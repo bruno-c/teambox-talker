@@ -1,0 +1,17 @@
+@P1
+* Realtime update using Flash sockets
+* Paste w/ syntax highlighting
+* Room admin can kick, voice, etc
+* Logging w/ search
+* Private messages
+* Unread messages in page title (can filter by @name)
+@P2
+* Compat w/ XMPP
+* Transparent switching to diff server on downtime
+* Fallback to polling for browser w/out Flash
+* Client gem in ruby, python, etc
+* File upload
+@P3
+* Integration w/ github, twitter, irc, etc.
+* Small client app for OS X, Linux & Windows
+* Integrated bot

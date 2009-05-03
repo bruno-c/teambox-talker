@@ -1,0 +1,12 @@
+@P1
+* Log messages
+* Creating room
+* login w/ login/password
+* login w/ OpenID
+* Kick
+* Private msg
+@P2
+* Pasty
+* Create a jquery.readline plugin to using on textarea
+* Add UI to buy a plan
+* Restrict user per plan

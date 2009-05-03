@@ -1,0 +1,6 @@
+%h1 Rooms
+
+%ul
+  - @rooms.each do |room|
+    %li
+      %a{:href => "/rooms/#{room.id}"}= room.name

@@ -1,0 +1,5 @@
+* Frontend using Flash sockets (http://github.com/tmm1/jssocket)
+* Push new message using AMQ ?
+* Complete async backend using sinatra, em-mysql, memcache
+
+http://github.com/cliffmoon/eventedcache

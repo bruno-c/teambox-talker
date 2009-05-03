@@ -1,0 +1,44 @@
+#room
+  #sidebar
+    %h1= @room.name
+  %table#log
+    - @room.messages.each do |message|
+      = haml :message, :layout => false, :locals => { :message => message }
+  #message
+    %form
+      %textarea
+      %input{:type => "submit", :value => "Send"}
+    :javascript
+      var connection = new Connection(#{@room.id}, #{@user.id}, function(message) {
+        $("#log").append(message);
+        scrollToLast();
+      });
+      
+      var messageForm = $('#message form');
+      var messageBox = messageForm.find('textarea');
+      $(window).ready(messageBox.focus);
+      
+      function scrollToLast() {
+        $(window).scrollTop($("#log")[0].scrollHeight);
+      };
+      $(window).ready(scrollToLast);
+      
+      function sendMessage() {
+        var text = messageBox.val();
+        if (text.length > 0) {
+          connection.send(text);
+          messageBox.val("");
+        }
+        return false;
+      };
+      
+      $('#message form').submit(sendMessage)
+      
+      $("#message form textarea").keypress(function (e) {
+        if (e.which == 13) {
+          sendMessage();
+          return false;
+        }
+        return true;
+      });
+    

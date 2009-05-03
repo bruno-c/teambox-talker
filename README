@@ -1,0 +1,18 @@
+= Talker
+The chat app that will change your like
+
+== Running the app
+Start using config.ru Rack file
+
+  thin start -R config.ru
+  
+Or in dev, for reloading
+
+  shotgun config.ru
+
+== Running tests
+
+  sudo gem install giraffesoft-zebra
+  rake
+
+(c) macournoyer

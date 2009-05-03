@@ -1,0 +1,9 @@
+%form{:action => "/login", :method => "post"}
+  %p
+    %label{:for => "username"} Username
+    %input#username{:name => "username", :type => "text"}
+  %p
+    %label{:for => "password"} Password
+    %input#password{:name => "password", :type => "password"}
+  %p
+    %input{:type => "submit", :value => "Login"}
