@@ -1,0 +1,21 @@
+#room
+  #sidebar
+    %h1= @room.name
+  %canvas#canvas{:width=>"800", :height=>"600"} You need canvas dude
+  :javascript
+    var canvas = $('canvas');
+    if (canvas[0].getContext){
+      
+      var color = "#FFA500";
+      var board = new DrawingBoard(canvas, color);
+      var connection = new Connection(#{@room.id}, #{@user.id}, function(m) {
+        board.draw(m.x1, m.y1, m.x2, m.y2, m.color);
+      });
+      board.ondraw(function(d) {
+        connection.send(d);
+      });
+      
+    } else {
+      alert("Canvas not supported");
+    }
+    

@@ -41,7 +41,14 @@ get "/rooms/:id" do
   
   @room = Room[:id => params[:id]] || raise(Sinatra::NotFound)
   @user = current_user
-  haml :room
+  case @room.medium
+  when "text"
+    haml :text_room
+  when "draw"
+    haml :draw_room
+  else
+    raise Sinatra::NotFound
+  end
 end
 
 get "/styles/:name.css" do

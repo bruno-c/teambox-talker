@@ -4,3 +4,4 @@
   - @rooms.each do |room|
     %li
       %a{:href => "/rooms/#{room.id}"}= room.name
+      == (#{room.medium})

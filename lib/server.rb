@@ -44,12 +44,16 @@ class Server < EM::Connection
       json = JSON.parse(packet)
       puts ">> got packet from #{@ip}: #{json.inspect}"
       
+      room = json["room"]
+      
       # TODO optimize this
-      connections = @@connections[json["room"]]
+      connections = @@connections[room]
       connections << self unless connections.include?(self)
       
+      puts ">> Now #{connections.size} users in room #{room}"
+      
       if json["type"] == "message"
-        publish_message json["room"], json["user"], json["message"]
+        publish_message room, json["user"], json["message"]
       end
     end
   end
@@ -67,8 +71,9 @@ class Server < EM::Connection
   end
   
   def send_message(user, message)
-    puts ">> sending message #{message.content.inspect} to #{@ip}"
-    send_data %(<tr class="message"><td class="author">#{user.name}</td><td class="content">#{message.content}</td></tr>\0)
+    data = %({"user":#{user.name.to_json},"content":#{message.content.to_json}}\0)
+    puts ">> sending to #{@ip}: #{data}"
+    send_data data
   end
 end
 

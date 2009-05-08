@@ -10,7 +10,12 @@
       %input{:type => "submit", :value => "Send"}
     :javascript
       var connection = new Connection(#{@room.id}, #{@user.id}, function(message) {
-        $("#log").append(message);
+        $("#log").append(
+          $('<tr class="message">' +
+              '<td class="author">' + message.user + '</td>' +
+              '<td class="content">' + message.content + '</td>' +
+            '</tr>')
+        );
         scrollToLast();
       });
       

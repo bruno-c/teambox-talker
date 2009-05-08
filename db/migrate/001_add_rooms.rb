@@ -3,6 +3,7 @@ class AddRooms < Sequel::Migration
     create_table :rooms do
       primary_key :id
       varchar :name, :size => 100, :null => false
+      varchar :medium, :size => 10, :null => false
     end
   end
 
