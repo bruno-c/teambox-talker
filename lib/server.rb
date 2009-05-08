@@ -53,16 +53,17 @@ class Server < EM::Connection
       puts ">> Now #{connections.size} users in room #{room}"
       
       if json["type"] == "message"
-        publish_message room, json["user"], json["message"]
+        publish_message room, json["user"], json["message"], json["data"]
       end
     end
   end
   
-  def publish_message(room_id, user_id, content)
+  def publish_message(room_id, user_id, content, data)
     # TODO validate args
     
     # TODO make async
-    message = Message.create :room_id => room_id, :user_id => user_id, :content => content
+    message = Message.create :room_id => room_id, :user_id => user_id,
+                             :content => content, :data => data.to_json
     user = User.select(:name)[:id => 1]
     
     @@connections[room_id].each do |connection|
@@ -71,7 +72,7 @@ class Server < EM::Connection
   end
   
   def send_message(user, message)
-    data = %({"user":#{user.name.to_json},"content":#{message.content.to_json}}\0)
+    data = %({"user":#{user.name.to_json},"content":#{message.content.to_json},"data":#{message.data}}\0)
     puts ">> sending to #{@ip}: #{data}"
     send_data data
   end

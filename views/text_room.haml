@@ -31,7 +31,7 @@
       function sendMessage() {
         var text = messageBox.val();
         if (text.length > 0) {
-          connection.send(text);
+          connection.send({content: text});
           messageBox.val("");
         }
         return false;

@@ -5,6 +5,7 @@ class AddMessages < Sequel::Migration
       foreign_key :user_id, :users
       foreign_key :room_id, :rooms
       text :content
+      text :data
       timestamp :created_at
     end
   end

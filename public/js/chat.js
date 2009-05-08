@@ -22,7 +22,8 @@ function Connection(room, user, onReceive) {
     send: function(message) {
       socket.send({
         type: "message",
-        message: message,
+        message: message.content,
+        data: message.data,
         room: room,
         user: user
       });
@@ -33,24 +34,21 @@ function Connection(room, user, onReceive) {
 function DrawingBoard(canvas, color) {
   var context = canvas[0].getContext('2d');
   var started = false;
-  var drawing = {};
+  var drawing = [];
   var drawCallback = function(d) {};
   
   canvas.mousedown(function(e) {
     context.beginPath();
     context.strokeStyle = color;
     context.moveTo(e.clientX, e.clientY);
+    drawing.push({x: e.clientX, y: e.clientY, color: color});
     started = true;
-    drawing.x1 = e.clientX;
-    drawing.y1 = e.clientY;
-    drawing.color = color;
   });
 
   canvas.mousemove(function(e) {
     if (started) {
       context.lineTo(e.clientX, e.clientY);
-      drawing.x2 = e.clientX;
-      drawing.y2 = e.clientY;
+      drawing.push({x: e.clientX, y: e.clientY});
       context.stroke();
     }
   });
@@ -58,15 +56,18 @@ function DrawingBoard(canvas, color) {
   canvas.mouseup(function(e) {
     drawCallback(drawing);
     started = false;
-    drawing = {};
+    drawing = [];
   });
   
   return {
-    draw: function(x1, y1, x2, y2, color) {
+    draw: function(drawing) {
+      header = drawing[0];
       context.beginPath();
-      context.strokeStyle = color;
-      context.moveTo(x1, y1);
-      context.lineTo(x2, y2);
+      context.strokeStyle = header.color;
+      context.moveTo(header.x, header.y);
+      for (var i=1; i < drawing.length; i++) {
+        context.lineTo(drawing[i].x, drawing[i].y);
+      };
       context.stroke();
     },
     

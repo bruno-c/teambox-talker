@@ -6,13 +6,13 @@
     var canvas = $('canvas');
     if (canvas[0].getContext){
       
-      var color = "#FFA500";
+      var color = "#FFA500"; // TODO random color
       var board = new DrawingBoard(canvas, color);
       var connection = new Connection(#{@room.id}, #{@user.id}, function(m) {
-        board.draw(m.x1, m.y1, m.x2, m.y2, m.color);
+        board.draw(m.data);
       });
       board.ondraw(function(d) {
-        connection.send(d);
+        connection.send({data: d});
       });
       
     } else {
