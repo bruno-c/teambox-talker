@@ -24,9 +24,14 @@ get "/login" do
 end
 
 post "/login" do
-  # TODO
-  session[:user] = 1
-  redirect "/"
+  if user = User.authenticate(params[:username], params[:password])
+    puts "login as user: #{user.id}"
+    session[:user] = user.id
+    redirect "/"
+  else
+    @notice = "Bad login"
+    haml :login
+  end
 end
 
 get "/" do

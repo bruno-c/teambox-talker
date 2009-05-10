@@ -3,10 +3,14 @@
     %h1= @room.name
   %canvas#canvas{:width=>"800", :height=>"600"} You need canvas dude
   :javascript
+    function random_color() {
+      var rint = Math.round(0xffffff * Math.random());
+      return ('#0' + rint.toString(16)).replace(/^#0([0-9a-f]{6})$/i, '#$1');
+    }
+
     var canvas = $('canvas');
     if (canvas[0].getContext){
-      
-      var color = "#FFA500"; // TODO genrate color based on user id/name
+      var color = random_color(); // TODO genrate color based on user id/name
       var board = new DrawingBoard(canvas, color);
       var connection = new Connection(#{@room.id}, #{@user.id}, function(m) {
         board.draw(m.data);

@@ -64,7 +64,7 @@ class Server < EM::Connection
     # TODO make async
     message = Message.create :room_id => room_id, :user_id => user_id,
                              :content => content, :data => data.to_json
-    user = User.select(:name)[:id => 1]
+    user = User.select(:name)[:id => user_id]
     
     @@connections[room_id].each do |connection|
       connection.send_message user, message
