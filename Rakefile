@@ -4,7 +4,7 @@ Rake::TestTask.new(:test) do |t|
   t.pattern = 'test/**/*_test.rb'
   t.verbose = false
 end
-task :test => "db:setup_test"
+task :test => "db:clone_to_test"
 task :default => :test
 
 task :environment do
@@ -15,12 +15,13 @@ task :console do
   sh "irb -r config/boot"
 end
 
-task :web_server do
-  sh "shotgun config.ru -sthin -O"
-end
-
-task :chat_server do
-  sh "ruby lib/server.rb"
+namespace :server do
+  task :web do
+    sh "shotgun config.ru -sthin -O"
+  end
+  task :chat do
+    sh "ruby lib/server.rb"
+  end
 end
 
 namespace :db do
@@ -32,8 +33,7 @@ namespace :db do
   task :drop => :environment do
     rm DB.opts[:database]
   end
-  task :setup_test do
-    ENV["RACK_ENV"] = "test"
-    Rake::Task["db:migrate"].invoke
+  task :clone_to_test do
+    cp "db/#{ENV['RACK_ENV'] || 'development'}.db", "db/test.db", :verbose => false
   end
 end
