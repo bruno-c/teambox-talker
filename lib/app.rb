@@ -25,7 +25,6 @@ end
 
 post "/login" do
   if user = User.authenticate(params[:username], params[:password])
-    puts "login as user: #{user.id}"
     session[:user] = user.id
     redirect "/"
   else

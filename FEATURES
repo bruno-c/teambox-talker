@@ -1,17 +1,24 @@
 @P1
-* Realtime update using Flash sockets
 * Paste w/ syntax highlighting
 * Room admin can kick, voice, etc
-* Logging w/ search
-* Private messages
+* Search trough history
 * Unread messages in page title (can filter by @name)
+* Private messages
+* Invite ppl by email
 @P2
-* Compat w/ XMPP
+* Allow guests
+* Highlight message when your name is mentioned
+* hide the logged in/logged out messages
+* simple poll system
 * Transparent switching to diff server on downtime
 * Fallback to polling for browser w/out Flash
+* Document API
 * Client gem in ruby, python, etc
 * File upload
+* Digest email
 @P3
 * Integration w/ github, twitter, irc, etc.
 * Small client app for OS X, Linux & Windows
+* Client app for iPhone
 * Integrated bot
+* Compat w/ XMPP

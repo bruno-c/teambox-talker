@@ -1,5 +1,5 @@
-function Connection(room, user, onReceive) {
-  // Private property
+function Connection(room, user, options) {
+  var emptyFn = function(){};
   var socket = jsSocket({
     port: 1234,
     debug: true,
@@ -7,13 +7,14 @@ function Connection(room, user, onReceive) {
       this.send({ type: 'ping', room: room })
     },
     onData: function(m) {
-      onReceive(JSONstring.toObject(m))
+      (options.onReceive || emptyFn)(JSONstring.toObject(m))
     },
     onOpen: function() {
-      this.send({ type: 'open', room: room })
+      this.send({ type: 'open', room: room });
+      (options.onOpen || emptyFn)();
     },
     onClose: function() {
-      this.send({ type: 'close', room: room })
+      (options.onClose || emptyFn)();
     }
   });
   

@@ -7,30 +7,45 @@
   #message
     %form
       %textarea
-      %input{:type => "submit", :value => "Send"}
+      %input#sendBtn{:type => "submit", :value => "Send", :disabled => "disabled"}
     :javascript
-      var connection = new Connection(#{@room.id}, #{@user.id}, function(message) {
-        $("#log").append(
-          $('<tr class="message">' +
-              '<td class="author">' + message.user + '</td>' +
-              '<td class="content">' + message.content + '</td>' +
-            '</tr>')
-        );
-        scrollToLast();
+      var connection = new Connection(#{@room.id}, #{@user.id}, {
+        onReceive: function(message) {
+          $("#log").append(
+            $('<tr class="message">' +
+                '<td class="author">' + message.user + '</td>' +
+                '<td class="content">' + message.content + '</td>' +
+              '</tr>')
+          );
+          scrollToLast();
+        },
+        onOpen: function() { enableSend(true) },
+        onClose: function() { enableSend(false) }
       });
       
       var messageForm = $('#message form');
       var messageBox = messageForm.find('textarea');
-      $(window).ready(messageBox.focus);
+      
+      function enableSend(val) {
+        $('#sendBtn')[0].disabled = !val;
+      };
+
+      function sendEnabled() {
+        return !$('#sendBtn')[0].disabled;
+      };
       
       function scrollToLast() {
         $(window).scrollTop($("#log")[0].scrollHeight);
       };
-      $(window).ready(scrollToLast);
+
+      $(document).ready(function () {
+        scrollToLast();
+        messageBox.focus();
+      });
       
       function sendMessage() {
         var text = messageBox.val();
-        if (text.length > 0) {
+        if (sendEnabled() && text.length > 0) {
           connection.send({content: text});
           messageBox.val("");
         }
