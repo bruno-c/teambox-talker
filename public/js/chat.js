@@ -7,6 +7,7 @@ function Connection(room, user, options) {
       this.send({ type: 'ping', room: room })
     },
     onData: function(m) {
+      console.warn(m);
       (options.onReceive || emptyFn)(JSONstring.toObject(m))
     },
     onOpen: function() {

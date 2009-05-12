@@ -5,7 +5,7 @@
     - @room.messages.each do |message|
       %tr.message
         %td.author= message.user.name
-        %td.content= message.content
+        %td.content= message.content.gsub(/\n/, "<br/>")
   #message
     %form
       %textarea#msgBox
@@ -16,7 +16,7 @@
           $("#log").append(
             $('<tr class="message">' +
                 '<td class="author">' + message.user + '</td>' +
-                '<td class="content">' + message.content + '</td>' +
+                '<td class="content">' + message.content.replace("\n", "<br/>") + '</td>' +
               '</tr>')
           );
           scrollToLast();
@@ -42,11 +42,6 @@
         $(window).scrollTop($("#log")[0].scrollHeight);
       };
 
-      $(document).ready(function () {
-        scrollToLast();
-        messageBox.focus();
-      });
-      
       function sendMessage() {
         var text = messageBox.val();
         if (sendEnabled() && text.length > 0) {
@@ -56,12 +51,17 @@
         return false;
       };
       
-      $('#message form').submit(sendMessage)
+      $(document).ready(function () {
+        scrollToLast();
+        messageBox.focus();
+      });
+      
+      $('#message form').submit(sendMessage);
       
       $("#message form textarea").keypress(function (e) {
-        if (e.which == 13) {
-          sendMessage();
-          return false;
+        if (!e.shiftKey && e.which == 13) {
+         sendMessage();
+         return false;
         }
         return true;
       });
