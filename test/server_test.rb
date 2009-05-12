@@ -39,7 +39,7 @@ describe Server do
     @room.reload.messages.size.should == 1
   end
   
-  should "send message to each user" do
+  should "send message to each user in room" do
     Server.any_instance.expects(:send_data).times(2)
     
     @server.dup.receive_data(message("type" => "ping", "user" => @user2.id, "room" => @room.id))
