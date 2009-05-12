@@ -3,11 +3,13 @@
     %h1= @room.name
   %table#log
     - @room.messages.each do |message|
-      = haml :message, :layout => false, :locals => { :message => message }
+      %tr.message
+        %td.author= message.user.name
+        %td.content= message.content
   #message
     %form
-      %textarea
-      %input#sendBtn{:type => "submit", :value => "Send", :disabled => "disabled"}
+      %textarea#msgBox
+      %input#sendBtn{:type => "submit", :value => "Connecting...", :disabled => "disabled"}
     :javascript
       var connection = new Connection(#{@room.id}, #{@user.id}, {
         onReceive: function(message) {
@@ -27,7 +29,9 @@
       var messageBox = messageForm.find('textarea');
       
       function enableSend(val) {
-        $('#sendBtn')[0].disabled = !val;
+        var btn = $('#sendBtn')[0];
+        btn.value = val ? "Send message" : "Connecting...";
+        btn.disabled = !val;
       };
 
       function sendEnabled() {
