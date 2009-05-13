@@ -1,6 +1,6 @@
 module ModelFactory
   def hash_for_user(attributes={})
-    { :name => 'Clark Kent', :account => Account.first }.merge(attributes)
+    { :login => 'quire', :email => 'quire@example.com', :password => 'quire69', :password_confirmation => 'quire69' }.merge(attributes)
   end
   
   def hash_for_account(attributes={})
@@ -8,7 +8,7 @@ module ModelFactory
   end
   
   def hash_for_room(attributes={})
-    { :name => 'Main', :account => Account.first }.merge(attributes)
+    { :name => 'Main' }.merge(attributes)
   end
   
   def hash_for_message(attributes={})

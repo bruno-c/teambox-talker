@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
   
+  include AuthenticatedSystem
+  
   protected
     def current_account
       @current_account ||= Account.find_by_subdomain(request.subdomains.first) ||
