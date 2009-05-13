@@ -1,9 +1,0 @@
-%h1 Rooms
-
-%p== Hi #{current_user.name}
-
-%ul
-  - @rooms.each do |room|
-    %li
-      %a{:href => "/rooms/#{room.id}"}= room.name
-      == (#{room.medium})
