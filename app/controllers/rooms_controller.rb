@@ -2,18 +2,18 @@ class RoomsController < ApplicationController
   before_filter :find_room, :only => [:show, :edit, :update, :destroy]
   
   def index
-    @rooms = Room.all
+    @rooms = current_account.rooms
   end
 
   def show
   end
 
   def new
-    @room = Room.new
+    @room = current_account.rooms.build
   end
 
   def create
-    @room = Room.new(params[:room])
+    @room = current_account.rooms.build(params[:room])
 
     if @room.save
       redirect_to(@room)
@@ -24,6 +24,6 @@ class RoomsController < ApplicationController
   
   private
     def find_room
-      @room = Room.find(params[:id])
+      @room = current_account.rooms.find(params[:id])
     end
 end
