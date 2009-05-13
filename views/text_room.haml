@@ -2,7 +2,7 @@
   #sidebar
     %h1= @room.name
   %table#log
-    - @room.messages.each do |message|
+    - @messages.each do |message|
       %tr.message
         %td.author= message.user.name
         %td.content= message.content.gsub(/\n/, "<br/>")

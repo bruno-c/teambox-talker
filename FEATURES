@@ -22,3 +22,12 @@
 * Client app for iPhone
 * Integrated bot
 * Compat w/ XMPP
+
+Architecture
+============
+* In case of downtime, connection is made to dispatcher server
+  to dispatch to the new server hosting the room
+  
+                      ,-> server1
+browser -->dispatcher --> server2
+                      '-> server3

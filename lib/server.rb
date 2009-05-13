@@ -20,7 +20,7 @@ class Server < EM::Connection
   
   def self.start(host, port)
     EM.run do
-      log "Listening on #{host}:#{port}"
+      puts "Listening on #{host}:#{port}"
       EM.start_server host, port, self
     end
   end

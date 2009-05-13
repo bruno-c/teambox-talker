@@ -45,6 +45,7 @@ get "/rooms/:id" do
   
   @room = Room[:id => params[:id]] || raise(Sinatra::NotFound)
   @user = current_user
+  @messages = @room.messages_dataset.limit(25).order(:created_at.desc)
   case @room.medium
   when "text"
     haml :text_room
