@@ -1,11 +1,17 @@
 !!!
 %html
   %head
+    %title&= @title
     = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
     = stylesheet_link_tag 'print.css', :media => 'print'
     /[if IE]
       = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
   
   %body
+    %h1&= @title
+    
+    - if flash[:notice]
+      %p.notice= flash[:notice]
+    
     = yield
   
