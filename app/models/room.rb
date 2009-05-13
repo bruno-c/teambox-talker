@@ -1,5 +1,6 @@
 class Room < ActiveRecord::Base
   has_many :messages
+  belongs_to :account
   
   validates_presence_of :name
   validates_inclusion_of :medium, :in => %w( text drawing )
