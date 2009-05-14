@@ -4,6 +4,7 @@
   %ol
     %li
       Choose your site address to host your chat rooms. This is where everyone in your group will go to chat. You might use your organization name here.
+      = f.error_messages
       %p
         = f.label :subdomain, "http://"
         = f.text_field :subdomain
@@ -12,6 +13,10 @@
     %li
       - fields_for @user do |uf|
         Create a master user account to invite other users and manage chat rooms.
+        = uf.error_messages
+        %p
+          = uf.label :login
+          = uf.text_field :login
         %p
           = uf.label :name
           = uf.text_field :name
@@ -30,9 +35,6 @@
         %p
           = uf.label :open_id, "OpenID"
           = uf.text_field :open_id
-    
-    %li
-      Payment Information
     
     %li
       Hurray, you're done!
