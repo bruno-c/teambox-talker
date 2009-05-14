@@ -14,7 +14,7 @@ class AccountsController < ApplicationController
       self.current_user = @user
 
       flash[:notice] = "Thanks for signing up!"
-      redirect_to root_url(:host => "#{@account.subdomain}.#{request.host_with_port}")
+      redirect_to home_url(@account)
     end
     
   rescue ActiveRecord::RecordInvalid

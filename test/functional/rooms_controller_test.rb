@@ -4,6 +4,7 @@ class RoomsControllerTest < ActionController::TestCase
   def setup
     @room = rooms(:main)
     subdomain :master
+    login_as :quentin
   end
   
   def test_index
