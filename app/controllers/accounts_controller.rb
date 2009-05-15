@@ -1,6 +1,4 @@
 class AccountsController < ApplicationController
-  layout "home"
-  
   def new
     @account = Account.new
     @user = User.new

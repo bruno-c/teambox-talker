@@ -1,1 +1,14 @@
 - @title = @room.name
+
+#room
+  #sidebar
+    %h1= @room.name
+  %table#log
+    - @messages.each do |message|
+      %tr.message
+        %td.author= message.user.name
+        %td.content= message.content.gsub(/\n/, "<br/>")
+  #message
+    %form
+      %textarea#msgBox
+      %input#sendBtn{:type => "submit", :value => "Send message"}

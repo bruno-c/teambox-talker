@@ -1,4 +1,4 @@
-- @title = "New room"
+%h1= @title = "New room"
 
 - form_for(@room) do |f|
   = f.error_messages
@@ -10,4 +10,4 @@
   %p
     = f.submit "Create"
     or
-    = link_to 'Cancel', :back
+    = link_to "Cancel", :back
