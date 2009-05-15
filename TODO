@@ -1,13 +1,13 @@
 @P1
+* Comet for message send
+* Contact http://www.weareagoodcompany.com for design
 * Log messages
-* Setup Thinking Sphinx
-* Creating room
-* login w/ login/password
+@P2
 * login w/ OpenID
 * Kick
 * Private msg
-@P2
-* Pasty
+* Setup Thinking Sphinx
+* Pastie
 * Create a jquery.readline plugin to using on textarea
 * Add UI to buy a plan
 * Restrict user per plan
