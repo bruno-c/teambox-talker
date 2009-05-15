@@ -12,7 +12,7 @@ class CreateUsers < ActiveRecord::Migration
       t.column :remember_token_expires_at, :datetime
       t.belongs_to :account
     end
-    add_index :users, :login, :unique => true
+    add_index :users, :login
   end
 
   def self.down

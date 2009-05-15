@@ -1,6 +1,8 @@
 - @title = "Create an Account"
 
-- form_for @account, :url => account_path do |f|
+%h1= @title
+
+- form_for @account, :url => register_path do |f|
   %ol
     %li
       Choose your site address to host your chat rooms. This is where everyone in your group will go to chat. You might use your organization name here.

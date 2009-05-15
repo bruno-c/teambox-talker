@@ -8,7 +8,7 @@ class AccountsControllerTest < ActionController::TestCase
   
   def test_valid_create
     post :create, :account => hash_for_account, :user => hash_for_user
-    assert_redirected_to root_url(:host => assigns(:account).subdomain + ".test.host")
+    assert_redirected_to rooms_url(:host => assigns(:account).subdomain + ".test.host")
     assert ! assigns(:account).new_record?
     assert ! assigns(:user).new_record?
     assert_equal assigns(:user).account, assigns(:account)

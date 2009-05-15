@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     
     # URL helpers
     def home_url(account=current_account)
-      root_url(:host => "#{account.subdomain}.#{request.host_with_port}")
+      rooms_url(:host => "#{account.subdomain}.#{request.domain}#{request.port_string}")
     end
     helper_method :home_url
 end
