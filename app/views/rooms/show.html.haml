@@ -1,5 +1,9 @@
 - @title = @room.name
 
+- content_for :head do
+  = orbited_javascript
+  = stomp_connect @room.name
+
 #room
   #sidebar
     %h1= @room.name
