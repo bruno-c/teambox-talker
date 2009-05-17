@@ -1,18 +1,34 @@
 - @title = @room.name
 
 - content_for :head do
+  :javascript
+    var chat;
+    // cross-subdomain fix for orbited
+    document.domain = document.domain;
+    
+    document.observe("dom:loaded", function() {
+      chat = new Chat($("log"));
+      chat.scrollToBottom();
+      
+      $("msgbox").observe("keydown", function(event) {
+        if (event.keyCode == Event.KEY_RETURN) {
+          this.form.onsubmit();
+          return false;
+        }
+      });
+      
+      $("msgbox").focus();
+    });
+    
   = orbited_javascript
-  = stomp_connect @room.name
+  = stomp_connect @room.channel
 
 #room
   #sidebar
     %h1= @room.name
   %table#log
-    - @messages.each do |message|
-      %tr.message
-        %td.author= message.user.name
-        %td.content= message.content.gsub(/\n/, "<br/>")
+    = render :partial => "messages/message", :collection => @messages
   #message
-    %form
-      %textarea#msgBox
-      %input#sendBtn{:type => "submit", :value => "Send message"}
+    - form_remote_tag :url => room_messages_path(@room), :loading => "$('msgbox').value=''; $('msgbox').focus()" do
+      %textarea#msgbox{:name => 'message'}
+      = submit_tag "Send Message"

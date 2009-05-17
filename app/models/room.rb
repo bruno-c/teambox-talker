@@ -6,4 +6,9 @@ class Room < ActiveRecord::Base
   validates_inclusion_of :medium, :in => %w( text drawing )
   
   before_validation_on_create { |r| r.medium = "text" if r.medium.blank? }
+  
+  # STOMP channel
+  def channel
+    "rooms/#{id}"
+  end
 end

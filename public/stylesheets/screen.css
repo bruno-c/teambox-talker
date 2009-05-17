@@ -761,11 +761,10 @@ body {
   padding: 10px;
   left: 0px;
   right: 220px; }
-  #room #message textarea#msgBox {
+  #room #message textarea {
     width: 85%;
     height: 54px;
     float: left; }
-  #room #message input#sendBtn {
+  #room #message input {
     margin: 0 10px;
-    height: 54px;
     float: left; }

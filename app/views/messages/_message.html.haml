@@ -1,0 +1,3 @@
+%tr.message{:id => "message_#{message.id}"}
+  %td.author&= message.user.login
+  %td.content= format_message message.content
