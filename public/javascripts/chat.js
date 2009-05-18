@@ -1,13 +1,13 @@
-function Chat(log) {
+function Chat(room_id, log) {
   return {
-    messages: function() {
-      return log.getElementsByClassName("message");
+    events: function() {
+      return log.getElementsByClassName("event");
     },
     
-    insertMessage: function(id, html) {
-      var messages = this.messages();
-      for (var i = messages.length - 1; i >= 0; i--) {
-        var message = messages[i];
+    log: function(id, html) {
+      var events = this.events();
+      for (var i = events.length - 1; i >= 0; i--) {
+        var message = events[i];
         var message_id = parseInt(message.id.match(/message_(\d+)/)[1]);
         // message already there
         if (message_id == id) return;
@@ -22,8 +22,9 @@ function Chat(log) {
     },
     
     scrollToBottom: function() {
-      var messages = this.messages();
-      messages[messages.length-1].scrollTo();
+      var events = this.events();
+      if (events.length > 0)
+        events[events.length-1].scrollTo();
     }
   }
 }

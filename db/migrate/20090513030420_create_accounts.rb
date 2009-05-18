@@ -5,14 +5,10 @@ class CreateAccounts < ActiveRecord::Migration
 
       t.timestamps
     end
-    
-    add_column :users, :account_id, :integer
-    add_column :rooms, :account_id, :integer
+    add_index :accounts, :subdomain, :unique => true
   end
 
   def self.down
-    remove_column :rooms, :account_id
-    remove_column :users, :account_id
     drop_table :accounts
   end
 end

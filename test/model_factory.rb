@@ -11,8 +11,8 @@ module ModelFactory
     { :name => 'Main' }.merge(attributes)
   end
   
-  def hash_for_message(attributes={})
-    { :content => '...', :room => Room.first, :user => User.first }.merge(attributes)
+  def hash_for_event(attributes={})
+    { :message => '...', :room => Room.first, :user => User.first, :type => "message" }.merge(attributes)
   end
   
   # Simulates model creation methods based on has_for_<model_name>:

@@ -7,7 +7,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resource :session
 
-  map.resources :rooms, :has_many => :messages
+  map.resources :rooms, :has_many => :messages, :member => { :leave => :post }
   map.resource :session
   map.resource :account
   

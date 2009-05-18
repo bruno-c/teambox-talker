@@ -4,6 +4,7 @@ class CreateRooms < ActiveRecord::Migration
       t.string :name
       t.string :medium
       t.text :description
+      t.belongs_to :account
       t.timestamps
     end
   end

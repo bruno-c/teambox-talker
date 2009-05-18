@@ -3,11 +3,9 @@
 - content_for :head do
   :javascript
     var chat;
-    // cross-subdomain fix for orbited
-    document.domain = document.domain;
     
     document.observe("dom:loaded", function() {
-      chat = new Chat($("log"));
+      chat = new Chat(#{@room.id}, $("log"));
       chat.scrollToBottom();
       
       $("msgbox").observe("keydown", function(event) {
@@ -20,6 +18,10 @@
       $("msgbox").focus();
     });
     
+    Element.observe(window, "beforeunload", function() {
+      new Ajax.Request("#{leave_room_path(@room)}");
+    });
+    
   = orbited_javascript
   = stomp_connect @room.channel
 
@@ -27,7 +29,7 @@
   #sidebar
     %h1= @room.name
   %table#log
-    = render :partial => "messages/message", :collection => @messages
+    = render :partial => "messages/message", :collection => @events
   #message
     - form_remote_tag :url => room_messages_path(@room), :loading => "$('msgbox').value=''; $('msgbox').focus()" do
       %textarea#msgbox{:name => 'message'}

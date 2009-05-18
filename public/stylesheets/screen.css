@@ -734,14 +734,20 @@ body {
       margin-left: 960px; }
 
 #room #log {
-  margin-right: 200px;
-  padding-bottom: 60px; }
-  #room #log .message .author {
+  margin-right: 216px;
+  padding-bottom: 60px;
+  width: auto; }
+  #room #log .event .author {
     vertical-align: top;
     font-weight: bold; }
-  #room #log .message .content {
+  #room #log .event .content {
     width: 100%;
     border-bottom: solid 1px #eee; }
+  #room #log .message {
+    font-size: 12px; }
+  #room #log .notice {
+    font-size: 10px;
+    background-color: #ddf; }
 #room #canvas {
   border: 1px solid #ccc; }
 #room #sidebar {

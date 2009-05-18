@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090513191302) do
+ActiveRecord::Schema.define(:version => 20090518022616) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -17,21 +17,23 @@ ActiveRecord::Schema.define(:version => 20090513191302) do
     t.datetime "updated_at"
   end
 
-  create_table "messages", :force => true do |t|
+  add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true
+
+  create_table "events", :force => true do |t|
     t.integer  "user_id"
     t.integer  "room_id"
-    t.text     "content"
+    t.text     "message"
+    t.string   "type",       :limit => 15
     t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "rooms", :force => true do |t|
     t.string   "name"
     t.string   "medium"
     t.text     "description"
+    t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "account_id"
   end
 
   create_table "users", :force => true do |t|
@@ -47,6 +49,6 @@ ActiveRecord::Schema.define(:version => 20090513191302) do
     t.integer  "account_id"
   end
 
-  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+  add_index "users", ["login"], :name => "index_users_on_login"
 
 end

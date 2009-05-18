@@ -3,11 +3,8 @@ class MessagesController < ApplicationController
   before_filter :find_room
   
   def create
-    @message = @room.messages.create :content => params[:message], :user => current_user
-    data = render_to_string :update do |page|
-      page.call "chat.insertMessage", @message.id, render(:partial => "messages/message", :object => @message)
-    end
-    Orbited.send_data(@room.channel, data)
+    @message = @room.create_message(current_user, params[:message])
+    data = send_message(@message)
     render :text => data, :content_type => Mime::JS
   end
   

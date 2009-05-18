@@ -1,5 +1,5 @@
 class Room < ActiveRecord::Base
-  has_many :messages
+  has_many :events
   belongs_to :account
   
   validates_presence_of :name
@@ -10,5 +10,17 @@ class Room < ActiveRecord::Base
   # STOMP channel
   def channel
     "rooms/#{id}"
+  end
+  
+  def send_data(data)
+    Orbited.send_data(channel, data)
+  end
+  
+  def create_message(user, message)
+    events.create :message => message, :user => user, :type => "message"
+  end
+  
+  def create_notice(user, message)
+    events.create :message => message, :user => user, :type => "notice"
   end
 end

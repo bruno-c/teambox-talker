@@ -1,13 +1,14 @@
 class RoomsController < ApplicationController
   before_filter :login_required
-  before_filter :find_room, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_room, :only => [:show, :edit, :update, :destroy, :leave]
   
   def index
     @rooms = current_account.rooms
   end
 
   def show
-    @messages = @room.messages
+    send_message @room.create_notice(current_user, "joined the room")
+    @events = @room.events.recent.reverse
   end
 
   def new
@@ -22,6 +23,11 @@ class RoomsController < ApplicationController
     else
       render :action => "new"
     end
+  end
+  
+  def leave
+    send_message @room.create_notice(current_user, "left the room")
+    head :ok
   end
   
   private

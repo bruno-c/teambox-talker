@@ -9,13 +9,12 @@
     = javascript_include_tag :defaults, "chat", :cache => true
     = yield :head
   
-  %body
-    %div.container
-      - if flash[:notice]
-        %p.notice= flash[:notice]
+  %body.container
+    - if flash[:notice]
+      %p.notice= flash[:notice]
 
-      - if flash[:error]
-        %p.error= flash[:error]
-    
-      = yield
+    - if flash[:error]
+      %p.error= flash[:error]
+  
+    = yield
   
