@@ -14,6 +14,8 @@ class RoomsControllerTest < ActionController::TestCase
   end
   
   def test_show
+    Room.any_instance.expects(:join).returns(true)
+    Room.any_instance.expects(:send_data)
     get :show, :id => @room
     assert_response :success
     assert_equal assigns(:room), @room
@@ -35,5 +37,12 @@ class RoomsControllerTest < ActionController::TestCase
     post :create, :room => hash_for_room
     assert_response :success
     assert_template "new"
+  end
+  
+  def test_leave
+    Room.any_instance.expects(:leave).returns(true)
+    Room.any_instance.expects(:send_data)
+    post :leave, :id => @room
+    assert_response :success
   end
 end

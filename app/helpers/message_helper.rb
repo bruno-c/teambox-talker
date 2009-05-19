@@ -5,4 +5,16 @@ module MessageHelper
     text.gsub!(/\n/, '<br />') # newline   -> br
     text
   end
+  
+  def add_message(message)
+    page.call "chat.log", message.id, render(:partial => "messages/message", :object => message)
+  end
+  
+  def leave_room(user)
+    page.call "chat.leave", user.id, render(:partial => "user", :object => user)
+  end
+  
+  def join_room(user)
+    page.call "chat.join", user.id, render(:partial => "user", :object => user)
+  end
 end

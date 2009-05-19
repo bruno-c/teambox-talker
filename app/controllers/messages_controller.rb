@@ -4,7 +4,10 @@ class MessagesController < ApplicationController
   
   def create
     @message = @room.create_message(current_user, params[:message])
-    data = send_message(@message)
+    data = render_to_string :update do |page|
+      page.add_message @message
+    end
+    @room.send_data(data)
     render :text => data, :content_type => Mime::JS
   end
   

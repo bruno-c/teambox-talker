@@ -1,5 +1,6 @@
 @P1
 * Show/update user list in room
+* What if server goes down? Need to send missed message on restart
 @P2
 * login w/ OpenID
 * Kick

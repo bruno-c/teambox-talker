@@ -27,12 +27,4 @@ class ApplicationController < ActionController::Base
       rooms_url(:host => "#{account.subdomain}.#{request.domain}#{request.port_string}")
     end
     helper_method :home_url
-    
-    def send_message(message)
-      data = render_to_string :update do |page|
-        page.call "chat.log", message.id, render(:partial => "messages/message", :object => message)
-      end
-      message.room.send_data(data)
-      data
-    end
 end
