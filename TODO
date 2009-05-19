@@ -1,13 +1,17 @@
 @P1
-* Comet for message send
-* Contact http://www.weareagoodcompany.com for design
-* Log messages
+* Show/update user list in room
 @P2
 * login w/ OpenID
 * Kick
 * Private msg
-* Setup Thinking Sphinx
-* Pastie
-* Create a jquery.readline plugin to using on textarea
+* Search in message history
+* Pastie w/ syntax highlight
+* Add keyboard shortcuts in message box
 * Add UI to buy a plan
 * Restrict user per plan
+@P3
+* Contact http://www.weareagoodcompany.com for design
+* Get merchant account
+* File upload
+* Drawing rooms
+* XMPP api

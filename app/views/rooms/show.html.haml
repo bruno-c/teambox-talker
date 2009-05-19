@@ -2,6 +2,10 @@
 
 - content_for :head do
   :javascript
+    Orbited.settings.hostname = '#{request.subdomains.first}.#{OrbitedConfig.host}';
+    Orbited.settings.port = '#{OrbitedConfig.port}';
+    Orbited.settings.protocol = '#{request.ssl? ? "https" : "http"}'
+    Orbited.settings.streaming = true;
     var chat;
     
     document.observe("dom:loaded", function() {
@@ -22,15 +26,19 @@
       new Ajax.Request("#{leave_room_path(@room)}");
     });
     
-  = orbited_javascript
-  = stomp_connect @room.channel
+  = stomp_connect @room.channel, :callbacks => { :onopen => "function() { $('send_button').disabled = false }", :onclose => "function() { $('send_button').disabled = true }" }
 
 #room
   #sidebar
-    %h1= @room.name
+    %h1&= @room.name
+    %p&= @room.description
+    %h2 Users
+    %ul#users
+      %li&= current_user.login
+      %li TODO...
   %table#log
     = render :partial => "messages/message", :collection => @events
   #message
     - form_remote_tag :url => room_messages_path(@room), :loading => "$('msgbox').value=''; $('msgbox').focus()" do
       %textarea#msgbox{:name => 'message'}
-      = submit_tag "Send Message"
+      = submit_tag "Send Message", :id => "send_button", :disabled => "disabled"

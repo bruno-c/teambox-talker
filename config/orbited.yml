@@ -1,5 +1,5 @@
 development: &development
-  host: ma.standoutjobs-development.com
+  host: standoutjobs-development.com
   port: 8000
   protocol: stomp
   stomp_host: localhost
