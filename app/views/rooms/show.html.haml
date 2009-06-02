@@ -6,28 +6,8 @@
     Orbited.settings.port = '#{OrbitedConfig.port}';
     Orbited.settings.protocol = '#{request.ssl? ? "https" : "http"}'
     Orbited.settings.streaming = true;
-    
-    var chat;
-    
-    document.observe("dom:loaded", function() {
-      chat = new Chat($("log"), $("users"));
-      chat.scrollToBottom();
-      
-      $("msgbox").observe("keydown", function(event) {
-        if (event.keyCode == Event.KEY_RETURN) {
-          this.form.onsubmit();
-          return false;
-        }
-      });
-      
-      $("msgbox").focus();
-    });
-    
-    Element.observe(window, "beforeunload", function() {
-      new Ajax.Request("#{leave_room_path(@room)}");
-    });
-    
-  = stomp_connect @room.channel
+    var chat = new Chat();
+  = stomp_connect @room.channel, :js => "jquery"
 
 #room
   #sidebar
@@ -39,6 +19,6 @@
   %table#log
     = render :partial => "messages/message", :collection => @events
   #message
-    - form_remote_tag :url => room_messages_path(@room), :loading => "$('msgbox').value=''; $('msgbox').focus()" do
+    %form#msgForm{:action => room_messages_path(@room)}
       %textarea#msgbox{:name => 'message'}
       = submit_tag "Send Message"

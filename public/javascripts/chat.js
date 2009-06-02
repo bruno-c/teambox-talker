@@ -1,15 +1,29 @@
-function Chat(log, users) {
-  return {
-    events: function() {
-      return log.getElementsByClassName("event");
-    },
+function Chat() {
+  function scrollToBottom() {
+    window.scrollTo(0, document.body.clientHeight);
+  };
+  
+  $(document).ready(function() {
+    scrollToBottom();
 
-    users: function() {
-      return users.getElementsByClassName("user");
-    },
+    $("#msgbox").
+      keydown(function(event) {
+        if (event.which == 13) {
+          $("#msgForm").trigger("submit")[0].reset();
+          return false;
+        }
+      }).
+      focus();
     
+    $("#msgForm").submitWithAjax(function() {
+      $("#msgForm")[0].reset();
+      $("#msgForm")[0].focus();
+    });
+  });
+  
+  return {
     log: function(id, html) {
-      var events = this.events();
+      var events = $("#log").find(".event");
       for (var i = events.length - 1; i >= 0; i--) {
         var message = events[i];
         var messageId = parseInt(message.id.match(/message_(\d+)/)[1]);
@@ -17,27 +31,22 @@ function Chat(log, users) {
         if (messageId == id) return;
         // message is older, insert before
         if (messageId < id) {
-          message.insert({ after: html }).scrollTo();
+          $(message).after(html);
+          scrollToBottom();
           return;
-        }
+        };
       };
       // should never get here, but just in case...
-      log.insert({ bottom: html }).scrollTo();
-    },
-    
-    scrollToBottom: function() {
-      var events = this.events();
-      if (events.length > 0)
-        events[events.length-1].scrollTo();
+      $("#log").append(html);
+      scrollToBottom();
     },
     
     join: function(userId, html) {
-      if (!$("user_" + userId))
-        users.insert({ bottom: html });
+      if ($("#user_" + userId).length > 0) $("#users").bottom(html);
     },
 
     leave: function(userId, html) {
-      $("user_" + userId).remove();
+      $("#user_" + userId).remove();
     },
   }
 }
