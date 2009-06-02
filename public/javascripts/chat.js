@@ -42,7 +42,7 @@ function Chat() {
     },
     
     join: function(userId, html) {
-      if ($("#user_" + userId).length > 0) $("#users").bottom(html);
+      if ($("#user_" + userId).length > 0) $("#users").append(html);
     },
 
     leave: function(userId, html) {
