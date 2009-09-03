@@ -8,11 +8,12 @@
 body
   +blueprint-typography
   +blueprint-grid
+  textarea
+    :font inherit
 
 #room
   #log
     :margin-right 216px
-    :padding-bottom 60px
     :width auto
     .event
       .author
@@ -42,16 +43,7 @@ body
       :margin-top 0
   
   #message
-    :position fixed
-    :bottom 0
-    :background-color #eee
-    :padding 10px
-    :left 0px
-    :right 220px
     textarea
-      :width 85%
+      :width 100%
       :height 54px
-      :float left
-    input
-      :margin 0 10px
       :float left
