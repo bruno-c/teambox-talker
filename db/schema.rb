@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090519013823) do
+ActiveRecord::Schema.define(:version => 20090911000119) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -32,7 +32,10 @@ ActiveRecord::Schema.define(:version => 20090519013823) do
     t.text     "message"
     t.string   "type",       :limit => 15
     t.datetime "created_at"
+    t.string   "uuid",       :limit => 36
   end
+
+  add_index "events", ["uuid"], :name => "index_events_on_uuid", :unique => true
 
   create_table "rooms", :force => true do |t|
     t.string   "name"

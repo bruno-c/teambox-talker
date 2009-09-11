@@ -8,8 +8,14 @@
       = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"
     = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"
-    = javascript_include_tag "jrails", "application", :cache => true
+    = javascript_include_tag "jrails", "uuid", "application", :cache => true
     = yield :head
+
+    - if logged_in?
+      :javascript
+        var currentUser = {
+          login: #{current_user.login.to_json}
+        };
   
   %body.container
     - if flash[:notice]
