@@ -27,7 +27,8 @@ var Chat = {
   messages: {},
   currentMessage: null,
   
-  sendLater: function(data, cond) {
+  sendLater: function(data) {
+    if (data === "") return;
     if (this.sendTimeout) clearTimeout(this.sendTimeout);
     this.sendTimeout = setTimeout(function() {
       Chat.send(data);
@@ -35,6 +36,7 @@ var Chat = {
   },
   
   send: function(data) {
+    if (data === "") return;
     if (this.sendTimeout) clearTimeout(this.sendTimeout);
     this.enqueue(data);
   },
@@ -53,15 +55,23 @@ var Chat = {
     this.scrollToBottom();
   },
   
-  receive: function(uuid, from, content) {
-    console.info("Received: message #" + uuid);
-    var message = this.messages[uuid];
+  receive: function(frame) {
+    console.info(frame.body);
+    var data = JSON.decode(frame.body);
+    var message = this.messages[data.uuid];
     if (!message) {
-      message = this.messages[uuid] = new Message(from, uuid);
-      messages.createElement();
+      console.info("new message");
+      message = this.messages[data.uuid] = new Message(data.from, data.uuid);
+      message.createElement();
     }
 
-    message.update(content);
+    message.update(data.content);
+    
+    if (this.currentMessage.content == null) {
+      this.newMessageElement.
+        appendTo(Chat.log).
+        find("textarea").focus();
+    }
 
     this.scrollToBottom();
   },
@@ -73,7 +83,7 @@ var Chat = {
   
   dequeue: function() {
     var message = this.currentMessage;
-    $.post(this.newMessageUrl, { uuid: message.uuid, message: message.content });
+    $.post(this.newMessageUrl, { uuid: message.uuid, content: message.content });
   },
 
   scrollToBottom: function() {
@@ -84,24 +94,24 @@ var Chat = {
 function Message(from, uuid) {
   this.from = from;
   this.uuid = uuid || Math.uuid();
-  this.elementId = "#message-" + this.uuid;
+  this.elementId = "message-" + this.uuid;
 }
 
 Message.prototype.update = function(content) {
   this.content = content;
-  this.element.find(".content").html(content);
+  if (this.element) this.element.find(".content").html(content);
 }
 
 Message.prototype.createElement = function() {
   // Create of find the message HTML element
-  this.element = Chat.log.find(this.elementId);
+  this.element = Chat.log.find("#" + this.elementId);
   if (this.element.length == 0) {
     this.element = $("<tr/>").
       addClass("event").
       addClass("message").
       attr("id", this.elementId).
       append($("<td/>").addClass("author").html(this.from)).
-      append($("<td/>").addClass("content").html(this.content)).
+      append($("<td/>").addClass("content").html(this.content || "")).
       appendTo(Chat.log);
   }
   return this.element;

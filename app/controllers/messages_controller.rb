@@ -3,13 +3,10 @@ class MessagesController < ApplicationController
   before_filter :find_room
   
   def create
-    head :ok
     # @message = @room.create_message(current_user, params[:message])
-    # data = render_to_string :update do |page|
-    #   page.add_message @message
-    # end
-    # @room.send_data(data)
-    # render :text => data, :content_type => Mime::JS
+    data = { :uuid => params[:uuid], :content => params[:content], :from => current_user.login }
+    @room.send_data(data.to_json)
+    head :ok
   end
   
   private

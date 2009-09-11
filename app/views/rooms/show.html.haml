@@ -1,5 +1,14 @@
 - content_for :head do
   = javascript_include_tag "orbited", "stomp", "chat", :cache => "chat_all"
+
+  :javascript
+    Orbited.settings.hostname = '#{request.subdomains.first}.#{OrbitedConfig.host}';
+    Orbited.settings.port = '#{OrbitedConfig.port}';
+    Orbited.settings.protocol = '#{request.ssl? ? "https" : "http"}'
+    Orbited.settings.streaming = true;
+    
+  = stomp_connect @room.channel, :js => :jquery, :callbacks => { :onmessageframe => "function(frame) { Chat.receive(frame) }" }
+
 - @title = @room.name
 
 #room
@@ -15,4 +24,4 @@
       %td.author&= current_user.login
       %td.content
         %form#msgForm{:action => room_messages_path(@room)}
-          %textarea#msgbox
+          %textarea#msgbox{:rows => 1}
