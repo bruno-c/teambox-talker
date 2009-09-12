@@ -27,14 +27,14 @@ class Room < ActiveRecord::Base
   end
   
   def join(user)
-    if connections.find_by_user_id(user.id)
-      nil
-    else
-      connections.create :user => user
-    end
+    # if connections.find_by_user_id(user.id)
+    #   nil
+    # else
+    #   connections.create :user => user
+    # end
   end
 
   def leave(user)
-    connections.find_by_user_id(user.id).try(:delete)
+    # connections.find_by_user_id(user.id).try(:delete)
   end
 end

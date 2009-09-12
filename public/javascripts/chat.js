@@ -42,7 +42,7 @@ var Chat = {
   },
   
   newMessage: function() {
-    if (this.currentMessage) this.currentMessage.createElement();
+    if (this.currentMessage) this.currentMessage.createElement().insertBefore(this.newMessageElement);
     this.currentMessage = new Message(currentUser.login);
     this.messages[this.currentMessage.uuid] = this.currentMessage;
     
@@ -60,7 +60,6 @@ var Chat = {
     var data = JSON.decode(frame.body);
     var message = this.messages[data.uuid];
     if (!message) {
-      console.info("new message");
       message = this.messages[data.uuid] = new Message(data.from, data.uuid);
       message.createElement();
     }
