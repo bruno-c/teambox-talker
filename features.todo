@@ -1,0 +1,3 @@
+- Choose backend protocol (XMPP or custom?)
+- Implement user presence
+- Log room history

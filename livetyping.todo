@@ -1,6 +1,0 @@
-- generate msg uuid client side and send along to server
-- enqueue messages to be sent
-- dequeue and send 1 message at the time
-- update/add message from other users
-- insert new messages after current textbox if typing
-- textbox stays at bottom if new message and not typing
