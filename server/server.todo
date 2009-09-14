@@ -1,0 +1,4 @@
+✓ Handle timeout of clients
+- Log message history
+- Support clustering / redundancy
+- Resend possibly lost messages on reconnect
