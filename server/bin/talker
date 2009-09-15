@@ -3,8 +3,11 @@
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require "rubygems"
 require "talker/server"
+require "amqp"
 
 EM.run do
+  AMQP.connect(:host => 'localhost')
+  
   server = Talker::Server.new
   puts "Listening on #{server.host}:#{server.port}"
   server.start

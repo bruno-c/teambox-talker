@@ -27,6 +27,12 @@ class Talker::Server::Connection < EM::Connection
     when "ping"
       # ignore
     end
+  rescue Exception => e
+    close "Error processing command"
+  end
+  
+  def uid
+    "#{@server.port}-#{signature}"
   end
   
   def authenticate(room_name, user, token)
@@ -38,8 +44,10 @@ class Talker::Server::Connection < EM::Connection
     
     @room = room
     @user_name = user
-    @subscription_id = @room.subscribe { |message| send_data message }
+    @subscription = @room.subscribe(@user_name, uid) { |message| send_data message }
     presence :join
+  rescue SubscriptionError => e
+    close "Failed to subscribe to room"
   end
   
   def message_received(id, content)
@@ -69,7 +77,7 @@ class Talker::Server::Connection < EM::Connection
   
   def unbind
     if @room
-      @room.unsubscribe @subscription_id
+      @room.unsubscribe @subscription
       presence :leave
     end
   end

@@ -2,7 +2,7 @@ require "eventmachine"
 
 module Talker
   class Server
-    TIMEOUT = 10.0 # sec
+    TIMEOUT = 30.0 # sec
     
     attr_reader :host, :port
   
