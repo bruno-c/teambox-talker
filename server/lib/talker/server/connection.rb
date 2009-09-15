@@ -22,13 +22,11 @@ class Talker::Server::Connection < EM::Connection
       authenticate obj["room"], obj["user"], obj["token"]
     when "message"
       message_received obj["id"], obj["content"]
-    when "close"
-      close
     when "ping"
       # ignore
     end
   rescue Exception => e
-    close "Error processing command"
+    error "Error processing command"
   end
   
   def uid
@@ -38,7 +36,7 @@ class Talker::Server::Connection < EM::Connection
   def authenticate(room_name, user, token)
     room = @server.find_room(room_name)
     unless room && room.authenticate(user, token)
-      close "Authentication failed"
+      error "Authentication failed"
       return
     end
     
@@ -47,11 +45,11 @@ class Talker::Server::Connection < EM::Connection
     @subscription = @room.subscribe(@user_name, uid) { |message| send_data message }
     presence :join
   rescue SubscriptionError => e
-    close "Failed to subscribe to room"
+    error "Failed to subscribe to room"
   end
   
   def message_received(id, content)
-    close "Not connected to a room" and return unless @room
+    error "Not connected to a room" and return unless @room
     
     @room.send_message(%Q|{"type":"message", "id":"#{id}", "content":#{Yajl::Encoder.encode(content)}, "from":"#{@user_name}"}\n|)
   end
@@ -60,8 +58,8 @@ class Talker::Server::Connection < EM::Connection
     @room.send_message(%Q|{"type":"#{type}", "user":"#{@user_name}"}\n|)
   end
   
-  def close(error_message=nil)
-    send_data(%Q|{"type":"error", "message":"#{error_message}"}\n|) if error_message
+  def error(message)
+    send_data(%Q|{"type":"error", "message":"#{message}"}\n|)
     close_connection_after_writing
   end
   
@@ -72,7 +70,7 @@ class Talker::Server::Connection < EM::Connection
     # continue passing chunks
     @parser << data
   rescue Yajl::ParseError
-    close "Invalid JSON"
+    error "Invalid JSON"
   end
   
   def unbind

@@ -1,3 +1,5 @@
-- Choose backend protocol (XMPP or custom?)
-- Implement user presence
+- Implement Orbited protocol in js for talker server (similar javascripts/stomp.js but implementing server/doc/protocol.md)
+- Deploy app on talkerapp.com to eat dog food ASAP!
 - Log room history
+- Invite users by email
+- Format messages (turn urls into links, show images, videos, etc.)
