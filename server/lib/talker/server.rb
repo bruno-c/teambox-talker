@@ -20,6 +20,7 @@ module Talker
     end
     
     def find_room(name)
+      # TODO When to remove unused rooms from @rooms hash?
       @rooms[name] ||= Room.new(name)
     end
   
@@ -29,5 +30,5 @@ module Talker
   end
 end
 
-require "talker/server/connection"
 require "talker/server/room"
+require "talker/server/connection"

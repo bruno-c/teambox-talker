@@ -1,4 +1,4 @@
 ✓ Handle timeout of clients
 - Log message history
-- Support clustering / redundancy
-- Resend possibly lost messages on reconnect
+✓ Support clustering / redundancy (handled by AMQP)
+✓ Resend possibly lost messages on reconnect (handled by AMQP)
