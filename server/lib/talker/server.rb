@@ -11,6 +11,10 @@ module Talker
       @port = port
       @rooms = {}
     end
+    
+    def uid
+      @port.to_s
+    end
   
     def start
       EM.start_server(@host, @port, Connection) do |connection|
@@ -19,11 +23,6 @@ module Talker
       end
     end
     
-    def find_room(name)
-      # TODO When to remove unused rooms from @rooms hash?
-      @rooms[name] ||= Room.new(name)
-    end
-  
     def self.start(*args)
       new(*args).start
     end
