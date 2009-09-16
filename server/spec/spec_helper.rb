@@ -2,7 +2,7 @@ require 'rubygems'
 require 'spec'
 
 $:.unshift File.dirname(__FILE__) + "/../lib"
-require "talker/server"
+require "talker"
 
 module Helpers
   def encode(json)
@@ -14,7 +14,7 @@ module Helpers
   end
   
   def create_connection(signature="connection_uid")
-    connection = Talker::Server::Connection.new(signature)
+    connection = Talker::Connection.new(signature)
     connection.post_init
     connection.reraise_errors = true
     connection.extend ConnectionSpecer

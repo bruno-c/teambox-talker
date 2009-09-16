@@ -5,11 +5,13 @@ module Talker
     TIMEOUT = 30.0 # sec
     
     attr_reader :host, :port
+    attr_accessor :logger
   
     def initialize(host="0.0.0.0", port=8860)
       @host = host
       @port = port
       @rooms = {}
+      @logger = Logger.new(nil)
     end
     
     def uid
@@ -28,6 +30,3 @@ module Talker
     end
   end
 end
-
-require "talker/server/room"
-require "talker/server/connection"

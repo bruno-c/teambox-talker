@@ -18,7 +18,7 @@ describe "connect message" do
     # Should broadcast prescence
     @room.should_receive(:send_message).with(encode(:type => "join", :user => "user"))
     
-    Talker::Server::Room.should_receive(:new).and_return(@room)
+    Talker::Room.should_receive(:new).and_return(@room)
     
     @connection.send_message(:type => "connect", :room => "room", :user => "user", :token => "token")
   end
@@ -27,7 +27,7 @@ describe "connect message" do
     @room = mock("room")
     @room.should_receive(:authenticate).with("user", "token").and_return(false)
     
-    Talker::Server::Room.should_receive(:new).and_return(@room)
+    Talker::Room.should_receive(:new).and_return(@room)
     
     @connection.should_receive_data(:type => "error", :message => "Authentication failed")
     @connection.should_close
