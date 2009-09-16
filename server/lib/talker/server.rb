@@ -1,4 +1,5 @@
 require "eventmachine"
+require "logger"
 
 module Talker
   class Server

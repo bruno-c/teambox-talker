@@ -8,8 +8,12 @@ require "amqp"
 EM.run do
   AMQP.connect :host => 'localhost'
   
-  server = Talker::Server.new
-  puts "Listening on #{server.host}:#{server.port}"
-  
-  server.start
+  service = Talker::Services::ConsoleLogger.new
+
+  trap('INT') do
+    service.stop
+    AMQP.stop { EM.stop }
+  end
+
+  service.start
 end

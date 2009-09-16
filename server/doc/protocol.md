@@ -6,7 +6,7 @@ All messages are in JSON format. They contain a hash ({...}) and end with a line
 ## Authentication
 Before sending and receiving messages in a room, the client must connect to the room by sending the following message:
 
-    { "type": "connect", "room": "account/roomname", "user": "user name", "token": "user secret token" }
+    { "type": "connect", "room": "account.roomname", "user": "user name", "token": "user secret token" }
 
 If the authentication is successful, the connection is left open, if not, the connection is closed after the following message is sent by the server:
 
