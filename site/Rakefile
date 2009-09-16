@@ -1,0 +1,7 @@
+task :build do
+  sh "staticmatic build ."
+end
+
+task :deploy => :build do
+  sh "rsync -va site/ macournoyer@macournoyer.com:talkerapp.com/"
+end

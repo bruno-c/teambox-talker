@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %title Talker - Group Chat For People With No Time To Waste
+    = stylesheets
+    = javascripts "http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js", "application"
+  %body
+    #topbar
+      .inner
+        %a{:href => "/signup"} Sign up
+    
+    = yield
+    
+    #footer.outer
+      .inner
+        &copy;
+        %em Talker
+      
+    = partial "analytics"
