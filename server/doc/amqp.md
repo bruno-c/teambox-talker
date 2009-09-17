@@ -1,0 +1,1 @@
+* http://www.infoq.com/articles/AMQP-RabbitMQ

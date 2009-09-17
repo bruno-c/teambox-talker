@@ -8,34 +8,44 @@ module Talker
 
     def initialize(name)
       @name = name
-      @topic = MQ.topic("talker")
+      @exchange = MQ.fanout("room.#{name}")
+      MQ.queue("rooms").bind(@exchange)
     end
 
     def authenticate(user, token)
       # TODO
       true
     end
-    
-    def routing_key
-      "room.#{@name}"
-    end
 
-    def subscribe(user, connection_id, &block)
-      queue = MQ.queue("room.#{name}.#{user}.#{connection_id}")
-      queue.bind(@topic, :key => routing_key).subscribe(&block)
+    def subscribe(user, connection)
+      queue = MQ.queue("connection.#{name}.#{user}")
+      if queue.subscribed?
+        raise SubscriptionError, "User #{user} already connected to room #{name}, wait #{Server::TIMEOUT} seconds and try again."
+      end
+      queue.bind(@exchange).subscribe do |message|
+        connection.send_message(message)
+      end
       queue
-    rescue MQ::Error => e
-      raise SubscriptionError, e.message
     end
 
-    def unsubscribe(queue)
+    def leave(queue)
       queue.delete
     rescue MQ::Error
       # Never fails
     end
+    
+    # Cleanup stale subscribers on interval
+
+    def unsubscribe(queue)
+      queue.unsubscribe
+    end
+    
+    def delete
+      @delete.delete
+    end
 
     def send_message(data)
-      @topic.publish(data, :routing_key => routing_key)
+      @exchange.publish(data)
     end
   end
 end

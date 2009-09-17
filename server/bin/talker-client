@@ -14,7 +14,12 @@ module KeyboardInput
   attr_accessor :client
   
   def receive_line(data)
-    @client.send_message(data)
+    case data
+    when "/close"
+      @client.close
+    else
+      @client.send_message(data)
+    end
   end
 end
 
@@ -31,8 +36,14 @@ EM.run do
       end
     end
     
+    client.on_closed do
+      puts "disconnected"
+      EM.stop
+      exit
+    end
+    
     EM.open_keyboard(KeyboardInput) { |i| i.client = client }
-    trap("INT") { client.close; EM.stop }
+    trap("INT") { EM.stop }
   end
 
 end

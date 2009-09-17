@@ -14,11 +14,11 @@ describe "connect message" do
   it "should accept connection when valid" do
     @room = mock("room")
     @room.should_receive(:authenticate).with("user", "token").and_return(true)
-    @room.should_receive(:subscribe).with("user", "server_uid-connection_uid")
+    @room.should_receive(:subscribe).with("user", @connection)
     # Should broadcast prescence
     @room.should_receive(:send_message).with(encode(:type => "join", :user => "user"))
     
-    Talker::Room.should_receive(:new).and_return(@room)
+    @connection.server.should_receive(:rooms).and_return("room" => @room)
     
     @connection.send_message(:type => "connect", :room => "room", :user => "user", :token => "token")
   end
@@ -27,7 +27,7 @@ describe "connect message" do
     @room = mock("room")
     @room.should_receive(:authenticate).with("user", "token").and_return(false)
     
-    Talker::Room.should_receive(:new).and_return(@room)
+    @connection.server.should_receive(:rooms).and_return("room" => @room)
     
     @connection.should_receive_data(:type => "error", :message => "Authentication failed")
     @connection.should_close

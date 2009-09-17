@@ -9,7 +9,12 @@ EM.run do
   AMQP.connect :host => 'localhost'
   
   server = Talker::Server.new
+  trap('INT') do
+    puts "Stopping ..."
+    EM.stop
+    # AMQP.stop { EM.stop } hangs ???
+  end
+
   puts "Listening on #{server.host}:#{server.port}"
-  
   server.start
 end

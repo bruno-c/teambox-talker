@@ -5,15 +5,12 @@ require "rubygems"
 require "talker"
 require "amqp"
 
+trap('INT') do
+  AMQP.stop { EM.stop }
+end
+
 EM.run do
   AMQP.connect :host => 'localhost'
-  
-  service = Talker::Services::ConsoleLogger.new
 
-  trap('INT') do
-    service.stop
-    AMQP.stop { EM.stop }
-  end
-
-  service.start
+  Talker::Services::ConsoleLogger.start
 end

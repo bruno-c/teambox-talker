@@ -22,6 +22,8 @@ module Talker
         authenticate obj["room"], obj["user"], obj["token"]
       when "message"
         message_received obj
+      when "close"
+        close
       when "ping"
         # ignore
       end
@@ -31,17 +33,13 @@ module Talker
       error "Error processing command"
     end
   
-    def uid
-      "#{@server.uid}-#{signature}"
-    end
-  
     def authenticate(room_name, user, token)
       if room_name.nil? || user.nil? || token.nil?
         error "Authentication failed"
         return
       end
     
-      room = Room.new(room_name)
+      room = @server.rooms[room_name]
       unless room && room.authenticate(user, token)
         error "Authentication failed"
         return
@@ -49,10 +47,14 @@ module Talker
     
       @room = room
       @user_name = user
-      @subscription = @room.subscribe(@user_name, uid) { |message| send_data message }
       presence :join
+      @subscription = @room.subscribe(@user_name, self)
     rescue SubscriptionError => e
       error "Failed to subscribe to room"
+    end
+    
+    def send_message(message)
+      send_data message
     end
   
     def message_received(obj)
@@ -61,6 +63,15 @@ module Talker
       obj["from"] = @user_name
       @room.send_message(encode(obj))
     end
+    
+    def close
+      if @room
+        @room.leave @subscription if @subscription
+        @subscription = nil
+        presence :leave
+      end
+      close_connection_after_writing
+    end
   
     def presence(type)
       @room.send_message(%Q|{"type":"#{type}","user":"#{@user_name}"}\n|)
@@ -68,7 +79,7 @@ module Talker
   
     def error(message)
       send_data(%Q|{"type":"error","message":"#{message}"}\n|)
-      close_connection_after_writing
+      close
     end
   
   
@@ -80,12 +91,9 @@ module Talker
     rescue Yajl::ParseError
       error "Invalid JSON"
     end
-  
+    
     def unbind
-      if @room
-        @room.unsubscribe @subscription
-        presence :leave
-      end
+      @room.unsubscribe @subscription if @subscription
     end
   
     private
