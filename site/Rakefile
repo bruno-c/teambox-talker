@@ -1,3 +1,7 @@
+task :preview do
+  sh "staticmatic preview ."
+end
+
 task :build do
   sh "staticmatic build ."
 end
