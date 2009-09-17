@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.dirname(__FILE__) + "/../lib"
+require "rubygems"
+require "talker"
+require "eventmachine"
+require "amqp"
+
+room, user, token = ARGV[0..2]
+
+module KeyboardInput
+  include EM::Protocols::LineText2
+  
+  attr_accessor :client
+  
+  def receive_line(data)
+    @client.send_message(data)
+  end
+end
+
+EM.run do
+  AMQP.connect :host => 'localhost'
+  
+  Talker::Client.connect("0.0.0.0", 8860, room, user, token) do |client|
+    client.on_message do |message|
+      case message["type"]
+      when "join", "leave"
+        puts message["user"] + " " + message["type"] + "s"
+      when "message"
+        puts message["from"] + ": " + message["content"]
+      end
+    end
+    
+    EM.open_keyboard(KeyboardInput) { |i| i.client = client }
+    trap("INT") { client.close; EM.stop }
+  end
+
+end
