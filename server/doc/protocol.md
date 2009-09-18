@@ -8,6 +8,10 @@ Before sending and receiving messages in a room, the client must connect to the 
 
     {"type":"connect","room":"0000","user":"user name","token":"user secret token"}
 
+"room" being the name of the room in the format <code>accountname.roomname</code>,
+"user" the name of the user connecting to the room and
+"token" the authentication token for that user.
+
 If the authentication is successful, the connection is left open, if not, the connection is closed after the following message is sent by the server:
 
     {"type":"error","message":"Authentication failed"}
@@ -19,6 +23,8 @@ A client connected to a room can send a public message like this:
 For partial messages:
 
     {"type":"message","content":"message to send","id":"unique message ID"}
+
+"id" must be a UUID as described in http://www.ietf.org/rfc/rfc4122.txt.
 
 For final messages:
 
