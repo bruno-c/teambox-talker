@@ -2,4 +2,3 @@ log/*.log
 tmp/**/*
 doc/api
 doc/app
-config/orbited.cfg

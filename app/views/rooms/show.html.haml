@@ -1,13 +1,22 @@
 - content_for :head do
-  = javascript_include_tag "orbited", "stomp", "chat", :cache => "chat_all"
+  = javascript_include_tag "orbited", "protocol", "chat", :cache => "chat_all"
 
   :javascript
     Orbited.settings.hostname = '#{request.subdomains.first}.#{OrbitedConfig.host}';
-    Orbited.settings.port = '#{OrbitedConfig.port}';
+    Orbited.settings.port = #{OrbitedConfig.port};
     Orbited.settings.protocol = '#{request.ssl? ? "https" : "http"}'
     Orbited.settings.streaming = true;
+    TCPSocket = Orbited.TCPSocket;
     
-  = stomp_connect @room.channel, :js => :jquery, :callbacks => { :onmessageframe => "function(frame) { Chat.receive(frame) }" }
+    $(function() {
+      document.domain = document.domain;
+      client = new TalkerClient();
+      client.connect('localhost', 61800, "#{@room.unique_name}", "#{current_user.login}", "TODO");
+      // TODO hook client.onMessage or something to Chat.receive(message);
+      
+      $(window).bind('beforeunload', function() { client.close() });
+    });
+    
 
 - @title = @room.name
 

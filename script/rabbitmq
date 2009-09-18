@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Starts RabbitMQ, only for dev
+RABBITMQ_NODE_IP_ADDRESS="" RABBITMQ_NODE_PORT="" RABBITMQ_LOG_BASE="/tmp" RABBITMQ_MNESIA_DIR="/tmp/rabbitmq-rabbit-mnesia" \
+  RABBITMQ_NODE_ONLY=true \
+  RABBITMQ_SERVER_START_ARGS=" -s rabbit" \
+  rabbitmq-server

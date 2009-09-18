@@ -9,9 +9,8 @@ class Room < ActiveRecord::Base
   
   before_validation_on_create { |r| r.medium = "text" if r.medium.blank? }
   
-  # STOMP channel
-  def channel
-    "rooms/#{id}"
+  def unique_name
+    account.subdomain + "." + name
   end
   
   def send_data(data)

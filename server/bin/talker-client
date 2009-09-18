@@ -26,7 +26,7 @@ end
 EM.run do
   AMQP.connect :host => 'localhost'
   
-  Talker::Client.connect("0.0.0.0", 8860, room, user, token) do |client|
+  Talker::Client.connect("0.0.0.0", 61800, room, user, token) do |client|
     client.on_message do |message|
       case message["type"]
       when "join", "leave"

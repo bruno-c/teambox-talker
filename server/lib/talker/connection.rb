@@ -74,6 +74,7 @@ module Talker
     end
   
     def presence(type)
+      logger.info "#{@user_name} #{type}s #{@room.name}"
       @room.send_message(%Q|{"type":"#{type}","user":"#{@user_name}"}\n|)
     end
   

@@ -1,12 +1,6 @@
 development: &development
   host: standoutjobs-development.com
   port: 8000
-  protocol: stomp
-  stomp_host: localhost
-  stomp_port: 61613
-  reactor: select
-  morbidq: 1
-  restrict_access: 0
 
 test:
   <<: *development
@@ -14,9 +8,3 @@ test:
 production:
   host: talkerapp.com
   port: 8000
-  protocol: stomp
-  stomp_host: your.stomp.domain.com
-  stomp_port: 61613
-  reactor: epoll
-  morbidq: 0
-  restrict_access: 1

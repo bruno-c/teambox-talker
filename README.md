@@ -17,11 +17,15 @@ And an host entry in your /etc/hosts file for each subdomains you want to use:
 
 Start the Rails app:
 
-    thin start -d
+    thin start
 
-Start the Orbited daemon:
+Start Orbited:
 
     script/orbited
+
+Start RabbitMQ:
+
+    script/rabbitmq
 
 Start the Talker server:
 
