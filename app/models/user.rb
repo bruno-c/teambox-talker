@@ -47,6 +47,12 @@ class User < ActiveRecord::Base
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
   end
+  
+  # Token used to authenticate the user in Talker server
+  def talker_token
+    # TODO
+    "TODO"
+  end
 
   protected
     

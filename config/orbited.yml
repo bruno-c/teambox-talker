@@ -1,8 +1,13 @@
 development: &development
   port: 8000
+  talker_host: localhost
+  talker_port: 61800
 
 test:
   <<: *development
 
 production:
   port: 8000
+  talker_host: localhost
+  talker_port: 61800
+  

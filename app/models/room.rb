@@ -24,16 +24,4 @@ class Room < ActiveRecord::Base
   def create_notice(user, message)
     events.create :message => message, :user => user, :type => "notice"
   end
-  
-  def join(user)
-    # if connections.find_by_user_id(user.id)
-    #   nil
-    # else
-    #   connections.create :user => user
-    # end
-  end
-
-  def leave(user)
-    # connections.find_by_user_id(user.id).try(:delete)
-  end
 end
