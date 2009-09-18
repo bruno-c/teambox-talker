@@ -6,6 +6,8 @@ require "talker"
 require "eventmachine"
 require "amqp"
 
+abort "usage: talker-client <account_name>.<room_name> <user_name> <auth token>" if ARGV.empty?
+
 room, user, token = ARGV[0..2]
 
 module KeyboardInput
