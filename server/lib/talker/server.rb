@@ -8,7 +8,7 @@ module Talker
     attr_reader :host, :port, :rooms
     attr_accessor :logger
   
-    def initialize(host="0.0.0.0", port=8860)
+    def initialize(host="0.0.0.0", port=61800)
       @host = host
       @port = port
       @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
