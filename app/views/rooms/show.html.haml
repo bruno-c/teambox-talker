@@ -2,8 +2,8 @@
   = javascript_include_tag "orbited", "protocol", "chat", :cache => "chat_all"
 
   :javascript
-    Orbited.settings.hostname = '#{request.subdomains.first}.#{OrbitedConfig.host}';
-    Orbited.settings.port = #{OrbitedConfig.port};
+    Orbited.settings.hostname = '#{request.host}';
+    Orbited.settings.port = #{Orbited.port};
     Orbited.settings.protocol = '#{request.ssl? ? "https" : "http"}'
     Orbited.settings.streaming = true;
     TCPSocket = Orbited.TCPSocket;

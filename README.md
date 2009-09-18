@@ -31,3 +31,4 @@ Start the Talker server:
 
     script/talker
 
+Browse to http://dev.com:3000/
