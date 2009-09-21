@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
   include Authentication::ByCookieToken
   
   belongs_to :account
-
+  
+  before_create             :create_talker_token
+  
   validates_presence_of     :name
   validates_uniqueness_of   :name,     :scope => :account_id
   validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message
@@ -15,14 +17,30 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email,    :scope => :account_id
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
-  # TODO
-  attr_accessor :open_id
-
-  # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible :email, :name, :password, :password_confirmation
   
+  
+  def email=(value)
+    write_attribute :email, (value ? value.downcase : nil)
+  end
+  
+  # Token used to authenticate the user in Talker server
+  def create_talker_token
+    self.talker_token = self.class.make_token
+    self
+  end
+  
+  def create_perishable_token!
+    self.perishable_token = self.class.make_token
+    save(false)
+  end
+
+  def clear_perishable_token!
+    self.perishable_token = nil
+    save(false)
+  end
   
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(email, password)
@@ -30,17 +48,4 @@ class User < ActiveRecord::Base
     u = find_by_email(email.downcase) # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
-
-  def email=(value)
-    write_attribute :email, (value ? value.downcase : nil)
-  end
-  
-  # Token used to authenticate the user in Talker server
-  def talker_token
-    # TODO
-    "TODO"
-  end
-  
-  protected
-    
 end

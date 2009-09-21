@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090921013309) do
+ActiveRecord::Schema.define(:version => 20090921174721) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(:version => 20090921013309) do
     t.string   "remember_token",            :limit => 40
     t.datetime "remember_token_expires_at"
     t.integer  "account_id"
+    t.string   "talker_token"
+    t.string   "perishable_token"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

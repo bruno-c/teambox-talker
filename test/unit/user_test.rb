@@ -2,38 +2,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def test_should_create_user
-    assert_difference 'User.count' do
-      user = create_user
-      assert !user.new_record?, user.errors.full_messages.to_sentence
-    end
-  end
-
-  def test_should_require_email
-    assert_no_difference 'User.count' do
-      u = create_user(:email => nil)
-      assert u.errors.on(:email)
-    end
-  end
-
-  def test_should_require_password
-    assert_no_difference 'User.count' do
-      u = create_user(:password => nil)
-      assert u.errors.on(:password)
-    end
-  end
-
-  def test_should_require_password_confirmation
-    assert_no_difference 'User.count' do
-      u = create_user(:password_confirmation => nil)
-      assert u.errors.on(:password_confirmation)
-    end
-  end
-
-  def test_should_require_email
-    assert_no_difference 'User.count' do
-      u = create_user(:email => nil)
-      assert u.errors.on(:email)
-    end
+    user = create_user
+    assert user.valid?, user.errors.full_messages.to_sentence
   end
 
   def test_should_reset_password
@@ -87,5 +57,9 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil users(:quentin).remember_token
     assert_not_nil users(:quentin).remember_token_expires_at
     assert users(:quentin).remember_token_expires_at.between?(before, after)
+  end
+  
+  def test_create_talker_tokens
+    assert_not_nil create_user.talker_token
   end
 end
