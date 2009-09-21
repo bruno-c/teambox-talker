@@ -14,7 +14,8 @@
     - if logged_in?
       :javascript
         var currentUser = {
-          login: #{current_user.login.to_json}
+          name: #{current_user.name.to_json},
+          email: #{current_user.email.to_json},
         };
   
   %body.container

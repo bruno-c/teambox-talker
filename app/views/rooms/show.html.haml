@@ -11,7 +11,7 @@
     $(function() {
       document.domain = document.domain;
       client = new TalkerClient();
-      client.connect('#{Orbited.talker_host}', Orbited.talker_port, #{@room.unique_name.to_json}, #{current_user.login.to_json}, #{current_user.talker_token.to_json});
+      client.connect('#{Orbited.talker_host}', Orbited.talker_port, #{@room.unique_name.to_json}, #{current_user.name.to_json}, #{current_user.talker_token.to_json});
       // TODO hook client.onMessage or something to Chat.receive(message);
       
       $(window).bind('beforeunload', function() { client.close() });
@@ -30,7 +30,7 @@
   %table#log
     = render :partial => "messages/message", :collection => @events
     %tr.message.event#message
-      %td.author&= current_user.login
+      %td.author&= current_user.name
       %td.content
         %form#msgForm{:action => room_messages_path(@room)}
           %textarea#msgbox{:rows => 1}

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090911000119) do
+ActiveRecord::Schema.define(:version => 20090921013309) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -47,7 +47,6 @@ ActiveRecord::Schema.define(:version => 20090911000119) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                     :limit => 40
     t.string   "name",                      :limit => 100, :default => ""
     t.string   "email",                     :limit => 100
     t.string   "crypted_password",          :limit => 40
@@ -59,6 +58,6 @@ ActiveRecord::Schema.define(:version => 20090911000119) do
     t.integer  "account_id"
   end
 
-  add_index "users", ["login"], :name => "index_users_on_login"
+  add_index "users", ["email"], :name => "index_users_on_email"
 
 end

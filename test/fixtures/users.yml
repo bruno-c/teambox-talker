@@ -1,5 +1,5 @@
 quentin:
-  login:                     quentin
+  name:                      quentin
   email:                     quentin@example.com
   salt:                      1b6453892473a467d07372d45eb05abc2031647a # SHA1('0')
   crypted_password:          d7a121979de3018e5e14d633f4739c99d8efc6b6 # 'monkey'
@@ -9,7 +9,7 @@ quentin:
   account:                   master
       
 aaron:
-  login:                     aaron
+  name:                      aaron
   email:                     aaron@example.com
   salt:                      ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4 # SHA1('1')
   crypted_password:          881d2283f0e3356687c810816458c6ff7d38b8ad # 'monkey'

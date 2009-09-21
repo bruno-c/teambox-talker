@@ -43,7 +43,7 @@ var Chat = {
   
   newMessage: function() {
     if (this.currentMessage) this.currentMessage.createElement().insertBefore(this.newMessageElement);
-    this.currentMessage = new Message(currentUser.login);
+    this.currentMessage = new Message(currentUser.email);
     this.messages[this.currentMessage.uuid] = this.currentMessage;
     
     // Move the new message form to the bottom
