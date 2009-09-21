@@ -1,15 +1,31 @@
 @import blueprint/screen.sass
-@import blueprint/modules/scaffolding.sass
-@import blueprint/modules/debug.sass
-@import blueprint/modules/fancy_type.sass
-@import blueprint/modules/typography.sass
 @import compass/reset.sass
 
 body
   +blueprint-typography
   +blueprint-grid
-  textarea
-    :font inherit
+
+textarea
+  :font inherit
+
+#header
+  :background-color #222
+  :padding 10px
+  .inner
+    :color #fff
+    +container
+    h1
+      :color #FFFF66
+  a
+    :color #eee
+    :margin-right 10px
+    &:hover
+      :color #fff
+
+#content
+  :padding-top 16px
+  .inner
+    +container
 
 #room
   #log
@@ -27,9 +43,6 @@ body
     .notice
       :font-size 10px
       :background-color #ddf
-  
-  #canvas
-    :border 1px solid #ccc
   
   #sidebar
     :position fixed

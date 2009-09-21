@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
+  before_filter :top_level_domain_required
+  
+  layout "root"
+  
   def index
-    redirect_to home_url unless request.subdomains.empty?
   end
 end

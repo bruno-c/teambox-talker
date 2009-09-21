@@ -1,4 +1,8 @@
 class AccountsController < ApplicationController
+  before_filter :top_level_domain_required
+  
+  layout "root"
+  
   def new
     @account = Account.new
     @user = User.new

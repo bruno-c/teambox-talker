@@ -19,4 +19,9 @@
         };
   
   %body.container
-    = yield
+    #header
+      .inner
+        = link_to "&larr; Back to Rooms", rooms_path, :class => "back"
+    
+    #content
+      = yield
