@@ -21,6 +21,7 @@ class InvitesControllerTest < ActionController::TestCase
     users(:quentin).create_perishable_token!
     get :show, :id => users(:quentin).perishable_token
     assert_nil flash[:error]
-    assert_redirected_to account_path
+    assert_not_nil flash[:notice]
+    assert_redirected_to settings_path
   end
 end

@@ -9,7 +9,9 @@ class InvitesController < ApplicationController
 
     if @token.present? && @user = current_account.users.find_by_perishable_token(@token)
       @user.clear_perishable_token!
-      redirect_to account_path # TODO change password...
+      self.current_user = @user
+      flash[:notice] = "You're now logged in! Please change your password."
+      redirect_to settings_path
     else
       flash[:error] = "Invalid token. Make sure you pasted the link correctly."
       access_denied

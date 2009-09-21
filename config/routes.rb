@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :invites
   map.resource :account
   map.resource :session
+  map.resource :settings
   map.resources :rooms, :has_many => :messages
   
   map.root :controller => "home"
