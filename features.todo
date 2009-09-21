@@ -2,5 +2,6 @@
 - Implement authentication on server
 - Deploy app on talkerapp.com to eat dog food ASAP!
 - Log room history
-- Invite users by email
+✓ Invite users by email
+- Implement "Forgot my password"
 - Format messages (turn urls into links, show images, videos, etc.)

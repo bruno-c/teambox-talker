@@ -17,8 +17,9 @@
     #header
       .inner
         - if logged_in?
-          = link_to 'New Room', new_room_path
-          = link_to 'Manage Users', users_path
+          - if admin?
+            = link_to 'New Room', new_room_path
+            = link_to 'Manage Users', users_path
           = link_to 'Settings', settings_path
         
           = "Hi #{current_user.name},"

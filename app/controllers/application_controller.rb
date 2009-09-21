@@ -27,6 +27,15 @@ class ApplicationController < ActionController::Base
       current_account
     end
     
+    def admin?
+      logged_in? && current_user.admin
+    end
+    helper_method :admin?
+    
+    def admin_required
+      authorized? && current_user.admin || access_denied
+    end
+    
     # URL helpers
     def home_url(account=current_account)
       rooms_url(:host => "#{account.subdomain}.#{request.domain}#{request.port_string}")

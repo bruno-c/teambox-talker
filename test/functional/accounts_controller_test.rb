@@ -12,6 +12,7 @@ class AccountsControllerTest < ActionController::TestCase
     assert ! assigns(:account).new_record?
     assert ! assigns(:user).new_record?
     assert_equal assigns(:user).account, assigns(:account)
+    assert assigns(:user).admin, "1st user must be admin"
   end
 
   def test_invalid_create

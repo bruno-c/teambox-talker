@@ -12,6 +12,7 @@ class AccountsController < ApplicationController
     logout_keeping_session!
     @account = Account.new(params[:account])
     @user = @account.users.build(params[:user])
+    @user.admin = true
     
     User.transaction do
       @account.save!
