@@ -1,13 +1,4 @@
 
-
-
-
-
-
-
-
-
-
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
 pre, a, abbr, acronym, address, code, del, dfn, em, img,
 dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption, tbody, tfoot, thead, tr {
@@ -67,130 +58,35 @@ table {
 a img {
   border: none; }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333333;
-  font-size: 75%; }
-  body h1 {
-    font-weight: normal;
-    color: #222222;
-    font-size: 3em;
-    line-height: 1;
-    margin-bottom: 0.5em; }
-    body h1 img {
-      margin: 0; }
-  body h2 {
-    font-weight: normal;
-    color: #222222;
-    font-size: 2em;
-    margin-bottom: 0.75em; }
-  body h3 {
-    font-weight: normal;
-    color: #222222;
-    font-size: 1.5em;
-    line-height: 1;
-    margin-bottom: 1em; }
-  body h4 {
-    font-weight: normal;
-    color: #222222;
-    font-size: 1.2em;
-    line-height: 1.25;
-    margin-bottom: 1.25em;
-    height: 1.25em; }
-  body h5 {
-    font-weight: normal;
-    color: #222222;
-    font-size: 1em;
-    font-weight: bold;
-    margin-bottom: 1.5em; }
-  body h6 {
-    font-weight: normal;
-    color: #222222;
-    font-size: 1em;
-    font-weight: bold; }
-  body h2 img, body h3 img, body h4 img, body h5 img, body h6 img {
-    margin: 0; }
-  body p {
-    margin: 0 0 1.5em; }
-    body p img {
-      float: left;
-      margin: 1.5em 1.5em 1.5em 0;
-      padding: 0; }
-      body p img.right {
-        float: right;
-        margin: 1.5em 0 1.5em 1.5em; }
-  body a {
-    text-decoration: underline;
-    color: #457ac9; }
-    body a:visited {
-      color: #124796; }
-    body a:focus {
-      color: #457ac9; }
-    body a:hover {
-      color: #399999; }
-    body a:active {
-      color: #ff7ac9; }
-  body blockquote {
-    margin: 1.5em;
-    color: #666;
-    font-style: italic; }
-  body strong {
-    font-weight: bold; }
-  body em {
-    font-style: italic; }
-  body dfn {
-    font-style: italic;
-    font-weight: bold; }
-  body sup, body sub {
-    line-height: 0; }
-  body abbr, body acronym {
-    border-bottom: 1px dotted #666; }
-  body address {
-    margin: 0 0 1.5em;
-    font-style: italic; }
-  body del {
-    color: #666; }
-  body pre, body code {
-    margin: 1.5em 0;
-    white-space: pre;
-    font: 1em 'andale mono', 'lucida console', monospace;
-    line-height: 1.5; }
-  body tt {
-    font: 1em 'andale mono', 'lucida console', monospace;
-    line-height: 1.5; }
-  body li ul, body li ol {
-    margin: 0 1.5em; }
-  body ul {
-    margin: 0 1.5em 1.5em 1.5em;
-    list-style-type: disc; }
-  body ol {
-    margin: 0 1.5em 1.5em 1.5em;
-    list-style-type: decimal; }
-  body dl {
-    margin: 0 0 1.5em 0; }
-    body dl dt {
-      font-weight: bold; }
-  body dd {
-    margin-left: 1.5em; }
-  body table {
-    margin-bottom: 1.4em;
-    width: 100%; }
-  body th {
-    font-weight: bold;
-    background: #C3D9FF;
-    padding: 4px 10px 4px 5px; }
-  body td {
-    padding: 4px 10px 4px 5px; }
-  body tr.even td {
-    background: #E5ECF9; }
-  body tfoot {
-    font-style: italic; }
-  body caption {
-    background: #eee; }
-  body .quiet {
-    color: #666666; }
-  body .loud {
-    color: #111111; }
+  font-size: 75%;
+  font-family: Helvetica, Geneva, sans-serif; }
   body .container {
     width: 950px;
     margin: 0 auto;
@@ -701,9 +597,240 @@ body {
       margin-right: -960px;
       margin-bottom: 1.5em;
       margin-left: 960px; }
-
-textarea {
-  font: inherit; }
+  body h1 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 3em;
+    line-height: 1;
+    margin-bottom: 0.5em; }
+    body h1 img {
+      margin: 0; }
+  body h2 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 2em;
+    margin-bottom: 0.75em; }
+  body h3 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 1.5em;
+    line-height: 1;
+    margin-bottom: 1em; }
+  body h4 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 1.2em;
+    line-height: 1.25;
+    margin-bottom: 1.25em;
+    height: 1.25em; }
+  body h5 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 1.5em; }
+  body h6 {
+    font-weight: normal;
+    color: #222222;
+    font-size: 1em;
+    font-weight: bold; }
+  body h2 img, body h3 img, body h4 img, body h5 img, body h6 img {
+    margin: 0; }
+  body p {
+    margin: 0 0 1.5em; }
+    body p img {
+      float: left;
+      margin: 1.5em 1.5em 1.5em 0;
+      padding: 0; }
+      body p img.right {
+        float: right;
+        margin: 1.5em 0 1.5em 1.5em; }
+  body a {
+    text-decoration: underline;
+    color: #457ac9; }
+    body a:visited {
+      color: #124796; }
+    body a:focus {
+      color: #457ac9; }
+    body a:hover {
+      color: #399999; }
+    body a:active {
+      color: #ff7ac9; }
+  body blockquote {
+    margin: 1.5em;
+    color: #666;
+    font-style: italic; }
+  body strong {
+    font-weight: bold; }
+  body em {
+    font-style: italic; }
+  body dfn {
+    font-style: italic;
+    font-weight: bold; }
+  body sup, body sub {
+    line-height: 0; }
+  body abbr, body acronym {
+    border-bottom: 1px dotted #666; }
+  body address {
+    margin: 0 0 1.5em;
+    font-style: italic; }
+  body del {
+    color: #666; }
+  body pre, body code {
+    margin: 1.5em 0;
+    white-space: pre;
+    font: 1em 'andale mono', 'lucida console', monospace;
+    line-height: 1.5; }
+  body tt {
+    font: 1em 'andale mono', 'lucida console', monospace;
+    line-height: 1.5; }
+  body li ul, body li ol {
+    margin: 0 1.5em; }
+  body ul {
+    margin: 0 1.5em 1.5em 1.5em;
+    list-style-type: disc; }
+  body ol {
+    margin: 0 1.5em 1.5em 1.5em;
+    list-style-type: decimal; }
+  body dl {
+    margin: 0 0 1.5em 0; }
+    body dl dt {
+      font-weight: bold; }
+  body dd {
+    margin-left: 1.5em; }
+  body table {
+    margin-bottom: 1.4em;
+    width: 100%; }
+  body th {
+    font-weight: bold;
+    background: #C3D9FF;
+    padding: 4px 10px 4px 5px; }
+  body td {
+    padding: 4px 10px 4px 5px; }
+  body tr.even td {
+    background: #E5ECF9; }
+  body tfoot {
+    font-style: italic; }
+  body caption {
+    background: #eee; }
+  body .quiet {
+    color: #666666; }
+  body .loud {
+    color: #111111; }
+  body .clear {
+    clear: both; }
+  body .nowrap {
+    white-space: nowrap; }
+  body .clearfix {
+    overflow: auto;
+    overflow: -moz-scrollbars-none;
+    display: inline-block; }
+    body .clearfix {
+      display: block; }
+  body .small {
+    font-size: .8em;
+    margin-bottom: 1.875em;
+    line-height: 1.875em; }
+  body .large {
+    font-size: 1.2em;
+    line-height: 2.5em;
+    margin-bottom: 1.25em; }
+  body .first {
+    margin-left: 0;
+    padding-left: 0; }
+  body .last {
+    margin-right: 0;
+    padding-right: 0; }
+  body .top {
+    margin-top: 0;
+    padding-top: 0; }
+  body .bottom {
+    margin-bottom: 0;
+    padding-bottom: 0; }
+  body .print-only {
+    display: none; }
+  body .showgrid {
+    background: url(images/grid.png); }
+  body .error {
+    padding: .8em;
+    margin-bottom: 1em;
+    border: 2px solid #ddd;
+    background: #fbe3e4;
+    color: #8a1f11;
+    border-color: #fbc2c4; }
+    body .error a {
+      color: #8a1f11; }
+  body .notice {
+    padding: .8em;
+    margin-bottom: 1em;
+    border: 2px solid #ddd;
+    background: #fff6bf;
+    color: #514721;
+    border-color: #ffd324; }
+    body .notice a {
+      color: #514721; }
+  body .success {
+    padding: .8em;
+    margin-bottom: 1em;
+    border: 2px solid #ddd;
+    background: #e6efc2;
+    color: #264409;
+    border-color: #c6d880; }
+    body .success a {
+      color: #264409; }
+  body .hide {
+    display: none; }
+  body .highlight {
+    background: #ff0; }
+  body .added {
+    background: #060;
+    color: #fff; }
+  body .removed {
+    background: #900;
+    color: #fff; }
+  body label {
+    font-weight: bold; }
+  body fieldset {
+    padding: 1.4em;
+    margin: 0 0 1.5em 0;
+    border: 1px solid #ccc; }
+  body legend {
+    font-weight: bold;
+    font-size: 1.2em; }
+  body input.text {
+    margin: 0.5em 0;
+    border: 1px solid #bbb;
+    width: 300px;
+    padding: 5px; }
+    body input.text:focus {
+      border: 1px solid #666; }
+  body input.title {
+    font-size: 1.5em; }
+  body input.title {
+    margin: 0.5em 0;
+    border: 1px solid #bbb;
+    width: 300px;
+    padding: 5px; }
+    body input.title:focus {
+      border: 1px solid #666; }
+  body textarea {
+    margin: 0.5em 0;
+    border: 1px solid #bbb; }
+    body textarea:focus {
+      border: 1px solid #666; }
+  body select {
+    margin: 0.5em 0;
+    border: 1px solid #bbb; }
+    body select:focus {
+      border: 1px solid #666; }
+  body textarea {
+    width: 390px;
+    height: 250px;
+    padding: 5px; }
+  body textarea, body select, body input {
+    font: inherit; }
+  body a.button {
+    font-weight: bold; }
 
 #header {
   background-color: #222;
@@ -736,6 +863,11 @@ textarea {
     #content .inner {
       display: block; }
 
+#room textarea {
+  height: auto;
+  width: auto;
+  padding: 0;
+  margin: 0; }
 #room #log {
   margin-right: 216px;
   width: auto; }
@@ -763,3 +895,6 @@ textarea {
 #room #message textarea {
   width: 100%;
   float: left; }
+
+td.actions {
+  text-align: right; }

@@ -1,12 +1,16 @@
-@import blueprint/screen.sass
 @import compass/reset.sass
+@import compass/utilities.sass
+@import blueprint/screen.sass
 
 body
-  +blueprint-typography
-  +blueprint-grid
-
-textarea
-  :font inherit
+  +blueprint
+  :font-family Helvetica, Geneva, sans-serif
+  
+  textarea, select, input
+    :font inherit
+  
+  a.button
+    :font-weight bold
 
 #header
   :background-color #222
@@ -28,6 +32,11 @@ textarea
     +container
 
 #room
+  textarea
+    :height auto
+    :width auto
+    :padding 0
+    :margin 0
   #log
     :margin-right 216px
     :width auto
@@ -59,3 +68,6 @@ textarea
     textarea
       :width 100%
       :float left
+
+td.actions
+  :text-align right

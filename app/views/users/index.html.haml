@@ -1,10 +1,28 @@
 - @title = "Manager Users"
 
 %p
-  = link_to "Invite users to join", invites_path
+  = link_to "Invite other users by email", invites_path, :class => "button"
 
-%table
-  - @users.each do |user|
-    %tr.user
-      %td=h user.name
-      %td= mail_to user.email
+%table#users
+  %thead
+    %tr
+      %th User Name
+      %th Email
+      %th State
+      %th
+  %tbody
+    - @users.each do |user|
+      %tr.user{:class => cycle(:odd, :even)}
+        %td=h user.name
+        %td= mail_to user.email
+        %td= "TODO"
+        %td.actions
+          - form_tag user_path(user) do
+            %span.role
+              = check_box_tag "admin", "1", user.admin, :id => dom_id(user, :admin), :class => "admin"
+              = label_tag dom_id(user, :admin), "Admin"
+            
+            %span.role
+              = check_box_tag "suspended", "1", false, :id => dom_id(user, :suspended), :class => "suspended"
+              = label_tag dom_id(user, :suspended), "Suspended"
+          
