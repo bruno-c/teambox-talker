@@ -8,6 +8,7 @@ class RoomsController < ApplicationController
 
   def show
     @events = @room.events.recent.reverse
+    render :layout => "room"
   end
 
   def new

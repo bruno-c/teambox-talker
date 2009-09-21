@@ -8,14 +8,15 @@
       = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
     - # Edit defaults in config/initializers/javascripts.rb
     = javascript_include_tag :defaults, :cache => true
+    = javascript_include_tag "uuid", "json", "orbited", "protocol", "chat", :cache => "chat_all"
     = yield :head
+
+    - if logged_in?
+      :javascript
+        var currentUser = {
+          name: #{current_user.name.to_json},
+          email: #{current_user.email.to_json},
+        };
   
   %body.container
-    - if flash[:notice]
-      %p.notice= flash[:notice]
-
-    - if flash[:error]
-      %p.error= flash[:error]
-  
     = yield
-  
