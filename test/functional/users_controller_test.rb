@@ -6,8 +6,8 @@ class UsersControllerTest < ActionController::TestCase
     login_as :quentin
   end
   
-  def test_new
-    get :new
+  def test_index
+    get :index
     assert_response :success
   end
 end

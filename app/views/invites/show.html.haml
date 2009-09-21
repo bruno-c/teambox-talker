@@ -1,0 +1,9 @@
+- @title = "Send Invites"
+
+%p Enter the email addresses of the people you want to invite. One per line.
+
+- form_tag invite_path do
+  %p
+    = text_area_tag :invitees
+  %p
+    = submit_tag "Send Invites"

@@ -1,0 +1,10 @@
+- @title = "Manager Users"
+
+%p
+  = link_to "Invite users to join", invite_path
+
+%table
+  - @users.each do |user|
+    %tr.user
+      %td=h user.name
+      %td= mail_to user.email
