@@ -20,8 +20,6 @@ If the authentication is successful, the connection is left open, if not, the co
 There are two types of messages: partial and final. Partial messages are sent by the client while live-typing and do not contain the full message, delivery of those messages is faster but not guaranteed. Final messages are sent once the user has hit enter and can no longer modify the message, delivery of those messages is guaranteed.
 A client connected to a room can send a public message like this:
 
-For partial messages:
-
     {"type":"message","content":"message to send","id":"unique message ID"}
 
 "id" must be a UUID as described in http://www.ietf.org/rfc/rfc4122.txt.
@@ -30,12 +28,29 @@ The server will broadcast the message to all online members of the room (includi
 
     {"type":"message","content":"message to send","id":"unique message ID","from":"user name"}
 
+To send a private message, add the "to" attribute:
+
+    {"type":"message","content":"message to send","id":"unique message ID","to":"someone"}
+
+The server will send the message to the user in the room matching the name in to:
+
+    {"type":"message","content":"message to send","id":"unique message ID","from":"user name","private":true}
+
+
 ## Presence
-When a client connects to a room, the following message will be sent to all online members of the room (excluding the new user):
+When a client connects to a room, the following message will be sent to all online members of the room:
 
     {"type":"join","user":"user name"}
 
-When a client close connection to a room, the following message will be sent to all online members of the room (excluding the new user):
+Members of the room must reply with the follow message stating their presence:
+
+    {"type":"present","to":"new user name"}
+
+The server will send this message to the new user:
+
+    {"type":"present","user":"sender name"}
+
+When a client close connection to a room, the server sends the following message to all online members of the room:
 
     {"type":"leave","user":"user name"}
 

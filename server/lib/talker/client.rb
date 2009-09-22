@@ -46,8 +46,14 @@ module Talker
     end
     
     def object_parsed(message)
-      raise Error, message["message"] if message["type"] == "error"
-      @on_message.call(message)
+      case message["type"]
+      when "error"
+        raise Error, message["message"]
+      when "join"
+        send "type" => "present", "to" => message["user"]
+      else
+        @on_message.call(message)
+      end
     end
     
     def receive_data(data)

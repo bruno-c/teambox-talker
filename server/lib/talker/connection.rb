@@ -15,13 +15,16 @@ module Talker
       @user_name = nil
       @reraise_errors = false
     end
-
+    
+    # Called when a JSON object in a message is fully parsed
     def object_parsed(obj)
       case obj["type"]
       when "connect"
         authenticate obj["room"], obj["user"], obj["token"]
       when "message"
-        message_received obj
+        broadcast_message obj, obj["to"]
+      when "present"
+        broadcast_presence obj["to"] unless obj["to"] == @user_name
       when "close"
         close
       when "ping"
@@ -53,15 +56,23 @@ module Talker
       error "Failed to subscribe to room"
     end
     
-    def send_message(message)
-      send_data message
-    end
-  
-    def message_received(obj)
+    def broadcast_message(obj, to)
       error "Not connected to a room" and return unless @room
     
       obj["from"] = @user_name
-      @room.send_message(encode(obj))
+      
+      if to
+        obj["private"] = true
+        @room.send_private_message encode(obj)
+      else
+        @room.send_message encode(obj)
+      end
+    end
+    
+    def broadcast_presence(to)
+      error "Not connected to a room" and return unless @room
+      
+      @room.send_private_message to, encode(:type => "present", :user => @user_name)
     end
     
     def close
@@ -72,7 +83,10 @@ module Talker
       end
       close_connection_after_writing
     end
-  
+    
+    
+    ## Helper methods
+    
     def presence(type)
       logger.info "#{@user_name} #{type}s #{@room.name}"
       @room.send_message(%Q|{"type":"#{type}","user":"#{@user_name}"}\n|)
@@ -82,10 +96,14 @@ module Talker
       send_data(%Q|{"type":"error","message":"#{message}"}\n|)
       close
     end
-  
-  
+    
+    def send_message(message)
+      send_data message
+    end
+    
+    
     ## EventMachine callbacks
-  
+    
     def receive_data(data)
       # continue passing chunks
       @parser << data

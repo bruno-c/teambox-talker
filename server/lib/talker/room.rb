@@ -18,7 +18,7 @@ module Talker
     end
 
     def subscribe(user, connection)
-      queue = MQ.queue("connection.#{name}.#{user}")
+      queue = MQ.queue("connection.#{@name}.#{user}")
       if queue.subscribed?
         raise SubscriptionError, "User #{user} already connected to room #{name}, wait #{Server::TIMEOUT} seconds and try again."
       end
@@ -48,8 +48,8 @@ module Talker
       @exchange.publish(data)
     end
     
-    def send_private_message(queue, data)
-      queue.publish(data)
+    def send_private_message(user, data)
+      MQ.queue("connection.#{@name}.#{user}").publish(data)
     end
   end
 end

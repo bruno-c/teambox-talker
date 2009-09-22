@@ -18,7 +18,7 @@ module Helpers
     connection.post_init
     connection.reraise_errors = true
     connection.extend ConnectionSpecer
-    connection.server = mock("server", :uid => "server_uid")
+    connection.server = mock("server", :uid => "server_uid", :logger => Logger.new(nil))
     connection
   end
 end

@@ -35,6 +35,8 @@ EM.run do
         puts message["user"] + " " + message["type"] + "s"
       when "message"
         puts message["from"] + ": " + message["content"]
+      when "present"
+        puts "(" + message["user"] + " is in the room)"
       end
     end
     

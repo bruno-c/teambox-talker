@@ -12,7 +12,7 @@ describe "connect message" do
   end
   
   it "should accept connection when valid" do
-    @room = mock("room")
+    @room = mock("room", :name => "test")
     @room.should_receive(:authenticate).with("user", "token").and_return(true)
     @room.should_receive(:subscribe).with("user", @connection)
     # Should broadcast prescence
