@@ -12,7 +12,13 @@ Before sending and receiving messages in a room, the client must connect to the 
 "user" the name of the user connecting to the room and
 "token" the authentication token for that user.
 
-If the authentication is successful, the connection is left open, if not, the connection is closed after the following message is sent by the server:
+If the authentication is successful, the server reply with the following message and connection is left open:
+
+    {"type":"connected", "users":["user1", "user2"]}
+
+The "users" attribute contains the list of users currently connected to the room.
+
+If authentication fail, the connection is closed after the following message is sent by the server:
 
     {"type":"error","message":"Authentication failed"}
 
