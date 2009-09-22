@@ -22,6 +22,25 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
   
   
+  acts_as_state_machine :initial => :pending
+  state :pending
+  state :active, :enter => proc { |u| u.activated_at = Time.now }
+  state :suspended
+
+  event :activate do
+    transitions :from => :pending, :to => :active
+  end
+  
+  event :suspend do
+    transitions :from => [:pending, :active], :to => :suspended
+  end
+
+  event :unsuspend do
+    transitions :from => :suspended, :to => :active,  :guard => proc { |u| u.activated_at }
+    transitions :from => :suspended, :to => :pending
+  end
+  
+  
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
   end
@@ -45,7 +64,7 @@ class User < ActiveRecord::Base
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(email, password)
     return nil if email.blank? || password.blank?
-    u = find_by_email(email.downcase) # need to get the salt
+    u = find_by_email_and_state(email.downcase, "active") # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
 end

@@ -8,6 +8,7 @@ class InvitesController < ApplicationController
     @token = params[:id]
 
     if @token.present? && @user = current_account.users.find_by_perishable_token(@token)
+      @user.activate!
       @user.clear_perishable_token!
       self.current_user = @user
       flash[:notice] = "You're now logged in! Please change your password."

@@ -4,6 +4,14 @@ class UserTest < ActiveSupport::TestCase
   def test_should_create_user
     user = create_user
     assert user.valid?, user.errors.full_messages.to_sentence
+    assert user.pending?
+  end
+
+  def test_activating_should_set_timestamp
+    user = create_user
+    user.activate!
+    assert user.active?
+    assert_not_nil user.activated_at
   end
 
   def test_should_reset_password
@@ -18,6 +26,11 @@ class UserTest < ActiveSupport::TestCase
 
   def test_should_authenticate_user
     assert_equal users(:quentin), User.authenticate('quentin@example.com', 'monkey')
+  end
+
+  def test_should_not_authenticate_suspended_user
+    users(:quentin).suspend!
+    assert_nil User.authenticate('quentin@example.com', 'monkey')
   end
 
   def test_should_set_remember_token

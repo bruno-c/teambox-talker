@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090921201604) do
+ActiveRecord::Schema.define(:version => 20090922021857) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -59,6 +59,9 @@ ActiveRecord::Schema.define(:version => 20090921201604) do
     t.string   "talker_token"
     t.string   "perishable_token"
     t.boolean  "admin",                                    :default => false
+    t.string   "state",                                    :default => "pending"
+    t.datetime "deleted_at"
+    t.datetime "activated_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

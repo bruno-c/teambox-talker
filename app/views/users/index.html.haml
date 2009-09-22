@@ -15,7 +15,7 @@
       %tr.user{:class => cycle(:odd, :even)}
         %td=h user.name
         %td= mail_to user.email
-        %td= "TODO"
+        %td= user.state.humanize
         %td.actions
           - form_tag user_path(user) do
             %span.role
