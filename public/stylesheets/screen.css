@@ -898,3 +898,7 @@ body {
 
 td.actions {
   text-align: right; }
+
+.pending {
+  color: #666;
+  font-size: 10px; }

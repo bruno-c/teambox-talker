@@ -16,6 +16,7 @@ class AccountsController < ApplicationController
     
     User.transaction do
       @account.save!
+      @user.activate!
       self.current_user = @user
 
       flash[:notice] = "Thanks for signing up!"

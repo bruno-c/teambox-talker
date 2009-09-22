@@ -8,14 +8,15 @@
     %tr
       %th User Name
       %th Email
-      %th State
       %th
   %tbody
     - @users.each do |user|
       %tr.user{:class => cycle(:odd, :even)}
         %td=h user.name
-        %td= mail_to user.email
-        %td= user.state.humanize
+        %td
+          = mail_to user.email
+          - if user.pending?
+            %span.pending Invitation Pending ...
         %td.actions
           - form_tag user_path(user) do
             %span.role
@@ -23,6 +24,8 @@
               = label_tag dom_id(user, :admin), "Admin"
             
             %span.role
-              = check_box_tag "suspended", "1", false, :id => dom_id(user, :suspended), :class => "suspended"
+              = check_box_tag "suspended", "1", user.suspended?, :id => dom_id(user, :suspended), :class => "suspended"
               = label_tag dom_id(user, :suspended), "Suspended"
+
+            = link_to "Resend Invitation", resend_invite_path(user), :method => :post
           

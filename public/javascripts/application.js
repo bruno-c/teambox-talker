@@ -11,14 +11,16 @@ jQuery.fn.submitWithAjax = function(callback) {
 };
 
 $(function() {
-  $("input.admin").click(function () {
+  $("#users input.admin, #users input.suspended").click(function () {
     var url = $(this).parents("form")[0].action;
+    var state = this.name;
+    
     $.ajax({
       type: "POST",
       url: url,
-      data: "_method=put&admin=" + (this.checked ? "1" : "0"),
+      data: "_method=put&" + state + "=" + (this.checked ? "1" : "0"),
       error: function() {
-        alert("Failed to set this user as admin. Refresh and try again");
+        alert("Failed to update this user. Refresh and try again");
       }
     });
   });

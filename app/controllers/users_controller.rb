@@ -7,7 +7,18 @@ class UsersController < ApplicationController
   
   def update
     @user = current_account.users.find(params[:id])
-    @user.admin = params[:admin] == "1"
+
+    if params[:admin]
+      @user.admin = params[:admin] == "1"
+    end
+    
+    if params[:suspended]
+      if params[:suspended] == "1"
+        @user.suspend!
+      else
+        @user.unsuspend!
+      end
+    end
     
     if @user.save
       head :ok

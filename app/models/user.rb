@@ -67,4 +67,9 @@ class User < ActiveRecord::Base
     u = find_by_email_and_state(email.downcase, "active") # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
+  
+  private
+    def password_required?
+      crypted_password.blank? && password
+    end
 end
