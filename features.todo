@@ -5,3 +5,4 @@
 ✓ Invite users by email
 - Implement "Forgot my password"
 - Format messages (turn urls into links, show images, videos, etc.)
+- Use Flash sockets if present http://github.com/tmm1/jssocket (??)
