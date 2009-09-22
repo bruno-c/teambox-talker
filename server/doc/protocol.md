@@ -26,10 +26,6 @@ For partial messages:
 
 "id" must be a UUID as described in http://www.ietf.org/rfc/rfc4122.txt.
 
-For final messages:
-
-    {"type":"message","content":"message to send","id":"unique message ID","final":true}
-
 The server will broadcast the message to all online members of the room (including the sender) with this:
 
     {"type":"message","content":"message to send","id":"unique message ID","from":"user name"}
