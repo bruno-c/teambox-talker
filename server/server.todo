@@ -1,4 +1,5 @@
 ✓ Handle timeout of clients
+- Send list of online users when new user connects
 - Log message history
 ✓ Support clustering / redundancy (handled by AMQP)
 ✓ Resend possibly lost messages on reconnect (handled by AMQP)

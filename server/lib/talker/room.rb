@@ -47,5 +47,9 @@ module Talker
     def send_message(data)
       @exchange.publish(data)
     end
+    
+    def send_private_message(queue, data)
+      queue.publish(data)
+    end
   end
 end
