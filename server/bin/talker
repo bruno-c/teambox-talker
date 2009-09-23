@@ -11,8 +11,10 @@ EM.run do
   server = Talker::Server.new
   trap('INT') do
     puts "Stopping ..."
+    server.stop
+    # FIXME hang
+    #AMQP.stop { EM.stop }
     EM.stop
-    # AMQP.stop { EM.stop } hangs ???
   end
 
   puts "Listening on #{server.host}:#{server.port}"
