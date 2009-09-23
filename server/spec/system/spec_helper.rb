@@ -41,4 +41,12 @@ end
 
 Spec::Runner.configure do |config|
   config.include SystemHelpers
+
+  config.before do
+    start_server
+  end
+  
+  config.after do
+    stop_server
+  end
 end

@@ -14,7 +14,7 @@ module Talker
         c.room = room
         c.user = user
         c.token = token
-        yield c
+        yield c if block_given?
       end
     end
     
@@ -56,9 +56,9 @@ module Talker
         raise Error, message["message"]
       when "join"
         send "type" => "present", "to" => message["user"]
-      else
-        @on_message.call(message) if @on_message
       end
+      
+      @on_message.call(message) if @on_message
     end
     
     def receive_data(data)

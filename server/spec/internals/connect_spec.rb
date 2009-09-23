@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
-describe "connect message" do
+describe "'connect' message" do
   before do
     @connection = create_connection
   end

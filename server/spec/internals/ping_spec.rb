@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
-describe "ping message" do
+describe "'ping' message" do
   before do
     @connection = create_connection
     connect "test", "tester"

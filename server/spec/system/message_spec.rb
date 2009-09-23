@@ -1,15 +1,7 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
-EM.describe "Talker Server" do
-  before do
-    start_server
-  end
-  
-  after do
-    stop_server
-  end
-  
-  it "should receive message from client" do
+EM.describe "Talker client message" do
+  it "should be received by itself" do
     connect "test", "tester" do |client|
       client.on_open do
         client.send_message("hi")
@@ -27,7 +19,7 @@ EM.describe "Talker Server" do
     end
   end
 
-  it "should broadcast message to all clients" do
+  it "should be received by other clients" do
     connect "test", "sender" do |client|
       client.on_open do
         EM.add_timer(1) { client.send_message("hi") }
