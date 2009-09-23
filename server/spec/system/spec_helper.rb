@@ -43,6 +43,7 @@ Spec::Runner.configure do |config|
   config.include SystemHelpers
 
   config.before do
+    Moqueue::MockBroker.instance.reset!
     start_server
   end
   

@@ -59,7 +59,7 @@ module Talker
       presence :join
       @subscription = @room.subscribe(@user_name, self)
     rescue SubscriptionError => e
-      raise ProtocolError, "Failed to subscribe to room"
+      raise ProtocolError, e.message
     end
     
     def broadcast_message(obj, to)
