@@ -20,12 +20,6 @@ EM.describe "Talker client message" do
   end
 
   it "should be received by other clients" do
-    connect "test", "sender" do |client|
-      client.on_open do
-        EM.add_timer(1) { client.send_message("hi") }
-      end
-    end
-    
     connect "test", "receiver" do |client|
       client.on_message do |message|
         if message["type"] == "message"
@@ -37,6 +31,12 @@ EM.describe "Talker client message" do
       end
       
       client.on_close { done }
+    end
+    
+    connect "test", "sender" do |client|
+      client.on_open do
+        EM.next_tick { client.send_message("hi") }
+      end
     end
   end
 end

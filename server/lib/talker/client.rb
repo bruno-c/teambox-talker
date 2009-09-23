@@ -34,6 +34,10 @@ module Talker
       send "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate
     end
     
+    def send_private_message(to, message)
+      send "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate, "to" => to
+    end
+    
     def connection_completed
       send "type" => "connect", "room" => @room, "user" => @user, "token" => @token
       EM.add_periodic_timer(20) { send "type" => "ping" }
