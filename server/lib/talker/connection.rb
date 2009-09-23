@@ -5,7 +5,8 @@ module Talker
   
   class Connection < EM::Connection
     attr_accessor :server, :room, :user_name, :reraise_errors
-  
+    
+    # Called after connection is fully initialized and establied from EM.
     def post_init
       @parser = Yajl::Parser.new
       # once a full JSON object has been parsed from the stream
@@ -15,7 +16,7 @@ module Talker
     
       @room = nil
       @user_name = nil
-      @reraise_errors = false
+      @reraise_errors = $TALKER_DEBUG
     end
     
     # Called when a JSON object in a message is fully parsed
@@ -39,7 +40,10 @@ module Talker
       logger.error("[Error from #{socket_address}] " + e.to_s + ": " + e.backtrace.join("\n"))
       error "Error processing command"
     end
-  
+    
+    
+    ## Message types
+    
     def authenticate(room_name, user, token)
       if room_name.nil? || user.nil? || token.nil?
         raise ProtocolError, "Authentication failed"

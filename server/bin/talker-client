@@ -40,7 +40,7 @@ EM.run do
       end
     end
     
-    client.on_closed do
+    client.on_close do
       puts "disconnected"
       EM.stop
       exit

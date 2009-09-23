@@ -24,4 +24,15 @@ Start the Talker server:
 
 Test it with the CLI client:
 
-    bin/talker-client test/test yourname 0000
+    bin/talker-client test.test yourname 0000
+
+## Running tests
+
+Install these gems:
+
+    sudo gem install tmm1-em-spec -s http://gems.github.com
+    sudo gem install danielsdeleo-moqueue -s http://gems.github.com
+    
+Run it!
+
+    rake spec

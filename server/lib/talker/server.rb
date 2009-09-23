@@ -13,13 +13,22 @@ module Talker
       @port = port
       @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
       @logger = Logger.new(STDOUT)
+      @signature = nil
     end
   
     def start
-      EM.start_server(@host, @port, Connection) do |connection|
+      @signature = EM.start_server(@host, @port, Connection) do |connection|
         connection.server = self
         connection.comm_inactivity_timeout = TIMEOUT
       end
+    end
+    
+    def running?
+      !!@signature
+    end
+    
+    def stop
+      EM.stop_server @signature if @signature
     end
     
     def self.start(*args)

@@ -4,6 +4,8 @@ require 'spec'
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require "talker"
 
+$TALKER_DEBUG = true
+
 module Helpers
   def encode(json)
     Yajl::Encoder.encode(json) + "\n"

@@ -18,12 +18,16 @@ module Talker
       end
     end
     
+    def on_open(&block)
+      @on_open = block
+    end
+
     def on_message(&block)
       @on_message = block
     end
 
-    def on_closed(&block)
-      @on_closed = block
+    def on_close(&block)
+      @on_close = block
     end
     
     def send_message(message)
@@ -33,6 +37,7 @@ module Talker
     def connection_completed
       send "type" => "connect", "room" => @room, "user" => @user, "token" => @token
       EM.add_periodic_timer(20) { send "type" => "ping" }
+      @on_open.call if @on_open
     end
     
     def close
@@ -52,7 +57,7 @@ module Talker
       when "join"
         send "type" => "present", "to" => message["user"]
       else
-        @on_message.call(message)
+        @on_message.call(message) if @on_message
       end
     end
     
@@ -61,7 +66,7 @@ module Talker
     end
     
     def unbind
-      @on_closed.call if @on_closed
+      @on_close.call if @on_close
     end
     
     private
