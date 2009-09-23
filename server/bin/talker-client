@@ -3,8 +3,6 @@
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require "rubygems"
 require "talker"
-require "eventmachine"
-require "amqp"
 
 abort "usage: talker-client <account_name>.<room_name> <user_name> <auth token>" if ARGV.empty?
 
@@ -26,8 +24,6 @@ module KeyboardInput
 end
 
 EM.run do
-  AMQP.connect :host => 'localhost'
-  
   Talker::Client.connect("0.0.0.0", 61800, room, user, token) do |client|
     client.on_message do |message|
       case message["type"]
@@ -49,5 +45,4 @@ EM.run do
     EM.open_keyboard(KeyboardInput) { |i| i.client = client }
     trap("INT") { EM.stop }
   end
-
 end

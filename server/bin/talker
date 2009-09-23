@@ -9,6 +9,7 @@ EM.run do
   AMQP.connect :host => 'localhost'
   
   server = Talker::Server.new
+  server.logger = Logger.new(nil) unless $DEBUG
   trap('INT') do
     puts "Stopping ..."
     server.stop
