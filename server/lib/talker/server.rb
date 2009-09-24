@@ -12,7 +12,7 @@ module Talker
       @host = host
       @port = port
       @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
-      @logger = Logger.new(STDOUT)
+      @logger = Logger.new(nil)
       @signature = nil
     end
   

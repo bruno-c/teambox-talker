@@ -5,7 +5,8 @@ options = {
   :host        => "0.0.0.0",
   :port        => 61800,
   :requests    => 1,
-  :concurrency => 1,
+  :clients     => 1,
+  :room        => "bm",
   :size        => 256,
   :debug       => false
 }
@@ -13,11 +14,12 @@ options = {
 OptionParser.new do |opts|
   opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
 
-  opts.on("-h", "--host HOST", "Server host")               { |host| options[:host] = host }
+  opts.on("-a", "--host HOST", "Server host")               { |host| options[:host] = host }
   opts.on("-p", "--port NUM", "Server port")                { |port| options[:port] = port.to_i }
   opts.on("-n", "--requests NUM", "Number of requests")     { |num| options[:requests] = num.to_i }
-  opts.on("-c", "--concurrency EXP", "Concurrency levels")  { |exp| options[:concurrency] = exp.to_i }
+  opts.on("-c", "--clients EXP", "Number of clients")       { |num| options[:clients] = num.to_i }
   opts.on("-s", "--size NUM", "Message size")               { |size| options[:size] = size.to_i }
+  opts.on("-r", "--room NAME", "Room name")                 { |name| options[:room] = name }
   opts.on("-d", "--debug", "Debug mode")                    { options[:debug] = true }
   
   opts.on_tail("-h", "--help", "Show this message")         { puts opts; exit }
@@ -32,45 +34,50 @@ puts "Max connections is #{size}"
 
 EM.run do
   message = "x" * options[:size]
-  start = Time.now
+  start = nil
   clients_done = 0
   requests_done = Hash.new(0)
+  messages = 0
   
-  puts "%d clients sending %d messages each, %d messages total" % [options[:concurrency], options[:requests], options[:concurrency] * options[:requests]]
+  puts "%d clients sending %d messages each" % [options[:clients], options[:requests]]
+  puts "%d messages per room" % [options[:clients] * options[:requests]]
   puts "Starting test ..."
-
-  options[:concurrency].times do |i|
-    Talker::Client.connect(options[:host], options[:port], "room", "user#{i}", "token") do |client|
+  
+  options[:clients].times do |i|
+    Talker::Client.connect(options[:host], options[:port], options[:room], options[:room] + "-user#{i}", "token") do |client|
+      user_name = options[:room] + "-user#{i}"
+      
       client.on_open do
-        puts "user#{i} connected" if options[:debug]
+        puts "#{user_name} connected" if options[:debug]
+        start ||= Time.now # start timer only when connected, we're mesuring messages here...
         options[:requests].times do
           EM.next_tick { client.send_message(message) }
         end
       end
-      
+    
       client.on_message do |message|
-        # Wait to receive all messages
-        if message["type"] == "message" && message["from"] == "user#{i}"
-          requests_done["user#{i}"] += 1
-          puts "%s received message %d from %s" % ["user#{i}", requests_done["user#{i}"], message["from"]] if options[:debug]
+        messages += 1
+        if message["type"] == "message" && message["from"] == user_name
+          requests_done[user_name] += 1
+          puts "%s received message %d from %s" % [user_name, requests_done[user_name], message["from"]] if options[:debug]
         end
-        if requests_done["user#{i}"] == options[:requests]
+        # Wait to receive all messages
+        if requests_done[user_name] == options[:requests]
           client.close
         end
       end
-      
+    
       client.on_close do
         clients_done += 1
-        puts "user#{i} done" if options[:debug]
-        if clients_done == options[:concurrency]
+        puts "#{user_name} done" if options[:debug]
+        if clients_done == options[:clients]
           time = Time.now - start
-          messages = options[:requests] * options[:concurrency]
           puts "Done!"
           puts
           puts "  Finished in %f sec" % time
           puts "  %0.2f messages/sec" % (messages.to_f / time.to_f)
           puts
-          
+        
           EM.add_timer(1) { EM.stop }
         end
       end
