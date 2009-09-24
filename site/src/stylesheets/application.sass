@@ -1,8 +1,6 @@
 @import compass/reset
 @import blueprint/modules/grid
 
-!blueprint_grid_width = 31
-
 +blueprint-grid
 
 body
@@ -19,182 +17,11 @@ body
 .outer
   :text-align center
 
-#topbar
-  :padding 12px
-  :border-bottom solid 1px #682B19
-  a
-    :color #eee
-    :margin-right 30px
-    :text-decoration none
-    :font 16px helvetica, arial, sans-serif
-    :letter-spacing 2px
-    :text-transform uppercase
-    &:hover
-      :color #E1852B
-
 #header
-  :padding 40px
-  :background #ccc url(/images/back.png) top center no-repeat
-  :border-bottom solid 1px #ccc
-  
-  h1, h2, h3
-    :text-shadow #999 -1px -1px 1px
-  
-  a.signup
-    :margin-top 10px
-  
-  h3
-    :font 18px georgia, times
-    :color #222
-    :margin-bottom 18px
-  
-  .screenshot
-    :background url(/images/header.png) bottom right no-repeat
-    :width 590px
-    :height 440px
-    :position relative
-    :float right
-    :margin 0 40px
-  
-  .home
-    :height 400px
+  :background-color #009
 
 #content
   :background-color #fff
-  .inner
-    +container
-    :padding 30px 0
-  
-    .left
-      +column(11.5)
-      
-      .screenshot
-        :margin-right 14px
-        :margin-bottom 20px
-        :width 210px
-        :float left
-        h4
-          :font-weight bold
-          :margin-bottom 4px
-        img
-          :width 200px
-          :height 180px
-          :border solid 1px #ccc
-          :margin-bottom 6px
-          :padding 1px
-      
-    .right
-      +push(0.5)
-      +column(11, true)
-    
-    p
-      :margin 20px 0
-      :line-height 1.2em
-    
-    ul.list
-      :border-top 1px dotted #ccc
-      :border-bottom 1px dotted #ccc
-      :padding 20px 0
-      :list-style square inside
-      :background-color #FBEEDF
-      li
-        :margin-left 20px
-        :margin-bottom 8px
-        :font-size 17px
-    
-    h3
-      :font 18px helvetica, arial, sans-serif
-      :color #B7562C
-      :font-weight bold
-      :text-transform uppercase
-      :letter-spacing -1px
-      :margin-top 20px
-      :margin-bottom -18px
-    
-    img.avatar
-      :position relative
-      :top 10px
-      :float right
-      :height 120px
-      :margin 10px
-      :border solid 1px #ccc
-      :padding 1px
-
-h1
-  :font 41px helvetica, arial, sans-serif
-  :font-weight bold
-  :letter-spacing -2px
-  :line-height 1.0em
-  :margin-bottom 16px
-
-h2
-  :font 24px georgia, times
-  :color #111
-  :margin-bottom 12px
-
-strong
-  :font-weight bold
-
-em
-  :font-style italic
-  :color #9C3310
-
-.box
-  :text-align center
-  :padding 20px
-  a.signup
-    :margin 0 auto
-  .or
-    :position relative
-    :top -20px
-    :margin 14px
-    :font-size 20px
-    :font-weight bold
-  
-a.signup
-  :display inline-block
-  :text-align center
-  :font 31px helvetica, arial, sans-serif
-  :font-weight bold
-  :text-decoration none
-  :border solid 3px #262
-  :background-color #282
-  :-moz-border-radius .4em
-  :-webkit-border-radius .4em
-  :text-shadow #262 -1px -1px 1px
-  :box-shadow 2px 2px 4px #666
-  :-webkit-box-shadow 2px 2px 4px #666
-  :-moz-box-shadow 2px 2px 4px #666
-  :padding 10px 20px
-  :color #fff
-  .info
-    :font-weight normal
-    :font-size 12px
-    :color #FAE8BD
-  &:hover
-    :background-color #2a2
-a.sample
-  :display inline-block
-  :position relative
-  :text-align center
-  :font-size 20px
-  :width 160px
-  :font-weight bold
-  :line-height 1.0em
-  :top -8px
-
-blockquote
-  :padding 6px
-  :border-top 1px dotted #ccc
-  :border-bottom 1px dotted #ccc
-  :background-color #FBEEDF
-  :font-size 20px
-  :line-height 1.3em
-  :text-align center
-  :margin 16px 0
-  em
-    :font-size 14px
-    :color #666
 
 #footer
   :background-color #222
@@ -203,11 +30,6 @@ blockquote
     :color #999
     :font-size 11px
     :text-align center
-  
-  a
-    :color #9C3310
-    &:hover
-      :color #FBEEDF
     
 .quiet
   :font-size 11px

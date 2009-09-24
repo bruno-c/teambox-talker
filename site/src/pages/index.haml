@@ -1,6 +1,5 @@
 #header.outer
-  .inner.home
-    .screenshot
+  .inner
     .content
       %h1 Talker
       %h2 Group Chat For People With No Time To Waste.
@@ -12,14 +11,9 @@
 #content.outer
   .inner
   
-    .left
-      hi
-      
-    .right
-      %h2 Chat faster...
-      
-      .box
-        %a.signup{:href => "/signup"}
-          Sign Up
-          .info for beta
-      
+     %form{:action=>"http://macournoyer.createsend.com/t/y/s/dhkrly/", :method=>"post"}
+        %p
+          %label{:for=>"dhkrly-dhkrly"} Enter your email:
+          %input{:type=>"text", :name=>"cm-dhkrly-dhkrly", :id=>"dhkrly-dhkrly"}
+          %input{:type=>"submit", :value=>"Subscribe"}
+        %p.quiet We respect your privacy and will keep your email private.
