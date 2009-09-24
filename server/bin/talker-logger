@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+amqp_host = "0.0.0.0"
+amqp_port = 5672
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
+
+  opts.on("-A", "--amqp-host HOST", "AMQP host")            { |h| amqp_host = h }
+  opts.on("-P", "--amqp-port NUM", "AMQP port")             { |n| amqp_port = n.to_i }
+  
+  opts.on_tail("-h", "--help", "Show this message")         { puts opts; exit }
+end.parse!(ARGV)
+
+
+$:.unshift File.dirname(__FILE__) + "/../lib"
+require "rubygems"
+require "talker"
+require "amqp"
+
+trap('INT') do
+  AMQP.stop { EM.stop }
+end
+
+EM.run do
+  AMQP.connect :host => amqp_host, :port => amqp_port
+
+  Talker::Logger.start
+end
