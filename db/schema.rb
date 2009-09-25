@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090922021857) do
+ActiveRecord::Schema.define(:version => 20090924200950) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(:version => 20090922021857) do
 
   create_table "rooms", :force => true do |t|
     t.string   "name"
-    t.string   "medium"
     t.text     "description"
     t.integer  "account_id"
     t.datetime "created_at"

@@ -5,9 +5,6 @@ class Room < ActiveRecord::Base
   belongs_to :account
   
   validates_presence_of :name
-  validates_inclusion_of :medium, :in => %w( text drawing )
-  
-  before_validation_on_create { |r| r.medium = "text" if r.medium.blank? }
   
   def unique_name
     account.subdomain + "." + name
