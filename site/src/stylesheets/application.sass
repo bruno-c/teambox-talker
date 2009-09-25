@@ -1,36 +1,62 @@
 @import compass/reset
 @import blueprint/modules/grid
+@import blueprint/modules/fancy_type.sass
 
+!blueprint_grid_width = 31
 +blueprint-grid
 
 body
-  :font
-    :family Georgia
-    :size 15px
-  :background-color #222
+  :font 15px Georgia
+
+h1
+  :font 100px arial, sans-serif
+  :font-weight bold
+  :text-transform uppercase
+  :letter-spacing 2px
+  
+
+h2
+  :font 21px georgia, times
+
+h3
+  :font 17px georgia, times
+  :color #444
+  
+
 
 .inner
+  +container
   :margin 0 auto
   :text-align left
   :width 980px
+  
+  .left
+    +column(11.5)
+
+  .right
+    +push(0.5)
+    +column(11, true)
 
 .outer
   :text-align center
 
-#header
-  :background-color #009
-
 #content
   :background-color #fff
+  :padding 60px 0
+  
+  .content
+    h2
+      :margin 15px 0
 
 #footer
-  :background-color #222
-  :padding 20px 40px
-  .inner
-    :color #999
-    :font-size 11px
-    :text-align center
-    
-.quiet
+  :margin-top 70px
   :font-size 11px
+  :color #333
+  :text-align center
+    
+.safe_email
+  :font-size 10px
   :color #666
+
+.amp
+  +alt
