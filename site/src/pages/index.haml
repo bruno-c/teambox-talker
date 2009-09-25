@@ -1,22 +1,18 @@
-#content.outer
-  .inner
-    .left
-      %h1 Talker
-      %h2 Group Chat For People With No Time To Waste.
-      %h3 The fastest and most pleasant way to chat with your team.
-      
-      #footer
-        A project of <a href="http://twitter.com/macournoyer">Marc-Andr&eacute; Cournoyer</a> <span class="amp">&</span> <a href="http://twitter.com/xutopia">Gary Haran</a>.
-    
-    .right.content
-      %h2 Chat as fast as you speak
-      %p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      
-      %h2 Sign up for the beta
-    
-      %form{:action=>"http://macournoyer.createsend.com/t/y/s/dhkrly/", :method=>"post"}
-        %p
-          %label{:for=>"dhkrly-dhkrly"} Enter your email:
-          %input{:type=>"text", :name=>"cm-dhkrly-dhkrly", :id=>"dhkrly-dhkrly"}
-          %input{:type=>"submit", :value=>"Subscribe"}
-        %p.safe_email You're email is safe with us, really.
+#header
+  %h1 Talker
+  %h2 Group Chat For People With No Time To Waste.
+  %h3 The fastest and most pleasant way to chat with your team.
+
+#content
+  %h2 Chat as fast as you speak
+  %p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+  %h2 Sign up for the beta
+
+  %form{:action=>"http://macournoyer.createsend.com/t/y/s/dhkrly/", :method=>"post", :id => "signup_form"}
+    %p
+      %label{:for=>"dhkrly-dhkrly"} Enter your email to get notified when the beta is ready:
+      %input{:type=>"text", :name=>"cm-dhkrly-dhkrly", :id=>"dhkrly-dhkrly", :size => 40}
+      %input{:type=>"submit", :value=>"Subscribe"}
+    %p.safe_email You're email is safe with us, really.
+

@@ -7,56 +7,75 @@
 
 body
   :font 15px Georgia
+  :background url(/images/back.png) repeat-x #222
 
 h1
-  :font 100px arial, sans-serif
+  :font 40px arial, sans-serif
   :font-weight bold
-  :text-transform uppercase
-  :letter-spacing 2px
-  
+  :letter-spacing 3px
 
 h2
-  :font 21px georgia, times
+  :font 22px georgia, times
 
 h3
-  :font 17px georgia, times
-  :color #444
-  
+  :margin-bottom 15px
+  :font 18px georgia, times
+  :color #222
 
+h1, h2, h3
+  :text-shadow #A5D7F6 -1px -1px 1px
 
-.inner
-  +container
-  :margin 0 auto
-  :text-align left
-  :width 980px
-  
-  .left
-    +column(11.5)
-
-  .right
-    +push(0.5)
-    +column(11, true)
+h1, h2
+  :margin-bottom 4px
 
 .outer
   :text-align center
 
-#content
-  :background-color #fff
+#root
   :padding 60px 0
+  :background url(/images/fish.png) no-repeat
+  :height 480px
+  :border-bottom solid 3px #E5952B
+  .inner
+    +container
+    :margin 0 auto
+    :text-align left
+    :width 980px
+    +push(13)
+    +column(14, true)
+
+#header
+  h2
+    :color #111
+    :font-weight bold
   
-  .content
-    h2
-      :margin 15px 0
+#content
+  h2
+    :margin 15px 0
+  p
+    :line-height 1.3em
 
 #footer
-  :margin-top 70px
+  :margin-top 15px
   :font-size 11px
-  :color #333
   :text-align center
-    
+  :color #666
+  a
+    :color #999
+    &:hover
+
+#signup_form
+  label
+    :font-size 12px
+    :font-weight bold
+    :display block
+  input
+    :font-size 14px
+    :padding 6px
+
 .safe_email
   :font-size 10px
-  :color #666
+  :color #333
 
 .amp
   +alt

@@ -5,6 +5,12 @@
     = stylesheets
     = javascripts "http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js", "application"
   %body
-    = yield
+    #root.outer
+      .inner
+        = yield
+    
+    #footer
+      A project by <a href="http://twitter.com/macournoyer">Marc-Andr&eacute; Cournoyer</a> <span class="amp">&</span> <a href="http://twitter.com/xutopia">Gary Haran</a>.
+    
     
     = partial "analytics"
