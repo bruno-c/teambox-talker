@@ -1,3 +1,3 @@
-[submodule "recipes/cookbooks"]
-	path = recipes/cookbooks
+[submodule "chef/recipes/cookbooks"]
+	path = chef/recipes/cookbooks
 	url = git://github.com/opscode/cookbooks.git
