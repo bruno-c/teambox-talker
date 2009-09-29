@@ -8,7 +8,7 @@
     
     $(function() {
       document.domain = document.domain;
-      client = new TalkerClient({onNewMessage: ChatRoom.onNewMessage});
+      client = new TalkerClient({onNewMessage: ChatRoom.onNewMessage, onJoin: ChatRoom.onJoin});
       ChatRoom.client = client;
       client.connect('#{Orbited.talker_host}', #{Orbited.talker_port}, #{@room.unique_name.to_json}, #{current_user.name.to_json}, #{current_user.talker_token.to_json});
       // TODO hook client.onMessage or something to Chat.receive(message);

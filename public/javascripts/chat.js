@@ -85,6 +85,13 @@ var ChatRoom = {
     }
 
     ChatRoom.scrollToBottom();
+  },
+  
+  onJoin: function(data) {
+    if ($("ul#users li:contains('" + data.user + "')").length < 1){
+      $('ul#users').append('<li>' + data.user + '</li>')
+    }
+    $("ul#users li:contains('" + data.user + "')").highlight();
   }
 };
 
@@ -125,7 +132,7 @@ function TalkerClient(options) {
           options.onNewMessage(line);
           break;
         case 'join':
-          self.join(line);
+          options.onJoin(line);
           break;
         case 'closed':
           break;
@@ -144,19 +151,11 @@ function TalkerClient(options) {
       self.pingInterval = setInterval(function(){
         self.ping();
       }, 20000);
-    }
-    
-    self.join = function(line){
-      if ($("ul#users li:contains('" + line.user + "')").length < 1){
-        $('ul#users').append('<li>' + line.user + '</li>')
-      }
-      $("ul#users li:contains('" + line.user + "')").highlight();
     };
     
     self.ping = function(){
-      console.info("ping");
       protocol.send(JSON.encode({type: 'ping'}));
-    }
+    };
     
     // Methods
     self.sendData = function(message) {
