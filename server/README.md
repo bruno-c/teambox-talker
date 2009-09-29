@@ -12,6 +12,10 @@ Test it:
 
     rabbitmq-server
 
+Install these gems:
+
+    sudo gem install brianmario-yajl-ruby -s http://gems.github.com
+
 ## Running
 
 Start RabbitMQ:

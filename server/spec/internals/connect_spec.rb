@@ -13,7 +13,7 @@ describe "'connect' message" do
   
   it "should accept connection when valid" do
     @room = mock("room", :name => "test")
-    @room.should_receive(:authenticate).with("user", "token").and_return(true)
+    @connection.server.should_receive(:authenticate).with("room", "user", "token").and_yield(true)
     @room.should_receive(:subscribe).with("user", @connection)
     # Should broadcast prescence
     @room.should_receive(:send_message).with(encode(:type => "join", :user => "user"))
@@ -25,9 +25,7 @@ describe "'connect' message" do
   
   it "should close connection when invalid credentials" do
     @room = mock("room")
-    @room.should_receive(:authenticate).with("user", "token").and_return(false)
-    
-    @connection.server.should_receive(:rooms).and_return("room" => @room)
+    @connection.server.should_receive(:authenticate).with("room", "user", "token").and_yield(false)
     
     @connection.should_receive_data(:type => "error", :message => "Authentication failed")
     @connection.should_close

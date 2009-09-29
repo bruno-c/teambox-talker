@@ -23,9 +23,8 @@ module Moqueue
 end
 
 module SystemHelpers
-  def start_server(host="0.0.0.0", port=61810)
-    @server = Talker::Server.new(host, port)
-    @server.logger = Logger.new(nil)
+  def start_server(options={})
+    @server = Talker::Server.new(options)
     @server.start
     @server
   end

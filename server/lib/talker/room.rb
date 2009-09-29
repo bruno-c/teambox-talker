@@ -12,11 +12,6 @@ module Talker
       MQ.queue("rooms").bind(@exchange)
     end
 
-    def authenticate(user, token)
-      # TODO
-      true
-    end
-
     def subscribe(user, connection)
       queue = MQ.queue("connection.#{@name}.#{user}")
       if queue.subscribed?

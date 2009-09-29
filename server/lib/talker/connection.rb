@@ -48,18 +48,21 @@ module Talker
       if room_name.nil? || user.nil? || token.nil?
         raise ProtocolError, "Authentication failed"
       end
-    
-      room = @server.rooms[room_name]
-      unless room && room.authenticate(user, token)
-        raise ProtocolError, "Authentication failed"
+      
+      @server.authenticate(room_name, user, token) do |success|
+        unless success
+          raise ProtocolError, "Authentication failed"
+        end
+        
+        begin
+          @room = @server.rooms[room_name]
+          @user_name = user
+          presence :join
+          @subscription = @room.subscribe(@user_name, self)
+        rescue SubscriptionError => e
+          raise ProtocolError, e.message
+        end
       end
-    
-      @room = room
-      @user_name = user
-      presence :join
-      @subscription = @room.subscribe(@user_name, self)
-    rescue SubscriptionError => e
-      raise ProtocolError, e.message
     end
     
     def broadcast_message(obj, to)
@@ -71,6 +74,7 @@ module Talker
         obj["private"] = true
         @room.send_private_message to, encode(obj)
       else
+        # TODO send message in chunks to prevent using more mem
         @room.send_message encode(obj)
       end
     end
