@@ -16,6 +16,7 @@ Message.prototype.createElement = function() {
     this.element = $("<tr/>").
       addClass("event").
       addClass("message").
+      addClass("partial").
       attr("id", this.elementId).
       append($("<td/>").addClass("author").html(this.from)).
       append($("<td/>").addClass("content").html(this.content || "")).
@@ -36,14 +37,14 @@ var ChatRoom = {
     }, 400);
   },
   
-  send: function(data) {
+  send: function(data, eol) {
     if (data === "") return;
     if (this.sendTimeout) clearTimeout(this.sendTimeout);
 
     console.info("sending message");
     var message = this.currentMessage;
     message.content = data;
-    this.client.send(message.uuid, message.content);
+    this.client.send({id: message.uuid, content: message.content, "final": (eol == true)});
   },
   
   scrollToBottom: function() {
@@ -52,7 +53,7 @@ var ChatRoom = {
   
   newMessage: function() {
     if (this.currentMessage) this.currentMessage.createElement().insertBefore($("#message"));
-    this.currentMessage = new Message(currentUser.email);
+    this.currentMessage = new Message(currentUser.name);
     this.messages[this.currentMessage.uuid] = this.currentMessage;
     
     // Move the new message form to the bottom
@@ -73,6 +74,10 @@ var ChatRoom = {
 
     message.update(data.content);
     
+    if (data.final){
+      message.element.removeClass('partial');
+    }
+    
     if (ChatRoom.currentMessage == null || ChatRoom.currentMessage.content == null) {
       $("#message").
         appendTo($("#log")).
@@ -87,7 +92,7 @@ $(function() {
   $("#msgbox").
     keydown(function(e) {
       if (e.which == 13) {
-        ChatRoom.send(this.value);
+        ChatRoom.send(this.value, true);
         ChatRoom.newMessage();
         return false;
       }
@@ -181,8 +186,9 @@ function TalkerClient(options) {
     self.reset = function() {
         protocol.reset();
     }
-    self.send = function(id, message) {
-      self.sendData({type: "message", content: message, id: id});
+    self.send = function(message) {
+      message.type = "message";
+      self.sendData(message);
     };
 }
 

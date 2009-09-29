@@ -879,6 +879,8 @@ body {
     border-bottom: solid 1px #eee; }
   #room #log .message {
     font-size: 12px; }
+  #room #log .partial .content {
+    color: #999; }
   #room #log .notice {
     font-size: 10px;
     background-color: #ddf; }
