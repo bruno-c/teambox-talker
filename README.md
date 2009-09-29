@@ -36,3 +36,8 @@ Start the Talker server:
     script/talker
 
 Browse to http://dev.com:3000/
+
+# Twitter account
+http://twitter.com/talkerapp
+macournoyer+talker@gmail.com
+kh2bi4JwMeRvMMkh
