@@ -9,4 +9,7 @@ $TALKER_DEBUG = false
 module Talker
   autoload :Client, "talker/client"
   autoload :Logger, "talker/logger"
+  
+  autoload :NullAuthenticator, "talker/authenticators/null_authenticator"
+  autoload :MysqlAuthenticator, "talker/authenticators/mysql_authenticator"
 end

@@ -15,6 +15,7 @@ module Talker
       @port = options[:port] || DEFAULT_PORT
       @logger = options[:logger] || ::Logger.new(nil)
       @timeout = options[:timeout] || DEFAULT_TIMEOUT
+      @authenticator = options[:authenticator] || raise(ArgumentError, ":authenticator option required")
       @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
       @signature = nil
     end
@@ -35,8 +36,7 @@ module Talker
     end
     
     def authenticate(room, user, token, &callback)
-      # TODO
-      callback.call(true)
+      @authenticator.authenticate(room, user, token, &callback)
     end
     
     def self.start(*args)

@@ -24,7 +24,7 @@ end
 
 module SystemHelpers
   def start_server(options={})
-    @server = Talker::Server.start(options)
+    @server = Talker::Server.start({ :authenticator => Talker::NullAuthenticator.new }.merge(options))
   end
   
   def stop_server

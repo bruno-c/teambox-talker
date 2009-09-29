@@ -14,6 +14,7 @@ Test it:
 
 Install these gems:
 
+    sudo gem install mysqlplus
     sudo gem install brianmario-yajl-ruby -s http://gems.github.com
 
 ## Running
