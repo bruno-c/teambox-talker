@@ -13,6 +13,7 @@ TalkerClient = function(options) {
       
       var line = eval('(' + line + ')');
       
+      // ugly shit but this will be refactored.
       switch(line.type){
         case 'message':
           console.info("should insert lines here wif msg: " + line.content);
@@ -24,6 +25,10 @@ TalkerClient = function(options) {
           break;
         case 'closed':
           console.info('bye bye... why u leave?');
+          break;
+        case 'error':
+          alert("An unfortunate error occured.  At least no one got hurt. (" + line.message + ")");
+          break;
       } 
     }
     function onRawDataReceived(data) {
@@ -95,7 +100,8 @@ TalkerClient = function(options) {
         protocol.reset();
     }
     self.send = function(message) {
-        self.sendData({type: "message", content: message, id: Math.uuid()});
+      console.info("sending message:" + message);
+      self.sendData({type: "message", content: message, id: Math.uuid()});
     };
 }
 
