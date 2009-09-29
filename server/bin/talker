@@ -34,7 +34,7 @@ EM.run do
   puts "Connected to AMQP on #{amqp_host}:#{amqp_port}"
   AMQP.connect :host => amqp_host, :port => amqp_port
   
-  server = Talker::Server.new(:host => host, :port => port)
+  server = Talker::Server.new(:host => host, :port => port, :authenticator => Talker::NullAuthenticator.new)
   server.logger = Logger.new(STDOUT) if trace
   trap('INT') do
     puts "Stopping ..."
