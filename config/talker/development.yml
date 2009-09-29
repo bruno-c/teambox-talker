@@ -1,0 +1,16 @@
+amqp:
+  host: localhost
+  port: 5672
+
+talker:
+  host: 0.0.0.0
+  port: 61800
+  descriptor_table_size: 4096
+  user: marc
+  logger: true
+
+database:
+  database: talker_development
+  username: root
+  password:
+  socket: /tmp/mysql.sock

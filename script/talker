@@ -1,2 +1,3 @@
-#!/usr/bin/env bash
-server/bin/talker "$@"
+#!/usr/bin/env ruby
+env = ENV["RAILS_ENV"] || "development"
+exec "server/bin/talker config/talker/#{env}.yml"
