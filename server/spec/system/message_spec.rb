@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/spec_helper"
 
 EM.describe "Talker client message" do
   it "should be received by itself" do
-    connect "test", "tester" do |client|
+    connect :room => "test", :user => "tester" do |client|
       client.on_open do
         client.send_message("hi")
       end
@@ -20,7 +20,7 @@ EM.describe "Talker client message" do
   end
 
   it "should be received by other clients" do
-    connect "test", "receiver" do |client|
+    connect :room => "test", :user => "receiver" do |client|
       client.on_message do |message|
         if message["type"] == "message"
           message.should have_key("id")
@@ -33,7 +33,7 @@ EM.describe "Talker client message" do
       client.on_close { done }
     end
     
-    connect "test", "sender" do |client|
+    connect :room => "test", :user => "sender" do |client|
       client.on_open do
         EM.next_tick { client.send_message("hi") }
       end

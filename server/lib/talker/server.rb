@@ -3,6 +3,7 @@ require "logger"
 
 module Talker
   class Server
+    DEFAULT_HOST = "0.0.0.0"
     DEFAULT_TIMEOUT = 30.0 # sec
     DEFAULT_PORT = 61800
     
@@ -10,7 +11,7 @@ module Talker
     attr_accessor :logger
   
     def initialize(options={})
-      @host = options[:host] || "0.0.0.0"
+      @host = options[:host] || DEFAULT_HOST
       @port = options[:port] || DEFAULT_PORT
       @logger = options[:logger] || ::Logger.new(nil)
       @timeout = options[:timeout] || DEFAULT_TIMEOUT
@@ -39,7 +40,9 @@ module Talker
     end
     
     def self.start(*args)
-      new(*args).start
+      s = new(*args)
+      s.start
+      s
     end
   end
 end

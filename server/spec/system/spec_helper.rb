@@ -24,17 +24,15 @@ end
 
 module SystemHelpers
   def start_server(options={})
-    @server = Talker::Server.new(options)
-    @server.start
-    @server
+    @server = Talker::Server.start(options)
   end
   
   def stop_server
     @server.stop
   end
   
-  def connect(room, user, token="TODO", host="0.0.0.0", port=61810, &block)
-    Talker::Client.connect(host, port, room, user, token, &block)
+  def connect(options, &block)
+    Talker::Client.connect({ :token => "dummy" }.merge(options), &block)
   end
 end
 

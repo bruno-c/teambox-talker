@@ -9,7 +9,13 @@ module Talker
     
     attr_accessor :room, :user, :token
     
-    def self.connect(host, port, room, user, token)
+    def self.connect(options={})
+      host = options[:host] || Talker::Server::DEFAULT_HOST
+      port = options[:port] || Talker::Server::DEFAULT_PORT
+      room = options[:room]
+      user = options[:user]
+      token = options[:token]
+      
       EM.connect host, port, self do |c|
         c.room = room
         c.user = user

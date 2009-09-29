@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/spec_helper"
 
 EM.describe "Talker client private message" do
   it "should be received only by designated user" do
-    connect "test", "bob" do |client|
+    connect :room => "test", :user => "bob" do |client|
       client.on_message do |message|
         if message["type"] == "message"
           fail "Bob should not receiver that private message!"
@@ -10,7 +10,7 @@ EM.describe "Talker client private message" do
       end
     end
     
-    connect "test", "receiver" do |client|
+    connect :room => "test", :user => "receiver" do |client|
       client.on_message do |message|
         if message["type"] == "message"
           message["private"] == true
@@ -22,7 +22,7 @@ EM.describe "Talker client private message" do
       client.on_close { done }
     end
     
-    connect "test", "sender" do |client|
+    connect :room => "test", :user => "sender" do |client|
       client.on_open do
         EM.next_tick { client.send_private_message("receiver", "hi") }
       end
