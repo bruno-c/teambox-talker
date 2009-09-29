@@ -1,8 +1,10 @@
+require "em/mysql"
 require "mq"
 
 module Talker
   class Logger
-    def initialize
+    def initialize(options={})
+      EventedMysql.settings.update options
       @queue = MQ.queue("rooms")
     end
     
@@ -15,11 +17,24 @@ module Talker
     end
     
     def message_received(room, message)
-      # TODO log message in mysql db ...
+      type = message["type"]
+      uuid = message["id"]
+      content = message["content"]
+      # TODO user id or user name now?
+      EventedMysql.insert(<<-SQL)
+        INSERT INTO events (room_id, user_id, type, uuid, message)
+        VALUES (#{room.to_i}, 1, '#{quote(type)}', '#{quote(uuid)}', '#{quote(content)}')
+      SQL
     end
     
     def self.start(*args)
       new(*args).start
     end
+    
+    private
+      def quote(s)
+        return "" if s.nil?
+        s.gsub(/\\/, '\&\&').gsub(/'/, "''")
+      end
   end
 end

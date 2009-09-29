@@ -1,4 +1,3 @@
-$:.unshift File.dirname(__FILE__) + "/../../../vendor/em-mysql/lib"
 require "em/mysql"
 
 module Talker
@@ -31,15 +30,5 @@ module Talker
       def quote(s)
         s.gsub(/\\/, '\&\&').gsub(/'/, "''")
       end
-  end
-end
-
-if __FILE__ == $PROGRAM_NAME
-  EM.run do
-    a = Talker::MysqlAuthenticator.new(:database => "talker_development", :username => "root")
-    a.authenticate(1, "macournoyer", "e2b95d09a4fd5fbeaea0fdbcd582407fe38c6181") do |success|
-      puts success
-      EM.stop
-    end
   end
 end
