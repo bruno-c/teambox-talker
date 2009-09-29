@@ -1,41 +1,19 @@
 #!/usr/bin/env ruby
-require 'optparse'
-
-host = "0.0.0.0"
-port = 61800
-amqp_host = "0.0.0.0"
-amqp_port = 5672
-trace = false
-descriptor_table_size = 1024 * 4
-
-OptionParser.new do |opts|
-  opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
-
-  opts.on("-a", "--host HOST", "Server host")               { |h| host = h }
-  opts.on("-p", "--port NUM", "Server port")                { |n| port = n.to_i }
-  opts.on("-A", "--amqp-host HOST", "AMQP host")            { |h| amqp_host = h }
-  opts.on("-P", "--amqp-port NUM", "AMQP port")             { |n| amqp_port = n.to_i }
-  opts.on("-t", "--trace", "Output connections info")       { trace = true }
-  opts.on("-s", "--descriptors", "Set descriptor table size")  { |n| descriptor_table_size = n.to_i }
-  
-  opts.on_tail("-h", "--help", "Show this message")         { puts opts; exit }
-end.parse!(ARGV)
-
-
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require "rubygems"
 require "talker"
-require "amqp"
 
-size = EM.set_descriptor_table_size(descriptor_table_size)
-puts "Descriptor table size set to #{size}"
+abort "usage: talker [config_file.yml]" unless ARGV.first
+
+config = Talker::Config.new(ARGV.first)
 
 EM.run do
-  puts "Connected to AMQP on #{amqp_host}:#{amqp_port}"
-  AMQP.connect :host => amqp_host, :port => amqp_port
+  puts "Connected to AMQP on #{config[:amqp][:host]}:#{config[:amqp][:port]}"
+  AMQP.connect config[:amqp]
   
-  server = Talker::Server.new(:host => host, :port => port)
-  server.logger = Logger.new(STDOUT) if trace
+  server = Talker::Server.new(config[:talker])
+  server.authenticator = Talker::MysqlAuthenticator.new(config[:database])
+  
   trap('INT') do
     puts "Stopping ..."
     server.stop

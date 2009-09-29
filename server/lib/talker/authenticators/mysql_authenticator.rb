@@ -1,4 +1,4 @@
-$:.unshift File.dirname(__FILE__) + "/../../vendor/em-mysql/lib"
+$:.unshift File.dirname(__FILE__) + "/../../../vendor/em-mysql/lib"
 require "em/mysql"
 
 module Talker

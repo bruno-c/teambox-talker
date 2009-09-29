@@ -1,4 +1,3 @@
-require "eventmachine"
 require "logger"
 
 module Talker
@@ -8,19 +7,32 @@ module Talker
     DEFAULT_PORT = 61800
     
     attr_reader :host, :port, :rooms
-    attr_accessor :logger
+    attr_accessor :logger, :authenticator
   
     def initialize(options={})
       @host = options[:host] || DEFAULT_HOST
       @port = options[:port] || DEFAULT_PORT
-      @logger = options[:logger] || ::Logger.new(nil)
       @timeout = options[:timeout] || DEFAULT_TIMEOUT
-      @authenticator = options[:authenticator] || raise(ArgumentError, ":authenticator option required")
+
+      case options[:logger]
+      when TrueClass
+        @logger = ::Logger.new(STDOUT)
+      when String
+        @logger = ::Logger.new(options[:logger])
+      else
+        @logger = ::Logger.new(nil)
+      end
+
+      @authenticator = options[:authenticator]
       @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
       @signature = nil
+      self.descriptor_table_size = options[:descriptor_table_size] if options[:descriptor_table_size]
+      EM.set_effective_user options[:user] if options[:user]
     end
   
     def start
+      raise ArgumentError, "authenticator required" unless @authenticator
+      
       @signature = EM.start_server(@host, @port, Connection) do |connection|
         connection.server = self
         connection.comm_inactivity_timeout = @timeout
@@ -37,6 +49,12 @@ module Talker
     
     def authenticate(room, user, token, &callback)
       @authenticator.authenticate(room, user, token, &callback)
+    end
+    
+    def descriptor_table_size=(size)
+      actual_size = EM.set_descriptor_table_size(size)
+      @logger.info "Descriptor table size set to #{actual_size}"
+      actual_size
     end
     
     def self.start(*args)

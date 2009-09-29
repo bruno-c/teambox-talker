@@ -50,18 +50,21 @@ module Talker
       end
       
       @server.authenticate(room_name, user, token) do |success|
-        unless success
-          raise ProtocolError, "Authentication failed"
+        
+        if success
+          begin
+            @room = @server.rooms[room_name]
+            @user_name = user
+            presence :join
+            @subscription = @room.subscribe(@user_name, self)
+          rescue SubscriptionError => e
+            error e.message
+          end
+        
+        else
+          error "Authentication failed"
         end
         
-        begin
-          @room = @server.rooms[room_name]
-          @user_name = user
-          presence :join
-          @subscription = @room.subscribe(@user_name, self)
-        rescue SubscriptionError => e
-          raise ProtocolError, e.message
-        end
       end
     end
     
