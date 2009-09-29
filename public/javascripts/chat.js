@@ -28,17 +28,35 @@ var ChatRoom = {
   messages: {},
   currentMessage: null,
   
+  sendLater: function(data) {
+    if (data === "") return;
+    if (this.sendTimeout) clearTimeout(this.sendTimeout);
+    this.sendTimeout = setTimeout(function() {
+      ChatRoom.send(data);
+    }, 400);
+  },
+  
+  send: function(data) {
+    if (data === "") return;
+    if (this.sendTimeout) clearTimeout(this.sendTimeout);
+
+    console.info("sending message");
+    var message = this.currentMessage;
+    message.content = data;
+    this.client.send(message.uuid, message.content);
+  },
+  
   scrollToBottom: function() {
     window.scrollTo(0, document.body.clientHeight);
   },
   
   newMessage: function() {
-    if (this.currentMessage) this.currentMessage.createElement().insertBefore(this.newMessageElement);
+    if (this.currentMessage) this.currentMessage.createElement().insertBefore($("#message"));
     this.currentMessage = new Message(currentUser.email);
     this.messages[this.currentMessage.uuid] = this.currentMessage;
     
     // Move the new message form to the bottom
-    this.newMessageElement.
+    $("#message").
       appendTo($("#log")).
       find("form").reset().
       find("textarea").focus();
@@ -47,24 +65,40 @@ var ChatRoom = {
   },
   
   onNewMessage: function(data) {
-    console.info("onNewMessage: " + data.content);
-    var message = this.messages[data.id];
+    var message = ChatRoom.messages[data.id];
     if (!message) {
-      message = this.messages[data.id] = new Message(data.from, data.id);
+      message = ChatRoom.messages[data.id] = new Message(data.from, data.id);
       message.createElement();
     }
 
     message.update(data.content);
     
-    // if (this.currentMessage == null || this.currentMessage.content == null) {
+    if (ChatRoom.currentMessage == null || ChatRoom.currentMessage.content == null) {
       $("#message").
         appendTo($("#log")).
         find("textarea").focus();
-    // }
+    }
 
-    this.scrollToBottom();
+    ChatRoom.scrollToBottom();
   }
 };
+
+$(function() {
+  $("#msgbox").
+    keydown(function(e) {
+      if (e.which == 13) {
+        ChatRoom.send(this.value);
+        ChatRoom.newMessage();
+        return false;
+      }
+    }).
+    keyup(function(e) {
+      ChatRoom.sendLater(this.value);
+    }).
+    focus();
+  
+  ChatRoom.newMessage();
+});
 
 
 // Talker client
@@ -78,22 +112,17 @@ function TalkerClient(options) {
 
     // LineProtocol implementation.
     function onLineReceived(line) {
-      console.info("TalkerClient::received line: " + line);
-      
       var line = eval('(' + line + ')');
       
       // ugly shit but this will be refactored.
       switch(line.type){
         case 'message':
-          options.chatRoom.onNewMessage(line);
-          $('#msgbox').val('');
+          options.onNewMessage(line);
           break;
         case 'join':
-          console.info("yay joined"); 
           self.join(line);
           break;
         case 'closed':
-          console.info('bye bye... why u leave?');
           break;
         case 'error':
           alert("An unfortunate error occured.  At least no one got hurt. (" + line.message + ")");
@@ -103,22 +132,6 @@ function TalkerClient(options) {
     function onRawDataReceived(data) {
       console.info("TalkerClient::received raw: " + data);
     }
-    
-    $("#msgbox").
-      keydown(function(e) {
-        if (e.which == 13) {
-          self.send(this.value);
-          $('#msgbox').value = '';
-        }
-      }).
-      keyup(function(e) {
-        if (e.which == 32) { // space
-          // Chat.send(this.value);
-        } else {
-          // Chat.sendLater(this.value);
-        }
-      }).
-      focus();
     
     self.pingInterval = setInterval(function(){
       self.ping();
@@ -168,9 +181,8 @@ function TalkerClient(options) {
     self.reset = function() {
         protocol.reset();
     }
-    self.send = function(message) {
-      console.info("sending message:" + message);
-      self.sendData({type: "message", content: message, id: Math.uuid()});
+    self.send = function(id, message) {
+      self.sendData({type: "message", content: message, id: id});
     };
 }
 
