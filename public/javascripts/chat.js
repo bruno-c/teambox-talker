@@ -1,6 +1,75 @@
+function Message(from, uuid) {
+  this.from = from;
+  this.uuid = uuid || Math.uuid();
+  this.elementId = "message-" + this.uuid;
+}
+
+Message.prototype.update = function(content) {
+  this.content = content;
+  if (this.element) this.element.find(".content").html(content);
+}
+
+Message.prototype.createElement = function() {
+  // Create of find the message HTML element
+  this.element = $("#log").find("#" + this.elementId);
+  if (this.element.length == 0) {
+    this.element = $("<tr/>").
+      addClass("event").
+      addClass("message").
+      attr("id", this.elementId).
+      append($("<td/>").addClass("author").html(this.from)).
+      append($("<td/>").addClass("content").html(this.content || "")).
+      appendTo($("#log"));
+  }
+  return this.element;
+}
+
+var ChatRoom = {
+  messages: {},
+  currentMessage: null,
+  
+  scrollToBottom: function() {
+    window.scrollTo(0, document.body.clientHeight);
+  },
+  
+  newMessage: function() {
+    if (this.currentMessage) this.currentMessage.createElement().insertBefore(this.newMessageElement);
+    this.currentMessage = new Message(currentUser.email);
+    this.messages[this.currentMessage.uuid] = this.currentMessage;
+    
+    // Move the new message form to the bottom
+    this.newMessageElement.
+      appendTo($("#log")).
+      find("form").reset().
+      find("textarea").focus();
+    
+    this.scrollToBottom();
+  },
+  
+  onNewMessage: function(data) {
+    console.info("onNewMessage: " + data.content);
+    var message = this.messages[data.id];
+    if (!message) {
+      message = this.messages[data.id] = new Message(data.from, data.id);
+      message.createElement();
+    }
+
+    message.update(data.content);
+    
+    // if (this.currentMessage == null || this.currentMessage.content == null) {
+      $("#message").
+        appendTo($("#log")).
+        find("textarea").focus();
+    // }
+
+    this.scrollToBottom();
+  }
+};
+
+
 // Talker client
 // Based on STOMP client shipped with Orbited.
-TalkerClient = function(options) {
+function TalkerClient(options) {
     var log = getTalkerLogger("TalkerClient");
     var self = this;
     var protocol = null;
@@ -16,7 +85,7 @@ TalkerClient = function(options) {
       // ugly shit but this will be refactored.
       switch(line.type){
         case 'message':
-          console.info("should insert lines here wif msg: " + line.content);
+          options.chatRoom.onNewMessage(line);
           $('#msgbox').val('');
           break;
         case 'join':
