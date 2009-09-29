@@ -14,6 +14,10 @@ TalkerClient = function(options) {
       var line = eval('(' + line + ')');
       
       switch(line.type){
+        case 'message':
+          console.info("should insert lines here wif msg: " + line.content);
+          $('#msgbox').val('');
+          break;
         case 'join':
           console.info("yay joined"); 
           self.join(line);
@@ -26,12 +30,36 @@ TalkerClient = function(options) {
       console.info("TalkerClient::received raw: " + data);
     }
     
+    $("#msgbox").
+      keydown(function(e) {
+        if (e.which == 13) {
+          self.send(this.value);
+          $('#msgbox').value = '';
+        }
+      }).
+      keyup(function(e) {
+        if (e.which == 32) { // space
+          // Chat.send(this.value);
+        } else {
+          // Chat.sendLater(this.value);
+        }
+      }).
+      focus();
+    
+    self.pingInterval = setInterval(function(){
+      self.ping();
+    }, 20000);
+    
     self.join = function(line){
       if ($("ul#users li:contains('" + line.user + "')").length < 1){
         $('ul#users').append('<li>' + line.user + '</li>')
       }
       $("ul#users li:contains('" + line.user + "')").highlight();
     };
+    
+    self.ping = function(){
+      protocol.send(JSON.encode({type: 'ping'}));
+    }
     
     // Methods
     self.sendData = function(message) {
