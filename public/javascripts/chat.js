@@ -78,13 +78,17 @@ var ChatRoom = {
       message.element.removeClass('partial');
     }
     
-    if (ChatRoom.currentMessage == null || ChatRoom.currentMessage.content == null) {
+    if (!ChatRoom.typing()) {
       $("#message").
         appendTo($("#log")).
         find("textarea").focus();
     }
 
     ChatRoom.scrollToBottom();
+  },
+  
+  typing: function() {
+    return ChatRoom.currentMessage != null && ChatRoom.currentMessage.content != null
   },
   
   addUser: function(user) {
@@ -96,12 +100,16 @@ var ChatRoom = {
   
   addNotice: function(data){
     console.info(data);
-    $("<tr/>").
+    var element = $("<tr/>").
       addClass("event").
       addClass("notice").
       append($("<td/>").addClass("author").html(data.user)).
-      append($("<td/>").addClass("content").html(data.type + "s")).
-      appendTo($("#log"));
+      append($("<td/>").addClass("content").html(data.type + "s"));
+    
+    if (ChatRoom.typing())
+      element.appendTo("#log");
+    else
+      element.insertBefore("#message");
   },
   
   onJoin: function(data) {
@@ -130,7 +138,7 @@ $(function() {
     focus();
   
   ChatRoom.newMessage();
-  ChatRoom.addUser(currentUser.name);
+  ChatRoom.onJoin({type: "join", user: currentUser.name});
 });
 
 
