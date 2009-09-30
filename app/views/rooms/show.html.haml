@@ -11,10 +11,6 @@
       client = new TalkerClient({onNewMessage: ChatRoom.onNewMessage, onJoin: ChatRoom.onJoin, onLeave: ChatRoom.onLeave});
       ChatRoom.client = client;
       client.connect('#{Orbited.talker_host}', #{Orbited.talker_port}, #{@room.id}, #{current_user.name.to_json}, #{current_user.talker_token.to_json});
-      // TODO hook client.onMessage or something to Chat.receive(message);
-      
-      // Send a message
-      // client.sendData(...);
     });
     
 
