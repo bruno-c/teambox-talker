@@ -28,6 +28,7 @@ Message.prototype.createElement = function() {
 var ChatRoom = {
   messages: {},
   currentMessage: null,
+  maxImageWidth: 400,
   
   sendLater: function(data) {
     if (data === "") return;
@@ -65,11 +66,21 @@ var ChatRoom = {
     this.scrollToBottom();
   },
   
-  // TODO
   formatMessage: function(content) {
-    return content;
-    // check for url of image
-    // content.match(/https?:\/\/[^\s]+\.(gif|png)/g);
+    var image = content.match(/^https?:\/\/[^\s]+\.(gif|png|jpeg|jpg)$/g);
+    if (image){
+      return content.replace(image, '<a href="' + image + '" target="_blank"><img src="' + image + '" onload="ChatRoom.resizeImage(this)" style="visibility: hidden;" /></a>');
+    } else {
+      return content;
+    }
+  },
+  
+  resizeImage: function(image){
+    $(image).css({width: 'auto'});
+    if (image.width > ChatRoom.maxImageWidth){
+      $(image).css({width: ChatRoom.maxImageWidth + 'px'});
+    }
+    image.style.visibility = 'visible';
   },
   
   onNewMessage: function(data) {
