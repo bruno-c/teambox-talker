@@ -8,7 +8,7 @@ Before sending and receiving messages in a room, the client must connect to the 
 
     {"type":"connect","room":"0000","user":"user name","token":"user secret token"}
 
-"room" being the name of the room in the format <code>accountname.roomname</code>,
+"room" being the unique number of the room,
 "user" the name of the user connecting to the room and
 "token" the authentication token for that user.
 

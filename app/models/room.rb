@@ -6,10 +6,6 @@ class Room < ActiveRecord::Base
   
   validates_presence_of :name
   
-  def unique_name
-    account.subdomain + "." + name
-  end
-  
   def send_data(data)
     Orbited.send_data(channel, data)
   end
