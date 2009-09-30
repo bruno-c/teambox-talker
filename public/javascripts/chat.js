@@ -65,6 +65,13 @@ var ChatRoom = {
     this.scrollToBottom();
   },
   
+  // TODO
+  formatMessage: function(content) {
+    return content;
+    // check for url of image
+    // content.match(/https?:\/\/[^\s]+\.(gif|png)/g);
+  },
+  
   onNewMessage: function(data) {
     var message = ChatRoom.messages[data.id];
     if (!message) {
@@ -72,10 +79,12 @@ var ChatRoom = {
       message.createElement();
     }
 
-    message.update(data.content);
     
-    if (data.final){
+    if (data.final) {
+      message.update(ChatRoom.formatMessage(data.content));
       message.element.removeClass('partial');
+    } else {
+      message.update(data.content);
     }
     
     if (!ChatRoom.typing()) {
