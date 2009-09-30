@@ -94,12 +94,24 @@ var ChatRoom = {
     $("ul#users li:contains('" + user + "')").highlight();
   },
   
+  addNotice: function(data){
+    console.info(data);
+    $("<tr/>").
+      addClass("event").
+      addClass("notice").
+      append($("<td/>").addClass("author").html(data.user)).
+      append($("<td/>").addClass("content").html(data.type + "s")).
+      appendTo($("#log"));
+  },
+  
   onJoin: function(data) {
     ChatRoom.addUser(data.user);
+    if (data.type == "join") ChatRoom.addNotice(data);
   },
 
   onLeave: function(data) {
     $("ul#users li:contains('" + data.user + "')").remove();
+    ChatRoom.addNotice(data);
   }
 };
 
@@ -149,7 +161,6 @@ function TalkerClient(options) {
           break;
         case 'leave':
           options.onLeave(line);
-        case 'closed':
           break;
         case 'error':
           alert("An unfortunate error occured.  At least no one got hurt. (" + line.message + ")");
@@ -199,9 +210,6 @@ function TalkerClient(options) {
     };
 
     self.close = function() {
-        // NB: after we send a close message, the Talker server
-        //     should automatically close the transport, which will
-        //     trigger an "onclose" event.
         self.sendData({type: "close"});
     };
     self.reset = function() {
