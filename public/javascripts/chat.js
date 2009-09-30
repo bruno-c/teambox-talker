@@ -87,11 +87,19 @@ var ChatRoom = {
     ChatRoom.scrollToBottom();
   },
   
-  onJoin: function(data) {
-    if ($("ul#users li:contains('" + data.user + "')").length < 1){
-      $('ul#users').append('<li>' + data.user + '</li>')
+  addUser: function(user) {
+    if ($("ul#users li:contains('" + user + "')").length < 1){
+      $('ul#users').append('<li>' + user + '</li>')
     }
-    $("ul#users li:contains('" + data.user + "')").highlight();
+    $("ul#users li:contains('" + user + "')").highlight();
+  },
+  
+  onJoin: function(data) {
+    ChatRoom.addUser(data.user);
+  },
+
+  onLeave: function(data) {
+    $("ul#users li:contains('" + data.user + "')").remove();
   }
 };
 
@@ -110,6 +118,7 @@ $(function() {
     focus();
   
   ChatRoom.newMessage();
+  ChatRoom.addUser(currentUser.name);
 });
 
 
@@ -126,14 +135,20 @@ function TalkerClient(options) {
     function onLineReceived(line) {
       var line = eval('(' + line + ')');
       
+      console.info(line);
+      
       // ugly shit but this will be refactored.
       switch(line.type){
         case 'message':
           options.onNewMessage(line);
           break;
         case 'join':
+          self.sendData({type: "present", to: line.user});
+        case 'present':
           options.onJoin(line);
           break;
+        case 'leave':
+          options.onLeave(line);
         case 'closed':
           break;
         case 'error':
