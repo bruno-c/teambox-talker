@@ -17,6 +17,8 @@ module Talker
     end
     
     def message_received(room, message)
+      # TODO update existing message if partial
+      return unless message["final"]
       type = message["type"]
       uuid = message["id"]
       content = message["content"]
