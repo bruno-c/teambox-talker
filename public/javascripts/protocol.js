@@ -130,7 +130,7 @@ LineProtocol = function(transport) {
     };
 
     self.close = function() {
-        log.debug("close");
+        log.debug("transport.close");
         transport.close();
     };
     self.reset = function() {
@@ -147,58 +147,3 @@ LineProtocol = function(transport) {
     self.onlinereceived = function(line) {};
     self.onrawdatareceived = function(data) {};
 };
-
-
-// Talker client
-// Based on STOMP client shipped with Orbited.
-TalkerClient = function() {
-    var log = getTalkerLogger("TalkerClient");
-    var self = this;
-    var protocol = null;
-    var buffer = "";
-    var remainingBodyLength = null;
-
-    // LineProtocol implementation.
-    function onLineReceived(line) {
-      console.info("received line: " + line);
-    }
-    function onRawDataReceived(data) {
-      console.info("received raw: " + data);
-    }
-
-    // Methods
-
-    self.sendData = function(message) {
-      // TODO encode to UTF8?
-      protocol.send(JSON.encode(message));
-    };
-
-    self.connect = function(domain, port, room, user, token) {
-        protocol = new LineProtocol(new TCPSocket());
-        protocol.onopen = function() {
-          // Connect to Talker server
-          self.sendData({type: "connect", room: room, user: user, token: token});
-        }
-        // XXX even though we are connecting to onclose, this never gets fired
-        //     after we shutdown orbited.
-        protocol.onclose = function() { console.warn("closed"); }
-        // TODO what should we do when there is a protocol error?
-        protocol.onerror = function(error) { console.error(error); }
-        protocol.onlinereceived = onLineReceived;
-        protocol.onrawdatareceived = onRawDataReceived;
-        protocol.open(domain, port, true);
-    };
-
-    self.close = function() {
-        // NB: after we send a close message, the Talker server
-        //     should automatically close the transport, which will
-        //     trigger an "onclose" event.
-        self.sendData({type: "close"});
-    };
-    self.reset = function() {
-        protocol.reset();
-    }
-    self.send = function(message) {
-        self.sendData({type: "message", content: message, id: Math.uuid()});
-    };
-}
