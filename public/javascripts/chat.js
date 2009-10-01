@@ -145,26 +145,25 @@ var ChatRoom = {
 };
 
 $(function() {
-  $("#msgbox").
-    keydown(function(e) {
-      if (e.which == 13) {
-        ChatRoom.send(this.value, true);
-        ChatRoom.newMessage();
-        return false;
-      }
-    }).
-    keyup(function(e) {
-      ChatRoom.sendLater(this.value);
-    }).
-    focus();
-  
-  // reformat all messages loaded from db on first load
-  $('.content').each(function(){
-    this.innerHTML = ChatRoom.formatMessage(this.innerHTML, true)
-  });
-  
-  ChatRoom.newMessage();
-  ChatRoom.onJoin({type: "join", user: currentUser.name});
+    $("#msgbox")
+      .keydown(function(e) {
+        console.info("msgbox keydown" + e.which);
+        if (e.which == 13) {
+          ChatRoom.send(this.value, true);
+          ChatRoom.newMessage();
+          return false;
+        }
+      })
+      .keyup(function(e) {
+        ChatRoom.sendLater(this.value);
+      });
+    
+    // reformat all messages loaded from db on first load
+    $('.content').each(function(something, element){
+      element.innerHTML = ChatRoom.formatMessage(this.innerHTML, true);
+    });
+
+    ChatRoom.newMessage();
 });
 
 
@@ -181,7 +180,7 @@ function TalkerClient(options) {
     function onLineReceived(line) {
       var line = eval('(' + line + ')');
       
-      console.info(line);
+      console.info("TalkerClient::onLineReceived" + line);
       
       // ugly shit but this will be refactored.
       switch(line.type){
@@ -219,7 +218,6 @@ function TalkerClient(options) {
     
     // Methods
     self.sendData = function(message) {
-      // TODO encode to UTF8?
       protocol.send(JSON.encode(message));
       self.resetPing();
     };

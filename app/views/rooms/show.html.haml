@@ -10,7 +10,14 @@
       document.domain = document.domain;
       client = new TalkerClient({onNewMessage: ChatRoom.onNewMessage, onJoin: ChatRoom.onJoin, onLeave: ChatRoom.onLeave});
       ChatRoom.client = client;
-      client.connect('#{Orbited.talker_host}', #{Orbited.talker_port}, #{@room.id}, #{current_user.name.to_json}, #{current_user.talker_token.to_json});
+      // "user":{"id":"unique id","name":"user name",...}
+      client.connect(
+        '#{Orbited.talker_host}', 
+        #{Orbited.talker_port}, 
+        #{@room.id}, 
+        #{{:id => current_user.id, :name => current_user.name}.to_json},
+        #{current_user.talker_token.to_json}
+      );
     });
     
 
@@ -27,6 +34,6 @@
     = render :partial => "messages/message", :collection => @events
     %tr.message.event#message
       %td.author&= current_user.name
-      %td.content
+      %td.new_content
         %form#msgForm{:action => room_messages_path(@room)}
           %textarea#msgbox{:rows => 1}
