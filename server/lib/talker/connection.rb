@@ -23,7 +23,7 @@ module Talker
     
     # Called when a JSON object in a message is fully parsed
     def object_parsed(obj)
-      logger.debug{to_s + "< " + obj.inspect}
+      logger.debug{to_s + "<<< " + obj.inspect}
       
       case obj["type"]
       when "connect"
@@ -113,7 +113,7 @@ module Talker
     end
   
     def error(message)
-      logger.debug {"#{to_s}>error: #{message}"}
+      logger.debug {"#{to_s}>>>error: #{message}"}
       send_data(%Q|{"type":"error","message":"#{message}"}\n|)
       close
     end
@@ -148,13 +148,13 @@ module Talker
       end
       
       def send_message(message)
-        logger.debug {"#{to_s}> #{message.inspect}"}
+        logger.debug {"#{to_s}>>> #{message.inspect}"}
         # TODO send in chunks?
         @room.send_message encode(message)
       end
       
       def send_private_message(to, message)
-        logger.debug {"#{to_s}(to #{to})> #{message.inspect}"}
+        logger.debug {"#{to_s}(to #{to})>>> #{message.inspect}"}
         # TODO send in chunks?
         @room.send_private_message to, encode(message)
       end
