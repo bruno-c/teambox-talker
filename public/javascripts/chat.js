@@ -1,29 +1,23 @@
-function Message(from, uuid) {
-  this.from = from;
-  this.uuid = uuid || Math.uuid();
-  this.elementId = "message-" + this.uuid;
-}
+$(function() {
+    $("#msgbox")
+      .keydown(function(e) {
+        if (e.which == 13) {
+          ChatRoom.send(this.value, true);
+          ChatRoom.newMessage();
+          return false;
+        }
+      })
+      .keyup(function(e) {
+        ChatRoom.sendLater(this.value);
+      });
+    
+    // reformat all messages loaded from db on first load
+    $('.content').each(function(something, element){
+      element.innerHTML = ChatRoom.formatMessage(this.innerHTML, true);
+    });
 
-Message.prototype.update = function(content) {
-  this.content = content;
-  if (this.element) this.element.find(".content").html(content);
-}
-
-Message.prototype.createElement = function() {
-  // Create of find the message HTML element
-  this.element = $("#log").find("#" + this.elementId);
-  if (this.element.length == 0) {
-    this.element = $("<tr/>").
-      addClass("event").
-      addClass("message").
-      addClass("partial").
-      attr("id", this.elementId).
-      append($("<td/>").addClass("author").html(this.from)).
-      append($("<td/>").addClass("content").html(this.content || "")).
-      appendTo($("#log"));
-  }
-  return this.element;
-}
+    ChatRoom.newMessage();
+});
 
 var ChatRoom = {
   messages: {},
@@ -144,28 +138,6 @@ var ChatRoom = {
   }
 };
 
-$(function() {
-    $("#msgbox")
-      .keydown(function(e) {
-        if (e.which == 13) {
-          ChatRoom.send(this.value, true);
-          ChatRoom.newMessage();
-          return false;
-        }
-      })
-      .keyup(function(e) {
-        ChatRoom.sendLater(this.value);
-      });
-    
-    // reformat all messages loaded from db on first load
-    $('.content').each(function(something, element){
-      element.innerHTML = ChatRoom.formatMessage(this.innerHTML, true);
-    });
-
-    ChatRoom.newMessage();
-});
-
-
 // Talker client
 // Based on STOMP client shipped with Orbited.
 function TalkerClient(options) {
@@ -248,4 +220,31 @@ function TalkerClient(options) {
       message.type = "message";
       self.sendData(message);
     };
+}
+
+function Message(from, uuid) {
+  this.from = from;
+  this.uuid = uuid || Math.uuid();
+  this.elementId = "message-" + this.uuid;
+  
+  this.update = function(content) {
+    this.content = content;
+    if (this.element) this.element.find(".content").html(content);
+  }  
+  
+  this.createElement = function() {
+    // Create of find the message HTML element
+    this.element = $("#log").find("#" + this.elementId);
+    if (this.element.length == 0) {
+      this.element = $("<tr/>").
+        addClass("event").
+        addClass("message").
+        addClass("partial").
+        attr("id", this.elementId).
+        append($("<td/>").addClass("author").html(this.from)).
+        append($("<td/>").addClass("content").html(this.content || "")).
+        appendTo($("#log"));
+    }
+    return this.element;
+  }
 }
