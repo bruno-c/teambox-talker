@@ -20,6 +20,7 @@ describe "'connect' message" do
     # Should broadcast prescence
     @room.should_receive(:send_message).with(encode(:type => "join", :user => user_info))
     
+    @connection.should_receive_data(:type => "connected")
     @connection.server.should_receive(:rooms).and_return("room" => @room)
     
     @connection.mock_message_received(:type => "connect", :room => "room",

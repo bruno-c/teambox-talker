@@ -4,6 +4,8 @@ module Talker
   class ProtocolError < RuntimeError; end
   
   class Connection < EM::Connection
+    # TODO freeze constant strings
+
     attr_accessor :server, :room, :user, :reraise_errors
     
     # Called after connection is fully initialized and establied from EM.
@@ -60,8 +62,9 @@ module Talker
           begin
             @room = @server.rooms[room_name]
             @user = User.new(user)
-            presence :join
             @subscription = @room.subscribe(@user, self)
+            send_data %({"type":"connected"}\n)
+            presence :join
           rescue SubscriptionError => e
             handle_error e
           end

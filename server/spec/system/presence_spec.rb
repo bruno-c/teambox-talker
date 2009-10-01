@@ -35,7 +35,7 @@ EM.describe "Talker client presence info" do
     
     # User 2 just close the connection
     connect :room => "test", :user => {:id => 2, :name => "user2"} do |client|
-      client.on_open do
+      client.on_connected do
         client.close
       end
     end

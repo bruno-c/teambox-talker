@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + "/spec_helper"
 EM.describe "Talker client message" do
   it "should be received by itself" do
     connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
-      client.on_open do
+      client.on_connected do
         client.send_message("hi")
       end
 
@@ -30,7 +30,7 @@ EM.describe "Talker client message" do
     end
     
     connect :room => "test", :user => {:id => 456, :name => "sender"} do |client|
-      client.on_open do
+      client.on_connected do
         EM.next_tick { client.send_message("hi") }
       end
     end

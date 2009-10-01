@@ -12,7 +12,11 @@ Before sending and receiving messages in a room, the client must connect to the 
 "user" is a hash containing the profile information of the user connecting to the room and
 "token" the authentication token for that user.
 
-If the authentication is successful, the connection is left open, if not, the connection is closed after the following message is sent by the server:
+If the authentication is successful, the connection is left open and the server replies with:
+
+    {"type":"connected"}
+
+if not, the connection is closed after the following message is sent by the server:
 
     {"type":"error","message":"Authentication failed"}
 

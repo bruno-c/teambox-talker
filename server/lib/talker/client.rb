@@ -28,8 +28,8 @@ module Talker
       @users = {}
     end
     
-    def on_open(&block)
-      @on_open = block
+    def on_connected(&block)
+      @on_connected = block
     end
 
     def on_message(&block)
@@ -65,7 +65,6 @@ module Talker
       send "type" => "connect", "room" => @room, "user" => @user.info, "token" => @token
       @users[@user.id] = @user
       EM.add_periodic_timer(20) { send "type" => "ping" }
-      @on_open.call if @on_open
     end
     
     def close
@@ -80,6 +79,8 @@ module Talker
     
     def object_parsed(message)
       case message["type"]
+      when "connected"
+        @on_connected.call if @on_connected
       when "error"
         raise Error, message["message"]
       when "present"

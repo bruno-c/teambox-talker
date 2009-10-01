@@ -18,7 +18,7 @@ EM.describe "Talker client private message" do
     end
     
     connect :room => "test", :user => {:id => "sender_id", :name => "sender"} do |client|
-      client.on_open do
+      client.on_connected do
         EM.next_tick { client.send_private_message("receiver_id", "hi") }
       end
     end
