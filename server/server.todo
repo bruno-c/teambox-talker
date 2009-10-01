@@ -1,9 +1,4 @@
-- [bug] Unable to get user name if a message is received before presence info
+- How to handle big messages like pastes? (server could POST to our private paste web service and broadcast link to room instead of full message)
 - Delete user queue if unused for 30-60 sec (can RabbitMQ handle that?)
 - Test case of the same user connecting to the same room twice
 - Improve perf by making partial messages transient (see High-speed transient message flows on http://www.rabbitmq.com/faq.html#scenarios)
-✓ Handle timeout of clients
-✓ Send list of online users when new user connects
-✓ Log message history
-✓ Support clustering / redundancy (handled by AMQP)
-✓ Resend possibly lost messages on reconnect (handled by AMQP)
