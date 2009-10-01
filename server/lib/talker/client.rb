@@ -18,7 +18,7 @@ module Talker
       
       EM.connect host, port, self do |c|
         c.room = room
-        c.user = user
+        c.user = Talker::User.new("id" => user[:id], "name" => user[:name])
         c.token = token
         yield c if block_given?
       end
@@ -61,7 +61,6 @@ module Talker
     end
     
     def connection_completed
-      @user = Talker::User.new("id" => @user[:id], "name" => @user[:name])
       send "type" => "connect", "room" => @room, "user" => @user.info, "token" => @token
       @users[@user.id] = @user
       EM.add_periodic_timer(20) { send "type" => "ping" }
@@ -99,7 +98,13 @@ module Talker
         @users.delete(user.id)
         @on_leave.call(user) if @on_leave
       when "message"
-        @on_message.call(@users[message["from"]], message["content"]) if @on_message
+        unless user = @users[message["from"]]
+          # TODO protocol issue?
+          # raise "Received message from unknown user: " + message["from"].inspect +
+          #       ", known users are " + @users.keys.inspect
+          user = Talker::User.new("id" => message["from"])
+        end
+        @on_message.call(user, message["content"]) if @on_message
       else
         raise Error, "unknown message type received from server: " + message["type"]
       end

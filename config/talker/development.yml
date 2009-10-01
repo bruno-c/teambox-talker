@@ -9,6 +9,10 @@ talker:
   user: marc
   logger: :debug # log to stdout
 
+  # for benchmarking
+  # logger: false
+  # no_auth: true
+
 database:
   database: talker_development
   username: root

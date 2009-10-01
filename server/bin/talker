@@ -12,7 +12,12 @@ EM.run do
   AMQP.connect config[:amqp]
   
   server = Talker::Server.new(config[:talker])
-  server.authenticator = Talker::MysqlAuthenticator.new(config[:database])
+  if config[:talker][:no_auth]
+    puts "!! WARNING starting server with authentication disabled !!"
+    server.authenticator = Talker::NullAuthenticator.new
+  else
+    server.authenticator = Talker::MysqlAuthenticator.new(config[:database])
+  end
   
   trap('INT') do
     puts "Stopping ..."
