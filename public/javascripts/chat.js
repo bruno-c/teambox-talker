@@ -66,21 +66,22 @@ var ChatRoom = {
     this.scrollToBottom();
   },
   
-  formatMessage: function(content) {
+  formatMessage: function(content, noScroll) {
     var image = content.match(/^https?:\/\/[^\s]+\.(gif|png|jpeg|jpg)$/g);
     if (image){
-      return content.replace(image, '<a href="' + image + '" target="_blank"><img src="' + image + '" onload="ChatRoom.resizeImage(this)" style="visibility: hidden;" /></a>');
+      return content.replace(image, '<a href="' + image + '" target="_blank"><img src="' + image + '" onload="ChatRoom.resizeImage(this, true)" style="visibility: hidden;" /></a>');
     } else {
       return content;
     }
   },
   
-  resizeImage: function(image){
+  resizeImage: function(image, noScroll){
     $(image).css({width: 'auto'});
     if (image.width > ChatRoom.maxImageWidth){
       $(image).css({width: ChatRoom.maxImageWidth + 'px'});
     }
     image.style.visibility = 'visible';
+    if (!noScroll) ChatRoom.scrollToBottom();
   },
   
   onNewMessage: function(data) {
@@ -156,6 +157,11 @@ $(function() {
       ChatRoom.sendLater(this.value);
     }).
     focus();
+  
+  // reformat all messages loaded from db on first load
+  $('.content').each(function(){
+    this.innerHTML = ChatRoom.formatMessage(this.innerHTML, true)
+  });
   
   ChatRoom.newMessage();
   ChatRoom.onJoin({type: "join", user: currentUser.name});
