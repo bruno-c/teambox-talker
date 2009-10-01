@@ -63,8 +63,8 @@ module Talker
             @room = @server.rooms[room_name]
             @user = User.new(user)
             @subscription = @room.subscribe(@user, self)
-            send_data %({"type":"connected"}\n)
             presence :join
+            send_data %({"type":"connected"}\n)
           rescue SubscriptionError => e
             handle_error e
           end

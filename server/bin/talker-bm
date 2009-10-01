@@ -6,7 +6,7 @@ options = {
   :port        => 61800,
   :requests    => 1,
   :clients     => 1,
-  :room        => "bm",
+  :room        => 1,
   :size        => 256,
   :debug       => false
 }
@@ -19,7 +19,7 @@ OptionParser.new do |opts|
   opts.on("-n", "--requests NUM", "Number of requests")     { |num| options[:requests] = num.to_i }
   opts.on("-c", "--clients EXP", "Number of clients")       { |num| options[:clients] = num.to_i }
   opts.on("-s", "--size NUM", "Message size")               { |size| options[:size] = size.to_i }
-  opts.on("-r", "--room NAME", "Room name")                 { |name| options[:room] = name }
+  opts.on("-r", "--room ID", "Room id")                     { |id| options[:room] = id.to_i }
   opts.on("-d", "--debug", "Debug mode")                    { options[:debug] = true }
   
   opts.on_tail("-h", "--help", "Show this message")         { puts opts; exit }
@@ -44,32 +44,30 @@ EM.run do
   puts "Starting test ..."
   
   options[:clients].times do |i|
-    Talker::Client.connect({:user => {:id => i, :name => "-user#{i}"}, :token => "token"}.merge(options)) do |client|
-      user_name = options[:room] + "-user#{i}"
-      
+    Talker::Client.connect({:user => {:id => i+1, :name => options[:room].to_s + "-user#{i+1}"}, :token => "dummy"}.merge(options)) do |client|
       client.on_connected do
-        puts "#{user_name} connected" if options[:debug]
+        puts "#{client.user.name} connected" if options[:debug]
         start ||= Time.now # start timer only when connected, we're mesuring messages here...
         options[:requests].times do
           EM.next_tick { client.send_message(message) }
         end
       end
-    
+      
       client.on_message do |user, message|
         messages += 1
-        if message["type"] == "message" && message["from"] == user_name
-          requests_done[user_name] += 1
+        if user.name == client.user.name
+          requests_done[client.user.id] += 1
         end
-        puts "%s received message %d from %s" % [user_name, requests_done[user_name], user.name] if options[:debug]
+        puts "%s received message %d from %s" % [client.user.name, requests_done[client.user.id], user.name] if options[:debug]
         # Wait to receive all messages
-        if requests_done[user_name] == options[:requests]
+        if requests_done[client.user.id] == options[:requests]
           client.close
         end
       end
     
       client.on_close do
         clients_done += 1
-        puts "#{user_name} done" if options[:debug]
+        puts "#{client.user.name} done" if options[:debug]
         if clients_done == options[:clients]
           time = Time.now - start
           puts "Done!"
