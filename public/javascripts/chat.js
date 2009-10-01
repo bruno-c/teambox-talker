@@ -84,7 +84,6 @@ var ChatRoom = {
       message = ChatRoom.messages[data.id] = new Message(data.from, data.id);
       message.createElement();
     }
-
     
     if (data.final) {
       message.update(ChatRoom.formatMessage(data.content));
@@ -107,10 +106,10 @@ var ChatRoom = {
   },
   
   addUser: function(user) {
-    if ($("ul#users li:contains('" + user + "')").length < 1){
-      $('ul#users').append('<li>' + user + '</li>')
+    if ($("ul#users li:contains('" + user.name + "')").length < 1){
+      $('ul#users').append('<li>' + user.name + '</li>')
     }
-    $("ul#users li:contains('" + user + "')").highlight();
+    $("ul#users li:contains('" + user.name + "')").highlight();
   },
   
   addNotice: function(data){
