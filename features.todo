@@ -1,8 +1,5 @@
-✓ Implement Orbited protocol in js for talker server (similar javascripts/stomp.js but implementing server/doc/protocol.md)
-✓ Implement authentication on server
 - Deploy app on talkerapp.com to eat dog food ASAP!
 - Add user name to history
-✓ Invite users by email
 - Remove "remember me" from login, should always do
 - Implement "Forgot my password"
 - Format messages (turn urls into links, show images, videos, etc.)
