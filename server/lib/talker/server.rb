@@ -15,12 +15,15 @@ module Talker
       @timeout = options[:timeout] || DEFAULT_TIMEOUT
 
       case options[:logger]
+      when :debug
+        @logger = ::Logger.new(STDOUT)
+        @logger.level = ::Logger::DEBUG
       when TrueClass
         @logger = ::Logger.new(STDOUT)
-      when String
-        @logger = ::Logger.new(options[:logger])
+        @logger.level = ::Logger::INFO
       else
-        @logger = ::Logger.new(nil)
+        @logger = ::Logger.new(options[:logger])
+        @logger.level = ::Logger::INFO
       end
 
       @authenticator = options[:authenticator]

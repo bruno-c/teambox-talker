@@ -4,21 +4,22 @@ module Talker
   class SubscriptionError < RuntimeError; end
 
   class Room
-    attr_reader :name
+    attr_reader :id
+    alias :name :id
 
-    def initialize(name)
-      @name = name
-      @exchange = MQ.fanout("room.#{name}")
+    def initialize(id)
+      @id = id
+      @exchange = MQ.fanout("room.#{id}")
       MQ.queue("rooms").bind(@exchange)
     end
-
+    
     def subscribe(user, connection)
-      queue = MQ.queue("connection.#{@name}.#{user}")
+      queue = queue(user.id)
       if queue.subscribed?
-        raise SubscriptionError, "User #{user} already connected to room #{name}, wait #{Server::TIMEOUT} seconds and try again."
+        raise SubscriptionError, "User #{user.name} already connected to room #{id}, wait #{Server::TIMEOUT} seconds and try again."
       end
       queue.bind(@exchange).subscribe do |message|
-        connection.send_message(message)
+        connection.send_data(message)
       end
       queue
     end
@@ -43,8 +44,13 @@ module Talker
       @exchange.publish(data)
     end
     
-    def send_private_message(user, data)
-      MQ.queue("connection.#{@name}.#{user}").publish(data)
+    def send_private_message(user_id, data)
+      queue(user_id).publish(data)
     end
+    
+    private
+      def queue(user_id)
+        MQ.queue("connection.#{@id}.#{user_id}")
+      end
   end
 end

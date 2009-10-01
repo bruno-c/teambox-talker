@@ -23,8 +23,12 @@ module Moqueue
 end
 
 module SystemHelpers
+  TEST_PORT = 61900
+  
   def start_server(options={})
-    @server = Talker::Server.start({ :authenticator => Talker::NullAuthenticator.new }.merge(options))
+    @server = Talker::Server.start({
+      # :logger => :debug,
+      :authenticator => Talker::NullAuthenticator.new, :port => TEST_PORT }.merge(options))
   end
   
   def stop_server
@@ -32,7 +36,7 @@ module SystemHelpers
   end
   
   def connect(options, &block)
-    Talker::Client.connect({ :token => "dummy" }.merge(options), &block)
+    Talker::Client.connect({ :token => "dummy", :port => TEST_PORT }.merge(options), &block)
   end
 end
 

@@ -8,28 +8,28 @@ describe "'message' message" do
   it "should require active connection" do
     message = { "type" => "message", "id" => "id", "content" => "ohaie" }
     @connection.should_receive(:error)
-    @connection.send_message(message)
+    @connection.mock_message_received(message)
   end
   
   it "should be broadcasted to room" do
-    connect "test", "tester"
+    connect "test", "user_id", "tester"
 
-    message = { "type" => "message", "id" => "id", "content" => "ohaie" }
-    sent_message = { "type" => "message", "id" => "id", "content" => "ohaie", "from" => "tester" }
+    message = { "type" => "message", "id" => "mid", "content" => "ohaie" }
+    sent_message = { "type" => "message", "id" => "mid", "content" => "ohaie", "from" => "user_id" }
     @connection.room.should_receive(:send_message).
                      with { |json| decode(json) == sent_message }
     
-    @connection.send_message(message)
+    @connection.mock_message_received(message)
   end
   
   it "should be send as private" do
-    connect "test", "tester"
+    connect "test", "user_id", "tester"
 
-    message = { "type" => "message", "id" => "id", "content" => "ohaie", "to" => "bob" }
-    sent_message = { "type" => "message", "id" => "id", "content" => "ohaie", "from" => "tester", "private" => true }
+    message = { "type" => "message", "id" => "mid", "content" => "ohaie", "to" => "bob" }
+    sent_message = { "type" => "message", "id" => "mid", "content" => "ohaie", "from" => "user_id", "private" => true }
     @connection.room.should_receive(:send_private_message).
                      with { |to, json| to == "bob" && decode(json) == sent_message }
     
-    @connection.send_message(message)
+    @connection.mock_message_received(message)
   end
 end

@@ -10,9 +10,9 @@ module ProtocolHelpers
     @connection
   end
   
-  def connect(room, user)
+  def connect(room, user_id, user_name)
     @connection.room = mock("room", :name => room)
-    @connection.user_name = user
+    @connection.user = Talker::User.new({"id" => user_id, "name" => user_name})
   end
 end
 
@@ -28,7 +28,7 @@ module ConnectionSpecer
     should_receive(:close_connection_after_writing)
   end
   
-  def send_message(data)
+  def mock_message_received(data)
     receive_data encode(data)
   end
 end

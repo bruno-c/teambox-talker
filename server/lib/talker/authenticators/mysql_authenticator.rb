@@ -6,13 +6,14 @@ module Talker
       EventedMysql.settings.update options
     end
     
-    def authenticate(room, user, token, &callback)
+    def authenticate(room_id, user_id, token, &callback)
       EventedMysql.select(<<-SQL) do |results|
           SELECT talker_token
           FROM users
           LEFT JOIN rooms ON rooms.account_id = users.account_id
-          WHERE users.name = '#{user}'
-            AND rooms.id = #{room.to_i}
+          WHERE users.id = #{user_id.to_i}
+            AND users.state = 'active'
+            AND rooms.id = #{room_id.to_i}
           LIMIT 1
         SQL
         
@@ -25,10 +26,5 @@ module Talker
         end
       end
     end
-    
-    private
-      def quote(s)
-        s.gsub(/\\/, '\&\&').gsub(/'/, "''")
-      end
   end
 end

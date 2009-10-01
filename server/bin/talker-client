@@ -4,9 +4,9 @@ $:.unshift File.dirname(__FILE__) + "/../lib"
 require "rubygems"
 require "talker"
 
-abort "usage: talker-client <room> <user> <auth token>" if ARGV.empty?
+abort "usage: talker-client <room> <user_id> <user_name> <auth token>" if ARGV.empty?
 
-room, user, token = ARGV[0..2]
+room, user_id, user_name, token = ARGV[0..3]
 
 module KeyboardInput
   include EM::Protocols::LineText2
@@ -17,6 +17,8 @@ module KeyboardInput
     case data
     when "/close"
       @client.close
+    when "/who", "/users"
+      puts @client.users.map { |id, u| u.name }.join(", ") + " are online"
     else
       @client.send_message(data)
     end
@@ -24,16 +26,21 @@ module KeyboardInput
 end
 
 EM.run do
-  Talker::Client.connect(:room => room, :user => user, :token => token) do |client|
-    client.on_message do |message|
-      case message["type"]
-      when "join", "leave"
-        puts message["user"] + " " + message["type"] + "s"
-      when "message"
-        puts message["from"] + ": " + message["content"]
-      when "present"
-        puts "(" + message["user"] + " is in the room)"
-      end
+  Talker::Client.connect(:room => room, :user => {:id => user_id, :name => user_name}, :token => token) do |client|
+    client.on_join do |user|
+      puts "#{user.name} joins"
+    end
+
+    client.on_leave do |user|
+      puts "#{user.name} left"
+    end
+    
+    client.on_presence do |user|
+      puts "(#{user.name} is in the room)"
+    end
+    
+    client.on_message do |user, message|
+      puts "#{user.name}: #{message}"
     end
     
     client.on_close do
