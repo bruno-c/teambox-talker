@@ -16,7 +16,9 @@ If the authentication is successful, the connection is left open and the server 
 
     {"type":"connected"}
 
-if not, the connection is closed after the following message is sent by the server:
+The client must wait for this message before sending any message or else an error will be returned and connection will be closed.
+
+If the authentication failed, the connection is closed after the following message is sent by the server:
 
     {"type":"error","message":"Authentication failed"}
 
