@@ -227,9 +227,7 @@ function TalkerClient(options) {
     self.connect = function(domain, port, room, user, token) {
         protocol = new LineProtocol(new TCPSocket());
         protocol.onopen = function() {
-          // Connect to Talker server
           self.sendData({type: "connect", room: room, user: user, token: token});
-          self.resetPing();
         }
         // XXX even though we are connecting to onclose, this never gets fired
         //     after we shutdown orbited.
