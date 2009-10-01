@@ -98,12 +98,8 @@ module Talker
         @users.delete(user.id)
         @on_leave.call(user) if @on_leave
       when "message"
-        unless user = @users[message["from"]]
-          # TODO protocol issue?
-          # raise "Received message from unknown user: " + message["from"].inspect +
-          #       ", known users are " + @users.keys.inspect
-          user = Talker::User.new("id" => message["from"])
-        end
+        user = Talker::User.new(message["user"])
+        @users[user.id] ||= user
         @on_message.call(user, message["content"]) if @on_message
       else
         raise Error, "unknown message type received from server: " + message["type"]

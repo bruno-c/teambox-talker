@@ -79,7 +79,7 @@ module Talker
     def broadcast_message(obj, to)
       room_required!
     
-      obj["from"] = @user.id
+      obj["user"] = @user.required_info
       
       if to
         obj["private"] = true

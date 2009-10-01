@@ -6,6 +6,10 @@ module Talker
       @info = info
     end
     
+    def required_info
+      @required_info ||= {"id" => id, "name" => name}
+    end
+    
     def id
       @id ||= @info["id"]
     end
