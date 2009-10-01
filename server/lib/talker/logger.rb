@@ -20,7 +20,7 @@ module Talker
       # TODO update existing message if partial?
       return unless message["final"]
       
-      user_id = message["from"]
+      user_id = message["user"]["id"]
       type = message["type"]
       uuid = message["id"]
       content = message["content"]

@@ -12,10 +12,11 @@ describe "'message' message" do
   end
   
   it "should be broadcasted to room" do
-    connect "test", "user_id", "tester"
+    connect "test", 1, "tester"
 
     message = { "type" => "message", "id" => "mid", "content" => "ohaie" }
-    sent_message = { "type" => "message", "id" => "mid", "content" => "ohaie", "from" => "user_id" }
+    sent_message = { "type" => "message", "id" => "mid", "content" => "ohaie",
+                     "user" => {"id" => 1, "name" => "tester"} }
     @connection.room.should_receive(:send_message).
                      with { |json| decode(json) == sent_message }
     
@@ -23,12 +24,13 @@ describe "'message' message" do
   end
   
   it "should be send as private" do
-    connect "test", "user_id", "tester"
+    connect "test", 1, "tester"
 
-    message = { "type" => "message", "id" => "mid", "content" => "ohaie", "to" => "bob" }
-    sent_message = { "type" => "message", "id" => "mid", "content" => "ohaie", "from" => "user_id", "private" => true }
+    message = { "type" => "message", "id" => "mid", "content" => "ohaie", "to" => 2 }
+    sent_message = { "type" => "message", "id" => "mid", "content" => "ohaie",
+                     "user" => {"id" => 1, "name" => "tester"}, "private" => true }
     @connection.room.should_receive(:send_private_message).
-                     with { |to, json| to == "bob" && decode(json) == sent_message }
+                     with { |to, json| to == 2 && decode(json) == sent_message }
     
     @connection.mock_message_received(message)
   end
