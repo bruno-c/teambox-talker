@@ -3,6 +3,7 @@
 - Deploy app on talkerapp.com to eat dog food ASAP!
 - Add user name to history
 ✓ Invite users by email
+- Remove "remember me" from login, should always do
 - Implement "Forgot my password"
 - Format messages (turn urls into links, show images, videos, etc.)
 - Server and room behind SSL
