@@ -8,9 +8,11 @@ Before sending and receiving messages in a room, the client must connect to the 
 
     {"type":"connect","room":"unique room id","user":{"id":"unique id","name":"user name",...},"token":"user secret token"}
 
-"room" being the unique number of the room,
-"user" is a hash containing the profile information of the user connecting to the room and
-"token" the authentication token for that user.
+Attributes:
+
+* "room" being the unique number of the room,
+* "user" is a hash containing the profile information of the user connecting to the room (id and name attributes are required, but other attributes can be passed) and
+* "token" the authentication token for that user.
 
 If the authentication is successful, the connection is left open and the server replies with:
 
@@ -28,12 +30,17 @@ A client connected to a room can send a public message like this:
 
     {"type":"message","content":"message to send","id":"unique message ID","final":true}
 
-"id" must be a UUID as described in http://www.ietf.org/rfc/rfc4122.txt.
-"final" must be true if this message wont be updated again and can be logged in the room history.
+Attributes:
+
+ * "id" must be a UUID as described in http://www.ietf.org/rfc/rfc4122.txt.
+ * "final" specifies that this message wont be updated again and delivery is required. Partial messages ("final":false) delivery is not guaranteed but faster.
 
 The server will broadcast the message to all online members of the room (including the sender) with this:
 
-    {"type":"message","content":"message to send","id":"unique message ID","from":"sender unique id"}
+    {"type":"message","content":"message to send","id":"unique message ID",
+     "user":{"id":"unique id","name":"user name"}}
+
+"user" being the required information of the sender (id and name, not profile picture, etc).
 
 To send a private message, add the "to" property:
 
@@ -41,7 +48,7 @@ To send a private message, add the "to" property:
 
 The server will send the message to the user in the room matching the name in to:
 
-    {"type":"message","content":"message to send","id":"unique message ID","from":"sender unique id","private":true}
+    {"type":"message","content":"message to send","id":"unique message ID","user":{"id":"unique id","name":"user name",...},"private":true}
 
 
 ## Presence
