@@ -81,6 +81,7 @@ var ChatRoom = {
       $(image).css({width: ChatRoom.maxImageWidth + 'px'});
     }
     image.style.visibility = 'visible';
+    ChatRoom.scrollToBottom();
   },
   
   onNewMessage: function(data) {
@@ -156,6 +157,11 @@ $(function() {
       ChatRoom.sendLater(this.value);
     }).
     focus();
+  
+  // reformat all messages loaded from db on first load
+  $('.content').each(function(){
+    this.innerHTML = ChatRoom.formatMessage(this.innerHTML)
+  });
   
   ChatRoom.newMessage();
   ChatRoom.onJoin({type: "join", user: currentUser.name});
