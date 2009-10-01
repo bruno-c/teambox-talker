@@ -147,7 +147,6 @@ var ChatRoom = {
 $(function() {
     $("#msgbox")
       .keydown(function(e) {
-        console.info("msgbox keydown" + e.which);
         if (e.which == 13) {
           ChatRoom.send(this.value, true);
           ChatRoom.newMessage();
