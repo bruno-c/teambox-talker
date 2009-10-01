@@ -114,11 +114,22 @@ var ChatRoom = {
   
   addNotice: function(data){
     console.info(data);
+    var msg_content = '';
+    switch(data.type){
+      case 'join': 
+      case 'leave':
+        msg_content = data.type + 's';
+        break
+      default:
+        msg_content = data.type;
+        break;
+    }
+    
     var element = $("<tr/>").
       addClass("event").
       addClass("notice").
       append($("<td/>").addClass("author").html(data.user)).
-      append($("<td/>").addClass("content").html(data.type + "s"));
+      append($("<td/>").addClass("content").html(data.type));
     
     if (ChatRoom.typing())
       element.appendTo("#log");
@@ -134,6 +145,10 @@ var ChatRoom = {
   onLeave: function(data) {
     $("ul#users li:contains('" + data.user + "')").remove();
     ChatRoom.addNotice(data);
+  },
+  
+  onClose: function(){
+    ChatRoom.addNotice({user:"System", type: "the persistent connection to talker is not active."});
   }
 };
 
@@ -145,6 +160,7 @@ function TalkerClient(options) {
     var protocol = null;
     var buffer = "";
     var remainingBodyLength = null;
+    self.options = options;
 
     // LineProtocol implementation.
     function onLineReceived(line) {
@@ -179,11 +195,15 @@ function TalkerClient(options) {
       if (self.pingInterval) clearInterval(self.pingInterval);
       self.pingInterval = setInterval(function(){
         self.ping();
-      }, 20000);
+      }, 5000);
     };
     
     self.ping = function(){
-      protocol.send(JSON.encode({type: 'ping'}));
+      if (self.reconnect){
+        location.reload();
+      }else{
+        protocol.send(JSON.encode({type: 'ping'}));
+      }
     };
     
     // Methods
@@ -192,21 +212,29 @@ function TalkerClient(options) {
       self.resetPing();
     };
 
-    self.connect = function(domain, port, room, user, token) {
-        protocol = new LineProtocol(new TCPSocket());
-        protocol.onopen = function() {
-          self.sendData({type: "connect", room: room, user: user, token: token});
-        }
-        // XXX even though we are connecting to onclose, this never gets fired
-        //     after we shutdown orbited.
-        protocol.onclose = function() { console.warn("TalkerClient:closed"); }
-        // TODO what should we do when there is a protocol error?
-        protocol.onerror = function(error) { console.error(error); }
-        protocol.onlinereceived = onLineReceived;
-        protocol.onrawdatareceived = onRawDataReceived;
-        protocol.open(domain, port, true);
-        
-        $(window).bind('beforeunload', function() { self.close() });
+    self.connect = function() {
+      protocol = new LineProtocol(new TCPSocket());
+      protocol.onopen = function() {
+        self.sendData({
+          type: "connect", 
+          room: self.options.room, 
+          user: self.options.user, 
+          token: self.options.token
+        });
+      }
+      // XXX even though we are connecting to onclose, this never gets fired
+      //     after we shutdown orbited.
+      protocol.onclose = function() {
+        self.reconnect = true;
+        ChatRoom.onClose();
+      }
+      // TODO what should we do when there is a protocol error?
+      protocol.onerror = function(error) { console.error(error); }
+      protocol.onlinereceived = onLineReceived;
+      protocol.onrawdatareceived = onRawDataReceived;
+      protocol.open(self.options.host, self.options.port, true);
+      
+      $(window).bind('beforeunload', function() { self.close() });
     };
 
     self.close = function() {
