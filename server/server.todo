@@ -1,5 +1,7 @@
+- Delete user queue if unused for 30-60 sec (can RabbitMQ handle that?)
+- Test case of the same user connecting to the same room twice
 ✓ Handle timeout of clients
-- Send list of online users when new user connects
-- Log message history
+✓ Send list of online users when new user connects
+✓ Log message history
 ✓ Support clustering / redundancy (handled by AMQP)
 ✓ Resend possibly lost messages on reconnect (handled by AMQP)

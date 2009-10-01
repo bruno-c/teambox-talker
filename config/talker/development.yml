@@ -7,7 +7,7 @@ talker:
   port: 61800
   descriptor_table_size: 4096
   user: marc
-  logger: true
+  logger: :debug # log to stdout
 
 database:
   database: talker_development

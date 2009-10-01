@@ -6,6 +6,7 @@ require "amqp"
 # Preload core classes
 require "talker/server"
 require "talker/room"
+require "talker/user"
 require "talker/connection"
 
 $TALKER_DEBUG = false

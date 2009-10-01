@@ -3,7 +3,8 @@
 - Deploy app on talkerapp.com to eat dog food ASAP!
 - Add user name to history
 ✓ Invite users by email
+- Remove "remember me" from login, should always do
 - Implement "Forgot my password"
 - Format messages (turn urls into links, show images, videos, etc.)
-- Server and room being SSL
+- Server and room behind SSL
 - Use Flash sockets if present http://github.com/tmm1/jssocket (??)

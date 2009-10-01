@@ -7,7 +7,7 @@ module Talker
     
     class Error < RuntimeError; end
     
-    attr_accessor :room, :user, :token
+    attr_accessor :room, :user, :token, :users
     
     def self.connect(options={})
       host = options[:host] || Talker::Server::DEFAULT_HOST
@@ -24,12 +24,28 @@ module Talker
       end
     end
     
-    def on_open(&block)
-      @on_open = block
+    def initialize
+      @users = {}
+    end
+    
+    def on_connected(&block)
+      @on_connected = block
     end
 
     def on_message(&block)
       @on_message = block
+    end
+
+    def on_join(&block)
+      @on_join = block
+    end
+
+    def on_presence(&block)
+      @on_presence = block
+    end
+
+    def on_leave(&block)
+      @on_leave = block
     end
 
     def on_close(&block)
@@ -45,9 +61,10 @@ module Talker
     end
     
     def connection_completed
-      send "type" => "connect", "room" => @room, "user" => @user, "token" => @token
+      @user = Talker::User.new("id" => @user[:id], "name" => @user[:name])
+      send "type" => "connect", "room" => @room, "user" => @user.info, "token" => @token
+      @users[@user.id] = @user
       EM.add_periodic_timer(20) { send "type" => "ping" }
-      @on_open.call if @on_open
     end
     
     def close
@@ -62,13 +79,35 @@ module Talker
     
     def object_parsed(message)
       case message["type"]
+      when "connected"
+        @on_connected.call if @on_connected
       when "error"
         raise Error, message["message"]
+      when "present"
+        user = Talker::User.new(message["user"])
+        @users[user.id] = user
+        @on_presence.call(user) if @on_presence
       when "join"
-        send "type" => "present", "to" => message["user"]
+        user = Talker::User.new(message["user"])
+        unless user.id == @user.id
+          @users[user.id] = user
+          send "type" => "present", "to" => user.id
+          @on_join.call(user) if @on_join
+        end
+      when "leave"
+        user = Talker::User.new(message["user"])
+        @users.delete(user.id)
+        @on_leave.call(user) if @on_leave
+      when "message"
+        @on_message.call(@users[message["from"]], message["content"]) if @on_message
+      else
+        raise Error, "unknown message type received from server: " + message["type"]
       end
-      
-      @on_message.call(message) if @on_message
+    rescue
+      puts "Error while processing: #{message.inspect}"
+      puts $!
+      puts $@.join("\n")
+      close
     end
     
     def receive_data(data)

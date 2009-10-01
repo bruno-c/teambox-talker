@@ -16,16 +16,18 @@ module Talker
       end
     end
     
-    def message_received(room, message)
-      # TODO update existing message if partial
+    def message_received(room_id, message)
+      # TODO update existing message if partial?
       return unless message["final"]
+      
+      user_id = message["from"]
       type = message["type"]
       uuid = message["id"]
       content = message["content"]
-      # TODO user id or user name now?
+      
       EventedMysql.insert(<<-SQL)
         INSERT INTO events (room_id, user_id, type, uuid, message)
-        VALUES (#{room.to_i}, 1, '#{quote(type)}', '#{quote(uuid)}', '#{quote(content)}')
+        VALUES (#{room.to_i}, #{user_id.to_i}, '#{quote(type)}', '#{quote(uuid)}', '#{quote(content)}')
       SQL
     end
     

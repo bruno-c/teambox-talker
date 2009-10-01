@@ -1,18 +1,24 @@
 # Talker Protocol
-This protocol describes how a Talker client communicates with the server. While similar to XMPP, this protocol is focusing on multi-user chat, low bandwidth, simplicity and efficient usage of resources by the server.
+This protocol describes how a Talker client communicates with the server. While similar to XMPP, this protocol is focusing on multi-user chat, low bandwidth, simplicity, efficiency and allows updating previous messages.
 
-All messages are in JSON format. They contain a hash ({...}) and end with a line break (\n). The hash will contain a type element that will define the type of message. See the following sections for a description of each type of message.
+All messages are in JSON format. They contain a hash ({...}) and end with a line break (\n). The hash will contain a type property that will define the type of message. See the following sections for a description of each type of message.
 
 ## Authentication
 Before sending and receiving messages in a room, the client must connect to the room by sending the following message:
 
-    {"type":"connect","room":"0000","user":"user name","token":"user secret token"}
+    {"type":"connect","room":"unique room id","user":{"id":"unique id","name":"user name",...},"token":"user secret token"}
 
 "room" being the unique number of the room,
-"user" the name of the user connecting to the room and
+"user" is a hash containing the profile information of the user connecting to the room and
 "token" the authentication token for that user.
 
-If the authentication is successful, the connection is left open, if not, the connection is closed after the following message is sent by the server:
+If the authentication is successful, the connection is left open and the server replies with:
+
+    {"type":"connected"}
+
+The client must wait for this message before sending any message or else an error will be returned and connection will be closed.
+
+If the authentication failed, the connection is closed after the following message is sent by the server:
 
     {"type":"error","message":"Authentication failed"}
 
@@ -20,39 +26,40 @@ If the authentication is successful, the connection is left open, if not, the co
 There are two types of messages: partial and final. Partial messages are sent by the client while live-typing and do not contain the full message, delivery of those messages is faster but not guaranteed. Final messages are sent once the user has hit enter and can no longer modify the message, delivery of those messages is guaranteed.
 A client connected to a room can send a public message like this:
 
-    {"type":"message","content":"message to send","id":"unique message ID"}
+    {"type":"message","content":"message to send","id":"unique message ID","final":true}
 
 "id" must be a UUID as described in http://www.ietf.org/rfc/rfc4122.txt.
+"final" must be true if this message wont be updated again and can be logged in the room history.
 
 The server will broadcast the message to all online members of the room (including the sender) with this:
 
-    {"type":"message","content":"message to send","id":"unique message ID","from":"user name"}
+    {"type":"message","content":"message to send","id":"unique message ID","from":"sender unique id"}
 
-To send a private message, add the "to" attribute:
+To send a private message, add the "to" property:
 
-    {"type":"message","content":"message to send","id":"unique message ID","to":"someone"}
+    {"type":"message","content":"message to send","id":"unique message ID","to":"recipient unique id"}
 
 The server will send the message to the user in the room matching the name in to:
 
-    {"type":"message","content":"message to send","id":"unique message ID","from":"user name","private":true}
+    {"type":"message","content":"message to send","id":"unique message ID","from":"sender unique id","private":true}
 
 
 ## Presence
 When a client connects to a room, the following message will be sent to all online members of the room:
 
-    {"type":"join","user":"user name"}
+    {"type":"join","user":{"id":"unique id","name":"user name",...}}
 
 Members of the room must reply with the follow message stating their presence:
 
-    {"type":"present","to":"new user name"}
+    {"type":"present","to":"new user unique id"}
 
 The server will send this message to the new user:
 
-    {"type":"present","user":"sender name"}
+    {"type":"present","user":{"id":"unique id","name":"user name",...}}
 
 When a client close connection to a room, the server sends the following message to all online members of the room:
 
-    {"type":"leave","user":"user name"}
+    {"type":"leave","user":"user unique id"}
 
 ## Pinging
 In order to keep the connection open, a client must send pings to the server when there is no activity (no message sent or received) on the connection for more then 30 seconds.
