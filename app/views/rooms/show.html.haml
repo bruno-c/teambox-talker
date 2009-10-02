@@ -8,16 +8,19 @@
     
     $(function() {
       document.domain = document.domain;
-      client = new TalkerClient({onNewMessage: ChatRoom.onNewMessage, onJoin: ChatRoom.onJoin, onLeave: ChatRoom.onLeave});
+      client = new TalkerClient({
+        host: '#{Orbited.talker_host}', 
+        port: #{Orbited.talker_port}, 
+        room: #{@room.id}, 
+        user: #{{:id => current_user.id, :name => current_user.name}.to_json},
+        token: #{current_user.talker_token.to_json},
+        onNewMessage: ChatRoom.onNewMessage, 
+        onJoin: ChatRoom.onJoin, 
+        onLeave: ChatRoom.onLeave
+      });
       ChatRoom.client = client;
       // "user":{"id":"unique id","name":"user name",...}
-      client.connect(
-        '#{Orbited.talker_host}', 
-        #{Orbited.talker_port}, 
-        #{@room.id}, 
-        #{{:id => current_user.id, :name => current_user.name}.to_json},
-        #{current_user.talker_token.to_json}
-      );
+      client.connect();
     });
     
 
