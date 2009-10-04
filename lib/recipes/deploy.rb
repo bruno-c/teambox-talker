@@ -1,6 +1,6 @@
 namespace :deploy do
   def god(command)
-    run "god #{command} thin-talker"
+    sudo "god #{command} thin-talker"
   end
   
   [:monitor, :start, :stop, :restart].each do |command|
