@@ -1,0 +1,18 @@
+development:
+  adapter: mysql
+  encoding: utf8
+  reconnect: false
+  database: talker_development
+  pool: 5
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+test:
+  adapter: mysql
+  encoding: utf8
+  reconnect: false
+  database: talker_test
+  pool: 5
+  username: root
+  password:
+  socket: /tmp/mysql.sock
