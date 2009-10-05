@@ -1,17 +1,43 @@
 #!/usr/bin/env ruby
 $:.unshift File.dirname(__FILE__) + "/../lib"
+require "optparse"
 require "rubygems"
 require "talker"
 
-abort "usage: talker-logger [config_file.yml]" unless ARGV.first
+amqp_host = "localhost"
+amqp_port = 5672
+db = {
+  :database => "talker_development",
+  :username => "root",
+  :password => "",
+  :host => "localhost"
+}
 
-config = Talker::Config.new(ARGV.first)
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
+
+  opts.separator "AMQP"
+  opts.on("--amqp-host HOST", "AMQP Server host")         { |x| amqp_host = x }
+  opts.on("--amqp-port NUM", "AMQP Server port")          { |x| amqp_port = x.to_i }
+  
+  opts.separator "Logging"
+  opts.on("--database", "Database name")                  { |x| db[:database] = x }
+  opts.on("--username", "Database username")              { |x| db[:username] = x }
+  opts.on("--password", "Database password")              { |x| db[:password] = x }
+  opts.on("--host", "Database host")                      { |x| db[:host] = x }
+  
+  opts.separator ""
+  opts.on_tail("-h", "--help", "Show this message")       { puts opts; exit }
+end.parse!(ARGV)
+
 
 trap('INT') do
   AMQP.stop { EM.stop }
 end
 
 EM.run do
-  AMQP.connect config[:amqp]
-  Talker::Logger.start config[:database]
+  puts "Connected to AMQP on #{amqp_host}:#{amqp_port}"
+  AMQP.connect :host => amqp_host, :port => amqp_port
+  puts "Logging to #{db[:database]}@#{db[:host]}"
+  Talker::Logger.start db
 end

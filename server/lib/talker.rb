@@ -13,7 +13,6 @@ $TALKER_DEBUG = false
 
 # Lazy load optional classes
 module Talker
-  autoload :Config, "talker/config"
   autoload :Client, "talker/client"
   autoload :Logger, "talker/logger"
   

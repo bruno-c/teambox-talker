@@ -1,22 +1,65 @@
 #!/usr/bin/env ruby
 $:.unshift File.dirname(__FILE__) + "/../lib"
+require "optparse"
 require "rubygems"
 require "talker"
 
-abort "usage: talker [config_file.yml]" unless ARGV.first
+host = Talker::Server::DEFAULT_HOST
+port = Talker::Server::DEFAULT_PORT
+amqp_host = "localhost"
+amqp_port = 5672
+descriptor_table_size = 4096
+user = nil
+logger = true
+auth = {
+  :database => "talker_development",
+  :username => "root",
+  :password => "",
+  :host => "localhost"
+}
 
-config = Talker::Config.new(ARGV.first)
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{$PROGRAM_NAME} [options]"
+
+  opts.separator "Server"
+  opts.on("--host HOST", "Server host")                   { |x| host = x }
+  opts.on("-p", "--port NUM", "Server port")              { |x| port = x.to_i }
+  
+  opts.separator "AMQP"
+  opts.on("--amqp-host HOST", "AMQP Server host")         { |x| amqp_host = x }
+  opts.on("--amqp-port NUM", "AMQP Server port")          { |x| amqp_port = x.to_i }
+  
+  opts.separator "Limits"
+  opts.on("--descriptors NUM", "Descriptor table size")   { |x| descriptor_table_size = x.to_i }
+  opts.on("--user NAME", "Running user")                  { |x| user = x }
+  
+  opts.separator "Logging"
+  opts.on("--logger FILE", "Log to file")                 { |x| logger = x }
+  opts.on("-d", "--debug", "Debug mode")                  { |x| logger = :debug }
+  opts.on("-q", "--quiet", "Disable log")                 { |x| logger = false }
+  
+  opts.separator "Authentication"
+  opts.on("--no-auth", "Disable authentication")          { |x| auth = nil }
+  opts.on("--database", "Database name")                  { |x| auth[:database] = x }
+  opts.on("--username", "Database username")              { |x| auth[:username] = x }
+  opts.on("--password", "Database password")              { |x| auth[:password] = x }
+  opts.on("--db-host", "Database host")                   { |x| auth[:host] = x }
+  
+  opts.separator ""
+  opts.on_tail("-h", "--help", "Show this message")       { puts opts; exit }
+end.parse!(ARGV)
+
 
 EM.run do
-  puts "Connected to AMQP on #{config[:amqp][:host]}:#{config[:amqp][:port]}"
-  AMQP.connect config[:amqp]
+  puts "Connected to AMQP on #{amqp_host}:#{amqp_port}"
+  AMQP.connect :host => amqp_host, :port => amqp_port
   
-  server = Talker::Server.new(config[:talker])
-  if config[:talker][:no_auth]
+  server = Talker::Server.new(:host => host, :port => port, :logger => logger, :user => user)
+  if auth.nil?
     puts "!! WARNING starting server with authentication disabled !!"
     server.authenticator = Talker::NullAuthenticator.new
   else
-    server.authenticator = Talker::MysqlAuthenticator.new(config[:database])
+    server.authenticator = Talker::MysqlAuthenticator.new(auth)
   end
   
   trap('INT') do

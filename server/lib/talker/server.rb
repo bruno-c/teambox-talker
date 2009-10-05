@@ -4,7 +4,7 @@ module Talker
   class Server
     DEFAULT_HOST = "0.0.0.0"
     DEFAULT_TIMEOUT = 30.0 # sec
-    DEFAULT_PORT = 61800
+    DEFAULT_PORT = 8500
     
     attr_reader :host, :port, :rooms
     attr_accessor :logger, :authenticator
