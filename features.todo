@@ -5,3 +5,4 @@
 - Format messages (turn urls into links, show images, videos, etc.)
 - Server and room behind SSL
 - Use Flash sockets if present http://github.com/tmm1/jssocket (??)
+- Import Campfire logs (using tinder)
