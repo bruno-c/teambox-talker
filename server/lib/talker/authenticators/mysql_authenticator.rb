@@ -10,7 +10,7 @@ module Talker
       EventedMysql.select(<<-SQL) do |results|
           SELECT talker_token
           FROM users
-          LEFT JOIN rooms ON rooms.account_id = users.account_id
+          INNER JOIN rooms ON rooms.account_id = users.account_id
           WHERE users.id = #{user_id.to_i}
             AND users.state = 'active'
             AND rooms.id = #{room_id.to_i}
