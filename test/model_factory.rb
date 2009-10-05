@@ -4,7 +4,7 @@ module ModelFactory
   end
   
   def hash_for_account(attributes={})
-    { :subdomain => 'super-awesome' }.merge(attributes)
+    { :subdomain => 'super-awesome', :invitation_code => Account::INVITATION_CODE }.merge(attributes)
   end
   
   def hash_for_room(attributes={})
