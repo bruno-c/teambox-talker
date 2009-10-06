@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090924200950) do
+ActiveRecord::Schema.define(:version => 20091006183342) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -46,19 +46,18 @@ ActiveRecord::Schema.define(:version => 20090924200950) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name",                      :limit => 100, :default => ""
-    t.string   "email",                     :limit => 100
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
+    t.string   "name",             :limit => 100, :default => ""
+    t.string   "email",            :limit => 100
+    t.string   "crypted_password", :limit => 40
+    t.string   "salt",             :limit => 40
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "remember_token",            :limit => 40
-    t.datetime "remember_token_expires_at"
+    t.string   "remember_token",   :limit => 40
     t.integer  "account_id"
     t.string   "talker_token"
     t.string   "perishable_token"
-    t.boolean  "admin",                                    :default => false
-    t.string   "state",                                    :default => "pending"
+    t.boolean  "admin",                           :default => false
+    t.string   "state",                           :default => "pending"
     t.datetime "deleted_at"
     t.datetime "activated_at"
   end

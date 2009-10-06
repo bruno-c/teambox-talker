@@ -18,6 +18,7 @@ class AccountsController < ApplicationController
       @account.save!
       @user.activate!
       self.current_user = @user
+      remember_me!
 
       flash[:notice] = "Thanks for signing up!"
       redirect_to home_url(@account)

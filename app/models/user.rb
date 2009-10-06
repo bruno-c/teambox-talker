@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
-  include Authentication::ByCookieToken
   
   belongs_to :account
   
@@ -43,6 +42,20 @@ class User < ActiveRecord::Base
   
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
+  end
+  
+  def remember_token?
+    remember_token.present?
+  end
+  
+  def remember_me
+    self.remember_token = self.class.make_token
+    save(false)
+  end
+  
+  def forget_me
+    self.remember_token = nil
+    save(false)
   end
   
   # Token used to authenticate the user in Talker server
