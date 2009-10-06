@@ -8,6 +8,8 @@ class UsersController < ApplicationController
   def update
     @user = current_account.users.find(params[:id])
 
+    head :error and return if @user == current_user
+
     if params[:admin]
       @user.admin = params[:admin] == "1"
     end
