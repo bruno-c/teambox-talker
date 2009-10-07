@@ -1,3 +1,2 @@
 #!/usr/bin/env ruby
-env = ENV["RAILS_ENV"] || "development"
-exec "orbited -c config/orbited/#{env}.cfg"
+exec "orbited -c config/orbited.cfg"

@@ -3,6 +3,8 @@ echo "Starting all services ..."
 echo "Don't you touch anything until you see 3 new tabs in your console."
 thin start -d
 echo "  thin started as a daemon (stop with 'thin stop')"
+script/tab script/orbited
+echo "  orbited started in a tab"
 script/tab script/rabbitmq
 echo "  rabbitmq started in a tab"
 script/tab script/talker
