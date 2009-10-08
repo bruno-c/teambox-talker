@@ -54,7 +54,8 @@ EM.run do
   puts "Connected to AMQP on #{amqp_host}:#{amqp_port}"
   AMQP.connect :host => amqp_host, :port => amqp_port
   
-  server = Talker::Server.new(:host => host, :port => port, :logger => logger, :user => user)
+  server = Talker::Server.new(:host => host, :port => port, :logger => logger, :user => user,
+                              :descriptor_table_size => descriptor_table_size)
   puts "Descriptor table size set to #{server.descriptor_table_size}"
 
   if auth.nil?
