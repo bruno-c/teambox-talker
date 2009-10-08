@@ -11,4 +11,8 @@ class Event < ActiveRecord::Base
   def type
     self[:type]
   end
+  
+  def notice?
+    type == "join" || type == "leave"
+  end
 end
