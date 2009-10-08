@@ -10,3 +10,9 @@
 - Use Flash sockets if present http://github.com/tmm1/jssocket (??)
 - Import Campfire logs (using tinder)
 - reconnect without a page refresh when a connection error occurs
+- esc key removes current typed message and puts text box back to the bottom
+- remove messages when there are more than x amount (perhaps with a click to load more messages)
+- ensure that higher ascii codes are supported.
+- only send temporary message when there is a difference in characters between each interval
+- lone character should be removed when you cancel a message with back space.
+- configure support for multiline/pasting.
