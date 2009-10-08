@@ -28,7 +28,7 @@ function TalkerClient(options) {
         options.onLeave(line);
         break;
       case 'error':
-        alert("An unfortunate error occured.  At least no one got hurt. (" + line.message + ")");
+        console.error("An unfortunate error occured.  At least no one got hurt. (" + line.message + ")");
         break;
     } 
   }
