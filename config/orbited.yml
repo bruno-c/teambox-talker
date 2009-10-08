@@ -8,6 +8,6 @@ test:
 
 production:
   port: 80
-  talker_host: talkerapp.com
+  talker_host: localhost
   talker_port: 8500
   
