@@ -84,10 +84,10 @@ function TalkerClient(options) {
   };
 
   self.close = function() {
-      self.sendData({type: "close"});
+    self.sendData({type: "close"});
   };
   self.reset = function() {
-      protocol.reset();
+    protocol.reset();
   }
   self.send = function(message) {
     message.type = "message";

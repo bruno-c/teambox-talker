@@ -873,7 +873,8 @@ body {
   width: auto; }
   #room #log .event .author {
     vertical-align: top;
-    font-weight: bold; }
+    font-weight: bold;
+    text-align: right; }
   #room #log .event .content {
     width: 100%;
     border-bottom: solid 1px #eee; }

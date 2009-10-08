@@ -81,7 +81,7 @@ var ChatRoom = {
   onNewMessage: function(data) {
     var message = ChatRoom.messages[data.id];
     if (!message) {
-      message = ChatRoom.messages[data.id] = new Message(data.from, data.id);
+      message = ChatRoom.messages[data.id] = new Message(data.user, data.id);
       message.createElement();
     }
     
@@ -128,7 +128,7 @@ var ChatRoom = {
     var element = $("<tr/>").
       addClass("event").
       addClass("notice").
-      append($("<td/>").addClass("author").html(data.user)).
+      append($("<td/>").addClass("author").html(data.user.name)).
       append($("<td/>").addClass("content").html(data.type));
     
     if (ChatRoom.typing())
@@ -148,12 +148,12 @@ var ChatRoom = {
   },
   
   onClose: function(){
-    ChatRoom.addNotice({user:"System", type: "the persistent connection to talker is not active."});
+    ChatRoom.addNotice({user: {id:0,name:"System"}, type: "the persistent connection to talker is not active."});
   }
 };
 
-function Message(from, uuid) {
-  this.from = from;
+function Message(user, uuid) {
+  this.user = user;
   this.uuid = uuid || Math.uuid();
   this.elementId = "message-" + this.uuid;
   
@@ -171,7 +171,7 @@ function Message(from, uuid) {
         addClass("message").
         addClass("partial").
         attr("id", this.elementId).
-        append($("<td/>").addClass("author").html(this.from)).
+        append($("<td/>").addClass("author").html(this.user.name)).
         append($("<td/>").addClass("content").html(this.content || "")).
         appendTo($("#log"));
     }
