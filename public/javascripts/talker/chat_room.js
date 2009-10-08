@@ -1,26 +1,30 @@
 $(function() {
-    $("#msgbox")
-      .keydown(function(e) {
-        if (e.which == 13) {
-          ChatRoom.send(this.value, true);
-          ChatRoom.newMessage();
-          return false;
-        }
-      })
-      .keyup(function(e) {
-        if (e.which == 65) { // space
-          ChatRoom.send(this.value);
-        } else {
-          ChatRoom.sendLater(this.value);
-        }
-      });
-    
-    // reformat all messages loaded from db on first load
-    $('.content').each(function(something, element){
-      element.innerHTML = ChatRoom.formatMessage(this.innerHTML, true);
+  $("#msgbox")
+    .keydown(function(e) {
+      if (e.which == 13) {
+        ChatRoom.send(this.value, true);
+        ChatRoom.newMessage();
+        return false;
+      }
+    })
+    .keyup(function(e) {
+      if (e.which == 65) { // space
+        ChatRoom.send(this.value);
+      } else {
+        ChatRoom.sendLater(this.value);
+      }
     });
+   
+  // reformat all messages loaded from db on first load
+  $('.content').each(function(something, element){
+    element.innerHTML = ChatRoom.formatMessage(this.innerHTML, true);
+  });
 
-    ChatRoom.newMessage();
+  ChatRoom.newMessage();
+  
+  $(window).keypress(function(e){
+	console.info(e.which);
+  });
 });
 
 var ChatRoom = {

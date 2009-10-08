@@ -8,4 +8,3 @@
 - Server and room behind SSL
 - Use Flash sockets if present http://github.com/tmm1/jssocket (??)
 - Import Campfire logs (using tinder)
-- reconnect without a page refresh when a connection error occurs
