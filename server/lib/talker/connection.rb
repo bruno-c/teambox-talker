@@ -40,7 +40,7 @@ module Talker
     rescue ProtocolError => e
       error e.message
     rescue Exception => e
-      logger.error("[Error from #{socket_address}] " + e.to_s + ": " + e.backtrace.join("\n"))
+      logger.error("[Error] " + e.to_s + ": " + e.backtrace.join("\n"))
       handle_error e, "Error processing command"
     end
     
@@ -165,12 +165,6 @@ module Talker
     
       def logger
         @server.logger
-      end
-    
-      def socket_address
-        Socket.unpack_sockaddr_in(get_peername)[1]
-      rescue
-        "?"
       end
   end
 end
