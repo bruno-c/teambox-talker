@@ -41,7 +41,7 @@ OptionParser.new do |opts|
   opts.separator "Authentication"
   opts.on("--no-auth", "Disable authentication")          { |x| auth = nil }
   opts.on("--database NAME", "Database name")             { |x| auth[:database] = x }
-  opts.on("--username NAME", "Database username")         { |x| auth[:username] = x }
+  opts.on("--username NAME", "Database username")         { |x| auth[:user] = x }
   opts.on("--password VALUE", "Database password")        { |x| auth[:password] = x }
   opts.on("--db-host NAME", "Database host")              { |x| auth[:host] = x }
   
