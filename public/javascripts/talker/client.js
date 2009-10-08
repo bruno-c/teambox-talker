@@ -20,7 +20,7 @@ function TalkerClient(options) {
         options.onNewMessage(line);
         break;
       case 'join':
-        self.sendData({type: "present", to: line.user});
+        self.sendData({type: "present", to: line.user.id});
       case 'present':
         options.onJoin(line);
         break;
