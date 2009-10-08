@@ -8,7 +8,11 @@ $(function() {
         }
       })
       .keyup(function(e) {
-        ChatRoom.sendLater(this.value);
+        if (e.which == 65) { // space
+          ChatRoom.send(this.value);
+        } else {
+          ChatRoom.sendLater(this.value);
+        }
       });
     
     // reformat all messages loaded from db on first load

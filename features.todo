@@ -1,4 +1,5 @@
 - Deploy app on talkerapp.com to eat dog food ASAP!
+- Server must send leave message when session expires
 ✓ Add user name to history
 ✓ Remove "remember me" from login, should always do
 - Implement "Forgot my password"
