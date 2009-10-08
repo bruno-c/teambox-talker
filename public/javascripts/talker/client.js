@@ -12,7 +12,7 @@ function TalkerClient(options) {
   function onLineReceived(line) {
     var line = eval('(' + line + ')');
     
-    console.info("TalkerClient::onLineReceived" + line);
+    console.info("TalkerClient::onLineReceived" + (line.user.id) + " : " + line.message);
     
     // ugly shit but this will be refactored.
     switch(line.type){
