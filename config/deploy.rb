@@ -10,7 +10,7 @@ set :user, "admin"
 
 set :scm, :git
 
-server = "ec2-67-202-7-88.compute-1.amazonaws.com"
+server = "ec2-174-129-29-3.compute-1.amazonaws.com"
 role :app, server
 role :web, server
 role :db,  server, :primary => true
