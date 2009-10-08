@@ -8,7 +8,11 @@ $(function() {
         }
       })
       .keyup(function(e) {
-        ChatRoom.sendLater(this.value);
+        if (e.which == 65) { // space
+          ChatRoom.send(this.value);
+        } else {
+          ChatRoom.sendLater(this.value);
+        }
       });
     
     // reformat all messages loaded from db on first load
@@ -48,7 +52,7 @@ var ChatRoom = {
   
   newMessage: function() {
     if (this.currentMessage) this.currentMessage.createElement().insertBefore($("#message"));
-    this.currentMessage = new Message(currentUser.name);
+    this.currentMessage = new Message(currentUser);
     this.messages[this.currentMessage.uuid] = this.currentMessage;
     
     // Move the new message form to the bottom
@@ -81,7 +85,7 @@ var ChatRoom = {
   onNewMessage: function(data) {
     var message = ChatRoom.messages[data.id];
     if (!message) {
-      message = ChatRoom.messages[data.id] = new Message(data.from, data.id);
+      message = ChatRoom.messages[data.id] = new Message(data.user, data.id);
       message.createElement();
     }
     
@@ -128,13 +132,15 @@ var ChatRoom = {
     var element = $("<tr/>").
       addClass("event").
       addClass("notice").
-      append($("<td/>").addClass("author").html(data.user)).
+      append($("<td/>").addClass("author").html(data.user.name)).
       append($("<td/>").addClass("content").html(data.type));
     
-    if (ChatRoom.typing())
+    if (ChatRoom.typing()){
       element.appendTo("#log");
-    else
+    } else {
       element.insertBefore("#message");
+    }
+    ChatRoom.scrollToBottom();
   },
   
   onJoin: function(data) {
@@ -148,12 +154,12 @@ var ChatRoom = {
   },
   
   onClose: function(){
-    ChatRoom.addNotice({user:"System", type: "the persistent connection to talker is not active."});
+    ChatRoom.addNotice({user: {id:0,name:"System"}, type: "the persistent connection to talker is not active."});
   }
 };
 
-function Message(from, uuid) {
-  this.from = from;
+function Message(user, uuid) {
+  this.user = user;
   this.uuid = uuid || Math.uuid();
   this.elementId = "message-" + this.uuid;
   
@@ -164,14 +170,14 @@ function Message(from, uuid) {
   
   this.createElement = function() {
     // Create of find the message HTML element
-    this.element = $("#log").find("#" + this.elementId);
+    this.element = $("#" + this.elementId);
     if (this.element.length == 0) {
       this.element = $("<tr/>").
         addClass("event").
         addClass("message").
         addClass("partial").
         attr("id", this.elementId).
-        append($("<td/>").addClass("author").html(this.from)).
+        append($("<td/>").addClass("author").html(this.user.name)).
         append($("<td/>").addClass("content").html(this.content || "")).
         appendTo($("#log"));
     }

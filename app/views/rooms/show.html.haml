@@ -16,11 +16,21 @@
         token: #{current_user.talker_token.to_json},
         onNewMessage: ChatRoom.onNewMessage, 
         onJoin: ChatRoom.onJoin, 
-        onLeave: ChatRoom.onLeave
+        onLeave: ChatRoom.onLeave,
+        onClose: ChatRoom.onClose
       });
       ChatRoom.client = client;
       // "user":{"id":"unique id","name":"user name",...}
       client.connect();
+      $(window).bind('beforeunload', function() { client.reset() });
+      $("a#leave").click(function() {
+        client.close();
+        var link = this;
+        client.options.onClose = function() {
+          window.location = link.href;
+        }
+        return false;
+      });
     });
     
 
@@ -30,6 +40,8 @@
   #sidebar
     %h1&= @room.name
     %p&= @room.description
+    %p
+      = link_to "Leave", rooms_path, :id => "leave"
     %h2 Users
     %ul#users
       = render :partial => "user", :collection => @room.users

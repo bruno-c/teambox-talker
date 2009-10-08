@@ -20,7 +20,7 @@ function TalkerClient(options) {
         options.onNewMessage(line);
         break;
       case 'join':
-        self.sendData({type: "present", to: line.user});
+        self.sendData({type: "present", to: line.user.id});
       case 'present':
         options.onJoin(line);
         break;
@@ -72,22 +72,20 @@ function TalkerClient(options) {
     //     after we shutdown orbited.
     protocol.onclose = function() {
       self.reconnect = true;
-      ChatRoom.onClose();
+      options.onClose();
     }
     // TODO what should we do when there is a protocol error?
     protocol.onerror = function(error) { console.error(error); }
     protocol.onlinereceived = onLineReceived;
     protocol.onrawdatareceived = onRawDataReceived;
     protocol.open(self.options.host, self.options.port, true);
-    
-    $(window).bind('beforeunload', function() { self.close() });
   };
 
   self.close = function() {
-      self.sendData({type: "close"});
+    self.sendData({type: "close"});
   };
   self.reset = function() {
-      protocol.reset();
+    protocol.reset();
   }
   self.send = function(message) {
     message.type = "message";
