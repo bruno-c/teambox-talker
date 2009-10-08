@@ -55,6 +55,8 @@ EM.run do
   AMQP.connect :host => amqp_host, :port => amqp_port
   
   server = Talker::Server.new(:host => host, :port => port, :logger => logger, :user => user)
+  puts "Descriptor table size set to #{server.descriptor_table_size}"
+
   if auth.nil?
     puts "!! WARNING starting server with authentication disabled !!"
     server.authenticator = Talker::NullAuthenticator.new

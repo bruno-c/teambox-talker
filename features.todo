@@ -1,4 +1,3 @@
-- Deploy app on talkerapp.com to eat dog food ASAP!
 - Show errors on top of invites page
 - Add proper hostname in postfix
 - god can't seem to stop talker server and logger
