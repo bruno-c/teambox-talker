@@ -72,15 +72,13 @@ function TalkerClient(options) {
     //     after we shutdown orbited.
     protocol.onclose = function() {
       self.reconnect = true;
-      ChatRoom.onClose();
+      options.onClose();
     }
     // TODO what should we do when there is a protocol error?
     protocol.onerror = function(error) { console.error(error); }
     protocol.onlinereceived = onLineReceived;
     protocol.onrawdatareceived = onRawDataReceived;
     protocol.open(self.options.host, self.options.port, true);
-    
-    $(window).bind('beforeunload', function() { self.close() });
   };
 
   self.close = function() {
