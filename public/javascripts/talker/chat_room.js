@@ -131,10 +131,12 @@ var ChatRoom = {
       append($("<td/>").addClass("author").html(data.user.name)).
       append($("<td/>").addClass("content").html(data.type));
     
-    if (ChatRoom.typing())
+    if (ChatRoom.typing()){
       element.appendTo("#log");
-    else
+    } else {
       element.insertBefore("#message");
+    }
+    ChatRoom.scrollToBottom();
   },
   
   onJoin: function(data) {
