@@ -1,4 +1,6 @@
 - Deploy app on talkerapp.com to eat dog food ASAP!
+- Show errors on top of invites page
+- Add proper hostname in postfix
 - Server must send leave message when session expires
 ✓ Add user name to history
 ✓ Remove "remember me" from login, should always do
