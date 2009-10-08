@@ -21,10 +21,10 @@ OptionParser.new do |opts|
   opts.on("--amqp-port NUM", "AMQP Server port")          { |x| amqp_port = x.to_i }
   
   opts.separator "Logging"
-  opts.on("--database", "Database name")                  { |x| db[:database] = x }
-  opts.on("--username", "Database username")              { |x| db[:username] = x }
-  opts.on("--password", "Database password")              { |x| db[:password] = x }
-  opts.on("--host", "Database host")                      { |x| db[:host] = x }
+  opts.on("--database NAME", "Database name")             { |x| db[:database] = x }
+  opts.on("--username NAME", "Database username")         { |x| db[:user] = x }
+  opts.on("--password VALUE", "Database password")        { |x| db[:password] = x }
+  opts.on("--host NAME", "Database host")                 { |x| db[:host] = x }
   
   opts.separator ""
   opts.on_tail("-h", "--help", "Show this message")       { puts opts; exit }
@@ -39,5 +39,6 @@ EM.run do
   puts "Connected to AMQP on #{amqp_host}:#{amqp_port}"
   AMQP.connect :host => amqp_host, :port => amqp_port
   puts "Logging to #{db[:database]}@#{db[:host]}"
+  $0 = "talker-logger"
   Talker::Logger.start db
 end

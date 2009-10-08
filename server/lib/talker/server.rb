@@ -6,7 +6,7 @@ module Talker
     DEFAULT_TIMEOUT = 30.0 # sec
     DEFAULT_PORT = 8500
     
-    attr_reader :host, :port, :rooms
+    attr_reader :host, :port, :rooms, :descriptor_table_size
     attr_accessor :logger, :authenticator
   
     def initialize(options={})
@@ -55,9 +55,7 @@ module Talker
     end
     
     def descriptor_table_size=(size)
-      actual_size = EM.set_descriptor_table_size(size)
-      @logger.info "Descriptor table size set to #{actual_size}"
-      actual_size
+      @descriptor_table_size = EM.set_descriptor_table_size(size)
     end
     
     def self.start(*args)

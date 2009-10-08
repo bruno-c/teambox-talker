@@ -40,10 +40,10 @@ OptionParser.new do |opts|
   
   opts.separator "Authentication"
   opts.on("--no-auth", "Disable authentication")          { |x| auth = nil }
-  opts.on("--database", "Database name")                  { |x| auth[:database] = x }
-  opts.on("--username", "Database username")              { |x| auth[:username] = x }
-  opts.on("--password", "Database password")              { |x| auth[:password] = x }
-  opts.on("--db-host", "Database host")                   { |x| auth[:host] = x }
+  opts.on("--database NAME", "Database name")             { |x| auth[:database] = x }
+  opts.on("--username NAME", "Database username")         { |x| auth[:user] = x }
+  opts.on("--password VALUE", "Database password")        { |x| auth[:password] = x }
+  opts.on("--db-host NAME", "Database host")              { |x| auth[:host] = x }
   
   opts.separator ""
   opts.on_tail("-h", "--help", "Show this message")       { puts opts; exit }
@@ -54,7 +54,10 @@ EM.run do
   puts "Connected to AMQP on #{amqp_host}:#{amqp_port}"
   AMQP.connect :host => amqp_host, :port => amqp_port
   
-  server = Talker::Server.new(:host => host, :port => port, :logger => logger, :user => user)
+  server = Talker::Server.new(:host => host, :port => port, :logger => logger, :user => user,
+                              :descriptor_table_size => descriptor_table_size)
+  puts "Descriptor table size set to #{server.descriptor_table_size}"
+
   if auth.nil?
     puts "!! WARNING starting server with authentication disabled !!"
     server.authenticator = Talker::NullAuthenticator.new
@@ -70,7 +73,7 @@ EM.run do
     EM.stop
   end
   
-  $0 = "talker:#{server.port}"
+  $0 = "talker-server:#{server.port}"
   puts "Listening on #{server.host}:#{server.port}"
   server.start
 end
