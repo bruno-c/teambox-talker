@@ -48,7 +48,7 @@ var ChatRoom = {
   
   newMessage: function() {
     if (this.currentMessage) this.currentMessage.createElement().insertBefore($("#message"));
-    this.currentMessage = new Message(currentUser.name);
+    this.currentMessage = new Message(currentUser);
     this.messages[this.currentMessage.uuid] = this.currentMessage;
     
     // Move the new message form to the bottom
@@ -164,7 +164,7 @@ function Message(user, uuid) {
   
   this.createElement = function() {
     // Create of find the message HTML element
-    this.element = $("#log").find("#" + this.elementId);
+    this.element = $("#" + this.elementId);
     if (this.element.length == 0) {
       this.element = $("<tr/>").
         addClass("event").

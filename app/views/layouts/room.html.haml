@@ -13,6 +13,7 @@
     - if logged_in?
       :javascript
         var currentUser = {
+          id: #{current_user.id},
           name: #{current_user.name.to_json},
           email: #{current_user.email.to_json},
         };

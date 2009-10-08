@@ -901,6 +901,8 @@ body {
 
 form label {
   display: block; }
+form label.inline {
+  display: inline; }
 
 td.actions {
   text-align: right; }

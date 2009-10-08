@@ -16,7 +16,7 @@ module Talker
     def subscribe(user, connection)
       queue = queue(user.id)
       if queue.subscribed?
-        raise SubscriptionError, "User #{user.name} already connected to room #{id}, wait #{Server::TIMEOUT} seconds and try again."
+        raise SubscriptionError, "User #{user.name} already connected to room #{id}, try again in a few seconds."
       end
       queue.bind(@exchange).subscribe do |message|
         connection.send_data(message)

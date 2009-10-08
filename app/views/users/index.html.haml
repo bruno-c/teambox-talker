@@ -24,11 +24,11 @@
             - form_tag user_path(user) do
               %span.role
                 = check_box_tag "admin", "1", user.admin, :id => dom_id(user, :admin), :class => "admin"
-                = label_tag dom_id(user, :admin), "Admin"
+                = label_tag dom_id(user, :admin), "Admin", :class => "inline"
             
               %span.role
                 = check_box_tag "suspended", "1", user.suspended?, :id => dom_id(user, :suspended), :class => "suspended"
-                = label_tag dom_id(user, :suspended), "Suspended"
+                = label_tag dom_id(user, :suspended), "Suspended", :class => "inline"
 
               = link_to "Resend Invitation", resend_invite_path(user), :method => :post
           
