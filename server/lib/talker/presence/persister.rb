@@ -4,8 +4,6 @@ module Talker
   module Presence
     # Persistence presence info in a MySQL db.
     class Persister
-      attr_accessor :logger
-      
       def initialize(options)
         EventedMysql.settings.update options
       end

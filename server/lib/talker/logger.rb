@@ -3,12 +3,20 @@ require "mq"
 
 module Talker
   class Logger
+    attr_accessor :logger
+    
     def initialize(options={})
       EventedMysql.settings.update options
       @queue = Queues.logger
     end
     
+    def options
+      EventedMysql.settings
+    end
+    
     def start
+      @logger.info "Logging to #{options[:database]}@#{options[:host]}"
+      
       @queue.subscribe do |headers, message|
         if room = headers.exchange[/^room\.(.*)$/, 1]
           message_received room, Yajl::Parser.parse(message)
@@ -40,8 +48,12 @@ module Talker
       EventedMysql.insert sql
     end
     
-    def self.start(*args)
-      new(*args).start
+    def stop
+      @queue.unsubscribe
+    end
+    
+    def to_s
+      "logger"
     end
     
     private

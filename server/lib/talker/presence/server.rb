@@ -17,11 +17,16 @@ module Talker
       end
     
       def start
+        @logger.info "Watching presence on queue #{@queue.name}"
         load
       
         @queue.subscribe do |message|
           @parser << message
         end
+      end
+      
+      def stop
+        @queue.unsubscribe
       end
     
       def load
@@ -45,6 +50,10 @@ module Talker
         else
           @logger.error "Wrong type of presence in message " + message.inspect
         end
+      end
+      
+      def to_s
+        "presence-server"
       end
     end
   end

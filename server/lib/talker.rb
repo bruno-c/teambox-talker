@@ -26,5 +26,6 @@ module Talker
   end
   
   autoload :Queues, "talker/queues"
+  autoload :Runner, "talker/runner"
   autoload :User, "talker/user"
 end

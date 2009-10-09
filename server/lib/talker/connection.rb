@@ -1,4 +1,4 @@
-roomrequire "eventmachine"
+require "eventmachine"
 require "yajl"
 
 module Talker

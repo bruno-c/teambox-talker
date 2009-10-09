@@ -1,5 +1,4 @@
 require "eventmachine"
-require "logger"
 
 module Talker
   module Channel
@@ -8,7 +7,7 @@ module Talker
       DEFAULT_TIMEOUT = 30.0 # sec
       DEFAULT_PORT = 8500
     
-      attr_reader :host, :port, :rooms, :descriptor_table_size
+      attr_reader :host, :port, :rooms
       attr_accessor :logger, :authenticator
   
       def initialize(options={})
@@ -16,28 +15,18 @@ module Talker
         @port = options[:port] || DEFAULT_PORT
         @timeout = options[:timeout] || DEFAULT_TIMEOUT
 
-        case options[:logger]
-        when :debug
-          @logger = ::Logger.new(STDOUT)
-          @logger.level = ::Logger::DEBUG
-        when TrueClass
-          @logger = ::Logger.new(STDOUT)
-          @logger.level = ::Logger::INFO
-        else
-          @logger = ::Logger.new(options[:logger])
-          @logger.level = ::Logger::INFO
-        end
-
-        @authenticator = options[:authenticator]
-        @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
+        @authenticator = nil
         @signature = nil
-        self.descriptor_table_size = options[:descriptor_table_size] if options[:descriptor_table_size]
-        EM.set_effective_user options[:user] if options[:user]
+        @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
       end
   
       def start
-        raise ArgumentError, "authenticator required" unless @authenticator
-      
+        if @authenticator.nil?
+          @logger.warn "!! WARNING starting server with authentication disabled !!"
+          @authenticator = NullAuthenticator.new
+        end
+        
+        @logger.info "Listening on #{@host}:#{@port}"
         @signature = EM.start_server(@host, @port, Connection) do |connection|
           connection.server = self
           connection.comm_inactivity_timeout = @timeout
@@ -55,9 +44,9 @@ module Talker
       def authenticate(room, user, token, &callback)
         @authenticator.authenticate(room, user, token, &callback)
       end
-    
-      def descriptor_table_size=(size)
-        @descriptor_table_size = EM.set_descriptor_table_size(size)
+      
+      def to_s
+        "channel-server:#{@port}"
       end
     
       def self.start(*args)
