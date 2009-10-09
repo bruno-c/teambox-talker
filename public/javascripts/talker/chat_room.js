@@ -70,12 +70,27 @@ var ChatRoom = {
   
   formatMessage: function(content, noScroll) {
     var image_expression    = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
-    var url_expression      = /[^\s]+\.[^\s]+/gim
+    var youtube_expression  = /^(?:http\S+youtube\.com\/watch\?v=)([\w-]+)(?:\S*)$/;
+    var url_expression      = /[^\s]+\.[^\s]+/gim;
     var protocol_expression = /^(http|https|ftp|ftps|ssh|irc|mms|file|about|mailto|xmpp):\/\//;
     
     if (content.match(image_expression)){
       return content.replace(image_expression, function(locator){
-        return '<a href="' + locator + '" target="_blank"><img src="' + locator + '" onload="ChatRoom.resizeImage(this, true)" style="visibility: hidden;" /></a>';
+        return '<a href="' 
+          + locator 
+          + '" target="_blank"><img src="' 
+          + locator 
+          + '" onload="ChatRoom.resizeImage(this, true)" style="visibility: hidden;" />'
+          + '</a>';
+      });
+    } else if (content.match(youtube_expression)){
+      return content.replace(youtube_expression, function(locator){
+        return '<a href="' 
+          + locator 
+          + '" target="_blank"><img src="' 
+          + locator.replace(youtube_expression, "http://img.youtube.com/vi/$1/0.jpg")
+          + '" onload="ChatRoom.resizeImage(this, true)" style="visibility: hidden;" class="youtube_image" />'
+          + '</a>';
       });
     } else if (content.match(url_expression)) {
       return content.replace(url_expression, function(locator){
