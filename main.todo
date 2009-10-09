@@ -4,3 +4,6 @@
 - Format messages (turn urls into links, show images, videos, etc.)
 - Use Flash sockets if present http://github.com/tmm1/jssocket (??)
 - Import Campfire logs (using tinder)
+
+Ideas:
+- Give each user a color for messages background (and highlight conversation w/ that @user w/ that color)
