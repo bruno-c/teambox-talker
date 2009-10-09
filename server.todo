@@ -1,4 +1,18 @@
-- How to handle big messages like pastes? (server could POST to our private paste web service and broadcast link to room instead of full message)
+Talker Server:
+- Move to mongodb or redis for faster writes & less mem
+- Rename Server to Channel Server
+- Create a presence server to hold user info (and remove presence message)
+  - Server must send leave message when session expires
+  - Prevent double join message when user reconnects
 - Delete user queue if unused for 30-60 sec (can RabbitMQ handle that?)
+- Handle big messages like pastes? (server could POST to our private paste web service and broadcast link to room instead of full message)
 - Test case of the same user connecting to the same room twice
+- Make sure queues are persisted on RabbitMQ
 - Improve perf by making partial messages transient (see High-speed transient message flows on http://www.rabbitmq.com/faq.html#scenarios)
+
+Chef:
+- Tweaks mysql recipe (use the one from opscode?); using too much mem
+- Move /db to /mnt or mount EBS volume
+- Server and room behind SSL (maybe can have nginx do all that)
+- Put talker servers behind haproxy
+- Implement Zero downtime thing, see http://www.igvita.com/2008/12/02/zero-downtime-restarts-with-haproxy/
