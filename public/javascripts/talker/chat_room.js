@@ -68,20 +68,25 @@ var ChatRoom = {
     this.scrollToBottom();
   },
   
-	// replace all links with a proper link with target == _blank.
-	// if 
+  // replace all links with a proper link with target == _blank.
+  // if 
   formatMessage: function(content, noScroll) {
-    var image = content.match(/^https?:\/\/[^\s]+\.(gif|png|jpeg|jpg)$/g);
-  	var url   = content.match(/(http|https|ftp|ssh|file|mirc|skype):\/\/[\S]+\/+(\b|$)/gim);
-  
-    if (image){
-      return content.replace(image, '<a href="' + image + '" target="_blank"><img src="' + image + '" onload="ChatRoom.resizeImage(this, true)" style="visibility: hidden;" /></a>');
-    } else if (url) {
-			console.info(url)
-      return content.replace(url, function(locator){
-	      console.info(locator);
-				return '<a href="' + locator + '" target="_blank">' + locator + "</a>";
-			});
+    var image_expression    = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
+    var url_expression      = /[^\s]+\.[^\s]+/gim
+    var protocol_expression = /^(http|https|ftp|ftps|ssh|irc|mms|file|about|mailto|xmpp):\/\//;
+    
+    if (content.match(image_expression)){
+      return content.replace(image_expression, function(locator){
+        return '<a href="' + locator + '" target="_blank"><img src="' + locator + '" onload="ChatRoom.resizeImage(this, true)" style="visibility: hidden;" /></a>';
+      });
+    } else if (content.match(url_expression)) {
+      return content.replace(url_expression, function(locator){
+        return '<a href="' 
+          +  (!locator.match(protocol_expression) ? 'http://' : '') + locator
+          + '" target="_blank">' 
+          +   locator 
+          + "</a>";
+      });
     } else{
       return content;
     }
