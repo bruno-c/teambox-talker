@@ -1,4 +1,5 @@
 require "mq"
+require "yajl"
 
 module Talker
   class SubscriptionError < RuntimeError; end
@@ -9,8 +10,8 @@ module Talker
 
     def initialize(id)
       @id = id
-      @exchange = MQ.fanout("room.#{id}")
-      MQ.queue("rooms").bind(@exchange)
+      @exchange = MQ.fanout("talker.room.#{id}")
+      MQ.queue("talker.log").bind(@exchange)
     end
     
     def subscribe(user, connection)
@@ -37,7 +38,7 @@ module Talker
     end
     
     def delete
-      @delete.delete
+      @exchange.delete
     end
 
     def send_message(data)
@@ -50,7 +51,7 @@ module Talker
     
     private
       def queue(user_id)
-        MQ.queue("connection.#{@id}.#{user_id}")
+        MQ.queue("talker.connection.#{@id}.#{user_id}")
       end
   end
 end

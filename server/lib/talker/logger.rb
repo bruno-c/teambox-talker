@@ -5,7 +5,7 @@ module Talker
   class Logger
     def initialize(options={})
       EventedMysql.settings.update options
-      @queue = MQ.queue("rooms")
+      @queue = MQ.queue("talker.log")
     end
     
     def start
@@ -27,13 +27,13 @@ module Talker
         uuid = message["id"]
         content = message["content"]
         sql = <<-SQL
-          INSERT INTO events (room_id, user_id, type, uuid, message)
-          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}', '#{quote(uuid)}', '#{quote(content)}')
+          INSERT INTO events (room_id, user_id, type, uuid, message, created_at)
+          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}', '#{quote(uuid)}', '#{quote(content)}', NOW())
         SQL
       else
         sql = <<-SQL
-          INSERT INTO events (room_id, user_id, type)
-          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}')
+          INSERT INTO events (room_id, user_id, type, created_at)
+          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}', created_at)
         SQL
       end
       
