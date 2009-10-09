@@ -10,18 +10,21 @@ module Talker
   autoload :MysqlAuthenticator, "talker/authenticators/mysql_authenticator"
 
   module Channel
+    autoload :Room, "talker/channel/room"
     autoload :Server, "talker/channel/server"
   end
-  autoload :Channel, "talker/channel"
 
   autoload :Client, "talker/client"
   autoload :Connection, "talker/connection"
   autoload :Logger, "talker/logger"
+  autoload :MessageChannel, "talker/message_channel"
 
   module Presence
+    autoload :Room, "talker/presence/room"
     autoload :Persister, "talker/presence/persister"
     autoload :Server, "talker/presence/server"
   end
   
+  autoload :Queues, "talker/queues"
   autoload :User, "talker/user"
 end

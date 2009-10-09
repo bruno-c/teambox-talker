@@ -1,3 +1,6 @@
+require "mq"
+require "yajl"
+
 module Talker
   module Presence
     class Server
@@ -7,7 +10,7 @@ module Talker
         @persister = persister
       
         @channels = Hash.new { |channels, name| channels[name] = Channel.new(name) }
-        @queue = MQ.queue("talker.presence")
+        @queue = Queues.presence
       
         @parser = Yajl::Parser.new
         @parser.on_parse_complete = method(:presence_received)

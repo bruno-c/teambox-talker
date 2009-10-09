@@ -1,4 +1,4 @@
-require "eventmachine"
+roomrequire "eventmachine"
 require "yajl"
 
 module Talker
@@ -12,9 +12,7 @@ module Talker
     # Called after connection is fully initialized and establied from EM.
     def post_init
       @parser = Yajl::Parser.new
-      # once a full JSON object has been parsed from the stream
-      # object_parsed will be called, and passed the constructed object
-      @parser.on_parse_complete = method(:object_parsed)
+      @parser.on_parse_complete = method(:message_parsed)
       @encoder = Yajl::Encoder.new
     
       @room = nil
@@ -23,16 +21,14 @@ module Talker
     end
     
     # Called when a JSON object in a message is fully parsed
-    def object_parsed(obj)
-      logger.debug{to_s + "<<< " + obj.inspect}
+    def message_parsed(message)
+      logger.debug{to_s + "<<< " + message.inspect}
       
-      case obj["type"]
+      case message["type"]
       when "connect"
-        authenticate obj["room"], obj["user"], obj["token"]
+        authenticate message["room"], message["user"], message["token"]
       when "message"
-        broadcast_message obj, obj.delete("to")
-      when "present"
-        broadcast_presence obj["to"] unless obj["to"] == @user.id
+        broadcast_message message, message.delete("to")
       when "close"
         close
       when "ping"
@@ -63,8 +59,8 @@ module Talker
           begin
             @room = @server.rooms[room_name]
             @user = User.new(user)
-            @subscription = @room.subscribe(@user, self)
-            presence :join
+            @subscription = @room.subscribe(@user) { |message| send_data message }
+            @room.join @user
             send_data %({"type":"connected"}\n)
           rescue SubscriptionError => e
             handle_error e
@@ -90,17 +86,11 @@ module Talker
       end
     end
     
-    def broadcast_presence(to)
-      room_required!
-      
-      send_private_message to, :type => "present", :user => @user.info
-    end
-    
     def close
       if @room
-        @room.leave @subscription if @subscription
+        @room.leave(@user)
+        @subscription.delete
         @subscription = nil
-        presence :leave
       end
       close_connection_after_writing
     end
@@ -108,11 +98,6 @@ module Talker
     
     ## Helper methods
     
-    def presence(type)
-      logger.info {"#{@user.name} #{type}s #{@room.id}"}
-      send_message :type => type, :user => @user.info
-    end
-  
     def error(message)
       logger.debug {"#{to_s}>>>error: #{message}"}
       send_data(%Q|{"type":"error","message":"#{message}"}\n|)
@@ -135,7 +120,7 @@ module Talker
     end
     
     def unbind
-      @room.unsubscribe @subscription if @subscription
+      @subscription.unsubscribe if @subscription
     end
   
     private

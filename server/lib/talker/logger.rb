@@ -5,7 +5,7 @@ module Talker
   class Logger
     def initialize(options={})
       EventedMysql.settings.update options
-      @queue = MQ.queue("talker.log")
+      @queue = Queues.logger
     end
     
     def start
