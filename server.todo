@@ -1,4 +1,3 @@
-- Add proper hostname in postfix
 - Server must send leave message when session expires
 - Server and room behind SSL
 - How to handle big messages like pastes? (server could POST to our private paste web service and broadcast link to room instead of full message)
