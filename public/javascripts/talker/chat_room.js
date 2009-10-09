@@ -68,8 +68,6 @@ var ChatRoom = {
     this.scrollToBottom();
   },
   
-  // replace all links with a proper link with target == _blank.
-  // if 
   formatMessage: function(content, noScroll) {
     var image_expression    = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
     var url_expression      = /[^\s]+\.[^\s]+/gim
