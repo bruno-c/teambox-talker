@@ -16,6 +16,7 @@ module Talker
       end
     
       def present?(user)
+        return false if user.nil?
         @users.key?(user.id)
       end
     
@@ -23,17 +24,15 @@ module Talker
         unless present?(user)
           send_message :type => "join", :user => user.info
           # Send list of online users to new user
-          send_private_message user.id, :type => "users", :users => users.map { |user| user.info }
-          @users[user.id] = user
+          send_private_message user.id, :type => "users", :users => users.map { |u| u.info }
+          self << user
         end
       end
     
       def leave(user)
         if present?(user)
           send_message :type => "leave", :user => user.info
-          @users.delete(users.id)
-          # Delete the queue on AMQP
-          user_queue(user.id).delete
+          @users.delete(user.id)
         end
       end
     end

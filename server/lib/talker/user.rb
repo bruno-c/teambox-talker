@@ -7,15 +7,15 @@ module Talker
     end
     
     def required_info
-      @required_info ||= {"id" => id, "name" => name}
+      @required_info ||= {"id" => id, "name" => name}.freeze
     end
     
     def id
-      @id ||= @info["id"]
+      @id ||= @info["id"].to_i
     end
 
     def name
-      @name ||= @info["name"]
+      @name ||= @info["name"].freeze
     end
   end
 end

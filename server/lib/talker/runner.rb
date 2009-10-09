@@ -26,6 +26,10 @@ module Talker
     def [](name)
       @options[name]
     end
+
+    def []=(name, value)
+      @options[name] = value
+    end
     
     def run(service)
       EM.run do
@@ -87,7 +91,12 @@ module Talker
       else
         logger = ::Logger.new(STDOUT)
       end
-      logger.level = ::Logger::DEBUG if options[:debug]
+      if options[:debug]
+        logger.level = ::Logger::DEBUG
+      else
+        logger.level = ::Logger::INFO
+      end
+      logger.debug "Demo mode ACTIVATED!"
       logger
     end
     

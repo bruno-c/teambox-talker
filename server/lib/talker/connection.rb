@@ -14,7 +14,7 @@ module Talker
       @parser = Yajl::Parser.new
       @parser.on_parse_complete = method(:message_parsed)
       @encoder = Yajl::Encoder.new
-    
+      
       @room = nil
       @user = nil
       @reraise_errors = $TALKER_DEBUG
@@ -136,13 +136,13 @@ module Talker
       def send_message(message)
         logger.debug {"#{to_s}>>> #{message.inspect}"}
         # TODO send in chunks?
-        @room.send_message encode(message)
+        @room.send_message message
       end
       
       def send_private_message(to, message)
         logger.debug {"#{to_s}(to #{to})>>> #{message.inspect}"}
         # TODO send in chunks?
-        @room.send_private_message to, encode(message)
+        @room.send_private_message to, message
       end
       
       def encode(data)

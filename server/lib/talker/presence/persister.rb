@@ -18,11 +18,11 @@ module Talker
 
       def delete(room_id, user_id)
         sql = <<-SQL
-          DELETE FROM connections (room_id, user_id)
+          DELETE FROM connections
           WHERE room_id = #{room_id.to_i}
           AND user_id = #{user_id.to_i}
         SQL
-        EventedMysql.delete sql
+        EventedMysql.raw sql
       end
       
       # yields [room_id, user_info_hash] for each connection
@@ -33,8 +33,9 @@ module Talker
           INNER JOIN users ON users.id = connections.user_id
         SQL
         EventedMysql.select(sql) do |results|
-          results.each do |room_id, user_id, name, email|
-            callback.call(room_id, {"id" => user_id, "name" => name, "email" => email})
+          results.each do |result|
+            callback.call(result["room_id"].to_i,
+                          {"id" => result["user_id"].to_i, "name" => result["name"], "email" => result["email"]})
           end
         end
       end

@@ -17,11 +17,11 @@ module Talker
       end
       
       def join(user)
-        @presence.publish :type => "join", :user => user.info
+        publish_as_json @presence, :type => "join", :room => name, :user => user.info
       end
 
       def leave(user)
-        @presence.publish :type => "leave", :user => user.info
+        publish_as_json @presence, :type => "leave", :room => name, :user => user.info
       end
     end
   end

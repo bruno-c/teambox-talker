@@ -3,6 +3,7 @@
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require "rubygems"
 require "talker"
+require "eventmachine"
 
 abort "usage: talker-client <room> <user_id> <user_name> <auth token>" if ARGV.empty?
 
@@ -26,17 +27,15 @@ module KeyboardInput
 end
 
 EM.run do
-  Talker::Client.connect(:room => room, :user => {:id => user_id, :name => user_name}, :token => token) do |client|
+  Talker::Client.connect(:room => room.to_i, :user => {:id => user_id.to_i, :name => user_name}, :token => token) do |client|
+    # client.debug = true
+    
     client.on_join do |user|
       puts "#{user.name} joins"
     end
 
     client.on_leave do |user|
       puts "#{user.name} left"
-    end
-    
-    client.on_presence do |user|
-      puts "(#{user.name} is in the room)"
     end
     
     client.on_message do |user, message|

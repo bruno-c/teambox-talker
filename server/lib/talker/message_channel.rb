@@ -16,17 +16,18 @@ module Talker
       Queues.logger.bind(@exchange)
     end
     
-    def send_message(message)
-      @encoder.encode(message) do |chunk|
-        @exchange.publish(chunk)
-      end
-    end
-    
-    def send_private_message(user_id, message)
-      queue = user_queue(user_id)
+    def publish_as_json(queue, message)
       @encoder.encode(message) do |chunk|
         queue.publish(chunk)
       end
+    end
+    
+    def send_message(message)
+      publish_as_json @exchange, message
+    end
+    
+    def send_private_message(user_id, message)
+      publish_as_json user_queue(user_id), message
     end
     
     def user_queue(user_id)

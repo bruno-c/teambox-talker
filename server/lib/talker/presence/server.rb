@@ -9,7 +9,7 @@ module Talker
       def initialize(persister)
         @persister = persister
       
-        @channels = Hash.new { |channels, name| channels[name] = Channel.new(name) }
+        @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
         @queue = Queues.presence
       
         @parser = Yajl::Parser.new
@@ -30,26 +30,31 @@ module Talker
       end
     
       def load
-        @persister.load do |channel, user|
-          @channels[channel] << User.new(user)
+        @persister.load do |room_id, user|
+          logger.debug{"loaded connection: room##{room_id} => #{user['name']}"}
+          @rooms[room_id] << User.new(user)
         end
       end
 
       def presence_received(message)
+        logger.debug{message.inspect}
+        
         type = message["type"]
-        channel = @channels[message["channel"]]
+        room = @rooms[message["room"]]
         user = User.new(message["user"])
-      
+        
         case type
         when "join"
-          channel.join user
-          @persister.store(channel.name, user.id)
+          room.join user
+          @persister.store(room.name, user.id)
         when "leave"
-          channel.leave user
-          @persister.delete(channel.name, user.id)
+          room.leave user
+          @persister.delete(room.name, user.id)
         else
           @logger.error "Wrong type of presence in message " + message.inspect
         end
+        
+        logger.debug{"room ##{room.name} users: " + room.users.map { |u| u.name }.join(",")}
       end
       
       def to_s
