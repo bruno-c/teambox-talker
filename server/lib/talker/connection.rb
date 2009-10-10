@@ -90,8 +90,8 @@ module Talker
     
     def close
       if @room
-        @room.leave(@user)
-        @subscription.delete
+        @room.leave(@user) if @user
+        @subscription.delete if @subscription
         @subscription = nil
       end
       close_connection_after_writing

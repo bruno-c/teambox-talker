@@ -107,7 +107,7 @@ module Talker
     end
 
     def build_presence_server
-      persister = Talker::Presence::Persister.new(options[:database])
+      persister = Talker::Presence::MysqlPersister.new(options[:database])
       Talker::Presence::Server.new(persister)
     end
     

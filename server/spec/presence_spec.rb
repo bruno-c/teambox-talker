@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
-EM.describe "Talker client presence info" do
+EM.describe "Presence info" do
   it "should be broadcasted on join" do
     # User 1 will receive notification of join
     connect :room => "test", :user => {:id => 1, :name => "user1"} do |client|
@@ -12,7 +12,8 @@ EM.describe "Talker client presence info" do
     
     # User 2 receives presence info
     connect :room => "test", :user => {:id => 2, :name => "user2"} do |client|
-      client.on_presence do |user|
+      client.on_presence do |users|
+        user = users.first
         user.id.should == 1
         user.name.should == "user1"
         client.close

@@ -3,7 +3,7 @@ require "em/mysql"
 module Talker
   module Presence
     # Persistence presence info in a MySQL db.
-    class Persister
+    class MysqlPersister
       def initialize(options)
         EventedMysql.settings.update options
       end

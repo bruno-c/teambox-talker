@@ -2,6 +2,8 @@ require 'rubygems'
 require 'spec'
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require "talker"
+require "logger"
+Dir[File.dirname(__FILE__) + "/mocks/*.rb"].each { |f| require f }
 
 $TALKER_DEBUG = true
 
@@ -31,9 +33,17 @@ module Helpers
   TEST_PORT = 61900
   
   def start_server(options={})
-    @server = Talker::Server.start({
-      # :logger => :debug,
-      :authenticator => Talker::NullAuthenticator.new, :port => TEST_PORT }.merge(options))
+    @server = Talker::Channel::Server.new({ :port => TEST_PORT }.merge(options))
+    @server.authenticator = NullAuthenticator.new
+    
+    @presence = Talker::Presence::Server.new(NullPersister.new)
+
+    @presence.logger = @server.logger = ::Logger.new(nil)
+    # @presence.logger = @server.logger = ::Logger.new(STDOUT)
+    @server.start
+    @presence.start
+    
+    @server
   end
   
   def stop_server

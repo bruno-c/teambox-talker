@@ -49,6 +49,10 @@ module Talker
       @on_close = block
     end
     
+    def on_presence(&block)
+      @on_presence = block
+    end
+    
     def send_message(message)
       send "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate
     end
@@ -83,6 +87,7 @@ module Talker
         message["users"].each do |user|
           @users[user["id"]] = User.new(user)
         end
+        @on_presence.call(@users.values) if @on_presence
       when "join"
         user = Talker::User.new(message["user"])
         unless user.id == @user.id

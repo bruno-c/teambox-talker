@@ -6,9 +6,6 @@ $TALKER_DEBUG = false
 
 # Lazy load optional classes
 module Talker
-  autoload :NullAuthenticator, "talker/authenticators/null_authenticator"
-  autoload :MysqlAuthenticator, "talker/authenticators/mysql_authenticator"
-
   module Channel
     autoload :Room, "talker/channel/room"
     autoload :Server, "talker/channel/server"
@@ -18,10 +15,11 @@ module Talker
   autoload :Connection, "talker/connection"
   autoload :Logger, "talker/logger"
   autoload :MessageChannel, "talker/message_channel"
+  autoload :MysqlAuthenticator, "talker/mysql_authenticator"
 
   module Presence
     autoload :Room, "talker/presence/room"
-    autoload :Persister, "talker/presence/persister"
+    autoload :MysqlPersister, "talker/presence/mysql_persister"
     autoload :Server, "talker/presence/server"
   end
   
