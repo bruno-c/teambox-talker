@@ -85,12 +85,14 @@ var ChatRoom = {
       });
     } else if (content.match(youtube_expression)){
       return content.replace(youtube_expression, function(locator){
-        return '<a href="' 
-          + locator 
-          + '" target="_blank"><img src="' 
-          + locator.replace(youtube_expression, "http://img.youtube.com/vi/$1/0.jpg")
-          + '" onload="ChatRoom.resizeImage(this, true)" style="visibility: hidden;" class="youtube_image" />'
-          + '</a>';
+        return locator.replace(youtube_expression, '<object width="425" height="355">'
+          + '<param name="movie" value="http://www.youtube.com/v/$1?rel=1&color1=0x2b405b&color2=0x6b8ab6&border=0&fs=1"></param>'
+          + '<param name="allowFullScreen" value="true"></param>'
+          + '<embed src="http://www.youtube.com/v/$1?rel=1&color1=0x2b405b&color2=0x6b8ab6&border=1&fs=1"'
+          + ' type="application/x-shockwave-flash"'
+          + '  width="425" height="355" '
+          + '  allowfullscreen="true"></embed>'
+          + '</object>');
       });
     } else if (content.match(url_expression)) {
       return content.replace(url_expression, function(locator){
