@@ -11,7 +11,8 @@ module Talker
       def subscribe(user, &callback)
         queue = user_queue(user.id)
         if queue.subscribed?
-          raise SubscriptionError, "User #{user.name} already connected to room #{name}, try again in a few seconds."
+          raise SubscriptionError, "User #{user.name} already connected this room, " +
+                                   "try again in a few seconds if there was an error."
         end
         queue.bind(@exchange).subscribe(&callback)
       end

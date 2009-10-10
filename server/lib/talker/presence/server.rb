@@ -54,7 +54,7 @@ module Talker
           @logger.error "Wrong type of presence in message " + message.inspect
         end
         
-        logger.debug{"room ##{room.name} users: " + room.users.map { |u| u.name }.join(",")}
+        logger.debug{"room ##{room.name} users: " + room.users.map { |u| u.name }.join(", ")}
       end
       
       def to_s

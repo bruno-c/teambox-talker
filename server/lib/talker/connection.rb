@@ -33,6 +33,8 @@ module Talker
         close
       when "ping"
         # ignore
+      else
+        error "Unknown message type: " + message["type"]
       end
     rescue ProtocolError => e
       error e.message
