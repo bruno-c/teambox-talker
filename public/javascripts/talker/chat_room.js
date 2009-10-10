@@ -45,7 +45,7 @@ var ChatRoom = {
     if (data === "") return;
     if (this.sendTimeout) clearTimeout(this.sendTimeout);
 
-    console.info("sending message");
+    // console.info("sending message");
     var message = this.currentMessage;
     message.content = data;
     this.client.send({id: message.uuid, content: message.content, "final": (eol == true)});
@@ -166,7 +166,7 @@ var ChatRoom = {
   },
   
   addNotice: function(data){
-    console.info(data);
+    // console.info(data);
     var msg_content = '';
     switch(data.type){
       case 'join': 
