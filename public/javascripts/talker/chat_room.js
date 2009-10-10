@@ -2,6 +2,7 @@ $(function() {
   $("#msgbox")
     .keydown(function(e) {
       if (e.which == 13) {
+        if (this.value == ''){ return false }
         ChatRoom.send(this.value, true);
         ChatRoom.newMessage();
         return false;
