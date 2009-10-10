@@ -17,7 +17,7 @@ module Talker
       end
     
       def start
-        @logger.info "Watching presence on queue #{@queue.name}"
+        Talker.logger.info "Watching presence on queue #{@queue.name}"
         load
       
         @queue.subscribe do |message|
@@ -31,13 +31,13 @@ module Talker
     
       def load
         @persister.load do |room_id, user|
-          logger.debug{"loaded connection: room##{room_id} => #{user['name']}"}
+          Talker.logger.debug{"loaded connection: room##{room_id} => #{user['name']}"}
           @rooms[room_id] << User.new(user)
         end
       end
 
       def presence_received(message)
-        logger.debug{message.inspect}
+        Talker.logger.debug{message.inspect}
         
         type = message["type"]
         room = @rooms[message["room"]]
@@ -51,10 +51,10 @@ module Talker
           room.leave user
           @persister.delete(room.name, user.id)
         else
-          @logger.error "Wrong type of presence in message " + message.inspect
+          Talker.logger.error "Wrong type of presence in message " + message.inspect
         end
         
-        logger.debug{"room ##{room.name} users: " + room.users.map { |u| u.name }.join(", ")}
+        Talker.logger.debug{"room ##{room.name} users: " + room.users.map { |u| u.name }.join(", ")}
       end
       
       def to_s

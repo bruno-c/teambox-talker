@@ -8,7 +8,7 @@ module Talker
       DEFAULT_PORT = 8500
     
       attr_reader :host, :port, :rooms
-      attr_accessor :logger, :authenticator
+      attr_accessor :authenticator
   
       def initialize(options={})
         @host = options[:host] || DEFAULT_HOST
@@ -22,11 +22,11 @@ module Talker
   
       def start
         if @authenticator.nil?
-          @logger.warn "!! WARNING starting server with authentication disabled !!"
+          Talker.logger.warn "!! WARNING starting server with authentication disabled !!"
           @authenticator = NullAuthenticator.new
         end
         
-        @logger.info "Listening on #{@host}:#{@port}"
+        Talker.logger.info "Listening on #{@host}:#{@port}"
         @signature = EM.start_server(@host, @port, Connection) do |connection|
           connection.server = self
           connection.comm_inactivity_timeout = @timeout

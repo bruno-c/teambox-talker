@@ -33,14 +33,12 @@ module Helpers
   TEST_PORT = 61900
   
   def start_server(options={})
+    Talker.logger = ::Logger.new(nil)
     @server = Talker::Channel::Server.new({ :port => TEST_PORT }.merge(options))
     @server.authenticator = NullAuthenticator.new
+    @server.start
     
     @presence = Talker::Presence::Server.new(NullPersister.new)
-
-    @presence.logger = @server.logger = ::Logger.new(nil)
-    # @presence.logger = @server.logger = ::Logger.new(STDOUT)
-    @server.start
     @presence.start
     
     @server

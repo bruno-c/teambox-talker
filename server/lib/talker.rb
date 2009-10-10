@@ -26,4 +26,8 @@ module Talker
   autoload :Queues, "talker/queues"
   autoload :Runner, "talker/runner"
   autoload :User, "talker/user"
+  
+  class << self
+    attr_accessor :logger
+  end
 end

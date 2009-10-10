@@ -48,7 +48,7 @@ module Talker
         end
         
         config_limits
-        server.logger = config_logger
+        config_logger
         install_signals server
 
         $0 = "talker-#{server.to_s}"
@@ -87,17 +87,16 @@ module Talker
     def config_logger
       require "logger"
       if options[:logger]
-        logger = ::Logger.new(options[:logger])
+        Talker.logger = ::Logger.new(options[:logger])
       else
-        logger = ::Logger.new(STDOUT)
+        Talker.logger = ::Logger.new(STDOUT)
       end
       if options[:debug]
-        logger.level = ::Logger::DEBUG
+        Talker.logger.level = ::Logger::DEBUG
       else
-        logger.level = ::Logger::INFO
+        Talker.logger.level = ::Logger::INFO
       end
-      logger.debug "Demo mode ACTIVATED!"
-      logger
+      Talker.logger.debug "Demo mode ACTIVATED!"
     end
     
     def build_channel_server

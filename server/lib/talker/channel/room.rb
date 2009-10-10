@@ -18,11 +18,15 @@ module Talker
       end
       
       def join(user)
-        publish_as_json @presence, :type => "join", :room => name, :user => user.info
+        message = { :type => "join", :room => name, :user => user.info }
+        Talker.logger.debug{"room##{name}>>> #{message.inspect}"}
+        publish_as_json @presence, message
       end
 
       def leave(user)
-        publish_as_json @presence, :type => "leave", :room => name, :user => user.info
+        message = { :type => "leave", :room => name, :user => user.info }
+        Talker.logger.debug{"room##{name}>>> #{message.inspect}"}
+        publish_as_json @presence, message
       end
     end
   end

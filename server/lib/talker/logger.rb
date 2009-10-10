@@ -3,8 +3,6 @@ require "mq"
 
 module Talker
   class Logger
-    attr_accessor :logger
-    
     def initialize(options={})
       EventedMysql.settings.update options
       @queue = Queues.logger
@@ -15,7 +13,7 @@ module Talker
     end
     
     def start
-      @logger.info "Logging to #{options[:database]}@#{options[:host]}"
+      Talker.logger.info "Logging to #{options[:database]}@#{options[:host]}"
       
       @queue.subscribe do |headers, message|
         if room = headers.exchange[/^room\.(.*)$/, 1]

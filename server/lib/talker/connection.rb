@@ -22,7 +22,7 @@ module Talker
     
     # Called when a JSON object in a message is fully parsed
     def message_parsed(message)
-      logger.debug{to_s + "<<< " + message.inspect}
+      Talker.logger.debug{to_s + "<<< " + message.inspect}
       
       case message["type"]
       when "connect"
@@ -39,7 +39,7 @@ module Talker
     rescue ProtocolError => e
       error e.message
     rescue Exception => e
-      logger.error("[Error] " + e.to_s + ": " + e.backtrace.join("\n"))
+      Talker.logger.error("[Error] " + e.to_s + ": " + e.backtrace.join("\n"))
       handle_error e, "Error processing command"
     end
     
@@ -82,9 +82,9 @@ module Talker
       
       if to
         obj["private"] = true
-        send_private_message to, obj
+        @room.send_private_message to, obj
       else
-        send_message obj
+        @room.send_message obj
       end
     end
     
@@ -101,7 +101,7 @@ module Talker
     ## Helper methods
     
     def error(message)
-      logger.debug {"#{to_s}>>>error: #{message}"}
+      Talker.logger.debug {"#{to_s}>>>error: #{message}"}
       send_data(%Q|{"type":"error","message":"#{message}"}\n|)
       close
     end
@@ -135,24 +135,8 @@ module Talker
         raise ProtocolError, "Not connected to a room" unless @room
       end
       
-      def send_message(message)
-        logger.debug {"#{to_s}>>> #{message.inspect}"}
-        # TODO send in chunks?
-        @room.send_message message
-      end
-      
-      def send_private_message(to, message)
-        logger.debug {"#{to_s}(to #{to})>>> #{message.inspect}"}
-        # TODO send in chunks?
-        @room.send_private_message to, message
-      end
-      
       def encode(data)
         Yajl::Encoder.encode(data) + "\n"
-      end
-    
-      def logger
-        @server.logger
       end
   end
 end
