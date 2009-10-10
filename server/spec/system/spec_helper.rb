@@ -1,4 +1,9 @@
-require File.dirname(__FILE__) + "/../spec_helper"
+require 'rubygems'
+require 'spec'
+$:.unshift File.dirname(__FILE__) + "/../lib"
+require "talker"
+
+$TALKER_DEBUG = true
 
 # Try installing em-spec from http://github.com/macournoyer/em-spec
 # if this doesn't work
@@ -22,7 +27,7 @@ module Moqueue
   end
 end
 
-module SystemHelpers
+module Helpers
   TEST_PORT = 61900
   
   def start_server(options={})
@@ -41,7 +46,7 @@ module SystemHelpers
 end
 
 Spec::Runner.configure do |config|
-  config.include SystemHelpers
+  config.include Helpers
 
   config.before do
     Moqueue::MockBroker.instance.reset!
