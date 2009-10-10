@@ -19,25 +19,6 @@ Install required gems:
 
 ## Running the app
 
-Start the Rails app:
+Start all service in development environment:
 
-    thin start
-
-Start Orbited:
-
-    script/orbited
-
-Start RabbitMQ:
-
-    script/rabbitmq
-
-Start the Talker server:
-
-    script/talker
-
-Browse to http://dev.com:3000/
-
-# Twitter account
-http://twitter.com/talkerapp
-macournoyer+talker@gmail.com
-kh2bi4JwMeRvMMkh
+    script/devenv

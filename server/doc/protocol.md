@@ -56,13 +56,9 @@ When a client connects to a room, the following message will be sent to all onli
 
     {"type":"join","user":{"id":"unique id","name":"user name",...}}
 
-Members of the room must reply with the follow message stating their presence:
+The server will send the list of users in the room to new users:
 
-    {"type":"present","to":"new user unique id"}
-
-The server will send this message to the new user:
-
-    {"type":"present","user":{"id":"unique id","name":"user name",...}}
+    {"type":"users","users":[{"id":"unique id","name":"user name",...}, ...]}
 
 When a client close connection to a room, the server sends the following message to all online members of the room:
 

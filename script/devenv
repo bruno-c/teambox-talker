@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 echo "Starting all services ..."
-echo "Don't you touch anything until you see 3 new tabs in your console."
+echo "Don't you touch anything until you see 5 new tabs in your console."
+script/tab script/rabbitmq
+echo "  rabbitmq started in a tab"
 thin start -d
 echo "  thin started as a daemon (stop with 'thin stop')"
 script/tab script/orbited
 echo "  orbited started in a tab"
-script/tab script/rabbitmq
-echo "  rabbitmq started in a tab"
-script/tab script/talker
-echo "  talker started in a tab"
-script/tab script/logger
-echo "  talker-logger started in a tab"
+sleep 3
+script/tab script/talker channel
+echo "  talker channel server started in a tab"
+script/tab script/talker presence
+echo "  talker presence server started in a tab"
+script/tab script/talker logger
+echo "  talker logger started in a tab"
 open http://standoutjobs-development.com:3000/
