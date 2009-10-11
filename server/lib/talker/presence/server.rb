@@ -45,11 +45,15 @@ module Talker
         
         case type
         when "join"
-          room.join user
-          @persister.store(room.name, user.id)
+          unless room.present?(user)
+            room.join user
+            @persister.store(room.name, user.id)
+          end
         when "leave"
-          room.leave user
-          @persister.delete(room.name, user.id)
+          if room.present?(user)
+            room.leave user
+            @persister.delete(room.name, user.id)
+          end
         else
           Talker.logger.error "Wrong type of presence in message " + message.inspect
         end

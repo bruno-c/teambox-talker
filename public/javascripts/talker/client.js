@@ -12,7 +12,7 @@ function TalkerClient(options) {
   function onLineReceived(line) {
     var line = eval('(' + line + ')');
     
-    console.info(line);
+    console.debug(line);
     
     // ugly shit but this will be refactored.
     switch(line.type){
@@ -21,12 +21,9 @@ function TalkerClient(options) {
         break;
       case 'join':
         options.onJoin(line);
+        break;
       case 'users':
-        console.warn("USERS:");
-        console.warn(line.users);
-        $.each(line.users, function() {
-          options.addUser(this);
-        });
+        $.each(line.users, function() { options.addUser(this); });
         break;
       case 'leave':
         options.onLeave(line);

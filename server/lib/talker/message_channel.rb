@@ -10,7 +10,7 @@ module Talker
     
     def initialize(name)
       @name = name
-      @encoder = Yajl::Encoder.new
+      @encoder = Yajl::Encoder.new(:terminator => nil)
 
       @exchange = MQ.fanout("#{CHANNEL_PREFIX}.#{@name}")
       Queues.logger.bind(@exchange)
@@ -18,7 +18,11 @@ module Talker
     
     def publish_as_json(queue, message)
       @encoder.encode(message) do |chunk|
-        queue.publish(chunk)
+        if chunk.nil?
+          queue.publish("\n")
+        else
+          queue.publish(chunk)
+        end
       end
     end
     

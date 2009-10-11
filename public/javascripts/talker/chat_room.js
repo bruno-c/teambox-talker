@@ -159,10 +159,12 @@ var ChatRoom = {
   },
   
   addUser: function(user) {
-    if ($("ul#users li:contains('" + user.name + "')").length < 1){
-      $('ul#users').append('<li>' + user.name + '</li>')
+    if ($("#user_" + user.id).length < 1) {
+      $('<li/>').attr("id", "user_" + user.id).
+                 html(user.name).
+                 appendTo('ul#users').
+                 highlight();
     }
-    $("ul#users li:contains('" + user.name + "')").highlight();
   },
   
   addNotice: function(data){
@@ -198,7 +200,7 @@ var ChatRoom = {
   },
 
   onLeave: function(data) {
-    $("ul#users li:contains('" + data.user + "')").remove();
+    $("#user_" + data.user.id).remove();
     ChatRoom.addNotice(data);
   },
   

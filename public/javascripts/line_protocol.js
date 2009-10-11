@@ -59,7 +59,7 @@ LineProtocol = function(transport) {
 
     transport.onread = function(data) {
         log.debug("transport.onread: enter isLineMode=", isLineMode, " buffer[", buffer.length, "]=", buffer, " data[", data.length, "]=", data);
-
+        
         if (isLineMode) {
             buffer += data;
             data = "";
