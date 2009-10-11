@@ -23,9 +23,9 @@ module Talker
       def join(user)
         unless present?(user)
           send_message :type => "join", :user => user.info
+          self << user
           # Send list of online users to new user
           send_private_message user.id, :type => "users", :users => users.map { |u| u.info }
-          self << user
         end
       end
     

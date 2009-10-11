@@ -28,7 +28,7 @@ module Talker
     end
     
     def send_private_message(user_id, message)
-      Talker.logger.debug{"room##{name}>>> (private) #{message.inspect}"}
+      Talker.logger.debug{"room##{name}>>> (private to user##{user_id}) #{message.inspect}"}
       publish_as_json user_queue(user_id), message
     end
     

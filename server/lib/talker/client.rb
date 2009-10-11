@@ -54,7 +54,7 @@ module Talker
     end
     
     def send_message(message)
-      send "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate
+      send "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate, "final" => true
     end
     
     def send_private_message(to, message)
