@@ -4,12 +4,15 @@ require "yajl"
 module Talker
   module Presence
     class Server
+      DEFAULT_TIMEOUT = 30.0 # sec
+      
       attr_accessor :logger
     
-      def initialize(persister)
+      def initialize(persister, options={})
         @persister = persister
+        @timeout = options[:timeout] || DEFAULT_TIMEOUT
       
-        @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
+        @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name, @persister, @timeout) }
         @queue = Queues.presence
       
         @parser = Yajl::Parser.new
@@ -19,7 +22,7 @@ module Talker
       def start
         Talker.logger.info "Watching presence on queue #{@queue.name}"
         load
-      
+        
         @queue.subscribe do |message|
           @parser << message
         end
@@ -45,15 +48,11 @@ module Talker
         
         case type
         when "join"
-          unless room.present?(user)
-            room.join user
-            @persister.store(room.name, user.id)
-          end
+          room.join user
+        when "idle"
+          room.idle user
         when "leave"
-          if room.present?(user)
-            room.leave user
-            @persister.delete(room.name, user.id)
-          end
+          room.leave user
         else
           Talker.logger.error "Wrong type of presence in message " + message.inspect
         end

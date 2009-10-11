@@ -1,6 +1,7 @@
 module Talker
   class User
     attr_reader :info
+    attr_accessor :timer
     
     def initialize(info)
       @info = info

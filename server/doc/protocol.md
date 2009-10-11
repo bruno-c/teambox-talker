@@ -60,6 +60,14 @@ The server will send the list of users in the room to new users:
 
     {"type":"users","users":[{"id":"unique id","name":"user name",...}, ...]}
 
+When a client connection is closed momentarily the following message is broadcasted in the room:
+
+    {"type":"idle","user":{"id":"unique id","name":"user name",...}}
+
+When the client returns from it's idle state, the following message is broadcasted in the room:
+
+    {"type":"back","user":{"id":"unique id","name":"user name",...}}
+
 When a client close connection to a room, the server sends the following message to all online members of the room:
 
     {"type":"leave","user":"user unique id"}

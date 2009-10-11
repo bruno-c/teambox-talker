@@ -62,7 +62,7 @@ module Talker
             @room = @server.rooms[room_name]
             @user = User.new(user)
             @subscription = @room.subscribe(@user) { |message| send_data message }
-            @room.join @user
+            @room.presence "join", @user
             send_data %({"type":"connected"}\n)
           rescue SubscriptionError => e
             handle_error e
@@ -89,11 +89,14 @@ module Talker
     end
     
     def close
-      if @room
-        @room.leave(@user) if @user
-        @subscription.delete if @subscription
-        @subscription = nil
-      end
+      room_required!
+
+      @subscription.unsubscribe
+      @subscription = nil
+
+      @room.presence("leave", @user)
+      @user = nil
+
       close_connection_after_writing
     end
     
@@ -122,7 +125,10 @@ module Talker
     end
     
     def unbind
-      @subscription.unsubscribe if @subscription
+      if @room
+        @subscription.unsubscribe if @subscription
+        @room.presence("idle", @user) if @user
+      end
     end
   
     private

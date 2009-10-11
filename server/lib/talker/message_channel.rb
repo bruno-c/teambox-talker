@@ -37,7 +37,7 @@ module Talker
     end
     
     def user_queue(user_id)
-      MQ.queue("#{USER_CHANNEL_PREFIX}.#{@name}.#{user_id}")
+      MQ.new.queue("#{USER_CHANNEL_PREFIX}.#{@name}.#{user_id}")
     end
   end
 end

@@ -32,6 +32,9 @@ module Talker
     end
     
     def run(service)
+      config_limits
+      config_logger
+      
       EM.run do
         start_amqp
         
@@ -47,8 +50,6 @@ module Talker
                                ", accepted services are: channel, presence, logger"
         end
         
-        config_limits
-        config_logger
         install_signals server
 
         $0 = "talker-#{server.to_s}"
@@ -74,6 +75,7 @@ module Talker
     end
     
     def config_limits
+      EM.set_max_timers 100_000
       if options[:descriptor_table_size]
         size = EM.set_descriptor_table_size options[:descriptor_table_size]
         puts "Descriptor table size set to #{size}"

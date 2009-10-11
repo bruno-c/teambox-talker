@@ -23,7 +23,7 @@ function TalkerClient(options) {
         options.onJoin(line);
         break;
       case 'users':
-        $.each(line.users, function() { options.addUser(this); });
+        $.each(line.users, function() { options.onJoin({user:this}); });
         break;
       case 'leave':
         options.onLeave(line);
@@ -31,6 +31,8 @@ function TalkerClient(options) {
       case 'error':
         console.error("An unfortunate error occured.  At least no one got hurt. (" + line.message + ")");
         break;
+      default:
+        console.warn("Unknown message type: " + line.type);
     } 
   }
   

@@ -1,7 +1,7 @@
 module Talker
+  class SubscriptionError < RuntimeError; end
+
   module Channel
-    class SubscriptionError < RuntimeError; end
-    
     class Room < MessageChannel
       def initialize(name)
         super(name)
@@ -17,12 +17,8 @@ module Talker
         queue.bind(@exchange).subscribe(&callback)
       end
       
-      def join(user)
-        publish_as_json @presence, :type => "join", :room => name, :user => user.info
-      end
-
-      def leave(user)
-        publish_as_json @presence, :type => "leave", :room => name, :user => user.info
+      def presence(type, user)
+        publish_as_json @presence, :type => type, :room => name, :user => user.info
       end
     end
   end
