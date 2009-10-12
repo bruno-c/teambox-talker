@@ -90,12 +90,16 @@ module Talker
     
     def close
       room_required!
-
-      @subscription.unsubscribe
-      @subscription = nil
-
-      @room.presence("leave", @user)
-      @user = nil
+      
+      if @subscription
+        @subscription.unsubscribe
+        @subscription = nil
+      end
+      
+      if @user
+        @room.presence("leave", @user)
+        @user = nil
+      end
 
       close_connection_after_writing
     end

@@ -14,7 +14,6 @@ require 'em/spec/rspec'
 EM.spec_backend = EM::Spec::Rspec
 
 require "moqueue"
-overload_amqp
 
 # Patch moqueue for some missing methods
 module Moqueue
@@ -26,8 +25,14 @@ module Moqueue
     def delete
       # noop
     end
+
+    def reset
+      # noop
+    end
   end
 end
+
+overload_amqp
 
 module Helpers
   TEST_PORT = 61900

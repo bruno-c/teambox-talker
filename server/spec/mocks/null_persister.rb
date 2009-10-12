@@ -1,5 +1,8 @@
 class NullPersister
-  def store(room_id, user_id)
+  def store(room_id, user_id, state)
+  end
+  
+  def update(room_id, user_id, state)
   end
 
   def delete(room_id, user_id)

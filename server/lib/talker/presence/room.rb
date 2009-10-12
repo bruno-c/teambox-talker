@@ -6,6 +6,7 @@ module Talker
         @users = {}
         @persister = persister
         @timeout = timeout
+        @idle_timers = {}
       end
     
       def users
@@ -25,10 +26,9 @@ module Talker
       def join(user)
         if present?(user)
           # Back from idle if already present in the room
+          stop_idle_timer user
           send_message :type => "back", :user => user.info
           @persister.update(@name, user.id, "online")
-          user.info.delete("state")
-          user.timer.cancel if user.timer
         else
           # New user in room if not present
           send_message :type => "join", :user => user.info
@@ -39,24 +39,35 @@ module Talker
         end
       end
       
+      def start_idle_timer(user)
+        @idle_timers[user.id] = EventMachine::Timer.new(@timeout) do
+          Talker.logger.debug {"#{user.name} has been idle for more then #{@timeout} sec, leaving room##{name}"}
+          leave user
+        end
+      end
+      
+      def stop_idle_timer(user)
+        user.online!
+        if timer = @idle_timers.delete(user.id)
+          timer.cancel
+        end
+      end
+      
       def idle(user)
         if present?(user)
-          user.info["state"] = "idle"
+          user.idle!
           send_message :type => "idle", :user => user.info
           @persister.update(@name, user.id, "idle")
           
           # If still idle after timeout, user leaves room
-          user.timer = EventMachine::Timer.new(@timeout) do
-            if user.info["state"] == "idle"
-              leave user
-            end
-          end
+          start_idle_timer user
         end
       end
     
       def leave(user)
         if present?(user)
           send_message :type => "leave", :user => user.info
+          send_private_message user.id, :type => "error", :message => "Connection closed"
           @persister.delete(@name, user.id)
           @users.delete(user.id)
           user_queue(user.id).delete

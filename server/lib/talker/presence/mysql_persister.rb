@@ -39,7 +39,7 @@ module Talker
         sql = <<-SQL
           SELECT connections.room_id AS room_id, users.id AS user_id,
                  users.name AS name, users.email AS email,
-                 users.state as state
+                 connections.state as state
           FROM connections
           INNER JOIN users ON users.id = connections.user_id
         SQL

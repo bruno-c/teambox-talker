@@ -33,9 +33,12 @@ module Talker
       end
     
       def load
-        @persister.load do |room_id, user|
-          Talker.logger.debug{"loaded connection: room##{room_id} => #{user['name']}"}
-          @rooms[room_id] << User.new(user)
+        @persister.load do |room_id, user_info|
+          room = @rooms[room_id]
+          user = User.new(user_info)
+          @rooms[room_id] << user
+          room.start_idle_timer user if user.idle?
+          Talker.logger.debug{"loaded connection: room##{room.name} => #{user.name} (#{user.state})"}
         end
       end
 

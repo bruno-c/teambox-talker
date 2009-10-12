@@ -10,6 +10,9 @@ module Talker
       
       def subscribe(user, &callback)
         queue = user_queue(user.id)
+        # Force re-creation of the queuer in case it was delete by presence server.
+        queue.reset
+        
         if queue.subscribed?
           raise SubscriptionError, "User #{user.name} already connected this room, " +
                                    "try again in a few seconds if there was an error."
