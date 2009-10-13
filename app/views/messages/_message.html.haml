@@ -1,4 +1,4 @@
-%tr.event{:id => "message-#{message.uuid || message.id}", :class => (message.notice? ? "notice" : "message")}
+%tr.event{:id => "message-#{message.uuid || message.id}", :class => "#{(message.notice? ? "notice" : "message")} user_#{message.user.id}"}
   %td.author&= message.user.name
   - if message.notice?
     %td.content&= message.type
