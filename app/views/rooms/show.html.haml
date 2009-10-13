@@ -37,19 +37,18 @@
 
 - @title = @room.name
 
-#room
-  #sidebar
-    %h1&= @room.name
-    %p&= @room.description
-    %p
-      = link_to "Leave", rooms_path, :id => "leave"
-    %h2 Users
-    %ul#users
-      = render :partial => "user", :collection => @room.users
-  %table#log
-    = render :partial => "messages/message", :collection => @events
-    %tr.message.event#message
-      %td.author&= current_user.name
-      %td.new_content
-        %form#msgForm{:action => room_messages_path(@room)}
-          %textarea#msgbox{:rows => 1}
+#sidebar
+  %h1&= @room.name
+  %p&= @room.description
+  %p
+    = link_to "Leave", rooms_path, :id => "leave"
+  %h2 Users
+  %ul#users
+    = render :partial => "user", :collection => @room.users
+%table#log
+  = render :partial => "messages/message", :collection => @events
+  %tr.message.event#message
+    %td.author&= current_user.name
+    %td.new_content
+      %form#msgForm{:action => room_messages_path(@room)}
+        %textarea#msgbox{:rows => 1}

@@ -18,10 +18,9 @@
           email: #{current_user.email.to_json},
         };
   
-  %body.container
+  %body.container#room
     #header
-      .inner
-        = link_to "&larr; Back to Rooms", rooms_path, :class => "back"
+      = link_to "&larr; Back to Rooms", rooms_path, :class => "back"
     
     #content
       = yield

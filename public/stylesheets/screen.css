@@ -863,6 +863,11 @@ body {
     #content .inner {
       display: block; }
 
+#room #header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; }
 #room textarea {
   height: auto;
   width: auto;
