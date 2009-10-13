@@ -7,11 +7,16 @@ var FormatHelper = {
     var protocol_expression  = /^(http|https|ftp|ftps|ssh|irc|mms|file|about|mailto|xmpp):\/\//;
     var multiline_expression = /\n/gim;
     
-    var content = content.replace('<', '&lt;').replace('>', '&gt;');
+    // forces multiline from being enclosed in <pre> twice and mucking up display.
+    if (content.match(/<!-- ignore -->/g)){
+      return content;
+    } else {
+      var content = content.replace('<', '&lt;').replace('>', '&gt;');
+    }
     
     if (content.match(multiline_expression)){
       // setup content message inside a div or something with overflow scroll/auto
-      return  '<pre style="display: block; margin:' 
+      return  '<!-- ignore --><pre style="display: block; margin:' 
             + ' 1em; font-family: \'Lucida Console\', monospace; overflow: scroll; height: 85px; width: 50%; background: white">' 
             + content 
             + '</pre>';
