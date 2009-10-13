@@ -17,9 +17,7 @@ $(function() {
     })
     .keydown(function(e){
       if (e.which == 27){
-        // we somehow need to send the message of cancelation to all users.
-        // perhaps sending an empty message would cancel everything
-        console.info("cancel message on this event");
+        ChatRoom.cancelMessage();
       }
     });
    
@@ -74,6 +72,16 @@ var ChatRoom = {
       find("textarea").focus();
     
     this.scrollToBottom();
+  },
+  
+  cancelMessage: function() {
+    if (this.currentMessage){
+      var message = this.currentMessage;
+      this.client.send({id: message.uuid, content: '', "final": false});
+      this.messages[this.currentMessage.uuid] = null;
+      this.currentMessage = null;
+    }
+    this.newMessage();
   },
   
   formatMessage: function(content, noScroll) {
@@ -140,6 +148,12 @@ var ChatRoom = {
   
   onNewMessage: function(data) {
     var message = ChatRoom.messages[data.id];
+    
+    if (data.content == '') {
+      new Message(data.user, data.id).destroyElement();
+      return false;
+    }
+    
     if (!message) {
       message = ChatRoom.messages[data.id] = new Message(data.user, data.id);
       message.createElement();
@@ -240,5 +254,9 @@ function Message(user, uuid) {
         appendTo($("#log"));
     }
     return this.element;
+  }
+  
+  this.destroyElement = function() {
+    $("#" + this.elementId).remove();
   }
 }
