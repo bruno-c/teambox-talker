@@ -4,3 +4,9 @@
   - @rooms.each do |room|
     %li
       = link_to h(room.name), room
+      %span.users
+        - if room.users.empty?
+          Nobody in the room
+        - else
+          = room.users.map(&:name).to_sentence
+          in the room
