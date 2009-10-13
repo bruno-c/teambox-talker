@@ -1,5 +1,5 @@
-- format urls, images and youtube videos.
-- enter key on empty message should not send message
+✓ format urls, images and youtube videos.
+✓ enter key on empty message should not send message
 - remove password confirmation
 - reconnect without a page refresh when a connection error occurs
 - esc key removes current typed message and puts text box back to the bottom
