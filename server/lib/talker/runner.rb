@@ -61,15 +61,22 @@ module Talker
     def start_amqp
       require "amqp"
       puts "Connected to AMQP on #{options[:amqp][:host]}:#{options[:amqp][:port]}"
-      AMQP.connect :host => options[:amqp][:host], :port => options[:amqp][:port]
+      AMQP.start :host => options[:amqp][:host], :port => options[:amqp][:port]
     end
     
     def install_signals(server)
       trap('INT') do
-        puts "Stopping ..."
+        Talker.logger.info "INT signal received, soft stopping ..."
         server.stop
-        # FIXME hang
-        #AMQP.stop { EM.stop }
+        Talker.logger.info "Waiting for AMQP to finish ..."
+        AMQP.stop do
+          Talker.logger.info "Terminating event loop"
+          EM.stop
+        end
+      end
+      trap('QUIT') do
+        Talker.logger.info "QUIT signal received, hard stopping ..."
+        Talker.logger.info "Terminating event loop"
         EM.stop
       end
     end
