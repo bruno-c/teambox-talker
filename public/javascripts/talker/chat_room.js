@@ -14,6 +14,13 @@ $(function() {
       } else {
         ChatRoom.sendLater(this.value);
       }
+    })
+    .keydown(function(e){
+      if (e.which == 27){
+        // we somehow need to send the message of cancelation to all users.
+        // perhaps sending an empty message would cancel everything
+        console.info("cancel message on this event");
+      }
     });
    
   // reformat all messages loaded from db on first load
@@ -73,7 +80,7 @@ var ChatRoom = {
     var image_expression    = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
     var youtube_expression  = /^(?:http\S+youtube\.com\/watch\?v=)([\w-]+)(?:\S*)$/;
     var vimeo_expression    = /^(?:http\S+vimeo\.com\/)(\d+)/;
-    var url_expression      = /[^\s]+\.[^\s]+/gim;
+    var url_expression      = /[^\s]+\.[^\s|\.]+/gim;
     var protocol_expression = /^(http|https|ftp|ftps|ssh|irc|mms|file|about|mailto|xmpp):\/\//;
     
     if (content.match(image_expression)){
