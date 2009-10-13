@@ -3,16 +3,13 @@ require "yajl"
 
 module Talker
   class MessageChannel
-    CHANNEL_PREFIX = "talker.channel".freeze
-    USER_CHANNEL_PREFIX = "talker.connection".freeze
-    
     attr_reader :name
     
     def initialize(name)
       @name = name
       @encoder = Yajl::Encoder.new(:terminator => nil)
 
-      @exchange = MQ.fanout("#{CHANNEL_PREFIX}.#{@name}")
+      @exchange = MQ.fanout("#{Queues::CHANNEL_PREFIX}.#{@name}")
       Queues.logger.bind(@exchange)
     end
     
@@ -37,7 +34,7 @@ module Talker
     end
     
     def user_queue(user_id)
-      MQ.queue("#{USER_CHANNEL_PREFIX}.#{@name}.#{user_id}")
+      MQ.queue("#{Queues::USER_CHANNEL_PREFIX}.#{@name}.#{user_id}")
     end
   end
 end

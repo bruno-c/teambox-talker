@@ -98,7 +98,7 @@ module Talker
       else
         Talker.logger.level = ::Logger::INFO
       end
-      Talker.logger.debug "Demo mode ACTIVATED!"
+      Talker.logger.debug "Debug mode ACTIVATED!"
     end
     
     def build_channel_server

@@ -13,6 +13,6 @@ class Event < ActiveRecord::Base
   end
   
   def notice?
-    type == "join" || type == "leave"
+    type != "message"
   end
 end
