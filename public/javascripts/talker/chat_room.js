@@ -37,6 +37,7 @@ var ChatRoom = {
   messages: {},
   currentMessage: null,
   maxImageWidth: 400,
+  current_user_id: null,
   
   sendLater: function(data) {
     if (data === "") return;
@@ -199,6 +200,7 @@ function Message(user, uuid) {
         addClass("event").
         addClass("message").
         addClass("partial").
+        addClass(ChatRoom.current_user_id == this.user.id ? 'me' : '').
         attr("id", this.elementId).
         append($("<td/>").addClass("author").html(this.user.name)).
         append($("<td/>").addClass("content").html(this.content || "")).
