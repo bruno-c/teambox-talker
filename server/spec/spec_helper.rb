@@ -5,8 +5,6 @@ require "talker"
 require "logger"
 Dir[File.dirname(__FILE__) + "/mocks/*.rb"].each { |f| require f }
 
-$TALKER_DEBUG = true
-
 # Try installing em-spec from http://github.com/macournoyer/em-spec
 # if this doesn't work
 require 'em/spec'

@@ -53,6 +53,10 @@ module Talker
       @on_presence = block
     end
     
+    def on_error(&block)
+      @on_error = block
+    end
+    
     def send_message(message)
       send "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate, "final" => true
     end
@@ -82,7 +86,11 @@ module Talker
       when "connected"
         @on_connected.call if @on_connected
       when "error"
-        raise Error, message["message"]
+        if @on_error
+          @on_error.call(message["message"])
+        else
+          raise Error, message["message"]
+        end
       when "users"
         message["users"].each do |user|
           @users[user["id"]] = User.new(user)

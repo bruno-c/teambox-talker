@@ -7,7 +7,7 @@ module Talker
   class Connection < EM::Connection
     # TODO freeze constant strings
 
-    attr_accessor :server, :room, :user, :reraise_errors
+    attr_accessor :server, :room, :user
     
     # Called after connection is fully initialized and establied from EM.
     def post_init
@@ -17,7 +17,6 @@ module Talker
       
       @room = nil
       @user = nil
-      @reraise_errors = $TALKER_DEBUG
     end
     
     # Called when a JSON object in a message is fully parsed
@@ -40,7 +39,7 @@ module Talker
       error e.message
     rescue Exception => e
       Talker.logger.error("[Error] " + e.to_s + ": " + e.backtrace.join("\n"))
-      handle_error e, "Error processing command"
+      error "Error processing command"
     end
     
     
@@ -65,11 +64,12 @@ module Talker
             @room.presence "join", @user
             send_data %({"type":"connected"}\n)
           rescue SubscriptionError => e
-            handle_error e
+            @subscription = @user = nil # do not presend like user is connected
+            error e.message
           end
         
         else
-          handle_error ProtocolError.new("Authentication failed")
+          error "Authentication failed"
         end
         
       end
@@ -114,7 +114,8 @@ module Talker
     end
     
     def to_s
-      return "#{@user.name}##{@user.id}@#{@room.name}" if @room
+      return "#{@user.name}##{@user.id}@#{@room.name}" if @user
+      return "?@#{@room.name}" if @room
       "(?)@(?)"
     end
     
@@ -125,7 +126,7 @@ module Talker
       # continue passing chunks
       @parser << data
     rescue Yajl::ParseError => e
-      handle_error e, "Invalid JSON"
+      error "Invalid JSON"
     end
     
     def unbind
@@ -136,11 +137,6 @@ module Talker
     end
   
     private
-      def handle_error(exception=$!, message=exception.message)
-        raise exception if @reraise_errors
-        error message
-      end
-      
       def room_required!
         raise ProtocolError, "Not connected to a room" unless @room
       end

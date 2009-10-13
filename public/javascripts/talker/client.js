@@ -29,7 +29,8 @@ function TalkerClient(options) {
         options.onLeave(line);
         break;
       case 'error':
-        console.error("An unfortunate error occured.  At least no one got hurt. (" + line.message + ")");
+        alert(line.message);
+        window.location = "/rooms";
         break;
       default:
         console.warn("Unknown message type: " + line.type);

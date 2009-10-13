@@ -1,4 +1,5 @@
 - format urls, images and youtube videos.
+- On error, connection is closed before processing the "error" message, eg. connect to the same room twice w/ same user.
 - enter key on empty message should not send message
 - remove password confirmation
 - reconnect without a page refresh when a connection error occurs
