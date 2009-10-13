@@ -17,9 +17,7 @@ $(function() {
     })
     .keydown(function(e){
       if (e.which == 27){
-        // we somehow need to send the message of cancelation to all users.
-        // perhaps sending an empty message would cancel everything
-        console.info("cancel message on this event");
+        ChatRoom.cancelMessage();
       }
     });
    
@@ -39,6 +37,7 @@ var ChatRoom = {
   messages: {},
   currentMessage: null,
   maxImageWidth: 400,
+  current_user_id: null,
   
   sendLater: function(data) {
     if (data === "") return;
@@ -76,57 +75,18 @@ var ChatRoom = {
     this.scrollToBottom();
   },
   
-  formatMessage: function(content, noScroll) {
-    var image_expression    = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
-    var youtube_expression  = /^(?:http\S+youtube\.com\/watch\?v=)([\w-]+)(?:\S*)$/;
-    var vimeo_expression    = /^(?:http\S+vimeo\.com\/)(\d+)/;
-    var url_expression      = /[^\s]+\.[^\s|\.]+/gim;
-    var protocol_expression = /^(http|https|ftp|ftps|ssh|irc|mms|file|about|mailto|xmpp):\/\//;
-    
-    if (content.match(image_expression)){
-      return content.replace(image_expression, function(locator){
-        return '<a href="' 
-          + locator 
-          + '" target="_blank"><img src="' 
-          + locator 
-          + '" onload="ChatRoom.resizeImage(this, true)" style="visibility: hidden;" />'
-          + '</a>';
-      });
-    } else if (content.match(youtube_expression)){
-      return content.replace(youtube_expression, function(locator){
-        return locator.replace(youtube_expression, '<object width="425" height="355">'
-          + '<param name="movie" value="http://www.youtube.com/v/$1?rel=1&color1=0x2b405b&color2=0x6b8ab6&border=0&fs=1"></param>'
-          + '<param name="allowFullScreen" value="true"></param>'
-          + '<embed src="http://www.youtube.com/v/$1?rel=1&color1=0x2b405b&color2=0x6b8ab6&border=1&fs=1"'
-          + ' type="application/x-shockwave-flash"'
-          + '  width="425" height="355" '
-          + '  allowfullscreen="true"></embed>'
-          + '</object>');
-      });
-    } else if (content.match(vimeo_expression)){
-      return content.replace(vimeo_expression, function(locator){
-        return locator.replace(vimeo_expression, '<object width="400" height="220">'
-          + '<param name="allowfullscreen" value="true" />'
-          + '<param name="allowscriptaccess" value="always" />'
-          + '<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=$1'
-          + '&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" />'
-          + '<embed src="http://vimeo.com/moogaloop.swf?clip_id=$1&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;'
-          + 'show_portrait=0&amp;color=&amp;fullscreen=1" '
-          + 'type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="220">'
-          + '</embed></object>'
-        );
-      });
-    } else if (content.match(url_expression)) {
-      return content.replace(url_expression, function(locator){
-        return '<a href="' 
-          +  (!locator.match(protocol_expression) ? 'http://' : '') + locator
-          + '" target="_blank">' 
-          +   locator 
-          + "</a>";
-      });
-    } else{
-      return content;
+  cancelMessage: function() {
+    if (this.currentMessage){
+      var message = this.currentMessage;
+      this.client.send({id: message.uuid, content: '', "final": false});
+      this.messages[this.currentMessage.uuid] = null;
+      this.currentMessage = null;
     }
+    this.newMessage();
+  },
+  
+  formatMessage: function(content) {
+    return FormatHelper.text2html(content)
   },
   
   resizeImage: function(image, noScroll){
@@ -140,6 +100,12 @@ var ChatRoom = {
   
   onNewMessage: function(data) {
     var message = ChatRoom.messages[data.id];
+    
+    if (data.content == '') {
+      new Message(data.user, data.id).destroyElement();
+      return false;
+    }
+    
     if (!message) {
       message = ChatRoom.messages[data.id] = new Message(data.user, data.id);
       message.createElement();
@@ -234,11 +200,16 @@ function Message(user, uuid) {
         addClass("event").
         addClass("message").
         addClass("partial").
+        addClass(ChatRoom.current_user_id == this.user.id ? 'me' : '').
         attr("id", this.elementId).
         append($("<td/>").addClass("author").html(this.user.name)).
         append($("<td/>").addClass("content").html(this.content || "")).
         appendTo($("#log"));
     }
     return this.element;
+  }
+  
+  this.destroyElement = function() {
+    $("#" + this.elementId).remove();
   }
 }

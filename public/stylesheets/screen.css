@@ -874,7 +874,8 @@ body {
   #room #log .event .author {
     vertical-align: top;
     font-weight: bold;
-    text-align: right; }
+    text-align: right;
+    white-space: nowrap; }
   #room #log .event .content {
     width: 100%;
     border-bottom: solid 1px #eee; }
@@ -885,6 +886,8 @@ body {
   #room #log .notice {
     font-size: 10px;
     background-color: #ddf; }
+  #room #log .me {
+    background-color: rgb(255, 255, 229); }
 #room #sidebar {
   position: fixed;
   right: 0;
