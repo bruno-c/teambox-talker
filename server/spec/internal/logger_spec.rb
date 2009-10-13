@@ -21,7 +21,7 @@ EM.describe Talker::Logger do
   end
   
   it "should insert new message" do
-    message = encode(:type => "message", :user => {:id => 1}, :final => true, :uuid => "123",
+    message = encode(:type => "message", :user => {:id => 1}, :final => true, :id => "123",
                      :time => 5, :content => "ohaie")
   
     @logger.should_receive(:insert_message).with(1, 1, "123", "ohaie", 5)
@@ -30,7 +30,7 @@ EM.describe Talker::Logger do
   end
   
   it "should delete empty message" do
-    message = encode(:type => "message", :user => {:id => 1}, :final => true, :uuid => "123",
+    message = encode(:type => "message", :user => {:id => 1}, :final => true, :id => "123",
                      :time => 5, :content => "")
   
     @logger.should_receive(:delete_message).with(1, 1, "123")

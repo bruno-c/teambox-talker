@@ -57,7 +57,7 @@ module Talker
       case type
       when "message"
         content = message["content"]
-        uuid = message["uuid"]
+        uuid = message["id"]
         if content.empty?
           delete_message room_id, user_id, uuid
         else
@@ -68,8 +68,9 @@ module Talker
       end
     end
     
-    def stop
+    def stop(&callback)
       @queue.unsubscribe
+      callback.call
     end
     
     def to_s
