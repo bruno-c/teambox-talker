@@ -38,9 +38,10 @@ Attributes:
 The server will broadcast the message to all online members of the room (including the sender) with this:
 
     {"type":"message","content":"message to send","id":"unique message ID",
-     "user":{"id":"unique id","name":"user name"}}
+     "user":{"id":"unique id","name":"user name"},"time":1255447115}
 
 "user" being the required information of the sender (id and name, not profile picture, etc).
+"time" is the epoch timestamp when the message was received by the server.
 
 To send a private message, add the "to" property:
 

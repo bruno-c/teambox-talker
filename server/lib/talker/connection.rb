@@ -64,7 +64,7 @@ module Talker
             @room.presence "join", @user
             send_data %({"type":"connected"}\n)
           rescue SubscriptionError => e
-            @subscription = @user = nil # do not presend like user is connected
+            @subscription = @user = nil # do not pretend like user is connected
             error e.message
           end
         
@@ -79,6 +79,7 @@ module Talker
       room_required!
     
       obj["user"] = @user.required_info
+      obj["time"] = Time.now.to_i
       
       if to
         obj["private"] = true
@@ -140,10 +141,6 @@ module Talker
     private
       def room_required!
         raise ProtocolError, "Not connected to a room" unless @room
-      end
-      
-      def encode(data)
-        Yajl::Encoder.encode(data) + "\n"
       end
   end
 end

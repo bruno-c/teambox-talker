@@ -48,14 +48,15 @@ module Talker
         type = message["type"]
         room = @rooms[message["room"]]
         user = User.new(message["user"])
+        time = message["time"]
         
         case type
         when "join"
-          room.join user
+          room.join user, time
         when "idle"
-          room.idle user
+          room.idle user, time
         when "leave"
-          room.leave user
+          room.leave user, time
         else
           Talker.logger.error "Wrong type of presence in message " + message.inspect
         end

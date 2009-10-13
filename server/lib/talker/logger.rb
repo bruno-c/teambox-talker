@@ -38,6 +38,7 @@ module Talker
       Talker.logger.debug{"room##{room_id}> " + message.inspect}
       
       user_id = message["user"]["id"]
+      time = message["time"] || Time.now.to_i
       
       case type
       when "message"
@@ -45,12 +46,12 @@ module Talker
         content = message["content"]
         EventedMysql.insert <<-SQL
           INSERT INTO events (room_id, user_id, type, uuid, message, created_at)
-          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}', '#{quote(uuid)}', '#{quote(content)}', NOW())
+          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}', '#{quote(uuid)}', '#{quote(content)}', FROM_UNIXTIME(#{time}))
         SQL
       when "join", "leave"
         EventedMysql.insert <<-SQL
           INSERT INTO events (room_id, user_id, type, created_at)
-          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}', created_at)
+          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}', FROM_UNIXTIME(#{time}))
         SQL
       end
     end

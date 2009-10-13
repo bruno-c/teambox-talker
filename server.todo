@@ -1,6 +1,7 @@
 Talker Server:
 - Expire connections (on presence server) if user leaves while channel server is down
-- Pass timestamp on each message
+✓ Pass timestamp on each message
+- Delete messages with empty content ("")
 - Handle big messages like pastes? (server could POST to our private paste web service and broadcast link to room instead of full message)
 - Make sure queues are persisted on RabbitMQ
 - Improve perf by making partial messages transient (see High-speed transient message flows on http://www.rabbitmq.com/faq.html#scenarios)

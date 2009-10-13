@@ -4,9 +4,10 @@ EM.describe "Presence info" do
   it "should be broadcasted on join" do
     # User 1 will receive notification of join
     connect :room => "test", :user => {:id => 1, :name => "user1"} do |client|
-      client.on_join do |user|
+      client.on_join do |user, attributes|
         user.id.should == 2
         user.name.should == "user2"
+        attributes.should have_key("time")
       end
     end
     
@@ -26,8 +27,9 @@ EM.describe "Presence info" do
   it "should be broadcasted on close" do
     # User 1 will receive notification of leave
     connect :room => "test", :user => {:id => 1, :name => "user1"} do |client|
-      client.on_leave do |user|
+      client.on_leave do |user, attributes|
         user.id.should == 2
+        attributes.should have_key("time")
         client.close
       end
 
