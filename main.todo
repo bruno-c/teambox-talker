@@ -1,7 +1,4 @@
-- Show errors on top of invites page
-✓ remove old user on rename
 - Implement "Forgot my password"
-- Format messages (turn urls into links, show images, videos, etc.)
 - Use Flash sockets if present http://github.com/tmm1/jssocket (??)
 - Import Campfire logs (using tinder)
 

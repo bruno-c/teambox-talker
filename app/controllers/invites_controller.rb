@@ -27,17 +27,28 @@ class InvitesController < ApplicationController
   
   def create
     @invitees = params[:invitees].split("\n")
+    success_count = 0
+    
+    flash.delete(:error)
     
     @invitees.each do |email|
       email.strip!
       user = current_account.users.build(:name => email, :email => email)
-      if user.save!
+      if user.save
         send_invitation user
+        success_count += 1
+      else
+        flash[:error] ||= "Some errors occured while sending invitations:"
+        flash[:error] += "<br/><strong>" + email + "</strong>: " + user.errors.full_messages.to_sentence
       end
     end
     
-    flash[:notice] = "Users invited! You can now set permissions."
-    redirect_to users_path
+    if success_count > 0
+      flash[:notice] = "Yeah! #{success_count} user(s) were invited! You can now edit permissions."
+      redirect_to users_path
+    else
+      render :index
+    end
   end
   
   def resend
