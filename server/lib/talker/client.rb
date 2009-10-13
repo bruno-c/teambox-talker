@@ -29,32 +29,18 @@ module Talker
       @users = {}
     end
     
-    def on_connected(&block)
-      @on_connected = block
-    end
-
-    def on_message(&block)
-      @on_message = block
-    end
-
-    def on_join(&block)
-      @on_join = block
-    end
-
-    def on_leave(&block)
-      @on_leave = block
-    end
-
-    def on_close(&block)
-      @on_close = block
+    # Callbacks
+    %w( connected message join idle back leave presence error close ).each do |method|
+      class_eval <<-EOS
+        def on_#{method}(&block)
+          @on_#{method} = block
+        end
+      EOS
     end
     
-    def on_presence(&block)
-      @on_presence = block
-    end
-    
-    def on_error(&block)
-      @on_error = block
+    def trigger(callback, *args)
+      callback = instance_variable_get(:"@on_#{callback}")
+      callback.call(*args) if callback
     end
     
     def send_message(message)
@@ -84,10 +70,11 @@ module Talker
     def object_parsed(message)
       case message["type"]
       when "connected"
-        @on_connected.call if @on_connected
+        trigger :connected
       when "error"
         if @on_error
           @on_error.call(message["message"])
+          EM.stop
         else
           raise Error, message["message"]
         end
@@ -95,21 +82,27 @@ module Talker
         message["users"].each do |user|
           @users[user["id"]] = User.new(user)
         end
-        @on_presence.call(@users.values) if @on_presence
+        trigger :presence, @users.values
       when "join"
         user = Talker::User.new(message["user"])
         unless user.id == @user.id
           @users[user.id] = user
-          @on_join.call(user) if @on_join
+          trigger :join, user
         end
       when "leave"
         user = Talker::User.new(message["user"])
         @users.delete(user.id)
-        @on_leave.call(user) if @on_leave
+        trigger :leave, user
+      when "idle"
+        user = Talker::User.new(message["user"])
+        trigger :idle, user
+      when "back"
+        user = Talker::User.new(message["user"])
+        trigger :back, user
       when "message"
         user = Talker::User.new(message["user"])
         @users[user.id] ||= user
-        @on_message.call(user, message["content"]) if @on_message
+        trigger :message, user, message["content"]
       else
         raise Error, "unknown message type received from server: " + message["type"]
       end
@@ -125,7 +118,7 @@ module Talker
     end
     
     def unbind
-      @on_close.call if @on_close
+      trigger :close if @on_close
     end
     
     private

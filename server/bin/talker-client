@@ -42,6 +42,10 @@ EM.run do
       puts "#{user.name}: #{message}"
     end
     
+    client.on_error do |message|
+      abort message
+    end
+    
     client.on_close do
       puts "disconnected"
       EM.stop
