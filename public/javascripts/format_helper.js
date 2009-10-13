@@ -17,7 +17,7 @@ var FormatHelper = {
     if (content.match(multiline_expression)){
       // setup content message inside a div or something with overflow scroll/auto
       return  '<!-- ignore --><pre style="display: block; margin:' 
-            + ' 1em; font-family: \'Lucida Console\', monospace; overflow: scroll; height: 85px; width: 50%; background: white">' 
+            + ' 1em; font-family: \'Lucida Console\', monospace; overflow: scroll; width: 70%; background: white">' 
             + content 
             + '</pre>';
       // add a link to a message display that would show the message in raw text
