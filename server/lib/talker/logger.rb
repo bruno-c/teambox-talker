@@ -68,8 +68,9 @@ module Talker
       end
     end
     
-    def stop
+    def stop(&callback)
       @queue.unsubscribe
+      callback.call
     end
     
     def to_s
