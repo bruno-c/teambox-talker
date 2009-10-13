@@ -27,8 +27,8 @@ OptionParser.new do |opts|
   
   opts.separator "Database"
   opts.on("--database NAME", "Database name")             { |x| runner[:database][:database] = x }
-  opts.on("--username NAME", "Database username")         { |x| runner[:database][:user] = x }
-  opts.on("--password VALUE", "Database password")        { |x| runner[:database][:password] = x }
+  opts.on("--db-user NAME", "Database username")          { |x| runner[:database][:user] = x }
+  opts.on("--db-password VALUE", "Database password")     { |x| runner[:database][:password] = x }
   opts.on("--db-host NAME", "Database host")              { |x| runner[:database][:host] = x }
   
   opts.separator "Other"
