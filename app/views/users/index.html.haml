@@ -11,7 +11,7 @@
       %th
   %tbody
     - @users.each do |user|
-      %tr.user{:class => cycle(:odd, :even)}
+      %tr.user{:class => cycle(:odd, :even), :id => dom_id(user)}
         %td=h user.name
         %td
           = mail_to user.email
@@ -31,4 +31,7 @@
                 = label_tag dom_id(user, :suspended), "Suspended", :class => "inline"
 
               = link_to "Resend Invitation", resend_invite_path(user), :method => :post
+              
+              - if user.pending?
+                = link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete
           
