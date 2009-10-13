@@ -23,15 +23,15 @@ module Talker
         @users.key?(user.id)
       end
     
-      def join(user)
+      def join(user, time)
         if present?(user)
           # Back from idle if already present in the room
           stop_idle_timer user
-          send_message :type => "back", :user => user.info
+          send_message :type => "back", :user => user.info, :time => time
           @persister.update(@name, user.id, "online")
         else
           # New user in room if not present
-          send_message :type => "join", :user => user.info
+          send_message :type => "join", :user => user.info, :time => time
           @persister.store(@name, user.id, "online")
           self << user
           # Send list of online users to new user
@@ -53,10 +53,10 @@ module Talker
         end
       end
       
-      def idle(user)
+      def idle(user, time)
         if present?(user)
           user.idle!
-          send_message :type => "idle", :user => user.info
+          send_message :type => "idle", :user => user.info, :time => time
           @persister.update(@name, user.id, "idle")
           
           # If still idle after timeout, user leaves room
@@ -64,9 +64,9 @@ module Talker
         end
       end
     
-      def leave(user)
+      def leave(user, time)
         if present?(user)
-          send_message :type => "leave", :user => user.info
+          send_message :type => "leave", :user => user.info, :time => time
           send_private_message user.id, :type => "error", :message => "Connection closed"
           @persister.delete(@name, user.id)
           @users.delete(user.id)

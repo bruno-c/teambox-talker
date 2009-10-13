@@ -23,7 +23,7 @@ module Talker
       end
       
       def presence(type, user)
-        publish_as_json @presence, :type => type, :room => name, :user => user.info
+        publish_as_json @presence, :type => type, :room => name, :user => user.info, :time => Time.now.to_i
       end
     end
   end

@@ -40,7 +40,7 @@ module Talker
     
     def trigger(callback, *args)
       callback = instance_variable_get(:"@on_#{callback}")
-      callback.call(*args) if callback
+      callback.call(*args[0,callback.arity]) if callback
     end
     
     def send_message(message)
@@ -87,22 +87,22 @@ module Talker
         user = Talker::User.new(message["user"])
         unless user.id == @user.id
           @users[user.id] = user
-          trigger :join, user
+          trigger :join, user, message
         end
       when "leave"
         user = Talker::User.new(message["user"])
         @users.delete(user.id)
-        trigger :leave, user
+        trigger :leave, user, message
       when "idle"
         user = Talker::User.new(message["user"])
-        trigger :idle, user
+        trigger :idle, user, message
       when "back"
         user = Talker::User.new(message["user"])
-        trigger :back, user
+        trigger :back, user, message
       when "message"
         user = Talker::User.new(message["user"])
         @users[user.id] ||= user
-        trigger :message, user, message["content"]
+        trigger :message, user, message["content"], message
       else
         raise Error, "unknown message type received from server: " + message["type"]
       end

@@ -7,10 +7,11 @@ EM.describe "Messages" do
         client.send_message("hi")
       end
 
-      client.on_message do |user, message|
+      client.on_message do |user, message, attributes|
         user.id.should == 123
         user.name.should == "tester"
         message.should == "hi"
+        attributes.should have_key("time")
         client.close
       end
       
