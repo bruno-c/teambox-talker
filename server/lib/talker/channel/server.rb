@@ -17,6 +17,8 @@ module Talker
 
         @authenticator = nil
         @signature = nil
+        @connections = {}
+        @on_stop = nil
         @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
       end
   
@@ -30,15 +32,36 @@ module Talker
         @signature = EM.start_server(@host, @port, Connection) do |connection|
           connection.server = self
           connection.comm_inactivity_timeout = @timeout
+          @connections[connection.signature] = connection
         end
       end
-    
+      
       def running?
         !!@signature
       end
     
-      def stop
-        EM.stop_server @signature if @signature
+      def stop(&callback)
+        if running?
+          # Stop accepting connections
+          EM.stop_server @signature
+          @signature = nil
+          
+          @connections.values.each { |c| c.close_connection }
+        end
+        
+        if callback
+          if @connections.empty?
+            callback.call
+          else
+            Talker.logger.info "Waiting for #{@connections.size} connections to finish ..."
+            @on_stop = callback
+          end
+        end
+      end
+      
+      def connection_closed(connection)
+        @connections.delete(connection.signature)
+        @on_stop.call if @on_stop && @connections.empty?
       end
     
       def authenticate(room, user, token, &callback)

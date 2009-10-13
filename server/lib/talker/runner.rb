@@ -67,11 +67,13 @@ module Talker
     def install_signals(server)
       trap('INT') do
         Talker.logger.info "INT signal received, soft stopping ..."
-        server.stop
-        log "Waiting for AMQP to finish ..."
-        AMQP.stop do
-          log "Terminating event loop"
-          EM.stop
+        log "Closing server connections ..."
+        server.stop do
+          log "Waiting for AMQP to finish ..."
+          AMQP.stop do
+            log "Terminating event loop"
+            EM.stop
+          end
         end
       end
       trap('QUIT') do

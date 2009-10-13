@@ -134,6 +134,7 @@ module Talker
         @subscription.unsubscribe if @subscription
         @room.presence("idle", @user) if @user
       end
+      @server.connection_closed(self)
     end
   
     private
