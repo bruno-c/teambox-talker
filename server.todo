@@ -1,16 +1,14 @@
 Talker Server:
-- Rename Server to Channel Server
-- Create a presence server to hold user info (and remove presence message)
-  - Server must send leave message when session expires
-  - Prevent double join message when user reconnects
-- Move to mongodb or redis for faster writes & less mem?
+- Expire connections (on presence server) if user leaves while channel server is down
 - Delete user queue if unused for 30-60 sec (can RabbitMQ handle that?)
 - Handle big messages like pastes? (server could POST to our private paste web service and broadcast link to room instead of full message)
 - Test case of the same user connecting to the same room twice
 - Make sure queues are persisted on RabbitMQ
 - Improve perf by making partial messages transient (see High-speed transient message flows on http://www.rabbitmq.com/faq.html#scenarios)
+- Move to mongodb or redis for faster writes & less mem?
 
 Chef:
+✓ Fix stopping talker processes w/ god
 - Tweaks mysql recipe (use the one from opscode?); using too much mem
 - Move /db to /mnt or mount EBS volume
 - Server and room behind SSL (maybe can have nginx do all that)
