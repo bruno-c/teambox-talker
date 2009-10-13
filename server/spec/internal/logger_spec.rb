@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/spec_helper"
 
 EM.describe Talker::Logger do
   before do
-    @logger = Talker::Logger.new :database => "talker_test", :user => "root"
+    @logger = Talker::Logger::Server.new :database => "talker_test", :user => "root"
     @logger.start
     
     @exchange = MQ.fanout("talker.test")
@@ -24,7 +24,7 @@ EM.describe Talker::Logger do
     message = encode(:type => "message", :user => {:id => 1}, :final => true, :id => "123",
                      :time => 5, :content => "ohaie")
   
-    @logger.should_receive(:insert_message).with(1, 1, "123", "ohaie", 5)
+    @logger.rooms[1].should_receive(:insert_message).with(1, 1, "123", "ohaie", 5)
     @exchange.publish message, :exchange => "talker.channel.1"
     done
   end
@@ -33,7 +33,7 @@ EM.describe Talker::Logger do
     message = encode(:type => "message", :user => {:id => 1}, :final => true, :id => "123",
                      :time => 5, :content => "")
   
-    @logger.should_receive(:delete_message).with(1, 1, "123")
+    @logger.rooms[1].should_receive(:delete_message).with(1, 1, "123")
     @exchange.publish message, :exchange => "talker.channel.1"
     done
   end
@@ -42,7 +42,7 @@ EM.describe Talker::Logger do
     message = encode(:type => "join", :user => {:id => 1},
                      :time => 5, :content => "ohaie")
   
-    @logger.should_receive(:insert_notice).with(1, 1, "join", 5)
+    @logger.rooms[1].should_receive(:insert_notice).with(1, 1, "join", 5)
     @exchange.publish message, :exchange => "talker.channel.1"
     done
   end
