@@ -25,63 +25,47 @@ module Talker
       def received(message)
         room_id = name.to_i
         type = message["type"]
-      
+        
         # Shortcircuit if partial message
         # TODO update existing message if partial?
         return if type == "message" && !message["final"]
-      
+        
         unless message.key?("user")
           Talker.logger.error "No user key in message: " + message.inspect
           return
         end
-      
+        
         Talker.logger.debug{"room##{room_id}> " + message.inspect}
-      
+        
         user_id = message["user"]["id"].to_i
         time = message["time"] || Time.now.to_i
-      
+        errback = proc { |e| Talker.logger.error "Error logging message: #{message.inspect}, error: #{e}" }
+        
         case type
         when "message"
           content = message["content"]
           uuid = message["id"]
-        
-          if content.empty?
-            delete_message room_id, user_id, uuid
-          else
-            insert_message room_id, user_id, uuid, content, time
-          end
+          insert_message room_id, user_id, uuid, content, time, @callback, errback
         when "join", "leave"
-          insert_notice room_id, user_id, type, time
+          insert_notice room_id, user_id, type, time, @callback, errback
         else
           @callback.call
         end
       end
       
       private
-        def insert_message(room_id, user_id, uuid, content, time)
-          db.insert <<-SQL, method(:on_written)
+        def insert_message(room_id, user_id, uuid, content, time, callback, errback)
+          db.insert <<-SQL, callback, errback
             INSERT INTO events (room_id, user_id, type, uuid, message, created_at)
             VALUES (#{room_id}, #{user_id}, 'message', '#{quote(uuid)}', '#{quote(content)}', FROM_UNIXTIME(#{time}))
           SQL
         end
-
-        def delete_message(room_id, user_id, uuid)
-          db.raw <<-SQL, method(:on_written)
-            DELETE FROM events
-            WHERE room_id = #{room_id} AND user_id = #{user_id}
-            AND uuid = '#{quote(uuid)}'
-          SQL
-        end
       
-        def insert_notice(room_id, user_id, type, time, &callback)
-          db.insert <<-SQL, method(:on_written)
+        def insert_notice(room_id, user_id, type, time, callback, errback)
+          db.insert <<-SQL, callback, errback
             INSERT INTO events (room_id, user_id, type, created_at)
             VALUES (#{room_id}, #{user_id}, '#{quote(type)}', FROM_UNIXTIME(#{time}))
           SQL
-        end
-        
-        def on_written(results)
-          @callback.call
         end
       
         def quote(s)
