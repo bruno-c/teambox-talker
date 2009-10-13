@@ -32,8 +32,8 @@ module Talker
     end
     
     def run(service)
-      config_limits
       config_logger
+      config_limits
       
       EM.run do
         start_amqp
@@ -53,14 +53,14 @@ module Talker
         install_signals server
 
         $0 = "talker-#{server.to_s}"
-        puts "Starting #{server.to_s} ..."
+        log "Starting #{server.to_s} ..."
         server.start
       end
     end
     
     def start_amqp
       require "amqp"
-      puts "Connected to AMQP on #{options[:amqp][:host]}:#{options[:amqp][:port]}"
+      log "Connected to AMQP on #{options[:amqp][:host]}:#{options[:amqp][:port]}"
       AMQP.start :host => options[:amqp][:host], :port => options[:amqp][:port]
     end
     
@@ -68,15 +68,15 @@ module Talker
       trap('INT') do
         Talker.logger.info "INT signal received, soft stopping ..."
         server.stop
-        Talker.logger.info "Waiting for AMQP to finish ..."
+        log "Waiting for AMQP to finish ..."
         AMQP.stop do
-          Talker.logger.info "Terminating event loop"
+          log "Terminating event loop"
           EM.stop
         end
       end
       trap('QUIT') do
-        Talker.logger.info "QUIT signal received, hard stopping ..."
-        Talker.logger.info "Terminating event loop"
+        log "QUIT signal received, hard stopping ..."
+        log "Terminating event loop"
         EM.stop
       end
     end
@@ -85,10 +85,10 @@ module Talker
       EM.set_max_timers 100_000
       if options[:descriptor_table_size]
         size = EM.set_descriptor_table_size options[:descriptor_table_size]
-        puts "Descriptor table size set to #{size}"
+        log "Descriptor table size set to #{size}"
       end
       if options[:user]
-        puts "Running as user #{options[:user]}"
+        log "Running as user #{options[:user]}"
         EM.set_effective_user options[:user]
       end
     end
@@ -121,6 +121,10 @@ module Talker
     
     def build_logger
       Talker::Logger.new options[:database]
+    end
+    
+    def log(msg)
+      Talker.logger.info msg
     end
   end
 end
