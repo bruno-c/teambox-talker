@@ -1,12 +1,27 @@
 var FormatHelper = {
   text2html: function(content){
-    var image_expression    = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
-    var youtube_expression  = /^(?:http\S+youtube\.com\/watch\?v=)([\w-]+)(?:\S*)$/;
-    var vimeo_expression    = /^(?:http\S+vimeo\.com\/)(\d+)/;
-    var url_expression      = /[^\s]+\.[^\s|\.]+/gim;
-    var protocol_expression = /^(http|https|ftp|ftps|ssh|irc|mms|file|about|mailto|xmpp):\/\//;
+    var image_expression     = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
+    var youtube_expression   = /^(?:http\S+youtube\.com\/watch\?v=)([\w-]+)(?:\S*)$/;
+    var vimeo_expression     = /^(?:http\S+vimeo\.com\/)(\d+)/;
+    var url_expression       = /[^\s]+\.[^\s|\.]+/gim;
+    var protocol_expression  = /^(http|https|ftp|ftps|ssh|irc|mms|file|about|mailto|xmpp):\/\//;
+    var multiline_expression = /\n/gim;
     
-    if (content.match(image_expression)){
+    // forces multiline from being enclosed in <pre> twice and mucking up display.
+    if (content.match(/<!-- ignore -->/g)){
+      return content;
+    } else {
+      var content = content.replace('<', '&lt;').replace('>', '&gt;');
+    }
+    
+    if (content.match(multiline_expression)){
+      // setup content message inside a div or something with overflow scroll/auto
+      return  '<!-- ignore --><pre style="display: block; margin:' 
+            + ' 1em; font-family: \'Lucida Console\', monospace; overflow: scroll; height: 85px; width: 50%; background: white">' 
+            + content 
+            + '</pre>';
+      // add a link to a message display that would show the message in raw text
+    } else if (content.match(image_expression)){
       return content.replace(image_expression, function(locator){
         return '<a href="' 
           + locator 
@@ -47,7 +62,7 @@ var FormatHelper = {
           +   locator 
           + "</a>";
       });
-    } else{
+    } else {
       return content;
     }
   }
