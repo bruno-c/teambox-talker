@@ -1,47 +1,66 @@
 require "em/mysql"
 require "mq"
+require "yajl"
 
 module Talker
   class Logger
     def initialize(options={})
       EventedMysql.settings.update options
-      @queue = MQ.queue("rooms")
+      @queue = Queues.logger
+      @parser = Yajl::Parser.new
+      @parser.on_parse_complete = method(:message_received)
+      @room_id = nil
+    end
+    
+    def options
+      EventedMysql.settings
     end
     
     def start
+      Talker.logger.info "Logging to #{options[:database]}@#{options[:host]}"
+      
       @queue.subscribe do |headers, message|
-        if room = headers.exchange[/^room\.(.*)$/, 1]
-          message_received room, Yajl::Parser.parse(message)
+        if room = headers.exchange[/^#{Queues::CHANNEL_PREFIX}\.(\d+)$/, 1]
+          @room_id = room # pass as ivar cause message_received is called from as a Yajl callback
+          @parser << message
+        else
+          Talker.logger.warn{"Ignoring message from " + headers.exchange + " no matching channel found"}
         end
       end
     end
     
-    def message_received(room_id, message)
+    def message_received(message)
+      room_id = @room_id
       type = message["type"]
       # TODO update existing message if partial?
       return if type == "message" && !message["final"]
       
+      Talker.logger.debug{"room##{room_id}> " + message.inspect}
+      
       user_id = message["user"]["id"]
       
-      if type == "message"
+      case type
+      when "message"
         uuid = message["id"]
         content = message["content"]
-        sql = <<-SQL
-          INSERT INTO events (room_id, user_id, type, uuid, message)
-          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}', '#{quote(uuid)}', '#{quote(content)}')
+        EventedMysql.insert <<-SQL
+          INSERT INTO events (room_id, user_id, type, uuid, message, created_at)
+          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}', '#{quote(uuid)}', '#{quote(content)}', NOW())
         SQL
-      else
-        sql = <<-SQL
-          INSERT INTO events (room_id, user_id, type)
-          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}')
+      when "join", "leave"
+        EventedMysql.insert <<-SQL
+          INSERT INTO events (room_id, user_id, type, created_at)
+          VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{quote(type)}', created_at)
         SQL
       end
-      
-      EventedMysql.insert sql
     end
     
-    def self.start(*args)
-      new(*args).start
+    def stop
+      @queue.unsubscribe
+    end
+    
+    def to_s
+      "logger"
     end
     
     private

@@ -1,3 +1,4 @@
+require "eventmachine"
 require "yajl"
 
 module Talker
@@ -6,42 +7,39 @@ module Talker
   class Connection < EM::Connection
     # TODO freeze constant strings
 
-    attr_accessor :server, :room, :user, :reraise_errors
+    attr_accessor :server, :room, :user
     
     # Called after connection is fully initialized and establied from EM.
     def post_init
       @parser = Yajl::Parser.new
-      # once a full JSON object has been parsed from the stream
-      # object_parsed will be called, and passed the constructed object
-      @parser.on_parse_complete = method(:object_parsed)
+      @parser.on_parse_complete = method(:message_parsed)
       @encoder = Yajl::Encoder.new
-    
+      
       @room = nil
       @user = nil
-      @reraise_errors = $TALKER_DEBUG
     end
     
     # Called when a JSON object in a message is fully parsed
-    def object_parsed(obj)
-      logger.debug{to_s + "<<< " + obj.inspect}
+    def message_parsed(message)
+      Talker.logger.debug{to_s + "<<< " + message.inspect}
       
-      case obj["type"]
+      case message["type"]
       when "connect"
-        authenticate obj["room"], obj["user"], obj["token"]
+        authenticate message["room"], message["user"], message["token"]
       when "message"
-        broadcast_message obj, obj.delete("to")
-      when "present"
-        broadcast_presence obj["to"] unless obj["to"] == @user.id
+        broadcast_message message, message.delete("to")
       when "close"
         close
       when "ping"
         # ignore
+      else
+        error "Unknown message type: " + message["type"]
       end
     rescue ProtocolError => e
       error e.message
     rescue Exception => e
-      logger.error("[Error] " + e.to_s + ": " + e.backtrace.join("\n"))
-      handle_error e, "Error processing command"
+      Talker.logger.error("[Error] " + e.to_s + ": " + e.backtrace.join("\n"))
+      error "Error processing command"
     end
     
     
@@ -62,15 +60,16 @@ module Talker
           begin
             @room = @server.rooms[room_name]
             @user = User.new(user)
-            @subscription = @room.subscribe(@user, self)
-            presence :join
+            @subscription = @room.subscribe(@user) { |message| send_data message }
+            @room.presence "join", @user
             send_data %({"type":"connected"}\n)
           rescue SubscriptionError => e
-            handle_error e
+            @subscription = @user = nil # do not presend like user is connected
+            error e.message
           end
         
         else
-          handle_error ProtocolError.new("Authentication failed")
+          error "Authentication failed"
         end
         
       end
@@ -83,43 +82,40 @@ module Talker
       
       if to
         obj["private"] = true
-        send_private_message to, obj
+        @room.send_private_message to, obj
       else
-        send_message obj
+        @room.send_message obj
       end
-    end
-    
-    def broadcast_presence(to)
-      room_required!
-      
-      send_private_message to, :type => "present", :user => @user.info
     end
     
     def close
-      if @room
-        @room.leave @subscription if @subscription
+      room_required!
+      
+      if @subscription
+        @subscription.unsubscribe
         @subscription = nil
-        presence :leave
       end
+      
+      if @user
+        @room.presence("leave", @user)
+        @user = nil
+      end
+
       close_connection_after_writing
     end
     
     
     ## Helper methods
     
-    def presence(type)
-      logger.info {"#{@user.name} #{type}s #{@room.id}"}
-      send_message :type => type, :user => @user.info
-    end
-  
     def error(message)
-      logger.debug {"#{to_s}>>>error: #{message}"}
+      Talker.logger.debug {"#{to_s}>>>error: #{message}"}
       send_data(%Q|{"type":"error","message":"#{message}"}\n|)
       close
     end
     
     def to_s
-      return "#{@user.name}##{@user.id}@#{@room.name}" if @room
+      return "#{@user.name}##{@user.id}@#{@room.name}" if @user
+      return "?@#{@room.name}" if @room
       "(?)@(?)"
     end
     
@@ -130,41 +126,23 @@ module Talker
       # continue passing chunks
       @parser << data
     rescue Yajl::ParseError => e
-      handle_error e, "Invalid JSON"
+      error "Invalid JSON"
     end
     
     def unbind
-      @room.unsubscribe @subscription if @subscription
+      if @room
+        @subscription.unsubscribe if @subscription
+        @room.presence("idle", @user) if @user
+      end
     end
   
     private
-      def handle_error(exception=$!, message=exception.message)
-        raise exception if @reraise_errors
-        error message
-      end
-      
       def room_required!
         raise ProtocolError, "Not connected to a room" unless @room
       end
       
-      def send_message(message)
-        logger.debug {"#{to_s}>>> #{message.inspect}"}
-        # TODO send in chunks?
-        @room.send_message encode(message)
-      end
-      
-      def send_private_message(to, message)
-        logger.debug {"#{to_s}(to #{to})>>> #{message.inspect}"}
-        # TODO send in chunks?
-        @room.send_private_message to, encode(message)
-      end
-      
       def encode(data)
         Yajl::Encoder.encode(data) + "\n"
-      end
-    
-      def logger
-        @server.logger
       end
   end
 end

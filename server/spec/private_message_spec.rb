@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
-EM.describe "Talker client private message" do
+EM.describe "Private messages" do
   it "should be received only by designated user" do
     connect :room => "test", :user => {:id => 1, :name => "bob"} do |client|
       client.on_message do |message|

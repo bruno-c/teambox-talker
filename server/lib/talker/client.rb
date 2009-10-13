@@ -1,5 +1,6 @@
 require "eventmachine"
 require "uuid"
+require "yajl"
 
 module Talker
   class Client < EM::Connection
@@ -7,11 +8,11 @@ module Talker
     
     class Error < RuntimeError; end
     
-    attr_accessor :room, :user, :token, :users
+    attr_accessor :room, :user, :token, :users, :debug
     
     def self.connect(options={})
-      host = options[:host] || Talker::Server::DEFAULT_HOST
-      port = options[:port] || Talker::Server::DEFAULT_PORT
+      host = options[:host] || Talker::Channel::Server::DEFAULT_HOST
+      port = options[:port] || Talker::Channel::Server::DEFAULT_PORT
       room = options[:room]
       user = options[:user]
       token = options[:token]
@@ -40,10 +41,6 @@ module Talker
       @on_join = block
     end
 
-    def on_presence(&block)
-      @on_presence = block
-    end
-
     def on_leave(&block)
       @on_leave = block
     end
@@ -52,8 +49,16 @@ module Talker
       @on_close = block
     end
     
+    def on_presence(&block)
+      @on_presence = block
+    end
+    
+    def on_error(&block)
+      @on_error = block
+    end
+    
     def send_message(message)
-      send "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate
+      send "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate, "final" => true
     end
     
     def send_private_message(to, message)
@@ -81,16 +86,20 @@ module Talker
       when "connected"
         @on_connected.call if @on_connected
       when "error"
-        raise Error, message["message"]
-      when "present"
-        user = Talker::User.new(message["user"])
-        @users[user.id] = user
-        @on_presence.call(user) if @on_presence
+        if @on_error
+          @on_error.call(message["message"])
+        else
+          raise Error, message["message"]
+        end
+      when "users"
+        message["users"].each do |user|
+          @users[user["id"]] = User.new(user)
+        end
+        @on_presence.call(@users.values) if @on_presence
       when "join"
         user = Talker::User.new(message["user"])
         unless user.id == @user.id
           @users[user.id] = user
-          send "type" => "present", "to" => user.id
           @on_join.call(user) if @on_join
         end
       when "leave"
@@ -121,6 +130,7 @@ module Talker
     
     private
       def send(data)
+        puts data.inspect if @debug
         send_data encode(data)
       end
       

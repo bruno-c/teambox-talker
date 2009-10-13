@@ -12,7 +12,7 @@ function TalkerClient(options) {
   function onLineReceived(line) {
     var line = eval('(' + line + ')');
     
-    console.info("TalkerClient::onLineReceived" + line);
+    console.debug(line);
     
     // ugly shit but this will be refactored.
     switch(line.type){
@@ -20,16 +20,20 @@ function TalkerClient(options) {
         options.onNewMessage(line);
         break;
       case 'join':
-        self.sendData({type: "present", to: line.user.id});
-      case 'present':
         options.onJoin(line);
+        break;
+      case 'users':
+        $.each(line.users, function() { options.onJoin({user:this}); });
         break;
       case 'leave':
         options.onLeave(line);
         break;
       case 'error':
-        console.error("An unfortunate error occured.  At least no one got hurt. (" + line.message + ")");
+        alert(line.message);
+        window.location = "/rooms";
         break;
+      default:
+        console.warn("Unknown message type: " + line.type);
     } 
   }
   

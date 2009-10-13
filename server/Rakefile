@@ -1,16 +1,8 @@
 require "spec/rake/spectask"
 
 task :default => :spec
-task :spec => ["spec:internals", "spec:system"]
 
-namespace :spec do
-  Spec::Rake::SpecTask.new(:internals) do |t|
-    t.spec_opts = %w(-fs -c)
-    t.spec_files = FileList["spec/internals/**/*_spec.rb"]
-  end
-
-  Spec::Rake::SpecTask.new(:system) do |t|
-    t.spec_opts = %w(-fs -c)
-    t.spec_files = FileList["spec/system/**/*_spec.rb"]
-  end
+Spec::Rake::SpecTask.new do |t|
+  t.spec_opts = %w(-fs -c)
+  t.spec_files = FileList["spec/**_spec.rb"]
 end
