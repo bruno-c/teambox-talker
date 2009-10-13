@@ -122,7 +122,7 @@ module Talker
     end
     
     def build_logger
-      Talker::Logger.new options[:database]
+      Talker::Logger::Server.new options[:database]
     end
     
     def log(msg)

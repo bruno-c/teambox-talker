@@ -44,6 +44,18 @@ class InvitesControllerTest < ActionController::TestCase
         post :create, :invitees => "one@example.com\ntwo@example.com"
       end
     end
+    assert_nil flash[:error]
+    assert_redirected_to users_path
+  end
+  
+  def test_create_with_invalid_email
+    login_as :quentin
+    assert_difference 'User.count', 1 do
+      assert_difference 'ActionMailer::Base.deliveries.size', 1 do
+        post :create, :invitees => "one@example.com\nblablabla"
+      end
+    end
+    assert_not_nil flash[:error]
     assert_redirected_to users_path
   end
   

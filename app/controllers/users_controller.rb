@@ -28,4 +28,15 @@ class UsersController < ApplicationController
       head :error
     end
   end
+  
+  def destroy
+    @user = current_account.users.find(params[:id])
+    if @user.pending?
+      flash[:notice] = "User deleted!"
+      @user.destroy
+    else
+      flash[:error] = "Can't delete a user that already logged in."
+    end
+    redirect_to users_path
+  end
 end

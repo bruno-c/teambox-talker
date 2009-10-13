@@ -23,7 +23,7 @@ module Talker
         @users.key?(user.id)
       end
     
-      def join(user, time)
+      def join(user, time=Time.now.to_i)
         if present?(user)
           # Back from idle if already present in the room
           stop_idle_timer user
@@ -53,7 +53,7 @@ module Talker
         end
       end
       
-      def idle(user, time)
+      def idle(user, time=Time.now.to_i)
         if present?(user)
           user.idle!
           send_message :type => "idle", :user => user.info, :time => time
@@ -64,7 +64,7 @@ module Talker
         end
       end
     
-      def leave(user, time)
+      def leave(user, time=Time.now.to_i)
         if present?(user)
           send_message :type => "leave", :user => user.info, :time => time
           send_private_message user.id, :type => "error", :message => "Connection closed"

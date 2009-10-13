@@ -30,7 +30,7 @@ module Talker
       
       def stop(&callback)
         @queue.unsubscribe
-        callback.call
+        callback.call if callback
       end
     
       def load
