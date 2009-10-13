@@ -57,7 +57,7 @@ module Talker
       case type
       when "message"
         content = message["content"]
-        uuid = message["uuid"]
+        uuid = message["id"]
         if content.empty?
           delete_message room_id, user_id, uuid
         else
