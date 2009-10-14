@@ -12,14 +12,14 @@
         host: '#{Orbited.talker_host}', 
         port: #{Orbited.talker_port}, 
         room: #{@room.id}, 
-        user: #{{:id => current_user.id, :name => current_user.name}.to_json},
+        user: #{{:id => current_user.id, :name => current_user.name, :livetyping => current_user.livetyping}.to_json},
         token: #{current_user.talker_token.to_json},
         onNewMessage: ChatRoom.onNewMessage, 
         onJoin: ChatRoom.onJoin, 
         onLeave: ChatRoom.onLeave,
         onClose: ChatRoom.onClose
       });
-      ChatRoom.current_user_id = #{current_user.id};
+      ChatRoom.current_user = client.options.user;
       ChatRoom.client = client;
       // "user":{"id":"unique id","name":"user name",...}
       client.connect();
@@ -46,7 +46,7 @@
   %ul#users
     = render :partial => "user", :collection => @room.users
 %table#log
-  = render :partial => "messages/message", :collection => @events
+  = render :partial => "messages/messages"
   %tr.message.event#message
     %td.author&= current_user.name
     %td.new_content

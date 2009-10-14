@@ -15,7 +15,7 @@ class SettingsControllerTest < ActionController::TestCase
     put :update, :user => hash_for_user
     assert_redirected_to settings_path
   end
-
+  
   def test_invalid_update
     User.any_instance.stubs(:valid?).returns(false)
     put :update, :user => hash_for_user
