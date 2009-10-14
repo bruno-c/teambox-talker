@@ -3,9 +3,13 @@ require 'spec'
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require "talker"
 
-# Only output errors in console
+# Disable logger
 require "logger"
-Talker.logger = ::Logger.new(STDOUT)
+if $DEBUG
+  Talker.logger = ::Logger.new(STDOUT)
+else
+  Talker.logger = ::Logger.new(nil)
+end
 Talker.logger.level = ::Logger::ERROR
 
 # Installing em-spec from http://github.com/macournoyer/em-spec

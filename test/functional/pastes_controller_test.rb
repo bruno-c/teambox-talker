@@ -18,7 +18,7 @@ class PastesControllerTest < ActionController::TestCase
   def test_create_from_json
     assert_difference "Paste.count", 1 do
       post :create, :content => "ohaie", :format => "json"
-      assert_response :success, @response.body
+      assert_response 201, @response.body
     end
     
     json = ActiveSupport::JSON.decode(@response.body)
