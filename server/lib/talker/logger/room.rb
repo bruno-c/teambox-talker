@@ -6,6 +6,10 @@ module Talker
       def initialize(name, server)
         @name = name
         @server = server
+        reset
+      end
+      
+      def reset
         @parser = Yajl::Parser.new
         @parser.on_parse_complete = method(:received)
       end
@@ -16,6 +20,9 @@ module Talker
       
       def parse(data)
         @parser << data
+      rescue Yajl::ParseError => e
+        Talker.logger.error "Ignoring invalid JSON (room##{@name}): " + e.message
+        reset
       end
       
       def callback(&callback)

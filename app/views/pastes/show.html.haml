@@ -1,0 +1,9 @@
+- @title = "Paste #" + @paste.permalink
+
+%p
+  Created
+  %span.date= time_ago_in_words @paste.created_at
+  ago by
+  %span.user= @paste.user.name
+
+%pre= @paste.content

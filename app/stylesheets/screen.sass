@@ -45,6 +45,13 @@ body
   #log
     :margin-right 216px
     :width auto
+    .datetime
+      :background #F3F3F3
+      :color #999
+      td
+        :padding 0.45em
+        :font-weight bold
+        :text-align right
     .event
       .author
         :vertical-align top
@@ -54,6 +61,9 @@ body
       .content
         :width 100%
         :border-bottom solid 1px #eee
+      .timestamp
+        :white-space nowrap
+        :display none
     .message
       :font-size 12px
     .partial
@@ -63,7 +73,7 @@ body
       :font-size 10px
       :background-color #ddf
     .me
-      :background-color rgb(255, 255, 229)
+      :background-color rgb(255, 255, 218)
   
   #sidebar
     :position fixed

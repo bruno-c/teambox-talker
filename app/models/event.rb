@@ -15,4 +15,8 @@ class Event < ActiveRecord::Base
   def notice?
     type != "message"
   end
+  
+  def message?
+    type == "message"
+  end
 end

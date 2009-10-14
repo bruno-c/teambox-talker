@@ -37,7 +37,7 @@ var ChatRoom = {
   messages: {},
   currentMessage: null,
   maxImageWidth: 400,
-  current_user_id: null,
+  current_user: null,
   
   sendLater: function(data) {
     if (data === "") return;
@@ -50,11 +50,16 @@ var ChatRoom = {
   send: function(data, eol) {
     if (data === "") return;
     if (this.sendTimeout) clearTimeout(this.sendTimeout);
-
-    // console.info("sending message");
+    
     var message = this.currentMessage;
     message.content = data;
-    this.client.send({id: message.uuid, content: message.content, "final": (eol == true)});
+    if (eol){
+      this.client.send({id: message.uuid, content: message.content, "final": true});
+    } else {
+      var message_content = (ChatRoom.current_user.livetyping ? message.content : FormatHelper.text2preview(message.content));
+      console.info(message_content + " " + ChatRoom.current_user.livetyping);
+      this.client.send({id: message.uuid, content: message_content, "final": false})
+    }
   },
   
   scrollToBottom: function() {
@@ -101,13 +106,15 @@ var ChatRoom = {
   onNewMessage: function(data) {
     var message = ChatRoom.messages[data.id];
     
+    ChatRoom.cleanupDuplicateNames();
+    
     if (data.content == '') {
       new Message(data.user, data.id).destroyElement();
       return false;
     }
     
     if (!message) {
-      message = ChatRoom.messages[data.id] = new Message(data.user, data.id);
+      message = ChatRoom.messages[data.id] = new Message(data.user, data.id, data.time);
       message.createElement();
     }
     
@@ -129,6 +136,16 @@ var ChatRoom = {
   
   typing: function() {
     return ChatRoom.currentMessage != null && ChatRoom.currentMessage.content != null
+  },
+  
+  cleanupDuplicateNames: function() {
+    $('#log tr.injected').each(function(){
+      var current = $(this);
+      var prev = current.prev();
+      if (current.find(".author span").html() != prev.find('.author span').html()){
+        current.find('.author span').css('visibility', 'visible');
+      }
+    });
   },
   
   addUser: function(user) {
@@ -182,15 +199,16 @@ var ChatRoom = {
   }
 };
 
-function Message(user, uuid) {
+function Message(user, uuid, timestamp) {
   this.user = user;
   this.uuid = uuid || Math.uuid();
+  this.timestamp = timestamp ? timestamp * 1000 : new Date().getTime();
   this.elementId = "message-" + this.uuid;
   
   this.update = function(content) {
     this.content = content;
     if (this.element) this.element.find(".content").html(content);
-  }  
+  }
   
   this.createElement = function() {
     // Create of find the message HTML element
@@ -199,11 +217,13 @@ function Message(user, uuid) {
       this.element = $("<tr/>").
         addClass("event").
         addClass("message").
+        addClass("injected").
         addClass("partial").
-        addClass(ChatRoom.current_user_id == this.user.id ? 'me' : '').
+        addClass(ChatRoom.current_user.id == this.user.id ? 'me' : '').
         attr("id", this.elementId).
-        append($("<td/>").addClass("author").html(this.user.name)).
+        append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
         append($("<td/>").addClass("content").html(this.content || "")).
+        append($("<td/>").addClass("timestamp").html(this.timestamp)).
         appendTo($("#log"));
     }
     return this.element;

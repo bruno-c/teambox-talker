@@ -1,4 +1,9 @@
 var FormatHelper = {
+  text2preview: function(content){
+    return content.replace(/[a-z]/g, 'x')
+                  .replace(/[A-Z]/g, 'X')
+                  .replace(/[0-9]/g, '#');
+  },
   text2html: function(content){
     var image_expression     = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
     var youtube_expression   = /^(?:http\S+youtube\.com\/watch\?v=)([\w-]+)(?:\S*)$/;
