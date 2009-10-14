@@ -44,7 +44,7 @@ module Talker
     end
     
     def send_message(message, attributes={})
-      send({ "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate, "final" => true }.merge(attributes))
+      send({ :type => "message", :content => message, :id => UUID_GENERATOR.generate, :final => true }.merge(attributes))
     end
     
     def send_private_message(to, message)

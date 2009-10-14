@@ -88,7 +88,7 @@ module Talker
       
       content = obj["content"]
       
-      if Paster.pastable?(content) || obj.delete("paste")
+      if obj["final"] && Paster.pastable?(content) || obj.delete("paste")
         Paster.new(@user.token).paste(content) do |content, paste_url|
           obj["content"] = content
           obj["paste_url"] = paste_url
