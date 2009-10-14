@@ -1,3 +1,6 @@
+- remove double usernames
+- sudo live typing
+- display timestamps
 - On error, connection is closed before processing the "error" message, eg. connect to the same room twice w/ same user.
 - remove password confirmation
 - reconnect without a page refresh when a connection error occurs
