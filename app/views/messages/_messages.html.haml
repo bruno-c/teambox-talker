@@ -12,3 +12,4 @@
       - @last_event_user_name = nil
     - else
       %td.content&= event.message
+    %td.timestamp&= event.created_at.to_formatted_s(:js)

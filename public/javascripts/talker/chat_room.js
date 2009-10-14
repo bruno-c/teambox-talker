@@ -114,7 +114,7 @@ var ChatRoom = {
     }
     
     if (!message) {
-      message = ChatRoom.messages[data.id] = new Message(data.user, data.id, data.timestamp);
+      message = ChatRoom.messages[data.id] = new Message(data.user, data.id, data.time);
       message.createElement();
     }
     
@@ -223,6 +223,7 @@ function Message(user, uuid, timestamp) {
         attr("id", this.elementId).
         append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
         append($("<td/>").addClass("content").html(this.content || "")).
+        append($("<td/>").addClass("timestamp").html(this.timestamp)).
         appendTo($("#log"));
     }
     return this.element;
