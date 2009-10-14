@@ -7,4 +7,4 @@
 - remove messages when there are more than x amount (perhaps with a click to load more messages)
 - ensure that higher ascii codes are supported.
 - only send temporary message when there is a difference in characters between each interval
-- lone character should be removed when you cancel a message with back space.
+- backspace on last character should cancel like an ESC

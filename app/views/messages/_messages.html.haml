@@ -2,7 +2,8 @@
 - @events.each do |event|
   %tr.event{:id => "message-#{event.uuid || event.id}", :class => "#{(event.notice? ? "notice" : "message")} user_#{event.user.id} #{event.user.id == current_user.id && !event.notice? ? 'me' : ''}"}
     - if @last_event_user_name == event.user.name && event.message?
-      %td.author &nbsp;
+      %td.author
+        %span{:style => 'visibility: hidden;'}&= event.user.name
     - else
       %td.author&= event.user.name
       - @last_event_user_name = event.user.name
