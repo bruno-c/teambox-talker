@@ -2,7 +2,6 @@ require File.dirname(__FILE__) + "/../test_helper"
 
 class PastesControllerTest < ActionController::TestCase
   def setup
-    subdomain :master
     login_as :quentin
   end
   

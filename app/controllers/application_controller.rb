@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     helper_method :current_account
     
     def authorized?(action = action_name, resource = nil)
-      logged_in? && current_account.users.exists?(current_user.id)
+      logged_in? && (!in_account? || current_account.users.exists?(current_user.id))
     end
     
     def account_required
