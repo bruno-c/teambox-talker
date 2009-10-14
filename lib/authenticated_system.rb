@@ -112,8 +112,9 @@ module AuthenticatedSystem
 
     # Called from #current_user.  Now, attempt to login by talker token
     def login_from_talker_token
-      if params[:token].present?
-        self.current_user = User.find_by_talker_token(params[:token])
+      token = request.headers["HTTP_X_TALKER_TOKEN"]
+      if token.present?
+        self.current_user = User.find_by_talker_token(token)
       end
     end
     

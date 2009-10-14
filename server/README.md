@@ -16,6 +16,7 @@ Install these gems:
 
     sudo gem install mysqlplus
     sudo gem install brianmario-yajl-ruby -s http://gems.github.com
+    sudo gem install igrigorik-em-http-request -s http://gems.github.com
 
 ## Running
 

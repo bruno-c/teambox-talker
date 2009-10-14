@@ -49,6 +49,12 @@ class SessionsControllerTest < ActionController::TestCase
     get :new
     assert !@controller.send(:logged_in?)
   end
+  
+  def test_should_login_from_talker_token
+    @request.env["HTTP_X_TALKER_TOKEN"] = users(:quentin).talker_token
+    get :new
+    assert @controller.send(:logged_in?)
+  end
 
   protected
     def auth_token(token)
