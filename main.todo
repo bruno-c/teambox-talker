@@ -1,6 +1,11 @@
+Rails app:
+- Index chat log (w/ ultrasphinx?)
 - Implement "Forgot my password"
 - Use Flash sockets if present http://github.com/tmm1/jssocket (??)
 - Import Campfire logs (using tinder)
+
+Desktop client:
+- Build Prism app
 
 Ideas:
 - Give each user a color for messages background (and highlight conversation w/ that @user w/ that color)
