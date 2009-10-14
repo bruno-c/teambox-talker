@@ -7,4 +7,8 @@ class Paste < ActiveRecord::Base
   before_create { |p| p.permalink = ActiveSupport::SecureRandom.hex(10) }
   
   attr_accessible :content, :syntax
+  
+  def to_param
+    permalink
+  end
 end

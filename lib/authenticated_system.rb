@@ -9,7 +9,7 @@ module AuthenticatedSystem
     # Accesses the current user from the session.
     # Future calls avoid the database because nil is not equal to false.
     def current_user
-      @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie) unless @current_user == false
+      @current_user ||= (login_from_session || login_from_talker_token || login_from_cookie) unless @current_user == false
     end
 
     # Store the given user id in the session.
@@ -99,7 +99,8 @@ module AuthenticatedSystem
     def self.included(base)
       base.send :helper_method, :current_user, :logged_in?, :authorized? if base.respond_to? :helper_method
     end
-
+    
+    
     #
     # Login
     #
@@ -109,17 +110,13 @@ module AuthenticatedSystem
       self.current_user = User.find_by_id(session[:user_id]) if session[:user_id]
     end
 
-    # Called from #current_user.  Now, attempt to login by basic authentication information.
-    def login_from_basic_auth
-      authenticate_with_http_basic do |email, password|
-        self.current_user = current_account.users.authenticate(email, password)
+    # Called from #current_user.  Now, attempt to login by talker token
+    def login_from_talker_token
+      if params[:token].present?
+        self.current_user = User.find_by_talker_token(params[:token])
       end
     end
     
-    #
-    # Logout
-    #
-
     # Called from #current_user.  Finaly, attempt to login by an expiring token in the cookie.
     # for the paranoid: we _should_ be storing user_token = hash(cookie_token, request IP)
     def login_from_cookie
@@ -130,6 +127,11 @@ module AuthenticatedSystem
         self.current_user
       end
     end
+
+    
+    #
+    # Logout
+    #
 
     # This is ususally what you want; resetting the session willy-nilly wreaks
     # havoc with forgery protection, and is only strictly necessary on login.
