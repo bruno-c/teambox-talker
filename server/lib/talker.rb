@@ -21,6 +21,7 @@ module Talker
   
   autoload :MessageChannel, "talker/message_channel"
   autoload :MysqlAuthenticator, "talker/mysql_authenticator"
+  autoload :Paster, "talker/paster"
 
   module Presence
     autoload :Room, "talker/presence/room"

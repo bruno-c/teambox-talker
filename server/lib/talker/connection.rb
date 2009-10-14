@@ -60,7 +60,12 @@ module Talker
           begin
             @room = @server.rooms[room_name]
             @user = User.new(user)
+            @user.token = token
+            
+            # Listen to message in the room
             @subscription = @room.subscribe(@user) { |message| send_data message }
+            
+            # Broadcast presence
             @room.presence "join", @user
             send_data %({"type":"connected"}\n)
           rescue SubscriptionError => e
@@ -77,15 +82,20 @@ module Talker
     
     def broadcast_message(obj, to)
       room_required!
-    
+      
       obj["user"] = @user.required_info
       obj["time"] = Time.now.to_i
       
-      if to
-        obj["private"] = true
-        @room.send_private_message to, obj
+      content = obj["content"]
+      
+      if Paster.pastable?(content) || obj.delete("paste")
+        Paster.new(@user.token).paste(content) do |content, paste_url|
+          obj["content"] = content
+          obj["paste_url"] = paste_url
+          send_message obj, to
+        end
       else
-        @room.send_message obj
+        send_message obj, to
       end
     end
     
@@ -141,6 +151,15 @@ module Talker
     private
       def room_required!
         raise ProtocolError, "Not connected to a room" unless @room
+      end
+      
+      def send_message(message, to=nil)
+        if to
+          message["private"] = true
+          @room.send_private_message to, message
+        else
+          @room.send_message message
+        end
       end
   end
 end

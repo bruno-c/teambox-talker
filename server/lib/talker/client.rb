@@ -43,12 +43,12 @@ module Talker
       callback.call(*args[0,callback.arity]) if callback
     end
     
-    def send_message(message)
-      send "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate, "final" => true
+    def send_message(message, attributes={})
+      send({ "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate, "final" => true }.merge(attributes))
     end
     
     def send_private_message(to, message)
-      send "type" => "message", "content" => message, "id" => UUID_GENERATOR.generate, "to" => to
+      send_message message, :to => to
     end
     
     def connection_completed
