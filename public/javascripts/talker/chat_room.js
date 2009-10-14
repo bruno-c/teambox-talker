@@ -56,12 +56,7 @@ var ChatRoom = {
     if (eol){
       this.client.send({id: message.uuid, content: message.content, "final": true});
     } else {
-      var message_content = (ChatRoom.current_user.livetyping 
-        ? message.content 
-        : message.content
-            .replace(/[a-z]/g, 'x')
-            .replace(/[A-Z]/g, 'X')
-            .replace(/[0-9]/g, '#'));
+      var message_content = (ChatRoom.current_user.livetyping ? message.content : FormatHelper.text2preview(message.content));
       console.info(message_content + " " + ChatRoom.current_user.livetyping);
       this.client.send({id: message.uuid, content: message_content, "final": false})
     }
@@ -119,7 +114,7 @@ var ChatRoom = {
     }
     
     if (!message) {
-      message = ChatRoom.messages[data.id] = new Message(data.user, data.id);
+      message = ChatRoom.messages[data.id] = new Message(data.user, data.id, data.timestamp);
       message.createElement();
     }
     
@@ -204,9 +199,10 @@ var ChatRoom = {
   }
 };
 
-function Message(user, uuid) {
+function Message(user, uuid, timestamp) {
   this.user = user;
   this.uuid = uuid || Math.uuid();
+  this.timestamp = timestamp ? timestamp * 1000 : new Date().getTime();
   this.elementId = "message-" + this.uuid;
   
   this.update = function(content) {
