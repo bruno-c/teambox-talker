@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
   map.resource :settings
   map.resources :rooms, :has_many => :messages
+  map.resources :pastes
   
   map.root :controller => "home"
 end

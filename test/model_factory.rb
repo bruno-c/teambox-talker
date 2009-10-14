@@ -15,6 +15,10 @@ module ModelFactory
     { :message => '...', :room => Room.first, :user => User.first, :type => "message" }.merge(attributes)
   end
   
+  def hash_for_paste(attributes={})
+    { :content => "...", :user => User.first }.merge(attributes)
+  end
+  
   # Simulates model creation methods based on has_for_<model_name>:
   #   create_<model_name>:  will instantiate w/ attributes and call save
   #   create_<model_name>!: will instantiate w/ attributes and call save!

@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   end
   
   def remember_me
-    self.remember_token = self.class.make_token
+    self.remember_token = ActiveSupport::SecureRandom.hex(10)
     save(false)
   end
   
@@ -60,12 +60,12 @@ class User < ActiveRecord::Base
   
   # Token used to authenticate the user in Talker server
   def create_talker_token
-    self.talker_token = self.class.make_token
+    self.talker_token = ActiveSupport::SecureRandom.hex(10)
     self
   end
   
   def create_perishable_token!
-    self.perishable_token = self.class.make_token
+    self.perishable_token = ActiveSupport::SecureRandom.hex(10)
     save(false)
   end
 
