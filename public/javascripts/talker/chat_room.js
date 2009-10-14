@@ -135,7 +135,6 @@ var ChatRoom = {
   
   cleanupDuplicateNames: function() {
     $('#log tr.injected').each(function(){
-      console.info(this);
       var current = $(this);
       var prev = current.prev();
       if (current.find(".author span").html() != prev.find('.author span').html()){
