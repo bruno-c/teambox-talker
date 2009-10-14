@@ -1,4 +1,4 @@
-- remove double usernames
+✓ remove double usernames
 - sudo live typing
 - display timestamps
 - On error, connection is closed before processing the "error" message, eg. connect to the same room twice w/ same user.
@@ -8,3 +8,4 @@
 - ensure that higher ascii codes are supported.
 - only send temporary message when there is a difference in characters between each interval
 - backspace on last character should cancel like an ESC
+- refresh should cancel current livetyped messages
