@@ -30,7 +30,17 @@ $(function() {
   ChatRoom.newMessage();
   
   $(window).keypress(function(e){
-  // console.info(e.which);
+    switch (e.which){
+      case 32: // space
+      case 13: // enter
+      case 0:  // ESC is unfortunately not supported by most browser but there just the same
+        ChatRoom.align();
+        e.preventDefault();
+        break;
+      default:
+        // nothing at all.
+        break;
+    }
   });
 });
 
@@ -58,9 +68,27 @@ var ChatRoom = {
       this.client.send({id: message.uuid, content: message.content, "final": true});
     } else {
       var message_content = (ChatRoom.current_user.livetyping ? message.content : FormatHelper.text2preview(message.content));
-      console.info(message_content + " " + ChatRoom.current_user.livetyping);
       this.client.send({id: message.uuid, content: message_content, "final": false})
     }
+  },
+  
+  align: function() {
+    ChatRoom.scrollToBottom();
+    var msgbox = document.getElementById('msgbox'); // old school
+    var position = msgbox.value.length;
+    
+    if(msgbox.setSelectionRange) { 
+      msgbox.focus(); 
+      msgbox.setSelectionRange(position, position); 
+    } else if(msgbox.createTextRange) { 
+      var range = msgbox.createTextRange(); 
+      range.collapse(true); 
+      range.moveStart('character', position); 
+      range.moveEnd('character', position); 
+      range.select(); 
+    }
+    
+    document.getElementById('msgbox').focus();
   },
   
   scrollToBottom: function() {
@@ -160,7 +188,6 @@ var ChatRoom = {
   },
   
   addNotice: function(data){
-    // console.info(data);
     var msg_content = '';
     switch(data.type){
       case 'join': 
