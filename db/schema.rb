@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091014171546) do
+ActiveRecord::Schema.define(:version => 20091015184327) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -31,9 +31,10 @@ ActiveRecord::Schema.define(:version => 20091014171546) do
     t.integer  "user_id"
     t.integer  "room_id"
     t.text     "message"
-    t.string   "type",       :limit => 15
+    t.string   "type",            :limit => 15
     t.datetime "created_at"
-    t.string   "uuid",       :limit => 36
+    t.string   "uuid",            :limit => 36
+    t.string   "paste_permalink"
   end
 
   add_index "events", ["uuid"], :name => "index_events_on_uuid", :unique => true
@@ -46,8 +47,6 @@ ActiveRecord::Schema.define(:version => 20091014171546) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "pastes", ["permalink"], :name => "index_pastes_on_permalink", :unique => true
 
   create_table "rooms", :force => true do |t|
     t.string   "name"

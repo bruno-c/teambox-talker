@@ -17,6 +17,8 @@
       %td.content&= event.type
       - @last_event_user_name = nil
     - else
-      %td.content&= event.message
+      %td.body
+        = render :partial => "messages/paste", :object => event.paste if event.paste
+        .content&= event.message
     %td.timestamp&= event.created_at
   - @last_event_timestamp = event.created_at

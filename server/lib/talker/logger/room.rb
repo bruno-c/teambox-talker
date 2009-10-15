@@ -30,7 +30,6 @@ module Talker
       end
       
       def received(message)
-        room_id = name.to_i
         type = message["type"]
         
         # Shortcircuit if partial message
@@ -42,37 +41,64 @@ module Talker
           return
         end
         
-        Talker.logger.debug{"room##{room_id}> " + message.inspect}
-        
-        user_id = message["user"]["id"].to_i
-        time = message["time"] || Time.now.to_i
-        errback = proc { |e| Talker.logger.error "Error logging message: #{message.inspect}, error: #{e}" }
+        Talker.logger.debug{"room##{@name}> " + message.inspect}
         
         case type
         when "message"
-          content = message["content"]
-          uuid = message["id"]
-          insert_message room_id, user_id, uuid, content, time, @callback, errback
+          if message["paste"]
+            insert_paste message
+          else
+            insert_message message
+          end
         when "join", "leave"
-          insert_notice room_id, user_id, type, time, @callback, errback
+          insert_notice message
         else
           @callback.call
         end
       end
       
       private
-        def insert_message(room_id, user_id, uuid, content, time, callback, errback)
-          db.insert <<-SQL, callback, errback
-            INSERT INTO events (room_id, user_id, type, uuid, message, created_at)
-            VALUES (#{room_id}, #{user_id}, 'message', '#{quote(uuid)}', '#{quote(content)}', FROM_UNIXTIME(#{time}))
-          SQL
+        def insert_message(message)
+          room_id = @name.to_i
+          user_id = message["user"]["id"].to_i
+          uuid = message["id"]
+          content = message["content"]
+          time = message["time"] || Time.now.to_i
+          
+          sql = "INSERT INTO events (room_id, user_id, type, uuid, message, created_at) " +
+                "VALUES (#{room_id}, #{user_id}, 'message', '#{quote(uuid)}', '#{quote(content)}', FROM_UNIXTIME(#{time}))"
+
+          db.insert sql, @callback, errback_for(message)
         end
       
-        def insert_notice(room_id, user_id, type, time, callback, errback)
-          db.insert <<-SQL, callback, errback
-            INSERT INTO events (room_id, user_id, type, created_at)
-            VALUES (#{room_id}, #{user_id}, '#{quote(type)}', FROM_UNIXTIME(#{time}))
-          SQL
+        def insert_paste(message)
+          room_id = @name.to_i
+          user_id = message["user"]["id"].to_i
+          uuid = message["id"]
+          content = message["content"]
+          paste_id = message["paste"]["id"]
+          time = message["time"] || Time.now.to_i
+          
+          sql = "INSERT INTO events (room_id, user_id, type, uuid, message, paste_permalink, created_at) " +
+                "VALUES (#{room_id}, #{user_id}, 'message', '#{quote(uuid)}', '#{quote(content)}', '#{quote(paste_id)}', FROM_UNIXTIME(#{time}))"
+          
+          db.insert sql, @callback, errback_for(message)
+        end
+      
+        def insert_notice(message)
+          room_id = @name.to_i
+          user_id = message["user"]["id"].to_i
+          type = message["type"]
+          time = message["time"] || Time.now.to_i
+          
+          sql = "INSERT INTO events (room_id, user_id, type, created_at) " +
+                "VALUES (#{room_id}, #{user_id}, '#{quote(type)}', FROM_UNIXTIME(#{time}))"
+          
+          db.insert sql, @callback, errback_for(message)
+        end
+        
+        def errback_for(message)
+          proc { |e| Talker.logger.error "Error logging message: #{message.inspect}, error: #{e}" }
         end
       
         def quote(s)

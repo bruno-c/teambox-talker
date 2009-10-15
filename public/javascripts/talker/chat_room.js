@@ -263,12 +263,13 @@ function Message(user, uuid, timestamp) {
     this.header = "<div class='header'>" + header + "</div>";
   }
   
-  this.refresh = function() {
-    if (this.element) this.element.find(".content").html(this.getBody());
+  this.getBody = function() {
+    return (this.header || "") + 
+           "<div class='content'>" + (this.content || "") + "</div>";
   }
   
-  this.getBody = function() {
-    return (this.header || "") + (this.content || "");
+  this.refresh = function() {
+    if (this.element) this.element.find(".body").html(this.getBody());
   }
   
   this.createElement = function() {
@@ -283,7 +284,7 @@ function Message(user, uuid, timestamp) {
         addClass(ChatRoom.current_user.id == this.user.id ? 'me' : '').
         attr("id", this.elementId).
         append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
-        append($("<td/>").addClass("content").html(this.getBody())).
+        append($("<td/>").addClass("body").html(this.getBody())).
         append($("<td/>").addClass("timestamp").html(this.timestamp)).
         appendTo($("#log"));
     }
