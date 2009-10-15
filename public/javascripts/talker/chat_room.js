@@ -16,8 +16,13 @@ $(function() {
       }
     })
     .keydown(function(e){
-      if (e.which == 27){
+      if (e.which == 27){//ESC
         ChatRoom.cancelMessage();
+      }
+      if (e.which == 8){// backspace
+        if ($('#msgbox').val().length == 1){
+          ChatRoom.cancelMessage();
+        }
       }
     });
    
@@ -33,7 +38,6 @@ $(function() {
     switch (e.which){
       case 32: // space
       case 13: // enter
-      case 0:  // ESC is unfortunately not supported by most browser but there just the same
         ChatRoom.align();
         e.preventDefault();
         break;
