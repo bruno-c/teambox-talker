@@ -1,5 +1,5 @@
 Talker Server:
-- Handle big messages like pastes (server could POST to our private paste web service and broadcast link to room instead of full message)
+✓ Handle big messages like pastes (server could POST to our private paste web service and broadcast link to room instead of full message)
 - Expire connections (on presence server) if user leaves while channel server is down
 ✓ Pass timestamp on each message
 ✓ Delete messages with empty content ("")
