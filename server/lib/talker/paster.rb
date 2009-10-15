@@ -1,4 +1,5 @@
 require "em-http"
+require "cgi"
 
 module Talker
   class Paster
@@ -16,7 +17,7 @@ module Talker
     
     def paste(token, content, &callback)
       http = post :head => { "X-Talker-Token" => token, "Content-Type" => "application/x-www-form-urlencoded" },
-                  :body => { "content" => content }
+                  :body => { "content" => CGI.escape(content) }
       
       http.errback do
         handle_failure content, callback, http.errors
