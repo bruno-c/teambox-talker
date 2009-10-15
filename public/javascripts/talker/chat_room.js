@@ -146,6 +146,7 @@ var ChatRoom = {
     }
     
     if (data.final) {
+      if (data.paste) message.setHeader(FormatHelper.formatPaste(data.paste));
       message.update(ChatRoom.formatMessage(data.content));
       message.element.removeClass('partial');
     } else {
@@ -234,7 +235,19 @@ function Message(user, uuid, timestamp) {
   
   this.update = function(content) {
     this.content = content;
-    if (this.element) this.element.find(".content").html(content);
+    this.refresh();
+  }
+  
+  this.setHeader = function(header) {
+    this.header = "<div class='header'>" + header + "</div>";
+  }
+  
+  this.refresh = function() {
+    if (this.element) this.element.find(".content").html(this.getBody());
+  }
+  
+  this.getBody = function() {
+    return (this.header || "") + (this.content || "");
   }
   
   this.createElement = function() {
@@ -249,7 +262,7 @@ function Message(user, uuid, timestamp) {
         addClass(ChatRoom.current_user.id == this.user.id ? 'me' : '').
         attr("id", this.elementId).
         append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
-        append($("<td/>").addClass("content").html(this.content || "")).
+        append($("<td/>").addClass("content").html(this.getBody())).
         append($("<td/>").addClass("timestamp").html(this.timestamp)).
         appendTo($("#log"));
     }

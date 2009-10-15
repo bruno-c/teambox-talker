@@ -70,5 +70,13 @@ var FormatHelper = {
     } else {
       return content;
     }
+  },
+  
+  formatPaste: function(paste) {
+    var msg = "<a target='_blank' title='Paste #" + paste.id +
+              "' href='" + window.location.protocol + "//" + window.location.host + "/pastes/" + paste.id +
+              "'>View paste</a>";
+    if (paste.lines > paste.preview_lines) msg += " <span class='more_lines'>(" + (paste.lines - paste.preview_lines) + " more lines)</span>"
+    return msg;
   }
 }
