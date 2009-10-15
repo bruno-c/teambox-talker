@@ -1,5 +1,10 @@
 - @last_event_user_name = nil
+- @last_event_timestamp = @events.first.created_at
 - @events.each do |event|
+  - if (event.created_at.to_formatted_s(:js).to_i - @last_event_timestamp.to_formatted_s(:js).to_i > (1000 * 60  * 5)) # 5 minutes
+    - @last_event_user_name = nil # enables you to see user name of new typist.
+    %tr.datetime
+      %td{:colspan => "3"}&= "#{event.created_at.to_formatted_s(:long_ordinal)}"
   %tr.event{:id => "message-#{event.uuid || event.id}", :class => "#{(event.notice? ? "notice" : "message")} user_#{event.user.id} #{event.user.id == current_user.id && !event.notice? ? 'me' : ''}"}
     - if @last_event_user_name == event.user.name && event.message?
       %td.author
@@ -12,3 +17,5 @@
       - @last_event_user_name = nil
     - else
       %td.content&= event.message
+    %td.timestamp&= event.created_at
+  - @last_event_timestamp = event.created_at
