@@ -111,7 +111,7 @@ var ChatRoom = {
   },
   
   newMessage: function() {
-    if (this.currentMessage) this.currentMessage.createElement().insertBefore($("#message"));
+    if (this.currentMessage) this.currentMessage.createElement();
     this.currentMessage = new Message(currentUser);
     this.messages[this.currentMessage.uuid] = this.currentMessage;
     
@@ -160,12 +160,11 @@ var ChatRoom = {
       message.createElement();
     }
     
-    ChatRoom.cleanupDuplicateNames();
-    
     if (data.final) {
       if (data.paste) message.setHeader(FormatHelper.formatPaste(data.paste));
       message.update(ChatRoom.formatMessage(data.content));
       message.element.removeClass('partial');
+
       if (ChatRoom.logMessages){
         ChatRoom.logMessages = ChatRoom.logMessages === true ? 1 : ChatRoom.logMessages + 1;
         document.title = ChatRoom.room + " (" + ChatRoom.logMessages + " new messages)";
@@ -186,18 +185,7 @@ var ChatRoom = {
   typing: function() {
     return ChatRoom.currentMessage != null && ChatRoom.currentMessage.content != null
   },
-  
-  cleanupDuplicateNames: function() {
-    $('#log tr.injected').each(function(){
-      var current = $(this);
-      var prev = current.prev();
-      if (current.find(".author span").html() != prev.find('.author span').html()){
-        current.find('.author span').css('visibility', 'visible');
-      }
-      current.removeClass('injected'); // shouldn't need to redo this one again.
-    });
-  },
-  
+    
   addUser: function(user) {
     if ($("#user_" + user.id).length < 1) {
       $('<li/>').attr("id", "user_" + user.id).
@@ -286,12 +274,36 @@ function Message(user, uuid, timestamp) {
         append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
         append($("<td/>").addClass("body").html(this.getBody())).
         append($("<td/>").addClass("timestamp").html(this.timestamp)).
-        appendTo($("#log"));
+        appendTo($("#log"))
+        .insertBefore($("#message"));
+        
+        var current = this.element;
+        var prev = current.prev();
+        
+        if (current.find('.author span').html() == prev.find('.author span').html()){
+          current.find('.author span').css('visibility', 'hidden');
+        } else {
+          current.find('.author span').css('visibility', 'visible');
+        }
     }
     return this.element;
   }
   
   this.destroyElement = function() {
-    $("#" + this.elementId).remove();
+    var current = $("#" + this.elementId);
+    var prev = current.prev();
+    var next = current.next();
+    
+    if (next && next.get(0) && next.get(0).id == 'message'){
+      return; // no need to do anything since it's the last message
+    }
+    
+    if (next.find('.author span').html() == prev.find('.author span').html()){
+      next.find('.author span').css('visibility', 'hidden');
+    } else {
+      next.find('.author span').css('visibility', 'visible');
+    }
+    
+    current.remove();
   }
 }
