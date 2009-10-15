@@ -15,14 +15,9 @@ $(function() {
         ChatRoom.sendLater(this.value);
       }
     })
-    .keydown(function(e){
-      if (e.which == 27){//ESC
+    .keydown(function(e){ // handle ESC and BACKSPACE cancelation of messages.
+      if (e.which == 27 || e.which == 8 && $('#msgbox').val().length == 1){
         ChatRoom.cancelMessage();
-      }
-      if (e.which == 8){// backspace
-        if ($('#msgbox').val().length == 1){
-          ChatRoom.cancelMessage();
-        }
       }
     });
    
@@ -36,7 +31,6 @@ $(function() {
   
   $(window).keypress(function(e){
     switch (e.which){
-      case 32: // space
       case 13: // enter
         ChatRoom.align();
         e.preventDefault();
