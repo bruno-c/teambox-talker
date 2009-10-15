@@ -31,6 +31,10 @@ OptionParser.new do |opts|
   opts.on("--db-password VALUE", "Database password")     { |x| runner[:database][:password] = x }
   opts.on("--db-host NAME", "Database host")              { |x| runner[:database][:host] = x }
   
+  opts.separator "Pasting"
+  opts.on("--paste-url URL", "URL to post paste to",
+                 "(default: #{runner[:paste_url]})")      { |x| runner[:paste_url] = x }
+  
   opts.separator "Other"
   opts.on_tail("-h", "--help", "Show this message")       { puts opts; exit }
 end.parse!(ARGV)

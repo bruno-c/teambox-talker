@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-server/bin/talker "$@"
+server/bin/talker --paste-url http://localhost:3000/pastes.json "$@"

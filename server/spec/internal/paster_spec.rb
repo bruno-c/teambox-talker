@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/spec_helper"
 
 EM.describe Talker::Paster do
   before do
-    @paster = Talker::Paster.new("abc123")
+    @paster = Talker::Paster.new("http://talkerapp.com/pastes.json")
     
     @code = <<-EOS
 class Awesome
