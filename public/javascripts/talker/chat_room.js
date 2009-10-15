@@ -280,7 +280,9 @@ function Message(user, uuid, timestamp) {
         var current = this.element;
         var prev = current.prev();
         
-        if (current.find('.author span').html() == prev.find('.author span').html()){
+        if (prev.hasClass('notice')){
+          current.find('.author span').css('visibility', 'visible');
+        } else if (current.find('.author span').html() == prev.find('.author span').html()){
           current.find('.author span').css('visibility', 'hidden');
         } else {
           current.find('.author span').css('visibility', 'visible');
