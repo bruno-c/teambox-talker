@@ -4,7 +4,7 @@ var FormatHelper = {
                   .replace(/[A-Z]/g, 'X')
                   .replace(/[0-9]/g, '#');
   },
-  text2html: function(content){
+  text2html: function(content, noScroll){
     var image_expression     = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
     var youtube_expression   = /^(?:http\S+youtube\.com\/watch\?v=)([\w-]+)(?:\S*)$/;
     var vimeo_expression     = /^(?:http\S+vimeo\.com\/)(\d+)/;
@@ -32,7 +32,7 @@ var FormatHelper = {
           + locator 
           + '" target="_blank"><img src="' 
           + locator 
-          + '" onload="ChatRoom.resizeImage(this, true)" style="visibility: hidden;" />'
+          + '" onload="ChatRoom.resizeImage(this, ' + (!!noScroll) + ')" style="visibility: hidden;" />'
           + '</a>';
       });
     } else if (content.match(youtube_expression)){

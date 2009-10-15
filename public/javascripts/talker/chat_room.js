@@ -25,7 +25,8 @@ $(function() {
   $('.content').each(function(something, element){
     element.innerHTML = ChatRoom.formatMessage(this.innerHTML, true);
   });
-
+  
+  ChatRoom.scrollToBottom();
   ChatRoom.newMessage();
   
   $(window).keypress(function(e){
@@ -91,7 +92,7 @@ var ChatRoom = {
   },
   
   formatMessage: function(content) {
-    return FormatHelper.text2html(content)
+    return FormatHelper.text2html(content, false)
   },
   
   resizeImage: function(image, noScroll){
@@ -145,6 +146,7 @@ var ChatRoom = {
       if (current.find(".author span").html() != prev.find('.author span').html()){
         current.find('.author span').css('visibility', 'visible');
       }
+      current.removeClass('injected'); // shouldn't need to redo this one again.
     });
   },
   
