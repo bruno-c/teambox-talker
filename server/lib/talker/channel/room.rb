@@ -13,7 +13,7 @@ module Talker
         
         if queue.subscribed?
           raise SubscriptionError, "#{user.name} is already connected this room. " +
-                                   "A user can have only one active connection to a room."
+                                   "A user can have only one active connection to a room.  Try again in 30 seconds."
         end
         
         # Force re-creation of the queuer in case it was delete by presence server.
