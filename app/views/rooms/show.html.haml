@@ -20,6 +20,7 @@
         onClose: ChatRoom.onClose
       });
       ChatRoom.current_user = client.options.user;
+      ChatRoom.room = '#{@room.name}';
       ChatRoom.client = client;
       // "user":{"id":"unique id","name":"user name",...}
       client.connect();
