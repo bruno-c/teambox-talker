@@ -888,12 +888,13 @@ body {
     font-weight: bold;
     text-align: right;
     white-space: nowrap; }
-  #room #log .event .content {
-    width: 100%;
+  #room #log .event .body {
     border-bottom: solid 1px #eee; }
   #room #log .event .timestamp {
     white-space: nowrap;
     display: none; }
+  #room #log .event .more_lines {
+    color: #999; }
   #room #log .message {
     font-size: 12px; }
   #room #log .partial .content {

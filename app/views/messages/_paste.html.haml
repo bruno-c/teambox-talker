@@ -1,0 +1,4 @@
+.header
+  = link_to "View paste", paste, :target => "_blank"
+  - if paste.more_lines > 0
+    %span.more_lines== (#{paste.more_lines} more lines)

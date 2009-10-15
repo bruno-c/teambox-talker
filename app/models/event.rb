@@ -12,6 +12,10 @@ class Event < ActiveRecord::Base
     self[:type]
   end
   
+  def paste
+    @paste ||= Paste.find_by_permalink(paste_permalink)
+  end
+  
   def notice?
     type != "message"
   end
