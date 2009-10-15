@@ -111,7 +111,7 @@ var ChatRoom = {
   },
   
   newMessage: function() {
-    if (this.currentMessage) this.currentMessage.createElement().insertBefore($("#message"));
+    if (this.currentMessage) this.currentMessage.createElement();
     this.currentMessage = new Message(currentUser);
     this.messages[this.currentMessage.uuid] = this.currentMessage;
     
@@ -160,12 +160,11 @@ var ChatRoom = {
       message.createElement();
     }
     
-    ChatRoom.cleanupDuplicateNames();
-    
     if (data.final) {
       if (data.paste) message.setHeader(FormatHelper.formatPaste(data.paste));
       message.update(ChatRoom.formatMessage(data.content));
       message.element.removeClass('partial');
+      ChatRoom.cleanupDuplicateNames();
       if (ChatRoom.logMessages){
         ChatRoom.logMessages = ChatRoom.logMessages === true ? 1 : ChatRoom.logMessages + 1;
         document.title = ChatRoom.room + " (" + ChatRoom.logMessages + " new messages)";
@@ -188,13 +187,17 @@ var ChatRoom = {
   },
   
   cleanupDuplicateNames: function() {
+    return ;
     $('#log tr.injected').each(function(){
       var current = $(this);
       var prev = current.prev();
       if (current.find(".author span").html() != prev.find('.author span').html()){
         current.find('.author span').css('visibility', 'visible');
       }
-      current.removeClass('injected'); // shouldn't need to redo this one again.
+      console.info("do we haz partial?" + current.hasClass('partial'));
+      if (!current.hasClass('partial')){
+        current.removeClass('injected'); // shouldn't need to redo this one again.
+      }
     });
   },
   
@@ -286,7 +289,17 @@ function Message(user, uuid, timestamp) {
         append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
         append($("<td/>").addClass("body").html(this.getBody())).
         append($("<td/>").addClass("timestamp").html(this.timestamp)).
-        appendTo($("#log"));
+        appendTo($("#log"))
+        .insertBefore($("#message"));
+        
+        var current = this.element;
+        var prev = current.prev();
+        
+        if (current.find('.author span').html() == prev.find('.author span').html()){
+          current.find('.author span').css('visibility', 'hidden');
+        } else {
+          current.find('.author span').css('visibility', 'visible');
+        }
     }
     return this.element;
   }
