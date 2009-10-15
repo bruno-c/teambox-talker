@@ -150,8 +150,6 @@ var ChatRoom = {
   onNewMessage: function(data) {
     var message = ChatRoom.messages[data.id];
     
-    ChatRoom.cleanupDuplicateNames();
-    
     if (data.content == '') {
       new Message(data.user, data.id).destroyElement();
       return false;
@@ -161,6 +159,8 @@ var ChatRoom = {
       message = ChatRoom.messages[data.id] = new Message(data.user, data.id, data.time);
       message.createElement();
     }
+    
+    ChatRoom.cleanupDuplicateNames();
     
     if (data.final) {
       if (data.paste) message.setHeader(FormatHelper.formatPaste(data.paste));
