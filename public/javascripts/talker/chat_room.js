@@ -19,6 +19,11 @@ $(function() {
       if (e.which == 27 || e.which == 8 && $('#msgbox').val().length == 1){
         ChatRoom.cancelMessage();
       }
+    })
+    .keyup(function(e){
+      if (e.which == 9 && $('#msgbox').val() == ''){
+        ChatRoom.cancelMessage();
+      }
     });
    
   // reformat all messages loaded from db on first load
