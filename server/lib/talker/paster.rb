@@ -14,7 +14,7 @@ module Talker
     end
     
     def paste(content, &callback)
-      http = post :head => { "X-Talker-Token" => @token },
+      http = post :head => { "X-Talker-Token" => @token, "Content-Type" => "application/x-www-form-urlencoded" },
                   :body => { "content" => content }
       
       http.errback do
@@ -22,7 +22,7 @@ module Talker
       end
       
       http.callback do
-        if http.response_header.status == 201 && location = http.response_header["Location"]
+        if http.response_header.status == 201 && location = http.response_header["LOCATION"]
           callback.call truncate(content), location
         else
           handle_failure content, callback, "[#{http.response_header.status}] #{http.response}"
