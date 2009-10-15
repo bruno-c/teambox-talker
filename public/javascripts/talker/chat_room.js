@@ -290,6 +290,20 @@ function Message(user, uuid, timestamp) {
   }
   
   this.destroyElement = function() {
-    $("#" + this.elementId).remove();
+    var current = $("#" + this.elementId);
+    var prev = current.prev();
+    var next = current.next();
+    
+    if (next && next.get(0) && next.get(0).id == 'message'){
+      return; // no need to do anything since it's the last message
+    }
+    
+    if (next.find('.author span').html() == prev.find('.author span').html()){
+      next.find('.author span').css('visibility', 'hidden');
+    } else {
+      next.find('.author span').css('visibility', 'visible');
+    }
+    
+    current.remove();
   }
 }
