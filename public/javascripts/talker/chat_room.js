@@ -19,15 +19,31 @@ $(function() {
       if (e.which == 27 || e.which == 8 && $('#msgbox').val().length == 1){
         ChatRoom.cancelMessage();
       }
+    })
+    .keyup(function(e){
+      if (e.which == 9 && $('#msgbox').val() == ''){
+        ChatRoom.cancelMessage();
+      }
     });
-   
+  
   // reformat all messages loaded from db on first load
   $('.content').each(function(something, element){
     element.innerHTML = ChatRoom.formatMessage(this.innerHTML, true);
   });
   
+  
+  ChatRoom.align();
   ChatRoom.scrollToBottom();
   ChatRoom.newMessage();
+  
+  $(window)
+    .blur(function(e){
+      ChatRoom.logMessages = true;
+    })
+    .focus(function(){
+      ChatRoom.logMessages = false;
+      ChatRoom.resetWindowTitle();
+    });
   
   $(window).keypress(function(e){
     switch (e.which){
@@ -87,6 +103,10 @@ var ChatRoom = {
     }
     
     document.getElementById('msgbox').focus();
+  },
+  
+  resetWindowTitle: function() {
+    document.title = ChatRoom.room;
   },
   
   scrollToBottom: function() {
@@ -149,6 +169,10 @@ var ChatRoom = {
       if (data.paste) message.setHeader(FormatHelper.formatPaste(data.paste));
       message.update(ChatRoom.formatMessage(data.content));
       message.element.removeClass('partial');
+      if (ChatRoom.logMessages){
+        ChatRoom.logMessages = ChatRoom.logMessages === true ? 1 : ChatRoom.logMessages + 1;
+        document.title = ChatRoom.room + " (" + ChatRoom.logMessages + " new messages)";
+      }
     } else {
       message.update(data.content);
     }
