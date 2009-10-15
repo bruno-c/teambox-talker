@@ -88,7 +88,11 @@ module Talker
       
       content = obj["content"]
       
-      if obj["final"] && @server.paster.pastable?(content) || obj.delete("paste")
+      if @server.paster.pastable?(content) || obj.delete("paste")
+        # We don't broadcast partial message that are pasted to reduce exchange of big message.
+        # We wait for the final version before actually doing the paste.
+        return unless obj["final"]
+        
         @server.paster.paste(@user.token, content) do |truncated_content, paste|
           obj["content"] = truncated_content
           obj["paste"] = paste if paste

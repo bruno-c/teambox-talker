@@ -44,6 +44,7 @@ EOS
     connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
       client.on_connected do
         client.send_message("hi\nthere", :final => false)
+        client.send_message("bogus")
       end
 
       client.on_message do |user, message, attributes|
