@@ -1,12 +1,14 @@
 %h1= @title = "Rooms"
 
-%ul
+#rooms
   - @rooms.each do |room|
-    %li
-      = link_to h(room.name), room
-      %span.users
-        - if room.users.empty?
-          Nobody in the room
-        - else
-          = room.users.map(&:name).to_sentence
-          in the room
+    .room
+      %h2= link_to h(room.name), room
+      = link_to "View logs", logs_path(room)
+      .users
+        Online now:
+        %strong
+          - if room.users.empty?
+            Nobody
+          - else
+            &= room.users.map(&:name).to_sentence

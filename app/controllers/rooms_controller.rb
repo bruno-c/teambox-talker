@@ -1,5 +1,6 @@
 class RoomsController < ApplicationController
   before_filter :login_required
+  before_filter :account_required
   before_filter :find_room, :only => [:show, :edit, :update, :destroy, :leave]
   
   def index

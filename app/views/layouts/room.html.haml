@@ -21,6 +21,8 @@
   %body.container#room
     #header
       = link_to "&larr; Back to Rooms", rooms_path, :class => "back"
+      = link_to "Chat Logs", logs_path(@room), :target => "_blank"
+      = link_to "Today's Log", today_log_path(@room), :target => "_blank"
     
     #content
       = yield

@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
   set_inheritance_column nil
   
   named_scope :recent, :limit => 25, :order => "id desc"
+  named_scope :on_date, proc { |date| { :conditions => ["DATE(created_at) = ?", date] } }
   
   # HACK so it doesn't confuse w/ class
   def type
@@ -22,5 +23,9 @@ class Event < ActiveRecord::Base
   
   def message?
     type == "message"
+  end
+  
+  def self.dates
+    all(:order => "created_at desc", :group => "DATE(created_at)").map(&:created_at).compact
   end
 end
