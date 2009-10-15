@@ -6,6 +6,8 @@ $(function() {
         ChatRoom.send(this.value, true);
         ChatRoom.newMessage();
         return false;
+      } else if (e.which == 27 || e.which == 8 && $('#msgbox').val().length == 1){
+        ChatRoom.cancelMessage();
       }
     })
     .keyup(function(e) {
@@ -13,11 +15,6 @@ $(function() {
         ChatRoom.send(this.value);
       } else {
         ChatRoom.sendLater(this.value);
-      }
-    })
-    .keydown(function(e){ // handle ESC and BACKSPACE cancelation of messages.
-      if (e.which == 27 || e.which == 8 && $('#msgbox').val().length == 1){
-        ChatRoom.cancelMessage();
       }
     })
     .keyup(function(e){
