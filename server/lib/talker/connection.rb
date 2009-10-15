@@ -88,7 +88,7 @@ module Talker
       
       content = obj["content"]
       
-      if obj["final"] && Paster.pastable?(content) || obj.delete("paste")
+      if obj["final"] && @server.paster.pastable?(content) || obj.delete("paste")
         @server.paster.paste(@user.token, content) do |truncated_content, paste|
           obj["content"] = truncated_content
           obj["paste"] = paste if paste

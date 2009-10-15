@@ -24,7 +24,13 @@ module Talker
       
       http.callback do
         if http.response_header.status == 201 && location = http.response_header["LOCATION"]
-          callback.call truncate(content), (location && location[/\/(\w+)$/, 1])
+          truncated_content, lines, preview_lines = truncate(content)
+          
+          callback.call truncated_content, "id" => location[/\/(\w+)$/, 1],
+                                           "lines" => lines,
+                                           "preview_lines" => preview_lines
+        
+        # Request succeeded, but got bad response
         else
           handle_failure content, callback, "[#{http.response_header.status}] #{http.response}"
         end
@@ -33,11 +39,16 @@ module Talker
     
     def truncate(content)
       lines = content.split("\n")
+      
       if lines.size > PREVIEW_LINES
-        lines.first(PREVIEW_LINES).join("\n") + "\n..."
+        preview_lines = lines.first(PREVIEW_LINES)
+        truncated_content = preview_lines.join("\n") + "\n..."
       else
-        content
+        preview_lines = lines
+        truncated_content = content
       end
+      
+      [truncated_content, lines.size, preview_lines.size]
     end
     
     # If something fails we just don't paste the thing and return the full content
@@ -47,7 +58,7 @@ module Talker
       callback.call content, nil
     end
     
-    def self.pastable?(content)
+    def pastable?(content)
       content.include?("\n")
     end
   end

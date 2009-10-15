@@ -32,7 +32,7 @@ EOS
       end
 
       client.on_message do |user, message, attributes|
-        attributes["paste"].should == "THIS_IS_MOCKED"
+        attributes["paste"].should == {"id" => "THIS_IS_MOCKED", "lines" => 2, "preview_lines" => 2}
         client.close
       end
       
