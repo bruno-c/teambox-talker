@@ -21,19 +21,18 @@ class Awesome
 end
 EOS
   
-  
   before do
     $paster_response = nil
   end
   
-  it "should be received w/ a url" do
+  it "should be received w/ paste id" do
     connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
       client.on_connected do
         client.send_message("hi\nthere")
       end
 
       client.on_message do |user, message, attributes|
-        attributes["paste_url"].should_not be_nil
+        attributes["paste"].should == "THIS_IS_MOCKED"
         client.close
       end
       
@@ -41,14 +40,14 @@ EOS
     end
   end
   
-  it "should no paste partial messages" do
+  it "should not paste partial messages" do
     connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
       client.on_connected do
         client.send_message("hi\nthere", :final => false)
       end
 
       client.on_message do |user, message, attributes|
-        attributes["paste_url"].should be_nil
+        attributes["paste"].should be_nil
         client.close
       end
       
@@ -63,7 +62,7 @@ EOS
       end
 
       client.on_message do |user, message, attributes|
-        attributes["paste_url"].should_not be_nil
+        attributes["paste"].should_not be_nil
         attributes["content"][-3,3].should == "..."
         client.close
       end
@@ -79,7 +78,7 @@ EOS
       end
 
       client.on_message do |user, message, attributes|
-        attributes["paste_url"].should_not be_nil
+        attributes["paste"].should_not be_nil
         client.close
       end
       
@@ -96,7 +95,7 @@ EOS
       end
 
       client.on_message do |user, message, attributes|
-        attributes["paste_url"].should be_nil
+        attributes["paste"].should be_nil
         attributes["content"].should == CODE
         client.close
       end

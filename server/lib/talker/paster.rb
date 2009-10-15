@@ -2,19 +2,20 @@ require "em-http"
 
 module Talker
   class Paster
-    PASTE_URL = "http://talkerapp.com/pastes.json"
     PREVIEW_LINES = 15
     
-    def initialize(token)
-      @token = token
+    attr_reader :server_url
+    
+    def initialize(server_url)
+      @server_url = server_url
     end
     
     def post(options)
-      EM::HttpRequest.new(PASTE_URL).post(options)
+      EM::HttpRequest.new(@server_url).post(options)
     end
     
-    def paste(content, &callback)
-      http = post :head => { "X-Talker-Token" => @token, "Content-Type" => "application/x-www-form-urlencoded" },
+    def paste(token, content, &callback)
+      http = post :head => { "X-Talker-Token" => token, "Content-Type" => "application/x-www-form-urlencoded" },
                   :body => { "content" => content }
       
       http.errback do
@@ -23,7 +24,7 @@ module Talker
       
       http.callback do
         if http.response_header.status == 201 && location = http.response_header["LOCATION"]
-          callback.call truncate(content), location
+          callback.call truncate(content), (location && location[/\/(\w+)$/, 1])
         else
           handle_failure content, callback, "[#{http.response_header.status}] #{http.response}"
         end

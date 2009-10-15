@@ -15,8 +15,9 @@ module Talker
     
     class SuccessResponse < Response
       def response_header
-        header = EM::HttpResponseHeader.new "Location" => "http://talkerapp.com/pastes/THIS_IS_MOCKED"
+        header = EM::HttpResponseHeader.new
         header.http_status = 201
+        header["LOCATION"] = "http://talkerapp.com/pastes/THIS_IS_MOCKED"
         header
       end
     end
