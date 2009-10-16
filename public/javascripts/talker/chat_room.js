@@ -116,12 +116,12 @@ var ChatRoom = {
     this.messages[this.currentMessage.uuid] = this.currentMessage;
     
     // Move the new message form to the bottom
-    $("#message").
-      appendTo($("#log")).
-      find("form").reset().
-      find("textarea").focus();
+    $("#message").appendTo($("#log"));
+    document.getElementById('msgbox').value = '';
     
     this.scrollToBottom();
+    
+    ChatRoom.align();
   },
   
   cancelMessage: function() {
@@ -145,6 +145,10 @@ var ChatRoom = {
     }
     image.style.visibility = 'visible';
     if (!noScroll) ChatRoom.scrollToBottom();
+  },
+  
+  checkMessageOrder: function(message){
+    
   },
   
   onNewMessage: function(data) {
@@ -174,9 +178,7 @@ var ChatRoom = {
     }
     
     if (!ChatRoom.typing()) {
-      $("#message").
-        appendTo($("#log")).
-        find("textarea").focus();
+      $("#message").appendTo($("#log")).find("textarea").focus();
     }
 
     ChatRoom.scrollToBottom();
@@ -273,23 +275,33 @@ function Message(user, uuid, timestamp) {
         attr("id", this.elementId).
         append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
         append($("<td/>").addClass("body").html(this.getBody())).
-        append($("<td/>").addClass("timestamp").html(this.timestamp)).
-        appendTo($("#log"));
+        append($("<td/>").addClass("timestamp").html(this.timestamp));
         
-        if (!ChatRoom.typing){
+        if (ChatRoom.typing()){
+          console.info("************ INSERTED BEFORE");
           this.element.insertBefore($("#message"));
-        }
-        
-        var current = this.element;
-        var prev = current.prev();
-        
-        if (prev.hasClass('notice')){
-          current.find('.author span').css('visibility', 'visible');
-        } else if (current.find('.author span').html() == prev.find('.author span').html()){
-          current.find('.author span').css('visibility', 'hidden');
         } else {
-          current.find('.author span').css('visibility', 'visible');
+          console.info("************ APPENDED AFTER");
+          this.element.appendTo($("#log"));
         }
+        
+        var elementId = this.elementId;
+        var body = this.getBody();
+        
+        window.setTimeout(function(){
+          console.info(elementId);
+          var current = $('#' + elementId);
+          var prev = current.prev();
+
+          if (prev.hasClass('notice')){
+            console.info("WE HAS A NOTICE BEFORE:" + body)
+            current.find('.author span').css('visibility', 'visible');
+          } else if (current.find('.author span').html() == prev.find('.author span').html()){
+            current.find('.author span').css('visibility', 'hidden');
+          } else {
+            current.find('.author span').css('visibility', 'visible');
+          }
+        }, 10)
     }
     return this.element;
   }
