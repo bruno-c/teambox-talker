@@ -832,6 +832,9 @@ body {
   body a.button {
     font-weight: bold; }
 
+textarea:focus {
+  background-color: #DDD; }
+
 #header {
   background-color: #222;
   padding: 10px; }

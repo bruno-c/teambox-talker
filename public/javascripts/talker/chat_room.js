@@ -42,13 +42,14 @@ $(function() {
       ChatRoom.resetWindowTitle();
     });
   
-  $(window).keypress(function(e){
+  $(window).keydown(function(e){
     switch (e.which){
       case 13: // enter
         ChatRoom.align();
         e.preventDefault();
         break;
       default:
+        document.getElementById('msgbox').focus();
         // nothing at all.
         break;
     }
@@ -120,8 +121,6 @@ var ChatRoom = {
     document.getElementById('msgbox').value = '';
     
     this.scrollToBottom();
-    
-    ChatRoom.align();
   },
   
   cancelMessage: function() {
