@@ -10,10 +10,12 @@ class Event < ActiveRecord::Base
   
   define_index do
     # fields
-    indexes message
+    indexes :message
+    
+    where "type = 'message'"
 
     # attributes
-    has room_id, user_id, type, created_at, updated_at
+    has :room_id, :user_id, :created_at
   end
   
   # HACK so it doesn't confuse w/ class

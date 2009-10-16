@@ -2,6 +2,8 @@
 
 %h1&= @title
 
+= render :partial => "search_form"
+
 - @dates.each do |date|
   .log-entry
     %h2= link_to human_date(date), log_path(@room, date.year, date.month, date.day)

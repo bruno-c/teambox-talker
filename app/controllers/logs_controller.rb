@@ -12,6 +12,12 @@ class LogsController < ApplicationController
     @events = @room.events.on_date(@date)
   end
   
+  def search
+    @query = params[:q]
+    @events = Event.search @query, :with => { :room_id => @room.id }
+    render :show
+  end
+  
   def today
     @date = Time.now.to_date
     @events = @room.events.on_date(@date)
