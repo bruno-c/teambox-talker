@@ -1,8 +1,9 @@
 Rails app:
 - Index chat log (w/ ultrasphinx?)
+- Use format_helper.js to render events in HTML template using http://github.com/jbarnette/johnson/
 - Implement "Forgot my password"
-- Use Flash sockets if present http://github.com/tmm1/jssocket (??)
 - Import Campfire logs (using tinder)
+- Add support for Flash sockets in Orbited
 
 Desktop client:
 - Build Prism app
