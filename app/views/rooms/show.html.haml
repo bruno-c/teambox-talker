@@ -47,7 +47,7 @@
   %ul#users
     = render :partial => "user", :collection => @room.users
 %table#log
-  = render :partial => "messages/messages"
+  = render :partial => "messages/messages", :object => @events
   %tr.message.event#message
     %td.author&= current_user.name
     %td.new_content

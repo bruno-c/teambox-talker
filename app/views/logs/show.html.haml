@@ -1,0 +1,5 @@
+- @title = "Chat Logs of #{@room.name} for " + human_date(@date)
+
+%table#log
+  = render :partial => "messages/messages", :object => @events
+  

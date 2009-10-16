@@ -1,6 +1,6 @@
 - @last_event_user_name = nil
 - @last_event_timestamp = nil
-- @events.each do |event|
+- messages.each do |event|
   - @last_event_timestamp = @events.first.created_at if @last_event_timestamp == nil 
   - if (event.created_at.to_formatted_s(:js).to_i - @last_event_timestamp.to_formatted_s(:js).to_i > (1000 * 60  * 5)) # 5 minutes
     - @last_event_user_name = nil # enables you to see user name of new typist.

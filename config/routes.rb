@@ -12,5 +12,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :rooms, :has_many => :messages
   map.resources :pastes
   
+  map.logs "/rooms/:room_id/logs", :controller => "logs", :action => "index"
+  map.log "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "show"
+  map.today_log "/rooms/:room_id/logs/today", :controller => "logs", :action => "today"
+  
   map.root :controller => "home"
 end

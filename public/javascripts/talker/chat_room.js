@@ -274,13 +274,18 @@ function Message(user, uuid, timestamp) {
         append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
         append($("<td/>").addClass("body").html(this.getBody())).
         append($("<td/>").addClass("timestamp").html(this.timestamp)).
-        appendTo($("#log"))
-        .insertBefore($("#message"));
+        appendTo($("#log"));
+        
+        if (!ChatRoom.typing){
+          this.element.insertBefore($("#message"));
+        }
         
         var current = this.element;
         var prev = current.prev();
         
-        if (current.find('.author span').html() == prev.find('.author span').html()){
+        if (prev.hasClass('notice')){
+          current.find('.author span').css('visibility', 'visible');
+        } else if (current.find('.author span').html() == prev.find('.author span').html()){
           current.find('.author span').css('visibility', 'hidden');
         } else {
           current.find('.author span').css('visibility', 'visible');

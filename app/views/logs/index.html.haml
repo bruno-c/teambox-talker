@@ -1,0 +1,7 @@
+- @title = "Chat Logs for #{@room.name}"
+
+%h1&= @title
+
+- @dates.each do |date|
+  .log-entry
+    %h2= link_to human_date(date), log_path(@room, date.year, date.month, date.day)
