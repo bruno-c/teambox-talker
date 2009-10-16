@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091016203601) do
+ActiveRecord::Schema.define(:version => 20091016204029) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20091016203601) do
     t.datetime "created_at"
     t.string   "uuid",            :limit => 36
     t.string   "paste_permalink"
+    t.boolean  "delta",                         :default => true, :null => false
   end
 
   add_index "events", ["uuid"], :name => "index_events_on_uuid", :unique => true
