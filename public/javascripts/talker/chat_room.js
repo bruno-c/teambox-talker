@@ -274,8 +274,11 @@ function Message(user, uuid, timestamp) {
         append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
         append($("<td/>").addClass("body").html(this.getBody())).
         append($("<td/>").addClass("timestamp").html(this.timestamp)).
-        appendTo($("#log"))
-        .insertBefore($("#message"));
+        appendTo($("#log"));
+        
+        if (!ChatRoom.typing){
+          this.element.insertBefore($("#message"));
+        }
         
         var current = this.element;
         var prev = current.prev();
