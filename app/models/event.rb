@@ -8,6 +8,14 @@ class Event < ActiveRecord::Base
   named_scope :recent, :limit => 25, :order => "id desc"
   named_scope :on_date, proc { |date| { :conditions => ["DATE(created_at) = ?", date] } }
   
+  define_index do
+    # fields
+    indexes message
+
+    # attributes
+    has room_id, user_id, type, created_at, updated_at
+  end
+  
   # HACK so it doesn't confuse w/ class
   def type
     self[:type]
