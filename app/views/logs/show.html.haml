@@ -1,5 +1,8 @@
 - if @query
-  - @title = "Chat Logs search for #{@query} in #{@room.name}"
+  - if @room
+    - @title = "Chat Logs search for #{@query} in #{@room.name}"
+  - else
+    - @title = "Chat Logs search for #{@query}"
   
   = render :partial => "search_form"
   

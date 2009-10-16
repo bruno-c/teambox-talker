@@ -19,13 +19,24 @@ class LogsControllerTest < ActionController::TestCase
     assert_equal Date.new(2009, 10, 7), assigns(:date)
   end
   
-  def test_search
+  def test_search_in_room
     Event.expects(:search).with("test", :with => { :room_id => @room.id }).returns([])
 
     get :search, :room_id => @room, :q => "test"
 
     assert_response :success, @response.body
     assert_equal "test", assigns(:query)
+    assert_template :show
+  end
+  
+  def test_search_in_rooms
+    Event.expects(:search).with("test", :with => { :account_id => @room.account_id }).returns([])
+
+    get :search, :q => "test"
+
+    assert_response :success, @response.body
+    assert_equal "test", assigns(:query)
+    assert_nil assigns(:room)
     assert_template :show
   end
   

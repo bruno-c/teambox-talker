@@ -1,7 +1,7 @@
 class LogsController < ApplicationController
   before_filter :login_required
   before_filter :account_required
-  before_filter :find_room
+  before_filter :find_room, :except => :search
   
   def index
     @dates = @room.events.dates
@@ -14,7 +14,13 @@ class LogsController < ApplicationController
   
   def search
     @query = params[:q]
-    @events = Event.search @query, :with => { :room_id => @room.id }
+    if params[:room_id]
+      @room = find_room
+      @events = Event.search @query, :with => { :room_id => @room.id }
+    else
+      @events = Event.search @query, :with => { :account_id => current_account.id }
+    end
+    
     render :show
   end
   

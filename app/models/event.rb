@@ -16,6 +16,7 @@ class Event < ActiveRecord::Base
 
     # attributes
     has :room_id, :user_id, :created_at
+    has room(:account_id), :as => :account_id
   end
   
   # HACK so it doesn't confuse w/ class

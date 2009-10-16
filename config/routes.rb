@@ -16,6 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.log "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "show"
   map.today_log "/rooms/:room_id/logs/today", :controller => "logs", :action => "today"
   map.search_log "/rooms/:room_id/search", :controller => "logs", :action => "search"
+  map.search_logs "/logs/search", :controller => "logs", :action => "search"
   
   map.root :controller => "home"
 end
