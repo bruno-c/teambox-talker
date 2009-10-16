@@ -277,10 +277,8 @@ function Message(user, uuid, timestamp) {
         append($("<td/>").addClass("timestamp").html(this.timestamp));
         
         if (ChatRoom.typing()){
-          console.info("************ INSERTED BEFORE");
           this.element.insertBefore($("#message"));
         } else {
-          console.info("************ APPENDED AFTER");
           this.element.appendTo($("#log"));
         }
         
@@ -288,12 +286,10 @@ function Message(user, uuid, timestamp) {
         var body = this.getBody();
         
         window.setTimeout(function(){
-          console.info(elementId);
           var current = $('#' + elementId);
           var prev = current.prev();
 
           if (prev.hasClass('notice')){
-            console.info("WE HAS A NOTICE BEFORE:" + body)
             current.find('.author span').css('visibility', 'visible');
           } else if (current.find('.author span').html() == prev.find('.author span').html()){
             current.find('.author span').css('visibility', 'hidden');
