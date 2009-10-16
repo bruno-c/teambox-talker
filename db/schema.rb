@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091015184327) do
+ActiveRecord::Schema.define(:version => 20091016203601) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -25,6 +25,19 @@ ActiveRecord::Schema.define(:version => 20091015184327) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state",      :limit => 15
+  end
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.string   "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "events", :force => true do |t|
@@ -47,8 +60,6 @@ ActiveRecord::Schema.define(:version => 20091015184327) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "pastes", ["permalink"], :name => "index_pastes_on_permalink", :unique => true
 
   create_table "rooms", :force => true do |t|
     t.string   "name"
