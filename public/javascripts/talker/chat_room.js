@@ -21,7 +21,8 @@ $(function() {
       if (e.which == 9 && $('#msgbox').val() == ''){
         ChatRoom.cancelMessage();
       }
-    });
+    })
+    .focus(function(e){ e.stopPropagation() });// stops window/document from calling focus.  re: logMessages
   
   // reformat all messages loaded from db on first load
   $('.content').each(function(something, element){
@@ -33,14 +34,25 @@ $(function() {
   ChatRoom.scrollToBottom();
   ChatRoom.newMessage();
   
-  $(window)
-    .blur(function(e){
-      ChatRoom.logMessages = true;
-    })
-    .focus(function(){
-      ChatRoom.logMessages = false;
-      ChatRoom.resetWindowTitle();
-    });
+  var dom_element, on_focus, on_blur, on_focus_handler = function(e){
+    ChatRoom.logMessages = -1;
+    ChatRoom.resetWindowTitle();
+  };
+  
+  if ($.browser.mozilla) {
+    dom_element = document, on_focus = "focus", on_blur = "blur";
+  } else if ($.browser.msie) {
+    dom_element = document, on_focus = "focusin", on_blur = "focusout";
+  } else { // safari and others
+    dom_element = window, on_focus = "focus", on_blur = "blur";
+  }
+
+  if (!$.browser.safari){
+    $(dom_element)
+    .bind(on_focus, on_focus_handler)
+    .click(on_focus_handler)
+    .bind(on_blur, function(){ ChatRoom.logMessages = 0; });
+  }
   
   $(window).keydown(function(e){
     switch (e.which){
@@ -168,8 +180,8 @@ var ChatRoom = {
       message.update(ChatRoom.formatMessage(data.content));
       message.element.removeClass('partial');
 
-      if (ChatRoom.logMessages){
-        ChatRoom.logMessages = ChatRoom.logMessages === true ? 1 : ChatRoom.logMessages + 1;
+      if (!$.browser.safari && ChatRoom.logMessages !== -1){
+        ChatRoom.logMessages = ChatRoom.logMessages + 1;
         document.title = ChatRoom.room + " (" + ChatRoom.logMessages + " new messages)";
       }
     } else {
