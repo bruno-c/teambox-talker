@@ -38,7 +38,7 @@ function TalkerClient(options) {
   }
   
   function onRawDataReceived(data) {
-    console.info("TalkerClient::received raw: " + data);
+    // console.info("TalkerClient::received raw: " + data);
   }
   
   self.resetPing = function() {
