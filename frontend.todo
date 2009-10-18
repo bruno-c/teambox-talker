@@ -1,6 +1,6 @@
 ✓ remove double usernames
 ✓ sudo live typing
-- Do not send pastes as live typing, wait for enter to send final message
+✓ Do not send pastes as live typing, wait for enter to send final message
 - display timestamps
 - On error, connection is closed before processing the "error" message, eg. connect to the same room twice w/ same user.
 - remove password confirmation
