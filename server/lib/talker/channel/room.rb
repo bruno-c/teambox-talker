@@ -12,7 +12,7 @@ module Talker
         queue = user_queue(user.id)
         
         if queue.subscribed?
-          raise SubscriptionError, "#{user.name} is already connected this room. " +
+          raise SubscriptionError, "#{user.name} is already connected to this room. " +
                                    "A user can have only one active connection to a room.  Try again in 30 seconds."
         end
         
