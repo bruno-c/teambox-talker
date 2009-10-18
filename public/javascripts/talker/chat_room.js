@@ -55,8 +55,6 @@ $(function() {
   }
   
   $(window).keydown(function(e){
-    console.info("************** KEYDOWN")
-    console.info(e.which);
     switch (e.which){
       case 91: // command
       case 67: // Cmd+c Ctrl+c
@@ -182,9 +180,13 @@ var ChatRoom = {
     }
     
     if (data.final) {
-      if (data.paste) message.setHeader(FormatHelper.formatPaste(data.paste));
+      if (data.paste) {
+        message.setHeader(FormatHelper.formatPaste(data.paste));
+        message.element.removeClass('hidden');
+      }
       message.update(ChatRoom.formatMessage(data.content));
       message.element.removeClass('partial');
+      message.element.removeClass('hidden');
 
       if (!$.browser.safari && ChatRoom.logMessages !== -1){
         ChatRoom.logMessages = ChatRoom.logMessages + 1;
@@ -288,6 +290,7 @@ function Message(user, uuid, timestamp) {
         addClass("message").
         addClass("injected").
         addClass("partial").
+        addClass(this.content && this.content.match(/\n/g) ? "hidden" : "").
         addClass(ChatRoom.current_user.id == this.user.id ? 'me' : '').
         attr("id", this.elementId).
         append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
