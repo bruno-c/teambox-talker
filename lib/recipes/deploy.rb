@@ -3,7 +3,7 @@ namespace :deploy do
     sudo "god #{command} thin-talker"
   end
   
-  [:monitor, :start, :stop, :restart].each do |command|
+  [:start, :stop, :restart].each do |command|
     desc "Send #{command} command to Thin processes."
     task command, :roles => :app do
       god command

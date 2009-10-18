@@ -1,5 +1,7 @@
 %h1= @title = "Rooms"
 
+= render :partial => "logs/search_form"
+
 #rooms
   - @rooms.each do |room|
     .room

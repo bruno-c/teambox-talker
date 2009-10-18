@@ -16,6 +16,7 @@ Install required gems:
     
     gem sources -a http://gems.github.com # if not already done
     sudo gem install eventmachine uuid tmm1-amqp brianmario-yajl-ruby mysqlplus igrigorik-em-http-request rubyosa
+    rake gems:install
 
 ## Running the app
 

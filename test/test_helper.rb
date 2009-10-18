@@ -3,6 +3,7 @@ ENV['BACKTRACE'] = "true"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require "rubygems"
 require "test_help"
+require "mocha"
 require File.dirname(__FILE__) + "/model_factory"
 
 class ActiveSupport::TestCase
