@@ -21,7 +21,8 @@ $(function() {
       if (e.which == 9 && $('#msgbox').val() == ''){
         ChatRoom.cancelMessage();
       }
-    });
+    })
+    .focus(function(e){ e.stopPropagation() });// stops window/document from calling focus.  re: logMessages
   
   // reformat all messages loaded from db on first load
   $('.content').each(function(something, element){
@@ -33,22 +34,40 @@ $(function() {
   ChatRoom.scrollToBottom();
   ChatRoom.newMessage();
   
-  $(window)
-    .blur(function(e){
-      ChatRoom.logMessages = true;
-    })
-    .focus(function(){
-      ChatRoom.logMessages = false;
-      ChatRoom.resetWindowTitle();
-    });
+  var dom_element, on_focus, on_blur, on_focus_handler = function(e){
+    ChatRoom.logMessages = -1;
+    ChatRoom.resetWindowTitle();
+  };
   
-  $(window).keypress(function(e){
+  if ($.browser.mozilla) {
+    dom_element = document, on_focus = "focus", on_blur = "blur";
+  } else if ($.browser.msie) {
+    dom_element = document, on_focus = "focusin", on_blur = "focusout";
+  } else { // safari and others
+    dom_element = window, on_focus = "focus", on_blur = "blur";
+  }
+
+  if (!$.browser.safari){
+    $(dom_element)
+    .bind(on_focus, on_focus_handler)
+    .click(on_focus_handler)
+    .bind(on_blur, function(){ ChatRoom.logMessages = 0; });
+  }
+  
+  $(window).keydown(function(e){
+    console.info("************** KEYDOWN")
+    console.info(e.which);
     switch (e.which){
+      case 91: // command
+      case 67: // Cmd+c Ctrl+c
+      case 17: // Ctrl
+        break;
       case 13: // enter
         ChatRoom.align();
         e.preventDefault();
         break;
       default:
+        document.getElementById('msgbox').focus();
         // nothing at all.
         break;
     }
@@ -116,10 +135,8 @@ var ChatRoom = {
     this.messages[this.currentMessage.uuid] = this.currentMessage;
     
     // Move the new message form to the bottom
-    $("#message").
-      appendTo($("#log")).
-      find("form").reset().
-      find("textarea").focus();
+    $("#message").appendTo($("#log"));
+    document.getElementById('msgbox').value = '';
     
     this.scrollToBottom();
   },
@@ -147,6 +164,10 @@ var ChatRoom = {
     if (!noScroll) ChatRoom.scrollToBottom();
   },
   
+  checkMessageOrder: function(message){
+    
+  },
+  
   onNewMessage: function(data) {
     var message = ChatRoom.messages[data.id];
     
@@ -165,8 +186,8 @@ var ChatRoom = {
       message.update(ChatRoom.formatMessage(data.content));
       message.element.removeClass('partial');
 
-      if (ChatRoom.logMessages){
-        ChatRoom.logMessages = ChatRoom.logMessages === true ? 1 : ChatRoom.logMessages + 1;
+      if (!$.browser.safari && ChatRoom.logMessages !== -1){
+        ChatRoom.logMessages = ChatRoom.logMessages + 1;
         document.title = ChatRoom.room + " (" + ChatRoom.logMessages + " new messages)";
       }
     } else {
@@ -174,9 +195,7 @@ var ChatRoom = {
     }
     
     if (!ChatRoom.typing()) {
-      $("#message").
-        appendTo($("#log")).
-        find("textarea").focus();
+      $("#message").appendTo($("#log")).find("textarea").focus();
     }
 
     ChatRoom.scrollToBottom();
@@ -273,23 +292,29 @@ function Message(user, uuid, timestamp) {
         attr("id", this.elementId).
         append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
         append($("<td/>").addClass("body").html(this.getBody())).
-        append($("<td/>").addClass("timestamp").html(this.timestamp)).
-        appendTo($("#log"));
+        append($("<td/>").addClass("timestamp").html(this.timestamp));
         
-        if (!ChatRoom.typing){
+        if (ChatRoom.typing()){
           this.element.insertBefore($("#message"));
-        }
-        
-        var current = this.element;
-        var prev = current.prev();
-        
-        if (prev.hasClass('notice')){
-          current.find('.author span').css('visibility', 'visible');
-        } else if (current.find('.author span').html() == prev.find('.author span').html()){
-          current.find('.author span').css('visibility', 'hidden');
         } else {
-          current.find('.author span').css('visibility', 'visible');
+          this.element.appendTo($("#log"));
         }
+        
+        var elementId = this.elementId;
+        var body = this.getBody();
+        
+        window.setTimeout(function(){
+          var current = $('#' + elementId);
+          var prev = current.prev();
+
+          if (prev.hasClass('notice')){
+            current.find('.author span').css('visibility', 'visible');
+          } else if (current.find('.author span').html() == prev.find('.author span').html()){
+            current.find('.author span').css('visibility', 'hidden');
+          } else {
+            current.find('.author span').css('visibility', 'visible');
+          }
+        }, 10)
     }
     return this.element;
   }
@@ -299,14 +324,12 @@ function Message(user, uuid, timestamp) {
     var prev = current.prev();
     var next = current.next();
     
-    if (next && next.get(0) && next.get(0).id == 'message'){
-      return; // no need to do anything since it's the last message
-    }
-    
-    if (next.find('.author span').html() == prev.find('.author span').html()){
-      next.find('.author span').css('visibility', 'hidden');
-    } else {
-      next.find('.author span').css('visibility', 'visible');
+    if (next && next.get(0) && next.get(0).id != 'message'){
+      if (next.find('.author span').html() == prev.find('.author span').html()){
+        next.find('.author span').css('visibility', 'hidden');
+      } else {
+        next.find('.author span').css('visibility', 'visible');
+      }
     }
     
     current.remove();
