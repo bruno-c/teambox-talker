@@ -876,6 +876,8 @@ body {
 #room #log {
   margin-right: 216px;
   width: auto; }
+  #room #log .hidden {
+    display: none; }
   #room #log .datetime {
     background: #F3F3F3;
     color: #999; }
