@@ -1,21 +1,22 @@
-require 'vendor/plugins/thinking-sphinx/recipes/thinking_sphinx'
-
-task :before_update_code, :roles => [:app] do
+before "deploy:update_code", :roles => :app do
   thinking_sphinx.stop
 end
 
-task :after_update_code, :roles => [:app] do
+after "deploy:symlink", :roles => :app do
   thinking_sphinx.symlink_indexes
   thinking_sphinx.configure
   thinking_sphinx.start
 end
 
+
 namespace :thinking_sphinx do
+  task :configure do
+    run "cd #{release_path}; rake RAILS_ENV=production thinking_sphinx:configure"
+  end
   
   [:start, :stop, :restart].each do |command|
     desc "#{command} the Sphinx daemon"
     task command do
-      configure
       sudo "god #{command} sphinx-talker"
     end
   end
