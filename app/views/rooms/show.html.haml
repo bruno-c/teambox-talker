@@ -48,8 +48,9 @@
     = render :partial => "user", :collection => @room.users
 %table#log
   = render :partial => "messages/messages", :object => @events
-  %tr.message.event#message
-    %td.author&= current_user.name
+  %tr.event#message
+    %td.author
+      %span&= current_user.name
     %td.new_content
       %form#msgForm{:action => room_messages_path(@room)}
         %textarea#msgbox{:rows => 1}
