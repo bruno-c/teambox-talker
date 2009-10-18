@@ -12,3 +12,4 @@
 - refresh should cancel current livetyped messages
 - change title on actionable events - remove title when window gets focus or an action occurs
 - change leave/join message to something better like "Gary left" and "Gary joined" rather that simply the leave or join keyword
+- fix ordering.  Currently messages do not appear in the same order on every side.
