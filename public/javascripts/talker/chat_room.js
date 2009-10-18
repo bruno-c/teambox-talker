@@ -282,6 +282,20 @@ function Message(user, uuid, timestamp) {
   }
   
   this.createElement = function() {
+    var lastEvent = $('#log tr.message:last');
+    
+    var timeOfLastEvent = lastEvent.find('.timestamp').html();
+    
+    if (timeOfLastEvent && Math.abs(timeOfLastEvent - new Date().getTime()) > 300000){ // more than 5 minutes ago
+      var displayed_time = new Date();
+      displayed_time.setTime(timeOfLastEvent - timeOfLastEvent % 300000);
+      
+      if (!$('#log tr:last').hasClass('datetime')){
+        $("<tr/>").addClass('datetime').append($('<td/>').attr('colspan', '3')
+        .html(FormatHelper.date2human(displayed_time))).insertAfter(lastEvent);
+      }
+    }
+          
     // Create of find the message HTML element
     this.element = $("#" + this.elementId);
     if (this.element.length == 0) {
@@ -309,8 +323,8 @@ function Message(user, uuid, timestamp) {
         window.setTimeout(function(){
           var current = $('#' + elementId);
           var prev = current.prev();
-
-          if (prev.hasClass('notice')){
+          
+          if (prev.hasClass('notice') || prev.hasClass('datetime')){
             current.find('.author span').css('visibility', 'visible');
           } else if (current.find('.author span').html() == prev.find('.author span').html()){
             current.find('.author span').css('visibility', 'hidden');

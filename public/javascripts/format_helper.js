@@ -78,5 +78,18 @@ var FormatHelper = {
               "'>View paste</a>";
     if (paste.lines > paste.preview_lines) msg += " <span class='more_lines'>(" + (paste.lines - paste.preview_lines) + " more lines)</span>"
     return msg;
+  },
+  
+  date2human: function(date) {
+    // jsDate => October 18th, 2009 17:45
+    var months = 'January February March April May June July August September October November December'.split(' ');
+    var dayOrdinalSuffixes = 'st nd rd th th th th th th th'.split(' ');
+    var minutes = date.getMinutes() - date.getMinutes() % 5;
+    
+    return months[date.getMonth()] + ' ' 
+      + date.getDate() + dayOrdinalSuffixes[date.getDate() % 10] + ', '
+      + date.getFullYear() + ' '
+      + (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':'
+      + (minutes < 10 ? '0' + minutes : minutes)
   }
 }

@@ -20,5 +20,5 @@
       %td.body
         = render :partial => "messages/paste", :object => event.paste if event.paste
         .content&= event.message
-    %td.timestamp&= event.created_at
+    %td.timestamp&= event.created_at.to_i * 1000
   - @last_event_timestamp = event.created_at
