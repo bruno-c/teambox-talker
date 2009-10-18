@@ -2,6 +2,7 @@ Rails app:
 - Index chat log (w/ ultrasphinx?)
 - Use format_helper.js to render events in HTML template using http://github.com/jbarnette/johnson/
 - Configure timezone.
+- Relay emails to http://www.authsmtp.com/ to prevent going into spam
 - Implement "Forgot my password"
 - Import Campfire logs (using tinder)
 - Add support for Flash sockets in Orbited
