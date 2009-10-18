@@ -198,7 +198,8 @@ var ChatRoom = {
     }
     
     if (!ChatRoom.typing()) {
-      $("#message").appendTo($("#log")).find("textarea").focus();
+      $("#message").appendTo($("#log"));
+      document.getElementById('msgbox').focus(); // why oh why must it only work like this?
     }
 
     ChatRoom.scrollToBottom();

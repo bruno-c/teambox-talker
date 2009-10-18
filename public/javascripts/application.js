@@ -25,3 +25,8 @@ $(function() {
     });
   });
 });
+
+if (typeof console == 'undefined'){
+  console = {};
+  console.info = function(){ }
+}
