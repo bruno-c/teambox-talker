@@ -11,6 +11,7 @@ Talker Server:
 - Move to mongodb or redis for faster writes & less mem?
 
 Chef:
+- Put correct hostname in email sent via postfix
 - Tweaks mysql recipe (use the one from opscode?); using too much mem
 - Move /db to /mnt or mount EBS volume
 - Server and room behind SSL (maybe can have nginx do all that)
