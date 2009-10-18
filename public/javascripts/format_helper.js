@@ -8,7 +8,7 @@ var FormatHelper = {
     var image_expression     = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
     var youtube_expression   = /^(?:http\S+youtube\.com\/watch\?v=)([\w-]+)(?:\S*)$/;
     var vimeo_expression     = /^(?:http\S+vimeo\.com\/)(\d+)/;
-    var url_expression       = /[^\s]+\.[^\s|\.]+/gim;
+    var url_expression       = /(https?:\/\/|www\.)[^\s<]*/gi
     var protocol_expression  = /^(http|https|ftp|ftps|ssh|irc|mms|file|about|mailto|xmpp):\/\//;
     var multiline_expression = /\n/gim;
     
