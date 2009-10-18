@@ -55,8 +55,6 @@ $(function() {
   }
   
   $(window).keydown(function(e){
-    console.info("************** KEYDOWN")
-    console.info(e.which);
     switch (e.which){
       case 91: // command
       case 67: // Cmd+c Ctrl+c
