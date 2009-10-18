@@ -55,7 +55,13 @@ $(function() {
   }
   
   $(window).keydown(function(e){
+    console.info("************** KEYDOWN")
+    console.info(e.which);
     switch (e.which){
+      case 91: // command
+      case 67: // Cmd+c Ctrl+c
+      case 17: // Ctrl
+        break;
       case 13: // enter
         ChatRoom.align();
         e.preventDefault();
