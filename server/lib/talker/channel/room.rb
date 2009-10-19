@@ -1,6 +1,4 @@
 module Talker
-  class SubscriptionError < RuntimeError; end
-
   module Channel
     class Room < EventChannel
       def subscribe(session_id, user, only_final=false, &callback)
@@ -20,6 +18,11 @@ module Talker
         queue.subscribe(&callback)
         
         queue
+      end
+      
+      def publish_presence(type, user)
+        publish_as_json Queues.presence, "type" => type, "room" => name,
+                                         "user" => user.required_info, "time" => Time.now.to_i
       end
     end
   end

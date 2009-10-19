@@ -70,7 +70,7 @@ module Talker
             @subscription = @room.subscribe(session_id, @user, include_partial) { |message| send_data message }
             
             # Broadcast presence
-            @room.presence "join", @user
+            @room.publish_presence "join", @user
             send_data %({"type":"connected"}\n)
           rescue SubscriptionError => e
             @subscription = @user = nil # do not pretend like user is connected
@@ -95,7 +95,7 @@ module Talker
       if @server.paster.pastable?(content) || obj.delete("paste")
         # We don't broadcast partial message that are pasted to reduce exchange of big message.
         # We wait for the final version before actually doing the paste.
-        return unless obj["final"]
+        return if obj["partial"]
         
         @server.paster.paste(@user.token, content) do |truncated_content, paste|
           obj["content"] = truncated_content
@@ -116,7 +116,7 @@ module Talker
       end
       
       if @user
-        @room.presence("leave", @user)
+        @room.publish_presence("leave", @user)
         @user = nil
       end
 
@@ -151,7 +151,7 @@ module Talker
     def unbind
       if @room
         @subscription.unsubscribe if @subscription
-        @room.presence("idle", @user) if @user
+        @room.publish_presence("idle", @user) if @user
       end
       @server.connection_closed(self)
     end
@@ -161,12 +161,12 @@ module Talker
         raise ProtocolError, "Not connected to a room" unless @room
       end
       
-      def send_message(message, to=nil)
+      def send_message(event, to=nil)
         if to
-          message["private"] = true
-          @room.send_private_message to, message
+          event["private"] = true
+          @room.publish event, to
         else
-          @room.send_message message
+          @room.publish event
         end
       end
   end

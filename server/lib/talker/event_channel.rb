@@ -21,11 +21,15 @@ module Talker
       
       Talker.logger.debug{"#{key}>>> #{event.inspect}"}
       
+      publish_as_json @exchange, event, options
+    end
+    
+    def publish_as_json(exchange, event, options={})
       @encoder.encode(event) do |chunk|
         if chunk.nil?
-          @exchange.publish(EVENT_DELIMITER, options)
+          exchange.publish(EVENT_DELIMITER, options)
         else
-          @exchange.publish(chunk, options)
+          exchange.publish(chunk, options)
         end
       end
     end

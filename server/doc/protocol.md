@@ -51,13 +51,13 @@ To send a private message, add the "to" property:
 
 The server will send the message to the user in the room matching the name in to:
 
-    {"type":"message","content":"message to send","id":"unique message ID","user":{"id":"unique id","name":"user name",...},"private":true}
+    {"type":"message","content":"message to send","id":"unique message ID","user":{"id":"unique id","name":"user name",...},"private":true,"time":1255447115}
 
 
 ## Presence
 When a client connects to a room, the following event will be sent to all online members of the room:
 
-    {"type":"join","user":{"id":"unique id","name":"user name",...}}
+    {"type":"join","user":{"id":"unique id","name":"user name",...},"time":1255447115}
 
 The server will send the list of users in the room to new users:
 
@@ -65,15 +65,15 @@ The server will send the list of users in the room to new users:
 
 When a client connection is closed momentarily the following event is broadcasted in the room:
 
-    {"type":"idle","user":{"id":"unique id","name":"user name",...}}
+    {"type":"idle","user":{"id":"unique id","name":"user name",...},"time":1255447115}
 
 When the client returns from it's idle state, the following event is broadcasted in the room:
 
-    {"type":"back","user":{"id":"unique id","name":"user name",...}}
+    {"type":"back","user":{"id":"unique id","name":"user name",...},"time":1255447115}
 
 When a client close connection to a room, the server sends the following event to all online members of the room:
 
-    {"type":"leave","user":"user unique id"}
+    {"type":"leave","user":"user unique id","time":1255447115}
 
 ## Pinging
 In order to keep the connection open, a client must send pings to the server when there is no activity (no events sent or received) on the connection for more then 30 seconds.
