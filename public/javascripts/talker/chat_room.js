@@ -29,7 +29,6 @@ $(function() {
     element.innerHTML = ChatRoom.formatMessage(this.innerHTML, true);
   });
   
-  
   ChatRoom.align();
   ChatRoom.scrollToBottom();
   ChatRoom.newMessage();
@@ -314,9 +313,9 @@ function Message(user, uuid, timestamp) {
         append($("<td/>").addClass("timestamp").html(this.timestamp));
         
         if (ChatRoom.typing()){
-          this.element.insertBefore($("#message"));
-        } else {
           this.element.appendTo($("#log"));
+        } else {
+          this.element.insertBefore($("#message"));
         }
         
         var elementId = this.elementId;
