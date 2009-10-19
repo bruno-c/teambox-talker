@@ -52,7 +52,7 @@ module Talker
         raise ProtocolError, "You must specify your user id and name"
       end
       
-      unless session_id.match(/^\w+$/)
+      unless session_id.match(/^[\w\-]+$/)
         raise ProtocolError, "Invalid Session ID (sid)"
       end
       
@@ -108,8 +108,6 @@ module Talker
     end
     
     def close
-      room_required!
-      
       if @subscription
         @subscription.unsubscribe
         @subscription = nil

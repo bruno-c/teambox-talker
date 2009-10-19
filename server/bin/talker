@@ -39,4 +39,9 @@ OptionParser.new do |opts|
   opts.on_tail("-h", "--help", "Show this message")       { puts opts; exit }
 end.parse!(ARGV)
 
-runner.run(ARGV.first)
+case cmd = ARGV.first
+when "reset"
+  runner.reset
+else
+  runner.run(cmd)
+end

@@ -1,10 +1,12 @@
+require "mq"
+
 module Talker
   module Queues
     CHANNEL_PREFIX = "talker.channel".freeze
     USER_CHANNEL_PREFIX = "talker.connection".freeze
     
     def self.topic
-      @topic ||= MQ.topic("talker.chat")
+      @topic ||= MQ.topic("talker.chat", :durable => true)
     end
     
     def self.presence
@@ -22,6 +24,12 @@ module Talker
     def self.create
       presence.bind(topic, :key => "talker.room.*")
       logger.bind(topic, :key => "talker.room.*")
+    end
+    
+    def self.reset
+      topic.delete
+      presence.delete
+      logger.delete
     end
   end
 end

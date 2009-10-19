@@ -44,7 +44,7 @@ module Talker
     end
     
     def send_message(message, attributes={})
-      send({ :type => "message", :content => message, :id => UUID_GENERATOR.generate, :final => true }.merge(attributes))
+      send({ :type => "message", :content => message, :id => UUID_GENERATOR.generate }.merge(attributes))
     end
     
     def send_private_message(to, message)
@@ -52,7 +52,7 @@ module Talker
     end
     
     def connection_completed
-      send "type" => "connect", "room" => @room, "user" => @user.info, "token" => @token
+      send "type" => "connect", "room" => @room, "user" => @user.info, "token" => @token, "sid" => UUID_GENERATOR.generate
       @users[@user.id] = @user
       EM.add_periodic_timer(20) { send "type" => "ping" }
     end

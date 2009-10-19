@@ -32,6 +32,16 @@ module Talker
       @options[name] = value
     end
     
+    def reset
+      config_logger
+      EM.run do
+        start_amqp
+        log "Deleting queues and exchanges"
+        Queues.reset
+        stop_amqp
+      end
+    end
+    
     def run(service)
       config_logger
       config_limits
@@ -71,16 +81,20 @@ module Talker
       Queues.create
     end
     
+    def stop_amqp
+      log "Waiting for AMQP to finish ..."
+      AMQP.stop do
+        log "Terminating event loop"
+        EM.stop
+      end
+    end
+    
     def install_signals(server)
       trap('INT') do
         Talker.logger.info "INT signal received, soft stopping ..."
         log "Closing server connections ..."
         server.stop do
-          log "Waiting for AMQP to finish ..."
-          AMQP.stop do
-            log "Terminating event loop"
-            EM.stop
-          end
+          stop_amqp
         end
       end
       trap('QUIT') do
