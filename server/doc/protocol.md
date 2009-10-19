@@ -1,7 +1,7 @@
 # Talker Protocol
 This protocol describes how a Talker client communicates with the server. While similar to XMPP, this protocol is focusing on multi-user chat, low bandwidth, simplicity, efficiency and allows updating previous messages.
 
-All eventss are in JSON format. They contain a hash ({...}) and end with a line break (\n). The hash will contain a type property that will define the type of event. See the following sections for a description of each type of event.
+All events are in JSON format. They contain a hash ({...}) and end with a line break (\n). The hash will contain a type property that will define the type of event. See the following sections for a description of each type of event.
 
 ## Authentication
 Before sending and receiving events in a room, the client must connect to the room by sending the following message:
