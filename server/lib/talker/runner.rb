@@ -38,6 +38,7 @@ module Talker
       
       EM.run do
         start_amqp
+        create_queues
         
         server = case service
         when "channel"
@@ -63,6 +64,11 @@ module Talker
       require "amqp"
       log "Connected to AMQP on #{options[:amqp][:host]}:#{options[:amqp][:port]}"
       AMQP.start :host => options[:amqp][:host], :port => options[:amqp][:port]
+    end
+    
+    def create_queues
+      log "Creating core queues and exchanges"
+      Queues.create
     end
     
     def install_signals(server)

@@ -13,13 +13,13 @@ module Talker
 
   autoload :Client, "talker/client"
   autoload :Connection, "talker/connection"
+  autoload :EventChannel, "talker/event_channel"
   
   module Logger
     autoload :Room, "talker/logger/room"
     autoload :Server, "talker/logger/server"
   end
   
-  autoload :MessageChannel, "talker/message_channel"
   autoload :MysqlAuthenticator, "talker/mysql_authenticator"
   autoload :Paster, "talker/paster"
 

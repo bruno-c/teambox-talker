@@ -19,9 +19,18 @@ module Moqueue
       @subscribe_block = nil
     end
   end
+  
 end
 
 overload_amqp
+
+class MQ
+  class << self
+    def topic(name, opts={})
+      Moqueue::MockExchange.new(opts.merge(:topic=>name))
+    end
+  end
+end
 
 Spec::Runner.configure do |config|
   config.before do
