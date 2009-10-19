@@ -26,7 +26,11 @@ module Talker
       logger.bind(topic, :key => "talker.room.*")
     end
     
-    def self.reset
+    def self.reset!
+      @topic = @presence = @logger = nil
+    end
+    
+    def self.delete
       topic.delete
       presence.delete
       logger.delete

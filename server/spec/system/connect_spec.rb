@@ -9,19 +9,11 @@ EM.describe "A user that connects to a room" do
     end
   end
 
-  it "should receive error if already connected" do
-    disconnected = false
+  it "should be allow if same user is connected" do
+    connect :room => "test", :user => {:id => 123, :name => "tester"}
     
     connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
-      client.on_close do
-        fail "Should not be closed before second user" unless disconnected
-      end
-    end
-    
-    connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
-      client.on_error do |message|
-        message.should include("already connected")
-        disconnected = true
+      client.on_connected do
         done
       end
     end

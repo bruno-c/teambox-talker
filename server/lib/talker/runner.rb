@@ -37,7 +37,7 @@ module Talker
       EM.run do
         start_amqp
         log "Deleting queues and exchanges"
-        Queues.reset
+        Queues.delete
         stop_amqp
       end
     end

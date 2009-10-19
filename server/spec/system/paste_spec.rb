@@ -43,7 +43,7 @@ EOS
   it "should not paste partial messages" do
     connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
       client.on_connected do
-        client.send_message("hi\nthere", :final => false)
+        client.send_message("hi\nthere", :partial => true)
         client.send_message("bogus")
       end
 
