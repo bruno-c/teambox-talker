@@ -253,6 +253,17 @@ var ChatRoom = {
     ChatRoom.addNotice(data);
   },
   
+  onConnected: function(data){
+  },
+  
+  onIdle: function(data){
+    $("#user_" + data.user.id).css('opacity', 0.7).addClass('idle');
+  },
+  
+  onBack: function(data){
+    $("#user_" + data.user.id).css('opacity', 1.0).removeClass('idle');
+  },
+  
   onClose: function(){
     ChatRoom.addNotice({user: {id:0,name:"System"}, type: "the persistent connection to talker is not active."});
   }

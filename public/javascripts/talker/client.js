@@ -32,8 +32,17 @@ function TalkerClient(options) {
         alert(line.message);
         window.location = "/rooms";
         break;
+      case 'back':
+        options.onBack(line);
+        break;
+      case 'idle':
+        options.onIdle(line);
+        break;
+      case 'connected':
+        options.onConnected(line);
+        break;
       default:
-        console.warn("Unknown message type: " + line.type);
+        console.warn("Unknown message type(client error): " + line.type);
     } 
   }
   
