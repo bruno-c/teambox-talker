@@ -13,10 +13,8 @@ module Talker
     def post_init
       @parser = Yajl::Parser.new
       @parser.on_parse_complete = method(:message_parsed)
-      @encoder = Yajl::Encoder.new
       
-      @room = nil
-      @user = nil
+      @room = @user = @subscription = nil
     end
     
     # Called when a JSON object in a message is fully parsed
@@ -25,7 +23,7 @@ module Talker
       
       case message["type"]
       when "connect"
-        authenticate message["room"], message["user"], message["token"]
+        authenticate message["room"], message["sid"], message["user"], message["token"], message
       when "message"
         broadcast_message message, message.delete("to")
       when "close"
@@ -45,14 +43,20 @@ module Talker
     
     ## Message types
     
-    def authenticate(room_name, user, token)
-      if room_name.nil? || user.nil? || token.nil?
+    def authenticate(room_name, session_id, user, token, options)
+      if room_name.nil? || session_id.nil? || user.nil? || token.nil?
         raise ProtocolError, "Authentication failed"
       end
       
       if !user.is_a?(Hash) || !(user.key?("id") && user.key?("name"))
         raise ProtocolError, "You must specify your user id and name"
       end
+      
+      unless session_id.match(/^\w+$/)
+        raise ProtocolError, "Invalid Session ID (sid)"
+      end
+      
+      include_partial = !!options["include_partial"]
       
       @server.authenticate(room_name, user["id"], token) do |success|
         
@@ -63,7 +67,7 @@ module Talker
             @user.token = token
             
             # Listen to message in the room
-            @subscription = @room.subscribe(@user) { |message| send_data message }
+            @subscription = @room.subscribe(session_id, @user, include_partial) { |message| send_data message }
             
             # Broadcast presence
             @room.presence "join", @user

@@ -6,7 +6,7 @@ All events are in JSON format. They contain a hash ({...}) and end with a line b
 ## Authentication
 Before sending and receiving events in a room, the client must connect to the room by sending the following message:
 
-    {"type":"connect","room":"unique room id","user":{"id":"unique id","name":"user name",...},"token":"user secret token","sid":"unique session id"}
+    {"type":"connect","room":"unique room id","user":{"id":"unique id","name":"user name",...},"token":"user secret token","sid":"unique session id","include_partial":true}
 
 Attributes:
 
@@ -14,6 +14,7 @@ Attributes:
 * "user" is a hash containing the profile information of the user connecting to the room (id and name attributes are required, but other attributes can be passed) and
 * "token" the authentication token for that user.
 * "sid" is a unique session ID used to recover a session when connection is lost.
+* "include_partial" set to false to receive only final messages.
 
 If the authentication is successful, the connection is left open and the server replies with:
 
