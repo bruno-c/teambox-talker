@@ -16,7 +16,7 @@ module Talker
     # Public
     def publish(event, user_id=nil)
       partial = event["partial"]
-      key = build_routing_key(partial, user_id)
+      key = routing_key(partial, user_id)
       options = { :key => key, :persistent => !partial }
       
       Talker.logger.debug{"#{key}>>> #{event.inspect}"}
@@ -30,7 +30,7 @@ module Talker
       end
     end
     
-    def build_routing_key(partial=false, user_id=nil)
+    def routing_key(partial=false, user_id=nil)
       key = "talker.room.#{@name}"
       key += ".#{user_id}" if user_id
       key += ".partial" if partial

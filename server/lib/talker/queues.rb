@@ -15,6 +15,10 @@ module Talker
       MQ.queue("talker.log", :durable => true)
     end
     
+    def self.session(sid)
+      MQ.queue("talker.session.#{sid}", :durable => true)
+    end
+    
     def self.create
       presence.bind(topic, :key => "talker.room.*")
       logger.bind(topic, :key => "talker.room.*")

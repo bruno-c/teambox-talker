@@ -26,6 +26,10 @@ overload_amqp
 
 class MQ
   class << self
+    def queue(name, opts={})
+      Moqueue::MockQueue.new(name)
+    end
+    
     def topic(name, opts={})
       Moqueue::MockExchange.new(opts.merge(:topic=>name))
     end
