@@ -1,6 +1,6 @@
 module Talker
   module Presence
-    class Room < MessageChannel
+    class Room < EventChannel
       def initialize(name, persister, timeout)
         super(name)
         @users = {}
@@ -27,15 +27,15 @@ module Talker
         if present?(user)
           # Back from idle if already present in the room
           stop_idle_timer user
-          send_message :type => "back", :user => user.info, :time => time
+          publish :type => "back", :user => user.info, :time => time
           @persister.update(@name, user.id, "online")
         else
           # New user in room if not present
-          send_message :type => "join", :user => user.info, :time => time
+          publish :type => "join", :user => user.info, :time => time
           @persister.store(@name, user.id, "online")
           self << user
           # Send list of online users to new user
-          send_private_message user.id, :type => "users", :users => users.map { |u| u.info }
+          publish_to user.id, :type => "users", :users => users.map { |u| u.info }
         end
       end
       
@@ -56,7 +56,7 @@ module Talker
       def idle(user, time=Time.now.to_i)
         if present?(user)
           user.idle!
-          send_message :type => "idle", :user => user.info, :time => time
+          publish :type => "idle", :user => user.info, :time => time
           @persister.update(@name, user.id, "idle")
           
           # If still idle after timeout, user leaves room
@@ -66,11 +66,10 @@ module Talker
     
       def leave(user, time=Time.now.to_i)
         if present?(user)
-          send_message :type => "leave", :user => user.info, :time => time
-          send_private_message user.id, :type => "error", :message => "Connection closed"
+          publish :type => "leave", :user => user.info, :time => time
+          publish_to user.id, :type => "error", :message => "Connection closed"
           @persister.delete(@name, user.id)
           @users.delete(user.id)
-          user_queue(user.id).delete
         end
       end
     end

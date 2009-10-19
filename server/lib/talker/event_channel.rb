@@ -13,7 +13,6 @@ module Talker
       @exchange = Queues.topic
     end
     
-    # Public
     def publish(event, user_id=nil)
       partial = event["partial"]
       key = routing_key(partial, user_id)
@@ -22,6 +21,11 @@ module Talker
       Talker.logger.debug{"#{key}>>> #{event.inspect}"}
       
       publish_as_json @exchange, event, options
+    end
+    
+    # Sugar for publish w/ a user_id
+    def publish_to(user_id, event)
+      publish event, user_id
     end
     
     def publish_as_json(exchange, event, options={})

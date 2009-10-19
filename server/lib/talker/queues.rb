@@ -22,7 +22,7 @@ module Talker
     end
     
     def self.create
-      presence.bind(topic, :key => "talker.room.*")
+      presence # Implicitly binded to direct exchange of the same name
       logger.bind(topic, :key => "talker.room.*")
     end
     

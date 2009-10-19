@@ -44,7 +44,7 @@ module Talker
       end
 
       def presence_received(message)
-        Talker.logger.debug{message.inspect}
+        Talker.logger.debug{"<<< " + message.inspect}
         
         type = message["type"]
         room = @rooms[message["room"]]
