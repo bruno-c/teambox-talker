@@ -5,7 +5,7 @@ require "talker"
 
 # Disable logger
 require "logger"
-Talker.logger = ::Logger.new(STDOUT)
+Talker.logger = ::Logger.new(nil)
 Talker.logger.level = ::Logger::ERROR
 
 # Installing em-spec from http://github.com/macournoyer/em-spec
@@ -16,3 +16,5 @@ EM.spec_backend = EM::Spec::Rspec
 require File.dirname(__FILE__) + "/fixtures"
 Dir[File.dirname(__FILE__) + "/mocks/*.rb"].each { |f| require f }
 
+require "talker/mailer"
+Talker.mailer = NullMailer.new

@@ -1,3 +1,5 @@
+require "talker/mailer"
+
 module Talker
   module Notifier
     def self.error(message, exception=nil)
@@ -6,7 +8,7 @@ module Talker
         Talker.mailer.deliver_exception(message, exception)
       else
         Talker.logger.error("[ERROR] #{message}")
-        Talker.mailer.deliver(message)
+        Talker.mailer.deliver_error(message)
       end
     end
   end
