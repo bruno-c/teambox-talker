@@ -2,9 +2,6 @@ require "mq"
 
 module Talker
   module Queues
-    CHANNEL_PREFIX = "talker.channel".freeze
-    USER_CHANNEL_PREFIX = "talker.connection".freeze
-    
     def self.topic
       @topic ||= MQ.topic("talker.chat", :durable => true)
     end

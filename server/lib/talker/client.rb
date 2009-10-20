@@ -8,7 +8,7 @@ module Talker
     
     class Error < RuntimeError; end
     
-    attr_accessor :room, :user, :token, :users, :debug
+    attr_accessor :room, :user, :token, :session_id, :users, :debug
     
     def self.connect(options={})
       host = options[:host] || Talker::Channel::Server::DEFAULT_HOST
@@ -16,11 +16,13 @@ module Talker
       room = options[:room]
       user = options[:user]
       token = options[:token]
+      session_id = options[:session_id] || UUID_GENERATOR.generate
       
       EM.connect host, port, self do |c|
         c.room = room
         c.user = Talker::User.new("id" => user[:id], "name" => user[:name])
         c.token = token
+        c.session_id = session_id
         yield c if block_given?
       end
     end
@@ -52,7 +54,7 @@ module Talker
     end
     
     def connection_completed
-      send "type" => "connect", "room" => @room, "user" => @user.info, "token" => @token, "sid" => UUID_GENERATOR.generate
+      send "type" => "connect", "room" => @room, "user" => @user.info, "token" => @token, "sid" => @session_id
       @users[@user.id] = @user
       EM.add_periodic_timer(20) { send "type" => "ping" }
     end

@@ -108,7 +108,7 @@ module Talker
     
     def close
       if @subscription
-        @subscription.unsubscribe
+        @subscription.delete
         @subscription = nil
       end
       
