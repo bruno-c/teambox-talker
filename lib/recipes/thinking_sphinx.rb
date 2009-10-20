@@ -1,11 +1,7 @@
-before "deploy:update_code", :roles => :app do
-  thinking_sphinx.stop
-end
-
 after "deploy:symlink", :roles => :app do
   thinking_sphinx.symlink_indexes
   thinking_sphinx.configure
-  thinking_sphinx.start
+  thinking_sphinx.restart
 end
 
 
