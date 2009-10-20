@@ -25,16 +25,19 @@ module Talker
         Talker.logger.info "Logging to #{options[:database]}@#{options[:host]}"
       
         @queue.subscribe(:ack => true) do |headers, message|
-          if room_id = headers.exchange[/^#{Queues::CHANNEL_PREFIX}\.(\d+)$/, 1]
+          
+          if room_id = headers.routing_key[/\.(\d+)$/, 1]
             room = @rooms[room_id.to_i]
             room.callback do
               headers.ack
               @rooms.delete(room_id.to_i)
             end
             room.parse message
+          
           else
-            Talker.logger.warn{"Ignoring message from " + headers.exchange + " no matching channel found"}
+            Talker.logger.warn{"Ignoring message from " + headers.routing_key + " no matching room found"}
           end
+          
         end
       end
     

@@ -4,9 +4,9 @@ EM.describe Talker::Logger do
   before do
     @logger = Talker::Logger::Server.new :database => "talker_test", :user => "root"
     @logger.start
-    
-    @exchange = MQ.fanout("talker.test")
-    Talker::Queues.logger.bind(@exchange)
+
+    Talker::Queues.create
+    @exchange = Talker::Queues.topic
   end
   
   after do
@@ -22,7 +22,7 @@ EM.describe Talker::Logger do
           
     @logger.db.should_receive(:insert).with(sql, anything, anything)
     
-    @exchange.publish encode(message), :exchange => "talker.channel.1"
+    @exchange.publish encode(message), :key => "talker.room.1"
     done
   end
   
@@ -35,7 +35,7 @@ EM.describe Talker::Logger do
     
     @logger.db.should_receive(:insert).with(sql, anything, anything)
     
-    @exchange.publish encode(message), :exchange => "talker.channel.1"
+    @exchange.publish encode(message), :key => "talker.room.1"
     done
   end
   
@@ -48,7 +48,7 @@ EM.describe Talker::Logger do
     
     @logger.db.should_receive(:insert).with(sql, anything, anything)
     
-    @exchange.publish encode(message), :exchange => "talker.channel.1"
+    @exchange.publish encode(message), :key => "talker.room.1"
     done
   end
   
@@ -62,7 +62,7 @@ EM.describe Talker::Logger do
     
     @logger.db.should_receive(:insert).with(sql, anything, anything)
     
-    @exchange.publish encode(message), :exchange => "talker.channel.1"
+    @exchange.publish encode(message), :key => "talker.room.1"
     done
   end
 end
