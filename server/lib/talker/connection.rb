@@ -43,37 +43,45 @@ module Talker
     
     ## Message types
     
-    def authenticate(room_name, session_id, user, token, options)
-      if room_name.nil? || session_id.nil? || user.nil? || token.nil?
+    def authenticate(room_name, session_id, user_info, token, options)
+      if room_name.nil? || session_id.nil? || user_info.nil? || token.nil?
         raise ProtocolError, "Authentication failed"
       end
       
-      if !user.is_a?(Hash) || !(user.key?("id") && user.key?("name"))
+      if !user_info.is_a?(Hash) || !(user_info.key?("id") && user_info.key?("name"))
         raise ProtocolError, "You must specify your user id and name"
       end
       
-      unless session_id.match(/^[\w\-]+$/)
+      session_id = session_id.to_s
+      unless session_id.to_s.match(/^[\w\-]+$/)
         raise ProtocolError, "Invalid Session ID (sid)"
       end
       
       include_partial = !!options["include_partial"]
       
-      @server.authenticate(room_name, user["id"], token) do |success|
+      @server.authenticate(room_name, user_info["id"], token) do |success|
         
         if success
           begin
-            @room = @server.rooms[room_name]
-            @user = User.new(user)
-            @user.token = token
+            room = @server.rooms[room_name]
+            user = User.new(user_info)
+            user.token = token
             
-            # Listen to message in the room
-            @subscription = @room.subscribe(session_id, @user, include_partial) { |message| send_data message }
+            if room.subscribed?(session_id, user)
+              error "Already connected to this room with the same session ID"
+            else
+              @room = room
+              @user = user
+              # Listen to message in the room
+              @subscription = @room.subscribe(session_id, @user, include_partial) { |message| send_data message }
             
-            # Broadcast presence
-            @room.publish_presence "join", @user
-            send_data %({"type":"connected"}\n)
-          rescue
-            error "Error while authenticating: #{$!.class.name}"
+              # Broadcast presence
+              @room.publish_presence "join", @user
+              send_data %({"type":"connected"}\n)
+            end
+          rescue Exception => e
+            Talker.logger.error{"Error while authenticating: #{e}\n#{e.backtrace.join("\n")}"}
+            error "Error while authenticating: #{e.class}"
           end
         
         else

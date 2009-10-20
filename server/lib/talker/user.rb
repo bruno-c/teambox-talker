@@ -4,7 +4,7 @@ module Talker
     attr_accessor :token
     
     def initialize(info)
-      @info = info
+      @info = info || raise(ArgumentError, "User info required")
     end
     
     def required_info

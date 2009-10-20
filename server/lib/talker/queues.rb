@@ -14,8 +14,8 @@ module Talker
       @logger ||= MQ.queue("talker.log", :durable => true)
     end
     
-    def self.session(sid)
-      MQ.queue("talker.session.#{sid}", :durable => true)
+    def self.session(room_id, user_id, sid)
+      MQ.queue("talker.session.#{room_id}.#{user_id}.#{sid}", :durable => true)
     end
     
     def self.create
