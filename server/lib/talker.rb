@@ -20,6 +20,7 @@ module Talker
     autoload :Server, "talker/logger/server"
   end
   
+  autoload :Mailer, "talker/mailer"
   autoload :MysqlAuthenticator, "talker/mysql_authenticator"
   autoload :Paster, "talker/paster"
 
