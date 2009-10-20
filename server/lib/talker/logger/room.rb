@@ -21,7 +21,7 @@ module Talker
       def parse(data)
         @parser << data
       rescue Yajl::ParseError => e
-        Talker.logger.error "Ignoring invalid JSON (room##{@name}): " + e.message
+        Talker.logger.warn "Ignoring invalid JSON (room##{@name}): " + e.message
         reset
       end
       
@@ -36,7 +36,7 @@ module Talker
         return if event["partial"]
         
         unless event.key?("user")
-          Talker.logger.error "No user key in event: " + event.inspect
+          Talker::Notifier.error "No user key in event: #{event.inspect}"
           return
         end
         
@@ -97,7 +97,7 @@ module Talker
         end
         
         def errback_for(message)
-          proc { |e| Talker.logger.error "Error logging message: #{message.inspect}, error: #{e}" }
+          proc { |e| Talker::Notifier.error "Error logging message: #{message.inspect}", e }
         end
       
         def quote(s)

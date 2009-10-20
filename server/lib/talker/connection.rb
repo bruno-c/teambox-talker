@@ -36,7 +36,7 @@ module Talker
     rescue ProtocolError => e
       error e.message
     rescue Exception => e
-      Talker.logger.error("[Error] " + e.to_s + ": " + e.backtrace.join("\n"))
+      Talker::Notifier.error "Error in Connection#message_parsed", e
       error "Error processing command"
     end
     
@@ -70,7 +70,7 @@ module Talker
             send_data %({"type":"connected"}\n)
           rescue Exception => e
             raise
-            Talker.logger.error{"Error while authenticating: #{e}\n#{e.backtrace.join("\n")}"}
+            Talker::Notifier.error "Error while authenticating", e
             error "Error while authenticating: #{e.class}"
           end
         

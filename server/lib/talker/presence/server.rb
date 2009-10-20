@@ -59,7 +59,7 @@ module Talker
         when "leave"
           room.leave user, time
         else
-          Talker.logger.error "Wrong type of presence in message " + message.inspect
+          Talker::Notifier.error "Wrong type of presence in message #{message.inspect}"
         end
         
         Talker.logger.debug{"room ##{room.name} users: " + room.users.map { |u| u.name }.join(", ")}

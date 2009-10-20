@@ -22,6 +22,7 @@ module Talker
   
   autoload :Mailer, "talker/mailer"
   autoload :MysqlAuthenticator, "talker/mysql_authenticator"
+  autoload :Notifier, "talker/notifier"
   autoload :Paster, "talker/paster"
 
   module Presence

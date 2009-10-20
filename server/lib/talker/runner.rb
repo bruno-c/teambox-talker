@@ -44,6 +44,7 @@ module Talker
     
     def run(service)
       config_logger
+      config_mailer
       config_limits
       
       EM.run do
@@ -129,6 +130,10 @@ module Talker
         Talker.logger.level = ::Logger::INFO
       end
       Talker.logger.debug "Debug mode ACTIVATED!"
+    end
+    
+    def config_mailer
+      Talker.mailer = Talker::Mailer.new
     end
     
     def build_channel_server

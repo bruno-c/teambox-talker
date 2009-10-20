@@ -1,3 +1,5 @@
+require "eventmachine"
+
 module Talker
   class Mailer
     DEFAULT_OPTIONS = {
@@ -13,14 +15,25 @@ module Talker
       @options = DEFAULT_OPTIONS.merge(options)
     end
     
+    def build_header
+      "=============================\n" +
+      "Process: #{$0}\n" + 
+      "PID:     #{Process.pid}\n" +
+      "=============================\n\n"
+    end
+    
     def deliver(subject, body)
       email = EM::Protocols::SmtpClient.send(@options.merge(
         :header => { "Subject" => subject },
-        :body => body
+        :body => build_header + "\n\n" + body
       ))
       email.errback do |e|
         Talker.logger.error "Failed to deliver email: #{e}"
       end
+    end
+    
+    def deliver_error(message)
+      deliver "[ERROR] #{message[0,50]}", message
     end
     
     def deliver_exception(exception, message=nil)
@@ -31,6 +44,5 @@ module Talker
   
   class << self
     attr_accessor :mailer
-    self.mailer = Mailer.new
   end
 end
