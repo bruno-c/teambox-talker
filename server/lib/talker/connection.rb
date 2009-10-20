@@ -63,23 +63,18 @@ module Talker
         
         if success
           begin
-            room = @server.rooms[room_name]
-            user = User.new(user_info)
-            user.token = token
+            @room = @server.rooms[room_name]
+            @user = User.new(user_info)
+            @user.token = token
             
-            if room.subscribed?(session_id, user)
-              error "Already connected to this room with the same session ID"
-            else
-              @room = room
-              @user = user
-              # Listen to message in the room
-              @subscription = @room.subscribe(session_id, @user, !include_partial) { |message| send_data message }
-            
-              # Broadcast presence
-              @room.publish_presence "join", @user
-              send_data %({"type":"connected"}\n)
-            end
+            # Listen to message in the room
+            @subscription = @room.subscribe(session_id, @user, !include_partial) { |message| send_data message }
+          
+            # Broadcast presence
+            @room.publish_presence "join", @user
+            send_data %({"type":"connected"}\n)
           rescue Exception => e
+            raise
             Talker.logger.error{"Error while authenticating: #{e}\n#{e.backtrace.join("\n")}"}
             error "Error while authenticating: #{e.class}"
           end

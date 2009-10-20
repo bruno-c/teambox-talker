@@ -10,7 +10,11 @@ function TalkerClient(options) {
 
   // LineProtocol implementation.
   function onLineReceived(line) {
-    var line = eval('(' + line + ')');
+    try {
+      var line = eval('(' + line + ')');
+    } catch (SyntaxError) {
+      return;
+    }
     
     console.debug(line);
     

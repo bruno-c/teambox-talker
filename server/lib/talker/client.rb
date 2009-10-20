@@ -109,10 +109,8 @@ module Talker
         raise Error, "unknown message type received from server: " + message["type"]
       end
     rescue
-      puts "Error while processing: #{message.inspect}"
-      puts $!
-      puts $@.join("\n")
       close
+      raise
     end
     
     def receive_data(data)

@@ -5,16 +5,8 @@ require "talker"
 
 # Disable logger
 require "logger"
-if $DEBUG
-  Talker.logger = ::Logger.new(STDOUT)
-else
-  Talker.logger = ::Logger.new(nil)
-end
+Talker.logger = ::Logger.new(STDOUT)
 Talker.logger.level = ::Logger::ERROR
-
-# For debug
-# Talker.logger = ::Logger.new(STDOUT)
-# Talker.logger.level = ::Logger::DEBUG
 
 # Installing em-spec from http://github.com/macournoyer/em-spec
 require 'em/spec'

@@ -20,18 +20,13 @@ EM.describe "A user that connects to a room" do
     end
   end
 
-  it "should not be allowed if same session id exists" do
+  xit "should closed previous session" do
     connect :user => {:id => 1}, :session_id => 10 do |client|
       client.on_error do |message|
-        fail message
-      end
-    end
-    
-    connect :user => {:id => 1}, :session_id => 10 do |client|
-      client.on_error do |message|
-        message.should == "Already connected to this room with the same session ID"
         done
       end
     end
+    
+    connect :user => {:id => 1}, :session_id => 10
   end
 end
