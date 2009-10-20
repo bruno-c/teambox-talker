@@ -1,11 +1,11 @@
 Talker Server:
 - Expire connections (on presence server) if user leaves while channel server is down
-- Support delta indexing of events
-- Have a fallback or multiple logger and presence instances running
+✓ Support delta indexing of events
 
 Chef:
 - Tweaks mysql recipe (use the one from opscode?); using too much mem
 - Move /db to /mnt or mount EBS volume
 - Server and room behind SSL (maybe can have nginx do all that)
 - Put talker servers behind haproxy
+- Have a fallback or multiple logger and presence instances running
 - Implement Zero downtime thing, see http://www.igvita.com/2008/12/02/zero-downtime-restarts-with-haproxy/

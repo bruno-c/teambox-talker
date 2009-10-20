@@ -18,8 +18,7 @@ class Event < ActiveRecord::Base
     has :room_id, :user_id, :created_at
     has room(:account_id), :as => :account_id
     
-    # TODO
-    # set_property :delta => :delayed
+    set_property :delta => :datetime, :threshold => 75.minutes
   end
   
   # HACK so it doesn't confuse w/ class

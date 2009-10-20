@@ -17,8 +17,8 @@ EM.describe Talker::Logger do
     message = { "type" => "message", "user" => {"id" => 1}, "id" => "123",
                 "time" => 5, "content" => "ohaie" }
     
-    sql = "INSERT INTO events (room_id, user_id, type, uuid, message, created_at) " +
-          "VALUES (1, 1, 'message', '123', 'ohaie', FROM_UNIXTIME(5))"
+    sql = "INSERT INTO events (room_id, user_id, type, uuid, message, created_at, updated_at) " +
+          "VALUES (1, 1, 'message', '123', 'ohaie', FROM_UNIXTIME(5), FROM_UNIXTIME(5))"
           
     @logger.db.should_receive(:insert).with(sql, anything, anything)
     
@@ -30,8 +30,8 @@ EM.describe Talker::Logger do
     message = { "type" => "join", "user" => {"id" => 1},
                 "time" => 5, "content" => "ohaie" }
     
-    sql = "INSERT INTO events (room_id, user_id, type, created_at) " +
-          "VALUES (1, 1, 'join', FROM_UNIXTIME(5))"
+    sql = "INSERT INTO events (room_id, user_id, type, created_at, updated_at) " +
+          "VALUES (1, 1, 'join', FROM_UNIXTIME(5), FROM_UNIXTIME(5))"
     
     @logger.db.should_receive(:insert).with(sql, anything, anything)
     
@@ -43,8 +43,8 @@ EM.describe Talker::Logger do
     message = { "type" => "leave", "user" => {"id" => 1},
                 "time" => 5, "content" => "ohaie" }
     
-    sql = "INSERT INTO events (room_id, user_id, type, created_at) " +
-          "VALUES (1, 1, 'leave', FROM_UNIXTIME(5))"
+    sql = "INSERT INTO events (room_id, user_id, type, created_at, updated_at) " +
+          "VALUES (1, 1, 'leave', FROM_UNIXTIME(5), FROM_UNIXTIME(5))"
     
     @logger.db.should_receive(:insert).with(sql, anything, anything)
     
@@ -57,8 +57,8 @@ EM.describe Talker::Logger do
                 "time" => 5, "content" => "ohaie...", 
                 "paste" => {"id" => "abc123", "lines" => 5, "preview_lines" => 3} }
     
-    sql = "INSERT INTO events (room_id, user_id, type, uuid, message, paste_permalink, created_at) " +
-          "VALUES (1, 1, 'message', '123', 'ohaie...', 'abc123', FROM_UNIXTIME(5))"
+    sql = "INSERT INTO events (room_id, user_id, type, uuid, message, paste_permalink, created_at, updated_at) " +
+          "VALUES (1, 1, 'message', '123', 'ohaie...', 'abc123', FROM_UNIXTIME(5), FROM_UNIXTIME(5))"
     
     @logger.db.should_receive(:insert).with(sql, anything, anything)
     
