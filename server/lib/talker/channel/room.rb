@@ -2,7 +2,7 @@ module Talker
   module Channel
     class Room < EventChannel
       def subscribe(user, only_final=false, &callback)
-        queue = Queues.session(@name, user.id)
+        queue = session_queue(user.id)
         
         # Must force re-creation of the queue in case it was delete by presence server.
         queue.reset

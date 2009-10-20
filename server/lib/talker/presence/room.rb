@@ -67,9 +67,13 @@ module Talker
       def leave(user, time=Time.now.to_i)
         if present?(user)
           publish :type => "leave", :user => user.info, :time => time
+          
+          # Make sure all open connection w/ this user are closed
           publish_to user.id, :type => "error", :message => "Connection closed"
+
           @persister.delete(@name, user.id)
           @users.delete(user.id)
+          session_queue(user.id).delete
         end
       end
     end

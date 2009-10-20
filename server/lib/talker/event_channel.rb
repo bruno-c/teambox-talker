@@ -44,5 +44,9 @@ module Talker
       key += ".partial" if partial
       key
     end
+    
+    def session_queue(user_id)
+      Queues.session(@name, user_id)
+    end
   end
 end
