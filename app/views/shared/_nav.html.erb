@@ -1,0 +1,14 @@
+<div id="nav">
+  <ul>
+    <li><%= link_to "Rooms", rooms_path, :title => "Rooms" %></li>
+    <li><%= link_to "People", invites_path, :title => "People" %></li>
+    <li><%= link_to "Search", "", :title => "Search" %></li>
+  </ul>
+  <p class="utilities">
+    Logged in as
+    <%= link_to image_tag("avatar_default.png", :alt => "Francis Wu"), "", :title => "Logged in as Francis Wu, manage my account", :class => "avatar" %>
+    <%= link_to "Francis Wu", "", :title => "Logged in as Francis Wu, manage my account" %>.
+    <%= link_to "My Account", "", :title => "Manage my account" %> or
+    <%= link_to "Logout", "", :title => "Logout" %>
+  </p>
+</div>
