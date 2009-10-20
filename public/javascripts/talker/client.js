@@ -78,7 +78,9 @@ function TalkerClient(options) {
         type: "connect", 
         room: self.options.room, 
         user: self.options.user, 
-        token: self.options.token
+        token: self.options.token,
+        sid: self.options.sid,
+        include_partial: true
       });
     }
     // XXX even though we are connecting to onclose, this never gets fired

@@ -93,10 +93,10 @@ var ChatRoom = {
     var message = this.currentMessage;
     message.content = data;
     if (eol){
-      this.client.send({id: message.uuid, content: message.content, "final": true});
+      this.client.send({id: message.uuid, content: message.content});
     } else {
       var message_content = (ChatRoom.current_user.livetyping ? message.content : FormatHelper.text2preview(message.content));
-      this.client.send({id: message.uuid, content: message_content, "final": false})
+      this.client.send({id: message.uuid, content: message_content, patial: true})
     }
   },
   
@@ -142,7 +142,7 @@ var ChatRoom = {
   cancelMessage: function() {
     if (this.currentMessage){
       var message = this.currentMessage;
-      this.client.send({id: message.uuid, content: '', "final": false});
+      this.client.send({id: message.uuid, content: '', partial: true});
       this.messages[this.currentMessage.uuid] = null;
       this.currentMessage = null;
     }
@@ -179,7 +179,7 @@ var ChatRoom = {
       message.createElement();
     }
     
-    if (data.final) {
+    if (!data.partial) {
       if (data.paste) {
         message.setHeader(FormatHelper.formatPaste(data.paste));
         message.element.removeClass('hidden');
