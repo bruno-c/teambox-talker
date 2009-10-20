@@ -96,7 +96,7 @@ var ChatRoom = {
       this.client.send({id: message.uuid, content: message.content});
     } else {
       var message_content = (ChatRoom.current_user.livetyping ? message.content : FormatHelper.text2preview(message.content));
-      this.client.send({id: message.uuid, content: message_content, patial: true})
+      this.client.send({id: message.uuid, content: message_content, partial: true})
     }
   },
   

@@ -73,7 +73,7 @@ module Talker
               @room = room
               @user = user
               # Listen to message in the room
-              @subscription = @room.subscribe(session_id, @user, include_partial) { |message| send_data message }
+              @subscription = @room.subscribe(session_id, @user, !include_partial) { |message| send_data message }
             
               # Broadcast presence
               @room.publish_presence "join", @user

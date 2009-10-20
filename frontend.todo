@@ -1,6 +1,6 @@
-- Pass a "sid" (session ID) in the connect event sent to the server
-- Add "include_partial":true in the connect event sent to the server
-- Remove "final":true from final messages (now implicit) and add "partial":true to partial messages
+✓ Pass a "sid" (session ID) in the connect event sent to the server
+✓ Add "include_partial":true in the connect event sent to the server
+✓ Remove "final":true from final messages (now implicit) and add "partial":true to partial messages
 ✓ remove double usernames
 ✓ sudo live typing
 ✓ Do not send pastes as live typing, wait for enter to send final message
