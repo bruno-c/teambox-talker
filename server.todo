@@ -1,11 +1,8 @@
 Talker Server:
-- Expire unused session queues (maybe pass session id to presence server)
+- Expire unused session queues (pass session id to presence server)
 - Expire connections (on presence server) if user leaves while channel server is down
 - Support delta indexing of events
-- Make sure queues are persisted on RabbitMQ
-- Improve perf by making partial messages transient (see High-speed transient message flows on http://www.rabbitmq.com/faq.html#scenarios)
 - Have a fallback or multiple logger and presence instances running
-- Delete user queue if unused for 30-60 sec (can RabbitMQ handle that?)
 
 Chef:
 - Tweaks mysql recipe (use the one from opscode?); using too much mem

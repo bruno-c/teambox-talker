@@ -116,6 +116,7 @@ module Talker
     
     def close
       if @subscription
+        @subscription.unsubscribe
         @subscription.delete
         @subscription = nil
       end
@@ -138,9 +139,8 @@ module Talker
     end
     
     def to_s
-      return "#{@user.name}##{@user.id}@#{@room.name}" if @user
-      return "?@#{@room.name}" if @room
-      "(?)@(?)"
+      return @subscription.name if @subscription
+      "<?>"
     end
     
     
@@ -154,6 +154,7 @@ module Talker
     end
     
     def unbind
+      Talker.logger.debug{"Connection lost with #{to_s}"}
       if @room
         @subscription.unsubscribe if @subscription
         @room.publish_presence("idle", @user) if @user
