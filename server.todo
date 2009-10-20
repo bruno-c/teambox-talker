@@ -1,5 +1,4 @@
 Talker Server:
-- Expire unused session queues (pass ping to presence server)
 - Expire connections (on presence server) if user leaves while channel server is down
 - Support delta indexing of events
 - Have a fallback or multiple logger and presence instances running
