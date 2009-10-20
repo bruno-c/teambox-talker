@@ -2,27 +2,28 @@ require File.dirname(__FILE__) + "/spec_helper"
 
 EM.describe "Messages" do
   it "should be received by sender" do
-    connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
+    message_received = false
+    
+    connect do |client|
       client.on_connected do
         client.send_message("hi")
       end
 
       client.on_message do |user, message, attributes|
-        user.id.should == 123
-        user.name.should == "tester"
         message.should == "hi"
         attributes.should have_key("time")
-        client.close
+        message_received = true
+        done
       end
       
-      client.on_close { done }
+      client.on_close { fail "Connection closed" unless message_received }
     end
   end
 
   it "should be received by other clients" do
-    connect :room => "test", :user => {:id => 123, :name => "receiver"} do |client|
+    connect :user => {:id => 1} do |client|
       client.on_message do |user, message|
-        user.name.should == "sender"
+        user.id.should == 2
         message.should == "hi"
         client.close
       end
@@ -30,7 +31,7 @@ EM.describe "Messages" do
       client.on_close { done }
     end
     
-    connect :room => "test", :user => {:id => 456, :name => "sender"} do |client|
+    connect :user => {:id => 2} do |client|
       client.on_connected do
         EM.next_tick { client.send_message("hi") }
       end

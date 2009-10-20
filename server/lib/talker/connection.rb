@@ -72,9 +72,8 @@ module Talker
             # Broadcast presence
             @room.publish_presence "join", @user
             send_data %({"type":"connected"}\n)
-          rescue SubscriptionError => e
-            @subscription = @user = nil # do not pretend like user is connected
-            error e.message
+          rescue
+            error "Error while authenticating: #{$!.class.name}"
           end
         
         else

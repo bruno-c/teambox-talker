@@ -26,7 +26,7 @@ EOS
   end
   
   it "should be received w/ paste id" do
-    connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
+    connect do |client|
       client.on_connected do
         client.send_message("hi\nthere")
       end
@@ -41,7 +41,7 @@ EOS
   end
   
   it "should not paste partial messages" do
-    connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
+    connect do |client|
       client.on_connected do
         client.send_message("hi\nthere", :partial => true)
         client.send_message("bogus")
@@ -57,7 +57,7 @@ EOS
   end
   
   it "should be truncated" do
-    connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
+    connect do |client|
       client.on_connected do
         client.send_message(CODE)
       end
@@ -73,7 +73,7 @@ EOS
   end
 
   it "should be forced w/ {'paste': true}" do
-    connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
+    connect do |client|
       client.on_connected do
         client.send_message("hi", :paste => true)
       end
@@ -90,7 +90,7 @@ EOS
   it "should not be truncated on service failure" do
     $paster_response = :fail
     
-    connect :room => "test", :user => {:id => 123, :name => "tester"} do |client|
+    connect do |client|
       client.on_connected do
         client.send_message(CODE)
       end

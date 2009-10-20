@@ -13,13 +13,6 @@ EM.describe Talker::Logger do
     @logger.stop
   end
   
-  it "should connect to database" do
-    @logger.db.select "SELECT 1 AS ONE;" do |results|
-      results[0]["ONE"].should == "1"
-      done
-    end
-  end
-  
   it "should insert message" do
     message = { "type" => "message", "user" => {"id" => 1}, "final" => true, "id" => "123",
                 "time" => 5, "content" => "ohaie" }

@@ -118,7 +118,7 @@ module Talker
     end
     
     def unbind
-      trigger :close if @on_close
+      trigger :close
     end
     
     private
