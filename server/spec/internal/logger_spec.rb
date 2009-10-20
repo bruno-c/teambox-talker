@@ -14,7 +14,7 @@ EM.describe Talker::Logger do
   end
   
   it "should insert message" do
-    message = { "type" => "message", "user" => {"id" => 1}, "final" => true, "id" => "123",
+    message = { "type" => "message", "user" => {"id" => 1}, "id" => "123",
                 "time" => 5, "content" => "ohaie" }
     
     sql = "INSERT INTO events (room_id, user_id, type, uuid, message, created_at) " +
@@ -53,7 +53,7 @@ EM.describe Talker::Logger do
   end
   
   it "should insert paste" do
-    message = { "type" => "message", "user" => {"id" => 1}, "final" => true, "id" => "123",
+    message = { "type" => "message", "user" => {"id" => 1}, "id" => "123",
                 "time" => 5, "content" => "ohaie...", 
                 "paste" => {"id" => "abc123", "lines" => 5, "preview_lines" => 3} }
     
