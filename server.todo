@@ -1,5 +1,5 @@
 Talker Server:
-- Kick other users of same name on connect
+- Expire unused session queues (maybe pass session id to presence server)
 - Expire connections (on presence server) if user leaves while channel server is down
 - Support delta indexing of events
 - Make sure queues are persisted on RabbitMQ
