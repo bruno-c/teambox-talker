@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091020145626) do
+ActiveRecord::Schema.define(:version => 20091016204029) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(:version => 20091020145626) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state",      :limit => 15
-    t.string   "session_id"
   end
 
   create_table "delayed_jobs", :force => true do |t|

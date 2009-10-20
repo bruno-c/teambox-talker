@@ -14,7 +14,6 @@
         room: #{@room.id}, 
         user: #{{:id => current_user.id, :name => current_user.name, :livetyping => current_user.livetyping}.to_json},
         token: #{current_user.talker_token.to_json},
-        sid: '#{session.session_id}',
         onNewMessage: ChatRoom.onNewMessage, 
         onJoin: ChatRoom.onJoin, 
         onLeave: ChatRoom.onLeave,

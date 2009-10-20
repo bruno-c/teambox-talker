@@ -1,8 +1,8 @@
 module Talker
   module Channel
     class Room < EventChannel
-      def subscribe(session_id, user, only_final=false, &callback)
-        queue = Queues.session(@name, user.id, session_id)
+      def subscribe(user, only_final=false, &callback)
+        queue = Queues.session(@name, user.id)
         
         # Must force re-creation of the queue in case it was delete by presence server.
         queue.reset
@@ -10,7 +10,7 @@ module Talker
         if queue.subscribed?
           # Send error to previously connected callback
           if on_msg = queue.instance_variable_get(:@on_msg)
-            on_msg.call %|{"type":"error","message":"Session ID used by another connection"}|
+            on_msg.call %|{"type":"error","message":"Another connection was made with this user"}|
           end
           queue.instance_variable_set(:@on_msg, callback)
         else
