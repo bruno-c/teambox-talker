@@ -29,29 +29,28 @@ module Talker
         @callback = callback
       end
       
-      def received(message)
-        type = message["type"]
+      def received(event)
+        type = event["type"]
         
-        # Shortcircuit if partial message
-        # TODO update existing message if partial?
-        return if type == "message" && !message["final"]
+        # Shortcircuit if partial event
+        return if event["partial"]
         
-        unless message.key?("user")
-          Talker.logger.error "No user key in message: " + message.inspect
+        unless event.key?("user")
+          Talker.logger.error "No user key in event: " + event.inspect
           return
         end
         
-        Talker.logger.debug{"room##{@name}> " + message.inspect}
+        Talker.logger.debug{"room##{@name}> " + event.inspect}
         
         case type
         when "message"
-          if message["paste"]
-            insert_paste message
+          if event["paste"]
+            insert_paste event
           else
-            insert_message message
+            insert_message event
           end
         when "join", "leave"
-          insert_notice message
+          insert_notice event
         else
           @callback.call
         end
