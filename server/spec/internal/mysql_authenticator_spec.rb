@@ -35,3 +35,19 @@ EM.describe Talker::MysqlAuthenticator do
     end
   end
 end
+
+EM.describe Talker::MysqlAuthenticator do
+  before do
+    load "em/mysql"
+    execute_sql_file "delete_all"
+    execute_sql_file "insert_users"
+    @authenticator = Talker::MysqlAuthenticator.new :database => "talker_test", :user => "root"
+  end
+  
+  it "should authenticate valid token" do
+    @authenticator.authenticate(1, 1, "valid") do |success|
+      success.should be_true
+      done
+    end
+  end
+end
