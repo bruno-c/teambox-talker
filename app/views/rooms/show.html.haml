@@ -17,7 +17,10 @@
         onNewMessage: ChatRoom.onNewMessage, 
         onJoin: ChatRoom.onJoin, 
         onLeave: ChatRoom.onLeave,
-        onClose: ChatRoom.onClose
+        onClose: ChatRoom.onClose,
+        onBack: ChatRoom.onBack,
+        onIdle: ChatRoom.onIdle,
+        onConnected: ChatRoom.onConnected
       });
       ChatRoom.current_user = client.options.user;
       ChatRoom.room = '#{@room.name}';
