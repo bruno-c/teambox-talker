@@ -58,10 +58,7 @@
       <p>This is a private room where the magic happens.</p>
       <h4>Who&#39;s here?</h4>
       <ul class="people" id="people">
-        <%= render :partial => "user", :collection => @users %>
-        <!-- <li><%= image_tag "avatar_default.png", :alt => "Francis" %> Francis</li>
-        <li><%= image_tag "avatar_default.png", :alt => "Gary" %> Gary</li>
-        <li><%= image_tag "avatar_default.png", :alt => "Marc" %> Marc</li> -->
+        <%= render :partial => "user", :collection => @room.users %>
       </p>
     </div>
     <div class="footer">

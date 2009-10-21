@@ -209,7 +209,7 @@ var ChatRoom = {
   },
     
   addUser: function(user) {
-    if ($("#people_" + user.id).length < 1) {
+    if ($("#user_" + user.id).length < 1) {
       $('<li/>').attr("id", "user_" + user.id).
                  html(user.name).
                  appendTo($('#people')).
