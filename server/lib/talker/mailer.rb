@@ -1,4 +1,5 @@
 require "eventmachine"
+require "socket"
 
 module Talker
   class Mailer
@@ -17,9 +18,12 @@ module Talker
     
     def build_header
       "=============================\n" +
-      "Process: #{$0}\n" + 
-      "PID:     #{Process.pid}\n" +
+      "Process:  #{$0}\n" + 
+      "PID:      #{Process.pid}\n" +
+      "Hostname: #{Socket.gethostname}" + 
       "=============================\n\n"
+    rescue Exception => e
+      "(Error building headers: #{e})"
     end
     
     def deliver(subject, body)
@@ -30,6 +34,9 @@ module Talker
       email.errback do |e|
         Talker.logger.error "Failed to deliver email: #{e}"
       end
+      email.callback do
+        Talker.logger.error "Send mail '#{subject}' to #{@options[:to].join(', ')}"
+      end
     end
     
     def deliver_error(message)
@@ -37,8 +44,12 @@ module Talker
     end
     
     def deliver_exception(exception, message=nil)
-      deliver "[ERROR] #{exception.class.name}: #{exception.message}",
-              [message, message.inspect, exception.backtrace.join("\n")].compact.join("\n\n")
+      description = "#{exception.class.name}: #{exception.message}"
+      deliver "[ERROR] #{description}",
+              [description,
+               message,
+               exception.inspect,
+               exception.backtrace.join("\n")].compact.join("\n\n")
     end
   end
   
