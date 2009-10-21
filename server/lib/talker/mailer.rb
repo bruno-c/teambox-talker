@@ -38,7 +38,7 @@ module Talker
     
     def deliver_exception(exception, message=nil)
       deliver "[ERROR] #{exception.class.name}: #{exception.message}",
-              [message, exception.backstrace.join("\n")].compact.join("\n\n")
+              [message, message.inspect, exception.backtrace.join("\n")].compact.join("\n\n")
     end
   end
   
