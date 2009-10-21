@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091020180803) do
+ActiveRecord::Schema.define(:version => 20091021183210) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20091020180803) do
     t.datetime "deleted_at"
     t.datetime "activated_at"
     t.boolean  "livetyping",                      :default => true
+    t.string   "time_zone"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

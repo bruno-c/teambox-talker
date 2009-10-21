@@ -26,7 +26,10 @@ $(function() {
   });
 });
 
+// Pass timezone offset from the browser to backend using a magic cookie
+$.cookie("tzoffset", (new Date()).getTimezoneOffset());
+
 if (typeof console == 'undefined'){
   console = {};
-  console.info = function(){ }
+  console.info = console.debug = console.warn = function(){ };
 }
