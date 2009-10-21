@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include ExceptionNotifiable
+  
   helper :all # include all helpers, all the time
 
   # Scrub sensitive parameters from your log

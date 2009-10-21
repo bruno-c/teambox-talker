@@ -8,7 +8,7 @@ module Talker
       :host => "localhost",
       :port => 25,
       :starttls => false, # use ssl
-      :from => "mailer@talkerapp.com",
+      :from => "error@talkerapp.com",
       :to => ["macournoyer@gmail.com"],
     }
     
