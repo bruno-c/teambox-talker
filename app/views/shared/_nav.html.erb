@@ -1,14 +1,25 @@
 <div id="nav">
-  <ul>
-    <li><%= link_to "Rooms", rooms_path, :title => "Rooms" %></li>
-    <li><%= link_to "People", invites_path, :title => "People" %></li>
-    <li><%= link_to "Search", "", :title => "Search" %></li>
+  <ul class="specific">
+    <% if logged_in? %>
+      <li class="user"><%= link_to "Logged in as #{current_user.name}", settings_path, :title => "Logged in as #{current_user.name}" %>.</li>
+      <li><%= link_to "Rooms", rooms_path, :title => "Rooms" %></li>
+      <% if admin? %>
+        <li><%= link_to 'New Room', new_room_path  %></li>
+        <li><%= link_to 'Manage Users', users_path %></li>
+      <% end %>
+    <% end %>
   </ul>
-  <p class="utilities">
-    Logged in as
-    <%= link_to image_tag("avatar_default.png", :alt => "Francis Wu"), "", :title => "Logged in as Francis Wu, manage my account", :class => "avatar" %>
-    <%= link_to "Francis Wu", "", :title => "Logged in as Francis Wu, manage my account" %>.
-    <%= link_to "My Account", "", :title => "Manage my account" %> or
-    <%= link_to "Logout", "", :title => "Logout" %>
-  </p>
+<!--  <p class="utilities">
+    <ul>
+      <% if logged_in? %>
+        <li>Logged in as
+        <%= link_to image_tag("avatar_default.png", :alt => current_user.name), settings_path, :title => "Logged in as #{current_user.name}, manage my account", :class => "avatar" %></li>
+        <li><%= link_to current_user.name, settings_path, :title => "Logged in as #{current_user.name}" %>.</li>
+        <li><%= link_to "Logout", "", :title => "Logout" %></li>
+      <% else %>
+        <li><%= link_to "Login", login_path, :title => "Login" %></li>
+        <li><%= link_to "Sign Up", signup_path, :title => "Sign Up" %></li>
+      <% end %>
+    </ul>
+  </p>-->
 </div>
