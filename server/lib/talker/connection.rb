@@ -6,7 +6,7 @@ module Talker
   
   class Connection < EM::Connection
     # TODO freeze constant strings
-
+    
     attr_accessor :server, :room, :user
     
     # Called after connection is fully initialized and establied from EM.
@@ -64,7 +64,7 @@ module Talker
             
             # Listen to message in the room
             @subscription = @room.subscribe(@user, !include_partial) { |message| send_data message }
-          
+            
             # Broadcast presence
             @room.publish_presence "join", @user
             send_data %({"type":"connected"}\n)
@@ -105,6 +105,8 @@ module Talker
     end
     
     def close
+      Talker.logger.debug{"Closing connection with #{to_s}"}
+      
       if @subscription
         @subscription.unsubscribe
         @subscription = nil
@@ -114,7 +116,7 @@ module Talker
         @room.publish_presence("leave", @user)
         @user = nil
       end
-
+      
       close_connection_after_writing
     end
     
@@ -150,7 +152,8 @@ module Talker
       end
       @server.connection_closed(self)
     end
-  
+    
+    
     private
       def room_required!
         raise ProtocolError, "Not connected to a room" unless @room

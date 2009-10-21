@@ -9,7 +9,7 @@ module Talker
     
     def initialize(name)
       @name = name
-      @encoder = Yajl::Encoder.new(:terminator => nil)
+      @encoder = Yajl::Encoder.new
       @exchange = Queues.topic
     end
     
@@ -29,13 +29,7 @@ module Talker
     end
     
     def publish_as_json(exchange, event, options={})
-      @encoder.encode(event) do |chunk|
-        if chunk.nil?
-          exchange.publish(EVENT_DELIMITER, options)
-        else
-          exchange.publish(chunk, options)
-        end
-      end
+      exchange.publish @encoder.encode(event) + EVENT_DELIMITER, options
     end
     
     def routing_key(partial=false, user_id=nil)
