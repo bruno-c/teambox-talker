@@ -1,5 +1,8 @@
 Talker Server:
+- [BUG] when restarting channel server, 1st time user connects, he doesn't get presence info and messages
 - Expire connections (on presence server) if user leaves while channel server is down
+- Support other types of channels (room, paste, etc)
+- Benchmark against ejabberd
 ✓ Support delta indexing of events
 
 Chef:

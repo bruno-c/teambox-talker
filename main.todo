@@ -3,14 +3,28 @@ Rails app:
 - Configure timezone.
 - Relay emails to http://www.authsmtp.com/ to prevent going into spam
 - Implement "Forgot my password"
-- Import Campfire logs (using tinder)
-- Add support for Flash sockets in Orbited
+- Review invitation process
+  - Change name in room
+  - Invite link go directly in room
+  - Generate random password
+- Review signup process
+  - Create default rooms
+- Create landing page
 
-Other:
-- Extract server/lib/talker/client.rb into a usable gem for using our API
+API:
+- Create Ruby Talker client gem talker.rb
+- Create Python Talker client package talker.py
 
 Desktop client:
 - Build Prism app
+- Add Growl notification
 
-Ideas:
+Exclusive features:
+- Import Campfire logs (using tinder)
+- Add support for Flash sockets in Orbited
+- Interactive pastes
+- "Braistorming mode" or room type
+- Exclusive alerts by keyword/username
+
+Crazy Ideas:
 - Give each user a color for messages background (and highlight conversation w/ that @user w/ that color)
