@@ -1,5 +1,5 @@
 Rails app:
-- Fix redirection issue on login
+✓ Fix redirection issue on login
 - Configure timezone.
 - Relay emails to http://www.authsmtp.com/ to prevent going into spam
 - Implement "Forgot my password"
