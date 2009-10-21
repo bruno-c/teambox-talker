@@ -1,0 +1,78 @@
+/*
+Sass::SyntaxError: File to import not found or unreadable: utilities/general/reset.sass.
+on line 1 of /Users/garyharan/talker/app/stylesheets/reset.sass
+
+1: @import utilities/general/reset.sass
+2: 
+3: // Global reset rules.
+4: // For more specific resets, use the reset mixins provided by
+5: // compass/utilities/general/reset
+6: html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
+7: pre, a, abbr, acronym, address, code, del, dfn, em, img,
+
+
+Backtrace:
+/Users/garyharan/talker/app/stylesheets/reset.sass:1
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/tree/import_node.rb:53:in `import'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/tree/import_node.rb:33:in `perform!'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/tree/node.rb:179:in `_perform'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/tree/node.rb:156:in `perform'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/tree/node.rb:200:in `perform_children'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/tree/node.rb:200:in `map'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/tree/node.rb:200:in `perform_children'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/tree/node.rb:191:in `perform!'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/tree/node.rb:179:in `_perform'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/tree/node.rb:156:in `perform'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/tree/node.rb:103:in `render'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/plugin.rb:83:in `update_stylesheet'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/plugin.rb:69:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/plugin.rb:64:in `each'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/plugin.rb:64:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/plugin.rb:62:in `each'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/plugin.rb:62:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/haml-2.2.9/rails/../lib/sass/plugin/rails.rb:16:in `process'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/base.rb:391:in `process'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/base.rb:386:in `call'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/routing/route_set.rb:433:in `call'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:88:in `dispatch'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:111:in `_call'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:82:in `initialize'
+/Users/garyharan/talker/vendor/rails/activerecord/lib/active_record/query_cache.rb:29:in `call'
+/Users/garyharan/talker/vendor/rails/activerecord/lib/active_record/query_cache.rb:29:in `call'
+/Users/garyharan/talker/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+/Users/garyharan/talker/vendor/rails/activerecord/lib/active_record/query_cache.rb:9:in `cache'
+/Users/garyharan/talker/vendor/rails/activerecord/lib/active_record/query_cache.rb:28:in `call'
+/Users/garyharan/talker/vendor/rails/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb:361:in `call'
+/Library/Ruby/Gems/1.8/gems/rack-1.0.0/lib/rack/head.rb:9:in `call'
+/Library/Ruby/Gems/1.8/gems/rack-1.0.0/lib/rack/methodoverride.rb:24:in `call'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/params_parser.rb:15:in `call'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/rewindable_input.rb:25:in `call'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/session/cookie_store.rb:93:in `call'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/reloader.rb:9:in `call'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/failsafe.rb:11:in `call'
+/Library/Ruby/Gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `call'
+/Library/Ruby/Gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `synchronize'
+/Library/Ruby/Gems/1.8/gems/rack-1.0.0/lib/rack/lock.rb:11:in `call'
+/Users/garyharan/talker/vendor/rails/actionpack/lib/action_controller/dispatcher.rb:106:in `call'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/rack/adapter/rails.rb:75:in `call'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/thin/connection.rb:76:in `pre_process'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/thin/connection.rb:74:in `catch'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/thin/connection.rb:74:in `pre_process'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/thin/connection.rb:57:in `process'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/thin/connection.rb:42:in `receive_data'
+/Library/Ruby/Gems/1.8/gems/eventmachine-0.12.8/lib/eventmachine.rb:242:in `run_machine'
+/Library/Ruby/Gems/1.8/gems/eventmachine-0.12.8/lib/eventmachine.rb:242:in `run'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/thin/backends/base.rb:57:in `start'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/thin/server.rb:156:in `start'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/thin/controllers/controller.rb:80:in `start'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/thin/runner.rb:174:in `send'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/thin/runner.rb:174:in `run_command'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/lib/thin/runner.rb:140:in `run!'
+/Library/Ruby/Gems/1.8/gems/thin-1.2.4/bin/thin:6
+/usr/bin/thin:19:in `load'
+/usr/bin/thin:19
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Sass::SyntaxError: File to import not found or unreadable: utilities/general/reset.sass.\A on line 1 of /Users/garyharan/talker/app/stylesheets/reset.sass\A \A 1: @import utilities/general/reset.sass\A 2: \A 3: // Global reset rules.\A 4: // For more specific resets, use the reset mixins provided by\A 5: // compass/utilities/general/reset\A 6: html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,\A 7: pre, a, abbr, acronym, address, code, del, dfn, em, img,\A "; }
