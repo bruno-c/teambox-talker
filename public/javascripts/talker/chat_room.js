@@ -25,7 +25,7 @@ $(function() {
     .focus(function(e){ e.stopPropagation() });// stops window/document from calling focus.  re: logMessages
   
   // reformat all messages loaded from db on first load
-  $('.content').each(function(something, element){
+  $('#log .content').each(function(something, element){
     element.innerHTML = ChatRoom.formatMessage(this.innerHTML, true);
   });
   
@@ -209,10 +209,10 @@ var ChatRoom = {
   },
     
   addUser: function(user) {
-    if ($("#user_" + user.id).length < 1) {
+    if ($("#people_" + user.id).length < 1) {
       $('<li/>').attr("id", "user_" + user.id).
                  html(user.name).
-                 appendTo('ul#users').
+                 appendTo($('#people')).
                  highlight();
     }
   },
@@ -261,6 +261,7 @@ var ChatRoom = {
   },
   
   onBack: function(data){
+    ChatRoom.addUser(data.user);
     $("#user_" + data.user.id).css('opacity', 1.0).removeClass('idle');
   },
   
