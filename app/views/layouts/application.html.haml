@@ -1,4 +1,34 @@
-!!!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= strip_tags @title || "Home" %> &#171; TalkerApp</title>
+  <%= stylesheet_link_tag "reset.css", "compiled/screen.css", :media => "screen, projection" %>
+  <%= stylesheet_link_tag "compiled/print.css", :media => "print" %>
+  <!--[if IE]><%= stylesheet_link_tag "compiled/ie.css", :media => "screen, projection" %><![endif]-->
+  <%= javascript_include_tag "jquery", "jquery-ui", "jrails", "jquery.form", "jquery.livequery", "jquery.uniform", "jquery.cycle", "jquery.autocomplete", "application", :cache => true %>
+  <%= yield :head %>
+</head>
+
+<body id="<%= @controller.controller_name %>_controller" class="<%= @template.instance_variable_get(:@_first_render).name %>">
+
+  <%#= render :partial => "shared/nav_in_room" %>
+  <%= render :partial => "shared/nav" %>
+
+  <div id="content">
+    <div id="sidebar">
+      <%= yield :sidebar %>
+    </div>
+    <div id="main">
+      <%- flash.each do |name, message| -%>
+        <%= content_tag :p, message, :id => "flash_#{name}", :class => "flash #{name}" %>
+      <%- end -%>
+      <%= yield %>
+    </div>
+  </div>
+
+</body>
+</html>
 %html
   %head
     %title
