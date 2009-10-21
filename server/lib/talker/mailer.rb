@@ -20,7 +20,7 @@ module Talker
       "=============================\n" +
       "Process:  #{$0}\n" + 
       "PID:      #{Process.pid}\n" +
-      "Hostname: #{Socket.gethostname}" + 
+      "Hostname: #{Socket.gethostname}\n" + 
       "=============================\n\n"
     rescue Exception => e
       "(Error building headers: #{e})"
