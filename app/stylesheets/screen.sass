@@ -204,6 +204,7 @@ html[xmlns] .clearfix
   height: 40px
   border-bottom = 2px solid !light_grey
   ul
+    width: 100%
     margin: 10px 0 0
     float: left
     overflow: hidden
@@ -223,6 +224,9 @@ html[xmlns] .clearfix
           background = !white
           +rounded_corners("all", 3)
           color = !accent_colour
+    li.user
+      margin-right: 40px
+      float: right
   p.utilities
     float: right
     color = !light_grey
@@ -234,10 +238,8 @@ html[xmlns] .clearfix
         height: 16px
         width: 16px
         img
-          height: 100%
-          width: 100%
-          position: relative
-          top: 3px
+          height: 16px
+          width: 16px
 
 // Layout
 #content
