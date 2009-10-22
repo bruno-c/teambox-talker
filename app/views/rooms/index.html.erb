@@ -1,0 +1,39 @@
+<% @title = "Rooms" %>
+
+<h2>Rooms</h2>
+
+<ul id="rooms">
+<% @rooms.each do |room| %>
+  <% content_tag_for :li, room do %>
+    <div class="panel">
+      <div class="header">
+        <span class="actions">
+          <%= link_to "Enter", room, :title => "Enter chat room" %>
+        </span>
+        <h3><%=h room.name %></h3>
+      </div>
+    
+      <div class="content">
+        <p class="people">
+          <label>Inside:</label>
+          <% if room.users.empty? %>
+            Nobody
+          <% else %>
+            <%= room.users.map { |user| image_tag("avatar_default.png", :alt => "Francis") + " #{h user.name}" }.to_sentence %>
+          <% end %>
+        </p>
+      </div>
+    
+      <div class="footer">
+        <%= link_to "Chat Logs", logs_path(room), :title => "Chat Logs" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+</div>
+
+<% content_for :sidebar do %>
+  <div id="actions">
+    <%= link_to "Add a room", new_room_path, :title => "Add a room", :class => "button add" %>
+  </div>
+<% end %>
