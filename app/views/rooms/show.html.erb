@@ -32,13 +32,13 @@
       ChatRoom.room = '<%= @room.name %>';
       ChatRoom.client = client;
       ChatRoom.receiver = Receiver;
-      // ChatRoom.events   = <%#= @events.to_json(:include => :users) %>;  // Unable to do this yet because the json is malformed.
+      ChatRoom.events   = <%= @events.to_json %>;
       
       client.connect();
       
-      // $.each(ChatRoom.events, function(){
-      //   Receiver.push(this.event);
-      // });
+      $.each(ChatRoom.events, function(){
+        Receiver.push(this);
+      });
       
       $(window).bind('beforeunload', function() { client.reset() });
       $("a#leave").click(function() {

@@ -74,6 +74,10 @@ class User < ActiveRecord::Base
     save(false)
   end
   
+  def to_json(options = {})
+    super(options.merge(:only => [:name, :email, :id]))
+  end
+  
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(email, password)
     return nil if email.blank? || password.blank?

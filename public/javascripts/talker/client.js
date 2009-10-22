@@ -71,6 +71,7 @@ function TalkerClient(options) {
   
   // Methods
   self.sendData = function(message) {
+    console.info(message);
     protocol.send(JSON.encode(message));
     self.resetPing();
   };
