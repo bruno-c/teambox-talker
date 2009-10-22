@@ -77,6 +77,10 @@ class User < ActiveRecord::Base
   def to_json(options = {})
     super(options.merge(:only => [:name, :email, :id]))
   end
+
+  def avatar_url
+    "/images/avatar_default.png"
+  end
   
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(email, password)
