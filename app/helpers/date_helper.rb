@@ -5,7 +5,7 @@ module DateHelper
   # Taken from: http://dev.rubyonrails.org/ticket/5792
   def human_date(date, format = "%B %e, %Y") 
     return "" if date.blank?
-    case Date.today - date.to_date 
+    case Time.zone.now.to_date - date.to_date
       when  1 then "Yesterday" 
       when  0 then "Today" 
       when -1 then "Tomorrow" 
