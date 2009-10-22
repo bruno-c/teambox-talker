@@ -167,106 +167,70 @@ var ChatRoom = {
   },
   
   onNewMessage: function(data) {
-    var message = ChatRoom.messages[data.id];
-    
-    if (data.content == '') {
-      new Message(data.user, data.id).destroyElement();
-      return false;
-    }
-    
-    if (!message) {
-      message = ChatRoom.messages[data.id] = new Message(data.user, data.id, data.time);
-      message.createElement();
-    }
-    
-    if (!data.partial) {
-      if (data.paste) {
-        message.setHeader(FormatHelper.formatPaste(data.paste));
-        message.element.removeClass('hidden');
-      }
-      message.update(ChatRoom.formatMessage(data.content));
-      message.element.removeClass('partial');
-      message.element.removeClass('hidden');
-
-      if (!$.browser.safari && ChatRoom.logMessages !== -1){
-        ChatRoom.logMessages = ChatRoom.logMessages + 1;
-        document.title = ChatRoom.room + " (" + ChatRoom.logMessages + " new messages)";
-      }
-    } else {
-      message.update(data.content);
-    }
-    
-    if (!ChatRoom.typing()) {
-      $("#message").appendTo($("#log"));
-      document.getElementById('msgbox').focus(); // why oh why must it only work like this?
-    }
-
+    Usher.message(data);
+    // 
+    // var message = ChatRoom.messages[data.id];
+    // 
+    // if (data.content == '') {
+    //   new Message(data.user, data.id).destroyElement();
+    //   return false;
+    // }
+    // 
+    // if (!message) {
+    //   message = ChatRoom.messages[data.id] = new Message(data.user, data.id, data.time);
+    //   message.createElement();
+    // }
+    // 
+    // if (!data.partial) {
+    //   if (data.paste) {
+    //     message.setHeader(FormatHelper.formatPaste(data.paste));
+    //     message.element.removeClass('hidden');
+    //   }
+    //   message.update(ChatRoom.formatMessage(data.content));
+    //   message.element.removeClass('partial');
+    //   message.element.removeClass('hidden');
+    // 
+    //   if (!$.browser.safari && ChatRoom.logMessages !== -1){
+    //     ChatRoom.logMessages = ChatRoom.logMessages + 1;
+    //     document.title = ChatRoom.room + " (" + ChatRoom.logMessages + " new messages)";
+    //   }
+    // } else {
+    //   message.update(data.content);
+    // }
+    // 
+    // if (!ChatRoom.typing()) {
+    //   $("#message").appendTo($("#log"));
+    //   document.getElementById('msgbox').focus(); // why oh why must it only work like this?
+    // }
+    // 
     ChatRoom.scrollToBottom();
   },
   
   typing: function() {
     return ChatRoom.currentMessage != null && ChatRoom.currentMessage.content != null
   },
-    
-  addUser: function(user) {
-    if ($("#user_" + user.id).length < 1) {
-      $('<li/>').attr("id", "user_" + user.id).
-                 html(user.name).
-                 appendTo($('#people')).
-                 highlight();
-    }
-  },
-  
-  addNotice: function(data){
-    var msg_content = '';
-    switch(data.type){
-      case 'join': 
-      case 'leave':
-        msg_content = data.type + 's';
-        break
-      default:
-        msg_content = data.type;
-        break;
-    }
-    
-    var element = $("<tr/>").
-      addClass("event").
-      addClass("notice").
-      append($("<td/>").addClass("author").html(data.user.name)).
-      append($("<td/>").addClass("content").html(data.type));
-    
-    if (ChatRoom.typing()){
-      element.appendTo("#log");
-    } else {
-      element.insertBefore("#message");
-    }
-    ChatRoom.scrollToBottom();
-  },
   
   onJoin: function(data) {
-    ChatRoom.addUser(data.user);
-    if (data.type == "join") ChatRoom.addNotice(data);
+    Usher.announce(data);
   },
 
   onLeave: function(data) {
-    $("#user_" + data.user.id).remove();
-    ChatRoom.addNotice(data);
+    Usher.announce(data);
   },
   
   onConnected: function(data){
   },
   
   onIdle: function(data){
-    $("#user_" + data.user.id).css('opacity', 0.7).addClass('idle');
+    $("#user_" + data.user.id).css('opacity', 0.5).addClass('idle');
   },
   
   onBack: function(data){
-    ChatRoom.addUser(data.user);
-    $("#user_" + data.user.id).css('opacity', 1.0).removeClass('idle');
+    Usher.announce(data);
   },
   
   onClose: function(){
-    ChatRoom.addNotice({user: {id:0,name:"System"}, type: "the persistent connection to talker is not active."});
+    Usher.notice({user: {id:0,name:"System"}, type: "the persistent connection to talker is not active."});
   }
 };
 
@@ -286,8 +250,7 @@ function Message(user, uuid, timestamp) {
   }
   
   this.getBody = function() {
-    return (this.header || "") + 
-           "<div class='content'>" + (this.content || "") + "</div>";
+    return (this.header || "") + '<div class="content">' + (this.content || "") + "</div>";
   }
   
   this.refresh = function() {
@@ -295,73 +258,33 @@ function Message(user, uuid, timestamp) {
   }
   
   this.createElement = function() {
-    var lastEvent = $('#log tr.message:last');
-    
-    var timeOfLastEvent = lastEvent.find('.timestamp').html();
-    
-    if (timeOfLastEvent && Math.abs(timeOfLastEvent - new Date().getTime()) > 300000){ // more than 5 minutes ago
-      var displayed_time = new Date();
-      displayed_time.setTime(timeOfLastEvent - timeOfLastEvent % 300000);
-      
-      if (!$('#log tr:last').hasClass('datetime')){
-        $("<tr/>").addClass('datetime').append($('<td/>').attr('colspan', '3')
-        .html(FormatHelper.date2human(displayed_time))).insertAfter(lastEvent);
-      }
-    }
-          
-    // Create of find the message HTML element
+    // <tr id="message-5748EF0B-F776-4550-B974-2C74BE88B273" class="message user_1 event">
+    //   <td class="author">
+    //     Marc
+    //     <%= image_tag "avatar_default.png", :alt => "Marc", :class => "avatar" %>
+    //     <b class="blockquote_tail"><!----></b>
+    //   </td>
+    //   <td class="message">
+    //     <blockquote>
+    //       <p>deploying</p>
+    //     </blockquote>
+    //   </td>
+    // </tr>
     this.element = $("#" + this.elementId);
-    if (this.element.length == 0) {
-      this.element = $("<tr/>").
-        addClass("event").
-        addClass("message").
-        addClass("injected").
-        addClass("partial").
-        addClass(this.content && this.content.match(/\n/g) ? "hidden" : "").
-        addClass(ChatRoom.current_user.id == this.user.id ? 'me' : '').
-        attr("id", this.elementId).
-        append($("<td/>").addClass("author").append($('<span/>').css('visibility', 'hidden').html(this.user.name))).
-        append($("<td/>").addClass("body").html(this.getBody())).
-        append($("<td/>").addClass("timestamp").html(this.timestamp));
-        
-        if (ChatRoom.typing()){
-          this.element.appendTo($("#log"));
-        } else {
-          this.element.insertBefore($("#message"));
-        }
-        
-        var elementId = this.elementId;
-        var body = this.getBody();
-        
-        window.setTimeout(function(){
-          var current = $('#' + elementId);
-          var prev = current.prev();
-          
-          if (prev.hasClass('notice') || prev.hasClass('datetime')){
-            current.find('.author span').css('visibility', 'visible');
-          } else if (current.find('.author span').html() == prev.find('.author span').html()){
-            current.find('.author span').css('visibility', 'hidden');
-          } else {
-            current.find('.author span').css('visibility', 'visible');
-          }
-        }, 10)
+    if (!this.element.length){// does not exist
+      
+      this.element = $('<tr/>').attr('id', this.elementId)
+        .addClass('event')
+        .addClass('injected')
+        .addClass('partial')
+        .addClass('')
+      
     }
+    
     return this.element;
   }
   
   this.destroyElement = function() {
-    var current = $("#" + this.elementId);
-    var prev = current.prev();
-    var next = current.next();
-    
-    if (next && next.get(0) && next.get(0).id != 'message'){
-      if (next.find('.author span').html() == prev.find('.author span').html()){
-        next.find('.author span').css('visibility', 'hidden');
-      } else {
-        next.find('.author span').css('visibility', 'visible');
-      }
-    }
-    
-    current.remove();
+    $("#" + this.elementId).remove();
   }
 }
