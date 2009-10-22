@@ -14,7 +14,7 @@ $(function() {
       if (e.which == 65) { // space
         ChatRoom.send(this.value);
       } else {
-        ChatRoom.sendLater(this.value);
+        ChatRoom.liveType(this.value);
       }
     })
     .keyup(function(e){
@@ -73,29 +73,32 @@ $(function() {
 });
 
 
-// manages the logic behind sending messages and updating the various events occuring to and from the chat room
-// the incoming events are all handled by Receiver.js which handles the sorting and compartmentalizing of events by authors and dates.
-// the transmitter (client.js)  handles all sending to server.
+/**
+* manages the logic behind sending messages and updating the various events occuring to and from the chat room
+* Handles focus and blur events.
+* the incoming events are all handled by Receiver.js which handles the sorting and compartmentalizing of events by authors and dates.
+* the transmitter (client.js)  handles all sending to server.
+*/
 var ChatRoom = {
   messages: {},
   currentMessage: null,
   maxImageWidth: 400,
   current_user: null,
   
-  sendLater: function(data) {
-    if (data === "") return;
-    if (this.sendTimeout) clearTimeout(this.sendTimeout);
-    this.sendTimeout = setTimeout(function() {
-      ChatRoom.send(data);
+  liveType: function(content) {
+    if (content === "") return;
+    if (ChatRoom.sendTimeout) clearTimeout(ChatRoom.sendTimeout);
+    ChatRoom.sendTimeout = setTimeout(function() {
+      ChatRoom.send(content);
     }, 400);
   },
   
-  send: function(data, eol) {
-    if (data === "") return;
+  send: function(content, eol) {
+    if (content === "") return;
     if (ChatRoom.sendTimeout) clearTimeout(ChatRoom.sendTimeout);
     
-    var message = this.currentMessage;
-    message.content = data;
+    var message = ChatRoom.currentMessage;
+    message.content = content;
     if (eol){
       ChatRoom.client.send({id: message.uuid, content: message.content});
     } else {
@@ -132,10 +135,13 @@ var ChatRoom = {
   },
   
   newMessage: function() {
-    // if (this.currentMessage) this.currentMessage.createElement();
-    // this.currentMessage = new Message(currentUser);
-    // this.messages[this.currentMessage.uuid] = this.currentMessage;
-    // 
+    if (ChatRoom.currentMessage) {
+      // ChatRoom.receiver.push(ChatRoom.currentMessage.json()); // for livetyping
+    } else {
+      // livetyping should move element to proper spot
+      ChatRoom.currentMessage = new Message({content: $('#msgbox').val()});
+    }
+     
     // Move the new message form to the bottom
     $("#message").appendTo($("#log"));
     document.getElementById('msgbox').value = '';
@@ -144,13 +150,12 @@ var ChatRoom = {
   },
   
   cancelMessage: function() {
-    // if (this.currentMessage){
-    //   var message = this.currentMessage;
-    //   ChatRoom.client.send({id: message.uuid, content: '', partial: true});
-    //   this.messages[this.currentMessage.uuid] = null;
-    //   this.currentMessage = null;
-    // }
-    // this.newMessage();
+    if (ChatRoom.currentMessage){
+      var message = ChatRoom.currentMessage;
+      ChatRoom.client.send(ChatRoom.currentMessage.json());
+      ChatRoom.currentMessage = null;
+    }
+    ChatRoom.newMessage();
   },
   
   formatMessage: function(content) {
@@ -173,7 +178,7 @@ var ChatRoom = {
   },
   
   typing: function() {
-    return ChatRoom.currentMessage != null && ChatRoom.currentMessage.content != null
+    return ChatRoom.currentMessage != null;// && ChatRoom.currentMessage.content != null;
   },
   
   onJoin: function(data) {
@@ -195,7 +200,7 @@ var ChatRoom = {
     ChatRoom.receiver.push(data);
   },
   
-  onClose: function(){ // this is very different than a window close event which needs to send a message through client.
-    Receiver.push({user: {id:0,name:"System"}, type: "close", comment: "the persistent connection to talker is not active."});
+  onClose: function(){
+    // Receiver.push({user: {id:0,name:"System"}, type: "close", comment: "the persistent connection to talker is not active."});
   }
 };

@@ -7,7 +7,7 @@ Receiver = {
       return Receiver[data.type](data);
     } catch(e){
       console.info(data);
-      throw "Unable to handle data type: (" + data.type + ") with data: " + data.toString();
+      console.error("Unable to handle data type: (" + data.type + ") with data: " + data.toString());
     }
   },
   
@@ -29,6 +29,10 @@ Receiver = {
     $("#user_" + data.user.id).animate({opacity: 0.0}, 800, function(){ $(this).remove() });
   },
   
+  close: function(data){
+    console.info("Received close event from server.")
+  },
+  
   back: function(data) {
     $("#user_" + data.user.id).css('opacity', 1.0).removeClass('idle');
   },
@@ -44,6 +48,7 @@ Receiver = {
     var id = data.type;
     
     if (data.partial){
+      console.info("not inserting partial messages yet");
       return;
     }
     id += ("_" + data.id);
