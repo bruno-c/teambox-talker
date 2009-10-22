@@ -39,6 +39,6 @@ class Event < ActiveRecord::Base
   end
   
   def self.dates
-    all(:order => "created_at desc", :group => "DATE(created_at)").map(&:created_at).compact
+    all(:order => "created_at desc", :group => "DATE(created_at - (#{Time.zone.utc_offset}))").map(&:created_at).compact
   end
 end
