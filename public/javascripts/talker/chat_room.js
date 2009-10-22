@@ -74,8 +74,8 @@ $(function() {
 
 
 // manages the logic behind sending messages and updating the various events occuring to and from the chat room
-// the incoming events are all sent using Usher.js which handles the sorting and compartmentalizing of events by authors and dates.
-// the client (this.client)  handles all sending to server.
+// the incoming events are all handled by Receiver.js which handles the sorting and compartmentalizing of events by authors and dates.
+// the transmitter (client.js)  handles all sending to server.
 var ChatRoom = {
   messages: {},
   currentMessage: null,
@@ -97,10 +97,10 @@ var ChatRoom = {
     var message = this.currentMessage;
     message.content = data;
     if (eol){
-      this.client.send({id: message.uuid, content: message.content});
+      this.transmitter.send({id: message.uuid, content: message.content});
     } else {
       var message_content = (ChatRoom.current_user.livetyping ? message.content : FormatHelper.text2preview(message.content));
-      this.client.send({id: message.uuid, content: message_content, partial: true})
+      this.transmitter.send({id: message.uuid, content: message_content, partial: true})
     }
   },
   
