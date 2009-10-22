@@ -1,28 +1,30 @@
-// 1) positions new messages within a table in the correct order.
-// 2) announces in the user list who is present and who isn't.
+// Handles incoming events, messages, notices and errors
 Usher = {
-  
   // for now inserts rows for each user, independently of what happened last
   // eventually it should check the previous messages and insert into proper <p>
   // it should also be smart enough to handle notices and private messages.
   message: function(data){
-    console.info(data);
-    
     var id = data.type;
     
-    if (data.type == 'message' && data.final == false){ return }
+    if (data.type == 'message' && data.partial){
+      return; // ignore partial messages for now.  This will be useful for brainstorming mode.
+    }
+    
     switch(data.type){
       case 'message':
         id += ("_" + data.id);
         break;
       default:
-        id += Math.uuid();
+        id += 'event' + Math.uuid();
     }
     
     this.element = $('<tr/>').attr('id', id)
-      .append('<td/>').addClass('author').html((data.user ? data.user.name : 'system'))
-      .append('<td/>').addClass('content').html(data.content ? data.content : data.toString())
-      .insertBefore($('#message'))
+      .append($('<td/>').addClass('author').html((data.user ? data.user.name : 'system')))
+      .append($('<td/>').addClass('content').html(data.content ? data.content : data.toString()))
+
+    this.element.insertBefore('#message');
+    
+    ChatRoom.align();
   },
   
   announce: function(data){
@@ -42,29 +44,5 @@ Usher = {
   
   notice: function(data){
     Usher.message(data);
-    // var msg_content = '';
-    // switch(data.type){
-    //   case 'join': 
-    //   case 'leave':
-    //     msg_content = data.type + 's';
-    //     break
-    //   default:
-    //     msg_content = data.type;
-    //     break;
-    // }
-    // 
-    // var element = $("<tr/>").
-    //   addClass("event").
-    //   addClass("notice").
-    //   append($("<td/>").addClass("author").html(data.user.name)).
-    //   append($("<td/>").addClass("content").html(msg_content));
-    // 
-    // if (ChatRoom.typing()){
-    //   element.appendTo("#log");
-    // } else {
-    //   element.insertBefore("#message");
-    // }
-    // 
-    // ChatRoom.scrollToBottom();
   }
 }
