@@ -6,8 +6,8 @@ Receiver = {
     try{
       return Receiver[data.type](data);
     } catch(e){
-      console.info(data);
-      console.error("Unable to handle data type: (" + data.type + ") with data: " + data.toString());
+      console.info(JSON.encode(data));
+      console.error("*** Unable to handle data type: (" + data.type + ") with data.  Format may not be appropriate.");
     }
   },
   
@@ -48,7 +48,7 @@ Receiver = {
     var id = data.type;
     
     if (data.partial){
-      console.info("not inserting partial messages yet");
+      console.info("partial: " + data.content);
       return;
     }
     id += ("_" + data.id);

@@ -24,11 +24,6 @@ $(function() {
     })
     .focus(function(e){ e.stopPropagation() });// stops window/document from calling focus.  re: logMessages
   
-  // reformat all messages loaded from db on first load
-  $('#log .content').each(function(something, element){
-    element.innerHTML = ChatRoom.formatMessage(this.innerHTML, true);
-  });
-  
   ChatRoom.align();
   ChatRoom.scrollToBottom();
   ChatRoom.newMessage();
