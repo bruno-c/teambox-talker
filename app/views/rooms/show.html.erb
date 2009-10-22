@@ -36,9 +36,9 @@
       
       client.connect();
       
-      $.each(ChatRoom.events, function(){
-        Receiver.push(this.event);
-      });
+      // $.each(ChatRoom.events, function(){
+      //   Receiver.push(this.event);
+      // });
       
       $(window).bind('beforeunload', function() { client.reset() });
       $("a#leave").click(function() {
