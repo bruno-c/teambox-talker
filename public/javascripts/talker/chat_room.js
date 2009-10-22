@@ -72,6 +72,10 @@ $(function() {
   });
 });
 
+
+// manages the logic behind sending messages and updating the various events occuring to and from the chat room
+// the incoming events are all sent using Usher.js which handles the sorting and compartmentalizing of events by authors and dates.
+// the client (this.client)  handles all sending to server.
 var ChatRoom = {
   messages: {},
   currentMessage: null,
@@ -128,10 +132,10 @@ var ChatRoom = {
   },
   
   newMessage: function() {
-    if (this.currentMessage) this.currentMessage.createElement();
-    this.currentMessage = new Message(currentUser);
-    this.messages[this.currentMessage.uuid] = this.currentMessage;
-    
+    // if (this.currentMessage) this.currentMessage.createElement();
+    // this.currentMessage = new Message(currentUser);
+    // this.messages[this.currentMessage.uuid] = this.currentMessage;
+    // 
     // Move the new message form to the bottom
     $("#message").appendTo($("#log"));
     document.getElementById('msgbox').value = '';
@@ -140,13 +144,13 @@ var ChatRoom = {
   },
   
   cancelMessage: function() {
-    if (this.currentMessage){
-      var message = this.currentMessage;
-      this.client.send({id: message.uuid, content: '', partial: true});
-      this.messages[this.currentMessage.uuid] = null;
-      this.currentMessage = null;
-    }
-    this.newMessage();
+    // if (this.currentMessage){
+    //   var message = this.currentMessage;
+    //   this.client.send({id: message.uuid, content: '', partial: true});
+    //   this.messages[this.currentMessage.uuid] = null;
+    //   this.currentMessage = null;
+    // }
+    // this.newMessage();
   },
   
   formatMessage: function(content) {
@@ -162,48 +166,10 @@ var ChatRoom = {
     if (!noScroll) ChatRoom.scrollToBottom();
   },
   
-  checkMessageOrder: function(message){
-    
-  },
-  
   onNewMessage: function(data) {
-    Usher.message(data);
-    // 
-    // var message = ChatRoom.messages[data.id];
-    // 
-    // if (data.content == '') {
-    //   new Message(data.user, data.id).destroyElement();
-    //   return false;
-    // }
-    // 
-    // if (!message) {
-    //   message = ChatRoom.messages[data.id] = new Message(data.user, data.id, data.time);
-    //   message.createElement();
-    // }
-    // 
-    // if (!data.partial) {
-    //   if (data.paste) {
-    //     message.setHeader(FormatHelper.formatPaste(data.paste));
-    //     message.element.removeClass('hidden');
-    //   }
-    //   message.update(ChatRoom.formatMessage(data.content));
-    //   message.element.removeClass('partial');
-    //   message.element.removeClass('hidden');
-    // 
-    //   if (!$.browser.safari && ChatRoom.logMessages !== -1){
-    //     ChatRoom.logMessages = ChatRoom.logMessages + 1;
-    //     document.title = ChatRoom.room + " (" + ChatRoom.logMessages + " new messages)";
-    //   }
-    // } else {
-    //   message.update(data.content);
-    // }
-    // 
-    // if (!ChatRoom.typing()) {
-    //   $("#message").appendTo($("#log"));
-    //   document.getElementById('msgbox').focus(); // why oh why must it only work like this?
-    // }
-    // 
+    Usher.push(data);
     ChatRoom.scrollToBottom();
+    ChatRoom.align();
   },
   
   typing: function() {
@@ -211,80 +177,25 @@ var ChatRoom = {
   },
   
   onJoin: function(data) {
-    Usher.announce(data);
+    Usher.push(data);
   },
 
   onLeave: function(data) {
-    Usher.announce(data);
+    Usher.push(data);
   },
   
   onConnected: function(data){
   },
   
   onIdle: function(data){
-    $("#user_" + data.user.id).css('opacity', 0.5).addClass('idle');
+    Usher.push(data);
   },
   
   onBack: function(data){
-    Usher.announce(data);
+    Usher.push(data);
   },
   
-  onClose: function(){
-    Usher.notice({user: {id:0,name:"System"}, type: "the persistent connection to talker is not active."});
+  onClose: function(){ // this is very different than a window close event which needs to send a message through client.
+    Usher.push({user: {id:0,name:"System"}, type: "close", comment: "the persistent connection to talker is not active."});
   }
 };
-
-function Message(user, uuid, timestamp) {
-  this.user = user;
-  this.uuid = uuid || Math.uuid();
-  this.timestamp = timestamp ? timestamp * 1000 : new Date().getTime();
-  this.elementId = "message-" + this.uuid;
-  
-  this.update = function(content) {
-    this.content = content;
-    this.refresh();
-  }
-  
-  this.setHeader = function(header) {
-    this.header = "<div class='header'>" + header + "</div>";
-  }
-  
-  this.getBody = function() {
-    return (this.header || "") + '<div class="content">' + (this.content || "") + "</div>";
-  }
-  
-  this.refresh = function() {
-    if (this.element) this.element.find(".body").html(this.getBody());
-  }
-  
-  this.createElement = function() {
-    // <tr id="message-5748EF0B-F776-4550-B974-2C74BE88B273" class="message user_1 event">
-    //   <td class="author">
-    //     Marc
-    //     <%= image_tag "avatar_default.png", :alt => "Marc", :class => "avatar" %>
-    //     <b class="blockquote_tail"><!----></b>
-    //   </td>
-    //   <td class="message">
-    //     <blockquote>
-    //       <p>deploying</p>
-    //     </blockquote>
-    //   </td>
-    // </tr>
-    this.element = $("#" + this.elementId);
-    if (!this.element.length){// does not exist
-      
-      this.element = $('<tr/>').attr('id', this.elementId)
-        .addClass('event')
-        .addClass('injected')
-        .addClass('partial')
-        .addClass('')
-      
-    }
-    
-    return this.element;
-  }
-  
-  this.destroyElement = function() {
-    $("#" + this.elementId).remove();
-  }
-}

@@ -1,48 +1,52 @@
-// Handles incoming events, messages, notices and errors
+// 1) Handles incoming events, messages, notices and errors in the browser log.
+// 2) Updates list of users in the chat room..
 Usher = {
-  // for now inserts rows for each user, independently of what happened last
-  // eventually it should check the previous messages and insert into proper <p>
-  // it should also be smart enough to handle notices and private messages.
-  message: function(data){
-    var id = data.type;
-    
-    if (data.type == 'message' && data.partial){
-      return; // ignore partial messages for now.  This will be useful for brainstorming mode.
+  // handles all incoming messages in a triage fashion eventually becoming an insertion in the log
+  push: function(data){
+    try{
+      return Usher[data.type](data);
+    } catch(e){
+      console.info(data);
+      throw "Unable to handle data" + data.toString()
     }
-    
-    switch(data.type){
-      case 'message':
-        id += ("_" + data.id);
-        break;
-      default:
-        id += 'event' + Math.uuid();
-    }
-    
-    this.element = $('<tr/>').attr('id', id)
-      .append($('<td/>').addClass('author').html((data.user ? data.user.name : 'system')))
-      .append($('<td/>').addClass('content').html(data.content ? data.content : data.toString()))
-
-    this.element.insertBefore('#message');
-    
-    ChatRoom.align();
   },
   
-  announce: function(data){
+  connected: function(data){
     if ($("#user_" + data.user.id).length < 1) {
       $('<li/>').attr("id", "user_" + data.user.id).
                  html(data.user.name).
                  appendTo($('#people')).
                  highlight();
     }
-    
-    if (data.type == 'idle'){
-      $("#user_" + data.user.id).css('opacity', 0.5).addClass('idle');
-    } else if (data.type == 'back') {
-      $("#user_" + data.user.id).css('opacity', 1.0).removeClass('idle');
-    }
   },
   
-  notice: function(data){
-    Usher.message(data);
+  join: function(data){
+    
+  },
+  
+  back: function(data){
+    $("#user_" + data.user.id).css('opacity', 1.0).removeClass('idle');
+  },
+  
+  idle: function(data){
+    $("#user_" + data.user.id).css('opacity', 0.5).addClass('idle');
+  },
+  
+  // for now inserts rows for each user, independently of what happened last
+  // eventually it should check the previous messages and insert into proper <p>
+  // it should also be smart enough to handle notices and private messages.
+  message: function(data){
+    var id = data.type;
+    
+    if (data.partial){
+      return;
+    }
+    id += ("_" + data.id);
+    
+    this.element = $('<tr/>')
+      .append($('<td/>').addClass('author').html((data.user ? data.user.name : 'system')))
+      .append($('<td/>').addClass('content').attr('id', id).html(data.content ? data.content : data.toString()))
+
+    this.element.insertBefore('#message');
   }
 }
