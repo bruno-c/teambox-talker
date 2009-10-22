@@ -12,6 +12,8 @@ Receiver = {
   },
   
   connected: function(data) {
+    console.info("CONNECTED");
+    console.info(data.user.id);
     if ($("#user_" + data.user.id).length < 1) {
       $('<li/>').attr("id", "user_" + data.user.id)
         .html('<img alt="gary" src="/images/avatar_default.png" />' + data.user.name)

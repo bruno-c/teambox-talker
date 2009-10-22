@@ -38,6 +38,15 @@ class Event < ActiveRecord::Base
     type == "message"
   end
   
+  def to_json(options = {})
+    # to_json(options.merge(:only => [:id, :message, :type, :created_at, :uuid, :paste_permalink], :include => :user))
+    if message?
+      {:time => created_at.to_i, :user => user, :type => type, :content => message}.to_json
+    else # notice?
+      {}.to_json
+    end
+  end
+  
   def self.dates
     all(:order => "created_at desc",
         # Convert the created_at datetime to the user's time zone inside mysql
