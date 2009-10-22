@@ -43,7 +43,7 @@ class Event < ActiveRecord::Base
     if message?
       {:time => created_at.to_i, :user => user, :type => type, :content => message}.to_json
     else # notice?
-      {}.to_json
+      {:time => created_at.to_i, :type => type, :content => message, :user => user}.to_json
     end
   end
   
