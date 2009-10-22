@@ -3,6 +3,9 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'accounts', :action => 'create'
   map.signup '/signup', :controller => 'accounts', :action => 'new'
+  
+  # For testing exception notifier
+  map.signup '/ouch', :controller => 'home', :action => 'ouch'
 
   map.resources :users
   map.resources :invites, :member => { :resend => :post }

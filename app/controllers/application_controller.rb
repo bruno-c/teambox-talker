@@ -1,10 +1,12 @@
 class ApplicationController < ActionController::Base
+  include ExceptionNotifiable
+  include TimeZoneSupport
+  include AuthenticatedSystem
+  
   helper :all # include all helpers, all the time
 
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password, :password_confirmation
-  
-  include AuthenticatedSystem
   
   protected
     def in_account?

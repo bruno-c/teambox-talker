@@ -38,14 +38,14 @@ class SessionsControllerTest < ActionController::TestCase
 
   def test_should_login_with_cookie
     users(:quentin).remember_me
-    @request.cookies["auth_token"] = cookie_for(:quentin)
+    @request.cookies["auth_token"] = users(:quentin).remember_token
     get :new
     assert @controller.send(:logged_in?)
   end
 
   def test_should_fail_cookie_login
     users(:quentin).remember_me
-    @request.cookies["auth_token"] = auth_token('invalid_auth_token')
+    @request.cookies["auth_token"] = 'invalid_auth_token'
     get :new
     assert !@controller.send(:logged_in?)
   end
@@ -55,13 +55,12 @@ class SessionsControllerTest < ActionController::TestCase
     get :new
     assert @controller.send(:logged_in?)
   end
-
-  protected
-    def auth_token(token)
-      CGI::Cookie.new('name' => 'auth_token', 'value' => token)
-    end
-    
-    def cookie_for(user)
-      auth_token users(user).remember_token
-    end
+  
+  def test_sets_time_zone_from_cookie
+    @request.cookies["tzoffset"] = "240"
+    login_as :quentin
+    get :new
+    assert_not_nil users(:quentin).reload.time_zone
+    assert_equal "Atlantic Time (Canada)", users(:quentin).time_zone
+  end
 end

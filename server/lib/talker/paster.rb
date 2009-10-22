@@ -55,7 +55,7 @@ module Talker
     # If something fails we just don't paste the thing and return the full content
     # to degrate as gracefully as a ballet dancer eating a cookie with a fork.
     def handle_failure(content, callback, error)
-      Talker.logger.error "Error pasting: " + error
+      Talker::Notifier.error "Error pasting: #{error}"
       callback.call content, nil
     end
     
