@@ -10,6 +10,7 @@ Rails app:
 - Review signup process
   - Create default rooms
 - Create landing page
+- Send message to a room using REST API
 
 API:
 - Create Ruby Talker client gem talker.rb

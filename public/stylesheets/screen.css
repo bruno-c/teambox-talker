@@ -121,7 +121,6 @@ html[xmlns] .clearfix {
   height: 40px;
   border-bottom: 2px solid silver; }
   #nav ul {
-    width: 100%;
     margin: 10px 0 0;
     float: left;
     overflow: hidden; }
@@ -143,9 +142,6 @@ html[xmlns] .clearfix {
           -moz-border-radius: 3px;
           -webkit-border-radius: 3px;
           color: #269ed6; }
-    #nav ul li.user {
-      margin-right: 40px;
-      float: right; }
   #nav p.utilities {
     float: right;
     color: silver;
@@ -157,8 +153,10 @@ html[xmlns] .clearfix {
         height: 16px;
         width: 16px; }
         #nav p.utilities a.avatar img {
-          height: 16px;
-          width: 16px; }
+          height: 100%;
+          width: 100%;
+          position: relative;
+          top: -3px; }
 
 #content {
   padding: 40px 0; }
