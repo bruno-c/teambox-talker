@@ -59,7 +59,7 @@
       <h4>Who&#39;s here?</h4>
       <ul class="people" id="people">
         <%= render :partial => "user", :collection => @room.users %>
-      </p>
+      </ul>
     </div>
     <div class="footer">
       <%= link_to "Chat Logs", "", :title => "Chat Logs" %>
@@ -73,261 +73,60 @@
 
 <div id="chat_log">
   <table id="log">
-    <tbody>
-      <tr id="message-1840" class="notice user_4 event">
-        <td class="author">
-          <%= image_tag "icons/exclamation.png", :alt => "Date/Time", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <strong>Francis</strong> entered the room.
-            <%= image_tag "avatar_default.png", :alt => "Francis", :class => "avatar" %>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-A337C9C0-C3E3-4422-B535-370943F540D7" class="message user_2 event">
-        <td class="author">
-          Gary
-          <%= image_tag "avatar_default.png", :alt => "Gary", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>asdfasdf</p>
-            <p>asdfasdf</p>
-          </blockquote>
-        </td>
-      </tr>
+    <tr id="message-1840" class="notice user_4 event">
+      <td class="author">
+        <%= image_tag "icons/exclamation.png", :alt => "Date/Time", :class => "avatar" %>
+        <b class="blockquote_tail"><!----></b>
+      </td>
+      <td class="message">
+        <blockquote>
+          <strong>Francis</strong> entered the room.
+          <%= image_tag "avatar_default.png", :alt => "Francis", :class => "avatar" %>
+        </blockquote>
+      </td>
+    </tr>
+    <tr id="message-A337C9C0-C3E3-4422-B535-370943F540D7" class="message user_2 event">
+      <td class="author">
+        Gary
+        <%= image_tag "avatar_default.png", :alt => "Gary", :class => "avatar" %>
+        <b class="blockquote_tail"><!----></b>
+      </td>
+      <td class="message">
+        <blockquote>
+          <p>asdfasdf</p>
+          <p>asdfasdf</p>
+        </blockquote>
+      </td>
+    </tr>
+    <tr id="message-5748EF0B-F776-4550-B974-2C74BE88B273" class="message user_1 event">
+      <td class="author">
+        Marc
+        <%= image_tag "avatar_default.png", :alt => "Marc", :class => "avatar" %>
+        <b class="blockquote_tail"><!----></b>
+      </td>
+      <td class="message">
+        <blockquote>
+          <p>deploying</p>
+        </blockquote>
+      </td>
+    </tr>
+    <tr id="message">
+      <td class="author">
+        <%= current_user.name %>
+        <%= image_tag "avatar_default.png", :alt => "Marc", :class => "avatar" %>
+      </td>
+      <td class="new_content">
+        <blockquote>
+          <form id="message_form" action="/rooms/1/messages" class="fade">
+            <p>
+              <textarea rows="1" id="msgbox"></textarea>
+            </p>
+          </form>
+        </blockquote>
+      </td>
+    </tr>
     </tbody>
   </table>
 </div>
 
 
-<div id="chat_log_" style="display: none">
-  <table id="log_">
-    <tbody>
-      <tr id="message-1840" class="notice user_4 event">
-        <td class="author">
-          <%= image_tag "icons/exclamation.png", :alt => "Date/Time", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <strong>Francis</strong> entered the room.
-            <%= image_tag "avatar_default.png", :alt => "Francis", :class => "avatar" %>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-5BE82EB4-6D6B-4C90-837E-874B79444FA2" class="message user_4 me event">
-        <td class="author">
-          Francis
-          <%= image_tag "avatar_default.png", :alt => "Francis", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>jdfas jkfd</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-A337C9C0-C3E3-4422-B535-370943F540D7" class="message user_2 event">
-        <td class="author">
-          Gary
-          <%= image_tag "avatar_default.png", :alt => "Gary", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>asdfasdf</p>
-            <p>asdfasdf</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-D2DEE632-4973-490D-B385-E7EE4A97F252" class="message user_1 event">
-        <td class="author">
-          Marc
-          <%= image_tag "avatar_default.png", :alt => "Marc", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>asdasd</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-275B9173-4D5A-4072-9419-6485EF8C2FB5" class="message user_4 me event">
-        <td class="author">
-          Francis
-          <%= image_tag "avatar_default.png", :alt => "Francis", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p> sajkfdjak jdfk</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-2DDEA5F7-F2AC-43DA-A2C6-3A3B6A3C2CD3" class="message user_1 event">
-        <td class="author">
-          Marc
-          <%= image_tag "avatar_default.png", :alt => "Marc", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>asd</p>
-            <p>asdas</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-9414F40D-5631-4ACB-B46D-E0C57BDB4480" class="message user_2 event">
-        <td class="author">
-          Gary
-          <%= image_tag "avatar_default.png", :alt => "Gary", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>asdfasdf</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-0B2299F3-5294-4BAC-B257-F17DFC4C7720" class="message user_1 event">
-        <td class="author">
-          Marc
-          <%= image_tag "avatar_default.png", :alt => "Marc", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>d</p>
-            <p>asd</p>
-            <p>as</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-EAFB9A54-7576-44B6-86E9-FA69834E5FC3" class="message user_2 event">
-        <td class="author">
-          Gary
-          <%= image_tag "avatar_default.png", :alt => "Gary", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>asdfasdf</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-DAA0A1DD-F79E-49C1-A552-9109652FA85E" class="message user_4 me event">
-        <td class="author">
-          Francis
-          <%= image_tag "avatar_default.png", :alt => "Francis", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>a jk fdjkf dsajk jfd saj</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-BBFE6025-F57D-455E-92C1-4556E1B8E604" class="message user_1 event">
-        <td class="author">
-          Marc
-          <%= image_tag "avatar_default.png", :alt => "Marc", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>dfdsf</p>
-            <p>adsfsdf</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-3EC5D0E5-9774-4D08-B3F2-66F99F6C1C44" class="message user_2 event">
-        <td class="author">
-          Gary
-          <%= image_tag "avatar_default.png", :alt => "Gary", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>time stamp please</p>
-            <p>ignore last message</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="datetime">
-        <td class="author">
-          <%= image_tag "icons/clock.png", :alt => "Date/Time", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message"><blockquote>October 18th, 2009 17:45</blockquote></td>
-      </tr>
-      <tr id="message-B67506FF-4280-428F-BF83-2CEC31AC0740" class="message user_1 event">
-        <td class="author">
-          Marc
-          <%= image_tag "avatar_default.png", :alt => "Marc", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>all riiiight, deploying sphinx stuff</p>
-            <p>cross your fingers</p>
-            <p>still get the lost focus issue after each message I sent</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr id="message-1BC8D299-9ACF-4873-A240-377238562FB4" class="message user_2 event">
-        <td class="author">
-          Gary
-          <%= image_tag "avatar_default.png", :alt => "Gary", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>what do you call lost focus?</p>
-            <p>do you mean the caret does not blink?</p>
-            <p>si je tapes, <%= link_to "this is a link", "" %></p>
-            <p>je continue de taper</p>
-          </blockquote>
-        </td>
-      </tr>
-      <tr class="datetime">
-        <td class="author">
-          <%= image_tag "icons/clock.png", :alt => "Date/Time", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message"><blockquote>October 18th, 2009 17:55</blockquote></td>
-      </tr>
-      <tr id="message-5748EF0B-F776-4550-B974-2C74BE88B273" class="message user_1 event">
-        <td class="author">
-          Marc
-          <%= image_tag "avatar_default.png", :alt => "Marc", :class => "avatar" %>
-          <b class="blockquote_tail"><!----></b>
-        </td>
-        <td class="message">
-          <blockquote>
-            <p>deploying</p>
-          </blockquote>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<div id="message_form">
-  <form id="msgForm" action="/rooms/1/messages" class="fade">
-    <textarea rows="1" id="msgbox"/></textarea>
-  </form>
-</div>
-
-
-<!-- %table#log
-  = render :partial => "messages/messages", :object => @events
-  %tr.event#message
-    %td.author
-      %span&= current_user.name
-    %td.new_content
-      %form#msgForm{:action => room_messages_path(@room)}
-        %textarea#msgbox{:rows => 1} -->
