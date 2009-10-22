@@ -3,6 +3,7 @@
 Receiver = {
   // handles all incoming messages in a triage fashion eventually becoming an insertion in the log
   push: function(data) {
+    if (data.type == null) return;
     try{
       return Receiver[data.type](data);
     } catch(e){
@@ -32,7 +33,7 @@ Receiver = {
   },
   
   close: function(data){
-    console.info("Received close event from server.")
+    console.info("Received close event.")
   },
   
   back: function(data) {

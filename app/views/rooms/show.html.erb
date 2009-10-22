@@ -37,7 +37,9 @@
       client.connect();
       
       $.each(ChatRoom.events, function(){
-        Receiver.push(this);
+        if (this.type == 'message'){
+          Receiver.push(this);
+        }
       });
       
       $(window).bind('beforeunload', function() { client.reset() });
@@ -118,12 +120,6 @@
           </td>
         </tr>
         -->
-      <% @events.each do |event| %>
-      <tr style="background: #DDD">
-        <td class="author"><%= event.user.name if event.message? %></td>
-        <td><%= event.message %></td>
-      </tr>
-      <% end %>
       <tr id="message">
         <td class="author">
           <%= current_user.name %>
