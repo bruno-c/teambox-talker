@@ -30,9 +30,9 @@
       });
       ChatRoom.current_user = client.options.user;
       ChatRoom.room = '<%= @room.name %>';
-      ChatRoom.transmitter = client;
-      ChatRoom.receiver    = Usher;
-  
+      ChatRoom.client = client;
+      ChatRoom.receiver = Receiver;
+      
       client.connect();
       $(window).bind('beforeunload', function() { client.reset() });
       $("a#leave").click(function() {

@@ -92,15 +92,15 @@ var ChatRoom = {
   
   send: function(data, eol) {
     if (data === "") return;
-    if (this.sendTimeout) clearTimeout(this.sendTimeout);
+    if (ChatRoom.sendTimeout) clearTimeout(ChatRoom.sendTimeout);
     
     var message = this.currentMessage;
     message.content = data;
     if (eol){
-      this.transmitter.send({id: message.uuid, content: message.content});
+      ChatRoom.client.send({id: message.uuid, content: message.content});
     } else {
       var message_content = (ChatRoom.current_user.livetyping ? message.content : FormatHelper.text2preview(message.content));
-      this.transmitter.send({id: message.uuid, content: message_content, partial: true})
+      ChatRoom.client.send({id: message.uuid, content: message_content, partial: true})
     }
   },
   
@@ -146,7 +146,7 @@ var ChatRoom = {
   cancelMessage: function() {
     // if (this.currentMessage){
     //   var message = this.currentMessage;
-    //   this.client.send({id: message.uuid, content: '', partial: true});
+    //   ChatRoom.client.send({id: message.uuid, content: '', partial: true});
     //   this.messages[this.currentMessage.uuid] = null;
     //   this.currentMessage = null;
     // }
@@ -167,7 +167,7 @@ var ChatRoom = {
   },
   
   onNewMessage: function(data) {
-    Usher.push(data);
+    Receiver.push(data);
     ChatRoom.scrollToBottom();
     ChatRoom.align();
   },
@@ -177,25 +177,25 @@ var ChatRoom = {
   },
   
   onJoin: function(data) {
-    Usher.push(data);
+    Receiver.push(data);
   },
 
   onLeave: function(data) {
-    Usher.push(data);
+    Receiver.push(data);
   },
   
   onConnected: function(data){
   },
   
   onIdle: function(data){
-    Usher.push(data);
+    ChatRoom.receiver.push(data);
   },
   
   onBack: function(data){
-    Usher.push(data);
+    ChatRoom.receiver.push(data);
   },
   
   onClose: function(){ // this is very different than a window close event which needs to send a message through client.
-    Usher.push({user: {id:0,name:"System"}, type: "close", comment: "the persistent connection to talker is not active."});
+    Receiver.push({user: {id:0,name:"System"}, type: "close", comment: "the persistent connection to talker is not active."});
   }
 };

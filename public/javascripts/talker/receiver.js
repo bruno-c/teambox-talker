@@ -1,41 +1,46 @@
 // 1) Handles incoming events, messages, notices and errors in the browser log.
 // 2) Updates list of users in the chat room..
-Usher = {
+Receiver = {
   // handles all incoming messages in a triage fashion eventually becoming an insertion in the log
-  push: function(data){
+  push: function(data) {
     try{
-      return Usher[data.type](data);
+      return Receiver[data.type](data);
     } catch(e){
       console.info(data);
-      throw "Unable to handle data" + data.toString()
+      throw "Unable to handle data type: (" + data.type + ") with data: " + data.toString();
     }
   },
   
-  connected: function(data){
+  connected: function(data) {
     if ($("#user_" + data.user.id).length < 1) {
-      $('<li/>').attr("id", "user_" + data.user.id).
-                 html(data.user.name).
-                 appendTo($('#people')).
-                 highlight();
+      $('<li/>').attr("id", "user_" + data.user.id)
+        .html('<img alt="gary" src="/images/avatar_default.png" />' + data.user.name)
+        .css('opacity', 0.0)
+        .appendTo($('#people'))
+        .animate({opacity: 1.0}, 800);
     }
   },
   
-  join: function(data){
-    
+  join: function(data) {
+    Receiver.connected(data);
   },
   
-  back: function(data){
+  leave: function(data) {
+    $("#user_" + data.user.id).animate({opacity: 0.0}, 800, function(){ $(this).remove() });
+  },
+  
+  back: function(data) {
     $("#user_" + data.user.id).css('opacity', 1.0).removeClass('idle');
   },
   
-  idle: function(data){
+  idle: function(data) {
     $("#user_" + data.user.id).css('opacity', 0.5).addClass('idle');
   },
   
   // for now inserts rows for each user, independently of what happened last
   // eventually it should check the previous messages and insert into proper <p>
   // it should also be smart enough to handle notices and private messages.
-  message: function(data){
+  message: function(data) {
     var id = data.type;
     
     if (data.partial){
