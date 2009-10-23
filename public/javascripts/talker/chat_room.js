@@ -3,8 +3,7 @@ $(function() {
     .keydown(function(e) {
       if (e.which == 13) {
         if (this.value == ''){ return false }
-        ChatRoom.send(this.value, true); // submits a new msg
-        $('#msgbox').val('');
+        ChatRoom.send(this.value, true); // submits a new final (ie: non partial) msg
         return false;
       } else if (e.which == 27 || e.which == 8 && $('#msgbox').val().length == 1){
         ChatRoom.cancelMessage();
@@ -136,18 +135,11 @@ var ChatRoom = {
   
   resetMessage: function() {
     ChatRoom.currentMessage = {id: Math.uuid(), content: $('#msgbox').val(), partial: true};
-    console.info("Created currentmessage");
-    console.info(ChatRoom.currentMessage);
-
-    // Move the new message form to the bottom
-    // $("#message").appendTo($("#log")); // as soon as livetyping is done.
     document.getElementById('msgbox').value = '';
-    
     ChatRoom.scrollToBottom();
   },
   
   cancelMessage: function() {
-    ChatRoom.currentMessage = null;
     ChatRoom.resetMessage();
   },
   
