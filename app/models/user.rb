@@ -74,6 +74,10 @@ class User < ActiveRecord::Base
     save(false)
   end
   
+  def to_json(options = {})
+    super(options.merge(:only => [:name, :email, :id]))
+  end
+
   def avatar_url
     "/images/avatar_default.png"
   end
