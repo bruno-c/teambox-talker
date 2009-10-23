@@ -76,9 +76,6 @@ p {
           border-left: 8px solid silver;
           margin: 5px 0 0 5px; }
 
-label {
-  color: gray; }
-
 input, select, textarea {
   font-family: helvetica, arial, sans-serif;
   font-size: 12px; }
@@ -198,8 +195,6 @@ form div.complex_field {
   margin: 0 0 1.5em; }
 form label {
   display: block;
-  float: left;
-  text-align: right;
   margin-right: 10px;
   font-size: 16px; }
   form label.description {
@@ -208,6 +203,10 @@ form label {
     font-size: 12px;
     float: none;
     text-align: left; }
+  form label.inline {
+    font-size: 12px;
+    display: inline;
+    float: none; }
 form input[type=text] {
   background: white;
   font-size: 16px;
@@ -218,6 +217,46 @@ form input[type=text] {
   border-left: 1px solid #bfbfbf; }
   form input[type=text].is_blank {
     color: silver; }
+<<<<<<< HEAD
+=======
+form textarea {
+  padding: 5px 3px;
+  font-size: 16px;
+  border: 1px solid #e5e5e5;
+  border-top: 1px solid #bfbfbf;
+  border-left: 1px solid #bfbfbf;
+  margin: 0; }
+  form textarea.large {
+    width: 600px; }
+form.lw40 label {
+  width: 40px; }
+  form.lw40 label.description {
+    width: auto;
+    margin-left: 50px; }
+form.lw40 p.indent {
+  margin-left: 50px; }
+form.lw80 label {
+  width: 80px; }
+  form.lw80 label.description {
+    width: auto;
+    margin-left: 90px; }
+form.lw80 p.indent {
+  margin-left: 90px; }
+form.lw120 label {
+  width: 120px; }
+  form.lw120 label.description {
+    width: auto;
+    margin-left: 130px; }
+form.lw120 p.indent {
+  margin-left: 130px; }
+form.lw160 label {
+  width: 160px; }
+  form.lw160 label.description {
+    width: auto;
+    margin-left: 170px; }
+form.lw160 p.indent {
+  margin-left: 170px; }
+>>>>>>> 2bbabafe660bdaf40d1d5f312d4f5270978ef07f
 
 a.button {
   display: inline-block;
@@ -235,31 +274,36 @@ a.button {
   height: 26px;
   box-shadow: 2px 2px 4px silver;
   -webkit-box-shadow: 2px 2px 4px silver;
-  -moz-box-shadow: 2px 2px 4px silver; }
+  -moz-box-shadow: 2px 2px 4px silver;
+  margin: 0 4px; }
   a.button:hover {
-    background: #269ed6; }
+    background: #228dbf; }
   a.button.large {
     font-size: 18px;
     line-height: 31px;
     height: 29px; }
+  a.button.small {
+    font-size: 12px;
+    line-height: 20px;
+    height: 20px; }
   a.button.negative {
     background: #924f6b;
     border-color: #6d3b50;
     text-shadow: -1px -1px 0px #6d3b50;
-    filter: alpha(opacity=50);
-    opacity: 0.5;
-    -moz-opacity: 0.5; }
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    -moz-opacity: 0.8; }
     a.button.negative:hover {
       filter: alpha(opacity=100);
       opacity: 1;
       -moz-opacity: 1; }
   a.button.neutral {
-    background: #b0b0b0;
+    background: #cfcfcf;
     border-color: gray;
-    text-shadow: 1px 1px 0px white;
+    text-shadow: 1px 1px 0px silver;
     color: #404040; }
     a.button.neutral:hover {
-      background-color: #cfcfcf;
+      background-color: #dfdfdf;
       color: black; }
   a.button.add {
     background-image: url('../../images/icons/plus-circle.png');
@@ -292,6 +336,10 @@ a.button {
     width: 280px;
     margin: 0 10px 10px 0;
     float: left; }
+    #people li.pending div.header {
+      background-color: gray; }
+      #people li.pending div.header .tag.pending {
+        background-color: silver; }
     #people li div.panel div.header div.avatar {
       position: absolute;
       top: 10px;
@@ -450,6 +498,19 @@ div.panel {
     -webkit-border-bottom-left-radius: 3px;
     border-top: 2px solid #f2f2f2;
     background: #f8f8f8; }
+  div.panel li {
+    line-height: 0px;
+    width: auto; }
+  div.panel .tag {
+    font-size: 12px;
+    background-color: #e5952b;
+    color: white;
+    padding: 2px 4px;
+    position: relative;
+    top: 5px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px; }
 
 #sidebar #room div.content ul.people li {
   display: block;

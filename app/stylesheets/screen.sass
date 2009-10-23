@@ -2,7 +2,7 @@
 !accent_colour = #269ED6
 !alt_colour = #E5952B
 !button_colour_off = #269ED6
-!button_colour_on = #269ED6
+!button_colour_on = #228DBF
 !alt_button_colour_off = #E5952B
 !alt_button_colour_on = #E5952B
 
@@ -163,8 +163,6 @@ p
           border-right: none
           border-left = 8px "solid" !light_grey
           margin: 5px 0 0 5px
-label
-  color = !grey
 input, select, textarea
   font-family: helvetica, arial, sans-serif
   +font_size("small")
@@ -285,8 +283,6 @@ form
     margin: 0 0 1.5em
   label
     display: block
-    float: left
-    text-align: right
     margin-right: 10px
     +font_size("large")
     &.description
@@ -295,6 +291,10 @@ form
       +font_size("small")
       float: none
       text-align: left
+    &.inline
+      +font_size("small")
+      display: inline
+      float: none
   input[type=text]
     background = !white
     +font_size("large")
@@ -359,26 +359,31 @@ a.button
   +font_size("large")
   height: 26px
   +box_shadow(2, 2, 4, !light_grey)
+  margin: 0 4px
   &:hover
     background = !button_colour_on
   &.large
     +font_size("xlarge")
     line-height = 31px
     height: 29px
+  &.small
+    +font_size("small")
+    line-height = 20px
+    height: 20px
   &.negative
     background = !colour_negative
     border-color = !colour_negative * 0.75 + !black * 0.25
     +text_shadow(-1, -1, 0, !colour_negative * 0.75 + !black * 0.25)
-    +opacity(50)
+    +opacity(80)
     &:hover
       +opacity(100)
   &.neutral
-    background = !light_grey * 0.75 + !grey * 0.25
+    background = !light_grey * 0.75 + !white * 0.25
     border-color = !grey
-    +text_shadow(1, 1, 0, !white)
+    +text_shadow(1, 1, 0, !light_grey)
     color = !dark_grey
     &:hover
-      background-color = !white * 0.25 + !light_grey * 0.75
+      background-color = !white * 0.5 + !light_grey * 0.5
       color = !black
   &.add
     background-image: url('../../images/icons/plus-circle.png')
@@ -415,6 +420,11 @@ a.button
     width: 280px
     margin: 0 10px 10px 0
     float: left
+    &.pending
+      div.header
+        :background-color = !grey
+        .tag.pending
+          :background-color = !light_grey
     div.panel
       div
         &.header
@@ -569,6 +579,17 @@ div.panel
       +rounded_corners("bottom", 3)
       border-top = 2px solid !light_grey * 0.2 + !white * 0.8
       background = !light_grey * 0.1 + !white * 0.9
+  li
+    :line-height 0px
+    :width auto
+  .tag
+    +font_size("small")
+    :background-color = !alt_colour
+    :color = !white
+    :padding 2px 4px
+    :position relative
+    :top 5px
+    +rounded_corners("all", 3)
 
 // Room Sidebar
 #sidebar

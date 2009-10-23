@@ -1,0 +1,63 @@
+<% @title = "Manager Users" %>
+
+<% content_for :sidebar do %>
+  <div id="actions">
+    <%= link_to "Send Invites", invites_path, :class => "button add" %>
+  </div>
+<% end %>
+
+<ul id="people">
+<% @users.each do |user| %>
+  <% form_tag user_path(user) do %>
+  <li class="user <%= 'pending' if user.pending? %>">
+    <div class="panel">
+      <div class="header">
+        <div class="avatar">
+          <%= image_tag user.avatar_url, :alt => h(user.name) %>
+        </div>
+        <span class="actions">
+          <% if user == current_user %>
+            <span class="tag">You</span>
+          <% end %>
+          <% if user.pending? %>
+            <span class="tag pending">Pending</span>
+          <% end %>
+        </span>
+        <h3 title="<%=h user.name %>"><%=h truncate(user.name, :length => 15) %></h3>
+      </div>
+      <div class="content">
+        <ul>
+          <li>
+            <%= check_box_tag "admin", "1", user.admin, :id => dom_id(user, :admin), :class => "admin" %>
+            <%= label_tag dom_id(user, :admin), "Administrator", :class => "inline" %>
+          </li>
+          <li>
+            <%= check_box_tag "suspended", "1", user.suspended?, :id => dom_id(user, :suspended), :class => "suspended" %>
+            <%= label_tag dom_id(user, :suspended), "Access suspended", :class => "inline" %>
+          </li>
+        </ul>
+        <div class="actions">
+          <%= link_to "Resend Invitation", resend_invite_path(user), :method => :post, :class => "button neutral small" %>
+          <%= link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete, :class => "button negative small" if user.pending? %>
+        </div>
+      </div>
+    </div>
+  </li>
+  <% end %>
+<% end %>
+</table>
+<!--
+- form_tag user_path(user) do
+  %span.role
+    = check_box_tag "admin", "1", user.admin, :id => dom_id(user, :admin), :class => "admin"
+    = label_tag dom_id(user, :admin), "Admin", :class => "inline"
+
+  %span.role
+    = check_box_tag "suspended", "1", user.suspended?, :id => dom_id(user, :suspended), :class => "suspended"
+    = label_tag dom_id(user, :suspended), "Suspended", :class => "inline"
+
+  = link_to "Resend Invitation", resend_invite_path(user), :method => :post
+  
+  - if user.pending?
+    = link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete -->
+          

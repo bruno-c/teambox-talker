@@ -96,10 +96,7 @@ Receiver = {
     var last_author = last_row.attr('author');
     
     if (data.type == 'message'){
-      console.info(JSON.encode(data));
-      console.info($('#message-' + data.id));
       if ($('#message-' + data.id).length) { // just update the element with the new content... ie we are livetyping
-        console.info("********** WE FOUND EXISTING MESSAGE *******************");
         $('#message-' + data.id).html(data.content);
       } else if (last_author == data.user.name){ // only append to existing blockquote group
         last_row.find('blockquote')

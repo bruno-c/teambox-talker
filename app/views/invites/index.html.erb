@@ -1,0 +1,13 @@
+<% @title = "Send Invites" %>
+
+<% form_tag invites_path do %>
+  <p>
+    <%= label_tag :invitees, "Enter the email addresses of the people you want to invite. One per line." %>
+    <%= text_area_tag :invitees, "", :class => "large", :rows => 10 %>
+  </p>
+  <p>
+    <%= submit_button "Send Invites" %>
+    or
+    <%= link_to "Cancel", :back, :class => "button negative" %>
+  </p>
+<% end %>

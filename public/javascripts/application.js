@@ -11,7 +11,7 @@ jQuery.fn.submitWithAjax = function(callback) {
 };
 
 $(function() {
-  $("#users input.admin, #users input.suspended").click(function () {
+  $("#people input.admin, #people input.suspended").click(function () {
     var url = $(this).parents("form")[0].action;
     var state = this.name;
     
