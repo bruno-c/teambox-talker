@@ -529,3 +529,25 @@ div.panel {
     width: 16px;
     position: relative;
     top: 3px; }
+
+div.flash {
+  padding: 10px 16px;
+  margin-bottom: 10px;
+  border: 2px solid;
+  border-left-width: 10px;
+  border-top-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px; }
+
+#flash_error {
+  border-color: #b20000;
+  color: #7f0000;
+  background-color: #fee5e5; }
+
+#flash_notice {
+  border-color: #007f00;
+  color: #004c00;
+  background-color: #e5fee5; }

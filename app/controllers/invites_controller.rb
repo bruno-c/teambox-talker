@@ -38,8 +38,8 @@ class InvitesController < ApplicationController
         send_invitation user
         success_count += 1
       else
-        flash[:error] ||= "Some errors occured while sending invitations:"
-        flash[:error] += "<br/><strong>" + email + "</strong>: " + user.errors.full_messages.to_sentence
+        flash[:error] ||= "<h3>Some errors occured while sending invitations:</h3>"
+        flash[:error] += "<p><strong>" + email + "</strong>: " + user.errors.full_messages.to_sentence + "</p>"
       end
     end
     

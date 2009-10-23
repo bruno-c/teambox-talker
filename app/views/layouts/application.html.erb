@@ -20,7 +20,9 @@
     </div>
     <div id="main">
       <%- flash.each do |name, message| -%>
-        <%= content_tag :p, message, :id => "flash_#{name}", :class => "flash #{name}" %>
+        <div id="flash_<%= name %>" class="flash">
+          <%= message %>
+        </div>
       <%- end -%>
       <%= yield %>
     </div>

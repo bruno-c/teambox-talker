@@ -614,3 +614,19 @@ div.panel
               width: 16px
               position: relative
               top: 3px
+
+// Flash
+div.flash
+  padding: 10px 16px
+  margin-bottom: 10px
+  border: 2px solid
+  border-left-width: 10px
+  +rounded_corners("right", 5)
+#flash_error
+  border-color = !red * 0.7
+  color = !red * 0.5
+  background-color = !red * 0.1 + !white * 0.9
+#flash_notice
+  border-color = !green * 0.5
+  color = !green * 0.3
+  background-color = !green * 0.1 + !white * 0.9
