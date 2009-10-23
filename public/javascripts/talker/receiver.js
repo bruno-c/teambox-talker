@@ -63,7 +63,7 @@ Receiver = {
     }
     
     // we need to figure out if the last row is of the same author to group elements together.
-    var last_row    = $('#log tr.message:last');
+    var last_row    = $('#log tr.received:last');
     var last_author = last_row.attr('author');
     
     if (data.type == 'message'){
@@ -75,7 +75,7 @@ Receiver = {
         last_row.find('blockquote')
           .append($('<p/>').attr('id', 'message-' + data.id).attr('time', data.time).html(data.content));
       } else {
-        var element = $('<tr/>').attr('author', data.user.name).addClass('message').addClass('user_' + data.user.id).addClass('event').addClass(data.user.id == currentUser.id ? 'me' : '')
+        var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('message').addClass('user_' + data.user.id).addClass('event').addClass(data.user.id == currentUser.id ? 'me' : '')
           .append($('<td/>').addClass('author')
             .append('\n' + data.user.name + '\n') //.append(' ') // this last space fixes the issue
             .append($('<img/>').attr('src', '/images/avatar_default.png').attr('alt', data.user.name).addClass('avatar'))
