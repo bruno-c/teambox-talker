@@ -1,0 +1,12 @@
+<% @title = "Chat Logs" %>
+
+<h2><%=h @title %></h2>
+
+<%= render :partial => "search_form" %>
+
+<h3>Room Logs</h3>
+<ul>
+<% @rooms.each do |room| %>
+  <li><%= link_to h(room.name), room_logs_path(room) %></li>
+<% end %>
+</ul>

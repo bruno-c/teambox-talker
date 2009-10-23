@@ -1,0 +1,11 @@
+<% @title = "Chat Logs for #{@room.name}" %>
+
+<h2><%=h @title %></h2>
+
+<%= render :partial => "search_form" %>
+
+<% @dates.each do |date| %>
+  <div class="log-entry">
+    <h3><%= link_to human_date(date), room_log_path(@room, date.year, date.month, date.day) %></h3>
+  </div>
+<% end %>

@@ -1,0 +1,7 @@
+<% @title = "Chat Logs of #{@room.name} for " + human_date(@date) %>
+
+<h2><%=h @title %></h2>
+
+<table id="log">
+  <%= render :partial => "messages/messages", :object => @events %>
+</table>
