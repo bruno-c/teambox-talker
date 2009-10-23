@@ -218,42 +218,6 @@ form input[type=text] {
   border-left: 1px solid #bfbfbf; }
   form input[type=text].is_blank {
     color: silver; }
-form textarea {
-  padding: 5px 3px;
-  font-size: 16px;
-  border: 1px solid #e5e5e5;
-  border-top: 1px solid #bfbfbf;
-  border-left: 1px solid #bfbfbf;
-  margin: 4px auto;
-  width: 90%; }
-form.lw40 label {
-  width: 40px; }
-  form.lw40 label.description {
-    width: auto;
-    margin-left: 50px; }
-form.lw40 p.indent {
-  margin-left: 50px; }
-form.lw80 label {
-  width: 80px; }
-  form.lw80 label.description {
-    width: auto;
-    margin-left: 90px; }
-form.lw80 p.indent {
-  margin-left: 90px; }
-form.lw120 label {
-  width: 120px; }
-  form.lw120 label.description {
-    width: auto;
-    margin-left: 130px; }
-form.lw120 p.indent {
-  margin-left: 130px; }
-form.lw160 label {
-  width: 160px; }
-  form.lw160 label.description {
-    width: auto;
-    margin-left: 170px; }
-form.lw160 p.indent {
-  margin-left: 170px; }
 
 a.button {
   display: inline-block;
@@ -430,23 +394,16 @@ a.button {
         color: black;
         font-weight: normal; }
 
-#message_form {
-  z-index: 2;
-  height: 100px;
-  overflow: hidden;
-  width: 100%; }
-  #message_form form.fade {
-    height: 80px;
-    margin: 20px 260px 0 0;
-    padding: 0 0 0 50px;
-    background: #e5e5e5;
-    box-shadow: 0px -10px 10px #e5e5e5;
-    -webkit-box-shadow: 0px -10px 10px #e5e5e5;
-    -moz-box-shadow: 0px -10px 10px #e5e5e5; }
-    #message_form form.fade textarea {
-      height: 50px;
-      width: 662px;
-      border: 1px solid silver; }
+#message form.fade {
+  display: inline;
+  background: #e5e5e5; }
+  #message form.fade textarea {
+    display: inline;
+    width: 99%;
+    min-height: 50px;
+    border: 1px solid #CCC;
+    background: white;
+    padding: 4px; }
 
 div.panel {
   margin: 0 0 20px;

@@ -65,7 +65,6 @@ $(function() {
         break;
       default:
         document.getElementById('msgbox').focus();
-        // nothing at all.
         break;
     }
   });
