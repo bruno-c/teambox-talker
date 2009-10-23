@@ -52,6 +52,15 @@ Receiver = {
     //   console.info("partial: " + data.content);
     //   return;
     // }
+    
+    if (data.content == '') { // cancel message
+      if ($('#message-' + data.id).parent('tr').find('p').length > 1){
+        $('#message-' + data.id).remove();
+      } else {
+        $('#message-' + data.id).parent('tr').remove();
+      }
+      return;
+    }
 
     // var id = (data.type + "_" + data.id);
     
