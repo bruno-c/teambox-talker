@@ -271,7 +271,8 @@ a.button {
   height: 26px;
   box-shadow: 2px 2px 4px silver;
   -webkit-box-shadow: 2px 2px 4px silver;
-  -moz-box-shadow: 2px 2px 4px silver; }
+  -moz-box-shadow: 2px 2px 4px silver;
+  margin: 0 4px; }
   a.button:hover {
     background: #228dbf; }
   a.button.large {
