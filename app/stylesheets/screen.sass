@@ -376,16 +376,16 @@ a.button
     background = !colour_negative
     border-color = !colour_negative * 0.75 + !black * 0.25
     +text_shadow(-1, -1, 0, !colour_negative * 0.75 + !black * 0.25)
-    +opacity(50)
+    +opacity(80)
     &:hover
       +opacity(100)
   &.neutral
-    background = !light_grey * 0.75 + !grey * 0.25
+    background = !light_grey * 0.75 + !white * 0.25
     border-color = !grey
-    +text_shadow(1, 1, 0, !white)
+    +text_shadow(1, 1, 0, !light_grey)
     color = !dark_grey
     &:hover
-      background-color = !white * 0.25 + !light_grey * 0.75
+      background-color = !white * 0.5 + !light_grey * 0.5
       color = !black
   &.add
     background-image: url('../../images/icons/plus-circle.png')

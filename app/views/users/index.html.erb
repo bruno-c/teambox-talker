@@ -23,7 +23,7 @@
             <span class="tag pending">Pending</span>
           <% end %>
         </span>
-        <h3 title="<%=h user.name %>"><%=h truncate(user.name, :length => 14) %></h3>
+        <h3 title="<%=h user.name %>"><%=h truncate(user.name, :length => 15) %></h3>
       </div>
       <div class="content">
         <ul>
@@ -37,7 +37,7 @@
           </li>
         </ul>
         <div class="actions">
-          <%= link_to "Resend Invitation", resend_invite_path(user), :method => :post %>
+          <%= link_to "Resend Invitation", resend_invite_path(user), :method => :post, :class => "button neutral small" %>
           <%= link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete, :class => "button negative small" if user.pending? %>
         </div>
       </div>
