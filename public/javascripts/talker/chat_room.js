@@ -135,12 +135,10 @@ var ChatRoom = {
   },
   
   resetMessage: function() {
-    if (!ChatRoom.currentMessage){
-      ChatRoom.currentMessage = {id: Math.uuid(), content: $('#msgbox').val()};
-      console.info("Created currentmessage");
-      console.info(ChatRoom.currentMessage);
-    }
-    
+    ChatRoom.currentMessage = {id: Math.uuid(), content: $('#msgbox').val(), partial: true};
+    console.info("Created currentmessage");
+    console.info(ChatRoom.currentMessage);
+
     // Move the new message form to the bottom
     // $("#message").appendTo($("#log")); // as soon as livetyping is done.
     document.getElementById('msgbox').value = '';
