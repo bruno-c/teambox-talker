@@ -305,14 +305,13 @@ form
     border-left = 1px "solid" !white * 0.75 + !black * 0.25
     &.is_blank
       color = !light_grey
-  textarea
-    padding: 5px 3px
-    +font_size("large")
-    border = 1px "solid" !white * 0.9 + !black * 0.1
-    border-top = 1px "solid" !white * 0.75 + !black * 0.25
-    border-left = 1px "solid" !white * 0.75 + !black * 0.25
-    margin: 4px auto
-    width: 90%
+//  textarea
+//    padding: 5px 3px
+//    +font_size("large")
+//    border = 1px "solid" !white * 0.9 + !black * 0.1
+//    border-top = 1px "solid" !white * 0.75 + !black * 0.25
+//    border-left = 1px "solid" !white * 0.75 + !black * 0.25
+//    margin: 4px auto
   &.lw40
     label
       width: 40px
@@ -533,21 +532,17 @@ a.button
                 color = !black
                 font-weight: normal
 
-#message_form
-  z-index: 2
-  height: 100px
-  overflow: hidden
-  width: 100%
+#message
   form.fade
-    height: 80px
-    margin: 20px 260px 0 0
-    padding: 0 0 0 50px
+    display: inline
     background = !black * 0.1 + !white * 0.9
-    +box_shadow(0, -10, 10, !black * 0.1 + !white * 0.9)
     textarea
-      height: 50px
-      width: 662px
-      border = 1px solid !light_grey
+      display: inline
+      width: 99%
+      min-height: 50px
+      border: 1px solid #CCC
+      background: white
+      padding: 4px
 
 // Panel
 div.panel

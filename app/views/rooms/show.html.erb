@@ -121,21 +121,23 @@
           </td>
         </tr>
         -->
-      <tr id="message">
+        
+      <tr id="message" class="message user_2 event me">
         <td class="author">
           <%= current_user.name %>
-          <%= image_tag "avatar_default.png", :alt => "Marc", :class => "avatar" %>
+          <%= image_tag "avatar_default.png", :alt => current_user.name, :class => "avatar" %>
+          <b class="blockquote_tail"><!----></b>
         </td>
-        <td class="new_content">
+        <td class="message">
           <blockquote>
-            <form id="message_form" action="/rooms/1/messages" class="fade">
               <p>
-                <textarea rows="1" id="msgbox"></textarea>
+                <form id="message_form" action="/rooms/1/messages" class="fade">
+                  <textarea rows="1" id="msgbox"></textarea>
+                </form>    
               </p>
-            </form>
           </blockquote>
         </td>
-      </tr> 
+      </tr>
   </table>
 </div>
 
