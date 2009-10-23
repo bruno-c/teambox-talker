@@ -41,7 +41,7 @@ class Event < ActiveRecord::Base
   def self.dates
     all(:order => "created_at desc",
         # Convert the created_at datetime to the user's time zone inside mysql
-        :group => "DATE(CONVERT_TZ(created_at, '+0:00', '#{Time.zone.utc_offset / 1.hour}:00'))"
+        :group => "DATE(CONVERT_TZ(events.created_at, '+0:00', '#{Time.zone.utc_offset / 1.hour}:00'))"
         ).map(&:created_at).compact
   end
 end

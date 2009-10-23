@@ -1,15 +1,21 @@
 module DateHelper
-  # Returns a 'human' formatted date string from a Date or Time object: "Yesterday", "Today" or  
-  # "Tomorrow" where applicable (a la Mac OS X's Mail.app, amongst others), or otherwise the output of strftime  
-  # for the given formatting string (the default, "%B %e, %Y", gives the American-style "Month [D]D, YYYY") 
-  # Taken from: http://dev.rubyonrails.org/ticket/5792
-  def human_date(date, format = "%B %e, %Y") 
+  def human_date(date) 
     return "" if date.blank?
-    case Time.zone.today - date.to_date
-      when  1 then "Yesterday" 
-      when  0 then "Today" 
-      when -1 then "Tomorrow" 
-      else date.strftime(format) 
-    end 
+    
+    today = Time.zone.today
+    date = date.to_date
+    
+    prefix = case today - date
+      when  1 then "Yesterday, "
+      when  0 then "Today, "
+      when -1 then "Tomorrow, "
+      else "%A, "
+      end
+    
+    sufix = if today.year != date.year
+      ", %Y"
+    end
+    
+    date.strftime("#{prefix}%B %e#{sufix}")
   end
 end
