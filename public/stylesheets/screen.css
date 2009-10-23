@@ -195,8 +195,6 @@ form div.complex_field {
   margin: 0 0 1.5em; }
 form label {
   display: block;
-  float: left;
-  text-align: right;
   margin-right: 10px;
   font-size: 16px; }
   form label.description {
@@ -226,6 +224,8 @@ form textarea {
   border-top: 1px solid #bfbfbf;
   border-left: 1px solid #bfbfbf;
   margin: 0; }
+  form textarea.large {
+    width: 600px; }
 form.lw40 label {
   width: 40px; }
   form.lw40 label.description {
