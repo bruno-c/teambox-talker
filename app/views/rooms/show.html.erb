@@ -41,6 +41,7 @@
           Receiver.push(this);
         }
       });
+      ChatRoom.scrollToBottom();
       
       $(window).bind('beforeunload', function() { client.reset() });
       $("a#leave").click(function() {
