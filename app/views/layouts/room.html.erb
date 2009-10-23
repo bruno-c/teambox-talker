@@ -20,9 +20,6 @@
       <%= yield :sidebar %>
     </div>
     <div id="main">
-      <%- flash.each do |name, message| -%>
-        <%= content_tag :p, message, :id => "flash_#{name}", :class => "flash #{name}" %>
-      <%- end -%>
       <%= yield %>
     </div>
   </div>

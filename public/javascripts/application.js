@@ -10,6 +10,14 @@ jQuery.fn.submitWithAjax = function(callback) {
   return this;
 };
 
+// Pass timezone offset from the browser to backend using a magic cookie
+$.cookie("tzoffset", (new Date()).getTimezoneOffset());
+
+if (typeof console == 'undefined'){
+  console = {};
+  console.info = console.debug = console.warn = function(){ };
+}
+
 $(function() {
   $("#people input.admin, #people input.suspended").click(function () {
     var url = $(this).parents("form")[0].action;
@@ -24,12 +32,9 @@ $(function() {
       }
     });
   });
+  
+  $("div.flash").click(function() {
+    $(this).remove();
+    return false;
+  });
 });
-
-// Pass timezone offset from the browser to backend using a magic cookie
-$.cookie("tzoffset", (new Date()).getTimezoneOffset());
-
-if (typeof console == 'undefined'){
-  console = {};
-  console.info = console.debug = console.warn = function(){ };
-}
