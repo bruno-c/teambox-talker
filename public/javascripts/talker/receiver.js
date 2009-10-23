@@ -6,6 +6,7 @@ Receiver = {
     if (data.type == null) return;
     
     if (typeof Receiver[data.type] == 'function'){
+      // console.info("RECEIVER: " + data.type);
       Receiver[data.type](data);
     }else{
       console.info(JSON.encode(data));
@@ -14,8 +15,6 @@ Receiver = {
   },
   
   connected: function(data) {
-    console.info("CONNECTED");
-    console.info(data.user.id);
     if ($("#user_" + data.user.id).length < 1) {
       $('<li/>').attr("id", "user_" + data.user.id)
         .html('<img alt="gary" src="/images/avatar_default.png" />' + data.user.name)
@@ -49,10 +48,10 @@ Receiver = {
   // eventually it should check the previous messages and insert into proper <p>
   // it should also be smart enough to handle notices and private messages.
   message: function(data) {
-    if (data.partial){
-      console.info("partial: " + data.content);
-      return;
-    }
+    // if (data.partial){
+    //   console.info("partial: " + data.content);
+    //   return;
+    // }
 
     // var id = (data.type + "_" + data.id);
     
@@ -88,7 +87,12 @@ Receiver = {
     var last_author = last_row.attr('author');
     
     if (data.type == 'message'){
-      if (last_author == data.user.name){ // only append to existing blockquote group
+      console.info(JSON.encode(data));
+      console.info($('#message-' + data.id));
+      if ($('#message-' + data.id).length) { // just update the element with the new content... ie we are livetyping
+        console.info("********** WE FOUND EXISTING MESSAGE *******************");
+        $('#message-' + data.id).html(data.content);
+      } else if (last_author == data.user.name){ // only append to existing blockquote group
         last_row.find('blockquote')
           .append($('<p/>').attr('id', 'message-' + data.id).attr('time', data.time).html(data.content));
       } else {
