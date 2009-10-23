@@ -15,11 +15,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :rooms, :has_many => :messages
   map.resources :pastes
   
-  map.logs "/rooms/:room_id/logs", :controller => "logs", :action => "index"
-  map.log "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "show"
+  map.logs "/logs", :controller => "logs", :action => "index"
+  map.search "/search", :controller => "logs", :action => "search"
+  
+  map.room_logs "/rooms/:room_id/logs", :controller => "logs", :action => "index"
+  map.room_log "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "show"
   map.today_log "/rooms/:room_id/logs/today", :controller => "logs", :action => "today"
-  map.search_log "/rooms/:room_id/search", :controller => "logs", :action => "search"
-  map.search_logs "/logs/search", :controller => "logs", :action => "search"
+  map.search_room "/rooms/:room_id/search", :controller => "logs", :action => "search"
   
   map.root :controller => "home"
 end

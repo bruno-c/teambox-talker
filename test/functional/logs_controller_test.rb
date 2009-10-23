@@ -9,6 +9,11 @@ class LogsControllerTest < ActionController::TestCase
   end
   
   def test_index
+    get :index
+    assert_response :success, @response.body
+  end
+
+  def test_index_in_room
     get :index, :room_id => @room
     assert_response :success, @response.body
   end

@@ -23,7 +23,7 @@ class PastesControllerTest < ActionController::TestCase
     
     json = ActiveSupport::JSON.decode(@response.body)
     assert_equal paste_url(assigns(:paste)), @response.location
-    assert_equal "ohaie", json["paste"]["content"]
+    assert_equal "ohaie", json["content"]
   end
   
   def test_create_from_json_with_error

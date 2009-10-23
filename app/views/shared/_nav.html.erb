@@ -5,7 +5,7 @@
       <% if admin? %>
         <li><%= link_to 'Users', users_path %></li>
       <% end %>
-      <li><%= render :partial => "logs/search_form" %></li>
+      <li><%= link_to 'Chat Logs', logs_path %></li>
     <% end %>
   </ul>
   <p class="utilities">
