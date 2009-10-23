@@ -1,27 +1,63 @@
+var LIVETYPE = true;
+
 $(function() {
-  $("#msgbox")
-    .keydown(function(e) {
-      if (e.which == 13) {
-        if (this.value == ''){ return false }
-        ChatRoom.send(this.value, true); // submits a new final (ie: non partial) msg
-        return false;
-      } else if (e.which == 27 || e.which == 8 && $('#msgbox').val().length == 1){
+  // $("#msgbox")
+  //   .keydown(function(e) {
+  //     if (e.which == 13) {
+  //       if (this.value == ''){ return false }
+  //       ChatRoom.send(this.value, true); // submits a new final (ie: non partial) msg
+  //       return false;
+  //     } else if (e.which == 27 || e.which == 8 && $('#msgbox').val().length == 1){
+  //       ChatRoom.cancelMessage();
+  //     }
+  //   })
+  //   .keyup(function(e) {
+  //     if (e.which == 65) { // space
+  //       ChatRoom.send(this.value);
+  //     } else {
+  //       if ($('#msgbox').val() != ''){
+  //         ChatRoom.liveType(this.value);
+  //       }
+  //     }
+  //   })
+  //   .keyup(function(e){
+  //     if (e.which == 9 && $('#msgbox').val() == ''){
+  //       ChatRoom.cancelMessage();
+  //     }
+  //   })
+  //   .focus(function(e){ e.stopPropagation() });// stops window/document from calling focus.  re: logMessages
+  
+  /// when we press enter we should send the message if it's not empty  (always returning false on enter)
+  /// 
+  
+  $('#msgbox')
+    .keydown(function(e){
+      // console.info("*** KEYDOWN:" + e.which);
+      if (e.which == 13){ // enter
+        if (this.value == '') {
+          return false;
+        } else { // we actually have a message
+          ChatRoom.send(this.value, true); // is final
+          return false;
+        }
+      } else if (e.which == 27 || e.which == 8 && this.value.length == 1){// esc or backspace on last character
         ChatRoom.cancelMessage();
-      }
-    })
-    .keyup(function(e) {
-      if (e.which == 65) { // space
-        ChatRoom.send(this.value);
-      } else {
-        ChatRoom.liveType(this.value);
       }
     })
     .keyup(function(e){
-      if (e.which == 9 && $('#msgbox').val() == ''){
-        ChatRoom.cancelMessage();
+      console.info("*** KEYUP:" + e.which);
+      // not enter, not esc and not backspace on last char. only if livetyping is enabled
+      if (e.which == 13 || e.which == 27) {
+        return;
+      } else if (e.which == 8 && this.value.length) {
+        ChatRoom.liveType(this.value);
+      } else if (this.value.length) {
+        ChatRoom.liveType(this.value);
       }
     })
-    .focus(function(e){ e.stopPropagation() });// stops window/document from calling focus.  re: logMessages
+    .focus(function(e){
+      e.stopPropagation();
+    })
   
   ChatRoom.align();
   ChatRoom.scrollToBottom();
@@ -84,7 +120,7 @@ var ChatRoom = {
     if (ChatRoom.sendTimeout) clearTimeout(ChatRoom.sendTimeout);
     ChatRoom.sendTimeout = setTimeout(function() {
       ChatRoom.send(content, false);
-    }, 400);
+    }, 50);
   },
   
   send: function(content, final) {
@@ -100,8 +136,11 @@ var ChatRoom = {
     message.content = content;
     if (final){
       ChatRoom.client.send({id: message.id, content: message.content, type: 'message'});
+      console.info('final message');
+      $("#msgbox").val('');
       ChatRoom.resetMessage();
     } else {
+      console.info('partial message');
       ChatRoom.client.send({id: message.id, content: message.content, partial: true, type: 'message'})
     }
   },
@@ -135,11 +174,12 @@ var ChatRoom = {
   
   resetMessage: function() {
     ChatRoom.currentMessage = {id: Math.uuid(), content: $('#msgbox').val(), partial: true};
-    document.getElementById('msgbox').value = '';
     ChatRoom.scrollToBottom();
   },
   
   cancelMessage: function() {
+    $('#msgbox').val('');
+    ChatRoom.client.send({id: ChatRoom.currentMessage.id, content: '', type: 'message'});
     ChatRoom.resetMessage();
   },
   

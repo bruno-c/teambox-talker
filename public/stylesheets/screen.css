@@ -223,9 +223,8 @@ form textarea {
   border: 1px solid #e5e5e5;
   border-top: 1px solid #bfbfbf;
   border-left: 1px solid #bfbfbf;
-  margin: 0; }
-  form textarea.large {
-    width: 600px; }
+  margin: 4px auto;
+  width: 90%; }
 form.lw40 label {
   width: 40px; }
   form.lw40 label.description {
