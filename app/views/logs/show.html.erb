@@ -1,23 +1,6 @@
-<%
-if @query
-  if @room
-    @title = "Chat Logs search for #{@query} in #{@room.name}"
-  else
-    @title = "Chat Logs search for #{@query}"
-  end
-else
-  if @room
-    @title = "Chat Logs of #{@room.name} for " + human_date(@date)
-  else
-    @title = "Chat Logs"
-  end
-end
-%>
-
+<% @title = "Chat Logs of #{@room.name} for " + human_date(@date) %>
 
 <h2><%=h @title %></h2>
-
-<%= render :partial => "search_form" %>
 
 <table id="log">
   <%= render :partial => "messages/messages", :object => @events %>

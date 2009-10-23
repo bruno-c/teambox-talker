@@ -1,17 +1,12 @@
-<%
-if @room
-  @title = "Chat Logs for #{@room.name}"
-else
-  @title = "Chat Logs"
-end
-%>
+<% @title = "Chat Logs" %>
 
 <h2><%=h @title %></h2>
 
 <%= render :partial => "search_form" %>
 
-<% @dates.each do |date| %>
-  <div class="log-entry">
-    <h3><%= link_to human_date(date), room_log_path(@room, date.year, date.month, date.day) %></h3>
-  </div>
+<h3>Room Logs</h3>
+<ul>
+<% @rooms.each do |room| %>
+  <li><%= link_to h(room.name), room_logs_path(room) %></li>
 <% end %>
+</ul>

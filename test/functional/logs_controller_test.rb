@@ -11,11 +11,13 @@ class LogsControllerTest < ActionController::TestCase
   def test_index
     get :index
     assert_response :success, @response.body
+    assert_template :index
   end
 
   def test_index_in_room
     get :index, :room_id => @room
     assert_response :success, @response.body
+    assert_template :room_index
   end
 
   def test_show
@@ -31,7 +33,7 @@ class LogsControllerTest < ActionController::TestCase
 
     assert_response :success, @response.body
     assert_equal "test", assigns(:query)
-    assert_template :show
+    assert_template :search
   end
   
   def test_search_in_rooms
@@ -42,7 +44,7 @@ class LogsControllerTest < ActionController::TestCase
     assert_response :success, @response.body
     assert_equal "test", assigns(:query)
     assert_nil assigns(:room)
-    assert_template :show
+    assert_template :search
   end
   
   def test_today

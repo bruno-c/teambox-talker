@@ -1,6 +1,6 @@
 <% form_tag @room ? search_room_path(@room) : search_path, :method => :get, :class => "search_form" do %>
   <p>
     <%= text_field_tag :q, @query %>
-    <%= submit_tag "Search Logs" %>
+    <%= submit_tag "Search" %>
   </p>
 <% end %>
