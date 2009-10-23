@@ -11,13 +11,11 @@ $(function() {
           return false;
         }
       } else if (e.which == 27 || e.which == 8 && this.value.length == 1){// esc or backspace on last character
-        console.info("CANCELLING BITCHES!!");
         ChatRoom.cancelMessage();
       }
     })
     .keyup(function(e){
-      // not enter, not esc and not backspace on last char. only if livetyping is enabled
-      if (e.which == 13 || e.which == 27) {
+      if (e.which == 13 || e.which == 27 || e.which == 224 || e.which == 17 || e.which == 18) { // enter, esc, backspace, Cmd, Ctrl, Alt
         return;
       } else if (e.which == 8 && this.value.length) {
         console.info("* ******  sending" + this.value);
