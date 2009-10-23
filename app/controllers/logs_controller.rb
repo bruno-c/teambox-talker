@@ -5,12 +5,12 @@ class LogsController < ApplicationController
   
   def index
     if @room
-      @events = @room.events
+      @dates = @room.events.dates
+      render :room_index
     else
-      @events = current_account.events
+      @rooms = current_account.rooms
+      render :index
     end
-    
-    @dates = @events.dates
   end
   
   def show
@@ -28,8 +28,6 @@ class LogsController < ApplicationController
     end
     
     @events = Event.search @query, :with => search_options
-    
-    render :show
   end
   
   def today
