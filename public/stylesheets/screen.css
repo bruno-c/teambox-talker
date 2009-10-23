@@ -217,46 +217,6 @@ form input[type=text] {
   border-left: 1px solid #bfbfbf; }
   form input[type=text].is_blank {
     color: silver; }
-<<<<<<< HEAD
-=======
-form textarea {
-  padding: 5px 3px;
-  font-size: 16px;
-  border: 1px solid #e5e5e5;
-  border-top: 1px solid #bfbfbf;
-  border-left: 1px solid #bfbfbf;
-  margin: 0; }
-  form textarea.large {
-    width: 600px; }
-form.lw40 label {
-  width: 40px; }
-  form.lw40 label.description {
-    width: auto;
-    margin-left: 50px; }
-form.lw40 p.indent {
-  margin-left: 50px; }
-form.lw80 label {
-  width: 80px; }
-  form.lw80 label.description {
-    width: auto;
-    margin-left: 90px; }
-form.lw80 p.indent {
-  margin-left: 90px; }
-form.lw120 label {
-  width: 120px; }
-  form.lw120 label.description {
-    width: auto;
-    margin-left: 130px; }
-form.lw120 p.indent {
-  margin-left: 130px; }
-form.lw160 label {
-  width: 160px; }
-  form.lw160 label.description {
-    width: auto;
-    margin-left: 170px; }
-form.lw160 p.indent {
-  margin-left: 170px; }
->>>>>>> 2bbabafe660bdaf40d1d5f312d4f5270978ef07f
 
 a.button {
   display: inline-block;

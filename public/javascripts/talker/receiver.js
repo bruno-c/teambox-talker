@@ -61,35 +61,6 @@ Receiver = {
       }
       return;
     }
-
-    // var id = (data.type + "_" + data.id);
-    
-    // <tr author="system" class="notice user_4 event">
-    //   <td class="author">
-    //     <%= image_tag "icons/exclamation.png", :alt => "Date/Time", :class => "avatar" %>
-    //     <b class="blockquote_tail">&nbsp;</b>
-    //   </td>
-    //   <td class="message">
-    //     <blockquote id="?id?">
-    //       <strong>Francis</strong> entered the room.
-    //       <%= image_tag "avatar_default.png", :alt => "Francis", :class => "avatar" %>
-    //     </blockquote>
-    //   </td>
-    // </tr>
-    
-    // <tr author="Gary" class="message user_2 event">
-    //   <td class="author">
-    //     Gary
-    //     <%= image_tag "avatar_default.png", :alt => "Gary", :class => "avatar" %>
-    //     <b class="blockquote_tail">&nbsp;</b>
-    //   </td>
-    //   <td class="message">
-    //     <blockquote>
-    //       <p id="message-A337C9C0-C3E3-4422-B535-370943F540D7" time="897984654654">The cat never left</p>
-    //       <p id="message-SDFOJADF-4D41-8798-OADS-ASDF39741ASD" time="987651620324" class="partial">Hello world.</p>
-    //     </blockquote>
-    //   </td>
-    // </tr>
     
     // we need to figure out if the last row is of the same author to group elements together.
     var last_row    = $('#log tr.message:last');
@@ -98,6 +69,8 @@ Receiver = {
     if (data.type == 'message'){
       if ($('#message-' + data.id).length) { // just update the element with the new content... ie we are livetyping
         $('#message-' + data.id).html(data.content);
+      } else if (data.user.name == currentUser.name && data.partial){
+        return;
       } else if (last_author == data.user.name){ // only append to existing blockquote group
         last_row.find('blockquote')
           .append($('<p/>').attr('id', 'message-' + data.id).attr('time', data.time).html(data.content));
