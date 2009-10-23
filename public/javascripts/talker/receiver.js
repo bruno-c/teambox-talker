@@ -54,10 +54,10 @@ Receiver = {
     // }
     
     if (data.content == '') { // cancel message
-      if ($('#message-' + data.id).parent('tr').find('p').length > 1){
+      if ($('#message-' + data.id).siblings().length > 1){
         $('#message-' + data.id).remove();
       } else {
-        $('#message-' + data.id).parent('tr').remove();
+        $('#message-' + data.id).closest('tr').remove(); // parent('tr') does not work here.
       }
       return;
     }
