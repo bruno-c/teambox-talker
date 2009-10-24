@@ -102,7 +102,8 @@ var ChatRoom = {
   },
   
   scrollToBottom: function() {
-    window.scrollTo(0, document.body.clientHeight);
+    document.getElementById('bottom_anchor').scrollIntoView();
+    //window.scrollTo(0, document.body.clientHeight);
   },
   
   formatMessage: function(content) {
@@ -120,6 +121,7 @@ var ChatRoom = {
   
   onNewMessage: function(data) {
     Receiver.push(data);
+    ChatRoom.scrollToBottom();
   },
   
   onJoin: function(data) {
