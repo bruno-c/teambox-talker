@@ -6,8 +6,8 @@
     <%= text_area_tag :invitees, params[:invitees], :class => "large", :rows => 10 %>
   </p>
   <p>
-    <%= submit_button "Send Invites" %>
+    <%= submit_button "Send Invites", :class => "neutral icon send-email" %>
     or
-    <%= link_to "Cancel", users_path, :class => "button negative" %>
+    <%= link_to "Cancel", users_path, :class => "button negative icon cancel" %>
   </p>
 <% end %>

@@ -75,6 +75,13 @@
 =text_shadow(!distance_x, !distance_y, !size, !colour)
   text-shadow = !distance_x + "px" !distance_y + "px" !size + "px" !colour
 
+=emboss(!color)
+  border:
+    top-color = !color * 0.5 + !white * 0.5
+    left-color = !color * 0.5 + !white * 0.5
+    bottom-color = !color
+    right-color = !color
+
 // Font Sizes
 =font_size(!size)
   !font_size_medium = 14px
@@ -261,7 +268,7 @@ html[xmlns] .clearfix
     div.panel
       div
         &.content
-          height: 40px
+          min-height: 40px
           p
             &.people
               label
@@ -348,11 +355,12 @@ form
 // Buttons
 a.button
   display: inline-block
-  +rounded_corners("all", 5)
+  +rounded_corners("all", 11)
   background = !button_colour_off
   color = !white
   +text_shadow(-1, -1, 0, !accent_colour * 0.75 + !black * 0.25)
-  border = 1px "solid" !accent_colour * 0.75 + !black * 0.25
+  border = 1px "solid"
+  +emboss(!accent_colour * 0.75 + !black * 0.25)
   text-decoration: none
   padding: 0 10px
   line-height: 27px
@@ -372,19 +380,19 @@ a.button
     height: 20px
   &.negative
     background = !colour_negative
-    border-color = !colour_negative * 0.75 + !black * 0.25
+    +emboss(!colour_negative * 0.75 + !black * 0.25)
     +text_shadow(-1, -1, 0, !colour_negative * 0.75 + !black * 0.25)
     +opacity(80)
     &:hover
       +opacity(100)
   &.neutral
-    background = !light_grey * 0.75 + !white * 0.25
-    border-color = !grey
+    background = !light_grey * 0.2 + !white * 0.8
+    +emboss(!grey)
     +text_shadow(1, 1, 0, !light_grey)
-    color = !dark_grey
+    color = !black
+    +opacity(80)
     &:hover
-      background-color = !white * 0.5 + !light_grey * 0.5
-      color = !black
+      +opacity(100)
   &.add
     background-image: url('../../images/icons/plus-circle.png')
     background-position: 10px center
@@ -400,6 +408,14 @@ a.button
     background-position: 10px center
     background-repeat: no-repeat
     padding-left: 31px
+  &.icon
+    background-position: 10px center
+    background-repeat: no-repeat
+    padding-left: 31px
+  &.send-email
+    background-image: url(/images/icons/mail--arrow.png)
+  &.delete, &.cancel
+    background-image: url(/images/icons/cross-circle.png)
 
 // Sidebar Action Buttons
 #sidebar
@@ -415,7 +431,7 @@ a.button
 // People
 #people
   overflow: hidden
-  li
+  li.user
     display: block
     width: 280px
     margin: 0 10px 10px 0
@@ -425,6 +441,8 @@ a.button
         :background-color = !grey
         .tag.pending
           :background-color = !light_grey
+    ul.roles
+      :list-style none
     div.panel
       div
         &.header
@@ -438,7 +456,7 @@ a.button
           h3
             margin: 0 0 0 50px
         &.content
-          height: 80px
+          min-height: 80px
           padding: 8px 10px 9px 60px
           +rounded_corners("bottom", 3)
 
@@ -580,6 +598,9 @@ div.panel
       border-bottom = 1px solid !light_grey * 0.33 + !white * 0.66
       p
         margin: 0 0 0.66em
+      div.actions
+        margin-top: 10px
+        line-height: 30px
     &.footer
       text-align: right
       +font_size("small")
@@ -587,9 +608,6 @@ div.panel
       +rounded_corners("bottom", 3)
       border-top = 2px solid !light_grey * 0.2 + !white * 0.8
       background = !light_grey * 0.1 + !white * 0.9
-  li
-    :line-height 0px
-    :width auto
   .tag
     +font_size("small")
     :background-color = !alt_colour
