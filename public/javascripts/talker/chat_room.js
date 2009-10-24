@@ -131,6 +131,7 @@ var ChatRoom = {
   },
   
   onConnected: function(data){
+    Receiver.push(data);
   },
   
   onIdle: function(data){

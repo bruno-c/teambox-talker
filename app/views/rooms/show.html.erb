@@ -37,9 +37,7 @@
       client.connect();
       
       $.each(ChatRoom.events, function(){
-        if (this.type == 'message'){
-          Receiver.push(this);
-        }
+        Receiver.push(this, true);
       });
       ChatRoom.scrollToBottom();
       
@@ -88,6 +86,6 @@
 
 <div id="message_form">
   <form id="msgForm" action="/rooms/1/messages" class="fade">
-    <textarea rows="1" id="msgbox"/></textarea>
+    <textarea rows="1" id="msgbox" disabled="true" /></textarea>
   </form>
 </div>
