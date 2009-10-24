@@ -338,7 +338,7 @@ a.button {
 #chat_log {
   background: white;
   padding: 10px 10px 0;
-  margin: 0 0 0 0;
+  margin: 0 0 60px 0;
   box-shadow: 2px 2px 2px #d2d2d2;
   -webkit-box-shadow: 2px 2px 2px #d2d2d2;
   -moz-box-shadow: 2px 2px 2px #d2d2d2;
@@ -402,16 +402,27 @@ a.button {
         color: black;
         font-weight: normal; }
 
-#message form.fade {
-  display: inline;
-  background: #e5e5e5; }
-  #message form.fade textarea {
-    display: inline;
-    width: 99%;
-    min-height: 50px;
-    border: 1px solid #CCC;
-    background: white;
-    padding: 4px; }
+#message_form {
+  position: fixed;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
+  height: 100px;
+  overflow: hidden;
+  width: 100%; }
+  #message_form form.fade {
+    height: 80px;
+    margin: 20px 260px 0 0;
+    padding: 0 0 0 50px;
+    background: #e5e5e5;
+    box-shadow: 0px -10px 10px #e5e5e5;
+    -webkit-box-shadow: 0px -10px 10px #e5e5e5;
+    -moz-box-shadow: 0px -10px 10px #e5e5e5; }
+    #message_form form.fade textarea {
+      height: 50px;
+      width: 95%;
+      padding: 5px;
+      border: 1px solid silver; }
 
 div.panel {
   margin: 0 0 20px;

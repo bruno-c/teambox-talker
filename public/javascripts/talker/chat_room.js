@@ -11,17 +11,7 @@ $(function() {
           return false;
         }
       } else if (e.which == 27 || e.which == 8 && this.value.length == 1){// esc or backspace on last character
-        ChatRoom.cancelMessage();
-      }
-    })
-    .keyup(function(e){
-      if (e.which == 13 || e.which == 27 || e.which == 224 || e.which == 17 || e.which == 18) { // enter, esc, backspace, Cmd, Ctrl, Alt
-        return;
-      } else if (e.which == 8 && this.value.length) {
-        console.info("* ******  sending" + this.value);
-        ChatRoom.liveType(this.value);
-      } else if (this.value.length) {
-        ChatRoom.liveType(this.value);
+        $('#msgbox').val('');
       }
     })
     .focus(function(e){
@@ -30,7 +20,6 @@ $(function() {
   
   ChatRoom.align();
   ChatRoom.scrollToBottom();
-  ChatRoom.resetMessage();
   
   var dom_element, on_focus, on_blur, on_focus_handler = function(e){
     ChatRoom.logMessages = -1;
@@ -79,36 +68,14 @@ $(function() {
 */
 var ChatRoom = {
   messages: {},
-  currentMessage: null,
   maxImageWidth: 400,
   current_user: null,
+
   
-  liveType: function(content) {
-    if (content === "") return;
-    if (ChatRoom.sendTimeout) clearTimeout(ChatRoom.sendTimeout);
-    ChatRoom.sendTimeout = setTimeout(function() {
-      ChatRoom.send(content, false);
-    }, 50);
-  },
-  
-  send: function(content, final) {
-    if (ChatRoom.sendTimeout) {
-      clearTimeout(ChatRoom.sendTimeout);
-    }
-    
-    if (!ChatRoom.currentMessage){
-      ChatRoom.resetMessage();
-    }
-    
-    var message = ChatRoom.currentMessage;
-    message.content = content;
-    if (final){
-      ChatRoom.client.send({id: message.id, content: message.content, type: 'message'});
-      $("#msgbox").val('');
-      ChatRoom.resetMessage();
-    } else {
-      ChatRoom.client.send({id: message.id, content: message.content, partial: true, type: 'message'})
-    }
+  send: function(text) {
+    ChatRoom.client.send({id: Math.uuid(), content: text || $('#msgbox').val(), type: 'message'});
+    $("#msgbox").val('');
+    ChatRoom.scrollToBottom();
   },
   
   align: function() {
@@ -138,17 +105,6 @@ var ChatRoom = {
     window.scrollTo(0, document.body.clientHeight);
   },
   
-  resetMessage: function() {
-    ChatRoom.currentMessage = {id: Math.uuid(), content: $('#msgbox').val(), partial: true};
-    ChatRoom.scrollToBottom();
-  },
-  
-  cancelMessage: function() {
-    $('#msgbox').val('');
-    ChatRoom.client.send({id: ChatRoom.currentMessage.id, content: '', type: 'message'});
-    ChatRoom.resetMessage();
-  },
-  
   formatMessage: function(content) {
     return FormatHelper.text2html(content, false)
   },
@@ -164,12 +120,6 @@ var ChatRoom = {
   
   onNewMessage: function(data) {
     Receiver.push(data);
-    ChatRoom.scrollToBottom();
-    ChatRoom.align();
-  },
-  
-  typing: function() {
-    return ChatRoom.currentMessage != null;// && ChatRoom.currentMessage.content != null;
   },
   
   onJoin: function(data) {
