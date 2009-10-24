@@ -283,6 +283,7 @@ html[xmlns] .clearfix
 form
   p
     line-height: 28px
+    padding: 2px 0
     &.submit
       margin-bottom: 0
   div.complex_field
@@ -291,7 +292,8 @@ form
   label
     display: block
     margin-right: 10px
-    +font_size("large")
+    line-height: 20px
+    font-weight: bold
     &.description
       line-height: 1
       margin-top: 5px
@@ -299,26 +301,12 @@ form
       float: none
       text-align: left
     &.inline
-      +font_size("small")
       display: inline
       float: none
-  input[type=text]
-    background = !white
-    +font_size("large")
-    padding: 5px 3px 0
-    height: 21px
-    border = 1px "solid" !white * 0.9 + !black * 0.1
-    border-top = 1px "solid" !white * 0.75 + !black * 0.25
-    border-left = 1px "solid" !white * 0.75 + !black * 0.25
-    &.is_blank
-      color = !light_grey
-//  textarea
-//    padding: 5px 3px
-//    +font_size("large")
-//    border = 1px "solid" !white * 0.9 + !black * 0.1
-//    border-top = 1px "solid" !white * 0.75 + !black * 0.25
-//    border-left = 1px "solid" !white * 0.75 + !black * 0.25
-//    margin: 4px auto
+      font-weight: normal
+  input, textarea, select
+    +font_size("medium")
+    
   &.lw40
     label
       width: 40px
@@ -385,7 +373,7 @@ a.button
     +opacity(80)
     &:hover
       +opacity(100)
-  &.neutral
+  &.neutral, &.submit
     background = !light_grey * 0.2 + !white * 0.8
     +emboss(!grey)
     +text_shadow(1, 1, 0, !light_grey)
@@ -416,6 +404,8 @@ a.button
     background-image: url(/images/icons/mail--arrow.png)
   &.delete, &.cancel
     background-image: url(/images/icons/cross-circle.png)
+  &.ok
+    background-image: url(/images/icons/tick.png)
 
 // Sidebar Action Buttons
 #sidebar
