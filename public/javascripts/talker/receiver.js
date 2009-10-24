@@ -67,15 +67,6 @@ Receiver = {
   },
   
   message: function(data) {
-    if (data.content == '') { // cancel message
-      if ($('#message-' + data.id).siblings().length > 1){
-        $('#message-' + data.id).remove();
-      } else {
-        $('#message-' + data.id).closest('tr').remove(); // parent('tr') does not work here.
-      }
-      return;
-    }
-    
     // we need to figure out if the last row is of the same author to group elements together.
     var last_row    = $('#log tr.received:last');
     var last_author = last_row.attr('author');
