@@ -7,12 +7,9 @@
   <% content_tag_for :li, room do %>
     <div class="panel">
       <div class="header">
-        <span class="actions">
-          <%= link_to "Enter", room, :title => "Enter chat room" %>
-        </span>
-        <h3><%=h room.name %></h3>
+        <h3><%= link_to h(room.name), room %></h3>
       </div>
-    
+      
       <div class="content">
         <p class="people">
           <label>Inside:</label>

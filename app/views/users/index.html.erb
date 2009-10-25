@@ -36,10 +36,10 @@
             <%= label_tag dom_id(user, :suspended), "Access suspended", :class => "inline", :title => "Suspending access will prevent this user from logging in." %>
           </li>
         </ul>
-        <div class="actions">
-          <%= link_to "Send Invite", resend_invite_path(user), :method => :post, :class => "button neutral small icon send-email", :title => "Sending email invitation" %>
-          <%= link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete, :class => "button negative small icon delete" if user.pending? %>
-        </div>
+      </div>
+      <div class="footer">
+        <%= link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete, :class => "button negative small icon delete" if user.pending? %>
+        <%= link_to "Send Invite", resend_invite_path(user), :method => :post, :class => "button neutral small icon send-email", :title => "Sending email invitation" %>
       </div>
     </div>
   </li>

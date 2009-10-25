@@ -446,7 +446,7 @@ a.button
           h3
             margin: 0 0 0 50px
         &.content
-          min-height: 80px
+          min-height: 40px
           padding: 8px 10px 9px 60px
           +rounded_corners("bottom", 3)
 
@@ -581,6 +581,8 @@ div.panel
       h3
         margin: 0
         color = !white
+        a
+          color: inherit
     &.content
       background = !white
       padding: 8px 10px 9px
@@ -588,9 +590,6 @@ div.panel
       border-bottom = 1px solid !light_grey * 0.33 + !white * 0.66
       p
         margin: 0 0 0.66em
-      div.actions
-        margin-top: 10px
-        line-height: 30px
     &.footer
       text-align: right
       +font_size("small")
