@@ -1,12 +1,13 @@
 <div id="nav">
   <ul>
     <% if logged_in? %>
-      <li><%= link_to "Rooms", rooms_path, :title => "Rooms" %></li>
+      <li><%= link_to_with_active "Rooms", rooms_path, :title => "Rooms" %></li>
       <% if admin? %>
-        <li><%= link_to 'Users', users_path %></li>
+        <li><%= link_to_with_active 'Users', users_path %></li>
       <% end %>
-      <li><%= link_to 'Chat Logs', logs_path %></li>
+      <li><%= link_to_with_active 'Chat Logs', logs_path %></li>
     <% end %>
+    <li><%= render :partial => "logs/search_form" %></li>
   </ul>
   <p class="utilities">
     <% if logged_in? %>

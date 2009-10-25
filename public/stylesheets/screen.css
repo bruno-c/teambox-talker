@@ -128,17 +128,23 @@ html[xmlns] .clearfix {
       #nav ul li a {
         display: block;
         line-height: 20px;
-        padding: 0 5px;
+        padding: 0 7px;
+        margin: 0 2px;
         height: 20px;
         font-weight: bold;
         text-decoration: none;
-        color: white; }
+        color: white;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px; }
         #nav ul li a:hover {
           background: white;
-          border-radius: 3px;
-          -moz-border-radius: 3px;
-          -webkit-border-radius: 3px;
           color: #269ed6; }
+        #nav ul li a.active {
+          background: gray; }
+      #nav ul li input#search {
+        position: relative;
+        top: -6px; }
   #nav p.utilities {
     float: right;
     color: silver;

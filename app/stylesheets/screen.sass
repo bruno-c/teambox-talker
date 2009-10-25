@@ -219,15 +219,21 @@ html[xmlns] .clearfix
       a
         display: block
         line-height: 20px
-        padding: 0 5px
+        padding: 0 7px
+        margin: 0 2px
         height: 20px
         font-weight: bold
         text-decoration: none
         color = !white
+        +rounded_corners("all", 10)
         &:hover
           background = !white
-          +rounded_corners("all", 3)
           color = !accent_colour
+        &.active
+          background = !grey
+      input#search
+        position: relative
+        top: -6px
   p.utilities
     float: right
     color = !light_grey
