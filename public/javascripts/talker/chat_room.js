@@ -1,5 +1,3 @@
-var LIVETYPE = true;
-
 $(function() {
   $('#msgbox')
     .keydown(function(e){
