@@ -8,6 +8,7 @@ Talker Server:
 - Support other types of channels (room, paste, etc)
 - Benchmark against ejabberd
 ✓ Support delta indexing of events
+- Setup emergency_mailer, see http://pauldowman.com/2008/02/17/smtp-mail-from-ec2-web-server-setup/
 
 Chef:
 - Tweaks mysql recipe (use the one from opscode?); using too much mem
