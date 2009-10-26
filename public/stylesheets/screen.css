@@ -444,19 +444,9 @@ a.button {
       background: #f4f4f4;
       padding: 5px 10px;
       color: gray; }
-    #chat_log table tr.notice td.author b.blockquote_tail {
-      border-right: 5px solid #f9fcc4; }
-    #chat_log table tr.notice td.message blockquote {
-      background: #f9fcc4;
-      padding: 5px 10px;
-      color: silver; }
-      #chat_log table tr.notice td.message blockquote img.avatar {
-        float: left;
-        margin: 0 4px 0 0;
-        top: 1px; }
-      #chat_log table tr.notice td.message blockquote strong {
-        color: black;
-        font-weight: normal; }
+    #chat_log table tr.notice td.message p {
+      color: silver;
+      font-size: 10px; }
 
 #message_form {
   position: fixed;

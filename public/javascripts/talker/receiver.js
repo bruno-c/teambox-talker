@@ -28,12 +28,9 @@ Receiver = {
       }
     }
     var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('notice').addClass('user_' + data.user.id).addClass('event')
-      .append($('<td/>').addClass('author')
-        .append($('<img/>').attr('src', '/images/icons/exclamation.png').attr('alt', data.user.name + ' has entered the room!').addClass('avatar'))
-        .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
+      .append($('<td/>').addClass('author'))
       .append($('<td/>').addClass('message')
-        .append($('<blockquote/>')
-          .append($('<p/>').attr('time', data.time).html(data.user.name + ' has entered the room'))));
+        .append($('<p/>').attr('time', data.time).html(data.user.name + ' has entered the room')));
     
     element.appendTo('#log');
   },
@@ -44,12 +41,9 @@ Receiver = {
     }
     
     var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('notice').addClass('user_' + data.user.id).addClass('event')
-      .append($('<td/>').addClass('author')
-        .append($('<img/>').attr('src', '/images/icons/exclamation.png').attr('alt', data.user.name + ' has left the room!').addClass('avatar'))
-        .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
+      .append($('<td/>').addClass('author'))
       .append($('<td/>').addClass('message')
-        .append($('<blockquote/>')
-          .append($('<p/>').attr('time', data.time).html(data.user.name + ' has left the room'))));
+        .append($('<p/>').attr('time', data.time).html(data.user.name + ' has left the room')));
     
     element.appendTo('#log');
   },
