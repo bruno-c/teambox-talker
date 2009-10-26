@@ -72,7 +72,7 @@ var FormatHelper = {
   
   formatPaste: function(data) {
     var msg = "<a target='_blank' title='Paste #" + data.paste.id +
-              "' href='" + window.location.protocol + "//" + window.location.host + "/pastes/" + data.paste.id +
+              "' href='" + window.location.protocol + "//" + window.location.host + "/pastes/" + data.paste.permalink +
               "'>View paste</a>";
     if (data.paste.lines > data.paste.preview_lines) {
       msg += " <span class='more_lines'>(" + (data.paste.lines - data.paste.preview_lines) + " more lines)</span>"
