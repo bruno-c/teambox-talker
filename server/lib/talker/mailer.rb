@@ -5,11 +5,16 @@ module Talker
   class Mailer
     DEFAULT_OPTIONS = {
       :domain => "talkerapp.com",
-      :host => "localhost",
-      :port => 25,
-      :starttls => false, # use ssl
-      :from => "error@talkerapp.com",
-      :to => ["macournoyer@gmail.com"],
+      :host => "smtp.gmail.com",
+      :port => 587,
+      :starttls => true, # use ssl
+      :auth => {
+        :type => :plain,
+        :username => "notifier@talkerapp.com",
+        :password => "Cn8JChhsZsqSYX3TTRnX"
+      },
+      :from => "notifier@talkerapp.com",
+      :to => ["macournoyer@talkerapp.com"],
     }
     
     def initialize(options={})
