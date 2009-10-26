@@ -28,12 +28,9 @@ Receiver = {
       }
     }
     var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('notice').addClass('user_' + data.user.id).addClass('event')
-      .append($('<td/>').addClass('author')
-        .append($('<img/>').attr('src', '/images/icons/exclamation.png').attr('alt', data.user.name + ' has entered the room!').addClass('avatar'))
-        .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
+      .append($('<td/>').addClass('author'))
       .append($('<td/>').addClass('message')
-        .append($('<blockquote/>')
-          .append($('<p/>').attr('time', data.time).html(data.user.name + ' has entered the room'))));
+        .append($('<p/>').attr('time', data.time).html(data.user.name + ' has entered the room')));
     
     element.appendTo('#log');
   },
@@ -44,12 +41,9 @@ Receiver = {
     }
     
     var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('notice').addClass('user_' + data.user.id).addClass('event')
-      .append($('<td/>').addClass('author')
-        .append($('<img/>').attr('src', '/images/icons/exclamation.png').attr('alt', data.user.name + ' has left the room!').addClass('avatar'))
-        .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
+      .append($('<td/>').addClass('author'))
       .append($('<td/>').addClass('message')
-        .append($('<blockquote/>')
-          .append($('<p/>').attr('time', data.time).html(data.user.name + ' has left the room'))));
+        .append($('<p/>').attr('time', data.time).html(data.user.name + ' has left the room')));
     
     element.appendTo('#log');
   },
@@ -72,6 +66,13 @@ Receiver = {
     // we need to figure out if the last row is of the same author to group elements together.
     var last_row    = $('#log tr.received:last');
     var last_author = last_row.attr('author');
+    
+    // format content appropriately
+    if (data.paste){
+      data.content = FormatHelper.formatPaste(data);
+    } else {
+      data.content = FormatHelper.text2html(data.content);
+    }
     
     if (last_author == data.user.name && last_row.hasClass('message')){ // only append to existing blockquote group
       last_row.find('blockquote')

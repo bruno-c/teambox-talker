@@ -40,7 +40,7 @@ class Event < ActiveRecord::Base
   
   def to_json(options = {})
     if message?
-      {:time => created_at.to_i, :user => user, :type => type, :content => message}.to_json
+      {:time => created_at.to_i, :user => user, :type => type, :content => message, :paste => paste}.to_json
     else # notice?
       {:time => created_at.to_i, :type => type, :content => message, :user => user}.to_json
     end

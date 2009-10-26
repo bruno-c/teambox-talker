@@ -8,6 +8,7 @@
 
 // Monochrome Colours
 !white = #FFFFFF
+!off_white = #F0F0F0
 !light_grey = #C0C0C0
 !grey = #808080
 !dark_grey = #404040
@@ -510,6 +511,13 @@ a.button
             overflow: hidden
             p
               margin: 2px 0
+              div
+                overflow: auto
+                padding: 10px
+                width: 60%
+                border = 1px solid !light_grey
+                pre
+                  font-family: monospace
       &.me
         td
           &.author
@@ -531,20 +539,10 @@ a.button
       &.notice
         td
           &.author
-            b.blockquote_tail
-              border-right = 5px solid !colour_exclamation * 0.25 + !white * 0.75
           &.message
-            blockquote
-              background = !colour_exclamation * 0.25 + !white * 0.75
-              padding: 5px 10px
+            p
               color = !light_grey
-              img.avatar
-                float: left
-                margin: 0 4px 0 0
-                top: 1px
-              strong
-                color = !black
-                font-weight: normal
+              +font_size("tiny")
 
 #message_form
   position: fixed

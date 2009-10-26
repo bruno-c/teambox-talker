@@ -7,8 +7,8 @@ function Scroller(options){
   
   self.options = $.extend(self.options, options);
   
-  self.scrollToBottom = function(){
-    if (self.shouldScrollToBottom()){
+  self.scrollToBottom = function(forceScroll){
+    if (self.shouldScrollToBottom() || forceScroll){
       window.scrollTo(0, self.getWindowHeight() + self.getScrollHeight());
     }
   }

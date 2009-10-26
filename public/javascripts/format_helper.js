@@ -1,9 +1,4 @@
 var FormatHelper = {
-  text2preview: function(content){
-    return content.replace(/[a-z]/g, 'x')
-                  .replace(/[A-Z]/g, 'X')
-                  .replace(/[0-9]/g, '#');
-  },
   text2html: function(content, noScroll){
     var image_expression     = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
     var youtube_expression   = /^(?:http\S+youtube\.com\/watch\?v=)([\w-]+)(?:\S*)$/;
@@ -21,10 +16,13 @@ var FormatHelper = {
     
     if (content.match(multiline_expression)){
       // setup content message inside a div or something with overflow scroll/auto
-      return  '<!-- ignore --><pre style="display: block; margin:' 
-            + ' 1em; font-family: \'Lucida Console\', monospace; overflow: scroll; width: 70%; background: white">' 
-            + content 
-            + '</pre>';
+      return  '<!-- ignore -->'
+            // + '<pre style="display: block;'
+            // + 'font-family: \'Lucida Console\', monospace; overflow: scroll; '
+            // + 'background: white">' 
+            + '<div><pre>'
+            +   content 
+            + '</pre></div>';
       // add a link to a message display that would show the message in raw text
     } else if (content.match(image_expression)){
       return content.replace(image_expression, function(locator){
@@ -72,11 +70,16 @@ var FormatHelper = {
     }
   },
   
-  formatPaste: function(paste) {
-    var msg = "<a target='_blank' title='Paste #" + paste.id +
-              "' href='" + window.location.protocol + "//" + window.location.host + "/pastes/" + paste.id +
+  formatPaste: function(data) {
+    var msg = "<a target='_blank' title='Paste #" + data.paste.id +
+              "' href='" + window.location.protocol + "//" + window.location.host + "/pastes/" + data.paste.permalink +
               "'>View paste</a>";
-    if (paste.lines > paste.preview_lines) msg += " <span class='more_lines'>(" + (paste.lines - paste.preview_lines) + " more lines)</span>"
+    if (data.paste.lines > data.paste.preview_lines) {
+      msg += " <span class='more_lines'>(" + (data.paste.lines - data.paste.preview_lines) + " more lines)</span>"
+    }
+    
+    msg += FormatHelper.text2html(data.content);
+    
     return msg;
   },
   
