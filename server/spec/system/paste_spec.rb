@@ -40,22 +40,6 @@ EOS
     end
   end
   
-  it "should not paste partial messages" do
-    connect do |client|
-      client.on_connected do
-        client.send_message("hi\nthere", :partial => true)
-        client.send_message("bogus")
-      end
-
-      client.on_message do |user, message, attributes|
-        attributes["paste"].should be_nil
-        client.close
-      end
-      
-      client.on_close { done }
-    end
-  end
-  
   it "should be truncated" do
     connect do |client|
       client.on_connected do

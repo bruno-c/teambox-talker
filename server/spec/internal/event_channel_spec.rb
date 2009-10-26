@@ -14,22 +14,9 @@ EM.describe Talker::EventChannel do
     done
   end
 
-  it "should publish partial event as transient" do
-    @channel.publish "type" => "message", "message" => "ohaie", "partial" => true
-    @queue.should have_received_exact_routing_key("talker.room.1.partial")
-    @queue.received_headers.last.persistent.should be_false
-    done
-  end
-  
   it "should publish private event" do
     @channel.publish({"type" => "message", "message" => "ohaie"}, 2)
     @queue.should have_received_exact_routing_key("talker.room.1.2")
-    done
-  end
-
-  it "should publish private partial event" do
-    @channel.publish({"type" => "message", "message" => "ohaie", "partial" => true}, 2)
-    @queue.should have_received_exact_routing_key("talker.room.1.2.partial")
     done
   end
 end

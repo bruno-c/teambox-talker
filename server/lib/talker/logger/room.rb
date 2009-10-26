@@ -32,9 +32,6 @@ module Talker
       def received(event)
         type = event["type"]
         
-        # Shortcircuit if partial event
-        return if event["partial"]
-        
         unless event.key?("user")
           Talker::Notifier.error "No user key in event: #{event.inspect}"
           return
@@ -60,27 +57,27 @@ module Talker
         def insert_message(message)
           room_id = @name.to_i
           user_id = message["user"]["id"].to_i
-          uuid = message["id"]
           content = message["content"]
           time = message["time"] || Time.now.to_i
           
-          sql = "INSERT INTO events (room_id, user_id, type, uuid, message, created_at, updated_at) " +
-                "VALUES (#{room_id}, #{user_id}, 'message', '#{quote(uuid)}', '#{quote(content)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
-
+          sql = "INSERT INTO events (room_id, user_id, type, message, created_at, updated_at) " +
+                "VALUES (#{room_id}, #{user_id}, 'message', '#{quote(content)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
+          
+          Talker.logger.debug sql
           db.insert sql, @callback, errback_for(message)
         end
       
         def insert_paste(message)
           room_id = @name.to_i
           user_id = message["user"]["id"].to_i
-          uuid = message["id"]
           content = message["content"]
           paste_id = message["paste"]["id"]
           time = message["time"] || Time.now.to_i
           
-          sql = "INSERT INTO events (room_id, user_id, type, uuid, message, paste_permalink, created_at, updated_at) " +
-                "VALUES (#{room_id}, #{user_id}, 'message', '#{quote(uuid)}', '#{quote(content)}', '#{quote(paste_id)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
+          sql = "INSERT INTO events (room_id, user_id, type, message, paste_permalink, created_at, updated_at) " +
+                "VALUES (#{room_id}, #{user_id}, 'message', '#{quote(content)}', '#{quote(paste_id)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
           
+          Talker.logger.debug sql
           db.insert sql, @callback, errback_for(message)
         end
       
@@ -93,6 +90,7 @@ module Talker
           sql = "INSERT INTO events (room_id, user_id, type, created_at, updated_at) " +
                 "VALUES (#{room_id}, #{user_id}, '#{quote(type)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
           
+          Talker.logger.debug sql
           db.insert sql, @callback, errback_for(message)
         end
         

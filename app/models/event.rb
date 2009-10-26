@@ -39,9 +39,8 @@ class Event < ActiveRecord::Base
   end
   
   def to_json(options = {})
-    # to_json(options.merge(:only => [:id, :message, :type, :created_at, :uuid, :paste_permalink], :include => :user))
     if message?
-      {:time => created_at.to_i, :user => user, :type => type, :content => message, :id => uuid}.to_json
+      {:time => created_at.to_i, :user => user, :type => type, :content => message}.to_json
     else # notice?
       {:time => created_at.to_i, :type => type, :content => message, :user => user}.to_json
     end

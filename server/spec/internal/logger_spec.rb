@@ -14,11 +14,11 @@ EM.describe Talker::Logger do
   end
   
   it "should insert message" do
-    message = { "type" => "message", "user" => {"id" => 1}, "id" => "123",
+    message = { "type" => "message", "user" => {"id" => 1},
                 "time" => 5, "content" => "ohaie" }
     
-    sql = "INSERT INTO events (room_id, user_id, type, uuid, message, created_at, updated_at) " +
-          "VALUES (1, 1, 'message', '123', 'ohaie', FROM_UNIXTIME(5), FROM_UNIXTIME(5))"
+    sql = "INSERT INTO events (room_id, user_id, type, message, created_at, updated_at) " +
+          "VALUES (1, 1, 'message', 'ohaie', FROM_UNIXTIME(5), FROM_UNIXTIME(5))"
           
     @logger.db.should_receive(:insert).with(sql, anything, anything)
     
@@ -53,12 +53,12 @@ EM.describe Talker::Logger do
   end
   
   it "should insert paste" do
-    message = { "type" => "message", "user" => {"id" => 1}, "id" => "123",
+    message = { "type" => "message", "user" => {"id" => 1},
                 "time" => 5, "content" => "ohaie...", 
                 "paste" => {"id" => "abc123", "lines" => 5, "preview_lines" => 3} }
     
-    sql = "INSERT INTO events (room_id, user_id, type, uuid, message, paste_permalink, created_at, updated_at) " +
-          "VALUES (1, 1, 'message', '123', 'ohaie...', 'abc123', FROM_UNIXTIME(5), FROM_UNIXTIME(5))"
+    sql = "INSERT INTO events (room_id, user_id, type, message, paste_permalink, created_at, updated_at) " +
+          "VALUES (1, 1, 'message', 'ohaie...', 'abc123', FROM_UNIXTIME(5), FROM_UNIXTIME(5))"
     
     @logger.db.should_receive(:insert).with(sql, anything, anything)
     

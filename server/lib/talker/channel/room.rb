@@ -1,7 +1,7 @@
 module Talker
   module Channel
     class Room < EventChannel
-      def subscribe(user, only_final=false, &callback)
+      def subscribe(user, &callback)
         queue = session_queue(user.id)
         
         # Must force re-creation of the queue in case it was delete by presence server.
@@ -17,13 +17,8 @@ module Talker
           queue.subscribe(&callback)
         end
         
-        queue.bind(exchange, :key => routing_key(false)).           # bind to public final messages
-              bind(exchange, :key => routing_key(false, user.id))   # bind to private final messages
-        
-        unless only_final
-          queue.bind(exchange, :key => routing_key(true)).          # bind to public partial messages
-                bind(exchange, :key => routing_key(true, user.id))  # bind to private partial messages
-        end
+        queue.bind(exchange, :key => routing_key).           # bind to public final messages
+              bind(exchange, :key => routing_key(user.id))   # bind to private final messages
         
         queue
       end
