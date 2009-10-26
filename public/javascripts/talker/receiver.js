@@ -75,7 +75,7 @@ Receiver = {
     
     if (last_author == data.user.name && last_row.hasClass('message')){ // only append to existing blockquote group
       last_row.find('blockquote')
-        .append($('<p/>').attr('id', 'message-' + data.id).attr('time', data.time).html(data.content));
+        .append($('<p/>').attr('time', data.time).html(data.content));
     } else {
       var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('message').addClass('user_' + data.user.id).addClass('event').addClass(data.user.id == currentUser.id ? 'me' : '')
         .append($('<td/>').addClass('author')
@@ -84,7 +84,7 @@ Receiver = {
           .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
         .append($('<td/>').addClass('message')
           .append($('<blockquote/>')
-            .append($('<p/>').attr('id', 'message-' + data.id).attr('time', data.time).html(data.content))));
+            .append($('<p/>').attr('time', data.time).html(data.content))));
       
       element.appendTo('#log');
     }
