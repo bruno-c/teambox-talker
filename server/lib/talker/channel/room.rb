@@ -10,7 +10,7 @@ module Talker
         if queue.subscribed?
           # Send error to previously connected callback
           if on_msg = queue.instance_variable_get(:@on_msg)
-            on_msg.call %|{"type":"error","message":"Another connection was made with this user"}|
+            on_msg.call %|{"type":"error","message":"Another connection was made with this user"}\n|
           end
           queue.instance_variable_set(:@on_msg, callback)
         else

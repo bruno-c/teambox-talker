@@ -2,8 +2,8 @@ Talker Server:
 ✓ [BUG] when restarting channel server, 1st time user connects, he doesn't get presence info and messages
 - [BUG] 1st user is not kicked out of room when 2nd user w/ same name connects
 - [BUG] second user get kicked when expired 1st user leaves
-- Handle incoming malformed events (in logger specially)
-- Allow duplicate uuid in events (maybe remove index)
+- Remove partial messages support (message uuid, partial routing key, etc.)
+- Handle incoming malformed events (in logger especially)
 - Expire connections (on presence server) if user leaves while channel server is down
 - Support other types of channels (room, paste, etc)
 - Benchmark against ejabberd
