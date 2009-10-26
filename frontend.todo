@@ -1,8 +1,9 @@
-- format messages (pastes, images, urls)
+✓ format messages (pastes, images, urls)
 - send/receive private messages
 - display timestamps using time offset
-- scroll smarter: if we're scrolled to bottom of page, automatically scroll on new message.  If we've scrolled up stop scrolling automatically but warn users of new message (icon w/ count?)
+✓ scroll smarter: if we're scrolled to bottom of page, automatically scroll on new message.  If we've scrolled up stop scrolling automatically but warn users of new message (icon w/ count?)
 - On error, connection is closed before processing the "error" message, eg. connect to the same room twice w/ same user.
+- onJoin should work properly users should be handled better.
 - remove password confirmation
 - reconnect without a page refresh when a connection error occurs
 - remove messages when there are more than x amount (perhaps with a click to load more messages)
