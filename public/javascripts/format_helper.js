@@ -20,9 +20,9 @@ var FormatHelper = {
             // + '<pre style="display: block;'
             // + 'font-family: \'Lucida Console\', monospace; overflow: scroll; '
             // + 'background: white">' 
-            + '<pre>'
+            + '<div><pre>'
             +   content 
-            + '</pre>';
+            + '</pre></div>';
       // add a link to a message display that would show the message in raw text
     } else if (content.match(image_expression)){
       return content.replace(image_expression, function(locator){
