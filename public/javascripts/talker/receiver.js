@@ -75,10 +75,8 @@ Receiver = {
     
     // format content appropriately
     if (data.paste){
-      console.info("WE HAZ A PASTE");
       data.content = FormatHelper.formatPaste(data);
     } else {
-      console.info("NOERML MSG");
       data.content = FormatHelper.text2html(data.content);
     }
     

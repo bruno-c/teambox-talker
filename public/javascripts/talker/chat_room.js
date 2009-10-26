@@ -110,8 +110,8 @@ var ChatRoom = {
     if (image.width > ChatRoom.maxImageWidth){
       $(image).css({width: ChatRoom.maxImageWidth + 'px'});
     }
-    image.style.visibility = 'visible';
-    if (!noScroll) ChatRoom.scroller.scrollToBottom();
+    $(image).css('visibility', 'visible');
+    if (!noScroll) ChatRoom.scroller.scrollToBottom(true);
   },
   
   onNewMessage: function(data) {
