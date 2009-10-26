@@ -15,7 +15,7 @@ And an host entry in your /etc/hosts file for each subdomains you want to use:
 Install required gems:
     
     gem sources -a http://gems.github.com # if not already done
-    sudo gem install eventmachine uuid tmm1-amqp brianmario-yajl-ruby mysqlplus igrigorik-em-http-request rubyosa
+    sudo gem install eventmachine tmm1-amqp brianmario-yajl-ruby mysqlplus igrigorik-em-http-request rubyosa
     rake gems:install
 
 ## Running the app

@@ -52,8 +52,6 @@ module Talker
         raise ProtocolError, "You must specify your user id and name"
       end
       
-      include_partial = !!options["include_partial"]
-      
       @server.authenticate(room_name, user_info["id"], token) do |success|
         
         if success
@@ -63,7 +61,7 @@ module Talker
             @user.token = token
             
             # Listen to message in the room
-            @subscription = @room.subscribe(@user, !include_partial) { |message| send_data message }
+            @subscription = @room.subscribe(@user) { |message| send_data message }
             
             # Broadcast presence
             @room.publish_presence "join", @user
@@ -90,10 +88,6 @@ module Talker
       content = obj["content"]
       
       if @server.paster.pastable?(content) || obj.delete("paste")
-        # We don't broadcast partial message that are pasted to reduce exchange of big message.
-        # We wait for the final version before actually doing the paste.
-        return if obj["partial"]
-        
         @server.paster.paste(@user.token, content) do |truncated_content, paste|
           obj["content"] = truncated_content
           obj["paste"] = paste if paste

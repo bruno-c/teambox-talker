@@ -6,14 +6,13 @@ All events are in JSON format. They contain a hash ({...}) and end with a line b
 ## Authentication
 Before sending and receiving events in a room, the client must connect to the room by sending the following message:
 
-    {"type":"connect","room":"unique room id","user":{"id":"unique id","name":"user name",...},"token":"user secret token","include_partial":true}
+    {"type":"connect","room":"unique room id","user":{"id":"unique id","name":"user name",...},"token":"user secret token"}
 
 Attributes:
 
 * "room" being the unique number of the room,
 * "user" is a hash containing the profile information of the user connecting to the room (id and name attributes are required, but other attributes can be passed) and
 * "token" the authentication token for that user.
-* "include_partial" set to false to receive only final messages.
 
 If the authentication is successful, the connection is left open and the server replies with:
 
@@ -26,19 +25,13 @@ If the authentication failed, the connection is closed after the following event
     {"type":"error","message":"Authentication failed"}
 
 ## Sending messages
-There are two types of messages: partial and final. Partial messages are sent by the client while live-typing and do not contain the full message, delivery of those messages is faster but not guaranteed. Final messages are sent once the user has hit enter and can no longer modify the message, delivery of those messages is guaranteed.
 A client connected to a room can send a public message like this:
 
-    {"type":"message","content":"message to send","id":"unique message ID","partial":true}
-
-Attributes:
-
- * "id" must be a UUID as described in http://www.ietf.org/rfc/rfc4122.txt.
- * "partial" specifies that this message will be updated again and delivery is not required (sent during live-typing). Final messages ("partial":false or "partial" attribute omitted) delivery is guaranteed but slower.
+    {"type":"message","content":"message to send"}
 
 The server will broadcast the message to all online members of the room (including the sender) with this:
 
-    {"type":"message","content":"message to send","id":"unique message ID",
+    {"type":"message","content":"message to send",
      "user":{"id":"unique id","name":"user name"},"time":1255447115}
 
 "user" being the required information of the sender (id and name, not profile picture, etc).
@@ -46,11 +39,11 @@ The server will broadcast the message to all online members of the room (includi
 
 To send a private message, add the "to" property:
 
-    {"type":"message","content":"message to send","id":"unique message ID","to":"recipient unique id"}
+    {"type":"message","content":"message to send","to":"recipient unique id"}
 
 The server will send the message to the user in the room matching the name in to:
 
-    {"type":"message","content":"message to send","id":"unique message ID","user":{"id":"unique id","name":"user name",...},"private":true,"time":1255447115}
+    {"type":"message","content":"message to send","user":{"id":"unique id","name":"user name",...},"private":true,"time":1255447115}
 
 
 ## Presence

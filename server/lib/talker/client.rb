@@ -1,11 +1,8 @@
 require "eventmachine"
-require "uuid"
 require "yajl"
 
 module Talker
   class Client < EM::Connection
-    UUID_GENERATOR = UUID.new
-    
     class Error < RuntimeError; end
     
     attr_accessor :room, :user, :token, :users, :debug
@@ -44,7 +41,7 @@ module Talker
     end
     
     def send_message(message, attributes={})
-      send({ :type => "message", :content => message, :id => UUID_GENERATOR.generate }.merge(attributes))
+      send({ :type => "message", :content => message }.merge(attributes))
     end
     
     def send_private_message(to, message)

@@ -14,13 +14,11 @@ module Talker
     end
     
     def publish(event, user_id=nil)
-      partial = event["partial"]
-      key = routing_key(partial, user_id)
-      options = { :key => key, :persistent => !partial }
+      key = routing_key(user_id)
       
       Talker.logger.debug{"#{key}>>> #{event.inspect}"}
       
-      publish_as_json @exchange, event, options
+      publish_as_json @exchange, event, :key => key, :persistent => true
     end
     
     # Sugar for publish w/ a user_id
@@ -32,10 +30,9 @@ module Talker
       exchange.publish @encoder.encode(event) + EVENT_DELIMITER, options
     end
     
-    def routing_key(partial=false, user_id=nil)
+    def routing_key(user_id=nil)
       key = "talker.room.#{@name}"
       key += ".#{user_id}" if user_id
-      key += ".partial" if partial
       key
     end
     
