@@ -73,7 +73,7 @@ var ChatRoom = {
 
   
   send: function(text) {
-    ChatRoom.client.send({id: Math.uuid(), content: text || $('#msgbox').val(), type: 'message'});
+    ChatRoom.client.send({content: text || $('#msgbox').val(), type: 'message'});
     $("#msgbox").val('');
     ChatRoom.scroller.scrollToBottom();
   },
