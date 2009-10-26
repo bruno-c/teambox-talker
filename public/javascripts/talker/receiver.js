@@ -14,7 +14,7 @@ Receiver = {
   },
   
   connected: function(data, replay) {
-    $('#msgbox').attr('disabled', '').focus();
+    $('#msgbox').focus();
   },
   
   join: function(data, replay) {
@@ -49,9 +49,7 @@ Receiver = {
   },
   
   close: function(data, replay){
-    if (!replay){
-      $('#msgbox').attr('disabled', true);
-    }
+
   },
   
   back: function(data, replay) {
