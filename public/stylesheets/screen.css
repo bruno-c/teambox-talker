@@ -432,6 +432,8 @@ a.button {
           overflow: hidden; }
           #chat_log table tr td.message blockquote p {
             margin: 2px 0; }
+            #chat_log table tr td.message blockquote p pre {
+              background: white; }
     #chat_log table tr.me td.author b.blockquote_tail {
       border-right: 5px solid #faeede; }
     #chat_log table tr.me td.message blockquote {

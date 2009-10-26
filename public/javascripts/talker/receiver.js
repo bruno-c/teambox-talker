@@ -73,6 +73,15 @@ Receiver = {
     var last_row    = $('#log tr.received:last');
     var last_author = last_row.attr('author');
     
+    // format content appropriately
+    if (data.paste){
+      console.info("WE HAZ A PASTE");
+      data.content = FormatHelper.formatPaste(data);
+    } else {
+      console.info("NOERML MSG");
+      data.content = FormatHelper.text2html(data.content);
+    }
+    
     if (last_author == data.user.name && last_row.hasClass('message')){ // only append to existing blockquote group
       last_row.find('blockquote')
         .append($('<p/>').attr('time', data.time).html(data.content));
