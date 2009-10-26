@@ -14,7 +14,7 @@ module Talker
         :password => "Cn8JChhsZsqSYX3TTRnX"
       },
       :from => "notifier@talkerapp.com",
-      :to => ["macournoyer@talkerapp.com"],
+      :to => ["macournoyer@gmail.com"],
     }
     
     def initialize(options={})

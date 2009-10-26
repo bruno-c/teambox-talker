@@ -1,4 +1,4 @@
-ExceptionNotifier.exception_recipients = %w(macournoyer@talkerapp.com gary@talkerapp.com)
+ExceptionNotifier.exception_recipients = %w(macournoyer@gmail.com gary.haran@gmail.com)
 ExceptionNotifier.sender_address = %("Rails Error" <notifier@talkerapp.com>)
 
 ExceptionNotifier.smtp_settings = {
