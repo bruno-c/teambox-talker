@@ -16,8 +16,10 @@ $(function() {
       e.stopPropagation();
     })
   
+
+  ChatRoom.scroller = new Scroller();
   ChatRoom.align();
-  ChatRoom.scrollToBottom();
+  ChatRoom.scroller.scrollToBottom();
   
   var dom_element, on_focus, on_blur, on_focus_handler = function(e){
     ChatRoom.logMessages = -1;
@@ -73,11 +75,11 @@ var ChatRoom = {
   send: function(text) {
     ChatRoom.client.send({id: Math.uuid(), content: text || $('#msgbox').val(), type: 'message'});
     $("#msgbox").val('');
-    ChatRoom.scrollToBottom();
+    ChatRoom.scroller.scrollToBottom();
   },
   
   align: function() {
-    ChatRoom.scrollToBottom();
+    ChatRoom.scroller.scrollToBottom();
     var msgbox = document.getElementById('msgbox'); // old school
     var position = msgbox.value.length;
     
@@ -99,11 +101,6 @@ var ChatRoom = {
     document.title = ChatRoom.room;
   },
   
-  scrollToBottom: function() {
-    document.getElementById('bottom_anchor').scrollIntoView();
-    //window.scrollTo(0, document.body.clientHeight);
-  },
-  
   formatMessage: function(content) {
     return FormatHelper.text2html(content, false)
   },
@@ -114,20 +111,22 @@ var ChatRoom = {
       $(image).css({width: ChatRoom.maxImageWidth + 'px'});
     }
     image.style.visibility = 'visible';
-    if (!noScroll) ChatRoom.scrollToBottom();
+    if (!noScroll) ChatRoom.scroller.scrollToBottom();
   },
   
   onNewMessage: function(data) {
     Receiver.push(data);
-    ChatRoom.scrollToBottom();
+    ChatRoom.scroller.scrollToBottom();
   },
   
   onJoin: function(data) {
     Receiver.push(data);
+    ChatRoom.scroller.scrollToBottom();
   },
 
   onLeave: function(data) {
     Receiver.push(data);
+    ChatRoom.scroller.scrollToBottom();
   },
   
   onConnected: function(data){
