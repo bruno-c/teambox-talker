@@ -6,7 +6,7 @@
     - @last_event_user_name = nil # enables you to see user name of new typist.
     %tr.datetime
       %td{:colspan => "3"}&= "#{(Time.at(event.created_at.to_i - event.created_at.to_i % 300).to_formatted_s(:long_ordinal))}"
-  %tr.event{:id => "message-#{event.uuid || event.id}", :class => "#{(event.notice? ? "notice" : "message")} user_#{event.user.id} #{event.user.id == current_user.id && !event.notice? ? 'me' : ''}"}
+  %tr.event{:id => "message-#{event.id}", :class => "#{(event.notice? ? "notice" : "message")} user_#{event.user.id} #{event.user.id == current_user.id && !event.notice? ? 'me' : ''}"}
     - if @last_event_user_name == event.user.name && event.message?
       %td.author
         %span{:style => 'visibility: hidden;'}&= event.user.name

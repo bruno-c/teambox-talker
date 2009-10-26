@@ -73,9 +73,7 @@ Receiver = {
     var last_row    = $('#log tr.received:last');
     var last_author = last_row.attr('author');
     
-    if ($('#message-' + data.id).length) { // just update the element with the new content... ie we are livetyping
-      $('#message-' + data.id).html(data.content);
-    } else if (last_author == data.user.name && last_row.hasClass('message')){ // only append to existing blockquote group
+    if (last_author == data.user.name && last_row.hasClass('message')){ // only append to existing blockquote group
       last_row.find('blockquote')
         .append($('<p/>').attr('id', 'message-' + data.id).attr('time', data.time).html(data.content));
     } else {
