@@ -7,7 +7,10 @@ class SessionsController < ApplicationController
 
   def create
     logout_keeping_session!
-    if user = current_account.users.authenticate(params[:email], params[:password])
+    
+    @email = params[:email]
+    
+    if user = current_account.users.authenticate(@email, params[:password])
       # Protects against session fixation attacks, causes request forgery
       # protection if user resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
@@ -17,8 +20,6 @@ class SessionsController < ApplicationController
       redirect_back_or_default rooms_path
     else
       note_failed_signin
-      @email       = params[:email]
-      @remember_me = params[:remember_me]
       render :action => 'new'
     end
   end

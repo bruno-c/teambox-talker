@@ -1,5 +1,5 @@
 Rails app:
-- Allow logging in by email or user name
+✓ Allow logging in by email or user name
 - Implement "Forgot my password"
 - Review invitation process
   - Change name in room

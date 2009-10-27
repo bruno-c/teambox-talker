@@ -17,6 +17,12 @@ class SessionsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_should_login_by_name
+    post :create, :email => 'quentin', :password => 'monkey'
+    assert_not_nil session[:user_id]
+    assert_response :redirect
+  end
+
   def test_should_logout
     login_as :quentin
     get :destroy
