@@ -57,7 +57,7 @@ class Event < ActiveRecord::Base
         }.to_json
       end
     else # notice?
-      {:time => created_at.to_i, :type => type, :content => message, :user => user}.to_json
+      {:time => created_at.to_i * 1000, :type => type, :content => message, :user => user}.to_json
     end
   end
   

@@ -4,7 +4,7 @@
       id: <%= current_user.id %>,
       name: <%= current_user.name.to_json %>,
       email: <%= current_user.email.to_json %>,
-      time_zone_offset: <%= current_user.utc_offset.to_json %>
+      time_zone_offset: <%= current_user.utc_offset.to_json %> * 1000 // to get milliseconds
     };
 
     Orbited.settings.hostname = '<%= request.host %>';
@@ -38,7 +38,7 @@
       client.connect();
       
       for (var i = 0; i < ChatRoom.events.length; i++){
-        Receiver.push(ChatRoom.events[i], true, i);
+        Receiver.push(ChatRoom.events[i], true);
       }
       
       ChatRoom.scroller.scrollToBottom();
@@ -84,7 +84,6 @@
 <div id="chat_log">
   <table id="log">
   </table>
-  <span id="bottom_anchor"></span>
 </div>
 
 <div id="message_form">

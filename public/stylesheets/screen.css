@@ -439,7 +439,7 @@ a.button {
             #chat_log table tr td.message blockquote p div {
               overflow: auto;
               padding: 10px;
-              width: 500px;
+              width: 500px // this is what we need to fix.;
               border: 1px solid silver; }
               #chat_log table tr td.message blockquote p div pre {
                 font-family: monospace; }
