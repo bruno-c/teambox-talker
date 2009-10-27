@@ -1,0 +1,18 @@
+<div class="panel dialog">
+  <div class="header">
+    <h3><%=h @title = "Reset Your Password" %></h3>
+  </div>
+  <div class="content">
+    <% form_tag password_path do %>
+      <p>
+        <%= label_tag :email %>
+        <%= text_field_tag :email, @email, :size => 30 %>
+      </p>
+      <p>
+        <%= submit_button 'Send reset link', :class => "icon send-email" %>
+        or
+        <%= link_to "Login", login_path %>
+      </p>
+    <% end %>
+  </div>
+</div>

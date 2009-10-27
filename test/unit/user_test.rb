@@ -19,6 +19,11 @@ class UserTest < ActiveSupport::TestCase
     assert_equal users(:quentin), User.authenticate('quentin@example.com', 'new password')
   end
 
+  def test_should_deny_blank_password
+    users(:quentin).update_attributes(:password => '', :password_confirmation => '')
+    assert !users(:quentin).valid?
+  end
+
   def test_should_not_rehash_password
     users(:quentin).update_attributes(:email => 'quentin2@example.com')
     assert_equal users(:quentin), User.authenticate('quentin2@example.com', 'monkey')
@@ -35,6 +40,19 @@ class UserTest < ActiveSupport::TestCase
   def test_should_not_authenticate_suspended_user
     users(:quentin).suspend!
     assert_nil User.authenticate('quentin@example.com', 'monkey')
+  end
+
+  def test_should_authenticate_by_perishable_token
+    users(:quentin).create_perishable_token!
+    assert_equal users(:quentin), User.authenticate_by_perishable_token(users(:quentin).perishable_token)
+  end
+
+  def test_should_fail_authenticate_by_nil_perishable_token
+    assert_not_nil users(:quentin), User.authenticate_by_perishable_token(nil)
+  end
+
+  def test_should_fail_authenticate_by_bad_perishable_token
+    assert_not_nil users(:quentin), User.authenticate_by_perishable_token("ohaie")
   end
 
   def test_should_set_remember_token

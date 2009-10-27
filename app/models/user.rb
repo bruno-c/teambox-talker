@@ -94,8 +94,15 @@ class User < ActiveRecord::Base
     u && u.authenticated?(password) ? u : nil
   end
   
+  def self.authenticate_by_perishable_token(token)
+    if token.present? && user = find_by_perishable_token(token)
+      user.clear_perishable_token!
+      user
+    end
+  end
+  
   private
     def password_required?
-      crypted_password.blank? && password
+      (crypted_password.blank? && password) || password
     end
 end

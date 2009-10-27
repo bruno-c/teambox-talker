@@ -2,6 +2,8 @@
 class SessionsController < ApplicationController
   before_filter :account_required, :except => :destroy
   
+  layout "blank"
+  
   def new
   end
 

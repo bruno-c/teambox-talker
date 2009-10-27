@@ -7,8 +7,7 @@ class InvitesController < ApplicationController
   def show
     @token = params[:id]
 
-    if @token.present? && @user = current_account.users.find_by_perishable_token(@token)
-      @user.clear_perishable_token!
+    if @user = current_account.users.authenticate_by_perishable_token(@token)
       self.current_user = @user
 
       if @user.pending?

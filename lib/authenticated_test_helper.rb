@@ -4,8 +4,11 @@ module AuthenticatedTestHelper
     @request.session[:user_id] = user ? (user.is_a?(User) ? user.id : users(user).id) : nil
   end
 
-  def authorize_as(user)
-    @request.env["HTTP_AUTHORIZATION"] = user ? ActionController::HttpAuthentication::Basic.encode_credentials(users(user).email, 'monkey') : nil
+  def assert_access_denied
+    assert_redirected_to "/login"
   end
-  
+
+  def assert_access_granted
+    assert_not_equal @controller.url_for("/login"), @controller.url_for(@response.redirected_to)
+  end
 end
