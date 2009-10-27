@@ -6,8 +6,8 @@
         <li><%= link_to_with_active 'Users', users_path %></li>
       <% end %>
       <li><%= link_to_with_active 'Chat Logs', logs_path %></li>
+      <li><%= render :partial => "logs/search_form" %></li>
     <% end %>
-    <li><%= render :partial => "logs/search_form" %></li>
   </ul>
   <p class="utilities">
     <% if logged_in? %>

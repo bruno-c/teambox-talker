@@ -11,4 +11,9 @@ class Account < ActiveRecord::Base
   
   attr_accessor :invitation_code
   validate { |a| a.errors.add(:invitation_code, "is invalid") unless a.invitation_code == INVITATION_CODE }
+  
+  # TODO determine if account have SSL depending on plan
+  def ssl
+    true
+  end
 end
