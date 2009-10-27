@@ -5,8 +5,13 @@ Receiver = {
   push: function(data, replay, index) {
     if (data.type == null) return;
     
+    data.time = data.time - currentUser.time_zone_offset;
+
     if (typeof Receiver[data.type] == 'function'){
-      Receiver[data.type](data, replay, index);
+      if ($.inArray(data.type, ['message', 'notice']) > -1 && $('#log p:last[time]').attr('time') - data.time < -(5 * 60)){
+        Receiver.timestamp(data, replay);
+      }
+      Receiver[data.type](data, replay);
     }else{
       console.info(JSON.encode(data, replay, index));
       console.error("*** Unable to handle data type: (" + data.type + ") with data.  Format may not be appropriate.");
@@ -62,17 +67,11 @@ Receiver = {
   
   message: function(data, replay, index) {
     // we need to figure out if the last row is of the same author to group elements together.
-    var last_row    = $('#log tr.received:last');
+    var last_row    = $('#log tr:last');
     var last_author = last_row.attr('author');
     
-    if (replay){
-      var last_time = index > 0 ? ChatRoom.events[index - 1].time : 0;
-    } else {
-      var last_time = ChatRoom.events[ChatRoom.events.length - 1].time;
-      ChatRoom.events.push(data);
-    }
-    // console.info("MESSAGE");
-    // console.info(last_time);
+    // console.info(last_row);
+    // data.content = FormatHelper.timestamp2date(data.time) + " " + data.content;
     
     // format content appropriately
     if (data.paste && data.paste != 'null'){
@@ -80,14 +79,6 @@ Receiver = {
     } else {
       data.content = FormatHelper.text2html(data.content);
     }
-    
-    // console.info("**********");
-    // console.info(last_time - data.time);
-    
-    // if (data.time - last_time > 5 * 60 * 60 * 1000) { // check time diff is more than 5 minutes
-    //   Receiver.timestamp(data);
-    //   last_row = $('#log tr:last');
-    // }
     
     if (last_author == data.user.name && last_row.hasClass('message')){ // only append to existing blockquote group
       last_row.find('blockquote')
@@ -107,18 +98,12 @@ Receiver = {
   },
   
   timestamp: function(data, replay){
-    console.info('INSIDE timestamp()');
-    console.info(data);
-
-    var time_stamp = new Date();
-    time_stamp.setTime(data.time);
-
     var element = $('<tr/>').addClass('timestamp')
-      .append($('<td/>'))
       .append($('<td/>')
-        .append($('<p/>')
-          .html(time_stamp.toString())));
-          // .html(time_stamp.adjustedFromUTC(currentUser.time_zone_offset).toString())));
+        .html(FormatHelper.toHumanDate(data.time)))
+      .append($('<td/>')
+        .append($('<p/>').attr('time', data.time)
+          .html(FormatHelper.toHumanTime(data.time))));
 
     element.appendTo('#log');
   }

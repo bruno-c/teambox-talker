@@ -8,7 +8,7 @@ var FormatHelper = {
     var multiline_expression = /\n/gim;
 
     var content = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    
+        
     if (content.match(multiline_expression)){
       // setup content message inside a div or something with overflow scroll/auto
       return '<div><pre>'
@@ -75,16 +75,28 @@ var FormatHelper = {
     return msg;
   },
   
-  date2human: function(date) {
-    // jsDate => October 18th, 2009 17:45
+  timestamp2date: function(timestamp){
+    var d = new Date();
+    d.setTime(timestamp * 1000);
+    return d;
+  },
+
+  toHumanDate: function(timestamp) {
+    var date = FormatHelper.timestamp2date(timestamp);
     var months = 'January February March April May June July August September October November December'.split(' ');
     var dayOrdinalSuffixes = 'st nd rd th th th th th th th'.split(' ');
     var minutes = date.getMinutes() - date.getMinutes() % 5;
     
-    return months[date.getMonth()] + ' ' 
-      + date.getDate() + dayOrdinalSuffixes[date.getDate() % 10] + ', '
-      + date.getFullYear() + ' '
-      + (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':'
+    return months[date.getMonth()] + '&nbsp;' 
+      + date.getDate() + dayOrdinalSuffixes[date.getDate() % 10] + ',&nbsp;'
+      + date.getFullYear();
+  },
+  
+  toHumanTime: function(timestamp) {
+    var date = FormatHelper.timestamp2date(timestamp);
+    var minutes = date.getMinutes() - date.getMinutes() % 5;
+    
+    return (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':'
       + (minutes < 10 ? '0' + minutes : minutes)
   }
 }

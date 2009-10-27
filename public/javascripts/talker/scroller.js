@@ -16,7 +16,7 @@ function Scroller(options){
   }
   
   self.shouldScrollToBottom = function(){
-    return (self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight() + self.options.scrollLimit) > 0
+    return (self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight() + self.getScrollLimit()) > 0
   }
   
   self.getWindowHeight = function(){
@@ -28,6 +28,14 @@ function Scroller(options){
   }
   
   self.getScrollHeight = function(){
-    return Math.max(document.documentElement.offsetHeight, document.body.scrollHeight)
+    return Math.max(document.documentElement.offsetHeight, document.body.scrollHeight) + 25;// + 25 for padding and extra display stuff. 
+  },
+  
+  self.getScrollLimit = function(){
+    if (typeof self.options.scrollLimit == 'function'){
+      return self.options.scrollLimit(); 
+    } else { // assumes integer
+      return self.options.scrollLimit;
+    }
   }
 }

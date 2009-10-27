@@ -42,7 +42,7 @@ class Event < ActiveRecord::Base
     if message?
       if paste 
         {
-          :time => created_at.to_i * 1000, :user => user, :type => type, 
+          :time => created_at.to_i, :user => user, :type => type, 
           :content => message, 
           :paste => {
             :permalink => paste.permalink,
@@ -52,7 +52,7 @@ class Event < ActiveRecord::Base
         }.to_json
       else
         {
-          :time => created_at.to_i * 1000, :user => user, :type => type, 
+          :time => created_at.to_i, :user => user, :type => type, 
           :content => message, 
         }.to_json
       end

@@ -1,0 +1,4 @@
+- create [typing, idle] indicator for user list
+- style timestamps so they look awesome
+- settings form
+- correct display of code blocks in pastes so that they can grow with window but not bleed over

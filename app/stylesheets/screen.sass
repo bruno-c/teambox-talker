@@ -513,10 +513,12 @@ a.button
             overflow: hidden
             p
               margin: 2px 0
+              width: 100%
+              overflow: auto
               div
                 overflow: auto
                 padding: 10px
-                width: 60%
+                width: 500px // this is what we need to fix.
                 border = 1px solid !light_grey
                 pre
                   font-family: monospace
@@ -528,16 +530,17 @@ a.button
           &.message
             blockquote
               background = !alt_colour * 0.15 + !white * 0.85
-      &.datetime
+      &.timestamp
         td
-          &.author
-            b.blockquote_tail
-              border-right = 5px solid !light_grey * 0.15 + !white * 0.85
-          &.message
-            blockquote
-              background = !light_grey * 0.15 + !white * 0.85
-              padding: 5px 10px
-              color = !grey 
+          border-bottom = 1px solid !light_grey
+          color = !light_grey
+          padding: 1px
+          margin: 1px
+          +font_size("tiny")
+          p
+            color = !light_grey
+            +font_size("tiny")
+            text-align: right
       &.notice
         td
           &.author
