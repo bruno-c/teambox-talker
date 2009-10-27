@@ -8,8 +8,12 @@ Receiver = {
     // console.info("**************");
     data.time = data.time - currentUser.time_zone_offset;
     
+    if (data.time < 946702800000){ // if date isn't formatted correctly by talker
+      data.time = data.time * 1000;
+    }
+    
     if (typeof Receiver[data.type] == 'function'){
-      if ($.inArray(data.type, ['message', 'notice']) > -1 && $('#log p:last[time]').attr('time') - data.time < -(60 * 60 * 50)){
+      if ($.inArray(data.type, ['message', 'notice']) > -1 && $('#log p:last[time]').attr('time') - data.time < -(5 * 60 * 1000)){
         Receiver.timestamp(data, replay);
       }
       Receiver[data.type](data, replay);
@@ -71,13 +75,16 @@ Receiver = {
     var last_row    = $('#log tr:last');
     var last_author = last_row.attr('author');
     
+    // console.info(last_row);
+    // data.content = FormatHelper.timestamp2date(data.time) + " " + data.content;
+    
     // format content appropriately
     if (data.paste && data.paste != 'null'){
       data.content = FormatHelper.formatPaste(data);
     } else {
       data.content = FormatHelper.text2html(data.content);
     }
-
+    
     if (last_author == data.user.name && last_row.hasClass('message')){ // only append to existing blockquote group
       last_row.find('blockquote')
         .append($('<p/>').attr('time', data.time).html(data.content));
@@ -96,18 +103,18 @@ Receiver = {
   },
   
   timestamp: function(data, replay){
-    console.info('INSIDE timestamp()');
-    console.info(data);
+    // console.info('INSIDE timestamp()');
+    // console.info(data);
 
     var time_stamp = new Date();
     time_stamp.setTime(data.time);
 
     var element = $('<tr/>').addClass('timestamp')
-      .append($('<td/>'))
+      .append($('<td/>')
+        .html(FormatHelper.toHumanDate(time_stamp)))
       .append($('<td/>')
         .append($('<p/>').attr('time', data.time)
-          .html(time_stamp.toString() + " " + data.type)));
-          // .html(time_stamp.adjustedFromUTC(currentUser.time_zone_offset).toString())));
+          .html(FormatHelper.toHumanTime(time_stamp))));
 
     element.appendTo('#log');
   }

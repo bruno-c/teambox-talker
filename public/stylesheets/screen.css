@@ -447,12 +447,16 @@ a.button {
       border-right: 5px solid #faeede; }
     #chat_log table tr.me td.message blockquote {
       background: #faeede; }
-    #chat_log table tr.datetime td.author b.blockquote_tail {
-      border-right: 5px solid #f4f4f4; }
-    #chat_log table tr.datetime td.message blockquote {
-      background: #f4f4f4;
-      padding: 5px 10px;
-      color: gray; }
+    #chat_log table tr.timestamp td {
+      border-bottom: 1px solid silver;
+      color: silver;
+      padding: 1px;
+      margin: 1px;
+      font-size: 10px; }
+      #chat_log table tr.timestamp td p {
+        color: silver;
+        font-size: 10px;
+        text-align: right; }
     #chat_log table tr.notice td.message p {
       color: silver;
       font-size: 10px; }
