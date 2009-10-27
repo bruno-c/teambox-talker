@@ -10,6 +10,7 @@ quentin:
   account:                   master
   state:                     active
   admin:                     true
+  time_zone:                 Atlantic Time (Canada)
       
 aaron:
   name:                      aaron
@@ -23,3 +24,4 @@ aaron:
   account:                   master
   state:                     active
   admin:                     false
+  time_zone:                 Atlantic Time (Canada)
