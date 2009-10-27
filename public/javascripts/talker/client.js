@@ -18,8 +18,6 @@ function TalkerClient(options) {
     
     console.debug(line);
     
-    line.time = line.time + currentUser.time_zone_offset; // because talker has non adjusted time
-    
     // ugly shit but this will be refactored.
     switch(line.type){
       case 'message':

@@ -5,7 +5,7 @@ Receiver = {
   push: function(data, replay, index) {
     if (data.type == null) return;
     
-    data.time = data.time - currentUser.time_zone_offset;
+    data.time = data.time + currentUser.time_zone_offset;
 
     if (typeof Receiver[data.type] == 'function'){
       if ($.inArray(data.type, ['message', 'notice']) > -1 && $('#log p:last[time]').attr('time') - data.time < -(5 * 60)){
