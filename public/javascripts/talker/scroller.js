@@ -9,7 +9,9 @@ function Scroller(options){
   
   self.scrollToBottom = function(forceScroll){
     if (self.shouldScrollToBottom() || forceScroll){
-      window.scrollTo(0, self.getWindowHeight() + self.getScrollHeight());
+      window.setTimeout(function(){
+        window.scrollTo(0, self.getWindowHeight() + self.getScrollHeight());
+      }, 10);
     }
   }
   
