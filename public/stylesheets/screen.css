@@ -433,11 +433,13 @@ a.button {
           padding: 3px 10px;
           overflow: hidden; }
           #chat_log table tr td.message blockquote p {
-            margin: 2px 0; }
+            margin: 2px 0;
+            width: 100%;
+            overflow: auto; }
             #chat_log table tr td.message blockquote p div {
               overflow: auto;
               padding: 10px;
-              width: 60%;
+              width: 500px;
               border: 1px solid silver; }
               #chat_log table tr td.message blockquote p div pre {
                 font-family: monospace; }
