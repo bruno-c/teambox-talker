@@ -1,10 +1,9 @@
 module Talker
   module Presence
     class Room < EventChannel
-      def initialize(name, persister, timeout)
+      def initialize(name, persister)
         super(name)
         @persister = persister
-        @timeout = timeout
         @sessions = {}
       end
       
@@ -12,13 +11,17 @@ module Talker
         @sessions[user.id]
       end
       
+      def sessions
+        @sessions.values
+      end
+      
       def users
         @sessions.values.map { |s| s.user }
       end
       
       # Add a user w/o broadcasting presence
-      def new_session(user)
-        @sessions[user.id] = Session.new(@persister, user, self, @timeout)
+      def new_session(user, state=nil)
+        @sessions[user.id] = Session.new(@persister, user, self, state)
       end
       
       def present?(user)
@@ -53,6 +56,12 @@ module Talker
           
           session.idle!
           publish :type => "idle", :user => user.info, :time => time
+        end
+      end
+      
+      def ping(user, time=Time.now.to_i)
+        if present?(user)
+          session_for(user).touch(time)
         end
       end
       

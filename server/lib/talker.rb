@@ -29,6 +29,7 @@ module Talker
     autoload :Room, "talker/presence/room"
     autoload :MysqlPersister, "talker/presence/mysql_persister"
     autoload :Server, "talker/presence/server"
+    autoload :Session, "talker/presence/session"
     autoload :Sweeper, "talker/presence/sweeper"
   end
   

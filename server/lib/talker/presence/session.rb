@@ -1,51 +1,50 @@
 module Talker
   module Presence
     class Session
-      attr_reader :user, :room, :updated_at
+      attr_reader :user, :room, :updated_at, :state
       
-      def initialize(persister, user, room, timeout)
+      def initialize(persister, user, room, state=nil)
         @persister = persister
         @user = user
         @room = room
-        @timeout = timeout
         @updated_at = Time.now.to_i
-        @state = nil
+        @state = state.to_sym if state
       end
       
       def touch(time)
         @updated_at = time
       end
       
-      def expired?
-        Time.now.to_i - @updated_at > @timeout
-      end
-      
       def join!
-        state = :online
+        @state = :online
         store :online
       end
       
       def back!
-        state = :online
+        @state = :online
         update :online
       end
       
       def online?
-        state == :online
+        @state == :online
       end
       
       def idle!
-        state = :idle
+        @state = :idle
         update :idle
       end
       
       def idle?
-        state == :idle
+        @state == :idle
       end
       
       def leave!
-        state = nil
+        @state = nil
         delete
+      end
+      
+      def to_s
+        "#{@room.name}.#{@user.id} (#{@state})"
       end
       
       private
@@ -58,7 +57,7 @@ module Talker
         end
         
         def delete
-          @persister.delete(@name, @user.id)
+          @persister.delete(@room.name, @user.id)
         end
     end
   end
