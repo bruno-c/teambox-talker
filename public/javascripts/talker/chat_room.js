@@ -17,7 +17,7 @@ $(function() {
     })
   
 
-  ChatRoom.scroller = new Scroller({scrollLimit: function(){ return $('#log tr:last p:last').height() }});
+  ChatRoom.scroller = new Scroller({scrollLimit: function(){ return $('#log tr:last').height() }});
   ChatRoom.align();
   ChatRoom.scroller.scrollToBottom();
   
