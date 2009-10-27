@@ -101,16 +101,7 @@ module Talker
     def close
       Talker.logger.debug{"Closing connection with #{to_s}"}
       
-      if @subscription
-        @subscription.unsubscribe
-        @subscription = nil
-      end
-      
-      if @user
-        @room.publish_presence("leave", @user)
-        @user = nil
-      end
-      
+      @room.publish_presence("leave", @user) if @user
       close_connection_after_writing
     end
     
@@ -140,10 +131,10 @@ module Talker
     
     def unbind
       Talker.logger.debug{"Connection lost with #{to_s}"}
-      if @room
-        @subscription.unsubscribe if @subscription
-        @room.publish_presence("idle", @user) if @user
-      end
+      
+      @subscription.delete if @subscription
+      @room.publish_presence("idle", @user) if @user && @room
+      
       @server.connection_closed(self)
     end
     

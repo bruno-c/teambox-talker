@@ -26,9 +26,11 @@ module Talker
       def join(user, time=Time.now.to_i)
         if present?(user)
           # Back from idle if already present in the room
-          stop_idle_timer user
-          publish :type => "back", :user => user.info, :time => time
-          @persister.update(@name, user.id, "online")
+          if user.idle?
+            stop_idle_timer user
+            publish :type => "back", :user => user.info, :time => time
+            @persister.update(@name, user.id, "online")
+          end
         else
           # New user in room if not present
           publish :type => "join", :user => user.info, :time => time
@@ -73,7 +75,6 @@ module Talker
 
           @persister.delete(@name, user.id)
           @users.delete(user.id)
-          session_queue(user.id).delete
         end
       end
     end
