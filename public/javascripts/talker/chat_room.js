@@ -116,17 +116,14 @@ var ChatRoom = {
   
   onNewMessage: function(data) {
     Receiver.push(data);
-    ChatRoom.scroller.scrollToBottom();
   },
   
   onJoin: function(data) {
     Receiver.push(data);
-    ChatRoom.scroller.scrollToBottom();
   },
 
   onLeave: function(data) {
     Receiver.push(data);
-    ChatRoom.scroller.scrollToBottom();
   },
   
   onConnected: function(data){
