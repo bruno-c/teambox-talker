@@ -24,8 +24,12 @@ class UserTest < ActiveSupport::TestCase
     assert_equal users(:quentin), User.authenticate('quentin2@example.com', 'monkey')
   end
 
-  def test_should_authenticate_user
+  def test_should_authenticate_user_by_email
     assert_equal users(:quentin), User.authenticate('quentin@example.com', 'monkey')
+  end
+
+  def test_should_authenticate_user_by_name
+    assert_equal users(:quentin), User.authenticate('quentin', 'monkey')
   end
 
   def test_should_not_authenticate_suspended_user

@@ -1,18 +1,14 @@
 Talker Server:
-✓ [BUG] when restarting channel server, 1st time user connects, he doesn't get presence info and messages
-✓ [BUG] 1st user is not kicked out of room when 2nd user w/ same name connects
 - [BUG] second user get kicked when expired 1st user leaves
-✓ Remove partial messages support (message uuid, partial routing key, etc.)
 - Handle incoming malformed events (in logger especially)
 - Expire connections (on presence server) if user leaves while channel server is down
 - Support other types of channels (room, paste, etc)
 - Benchmark against ejabberd
-✓ Support delta indexing of events
 
 Chef:
+- Setup emergency_mailer, see http://pauldowman.com/2008/02/17/smtp-mail-from-ec2-web-server-setup/
 - Tweaks mysql recipe (use the one from opscode?); using too much mem
 - Move /db to /mnt or mount EBS volume
-- Server and room behind SSL (maybe can have nginx do all that)
 - Put talker servers behind haproxy
 - Have a fallback or multiple logger and presence instances running
 - Implement Zero downtime thing, see http://www.igvita.com/2008/12/02/zero-downtime-restarts-with-haproxy/

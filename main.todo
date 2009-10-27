@@ -1,8 +1,5 @@
 Rails app:
-✓ Fix redirection issue on login
-✓ Configure timezone.
-- Allow logging in by email or user name
-- Relay emails to http://www.authsmtp.com/ to prevent going into spam
+✓ Allow logging in by email or user name
 - Implement "Forgot my password"
 - Review invitation process
   - Change name in room

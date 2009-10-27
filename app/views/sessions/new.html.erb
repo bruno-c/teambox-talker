@@ -1,0 +1,20 @@
+
+<div class="panel dialog">
+  <div class="header">
+    <h3><%=h @title = "Log In" %></h3>
+  </div>
+  <div class="content">
+    <% form_tag session_path do %>
+      <p>
+        <%= label_tag :email, 'Email or user name' %>
+        <%= text_field_tag :email, @email %>
+      </p>
+      <p>
+        <%= label_tag :password %>
+        <%= password_field_tag :password, nil %>
+      <p>
+        <%= submit_button 'Log in', :class => "icon ok" %>
+      </p>
+    <% end %>
+  </div>
+</div>
