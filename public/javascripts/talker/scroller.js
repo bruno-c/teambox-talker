@@ -10,13 +10,13 @@ function Scroller(options){
   self.scrollToBottom = function(forceScroll){
     if (self.shouldScrollToBottom() || forceScroll){
       window.setTimeout(function(){
-        window.scrollTo(0, self.getWindowHeight() + self.getScrollHeight());
+        window.scrollTo(0, self.getWindowHeight() + self.getScrollHeight() + 25); // + 25 for padding and extra display stuff. 
       }, 10);
     }
   }
   
   self.shouldScrollToBottom = function(){
-    return (self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight() + self.options.scrollLimit) > 0
+    return (self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight() + self.getScrollLimit() + 25) > 0
   }
   
   self.getWindowHeight = function(){
@@ -29,5 +29,13 @@ function Scroller(options){
   
   self.getScrollHeight = function(){
     return Math.max(document.documentElement.offsetHeight, document.body.scrollHeight)
+  },
+  
+  self.getScrollLimit = function(){
+    if (typeof self.options.scrollLimit == 'function'){
+      return self.options.scrollLimit(); 
+    } else { // assumes integer
+      return self.options.scrollLimit;
+    }
   }
 }
