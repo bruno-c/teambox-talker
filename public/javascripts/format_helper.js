@@ -6,21 +6,12 @@ var FormatHelper = {
     var url_expression       = /(https?:\/\/|www\.)[^\s<]*/gi
     var protocol_expression  = /^(http|https|ftp|ftps|ssh|irc|mms|file|about|mailto|xmpp):\/\//;
     var multiline_expression = /\n/gim;
-    
-    // forces multiline from being enclosed in <pre> twice and mucking up display.
-    if (content.match(/<!-- ignore -->/g)){
-      return content;
-    } else {
-      var content = content.replace('<', '&lt;').replace('>', '&gt;');
-    }
+
+    var content = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     
     if (content.match(multiline_expression)){
       // setup content message inside a div or something with overflow scroll/auto
-      return  '<!-- ignore -->'
-            // + '<pre style="display: block;'
-            // + 'font-family: \'Lucida Console\', monospace; overflow: scroll; '
-            // + 'background: white">' 
-            + '<div><pre>'
+      return '<div><pre>'
             +   content 
             + '</pre></div>';
       // add a link to a message display that would show the message in raw text
