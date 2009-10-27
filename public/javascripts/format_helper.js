@@ -77,12 +77,12 @@ var FormatHelper = {
   
   timestamp2date: function(timestamp){
     var d = new Date();
-    d.setTime(timestamp);
+    d.setTime(timestamp * 1000);
     return d;
   },
 
-  toHumanDate: function(date) {
-    // jsDate => October 18th, 2009 17:45
+  toHumanDate: function(timestamp) {
+    var date = FormatHelper.timestamp2date(timestamp);
     var months = 'January February March April May June July August September October November December'.split(' ');
     var dayOrdinalSuffixes = 'st nd rd th th th th th th th'.split(' ');
     var minutes = date.getMinutes() - date.getMinutes() % 5;
@@ -92,7 +92,8 @@ var FormatHelper = {
       + date.getFullYear();
   },
   
-  toHumanTime: function(date) {
+  toHumanTime: function(timestamp) {
+    var date = FormatHelper.timestamp2date(timestamp);
     var minutes = date.getMinutes() - date.getMinutes() % 5;
     
     return (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':'
