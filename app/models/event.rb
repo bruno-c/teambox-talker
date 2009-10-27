@@ -40,7 +40,22 @@ class Event < ActiveRecord::Base
   
   def to_json(options = {})
     if message?
-      {:time => created_at.to_i * 1000, :user => user, :type => type, :content => message, :paste => paste}.to_json
+      if paste 
+        {
+          :time => created_at.to_i * 1000, :user => user, :type => type, 
+          :content => message.gsub(/</, '&lt;').gsub(/>/, '&gt;'), 
+          :paste => {
+            :permalink => paste.permalink,
+            :content => paste.content.gsub(/</, '&lt;').gsub(/>/, '&gt;'),
+            :syntax => paste.syntax
+          }
+        }.to_json
+      else
+        {
+          :time => created_at.to_i * 1000, :user => user, :type => type, 
+          :content => message.gsub(/</, '&lt;').gsub(/>/, '&gt;'), 
+        }.to_json
+      end
     else # notice?
       {:time => created_at.to_i, :type => type, :content => message, :user => user}.to_json
     end

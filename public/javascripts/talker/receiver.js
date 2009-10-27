@@ -75,7 +75,7 @@ Receiver = {
     // console.info(last_time);
     
     // format content appropriately
-    if (data.paste){
+    if (data.paste && data.paste != 'null'){
       data.content = FormatHelper.formatPaste(data);
     } else {
       data.content = FormatHelper.text2html(data.content);

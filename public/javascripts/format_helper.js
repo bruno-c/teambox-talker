@@ -71,7 +71,8 @@ var FormatHelper = {
   },
   
   formatPaste: function(data) {
-    var msg = "<a target='_blank' title='Paste #" + data.paste.id +
+    console.info(data);
+    var msg = "<a target='_blank' title='Paste #" + data.paste.permalink +
               "' href='" + window.location.protocol + "//" + window.location.host + "/pastes/" + data.paste.permalink +
               "'>View paste</a>";
     if (data.paste.lines > data.paste.preview_lines) {
