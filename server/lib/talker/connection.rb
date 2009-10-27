@@ -83,7 +83,7 @@ module Talker
       room_required!
       
       obj["user"] = @user.required_info
-      obj["time"] = Time.now.to_i
+      obj["time"] = Time.now.utc.to_i
       
       content = obj["content"]
       

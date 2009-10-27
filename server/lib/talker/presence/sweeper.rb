@@ -19,7 +19,7 @@ module Talker
       def run
         Talker.logger.debug "Running sweeper"
         
-        now = Time.now.to_i
+        now = Time.now.utc.to_i
         
         @server.rooms.each do |room|
           room.sessions.each do |session|

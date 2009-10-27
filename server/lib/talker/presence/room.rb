@@ -29,7 +29,7 @@ module Talker
         @sessions.key?(user.id)
       end
       
-      def join(user, time=Time.now.to_i)
+      def join(user, time=Time.now.utc.to_i)
         if present?(user)
           session = session_for(user)
           
@@ -50,7 +50,7 @@ module Talker
         end
       end
       
-      def idle(user, time=Time.now.to_i)
+      def idle(user, time=Time.now.utc.to_i)
         if present?(user)
           session = session_for(user)
           
@@ -59,13 +59,13 @@ module Talker
         end
       end
       
-      def ping(user, time=Time.now.to_i)
+      def ping(user, time=Time.now.utc.to_i)
         if present?(user)
           session_for(user).touch(time)
         end
       end
       
-      def leave(user, time=Time.now.to_i)
+      def leave(user, time=Time.now.utc.to_i)
         if present?(user)
           session = @sessions.delete(user.id)
           

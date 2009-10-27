@@ -7,7 +7,7 @@ module Talker
         @persister = persister
         @user = user
         @room = room
-        @updated_at = Time.now.to_i
+        @updated_at = Time.now.utc.to_i
         @state = state.to_sym if state
       end
       

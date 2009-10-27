@@ -58,7 +58,7 @@ module Talker
           room_id = @name.to_i
           user_id = message["user"]["id"].to_i
           content = message["content"]
-          time = message["time"] || Time.now.to_i
+          time = message["time"] || Time.now.utc.to_i
           
           sql = "INSERT INTO events (room_id, user_id, type, message, created_at, updated_at) " +
                 "VALUES (#{room_id}, #{user_id}, 'message', '#{quote(content)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
@@ -72,7 +72,7 @@ module Talker
           user_id = message["user"]["id"].to_i
           content = message["content"]
           paste_id = message["paste"]["id"]
-          time = message["time"] || Time.now.to_i
+          time = message["time"] || Time.now.utc.to_i
           
           sql = "INSERT INTO events (room_id, user_id, type, message, paste_permalink, created_at, updated_at) " +
                 "VALUES (#{room_id}, #{user_id}, 'message', '#{quote(content)}', '#{quote(paste_id)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
@@ -85,7 +85,7 @@ module Talker
           room_id = @name.to_i
           user_id = message["user"]["id"].to_i
           type = message["type"]
-          time = message["time"] || Time.now.to_i
+          time = message["time"] || Time.now.utc.to_i
           
           sql = "INSERT INTO events (room_id, user_id, type, created_at, updated_at) " +
                 "VALUES (#{room_id}, #{user_id}, '#{quote(type)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
