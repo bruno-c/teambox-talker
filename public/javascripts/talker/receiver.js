@@ -2,13 +2,13 @@
 // 2) Updates list of users in the chat room..
 Receiver = {
   // handles all incoming messages in a triage fashion eventually becoming an insertion in the log
-  push: function(data, replay) {
+  push: function(data, replay, index) {
     if (data.type == null) return;
     
     if (typeof Receiver[data.type] == 'function'){
-      Receiver[data.type](data, replay);
+      Receiver[data.type](data, replay, index);
     }else{
-      console.info(JSON.encode(data, replay));
+      console.info(JSON.encode(data, replay, index));
       console.error("*** Unable to handle data type: (" + data.type + ") with data.  Format may not be appropriate.");
     }
   },
@@ -60,17 +60,34 @@ Receiver = {
     $("#user_" + data.user.id).css('opacity', 0.5).addClass('idle');
   },
   
-  message: function(data, replay) {
+  message: function(data, replay, index) {
     // we need to figure out if the last row is of the same author to group elements together.
     var last_row    = $('#log tr.received:last');
     var last_author = last_row.attr('author');
     
+    if (replay){
+      var last_time = index > 0 ? ChatRoom.events[index - 1].time : 0;
+    } else {
+      var last_time = ChatRoom.events[ChatRoom.events.length - 1].time;
+      ChatRoom.events.push(data);
+    }
+    // console.info("MESSAGE");
+    // console.info(last_time);
+    
     // format content appropriately
-    if (data.paste){
+    if (data.paste && data.paste != 'null'){
       data.content = FormatHelper.formatPaste(data);
     } else {
       data.content = FormatHelper.text2html(data.content);
     }
+    
+    // console.info("**********");
+    // console.info(last_time - data.time);
+    
+    // if (data.time - last_time > 5 * 60 * 60 * 1000) { // check time diff is more than 5 minutes
+    //   Receiver.timestamp(data);
+    //   last_row = $('#log tr:last');
+    // }
     
     if (last_author == data.user.name && last_row.hasClass('message')){ // only append to existing blockquote group
       last_row.find('blockquote')
@@ -78,14 +95,31 @@ Receiver = {
     } else {
       var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('message').addClass('user_' + data.user.id).addClass('event').addClass(data.user.id == currentUser.id ? 'me' : '')
         .append($('<td/>').addClass('author')
-          .append('\n' + data.user.name + '\n') //.append(' ') // this last space fixes the issue
+          .append('\n' + data.user.name + '\n')
           .append($('<img/>').attr('src', '/images/avatar_default.png').attr('alt', data.user.name).addClass('avatar'))
           .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
         .append($('<td/>').addClass('message')
           .append($('<blockquote/>')
             .append($('<p/>').attr('time', data.time).html(data.content))));
-      
+
       element.appendTo('#log');
     }
+  },
+  
+  timestamp: function(data, replay){
+    console.info('INSIDE timestamp()');
+    console.info(data);
+
+    var time_stamp = new Date();
+    time_stamp.setTime(data.time);
+
+    var element = $('<tr/>').addClass('timestamp')
+      .append($('<td/>'))
+      .append($('<td/>')
+        .append($('<p/>')
+          .html(time_stamp.toString())));
+          // .html(time_stamp.adjustedFromUTC(currentUser.time_zone_offset).toString())));
+
+    element.appendTo('#log');
   }
 }

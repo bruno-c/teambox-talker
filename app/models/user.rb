@@ -82,6 +82,10 @@ class User < ActiveRecord::Base
     "/images/avatar_default.png"
   end
   
+  def utc_offset
+    ActiveSupport::TimeZone[time_zone].utc_offset
+  end
+  
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(email_or_username, password)
     return nil if email_or_username.blank? || password.blank?

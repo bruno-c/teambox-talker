@@ -4,6 +4,7 @@
       id: <%= current_user.id %>,
       name: <%= current_user.name.to_json %>,
       email: <%= current_user.email.to_json %>,
+      time_zone_offset: <%= current_user.utc_offset.to_json %>
     };
 
     Orbited.settings.hostname = '<%= request.host %>';
@@ -36,9 +37,10 @@
       
       client.connect();
       
-      $.each(ChatRoom.events, function(){
-        Receiver.push(this, true);
-      });
+      for (var i = 0; i < ChatRoom.events.length; i++){
+        Receiver.push(ChatRoom.events[i], true, i);
+      }
+      
       ChatRoom.scroller.scrollToBottom();
       
       $(window).bind('beforeunload', function() { client.reset() });

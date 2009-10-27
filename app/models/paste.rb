@@ -24,4 +24,8 @@ class Paste < ActiveRecord::Base
       end
     end
   end
+  
+  def to_json
+    {:permalink => permalink, :content => content.gsub(/</, '&lt;').gsub(/>/, '&gt;'), :syntax => syntax}.to_json
+  end
 end

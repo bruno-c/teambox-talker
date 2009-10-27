@@ -38,3 +38,17 @@ $(function() {
     return false;
   });
 });
+
+if (!Date.prototype.adjustedFromUTC){
+  Date.prototype.adjustedFromUTC = function(offset_in_seconds){
+    var d = new Date();
+    d.setTime(d.getTime() + offset_in_seconds);
+    return d;
+  }
+}
+
+function getDateFromMilliseconds(milliseconds){
+  var d = new Date();
+  d.setTime(milliseconds);
+  return d;
+}
