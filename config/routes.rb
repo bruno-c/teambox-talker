@@ -15,6 +15,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :rooms, :has_many => :messages
   map.resources :pastes
   
+  map.reset_password "/passwords/reset/:token", :controller => "passwords", :action => "show", :token => nil, :conditions => { :method => :get }
+  map.connect "/passwords/reset", :controller => "passwords", :action => "show", :conditions => { :method => :post }
+  
   map.logs "/logs", :controller => "logs", :action => "index"
   map.search "/search", :controller => "logs", :action => "search"
   
