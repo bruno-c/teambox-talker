@@ -37,8 +37,8 @@ module Talker
         @persister.load do |room_id, user_info|
           room = @rooms[room_id]
           user = User.new(user_info)
-          @rooms[room_id] << user
-          room.start_idle_timer user if user.idle?
+          @rooms[room_id].new_session user
+          
           Talker.logger.debug{"loaded connection: room##{room.name} => #{user.name} (#{user.state})"}
         end
       end
@@ -54,10 +54,10 @@ module Talker
         case type
         when "join"
           room.join user, time
-        when "idle"
-          room.idle user, time
         when "leave"
           room.leave user, time
+        when "ping"
+          room.session_for(user).touch(time)
         else
           Talker::Notifier.error "Wrong type of presence in message #{message.inspect}"
         end

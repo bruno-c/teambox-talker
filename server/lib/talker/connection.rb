@@ -29,7 +29,7 @@ module Talker
       when "close"
         close
       when "ping"
-        # ignore
+        @room.publish_presence "ping", @user
       else
         error "Unknown message type: " + message["type"]
       end
@@ -133,8 +133,6 @@ module Talker
       Talker.logger.debug{"Connection lost with #{to_s}"}
       
       @subscription.delete if @subscription
-      @room.publish_presence("idle", @user) if @user && @room
-      
       @server.connection_closed(self)
     end
     

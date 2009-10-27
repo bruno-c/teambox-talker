@@ -68,7 +68,7 @@ When a client close connection to a room, the server sends the following event t
     {"type":"leave","user":"user unique id","time":1255447115}
 
 ## Pinging
-In order to keep the connection open, a client must send pings to the server when there is no activity (no events sent or received) on the connection for more then 30 seconds.
+In order to keep the connection open, a client must send pings to the server each 30 seconds or less.
 
     {"type":"ping"}
 
