@@ -35,9 +35,5 @@ module Talker
       key += ".#{user_id}" if user_id
       key
     end
-    
-    def session_queue(user_id)
-      Queues.session(@name, user_id)
-    end
   end
 end

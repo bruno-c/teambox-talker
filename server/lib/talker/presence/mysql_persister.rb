@@ -34,7 +34,7 @@ module Talker
         EventedMysql.raw sql
       end
       
-      # yields [room_id, user_info_hash] for each connection
+      # yields [room_id, user_info_hash, state] for each connection
       def load(&callback)
         sql = <<-SQL
           SELECT connections.room_id AS room_id, users.id AS user_id,
@@ -45,8 +45,8 @@ module Talker
         SQL
         EventedMysql.select(sql) do |results|
           results.each do |result|
-            user = {"id" => result["user_id"].to_i, "name" => result["name"], "email" => result["email"], "state" => result["state"]}
-            callback.call(result["room_id"].to_i, user)
+            user = {"id" => result["user_id"].to_i, "name" => result["name"], "email" => result["email"]}
+            callback.call(result["room_id"].to_i, user, result["state"])
           end
         end
       end

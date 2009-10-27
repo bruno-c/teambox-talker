@@ -7,18 +7,22 @@ module Talker
       DEFAULT_TIMEOUT = 30.0 # sec
       
       attr_accessor :logger
-    
+      
       def initialize(persister, options={})
         @persister = persister
-        @timeout = options[:timeout] || DEFAULT_TIMEOUT
-      
-        @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name, @persister, @timeout) }
+        @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name, @persister) }
         @queue = Queues.presence
-      
+        @sweeper = Sweeper.new(self, options[:timeout] || DEFAULT_TIMEOUT)
+        @sweeper.start
+        
         @parser = Yajl::Parser.new
         @parser.on_parse_complete = method(:presence_received)
       end
-    
+      
+      def rooms
+        @rooms.values
+      end
+      
       def start
         Talker.logger.info "Watching presence on queue #{@queue.name}"
         load
@@ -30,16 +34,17 @@ module Talker
       
       def stop(&callback)
         @queue.unsubscribe
+        @sweeper.stop
         callback.call if callback
       end
     
       def load
-        @persister.load do |room_id, user_info|
+        @persister.load do |room_id, user_info, state|
           room = @rooms[room_id]
           user = User.new(user_info)
-          @rooms[room_id] << user
-          room.start_idle_timer user if user.idle?
-          Talker.logger.debug{"loaded connection: room##{room.name} => #{user.name} (#{user.state})"}
+          session = @rooms[room_id].new_session(user, state)
+          
+          Talker.logger.debug{"loaded connection: room##{room.name} => #{user.name} (#{session.state})"}
         end
       end
 
@@ -54,15 +59,13 @@ module Talker
         case type
         when "join"
           room.join user, time
-        when "idle"
-          room.idle user, time
         when "leave"
           room.leave user, time
+        when "ping"
+          room.ping user, time
         else
           Talker::Notifier.error "Wrong type of presence in message #{message.inspect}"
         end
-        
-        Talker.logger.debug{"room ##{room.name} users: " + room.users.map { |u| u.name }.join(", ")}
       end
       
       def to_s

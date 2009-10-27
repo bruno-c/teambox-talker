@@ -106,7 +106,6 @@ module Talker
     end
     
     def config_limits
-      EM.set_max_timers 100_000
       if options[:descriptor_table_size]
         size = EM.set_descriptor_table_size options[:descriptor_table_size]
         log "Descriptor table size set to #{size}"
