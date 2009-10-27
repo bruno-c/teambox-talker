@@ -33,7 +33,7 @@
       ChatRoom.room = '<%= @room.name %>';
       ChatRoom.client = client;
       ChatRoom.receiver = Receiver;
-      ChatRoom.events   = <%= @events.to_json %>;
+      ChatRoom.events   = <%= @events.to_json.gsub(/</, '&lt;').gsub(/>/, '&gt;') %>;
       
       client.connect();
       

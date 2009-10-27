@@ -43,17 +43,17 @@ class Event < ActiveRecord::Base
       if paste 
         {
           :time => created_at.to_i * 1000, :user => user, :type => type, 
-          :content => message.gsub(/</, '&lt;').gsub(/>/, '&gt;'), 
+          :content => message, 
           :paste => {
             :permalink => paste.permalink,
-            :content => paste.content.gsub(/</, '&lt;').gsub(/>/, '&gt;'),
+            :content => paste.content,
             :syntax => paste.syntax
           }
         }.to_json
       else
         {
           :time => created_at.to_i * 1000, :user => user, :type => type, 
-          :content => message.gsub(/</, '&lt;').gsub(/>/, '&gt;'), 
+          :content => message, 
         }.to_json
       end
     else # notice?
