@@ -4,12 +4,12 @@ module Talker
       def initialize(server, timeout)
         @server = server
         @timeout = timeout
-        @half_timeout = (@timeout / 2.0).ceil
       end
       
       def start
-        Talker.logger.debug "Starting sweeper on interval #{@half_timeout}"
-        @timer = EM::PeriodicTimer.new(@half_timeout) { run }
+        interval = @timeout * 0.75
+        Talker.logger.info "Starting sweeper with #{interval}s interval and timeout of #{@timeout}s"
+        @timer = EM::PeriodicTimer.new(interval) { run }
       end
       
       def stop
@@ -24,9 +24,9 @@ module Talker
         @server.rooms.each do |room|
           room.sessions.each do |session|
             
-            # At half the time of the timeout, change the user state to idle
-            # if user is still idle after half timeout we force it to leave.
-            if now - session.updated_at >= @half_timeout
+            # The first time a session times out we mark it as idle.
+            # The second time we force the user to leave.
+            if now - session.updated_at >= @timeout
               if session.idle?
                 Talker.logger.debug "Expiring session #{session}"
                 room.leave session.user
