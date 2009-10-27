@@ -37,6 +37,19 @@ class UserTest < ActiveSupport::TestCase
     assert_nil User.authenticate('quentin@example.com', 'monkey')
   end
 
+  def test_should_authenticate_by_perishable_token
+    users(:quentin).create_perishable_token!
+    assert_equal users(:quentin), User.authenticate_by_perishable_token(users(:quentin).perishable_token)
+  end
+
+  def test_should_fail_authenticate_by_nil_perishable_token
+    assert_not_nil users(:quentin), User.authenticate_by_perishable_token(nil)
+  end
+
+  def test_should_fail_authenticate_by_bad_perishable_token
+    assert_not_nil users(:quentin), User.authenticate_by_perishable_token("ohaie")
+  end
+
   def test_should_set_remember_token
     users(:quentin).remember_me
     assert_not_nil users(:quentin).remember_token
