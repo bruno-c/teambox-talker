@@ -12,11 +12,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :account
   map.resource :session
   map.resource :settings
-  map.resources :rooms, :has_many => :messages
+  map.resources :rooms
   map.resources :pastes
   
   map.reset_password "/passwords/reset/:token", :controller => "passwords", :action => "show", :token => nil, :conditions => { :method => :get }
-  map.connect "/passwords/reset", :controller => "passwords", :action => "show", :conditions => { :method => :post }
+  map.resource :password
   
   map.logs "/logs", :controller => "logs", :action => "index"
   map.search "/search", :controller => "logs", :action => "search"

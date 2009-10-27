@@ -1,0 +1,21 @@
+<div class="panel dialog">
+  <div class="header">
+    <h3><%=h @title = "Reset Your Password" %></h3>
+  </div>
+  <div class="content">
+    <% form_for :user, :url => password_path, :html => { :method => :put } do |f| %>
+      <%= f.error_messages %>
+      <p>
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+      </p>
+      <p>
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation %>
+      </p>
+      <p>
+        <%= submit_button 'Change password', :class => "icon ok" %>
+      </p>
+    <% end %>
+  </div>
+</div>

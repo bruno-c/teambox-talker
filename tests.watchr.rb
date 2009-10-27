@@ -32,7 +32,8 @@ watch( '^app/models/(.*)\.rb'  )    { |m| run_test "test/unit/#{m[1]}_test.rb" }
 watch( '^app/helpers/(.*)\.rb')     { |m| run_test "test/unit/helpers/#{m[1]}_test.rb" }
 watch( '^app/mailers/(.*)\.rb'  )    { |m| run_test "test/unit/mailers/#{m[1]}_test.rb" }
 watch( '^app/controllers/(.*)\.rb') { |m| run_test "test/functional/#{m[1]}_test.rb" }
-watch( '^app/views/(.*)/.*\.rb') { |m| run_test "test/functional/#{m[1]}_controller_test.rb" }
+watch( '^app/views/(.*)/.*\.erb') { |m| run_test "test/functional/#{m[1]}_controller_test.rb" }
+watch( '^app/views/(.*_mailer)/.*\.erb') { |m| run_test "test/unit/mailers/#{m[1]}_test.rb" }
 
 # --------------------------------------------------
 # Signal Handling

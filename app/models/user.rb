@@ -99,6 +99,6 @@ class User < ActiveRecord::Base
   
   private
     def password_required?
-      crypted_password.blank? && password
+      (crypted_password.blank? && password) || password
     end
 end

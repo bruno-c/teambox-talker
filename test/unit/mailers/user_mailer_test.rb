@@ -7,4 +7,11 @@ class UserMailerTest < ActionMailer::TestCase
     assert_match "To: invitee@example.com", mail
     assert_match "http://test.talkerapp.com/", mail
   end
+
+  def test_reset_password
+    mail = UserMailer.create_reset_password("quentin@example.com", "http://test.talkerapp.com/").encoded
+    assert_match "From: no-reply@talkerapp.com", mail
+    assert_match "To: quentin@example.com", mail
+    assert_match "http://test.talkerapp.com/", mail
+  end
 end
