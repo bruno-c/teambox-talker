@@ -4,9 +4,9 @@ Talker Server:
 - Expire connections (on presence server) if user leaves while channel server is down
 - Support other types of channels (room, paste, etc)
 - Benchmark against ejabberd
-- Setup emergency_mailer, see http://pauldowman.com/2008/02/17/smtp-mail-from-ec2-web-server-setup/
 
 Chef:
+- Setup emergency_mailer, see http://pauldowman.com/2008/02/17/smtp-mail-from-ec2-web-server-setup/
 - Tweaks mysql recipe (use the one from opscode?); using too much mem
 - Move /db to /mnt or mount EBS volume
 - Put talker servers behind haproxy
