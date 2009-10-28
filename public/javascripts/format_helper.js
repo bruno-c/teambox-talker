@@ -62,8 +62,6 @@ var FormatHelper = {
   },
   
   formatPaste: function(data) {
-    console.info(data.paste.id);
-    console.info(data.paste);
     var msg = "<a target='_blank' title='Paste #" + data.paste.id +
               "' href='" + window.location.protocol + "//" + window.location.host + "/pastes/" + data.paste.id +
               "'>View paste</a>";
