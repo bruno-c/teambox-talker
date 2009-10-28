@@ -75,9 +75,7 @@ var FormatHelper = {
   },
   
   timestamp2date: function(timestamp){
-    var d = new Date();
-    d.setTime((timestamp - currentUser.time_zone_offset * 60) * 1000);
-    return d;
+    return new Date(timestamp * 1000);
   },
 
   toHumanDate: function(timestamp) {
