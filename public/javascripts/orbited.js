@@ -487,7 +487,7 @@
                         var transportClass = Orbited.util.chooseTransport();
                         cometTransport = new transportClass();
                         cometTransport.timeoutResetter = resetTimeout;
-                        cometTransport.isSameDomain = sessionUrl.isSameDomain(location.href);
+                        cometTransport.isSubDomain = sessionUrl.isSubDomain(location.href);
                         cometTransport.onReadFrame = transportOnReadFrame;
                         cometTransport.onclose = transportOnClose;
                         cometTransport.connect(sessionUrl.render());
@@ -1021,6 +1021,7 @@
     Orbited.singleton.XSDR = {
         receiveCbs: {},
         queues: {},
+        iframes: {},
         id: 0,
         register: function(receive, queue) {
             var id = ++Orbited.singleton.XSDR.id;
@@ -1056,19 +1057,18 @@
             method = null;
             data = null;
             requestHeaders = {};
-            
         };
         reset();
         self.onreadystatechange = function() { };
         self.open = function(_method, _url, async) {
             if (self.readyState == 4) {
-            reset();
+                reset();
             }
             if (self.readyState != 0) {
-            throw new Error("Invalid readyState");
+                throw new Error("Invalid readyState");
             }
             if (!async) {
-            throw new Error("Only Async XSDR supported");
+                throw new Error("Only Async XSDR supported");
             }
 ;;;         self.logger.debug('open', _method, _url, async);
             self.readyState = 1;
@@ -1078,35 +1078,35 @@
 
         self.send = function(data) {
             if (self.readyState != 1) {
-            throw new Error("Invalid readyState");
+                throw new Error("Invalid readyState");
             }
 ;;;         self.logger.debug('send', data);
             if (!ifr) {
-;;;         self.logger.debug('creating iframe');
-            ifr = document.createElement("iframe");
-            hideIframe(ifr);
-            ifr.src = bridgeUrl.render();
-;;;         self.logger.debug('set ifr.src to', ifr.src);
-            document.body.appendChild(ifr);
+;;;             self.logger.debug('creating iframe');
+                ifr = document.createElement("iframe");
+                hideIframe(ifr);
+                ifr.src = bridgeUrl.render();
+;;;             self.logger.debug('set ifr.src to', ifr.src);
+                document.body.appendChild(ifr);
+                Orbited.singleton.XSDR.iframes[id] = ifr;
             }
             else {
-            queue.push([method, url, data, requestHeaders]);
+                queue.push([method, url, data, requestHeaders]);
             }
         };
 
         self.abort = function() {
             if (self.readyState > 0 && self.readyState < 4) {
-            // TODO: push an ABORT command (so as not to reload the iframe)
-            //          queue.push(['ABORT']);
-;;;         self.logger.debug('ABORT called');
-            ifr.src = "about:blank";
-            document.body.removeChild(ifr);
-            ifr = null;
-            self.readyState = 4;
-            self.onreadystatechange();
+                // TODO: push an ABORT command (so as not to reload the iframe)
+                //          queue.push(['ABORT']);
+;;;             self.logger.debug('ABORT called');
+                ifr.src = "about:blank";
+                document.body.removeChild(ifr);
+                ifr = null;
+                self.readyState = 4;
+                self.onreadystatechange();
             }
         };
-        
 
 
         //    self.abort = function() {
@@ -1117,42 +1117,42 @@
 
         self.setRequestHeader = function(key, val) {
             if (self.readyState != 0) {
-            throw new Error("Invalid readyState");
+                throw new Error("Invalid readyState");
             }
             requestHeaders[key] = val;
         };
 
         self.getResponseHeader = function() {
             if (self.readyState < 2) {
-            throw new Error("Invalid readyState");
+                throw new Error("Invalid readyState");
             }
             return responseHeaders[key];
         };
-        
+
         var receive = function(payload) {
 ;;;         self.logger.debug('received', payload);
             switch(payload[0]) {
-            case 'initialized':
-            queue.push([method, url, data, requestHeaders]);
-;;;         self.logger.debug('queue is', queue);
-;;;         self.logger.debug('Orbited.singleton.XSDR.queues[id] is', Orbited.singleton.XSDR.queues[id]);
-            break;
-            case 'readystatechange':
-            data = payload[1];
-            self.readyState = data.readyState;
-;;;         self.logger.debug('readystatechange', self.readyState);
-            if (data.status) {
-                self.status = data.status;
-;;;             self.logger.debug('status', data.status);
-            }
-            if (data.responseText) {
-                self.responseText += data.responseText;
-;;;             self.logger.debug('responseText', data.responseText);
-            }
-;;;         self.logger.debug('doing trigger');
-            self.onreadystatechange();
-;;;         self.logger.debug('trigger complete');
-            break;
+                case 'initialized':
+                    queue.push([method, url, data, requestHeaders]);
+;;;                 self.logger.debug('queue is', queue);
+;;;                 self.logger.debug('Orbited.singleton.XSDR.queues[id] is', Orbited.singleton.XSDR.queues[id]);
+                    break;
+                case 'readystatechange':
+                    data = payload[1];
+                    self.readyState = data.readyState;
+;;;                 self.logger.debug('readystatechange', self.readyState);
+                    if (data.status) {
+                        self.status = data.status;
+;;;                     self.logger.debug('status', data.status);
+                    }
+                    if (data.responseText) {
+                        self.responseText += data.responseText;
+;;;                     self.logger.debug('responseText', data.responseText);
+                    }
+;;;                 self.logger.debug('doing trigger');
+                    self.onreadystatechange();
+;;;                 self.logger.debug('trigger complete');
+                    break;
             }
         };
 
@@ -1169,30 +1169,26 @@
 
     };
 
-    if (Orbited.util.browser == "opera")
-    {
-        document.addEventListener('message', function(e) {
+    if (Orbited.util.browser == "opera") {
+        var pmLocation = window.postMessage && "contentWindow" || "document";
+        (window.postMessage && window || document).addEventListener('message', function(e) {
             var msg = e.data.split(" ");
             var cmd = msg.shift();
-            if (cmd == "event")
-            {
-            var id = msg.shift();
-            var dataString = msg.join(" ");
-            var data = Orbited.JSON.parse(dataString);
-            
-            Orbited.singleton.XSDR.receiveCbs[id](data);
+            if (cmd == "event") {
+                var id = msg.shift();
+                var dataString = msg.join(" ");
+                var data = Orbited.JSON.parse(dataString);
+                Orbited.singleton.XSDR.receiveCbs[id](data);
             }
-            if (cmd == "queues")
-            {
-            id = msg.shift();
-            var queue = Orbited.singleton.XSDR.queues[id];
-            if (queue.length > 0) {
-                data = queue.shift();
-                e.source.postMessage(Orbited.JSON.stringify(data), e.origin);
+            if (cmd == "queues") {
+                id = msg.shift();
+                var queue = Orbited.singleton.XSDR.queues[id];
+                if (queue.length > 0) {
+                    data = queue.shift();
+                    Orbited.singleton.XSDR.iframes[id][pmLocation].postMessage(Orbited.JSON.stringify(data), e.origin);
+                }
             }
-            }
-        }, false
-                     );
+        }, false);
     }
 
     Orbited.XSDR.prototype.logger = Orbited.getLogger("Orbited.XSDR");
@@ -1957,11 +1953,11 @@ Orbited.CometTransports.Poll.ie = 0.5
 ;;;         self.logger.debug('doOpen', _url);
             htmlfile = new ActiveXObject('htmlfile'); // magical microsoft object
             htmlfile.open();
-            if (self.isSameDomain) {
-                htmlfile.write('<html></html>');
+            if (self.isSubDomain) {
+                htmlfile.write('<html><script>' + 'document.domain="' + document.domain + '";' + '</script></html>');
             }
             else {
-                htmlfile.write('<html><script>' + 'document.domain="' + document.domain + '";' + '</script></html>');
+                htmlfile.write('<html></html>');
             }
             htmlfile.parentWindow.Orbited = Orbited;
             htmlfile.close();
@@ -2228,7 +2224,8 @@ Orbited.CometTransports.Poll.ie = 0.5
             if (!_url.domain || !self.domain) {
                 return false;
             }
-            return (_url.port == self.port && _url.domain == self.domain.split('.').slice(1).join('.'));
+            return (_url.port == self.port && self.domain.indexOf("."+_url.domain) > 0);
+//            return (_url.port == self.port && _url.domain == self.domain.split('.').slice(1).join('.'));
         };
         var decodeQs = function(qs) {
             //      alert('a')
@@ -2290,35 +2287,35 @@ Orbited.CometTransports.Poll.ie = 0.5
         }
         for (var i=0; i < s.length; i++) {
             if ((s.charCodeAt(i) & 0xf8) == 0xf0) {
-            if (s.length -j < 4) { break; }
-            j+=4;
-            ret.push(String.fromCharCode(parseInt(
-                (s.charCodeAt(i) & 0x07).toString(2) +
-                pad6((s.charCodeAt(i+1) & 0x3f).toString(2)) +
-                pad6((s.charCodeAt(i+2) & 0x3f).toString(2)) +
-                pad6((s.charCodeAt(i+3) & 0x3f).toString(2))
-                , 2)));
-            i += 3;
+                if (s.length -j < 4) { break; }
+                j+=4;
+                ret.push(String.fromCharCode(parseInt(
+                    (s.charCodeAt(i) & 0x07).toString(2) +
+                    pad6((s.charCodeAt(i+1) & 0x3f).toString(2)) +
+                    pad6((s.charCodeAt(i+2) & 0x3f).toString(2)) +
+                    pad6((s.charCodeAt(i+3) & 0x3f).toString(2))
+                    , 2)));
+                i += 3;
             } else if ((s.charCodeAt(i) & 0xf0) == 0xe0) {
-            if (s.length -j < 3) { break; }
-            j+=3;
-            ret.push(String.fromCharCode(parseInt(
-                (s.charCodeAt(i) & 0x0f).toString(2) +
-                pad6((s.charCodeAt(i+1) & 0x3f).toString(2)) +
-                pad6((s.charCodeAt(i+2) & 0x3f).toString(2))
-                , 2)));
-            i += 2;
+                if (s.length -j < 3) { break; }
+                j+=3;
+                ret.push(String.fromCharCode(parseInt(
+                    (s.charCodeAt(i) & 0x0f).toString(2) +
+                    pad6((s.charCodeAt(i+1) & 0x3f).toString(2)) +
+                    pad6((s.charCodeAt(i+2) & 0x3f).toString(2))
+                    , 2)));
+                i += 2;
             } else if ((s.charCodeAt(i) & 0xe0) == 0xc0) {
-            j+=2;
-            if (s.length -j < 2) { break }
-            ret.push(String.fromCharCode(parseInt(
-                (s.charCodeAt(i) & 0x1f).toString(2) +
-                pad6((s.charCodeAt(i+1) & 0x3f).toString(2), 6)
-                , 2)));
-            i += 1;
+                if (s.length -j < 2) { break }
+                j+=2;
+                ret.push(String.fromCharCode(parseInt(
+                    (s.charCodeAt(i) & 0x1f).toString(2) +
+                    pad6((s.charCodeAt(i+1) & 0x3f).toString(2), 6)
+                    , 2)));
+                i += 1;
             } else {
-            j+=1;
-            ret.push(String.fromCharCode(s.charCodeAt(i)));
+                j+=1;
+                ret.push(String.fromCharCode(s.charCodeAt(i)));
             }
         }
         return [ret.join(""), j];
@@ -2700,5 +2697,3 @@ replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
             //    alert("Error! " + e.name + ": " + e.message);
             }
         })();
-        
-TCPSocket = Orbited.TCPSocket;
