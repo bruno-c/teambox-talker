@@ -22,6 +22,7 @@
         user: <%= {:id => current_user.id, :name => current_user.name, :livetyping => current_user.livetyping}.to_json %>,
         token: <%= current_user.talker_token.to_json %>,
         onNewMessage: ChatRoom.onNewMessage, 
+        onUsers: ChatRoom.onUsers,
         onJoin: ChatRoom.onJoin, 
         onLeave: ChatRoom.onLeave,
         onClose: ChatRoom.onClose,
@@ -39,11 +40,7 @@
       $.each(<%= @events.to_json.gsub(/</, '&lt;').gsub(/>/, '&gt;') %>, function(){
         Receiver.push(this, true);
       });
-      
-      $.each(<%= @room.users.to_json %>, function(){
-        UserList.add(this, true);
-      });
-      
+
       ChatRoom.scroller.scrollToBottom(true);
       
       $(window).bind('beforeunload', function() { client.reset() });

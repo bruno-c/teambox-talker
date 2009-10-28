@@ -27,7 +27,7 @@ function TalkerClient(options) {
         options.onJoin(line);
         break;
       case 'users':
-        $.each(line.users, function() { options.onJoin({user:this}); });
+        options.onUsers(line);
         break;
       case 'leave':
         options.onLeave(line);

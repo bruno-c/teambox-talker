@@ -23,6 +23,12 @@ Receiver = {
     $('#msgbox').focus();
   },
   
+  users: function(data){
+    $(data.users).each(function(){
+      UserList.add(this, true);
+    });
+  },
+  
   join: function(data, replay) {
     UserList.add(data.user, replay);
     
@@ -112,7 +118,7 @@ UserList = {
         .attr("id", "user_" + user.id)
         .attr('user_id', user.id)
         .attr('user_name', user.name)
-        .html('<img alt="gary" src="/images/avatar_default.png" />' + user.name)
+        .html('<img alt="gary" src="/images/avatar_default.png" /> ' + user.name)
         .appendTo($('#people'));
         
       if (replay){

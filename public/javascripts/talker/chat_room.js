@@ -141,6 +141,10 @@ var ChatRoom = {
     Receiver.push(data);
   },
   
+  onUsers: function(data){
+    Receiver.push(data);
+  },
+  
   onJoin: function(data) {
     Receiver.push(data);
   },
