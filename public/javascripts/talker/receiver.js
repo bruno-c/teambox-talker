@@ -58,19 +58,15 @@ Receiver = {
   },
   
   message: function(data, replay, index) {
-    // we need to figure out if the last row is of the same author to group elements together.
-    var last_row    = $('#log tr:last');
-    var last_author = last_row.attr('author');
-    
-    // console.info(last_row);
-    // data.content = FormatHelper.timestamp2date(data.time) + " " + data.content;
-    
     // format content appropriately
     if (data.paste && data.paste != 'null'){
       data.content = FormatHelper.formatPaste(data);
     } else {
       data.content = FormatHelper.text2html(data.content);
     }
+    
+    var last_row    = $('#log tr:last');
+    var last_author = last_row.attr('author');
     
     if (last_author == data.user.name && last_row.hasClass('message')){ // only append to existing blockquote group
       last_row.find('blockquote')
