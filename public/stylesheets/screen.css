@@ -71,7 +71,7 @@ a {
   a.negative {
     color: #924f6b; }
   a.disabled {
-    color: !grey;
+    color: gray;
     text-decoration: none;
     cursor: default; }
   a:hover {
@@ -144,6 +144,9 @@ hr {
   border: none;
   border-top: 1px solid silver;
   margin: 0 0 1.5em; }
+
+pre {
+  font-family: monospace; }
 
 .clearfix {
   display: inline-block; }
@@ -644,6 +647,3 @@ div.flash {
   border-color: #007f00;
   color: #004c00;
   background-color: #e5fee5; }
-
-pre {
-  font-family: monospace; }
