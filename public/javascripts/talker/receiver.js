@@ -72,14 +72,22 @@ Receiver = {
       last_row.find('blockquote')
         .append($('<p/>').attr('time', data.time).html(data.content));
     } else {
-      var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('message').addClass('user_' + data.user.id).addClass('event').addClass(data.user.id == currentUser.id ? 'me' : '')
-        .append($('<td/>').addClass('author')
-          .append('\n' + data.user.name + '\n')
-          .append($('<img/>').attr('src', '/images/avatar_default.png').attr('alt', data.user.name).addClass('avatar'))
-          .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
-        .append($('<td/>').addClass('message')
-          .append($('<blockquote/>')
-            .append($('<p/>').attr('time', data.time).html(data.content))));
+      var element = $('<tr/>')
+        .attr('author', data.user.name)
+        .addClass('received')
+        .addClass('message')
+        .addClass('user_' + data.user.id)
+        .addClass('event')
+        .addClass(data.user.id == currentUser.id ? 'me' : '')
+        .addClass(data.private ? 'private' : '')
+          .append($('<td/>').addClass('author')
+            .append('\n' + data.user.name + '\n')
+            .append($('<img/>').attr('src', '/images/avatar_default.png').attr('alt', data.user.name).addClass('avatar'))
+            .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
+          .append($('<td/>').addClass('message')
+            .append($('<blockquote/>')
+              .append($('<p/>').attr('time', data.time)
+                .html(data.content))));
 
       element.appendTo('#log');
     }
@@ -100,7 +108,10 @@ Receiver = {
 UserList = {
   add: function(user, replay){
     if ($("#user_" + user.id).length < 1) {
-      var presence = $('<li/>').attr("id", "user_" + user.id)
+      var presence = $('<li/>')
+        .attr("id", "user_" + user.id)
+        .attr('user_id', user.id)
+        .attr('user_name', user.name)
         .html('<img alt="gary" src="/images/avatar_default.png" />' + user.name)
         .appendTo($('#people'));
         

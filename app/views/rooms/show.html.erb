@@ -33,11 +33,10 @@
       ChatRoom.room = '<%= @room.name %>';
       ChatRoom.client = client;
       ChatRoom.receiver = Receiver;
-      ChatRoom.events   = <%= @events.to_json.gsub(/</, '&lt;').gsub(/>/, '&gt;') %>;
       
       client.connect();
       
-      $.each(ChatRoom.events, function(){
+      $.each(<%= @events.to_json.gsub(/</, '&lt;').gsub(/>/, '&gt;') %>, function(){
         Receiver.push(this, true);
       });
       
