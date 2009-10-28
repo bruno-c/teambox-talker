@@ -13,6 +13,6 @@ class AppsControllerTest < ActionController::TestCase
   def test_show_webapp
     get :show, :format => "webapp"
     assert_response :success, @response.body
-    assert_equal "application/x-webrunner", @response.content_type
+    assert_equal "application/x-webapp", @response.content_type
   end
 end
