@@ -41,7 +41,7 @@
         Receiver.push(ChatRoom.events[i], true);
       }
       
-      ChatRoom.scroller.scrollToBottom();
+      ChatRoom.scroller.scrollToBottom(true);
       
       $(window).bind('beforeunload', function() { client.reset() });
       $("a#leave").click(function() {
