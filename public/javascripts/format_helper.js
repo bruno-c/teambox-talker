@@ -83,11 +83,10 @@ var FormatHelper = {
   toHumanDate: function(timestamp) {
     var date = FormatHelper.timestamp2date(timestamp);
     var months = 'January February March April May June July August September October November December'.split(' ');
-    var dayOrdinalSuffixes = 'st nd rd th th th th th th th'.split(' ');
     var minutes = date.getMinutes() - date.getMinutes() % 5;
     
     return months[date.getMonth()] + '&nbsp;' 
-      + date.getDate() + dayOrdinalSuffixes[date.getDate() % 10] + ',&nbsp;'
+      + date.getDate().toOrdinal() + ',&nbsp;'
       + date.getFullYear();
   },
   
@@ -98,4 +97,9 @@ var FormatHelper = {
     return (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':'
       + (minutes < 10 ? '0' + minutes : minutes)
   }
+}
+
+Number.prototype.toOrdinal = function(){
+  var n = this % 100, s = 'th st nd rd th'.split(' ');
+  return this + (n < 21 ? (n < 4 ? s[n] : s[0]): (n % 10 > 4 ? s[0] : s[n % 10]));
 }
