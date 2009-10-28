@@ -1,3 +1,59 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, pre, a, abbr, acronym, address, code, del, dfn, em, img, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption, tbody, tfoot, thead, tr {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline; }
+
+body {
+  line-height: 1.5; }
+
+blockquote, q {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  quotes: "" ""; }
+
+blockquote:before, q:before, blockquote:after, q:after {
+  content: ""; }
+
+th, td, caption {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+table {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle; }
+
+a img {
+  border: none; }
+
 body {
   height: 100%;
   position: relative;
@@ -15,7 +71,7 @@ a {
   a.negative {
     color: #924f6b; }
   a.disabled {
-    color: !grey;
+    color: gray;
     text-decoration: none;
     cursor: default; }
   a:hover {
@@ -88,6 +144,9 @@ hr {
   border: none;
   border-top: 1px solid silver;
   margin: 0 0 1.5em; }
+
+pre {
+  font-family: monospace; }
 
 .clearfix {
   display: inline-block; }
@@ -441,8 +500,6 @@ a.button {
               padding: 10px;
               width: 500px // this is what we need to fix.;
               border: 1px solid silver; }
-              #chat_log table tr td.message blockquote p div pre {
-                font-family: monospace; }
     #chat_log table tr.me td.author b.blockquote_tail {
       border-right: 5px solid #faeede; }
     #chat_log table tr.me td.message blockquote {

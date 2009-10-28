@@ -14,9 +14,12 @@ class Paste < ActiveRecord::Base
     permalink
   end
   
+  def lines
+    @lines ||= content.count("\n")
+  end
+  
   def more_lines
     @more_lines ||= begin
-      lines = content.count("\n")
       if lines < PREVIEW_LINES
         0
       else
@@ -25,7 +28,8 @@ class Paste < ActiveRecord::Base
     end
   end
   
-  def to_json
-    {:permalink => permalink, :content => content.gsub(/</, '&lt;').gsub(/>/, '&gt;'), :syntax => syntax}.to_json
+  def to_json(*a)
+    { :id => permalink, :syntax => syntax,
+      :lines => lines, :preview_lines => PREVIEW_LINES }.to_json(*a)
   end
 end
