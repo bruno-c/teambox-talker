@@ -10,7 +10,7 @@ class Account < ActiveRecord::Base
   validates_exclusion_of :subdomain, :in => %w(www mail smtp ssh ftp dev chat service api admin)
   
   attr_accessor :invitation_code
-  validate { |a| a.errors.add(:invitation_code, "is invalid") unless a.invitation_code == INVITATION_CODE }
+  validate_on_update { |a| a.errors.add(:invitation_code, "is invalid") unless a.invitation_code == INVITATION_CODE }
   
   # TODO determine if account have SSL depending on plan
   def ssl
