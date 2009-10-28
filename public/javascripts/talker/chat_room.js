@@ -57,6 +57,9 @@ $(function() {
         break;
     }
   });
+  $('#search').keydown(function(e){
+    e.stopPropagation()
+  });
 });
 
 
