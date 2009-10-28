@@ -15,7 +15,7 @@ API:
 - Create Python Talker client package talker.py
 
 Desktop client:
-- Build Prism app
+✓ Build Prism app
 - Add Growl notification
 
 Exclusive features:
