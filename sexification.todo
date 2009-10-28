@@ -1,6 +1,0 @@
-- create [typing, idle] indicator for user list
-- create style for private messages
-- create style for temporary error messages (Connection Error: Attempting to reconnect...)
-- style timestamps so they look awesome
-- settings form w/ error messages
-- correct display of code blocks in pastes so that they can grow with window but not bleed over
