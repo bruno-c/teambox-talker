@@ -45,7 +45,7 @@ class Event < ActiveRecord::Base
           :time => created_at.to_i, :user => user, :type => type, 
           :content => message, 
           :paste => {
-            :permalink => paste.permalink,
+            :id => paste.permalink,
             :content => paste.content,
             :syntax => paste.syntax
           }
