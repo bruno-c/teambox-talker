@@ -2,6 +2,8 @@
 ✓ display timestamps using time offset
 - send/receive private messages
 ✓ scroll smarter: if we're scrolled to bottom of page, automatically scroll on new message.  If we've scrolled up stop scrolling automatically but warn users of new message (icon w/ count?)
+✓ fix scrolling on page load.
+- user list wonking
 - On error, connection is closed before processing the "error" message, eg. connect to the same room twice w/ same user.
 - onJoin should work properly users should be handled better.
 - remove password confirmation

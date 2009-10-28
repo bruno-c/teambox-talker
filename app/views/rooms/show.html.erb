@@ -37,9 +37,13 @@
       
       client.connect();
       
-      for (var i = 0; i < ChatRoom.events.length; i++){
-        Receiver.push(ChatRoom.events[i], true);
-      }
+      $.each(ChatRoom.events, function(){
+        Receiver.push(this, true);
+      });
+      
+      $.each(<%= @room.users.to_json %>, function(){
+        UserList.add(this, true);
+      });
       
       ChatRoom.scroller.scrollToBottom(true);
       

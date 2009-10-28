@@ -24,15 +24,8 @@ Receiver = {
   },
   
   join: function(data, replay) {
-    if ($("#user_" + data.user.id).length < 1) {
-      var presence = $('<li/>').attr("id", "user_" + data.user.id)
-        .html('<img alt="gary" src="/images/avatar_default.png" />' + data.user.name)
-        .css('opacity', 0.0)
-        .appendTo($('#people'))
-      if (!replay){
-        presence.animate({opacity: 1.0}, 800);
-      }
-    }
+    UserList.add(data.user, replay);
+    
     var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('notice').addClass('user_' + data.user.id).addClass('event')
       .append($('<td/>').addClass('author'))
       .append($('<td/>').addClass('message')
@@ -42,9 +35,7 @@ Receiver = {
   },
   
   leave: function(data, replay) {
-    if (!replay){
-      $("#user_" + data.user.id).animate({opacity: 0.0}, 800, function(){ $(this).remove() });
-    }
+    UserList.remove(data.user, replay);
     
     var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('notice').addClass('user_' + data.user.id).addClass('event')
       .append($('<td/>').addClass('author'))
@@ -107,5 +98,29 @@ Receiver = {
           .html(FormatHelper.toHumanTime(data.time))));
 
     element.appendTo('#log');
+  }
+}
+
+UserList = {
+  add: function(user, replay){
+    if ($("#user_" + user.id).length < 1) {
+      var presence = $('<li/>').attr("id", "user_" + user.id)
+        .html('<img alt="gary" src="/images/avatar_default.png" />' + user.name)
+        .appendTo($('#people'));
+        
+      if (replay){
+        presence.css('opacity', 1.0);
+      } else {
+        presence.animate({opacity: 1.0}, 800);
+      }
+    }
+  },
+  
+  remove: function(user, replay){
+    if (replay){
+      $("#user_" + user.id).remove();
+    } else {
+      $("#user_" + user.id).animate({opacity: 0.0}, 800, function(){ $(this).remove() });
+    }
   }
 }
