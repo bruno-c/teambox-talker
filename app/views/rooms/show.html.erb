@@ -33,15 +33,18 @@
       ChatRoom.room = '<%= @room.name %>';
       ChatRoom.client = client;
       ChatRoom.receiver = Receiver;
-      ChatRoom.events   = <%= @events.to_json.gsub(/</, '&lt;').gsub(/>/, '&gt;') %>;
       
       client.connect();
       
-      for (var i = 0; i < ChatRoom.events.length; i++){
-        Receiver.push(ChatRoom.events[i], true);
-      }
+      $.each(<%= @events.to_json.gsub(/</, '&lt;').gsub(/>/, '&gt;') %>, function(){
+        Receiver.push(this, true);
+      });
       
-      ChatRoom.scroller.scrollToBottom();
+      $.each(<%= @room.users.to_json %>, function(){
+        UserList.add(this, true);
+      });
+      
+      ChatRoom.scroller.scrollToBottom(true);
       
       $(window).bind('beforeunload', function() { client.reset() });
       $("a#leave").click(function() {

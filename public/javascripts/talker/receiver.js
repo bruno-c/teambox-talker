@@ -24,15 +24,8 @@ Receiver = {
   },
   
   join: function(data, replay) {
-    if ($("#user_" + data.user.id).length < 1) {
-      var presence = $('<li/>').attr("id", "user_" + data.user.id)
-        .html('<img alt="gary" src="/images/avatar_default.png" />' + data.user.name)
-        .css('opacity', 0.0)
-        .appendTo($('#people'))
-      if (!replay){
-        presence.animate({opacity: 1.0}, 800);
-      }
-    }
+    UserList.add(data.user, replay);
+    
     var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('notice').addClass('user_' + data.user.id).addClass('event')
       .append($('<td/>').addClass('author'))
       .append($('<td/>').addClass('message')
@@ -42,9 +35,7 @@ Receiver = {
   },
   
   leave: function(data, replay) {
-    if (!replay){
-      $("#user_" + data.user.id).animate({opacity: 0.0}, 800, function(){ $(this).remove() });
-    }
+    UserList.remove(data.user, replay);
     
     var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('notice').addClass('user_' + data.user.id).addClass('event')
       .append($('<td/>').addClass('author'))
@@ -67,13 +58,6 @@ Receiver = {
   },
   
   message: function(data, replay, index) {
-    // we need to figure out if the last row is of the same author to group elements together.
-    var last_row    = $('#log tr:last');
-    var last_author = last_row.attr('author');
-    
-    // console.info(last_row);
-    // data.content = FormatHelper.timestamp2date(data.time) + " " + data.content;
-    
     // format content appropriately
     if (data.paste && data.paste != 'null'){
       data.content = FormatHelper.formatPaste(data);
@@ -81,18 +65,29 @@ Receiver = {
       data.content = FormatHelper.text2html(data.content);
     }
     
-    if (last_author == data.user.name && last_row.hasClass('message')){ // only append to existing blockquote group
+    var last_row    = $('#log tr:last');
+    var last_author = last_row.attr('author');
+    
+    if (last_author == data.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !data.private){ // only append to existing blockquote group
       last_row.find('blockquote')
         .append($('<p/>').attr('time', data.time).html(data.content));
     } else {
-      var element = $('<tr/>').attr('author', data.user.name).addClass('received').addClass('message').addClass('user_' + data.user.id).addClass('event').addClass(data.user.id == currentUser.id ? 'me' : '')
-        .append($('<td/>').addClass('author')
-          .append('\n' + data.user.name + '\n')
-          .append($('<img/>').attr('src', '/images/avatar_default.png').attr('alt', data.user.name).addClass('avatar'))
-          .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
-        .append($('<td/>').addClass('message')
-          .append($('<blockquote/>')
-            .append($('<p/>').attr('time', data.time).html(data.content))));
+      var element = $('<tr/>')
+        .attr('author', data.user.name)
+        .addClass('received')
+        .addClass('message')
+        .addClass('user_' + data.user.id)
+        .addClass('event')
+        .addClass(data.user.id == currentUser.id ? 'me' : '')
+        .addClass(data.private ? 'private' : '')
+          .append($('<td/>').addClass('author')
+            .append('\n' + data.user.name + '\n')
+            .append($('<img/>').attr('src', '/images/avatar_default.png').attr('alt', data.user.name).addClass('avatar'))
+            .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
+          .append($('<td/>').addClass('message')
+            .append($('<blockquote/>')
+              .append($('<p/>').attr('time', data.time)
+                .html(data.content))));
 
       element.appendTo('#log');
     }
@@ -107,5 +102,32 @@ Receiver = {
           .html(FormatHelper.toHumanTime(data.time))));
 
     element.appendTo('#log');
+  }
+}
+
+UserList = {
+  add: function(user, replay){
+    if ($("#user_" + user.id).length < 1) {
+      var presence = $('<li/>')
+        .attr("id", "user_" + user.id)
+        .attr('user_id', user.id)
+        .attr('user_name', user.name)
+        .html('<img alt="gary" src="/images/avatar_default.png" />' + user.name)
+        .appendTo($('#people'));
+        
+      if (replay){
+        presence.css('opacity', 1.0);
+      } else {
+        presence.animate({opacity: 1.0}, 800);
+      }
+    }
+  },
+  
+  remove: function(user, replay){
+    if (replay){
+      $("#user_" + user.id).remove();
+    } else {
+      $("#user_" + user.id).animate({opacity: 0.0}, 800, function(){ $(this).remove() });
+    }
   }
 }

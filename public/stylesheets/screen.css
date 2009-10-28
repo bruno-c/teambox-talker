@@ -460,6 +460,9 @@ a.button {
     #chat_log table tr.notice td.message p {
       color: silver;
       font-size: 10px; }
+    #chat_log table tr.private td.message p {
+      font-style: italic;
+      text-align: right; }
 
 #message_form {
   position: fixed;
