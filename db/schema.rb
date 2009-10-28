@@ -9,12 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091026145054) do
+ActiveRecord::Schema.define(:version => 20091028191905) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "time_zone"
   end
 
   add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true
@@ -59,8 +60,6 @@ ActiveRecord::Schema.define(:version => 20091026145054) do
     t.datetime "updated_at"
   end
 
-  add_index "pastes", ["permalink"], :name => "index_pastes_on_permalink", :unique => true
-
   create_table "rooms", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -85,7 +84,6 @@ ActiveRecord::Schema.define(:version => 20091026145054) do
     t.datetime "deleted_at"
     t.datetime "activated_at"
     t.boolean  "livetyping",                      :default => true
-    t.string   "time_zone"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

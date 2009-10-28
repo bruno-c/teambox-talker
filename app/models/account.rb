@@ -16,4 +16,8 @@ class Account < ActiveRecord::Base
   def ssl
     true
   end
+  
+  def utc_offset
+    ActiveSupport::TimeZone[time_zone].utc_offset
+  end
 end

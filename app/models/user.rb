@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :email, :name, :password, :password_confirmation, :livetyping, :time_zone
+  attr_accessible :email, :name, :password, :password_confirmation
   
   
   acts_as_state_machine :initial => :pending
@@ -80,10 +80,6 @@ class User < ActiveRecord::Base
 
   def avatar_url
     "/images/avatar_default.png"
-  end
-  
-  def utc_offset
-    ActiveSupport::TimeZone[time_zone].utc_offset
   end
   
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.

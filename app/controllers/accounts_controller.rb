@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_filter :top_level_domain_required
+  before_filter :top_level_domain_required, :only => [:new, :create]
   
   layout "root"
   

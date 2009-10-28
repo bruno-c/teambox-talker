@@ -66,7 +66,7 @@ class SessionsControllerTest < ActionController::TestCase
     @request.cookies["tzoffset"] = "240"
     login_as :quentin
     get :new
-    assert_not_nil users(:quentin).reload.time_zone
-    assert_equal "Atlantic Time (Canada)", users(:quentin).time_zone
+    assert_not_nil accounts(:master).reload.time_zone
+    assert_equal "Atlantic Time (Canada)", accounts(:master).time_zone
   end
 end

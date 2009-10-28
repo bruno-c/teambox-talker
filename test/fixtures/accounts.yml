@@ -1,2 +1,3 @@
 master:
   subdomain: master
+  time_zone: Atlantic Time (Canada)
