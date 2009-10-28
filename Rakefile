@@ -8,3 +8,8 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+
+desc "Configure mysql database"
+task "db:config" => :environment do
+  ActiveRecord::Base.connection.execute "SET GLOBAL time_zone = '+0:00';"
+end
