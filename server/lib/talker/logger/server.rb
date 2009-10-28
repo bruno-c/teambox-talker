@@ -16,7 +16,7 @@ module Talker
       def db
         EventedMysql
       end
-
+      
       def options
         EventedMysql.settings
       end
