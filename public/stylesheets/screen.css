@@ -518,6 +518,8 @@ div.panel {
     border-bottom: 1px solid #e7e7e7; }
     div.panel div.content p {
       margin: 0 0 0.66em; }
+    div.panel div.content ol {
+      margin-left: 20px; }
   div.panel div.footer {
     text-align: right;
     font-size: 12px;
@@ -557,6 +559,12 @@ div.panel {
     width: 16px;
     position: relative;
     top: 3px; }
+
+#footer {
+  margin-top: 30px;
+  font-size: 10px;
+  text-align: center;
+  color: gray; }
 
 div.flash {
   padding: 10px 16px;
