@@ -68,7 +68,7 @@ Receiver = {
     var last_row    = $('#log tr:last');
     var last_author = last_row.attr('author');
     
-    if (last_author == data.user.name && last_row.hasClass('message')){ // only append to existing blockquote group
+    if (last_author == data.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !data.private){ // only append to existing blockquote group
       last_row.find('blockquote')
         .append($('<p/>').attr('time', data.time).html(data.content));
     } else {
