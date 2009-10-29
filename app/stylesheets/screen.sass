@@ -104,7 +104,7 @@ html[xmlns] .clearfix
 
 #nav
   position: fixed
-  z-index: 3
+  z-index: 6
   width: auto
   left: 0
   right: 0
@@ -392,7 +392,7 @@ a.button
 // Chat Log
 #top_mask
   position: fixed
-  z-index: 2
+  z-index: 5
   top: 0
   left: 0
   height: 80px
@@ -400,9 +400,11 @@ a.button
   width: 100%
   margin: 0 240px 0 0
   div.fade
+    z-index: 5
     height: 40px
     background = !black * 0.1 + !white * 0.9
     +box_shadow(0, 20, 20, !black * 0.1 + !white * 0.9)
+
 #chat_log
   background = !white
   padding: 5px 10px 5px
