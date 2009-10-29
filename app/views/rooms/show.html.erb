@@ -12,7 +12,7 @@
     Orbited.settings.protocol = '<%= request.ssl? ? "https" : "http" %>'
     Orbited.settings.streaming = true;
     TCPSocket = Orbited.TCPSocket;
-
+    
     $(function() {
       document.domain = document.domain;
       client = new TalkerClient({

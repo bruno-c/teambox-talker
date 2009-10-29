@@ -20,26 +20,8 @@ $(function() {
   ChatRoom.scroller = new Scroller({scrollLimit: function(){ return $('#log tr:last').height() }});
   ChatRoom.align();
   ChatRoom.scroller.scrollToBottom();
-  
-  var dom_element, on_focus, on_blur, on_focus_handler = function(e){
-    ChatRoom.logMessages = -1;
-    ChatRoom.resetWindowTitle();
-  };
-  
-  if ($.browser.mozilla) {
-    dom_element = document, on_focus = "focus", on_blur = "blur";
-  } else if ($.browser.msie) {
-    dom_element = document, on_focus = "focusin", on_blur = "focusout";
-  } else { // safari and others
-    dom_element = window, on_focus = "focus", on_blur = "blur";
-  }
 
-  if (!$.browser.safari){
-    $(dom_element)
-    .bind(on_focus, on_focus_handler)
-    .click(on_focus_handler)
-    .bind(on_blur, function(){ ChatRoom.logMessages = 0; });
-  }
+  ChatRoom.notifier = new Notifier();
   
   $(window).keydown(function(e){
     switch (e.which){
@@ -121,10 +103,6 @@ var ChatRoom = {
     setCaretTo(msgbox, position);
     
     document.getElementById('msgbox').focus();
-  },
-  
-  resetWindowTitle: function() {
-    document.title = ChatRoom.room;
   },
   
   formatMessage: function(content) {

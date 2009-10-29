@@ -10,7 +10,10 @@ Receiver = {
         Receiver.timestamp(data, replay);
       }
       Receiver[data.type](data, replay);
-      if (!replay) ChatRoom.scroller.scrollToBottom();
+      if (!replay) {
+        ChatRoom.scroller.scrollToBottom();
+        ChatRoom.notifier.push(data);
+      }
     }else{
       console.info(JSON.encode(data, replay, index));
       console.error("*** Unable to handle data type: (" + data.type + ") with data.  Format may not be appropriate.");
