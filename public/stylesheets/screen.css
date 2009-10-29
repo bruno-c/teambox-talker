@@ -85,7 +85,7 @@ h2 {
 h3 {
   font-size: 20px;
   margin: 0 0 0.66em;
-  font-weight: bold; }
+  color: #404040; }
 
 h4 {
   font-size: 18px;
@@ -169,7 +169,7 @@ html[xmlns] .clearfix {
 
 #nav {
   position: fixed;
-  z-index: 3;
+  z-index: 6;
   width: auto;
   left: 0;
   right: 0;
@@ -181,8 +181,7 @@ html[xmlns] .clearfix {
   border-bottom: 2px solid silver; }
   #nav ul {
     margin: 10px 0 0;
-    float: left;
-    overflow: hidden; }
+    float: left; }
     #nav ul li {
       list-style: none;
       display: block;
@@ -196,32 +195,41 @@ html[xmlns] .clearfix {
         font-weight: bold;
         text-decoration: none;
         color: white;
-        border-radius: 10px;
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px; }
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px; }
         #nav ul li a:hover {
           background: white;
           color: #269ed6; }
         #nav ul li a.active {
           background: gray; }
-      #nav ul li input#search {
-        position: relative;
-        top: -6px; }
+      #nav ul li form {
+        margin: 0 0 0 10px; }
+        #nav ul li form p {
+          padding: 0;
+          line-height: normal; }
+          #nav ul li form p input {
+            font-size: 12px;
+            height: 16px;
+            padding: 4px 2px 0 21px;
+            border-radius: 2px;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            border: none;
+            background-image: url('../../images/icons/magnifier.png');
+            background-repeat: no-repeat;
+            background-position: 2px center; }
   #nav p.utilities {
     float: right;
     color: silver;
     line-height: 40px; }
     #nav p.utilities a {
       color: white; }
-      #nav p.utilities a.avatar {
-        display: inline-block;
+      #nav p.utilities a.avatar img {
         height: 16px;
-        width: 16px; }
-        #nav p.utilities a.avatar img {
-          height: 100%;
-          width: 100%;
-          position: relative;
-          top: -3px; }
+        width: 16px;
+        position: relative;
+        top: 3px; }
 
 #content {
   padding: 40px 0 0 0; }
@@ -229,6 +237,12 @@ html[xmlns] .clearfix {
 #main {
   margin: 0 240px 0 0;
   padding: 40px; }
+  #main div.sheet {
+    background: white;
+    padding: 40px;
+    box-shadow: 1px 1px 2px #d2d2d2;
+    -webkit-box-shadow: 1px 1px 2px #d2d2d2;
+    -moz-box-shadow: 1px 1px 2px #d2d2d2; }
   #main.no-sidebar {
     margin: 0; }
 
@@ -236,8 +250,8 @@ html[xmlns] .clearfix {
   position: fixed;
   right: 0;
   float: right;
-  width: 200px;
-  padding: 40px 40px 40px 0; }
+  width: 195px;
+  padding: 37px 37px 37px 0; }
 
 #rooms {
   overflow: hidden; }
@@ -258,7 +272,7 @@ html[xmlns] .clearfix {
 
 form p {
   line-height: 28px;
-  padding: 2px 0; }
+  margin: 0 0 10px; }
   form p.submit {
     margin-bottom: 0; }
 form div.complex_field {
@@ -267,8 +281,9 @@ form div.complex_field {
 form label {
   display: block;
   margin-right: 10px;
-  line-height: 20px;
-  font-weight: bold; }
+  line-height: 28px;
+  float: left;
+  text-align: right; }
   form label.description {
     line-height: 1;
     margin-top: 5px;
@@ -279,8 +294,21 @@ form label {
     display: inline;
     float: none;
     font-weight: normal; }
-form input, form textarea, form select {
+form input[type=text], form input[type=password] {
+  background: white;
+  font-size: 14px;
+  padding: 5px 3px 0;
+  height: 21px;
+  border: 1px solid #e5e5e5;
+  border-top: 1px solid #bfbfbf;
+  border-left: 1px solid #bfbfbf;
+  margin: 0; }
+form textarea, form select {
   font-size: 14px; }
+form fieldset {
+  margin: 0 0 20px;
+  padding: 0;
+  border: none; }
 form.lw40 label {
   width: 40px; }
   form.lw40 label.description {
@@ -312,26 +340,21 @@ form.lw160 p.indent {
 
 a.button {
   display: inline-block;
-  border-radius: 11px;
-  -moz-border-radius: 11px;
-  -webkit-border-radius: 11px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
   background: #269ed6;
   color: white;
   text-shadow: -1px -1px 0px #1c76a0;
   border: 1px solid;
-  border-top-color: #8dbacf;
-  border-left-color: #8dbacf;
-  border-bottom-color: #1c76a0;
-  border-right-color: #1c76a0;
   text-decoration: none;
   padding: 0 10px;
   line-height: 27px;
-  font-size: 16px;
+  font-size: 14px;
   height: 26px;
-  box-shadow: 2px 2px 4px silver;
-  -webkit-box-shadow: 2px 2px 4px silver;
-  -moz-box-shadow: 2px 2px 4px silver;
-  margin: 0 4px; }
+  box-shadow: 2px 2px 4px #dfdfdf;
+  -webkit-box-shadow: 2px 2px 4px #dfdfdf;
+  -moz-box-shadow: 2px 2px 4px #dfdfdf; }
   a.button:hover {
     background: #228dbf; }
   a.button.large {
@@ -362,7 +385,7 @@ a.button {
     border-left-color: #bfbfbf;
     border-bottom-color: gray;
     border-right-color: gray;
-    text-shadow: 1px 1px 0px silver;
+    text-shadow: 0px 0px 0px transparent;
     color: black;
     filter: alpha(opacity=80);
     opacity: 0.8;
@@ -403,7 +426,14 @@ a.button {
   line-height: 1;
   height: auto;
   padding: 10px 15px 10px 36px;
-  background-position: 15px center; }
+  background-position: 15px center;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: none;
+  box-shadow: 1px 1px 2px #d2d2d2;
+  -webkit-box-shadow: 1px 1px 2px #d2d2d2;
+  -moz-box-shadow: 1px 1px 2px #d2d2d2; }
 
 #people {
   overflow: hidden; }
@@ -439,7 +469,7 @@ a.button {
 
 #top_mask {
   position: fixed;
-  z-index: 2;
+  z-index: 5;
   top: 0;
   left: 0;
   height: 80px;
@@ -447,6 +477,7 @@ a.button {
   width: 100%;
   margin: 0 240px 0 0; }
   #top_mask div.fade {
+    z-index: 4;
     height: 40px;
     background: #e5e5e5;
     box-shadow: 0px 20px 20px #e5e5e5;
@@ -455,78 +486,166 @@ a.button {
 
 #chat_log {
   background: white;
-  padding: 10px 10px 0;
+  padding: 5px 10px 5px;
   margin: 0 0 60px 0;
-  box-shadow: 2px 2px 2px #d2d2d2;
-  -webkit-box-shadow: 2px 2px 2px #d2d2d2;
-  -moz-box-shadow: 2px 2px 2px #d2d2d2;
-  border-right: 1px solid silver;
-  border-bottom: 1px solid silver; }
+  box-shadow: 1px 1px 2px #d2d2d2;
+  -webkit-box-shadow: 1px 1px 2px #d2d2d2;
+  -moz-box-shadow: 1px 1px 2px #d2d2d2; }
   #chat_log table {
     width: 100%; }
-    #chat_log table tr td {
-      font-size: 12px; }
-      #chat_log table tr td img.avatar {
-        height: 16px;
-        width: 16px;
-        position: relative;
-        top: 3px; }
-      #chat_log table tr td.author {
-        padding: 0 0 15px 0;
-        vertical-align: bottom;
-        white-space: nowrap;
-        text-align: right;
-        width: 1%; }
-        #chat_log table tr td.author b.blockquote_tail {
-          display: inline-block;
-          width: 0;
-          height: 0;
-          border: 5px solid transparent;
-          border-left: none;
-          border-right: 5px solid #ddeff8; }
-      #chat_log table tr td.message {
-        padding: 0 0 10px 0; }
-        #chat_log table tr td.message blockquote {
-          border-radius: 3px;
-          -moz-border-radius: 3px;
-          -webkit-border-radius: 3px;
-          background: #ddeff8;
-          font-style: normal;
-          padding: 3px 10px;
-          overflow: hidden; }
-          #chat_log table tr td.message blockquote p {
-            margin: 2px 0;
-            width: 100%;
-            overflow: auto; }
-            #chat_log table tr td.message blockquote p div {
+    #chat_log table tr {
+      position: relative; }
+      #chat_log table tr td {
+        font-size: 12px; }
+        #chat_log table tr td img.avatar {
+          height: 16px;
+          width: 16px;
+          position: relative;
+          top: 3px; }
+        #chat_log table tr td.author {
+          padding: 5px 0 10px 0;
+          vertical-align: bottom;
+          white-space: nowrap;
+          text-align: right;
+          width: 1%; }
+          #chat_log table tr td.author b.blockquote_tail {
+            margin: 0 0 0 5px;
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            border-left: none;
+            border-right: 5px solid #ddeff8; }
+        #chat_log table tr td.message {
+          padding: 5px 0; }
+          #chat_log table tr td.message blockquote {
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            background: #ddeff8;
+            font-style: normal;
+            padding: 3px 10px;
+            overflow: hidden; }
+            #chat_log table tr td.message blockquote span.marker {
+              float: right;
+              display: block;
+              color: gray;
+              margin: 0 0 5px 5px;
+              font-size: 10px;
+              padding: 0 0 0 19px;
+              line-height: 16px;
+              white-space: nowrap; }
+            #chat_log table tr td.message blockquote p {
+              margin: 2px 0;
+              overflow: auto; }
+              #chat_log table tr td.message blockquote p span.more_lines {
+                font-size: 10px;
+                color: gray; }
+              #chat_log table tr td.message blockquote p.typing {
+                background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center;
+                padding: 0 0 0 19px;
+                color: silver; }
+            #chat_log table tr td.message blockquote pre {
               overflow: auto;
               padding: 10px;
-              width: 500px // this is what we need to fix.;
-              border: 1px solid silver; }
-    #chat_log table tr.me td.author b.blockquote_tail {
-      border-right: 5px solid #faeede; }
-    #chat_log table tr.me td.message blockquote {
-      background: #faeede; }
-    #chat_log table tr.timestamp td {
-      border-bottom: 1px solid silver;
-      color: silver;
-      padding: 1px;
-      margin: 1px;
-      font-size: 10px; }
-      #chat_log table tr.timestamp td p {
+              width: auto;
+              background: white;
+              border: 1px solid silver;
+              margin: 0 0 5px; }
+      #chat_log table tr.me td.author b.blockquote_tail {
+        border-right: 5px solid #faeede; }
+      #chat_log table tr.me td.message blockquote {
+        background: #faeede; }
+      #chat_log table tr.timestamp td {
+        border-top: 1px dotted #dfdfdf;
+        height: 0;
+        padding: 0; }
+        #chat_log table tr.timestamp td div {
+          position: relative; }
+          #chat_log table tr.timestamp td div span.marker {
+            display: block;
+            z-index: 5;
+            position: absolute; }
+            #chat_log table tr.timestamp td div span.marker b {
+              display: block;
+              height: 0;
+              width: 0;
+              border: 4px solid transparent;
+              border: 5px solid transparent;
+              position: relative; }
+            #chat_log table tr.timestamp td div span.marker i {
+              display: block;
+              background-color: gray;
+              background-repeat: no-repeat;
+              background-position: 3px center;
+              color: white;
+              font-size: 10px;
+              border-radius: 2px;
+              -moz-border-radius: 2px;
+              -webkit-border-radius: 2px;
+              padding: 0 5px 0 20px;
+              font-style: normal;
+              white-space: nowrap; }
+        #chat_log table tr.timestamp td.date div span.marker {
+          right: 100%;
+          top: -18px;
+          margin: 0 -2 0 0; }
+          #chat_log table tr.timestamp td.date div span.marker b {
+            float: right;
+            border-left: 5px solid #bf4040;
+            border-right: none;
+            top: 13px; }
+          #chat_log table tr.timestamp td.date div span.marker i {
+            line-height: 1;
+            padding: 5px;
+            margin: 0 5px 0 0;
+            background: #bf4040; }
+            #chat_log table tr.timestamp td.date div span.marker i span {
+              display: block;
+              text-align: center; }
+              #chat_log table tr.timestamp td.date div span.marker i span.date {
+                font-weight: bold;
+                font-size: 14px; }
+              #chat_log table tr.timestamp td.date div span.marker i span.time {
+                text-transform: uppercase;
+                font-size: 10px; }
+        #chat_log table tr.timestamp td.time div span.marker {
+          left: 100%;
+          top: -10px;
+          margin: 0 0 0 -2px; }
+          #chat_log table tr.timestamp td.time div span.marker b {
+            float: left;
+            border-right: 5px solid gray;
+            border-left: none;
+            top: 5px; }
+          #chat_log table tr.timestamp td.time div span.marker i {
+            height: 20px;
+            background-image: url('../../images/icons/clock.png');
+            line-height: 20px;
+            margin: 0 0 0 5px; }
+      #chat_log table tr.notice td.message p {
         color: silver;
-        font-size: 10px;
-        text-align: right; }
-    #chat_log table tr.notice td.message p {
-      color: silver;
-      font-size: 10px; }
-    #chat_log table tr.private td.message p {
-      font-style: italic;
-      text-align: right; }
+        font-size: 10px; }
+      #chat_log table tr.private td.author b.blockquote_tail {
+        border-right: 5px solid #c8e6f4; }
+      #chat_log table tr.private td.message blockquote {
+        background: #edf6fb;
+        border: 2px dotted #d3ebf6;
+        padding: 3px 8px; }
+        #chat_log table tr.private td.message blockquote span.marker.private {
+          background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center; }
+        #chat_log table tr.private td.message blockquote p {
+          font-style: italic;
+          color: gray; }
+      #chat_log table tr.private.me td.author b.blockquote_tail {
+        border-right: 5px solid #f8e4c9; }
+      #chat_log table tr.private.me td.message blockquote {
+        background: #fcf6ee;
+        border: 2px dotted #f8e4c9; }
 
 #message_form {
   position: fixed;
-  z-index: 2;
+  z-index: 10;
   bottom: 0;
   left: 0;
   height: 100px;
@@ -534,7 +653,7 @@ a.button {
   width: 100%; }
   #message_form form.fade {
     height: 80px;
-    margin: 20px 260px 0 0;
+    margin: 20px 230px 0 0;
     padding: 0 0 0 50px;
     background: #e5e5e5;
     box-shadow: 0px -10px 10px #e5e5e5;
@@ -548,9 +667,9 @@ a.button {
 
 div.panel {
   margin: 0 0 20px;
-  box-shadow: 0px 0px 2px silver;
-  -webkit-box-shadow: 0px 0px 2px silver;
-  -moz-box-shadow: 0px 0px 2px silver; }
+  box-shadow: 1px 1px 2px #d2d2d2;
+  -webkit-box-shadow: 1px 1px 2px #d2d2d2;
+  -moz-box-shadow: 1px 1px 2px #d2d2d2; }
   div.panel div.header {
     border-top-left-radius: 3px;
     -moz-border-radius-topleft: 3px;
@@ -559,30 +678,53 @@ div.panel {
     -moz-border-radius-topright: 3px;
     -webkit-border-top-right-radius: 3px;
     background: #404040;
-    padding: 5px 10px 4px;
+    padding: 5px 10px;
     border-bottom: 1px solid silver;
     position: relative; }
     div.panel div.header span.actions {
       float: right;
-      font-size: 12px; }
+      font-size: 10px;
+      filter: alpha(opacity=66);
+      opacity: 0.66;
+      -moz-opacity: 0.66; }
       div.panel div.header span.actions a {
-        color: silver; }
+        display: inline-block;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 3px;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        background: #606060;
+        color: white;
+        text-decoration: none; }
         div.panel div.header span.actions a:hover {
-          color: white; }
+          background: #269ed6; }
     div.panel div.header h3 {
       margin: 0;
-      color: white; }
+      color: white;
+      font-size: 18px; }
       div.panel div.header h3 a {
         color: inherit; }
+    div.panel div.header small {
+      display: block;
+      color: silver;
+      font-size: 12px; }
+    div.panel div.header:hover span.actions {
+      filter: alpha(opacity=100);
+      opacity: 1;
+      -moz-opacity: 1; }
   div.panel div.content {
     background: white;
-    padding: 8px 10px 9px;
+    padding: 7px 10px 9px;
     border-top: 2px solid #f8f8f8;
     border-bottom: 1px solid #e7e7e7; }
     div.panel div.content p {
       margin: 0 0 0.66em; }
     div.panel div.content ol {
       margin-left: 20px; }
+    div.panel div.content h4 {
+      font-size: 16px; }
   div.panel div.footer {
     text-align: right;
     font-size: 12px;
@@ -609,19 +751,29 @@ div.panel {
     margin: 30px auto;
     width: 300px; }
 
-#sidebar #room div.content ul.people li {
-  display: block;
-  margin: 0 0 5px;
-  padding: 2px 5px;
-  background: #f4f4f4;
-  border-radius: 3px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px; }
-  #sidebar #room div.content ul.people li img {
-    height: 16px;
-    width: 16px;
-    position: relative;
-    top: 3px; }
+#sidebar {
+  z-index: 100; }
+  #sidebar #room div.header a.leave {
+    background-image: url('../../images/icons/door.png');
+    background-repeat: no-repeat;
+    background-position: 3px center;
+    padding: 0 5px 0 21px; }
+  #sidebar #room div.content ul.people {
+    margin: 0 0 -5px; }
+    #sidebar #room div.content ul.people li {
+      display: block;
+      margin: 0 0 5px;
+      padding: 2px 5px;
+      background: #f4f4f4;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      font-size: 12px; }
+      #sidebar #room div.content ul.people li img {
+        height: 16px;
+        width: 16px;
+        position: relative;
+        top: 3px; }
 
 #footer {
   margin-top: 30px;
@@ -630,23 +782,40 @@ div.panel {
   color: gray; }
 
 div.flash {
-  padding: 10px 16px;
-  margin-bottom: 10px;
-  border: 2px solid;
-  border-left-width: 10px;
-  border-top-right-radius: 5px;
-  -moz-border-radius-topright: 5px;
-  -webkit-border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  -moz-border-radius-bottomright: 5px;
-  -webkit-border-bottom-right-radius: 5px; }
+  margin: 0 0 1.5em;
+  color: black;
+  padding: 10px 10px 10px 31px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  line-height: normal; }
 
 #flash_error {
-  border-color: #b20000;
-  color: #7f0000;
-  background-color: #fee5e5; }
+  background: #f1c8cc url('../../images/icons/exclamation-red-frame.png') no-repeat 10px center; }
 
 #flash_notice {
-  border-color: #007f00;
-  color: #004c00;
-  background-color: #e5fee5; }
+  background: #c1c8fc url('../../images/icons/information-frame.png') no-repeat 10px center; }
+
+#errorExplanation {
+  color: black;
+  padding: 10px 10px 10px 31px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  margin: 0 0 20px;
+  color: black;
+  background: #f1c8cc url('../../images/icons/exclamation-red-frame.png') no-repeat 10px 10px; }
+  #errorExplanation h2 {
+    font-size: 14px;
+    margin: 0; }
+  #errorExplanation p {
+    font-size: 12px;
+    margin-bottom: 0;
+    color: black; }
+  #errorExplanation ul {
+    margin-left: 19px; }
+    #errorExplanation ul li {
+      font-size: 12px;
+      background: url('../../images/icons/exclamation-small-red.png') no-repeat left center;
+      padding-left: 21px;
+      list-style: none; }

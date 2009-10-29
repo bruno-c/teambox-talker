@@ -5,7 +5,6 @@ function Notifier(){
   
   var dom_element, on_focus, on_blur, on_focus_handler = function(e){
     self.enabled = false;
-    document.title = document.title.replace('*', '');
   };
   
   if ($.browser.mozilla) {
@@ -21,7 +20,6 @@ function Notifier(){
   .bind(on_focus, on_focus_handler)
   .click(on_focus_handler)
   .bind(on_blur, function(){ 
-    document.title = document.title + '*'
     self.enabled = true;
     self.counter = 0;
   });

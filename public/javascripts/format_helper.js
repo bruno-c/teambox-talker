@@ -77,7 +77,16 @@ var FormatHelper = {
   timestamp2date: function(timestamp){
     return new Date(timestamp * 1000);
   },
-
+  
+  getMonth: function(timestamp){
+    var months = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ');
+    return months[FormatHelper.timestamp2date(timestamp).getMonth()];
+  },
+  
+  getDate: function(timestamp){
+    return FormatHelper.timestamp2date(timestamp).getDate();
+  },
+  
   toHumanDate: function(timestamp) {
     var date = FormatHelper.timestamp2date(timestamp);
     var months = 'January February March April May June July August September October November December'.split(' ');

@@ -102,13 +102,30 @@ Receiver = {
   
   timestamp: function(data, replay){
     var element = $('<tr/>').addClass('timestamp')
-      .append($('<td/>')
-        .html(FormatHelper.toHumanDate(data.time)))
-      .append($('<td/>')
-        .append($('<p/>').attr('time', data.time)
-          .html(FormatHelper.toHumanTime(data.time))));
-
+      .append($('<td/>').addClass('date')
+        .append($('<div/>')
+          .append($('<span/>').addClass('marker').html(
+            '<b><!----></b><i><span class="date">' 
+              + FormatHelper.getDate(data.time)
+            + '</span><span class="month">'
+              + FormatHelper.getMonth(data.time)
+            + '</span></i>'
+          ))))
+      .append($('<td/>').addClass('time')
+        .append($('<div/>')
+          .append($('<span/>').addClass('marker').attr('time', data.time)
+            .html('<b><!----></b><i>' + FormatHelper.toHumanTime(data.time) + '</i>'))));
+    
     element.appendTo('#log');
+    
+    // var element = $('<tr/>').addClass('timestamp')
+    //   .append($('<td/>')
+    //     .html(FormatHelper.toHumanDate(data.time)))
+    //   .append($('<td/>')
+    //     .append($('<p/>').attr('time', data.time)
+    //       .html(FormatHelper.toHumanTime(data.time))));
+    // 
+    // element.appendTo('#log');
   }
 }
 
