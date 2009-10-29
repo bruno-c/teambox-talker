@@ -41,7 +41,8 @@ module Talker
       end
       
       def back(user, time=Time.now.utc.to_i)
-        if session = session_for(user) && session.idle?
+        session = session_for(user)
+        if session && session.idle?
           session.back!
           publish :type => "back", :user => user.info, :time => time
         end
