@@ -67,12 +67,7 @@ LineProtocol = function(transport) {
             var start = 0;
             var end;
             while ((end = buffer.indexOf("\n", start)) >= 0 && isLineMode) {
-                // TODO it would be nice that decode received the
-                //      start and end indexes, if it did, we didn't
-                //      need the slice copy.
-                var bytes = buffer.slice(start, end);
-                // TODO do not depend on Orbited.
-                var line = Orbited.utf8.decode(bytes)[0];
+                var line = buffer.slice(start, end);
                 log.debug("fire onlinereceived line[", line.length, "]=", line);
                 self.onlinereceived(line);
                 start = end + 1;

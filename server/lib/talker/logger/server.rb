@@ -5,8 +5,10 @@ require "yajl"
 module Talker
   module Logger
     class Server
+      ENCODING = "utf8"
+      
       attr_accessor :rooms, :queue
-    
+      
       def initialize(options={})
         EventedMysql.settings.update options
         @queue = Queues.logger
@@ -23,7 +25,27 @@ module Talker
     
       def start
         Talker.logger.info "Logging to #{options[:database]}@#{options[:host]}"
+        
+        configure { subscribe }
+      end
       
+      def configure
+        connections = options[:connections]
+        connections_configured = 0
+        
+        Talker.logger.info "Configuring #{connections} connections"
+        connections.times do
+          db.raw "SET NAMES '#{ENCODING}'" do
+            connections_configured += 1
+            if connections_configured == connections
+              yield
+            end
+          end
+        end
+      end
+      
+      def subscribe
+        Talker.logger.info "Subscribing to #{@queue.name}"
         @queue.subscribe(:ack => true) do |headers, message|
           
           if room_id = headers.routing_key[/\.(\d+)$/, 1]
@@ -40,12 +62,12 @@ module Talker
           
         end
       end
-    
+      
       def stop(&callback)
         @queue.unsubscribe
         callback.call if callback
       end
-    
+      
       def to_s
         "logger"
       end

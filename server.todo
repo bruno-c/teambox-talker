@@ -1,5 +1,6 @@
 Talker Server:
 ✓ [BUG] second user get kicked when expired 1st user leaves
+- Send "back" event when user sends a "ping"
 - Handle incoming malformed events (in logger especially)
 ✓ Expire connections (on presence server) if user leaves while channel server is down
 - Support other types of channels (room, paste, etc)

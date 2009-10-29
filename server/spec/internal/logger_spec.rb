@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + "/spec_helper"
 EM.describe Talker::Logger do
   before do
     @logger = Talker::Logger::Server.new :database => "talker_test", :user => "root"
+    @logger.db.should_receive(:raw).at_least(4).times.and_yield
     @logger.start
 
     Talker::Queues.create

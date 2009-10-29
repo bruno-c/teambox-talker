@@ -98,7 +98,7 @@ function TalkerClient(options) {
     protocol.onerror = function(error) { console.error(error); }
     protocol.onlinereceived = onLineReceived;
     protocol.onrawdatareceived = onRawDataReceived;
-    protocol.open(self.options.host, self.options.port, true);
+    protocol.open(self.options.host, self.options.port, false);
   };
 
   self.close = function() {
