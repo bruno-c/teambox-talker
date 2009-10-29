@@ -105,7 +105,11 @@ Receiver = {
       .append($('<td/>').addClass('date')
         .append($('<div/>')
           .append($('<span/>').addClass('marker').html(
-            '<b><!----></b><i><span class="date">28</span><span class="month">OCT</span></i>'
+            '<b><!----></b><i><span class="date">' 
+              + FormatHelper.getDate(data.time)
+            + '</span><span class="month">'
+              + FormatHelper.getMonth(data.time)
+            + '</span></i>'
           ))))
       .append($('<td/>').addClass('time')
         .append($('<div/>')
