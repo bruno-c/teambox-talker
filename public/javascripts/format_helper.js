@@ -84,7 +84,7 @@ var FormatHelper = {
     var minutes = date.getMinutes() - date.getMinutes() % 5;
     
     return months[date.getMonth()] + '&nbsp;' 
-      + new Number(date.getDate()).toOrdinal() + ',&nbsp;'
+      + date.getDate() + ',&nbsp;'
       + date.getFullYear();
   },
   
