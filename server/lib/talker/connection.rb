@@ -63,9 +63,11 @@ module Talker
             # Listen to message in the room
             @subscription = @room.subscribe(@user) { |message| send_data message }
             
+            # Tell the user he's connected
+            send_data %({"type":"connected"}\n)
+            
             # Broadcast presence
             @room.publish_presence "join", @user
-            send_data %({"type":"connected"}\n)
           rescue Exception => e
             raise
             Talker::Notifier.error "Error while authenticating", e
