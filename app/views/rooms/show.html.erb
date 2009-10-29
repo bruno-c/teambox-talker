@@ -40,7 +40,7 @@
       $.each(<%= escape_json @events.to_json %>, function(){
         Receiver.push(this, true);
       });
-
+      
       ChatRoom.scroller.scrollToBottom(true);
       
       $(window).bind('beforeunload', function() { client.reset() });

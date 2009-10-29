@@ -12,6 +12,7 @@ Receiver = {
       Receiver[data.type](data, replay);
       if (!replay) {
         ChatRoom.scroller.scrollToBottom();
+        resizePastes();
         ChatRoom.notifier.push(data);
       }
     }else{
@@ -95,7 +96,7 @@ Receiver = {
             .append($('<blockquote/>')
               .append($('<p/>').attr('time', data.time)
                 .html(data.content))));
-
+      
       element.appendTo('#log');
     }
   },
@@ -115,17 +116,8 @@ Receiver = {
         .append($('<div/>')
           .append($('<span/>').addClass('marker').attr('time', data.time)
             .html('<b><!----></b><i>' + FormatHelper.toHumanTime(data.time) + '</i>'))));
-    
+
     element.appendTo('#log');
-    
-    // var element = $('<tr/>').addClass('timestamp')
-    //   .append($('<td/>')
-    //     .html(FormatHelper.toHumanDate(data.time)))
-    //   .append($('<td/>')
-    //     .append($('<p/>').attr('time', data.time)
-    //       .html(FormatHelper.toHumanTime(data.time))));
-    // 
-    // element.appendTo('#log');
   }
 }
 
