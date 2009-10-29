@@ -22,6 +22,8 @@ function resizePastes(){
   $('div pre').css('width', $('#chat_log').width() - $('#log tr td:first').width() - 41);
 }
 
+$(window).ready(resizePastes).resize(resizePastes);
+
 $(function() {
   $("#people input.admin, #people input.suspended").click(function () {
     var url = $(this).parents("form")[0].action;

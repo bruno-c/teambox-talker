@@ -43,12 +43,6 @@
       
       ChatRoom.scroller.scrollToBottom(true);
       
-      resizePastes();
-      
-      $(window).resize(function(e){
-        resizePastes();
-      });
-      
       $(window).bind('beforeunload', function() { client.reset() });
       $("a#leave").click(function() {
         client.close();
