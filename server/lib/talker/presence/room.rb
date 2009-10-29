@@ -45,9 +45,10 @@ module Talker
           session.join!
           publish :type => "join", :user => user.info, :time => time
           
-          # Send list of online users to new user
-          publish_to user.id, :type => "users", :users => users.map { |u| u.info }
         end
+
+        # Send list of online users to new user
+        publish_to user.id, :type => "users", :users => users.map { |u| u.info }
       end
       
       def idle(user, time=Time.now.utc.to_i)
