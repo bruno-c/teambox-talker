@@ -7,10 +7,6 @@ module Talker
         @sessions = {}
       end
       
-      def session_for(user)
-        @sessions[user.id]
-      end
-      
       def sessions
         @sessions.values
       end
@@ -19,25 +15,18 @@ module Talker
         @sessions.values.map { |s| s.user }
       end
       
-      # Add a user w/o broadcasting presence
+      def session_for(user)
+        @sessions[user.id]
+      end
+      
+      # Create a new user session
       def new_session(user, state=nil)
         @sessions[user.id] = Session.new(@persister, user, self, state)
       end
       
-      def present?(user)
-        return false if user.nil?
-        @sessions.key?(user.id)
-      end
-      
       def join(user, time=Time.now.utc.to_i)
-        if present?(user)
-          session = session_for(user)
-          
-          # Back from idle state
-          if session.idle?
-            session.back!
-            publish :type => "back", :user => user.info, :time => time
-          end
+        if session = session_for(user)
+          back user, time
           
         # New user in room if not present
         else
@@ -51,25 +40,29 @@ module Talker
         publish_to user.id, :type => "users", :users => users.map { |u| u.info }
       end
       
+      def back(user, time=Time.now.utc.to_i)
+        if session = session_for(user) && session.idle?
+          session.back!
+          publish :type => "back", :user => user.info, :time => time
+        end
+      end
+      
       def idle(user, time=Time.now.utc.to_i)
-        if present?(user)
-          session = session_for(user)
-          
+        if session = session_for(user)
           session.idle!
           publish :type => "idle", :user => user.info, :time => time
         end
       end
       
       def ping(user, time=Time.now.utc.to_i)
-        if present?(user)
-          session_for(user).touch(time)
+        if session = session_for(user)
+          session.touch(time)
+          back user, time if session.idle?
         end
       end
       
       def leave(user, time=Time.now.utc.to_i)
-        if present?(user)
-          session = @sessions.delete(user.id)
-          
+        if session = @sessions.delete(user.id)
           session.leave!
           publish :type => "leave", :user => user.info, :time => time
           
