@@ -12,6 +12,7 @@ Receiver = {
       Receiver[data.type](data, replay);
       if (!replay) {
         ChatRoom.scroller.scrollToBottom();
+        resizePastes();
         ChatRoom.notifier.push(data);
       }
     }else{

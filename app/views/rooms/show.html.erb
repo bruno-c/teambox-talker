@@ -40,8 +40,14 @@
       $.each(<%= escape_json @events.to_json %>, function(){
         Receiver.push(this, true);
       });
-
+      
       ChatRoom.scroller.scrollToBottom(true);
+      
+      resizePastes();
+      
+      $(window).resize(function(e){
+        resizePastes();
+      });
       
       $(window).bind('beforeunload', function() { client.reset() });
       $("a#leave").click(function() {
