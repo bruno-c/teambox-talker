@@ -27,7 +27,7 @@ Receiver = {
   
   users: function(data){
     $(data.users).each(function(){
-      UserList.add(this, true);
+      UserList.add(this);
     });
   },
   
@@ -123,6 +123,8 @@ Receiver = {
 
 UserList = {
   add: function(user, replay){
+    if (replay) { return }
+    
     if ($("#user_" + user.id).length < 1) {
       var presence = $('<li/>')
         .attr("id", "user_" + user.id)
@@ -131,19 +133,13 @@ UserList = {
         .html('<img alt="gary" src="/images/avatar_default.png" /> ' + user.name)
         .appendTo($('#people'));
         
-      if (replay){
-        presence.css('opacity', 1.0);
-      } else {
-        presence.animate({opacity: 1.0}, 800);
-      }
+      presence.animate({opacity: 1.0}, 400);
     }
   },
   
   remove: function(user, replay){
-    if (replay){
-      $("#user_" + user.id).remove();
-    } else {
-      $("#user_" + user.id).animate({opacity: 0.0}, 800, function(){ $(this).remove() });
-    }
+    if (replay){ return }
+    
+    $("#user_" + user.id).animate({opacity: 0.0}, 400, function(){ $(this).remove() });
   }
 }
