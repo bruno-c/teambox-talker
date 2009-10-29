@@ -400,7 +400,7 @@ a.button
   width: 100%
   margin: 0 240px 0 0
   div.fade
-    z-index: 5
+    z-index: 4
     height: 40px
     background = !black * 0.1 + !white * 0.9
     +box_shadow(0, 20, 20, !black * 0.1 + !white * 0.9)
@@ -671,6 +671,7 @@ div.panel
 
 // Room Sidebar
 #sidebar
+  z-index: 100
   #room
     div
       &.header

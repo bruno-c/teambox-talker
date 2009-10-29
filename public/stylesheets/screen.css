@@ -477,7 +477,7 @@ a.button {
   width: 100%;
   margin: 0 240px 0 0; }
   #top_mask div.fade {
-    z-index: 5;
+    z-index: 4;
     height: 40px;
     background: #e5e5e5;
     box-shadow: 0px 20px 20px #e5e5e5;
@@ -751,27 +751,29 @@ div.panel {
     margin: 30px auto;
     width: 300px; }
 
-#sidebar #room div.header a.leave {
-  background-image: url('../../images/icons/door.png');
-  background-repeat: no-repeat;
-  background-position: 3px center;
-  padding: 0 5px 0 21px; }
-#sidebar #room div.content ul.people {
-  margin: 0 0 -5px; }
-  #sidebar #room div.content ul.people li {
-    display: block;
-    margin: 0 0 5px;
-    padding: 2px 5px;
-    background: #f4f4f4;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    font-size: 12px; }
-    #sidebar #room div.content ul.people li img {
-      height: 16px;
-      width: 16px;
-      position: relative;
-      top: 3px; }
+#sidebar {
+  z-index: 100; }
+  #sidebar #room div.header a.leave {
+    background-image: url('../../images/icons/door.png');
+    background-repeat: no-repeat;
+    background-position: 3px center;
+    padding: 0 5px 0 21px; }
+  #sidebar #room div.content ul.people {
+    margin: 0 0 -5px; }
+    #sidebar #room div.content ul.people li {
+      display: block;
+      margin: 0 0 5px;
+      padding: 2px 5px;
+      background: #f4f4f4;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      font-size: 12px; }
+      #sidebar #room div.content ul.people li img {
+        height: 16px;
+        width: 16px;
+        position: relative;
+        top: 3px; }
 
 #footer {
   margin-top: 30px;
