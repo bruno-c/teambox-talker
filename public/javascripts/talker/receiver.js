@@ -117,15 +117,6 @@ Receiver = {
             .html('<b><!----></b><i>' + FormatHelper.toHumanTime(data.time) + '</i>'))));
     
     element.appendTo('#log');
-    
-    // var element = $('<tr/>').addClass('timestamp')
-    //   .append($('<td/>')
-    //     .html(FormatHelper.toHumanDate(data.time)))
-    //   .append($('<td/>')
-    //     .append($('<p/>').attr('time', data.time)
-    //       .html(FormatHelper.toHumanTime(data.time))));
-    // 
-    // element.appendTo('#log');
   }
 }
 
