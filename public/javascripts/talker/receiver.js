@@ -6,7 +6,7 @@ Receiver = {
     if (data.type == null) return;
     
     if (typeof Receiver[data.type] == 'function'){
-      if ($.inArray(data.type, ['message', 'notice']) > -1 && $('#log p:last[time]').attr('time') - data.time < -(5 * 60)){
+      if ($.inArray(data.type, ['message', 'join', 'leave']) > -1 && $('#log p:last[time]').attr('time') - data.time < -(5 * 60)){
         Receiver.timestamp(data, replay);
       }
       Receiver[data.type](data, replay);
