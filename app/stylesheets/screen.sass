@@ -159,17 +159,52 @@ html[xmlns] .clearfix
 // Layout
 #content
   padding: 40px 0 0 0
-#main
-  margin: 0 240px 0 0
-  padding: 40px
-  &.no-sidebar
-    margin: 0
+  #sidebar
+    #room
+      div
+        &.header
+          a.leave
+            background-image: url('../../images/icons/door.png')
+            background-repeat: no-repeat
+            background-position: 3px center
+            padding: 0 5px 0 21px
+        &.content
+          ul.people
+            margin: 0 0 -5px
+            li
+              display: block
+              margin: 0 0 5px
+              padding: 2px 5px
+              background = !light_grey * 0.15 + !white * 0.85
+              +rounded_corners("all", 3)
+              +font_size("small")
+              img
+                height: 16px
+                width: 16px
+                position: relative
+                top: 3px
+
 #sidebar
   position: fixed
   right: 0
   float: right
   width: 200px
   padding: 40px 40px 40px 0
+
+#main
+  margin: 0 240px 0 0
+  padding: 40px
+  &.no-sidebar
+    margin: 0
+/*#sidebar
+  position: fixed
+  right: 0
+  float: right
+  width: 200px
+  padding: 40px 40px 40px 0
+*/
+
+
 
 // Rooms
 #rooms
@@ -179,7 +214,79 @@ html[xmlns] .clearfix
     width: 280px
     margin: 0 10px 10px 0
     float: left
-    div.panel
+
+
+div.panel
+  margin: 0 0 20px
+  +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
+  div
+    &.header
+      +rounded_corners("top", 3)
+      background = !dark_grey
+      padding: 5px 10px
+      border-bottom = 1px solid !light_grey
+      position: relative
+      span.actions
+        float: right
+        +font_size("tiny")
+        +opacity(66)
+        a
+          display: inline-block
+          height: 20px
+          line-height: 20px
+          padding: 0 3px
+          +rounded_corners("all", 3)
+          background = !grey * 0.5 + !dark_grey * 0.5
+          color = !white
+          text-decoration: none
+          &:hover
+            background = !accent_colour
+      h3
+        margin: 0
+        color = !white
+        +font_size("xlarge")
+        a
+          color: inherit
+      small
+        display: block
+        color = !light_grey
+        +font_size("small")
+      &:hover
+        span.actions
+          +opacity(100)
+
+    &.content
+      background = !white
+      padding: 7px 10px 9px
+      border-top = 2px solid !light_grey * 0.1 + !white * 0.9
+      border-bottom = 1px solid !light_grey * 0.33 + !white * 0.66
+      p
+        margin: 0 0 0.66em
+      ol
+        margin-left: 20px
+      h4
+        +font_size("large")
+    &.footer
+      text-align: right
+      +font_size("small")
+      padding: 3px 10px 5px
+      +rounded_corners("bottom", 3)
+      border-top = 2px solid !light_grey * 0.2 + !white * 0.8
+      background = !light_grey * 0.1 + !white * 0.9
+  .tag
+    +font_size("small")
+    :background-color = !alt_colour
+    :color = !white
+    :padding 2px 4px
+    :position relative
+    :top 5px
+    +rounded_corners("all", 3)
+  &.dialog
+    margin: 30px auto
+    width: 300px
+
+
+/*    div.panel
       div
         &.content
           min-height: 40px
@@ -192,7 +299,7 @@ html[xmlns] .clearfix
                 width: 16px
                 position: relative
                 top: 3px
-
+*/
 // Form Elements
 form
   p
@@ -322,7 +429,7 @@ a.button
     background-image: url(/images/icons/tick.png)
 
 // Sidebar Action Buttons
-#sidebar
+/*#sidebar
   #actions
     a.button
       +font_size("xlarge")
@@ -330,7 +437,7 @@ a.button
       line-height: 1
       height: auto
       padding: 10px 15px 10px 36px
-      background-position: 15px center
+      background-position: 15px center*/
 
 // People
 #people

@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(:version => 20091028191905) do
     t.datetime "updated_at"
   end
 
+  add_index "pastes", ["permalink"], :name => "index_pastes_on_permalink", :unique => true
+
   create_table "rooms", :force => true do |t|
     t.string   "name"
     t.text     "description"

@@ -61,12 +61,12 @@
   <div id="room" class="panel">
     <div class="header">
       <span class="actions">
-        <%= link_to "Leave", rooms_path, :title => "Leave this room", :id => "leave" %>
+        <%= link_to "Leave", rooms_path, :title => "Leave this room", :id => "leave", :class => "leave" %>
       </span>
       <h3><%=h @room.name %></h3>
+      <small><%=h @room.description %></small>
     </div>
     <div class="content">
-      <p><%=h @room.description %></p>
       <h4>Who&#39;s here?</h4>
       <ul class="people" id="people">
         <%= render :partial => "user", :collection => @room.users %>
