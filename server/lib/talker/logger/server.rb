@@ -11,6 +11,7 @@ module Talker
       
       def initialize(options={})
         EventedMysql.settings.update options
+        EventedMysql.settings.update :encoding => ENCODING
         @queue = Queues.logger
         @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name, self) }
       end
@@ -24,24 +25,10 @@ module Talker
       end
     
       def start
+        Talker.logger.info "Pool of #{db.connection_pool.size} connections"
         Talker.logger.info "Logging to #{options[:database]}@#{options[:host]}"
         
-        configure { subscribe }
-      end
-      
-      def configure
-        connections = options[:connections]
-        connections_configured = 0
-        
-        Talker.logger.info "Configuring #{connections} connections"
-        connections.times do
-          db.raw "SET NAMES '#{ENCODING}'" do
-            connections_configured += 1
-            if connections_configured == connections
-              yield
-            end
-          end
-        end
+        subscribe
       end
       
       def subscribe
