@@ -96,7 +96,7 @@ Receiver = {
             .append($('<blockquote/>')
               .append($('<p/>').attr('time', data.time)
                 .html(data.content))));
-
+      
       element.appendTo('#log');
     }
   },
@@ -116,7 +116,7 @@ Receiver = {
         .append($('<div/>')
           .append($('<span/>').addClass('marker').attr('time', data.time)
             .html('<b><!----></b><i>' + FormatHelper.toHumanTime(data.time) + '</i>'))));
-    
+
     element.appendTo('#log');
   }
 }

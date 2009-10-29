@@ -35,7 +35,7 @@ $(function() {
         e.preventDefault();
         break;
       default:
-        document.getElementById('msgbox').focus();
+        $('#msgbox').focus();
         break;
     }
   });
@@ -75,14 +75,18 @@ var ChatRoom = {
       ChatRoom.scroller.scrollToBottom();
     } else if ($('#msgbox').val().indexOf('/msg') == 0) {
       var msgbox = document.getElementById('msgbox');
-      setCaretTo(msgbox, 5);
-      insertAtCaret(msgbox, "unrecognizable user name ");
-      setCaretTo(msgbox, 5, 29);
+      if (msgbox){
+        setCaretTo(msgbox, 5);
+        insertAtCaret(msgbox, "unrecognizable user name ");
+        setCaretTo(msgbox, 5, 29);
+      }
     } else if ($('#msgbox').val().indexOf('/') == 0){
       var msgbox = document.getElementById('msgbox');
-      setCaretTo(msgbox, 1);
-      insertAtCaret(msgbox, "unrecognizable command ");
-      setCaretTo(msgbox, 1, 23);
+      if (msgbox){
+        setCaretTo(msgbox, 1);
+        insertAtCaret(msgbox, "unrecognizable command ");
+        setCaretTo(msgbox, 1, 23);
+      }
     }else {
       ChatRoom.send();
     }
@@ -98,11 +102,11 @@ var ChatRoom = {
   align: function() {
     ChatRoom.scroller.scrollToBottom();
     var msgbox = document.getElementById('msgbox'); // old school
-    var position = msgbox.value.length;
-    
-    setCaretTo(msgbox, position);
-    
-    document.getElementById('msgbox').focus();
+    if (msgbox){
+      var position = msgbox.value.length;
+      setCaretTo(msgbox, position);
+      document.getElementById('msgbox').focus();      
+    }
   },
   
   formatMessage: function(content) {
