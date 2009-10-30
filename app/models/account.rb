@@ -12,6 +12,8 @@ class Account < ActiveRecord::Base
   attr_accessor :invitation_code
   validate_on_update { |a| a.errors.add(:invitation_code, "is invalid") unless a.invitation_code == INVITATION_CODE }
   
+  after_create :create_default_rooms
+  
   # TODO determine if account have SSL depending on plan
   def ssl
     true
@@ -19,5 +21,9 @@ class Account < ActiveRecord::Base
   
   def utc_offset
     ActiveSupport::TimeZone[time_zone].utc_offset
+  end
+  
+  def create_default_rooms
+    rooms.create :name => "Lobby", :description => "Chat about the weather and the color of your socks."
   end
 end

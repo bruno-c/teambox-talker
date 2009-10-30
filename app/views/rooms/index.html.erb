@@ -11,6 +11,12 @@
       </div>
       
       <div class="content">
+        <% if room.description %>
+          <p class="description">
+            <%=h room.description %>
+          </p>
+        <% end %>
+        
         <p class="people">
           <label>Inside:</label>
           <% if room.users.empty? %>
