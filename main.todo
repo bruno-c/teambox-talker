@@ -1,6 +1,28 @@
-Rails app:
-✓ Allow logging in by email or user name
-✓ Implement "Forgot my password"
+- Integrate design [G/M]
+- Edit room [MA]
+- Package Prism [MA]
+- Package Fluid [MA]
+- Deal w/ conn. errors [G]
+✓ Fix chat logs [G]
+- Design signup [M]
+✓ UTF8 in message [M]
+- Default room on signup [M]
+- Autocomplete (@, /msg) [G]
+- /invite, /me, /msg [G]
+- Add "action" event [M]
+- Growl notification [G]
+- Fix search [G]
+
+Exclusive must haves:
+- Import campfire logs
+- Typing user state
+- Exclusive alerts by keywords / username
+- Avatar (using Gravatar)
+- Hide join/leaves
+- REST API
+- Interactive pastes
+
+After beta:
 - Review invitation process
   - Change name in room
   - Invite link go directly in room
@@ -8,22 +30,11 @@ Rails app:
 - Review signup process
   - Create default rooms
 - Create landing page
-- Send message to a room using REST API
+- Add support for Flash sockets in Orbited
 
 API:
 - Create Ruby Talker client gem talker.rb
 - Create Python Talker client package talker.py
-
-Desktop client:
-✓ Build Prism app
-- Add Growl notification
-
-Exclusive features:
-- Import Campfire logs (using tinder)
-- Add support for Flash sockets in Orbited
-- Interactive pastes
-- "Braistorming mode" or room type
-- Exclusive alerts by keyword/username
 
 Crazy Ideas:
 - Give each user a color for messages background (and highlight conversation w/ that @user w/ that color)
