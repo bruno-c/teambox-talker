@@ -4,7 +4,7 @@
 - Package Fluid [MA]
 - Deal w/ conn. errors [G]
 ✓ Fix chat logs [G]
-- Design signup [M]
+✓ Design signup [M]
 ✓ UTF8 in message [M]
 - Default room on signup [M]
 - Autocomplete (@, /msg) [G]
