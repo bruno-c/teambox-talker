@@ -25,7 +25,7 @@ module AccountSupport
     
     def top_level_domain_required
       if current_account?
-        redirect_to home_url(current_account)
+        redirect_to :host => request.domain + request.port_string
       end
     end
 end
