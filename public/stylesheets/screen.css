@@ -305,6 +305,8 @@ form input[type=text], form input[type=password] {
   margin: 0; }
 form textarea, form select {
   font-size: 14px; }
+form textarea.wide {
+  width: 100%; }
 form fieldset {
   margin: 0 0 20px;
   padding: 0;
