@@ -27,7 +27,7 @@ class LogsControllerTest < ActionController::TestCase
   end
   
   def test_search_in_room
-    Event.expects(:search).with("test", :with => { :room_id => @room.id }).returns([])
+    Event.expects(:search).with("test", :order => :created_at, :sort_mode => :desc, :with => { :room_id => @room.id }).returns([])
 
     get :search, :room_id => @room, :q => "test"
 
@@ -37,7 +37,7 @@ class LogsControllerTest < ActionController::TestCase
   end
   
   def test_search_in_rooms
-    Event.expects(:search).with("test", :with => { :account_id => @room.account_id }).returns([])
+    Event.expects(:search).with("test", :order => :created_at, :sort_mode => :desc, :with => { :account_id => @room.account_id }).returns([])
 
     get :search, :q => "test"
 
