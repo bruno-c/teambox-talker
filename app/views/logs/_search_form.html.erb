@@ -1,5 +1,5 @@
 <% form_tag @room ? search_room_path(@room) : search_path, :method => :get, :class => "search_form" do %>
   <p>
-    <%= text_field_tag :q, @query, :id => "search", :type => "search", :results => 5, :placeholder => "Search chat logs ..." %>
+    <%= text_field_tag :q, @query, :class => "search", :type => "search", :results => 5, :placeholder => "Search chat logs ..." %>
   </p>
 <% end %>

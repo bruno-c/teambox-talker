@@ -35,11 +35,11 @@ $(function() {
         e.preventDefault();
         break;
       default:
-        $('#msgbox').focus();
+        ChatRoom.align();
         break;
     }
   });
-  $('#search').keydown(function(e){
+  $('input.search').keydown(function(e){
     e.stopPropagation()
   });
 });
