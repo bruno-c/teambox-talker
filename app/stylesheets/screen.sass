@@ -174,7 +174,7 @@ html[xmlns] .clearfix
     padding: 40px
     +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
   &.dialog
-    margin: 30px auto
+    margin: 0 auto
     width: 500px
 #sidebar
   position: fixed
@@ -182,6 +182,11 @@ html[xmlns] .clearfix
   float: right
   width: 195px
   padding: 37px 37px 37px 0
+
+// Page specific layout fixes
+#accounts_controller.new
+  #content
+    padding-top: 0
 
 // Rooms
 #rooms
@@ -231,6 +236,7 @@ form
       display: inline
       float: none
       font-weight: normal
+      margin: 0
   input[type=text], input[type=password], textarea
     background = !white
     +font_size("medium")
@@ -249,7 +255,8 @@ form
     margin: 0 0 20px
     padding: 0
     border: none
-  .fieldWithErrors
+  div.fieldWithErrors
+    display: inline
     input, textarea
       border-color = !colour_negative
   &.lw40
@@ -701,10 +708,12 @@ div.panel
               top: 3px
 
 #footer
-  margin-top: 30px
+  margin: 30px 0 10px 0
   +font_size("tiny")
   text-align: center
   color = !grey
+  a
+    color = !accent_colour * 0.5 + !light_grey * 0.5
 
 // Flash Messages
 div.flash
@@ -743,11 +752,11 @@ div.flash
 
 div.info
   margin: 0 0 1.5em
-  color = !black
+  color = !accent_colour * 0.4
   padding: 10px 10px 10px 33px
   +rounded_corners("all", 3)
-  +font_size("medium")
+  +font_size("small")
   line-height: normal
-  background = !accent_colour * 0.2 + !white * 0.8 url(../../images/icons/information.png) "no-repeat" 10px 10px
+  background = !accent_colour * 0.2 + !white * 0.8 url(/images/icons/information.png) "no-repeat" 10px 10px
   p
     margin-bottom: 4px

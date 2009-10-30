@@ -244,7 +244,7 @@ html[xmlns] .clearfix {
     -webkit-box-shadow: 1px 1px 2px #d2d2d2;
     -moz-box-shadow: 1px 1px 2px #d2d2d2; }
   #main.dialog {
-    margin: 30px auto;
+    margin: 0 auto;
     width: 500px; }
 
 #sidebar {
@@ -253,6 +253,9 @@ html[xmlns] .clearfix {
   float: right;
   width: 195px;
   padding: 37px 37px 37px 0; }
+
+#accounts_controller.new #content {
+  padding-top: 0; }
 
 #rooms {
   overflow: hidden; }
@@ -294,7 +297,8 @@ form label {
   form label.inline {
     display: inline;
     float: none;
-    font-weight: normal; }
+    font-weight: normal;
+    margin: 0; }
 form input[type=text], form input[type=password], form textarea {
   background: white;
   font-size: 14px;
@@ -313,8 +317,10 @@ form fieldset {
   margin: 0 0 20px;
   padding: 0;
   border: none; }
-form .fieldWithErrors input, form .fieldWithErrors textarea {
-  border-color: #924f6b; }
+form div.fieldWithErrors {
+  display: inline; }
+  form div.fieldWithErrors input, form div.fieldWithErrors textarea {
+    border-color: #924f6b; }
 form.lw40 label {
   width: 40px; }
   form.lw40 label.description {
@@ -779,10 +785,12 @@ div.panel {
         top: 3px; }
 
 #footer {
-  margin-top: 30px;
+  margin: 30px 0 10px 0;
   font-size: 10px;
   text-align: center;
   color: gray; }
+  #footer a {
+    color: #73afcb; }
 
 div.flash {
   margin: 0 0 1.5em;
@@ -825,13 +833,13 @@ div.flash {
 
 div.info {
   margin: 0 0 1.5em;
-  color: black;
+  color: #0f3f55;
   padding: 10px 10px 10px 33px;
   border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: normal;
-  background: #d3ebf6 url('../../images/icons/information.png') no-repeat 10px 10px; }
+  background: #d3ebf6 url('/images/icons/information.png') no-repeat 10px 10px; }
   div.info p {
     margin-bottom: 4px; }

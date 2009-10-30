@@ -1,7 +1,7 @@
 class AccountsController < ApplicationController
   before_filter :top_level_domain_required, :only => [:new, :create]
   
-  layout "root"
+  layout "dialog"
   
   def new
     @account = Account.new

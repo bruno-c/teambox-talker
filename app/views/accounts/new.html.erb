@@ -1,0 +1,61 @@
+<% @title = "Create an Account" %>
+
+<div class="sheet">
+  <h2>Create a Talker Account</h2>
+  
+  <% form_for @account, :url => register_path, :html => { :class => "lw120" } do |f| %>
+    <%= f.error_messages %>
+    <fieldset id="info">
+      <p>
+        <%= f.label :invitation_code %>
+        <%= f.text_field :invitation_code %>
+        <label class="description">Since we're in private beta for now, you'll need an invitation code to create an account. <%= mail_to "info@talkerapp.com", "Contact us" %> if you'd like to try Talker.</label>
+      </p>
+    </fieldset>
+    
+    <fieldset id="subdomain">
+      <h3>Account Information</h3>
+      <div class="info">
+        Choose your site address to host your chat rooms. This is where everyone in your group will go to chat.
+      </div>
+      <p>
+        <%= f.label :subdomain, "Address" %>
+        <%= f.label :subdomain, "http://", :class => "inline" %>
+        <%= f.text_field :subdomain, :size => 15 %>
+        <%= f.label :subdomain, ".talkerapp.com", :class => "inline" %>
+        <label class="description">You might enter your organization name here.</label>
+      </p>
+    </fieldset>
+    
+    <fieldset id="user">
+      <h3>Administrator User</h3>
+      <% fields_for @user do |uf| %>
+        <div class="info">
+          Create a master user account to invite other users and manage chat rooms.
+        </div>
+        <%= uf.error_messages %>
+        <p>
+          <%= uf.label :name %>
+          <%= uf.text_field :name, :size => 20 %>
+          <label class="description">This will be your user name when you chat.</label>
+        </p>
+        <p>
+          <%= uf.label :email %>
+          <%= uf.text_field :email %>
+        </p>
+        <p>
+          <%= uf.label :password %>
+          <%= uf.password_field :password, :size => 20 %>
+        </p>
+        <p>
+          <%= uf.label :password_confirmation, "Password again" %>
+          <%= uf.password_field :password_confirmation, :size => 20 %>
+        </p>
+      <% end %>
+    </fieldset>
+    
+    <p class="submit indent">
+      <%= ok_button "Start chatting now!" %>
+    </p>
+  <% end %>
+</div>
