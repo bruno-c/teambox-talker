@@ -77,19 +77,18 @@ Receiver = {
     var last_row    = $('#log tr:last');
     var last_author = last_row.attr('author');
     
+    
+    if (linkToLogs){
+      var url = '/rooms/' + data.room + '/logs/' + FormatHelper.getUrlDate(data.time) + '#' + data.time;
+      var link_to_log = $('<a/>').attr('href', url).addClass('logs').html('view in logs');
+    } else {
+      var link_to_log = '';
+    }
+    
     if (last_author == data.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !data.private){ // only append to existing blockquote group
       last_row.find('blockquote')
-        .append($('<p/>').attr('time', data.time).html(data.content));
+        .append($('<p/>').attr('time', data.time).html(data.content).append(link_to_log));
     } else {
-      console.info(linkToLogs);
-      if (linkToLogs){
-        var link_to_log = $('<a/>').addClass('logs').html('view in logs');
-      } else {
-        var link_to_log = $('<a/>');
-      }
-      
-      console.info(link_to_log);
-      
       var element = $('<tr/>')
         .attr('author', data.user.name)
         .addClass('received')
