@@ -23,7 +23,7 @@ $(function() {
 
   ChatRoom.notifier = new Notifier();
   
-  $(window).keydown(function(e){git
+  $(window).keydown(function(e){
     switch (e.which){
       case 224: // Cmd in FF
       case 91:  // Cmd in Safari
