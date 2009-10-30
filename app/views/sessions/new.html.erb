@@ -2,11 +2,11 @@
 
 <div class="sheet">
   <h2>Log in to <%=h possessive(current_account.subdomain.titleize) %> Talker account</h2>
-
+  
   <% form_tag session_path, :class => "lw120" do %>
     <p>
       <%= label_tag :email, 'Email or name' %>
-      <%= text_field_tag :email, @email %>
+      <%= text_field_tag :email, @email, :size => 30 %>
     </p>
     <p>
       <%= label_tag :password %>
