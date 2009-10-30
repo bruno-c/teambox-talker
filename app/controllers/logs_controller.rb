@@ -22,12 +22,12 @@ class LogsController < ApplicationController
     @query = params[:q]
     
     if @room
-      search_options = { :room_id => @room.id }
+      with = { :room_id => @room.id }
     else
-      search_options = { :account_id => current_account.id }
+      with = { :account_id => current_account.id }
     end
     
-    @events = Event.search @query, :with => search_options
+    @events = Event.search @query, :order => :created_at, :sort_mode => :desc, :with => with
   end
   
   def today

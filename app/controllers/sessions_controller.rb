@@ -2,7 +2,7 @@
 class SessionsController < ApplicationController
   before_filter :account_required, :except => :destroy
   
-  layout "blank"
+  layout "dialog"
   
   def new
   end

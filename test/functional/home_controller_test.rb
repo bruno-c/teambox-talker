@@ -6,9 +6,9 @@ class HomeControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  def test_index_from_subdomain
+  def test_index_from_subdomain_redirect_to_root_domain
     subdomain :master
     get :index
-    assert_redirected_to rooms_url(:host => "master.test.host")
+    assert_redirected_to :host => "test.host"
   end
 end
