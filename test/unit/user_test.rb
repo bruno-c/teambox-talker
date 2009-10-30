@@ -19,9 +19,9 @@ class UserTest < ActiveSupport::TestCase
     assert_equal users(:quentin), User.authenticate('quentin@example.com', 'new password')
   end
 
-  def test_should_deny_blank_password
+  def test_should_not_update_to_blank_password
     users(:quentin).update_attributes(:password => '', :password_confirmation => '')
-    assert !users(:quentin).valid?
+    assert_equal users(:quentin), User.authenticate('quentin@example.com', 'monkey')
   end
 
   def test_should_not_rehash_password
