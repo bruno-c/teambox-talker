@@ -22,10 +22,10 @@
         Receiver.push(this, true);
       });
       
-      resizePastes();
+      resizeLogElements();
       
       $(window).resize(function(e){
-        resizePastes();
+        resizeLogElements();
       });
     
       var timestamp = window.location.href.match(/#(\d+)/);
@@ -35,7 +35,6 @@
           $('p[time=' + timestamp[1] + ']').scrollToCenter({
             complete: function(){
               $('p[time=' + timestamp[1] + ']').css({border: '1px dashed grey'}).highlight();
-
             }
           });
         },10);

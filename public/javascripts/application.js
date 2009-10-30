@@ -18,11 +18,22 @@ if (typeof console == 'undefined'){
   console.info = console.debug = console.warn = function(){ };
 }
 
-function resizePastes(){
-  $('div pre').css('width', $('#chat_log').width() - $('#log tr td:first').width() - 41);
+function resizeLogElements(){
+  var maxWidth = $('#chat_log').width() - $('#log tr td:first').width() - 41;
+  
+  $('div pre').css('width', maxWidth);
+  
+  $('#log img').each(function(){
+    $(this).css({width: 'auto'});
+    
+    if ($(this).width() > maxWidth){
+      $(this).css({width: maxWidth + 'px'});
+    }
+    $(this).css('visibility', 'visible');
+  });
 }
 
-$(window).ready(resizePastes).resize(resizePastes);
+$(window).ready(resizeLogElements).resize(resizeLogElements);
 
 $(function() {
   $("#people input.admin, #people input.suspended").click(function () {

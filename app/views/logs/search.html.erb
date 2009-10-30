@@ -28,12 +28,6 @@ end
       $.each(<%= escape_json @events.to_json %>, function(){
         Receiver.push(this, true, true);
       });
-      
-      resizePastes();
-      
-      $(window).resize(function(e){
-        resizePastes();
-      });
     });
   //]]>
   </script>

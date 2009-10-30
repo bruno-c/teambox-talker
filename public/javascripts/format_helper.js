@@ -21,7 +21,7 @@ var FormatHelper = {
           + locator 
           + '" target="_blank"><img src="' 
           + locator 
-          + '" onload="ChatRoom.resizeImage(this, ' + (!!noScroll) + ')" style="visibility: hidden;" />'
+          + '" onload="resizeLogElements(); if ('+ (!!noScroll) +'){ ChatRoom.scroller.scrollToBottom() }" style="visibility: hidden;" />'
           + '</a>';
       });
     } else if (content.match(youtube_expression)){
