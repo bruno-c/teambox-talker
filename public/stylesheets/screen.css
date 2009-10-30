@@ -557,7 +557,7 @@ a.button {
       #chat_log table tr.me td.message blockquote {
         background: #faeede; }
       #chat_log table tr.timestamp td {
-        border-top: 1px dotted #dfdfdf;
+        border-top: 1px dotted #bfbfbf;
         height: 0;
         padding: 0; }
         #chat_log table tr.timestamp td div {
@@ -575,7 +575,7 @@ a.button {
               position: relative; }
             #chat_log table tr.timestamp td div span.marker i {
               display: block;
-              background-color: gray;
+              background-color: silver;
               background-repeat: no-repeat;
               background-position: 3px center;
               color: white;
@@ -615,7 +615,7 @@ a.button {
           margin: 0 0 0 -2px; }
           #chat_log table tr.timestamp td.time div span.marker b {
             float: left;
-            border-right: 5px solid gray;
+            border-right: 5px solid silver;
             border-left: none;
             top: 5px; }
           #chat_log table tr.timestamp td.time div span.marker i {
