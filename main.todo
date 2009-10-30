@@ -6,7 +6,7 @@
 ✓ Fix chat logs [G]
 ✓ Design signup [M]
 ✓ UTF8 in message [M]
-- Default room on signup [M]
+✓ Default room on signup [M]
 - Autocomplete (@, /msg) [G]
 - /invite, /me, /msg [G]
 - Add "action" event [M]

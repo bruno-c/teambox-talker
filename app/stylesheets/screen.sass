@@ -199,8 +199,10 @@ html[xmlns] .clearfix
     div.panel
       div
         &.content
-          min-height: 40px
+          min-height: 90px
           p
+            &.description
+              +font_size("small")
             &.people
               label
                 color = !grey

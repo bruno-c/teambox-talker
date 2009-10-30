@@ -265,7 +265,9 @@ html[xmlns] .clearfix {
     margin: 0 10px 10px 0;
     float: left; }
     #rooms li div.panel div.content {
-      min-height: 40px; }
+      min-height: 90px; }
+      #rooms li div.panel div.content p.description {
+        font-size: 12px; }
       #rooms li div.panel div.content p.people label {
         color: gray; }
       #rooms li div.panel div.content p.people img {
