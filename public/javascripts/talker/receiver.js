@@ -2,15 +2,15 @@
 // 2) Updates list of users in the chat room..
 Receiver = {
   // handles all incoming messages in a triage fashion eventually becoming an insertion in the log
-  push: function(data, replay, index) {
+  push: function(data, replay, linkToLogs) {
     if (data.type == null) return;
     
     if (typeof Receiver[data.type] == 'function'){
       var lastTime = $('#log p:last[time]').attr('time');
       if ($.inArray(data.type, ['message', 'join', 'leave']) > -1 && lastTime - data.time < -(5 * 60)){
-        Receiver.timestamp(data.time, lastTime);
+        Receiver.timestamp(data.time, lastTime, linkToLogs);
       }
-      Receiver[data.type](data, replay);
+      Receiver[data.type](data, replay, linkToLogs);
       if (!replay) {
         ChatRoom.scroller.scrollToBottom();
         resizePastes();
@@ -66,7 +66,7 @@ Receiver = {
     $("#user_" + data.user.id).css('opacity', 0.5).addClass('idle');
   },
   
-  message: function(data, replay, index) {
+  message: function(data, replay, linkToLogs) {
     // format content appropriately
     if (data.paste && data.paste != 'null'){
       data.content = FormatHelper.formatPaste(data);
@@ -81,6 +81,15 @@ Receiver = {
       last_row.find('blockquote')
         .append($('<p/>').attr('time', data.time).html(data.content));
     } else {
+      console.info(linkToLogs);
+      if (linkToLogs){
+        var link_to_log = $('<a/>').addClass('logs').html('view in logs');
+      } else {
+        var link_to_log = $('<a/>');
+      }
+      
+      console.info(link_to_log);
+      
       var element = $('<tr/>')
         .attr('author', data.user.name)
         .addClass('received')
@@ -88,6 +97,7 @@ Receiver = {
         .addClass('user_' + data.user.id)
         .addClass('event')
         .addClass(data.user.id == currentUser.id ? 'me' : '')
+        .addClass(linkToLogs ? 'logs' : '')
         .addClass(data.private ? 'private' : '')
           .append($('<td/>').addClass('author')
             .append('\n' + data.user.name + '\n')
@@ -96,14 +106,14 @@ Receiver = {
           .append($('<td/>').addClass('message')
             .append($('<blockquote/>')
               .append($('<p/>').attr('time', data.time)
-                .html(data.content))));
+                .html(data.content).append(link_to_log))));
       
       element.appendTo('#log');
     }
   },
   
-  timestamp: function(time, lastTime) {
-    var element = $('<tr/>').addClass('timestamp');
+  timestamp: function(time, lastTime, linkToLogs) {
+    var element = $('<tr/>').addClass('timestamp').addClass(linkToLogs ? 'logs' : '');
     
     var date = FormatHelper.timestamp2date(time);
     var lastDate = FormatHelper.timestamp2date(lastTime);

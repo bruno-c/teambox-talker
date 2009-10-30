@@ -642,6 +642,22 @@ a.button {
       #chat_log table tr.private.me td.message blockquote {
         background: #fcf6ee;
         border: 2px dotted #f8e4c9; }
+      #chat_log table tr.logs td {
+        padding-bottom: 15px; }
+        #chat_log table tr.logs td a.logs {
+          float: right;
+          background: #606060;
+          background-image: url('../../images/icons/calendar--arrow.png');
+          background-repeat: no-repeat;
+          background-position: 3px center;
+          padding: 0 5px 0 21px;
+          height: 20px;
+          line-height: 20px;
+          border-radius: 3px;
+          -moz-border-radius: 3px;
+          -webkit-border-radius: 3px;
+          color: white;
+          text-decoration: none; }
 
 #message_form {
   position: fixed;
