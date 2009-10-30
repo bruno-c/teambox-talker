@@ -75,7 +75,8 @@ var FormatHelper = {
   },
   
   timestamp2date: function(timestamp){
-    return new Date(timestamp * 1000);
+    if (timestamp) return new Date(timestamp * 1000);
+    return null;
   },
   
   getMonth: function(timestamp){

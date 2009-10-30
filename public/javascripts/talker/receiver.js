@@ -6,8 +6,9 @@ Receiver = {
     if (data.type == null) return;
     
     if (typeof Receiver[data.type] == 'function'){
-      if ($.inArray(data.type, ['message', 'join', 'leave']) > -1 && $('#log p:last[time]').attr('time') - data.time < -(5 * 60)){
-        Receiver.timestamp(data, replay);
+      var lastTime = $('#log p:last[time]').attr('time');
+      if ($.inArray(data.type, ['message', 'join', 'leave']) > -1 && lastTime - data.time < -(5 * 60)){
+        Receiver.timestamp(data.time, lastTime);
       }
       Receiver[data.type](data, replay);
       if (!replay) {
@@ -101,22 +102,42 @@ Receiver = {
     }
   },
   
-  timestamp: function(data, replay){
-    var element = $('<tr/>').addClass('timestamp')
-      .append($('<td/>').addClass('date')
-        .append($('<div/>')
-          .append($('<span/>').addClass('marker').html(
-            '<b><!----></b><i><span class="date">' 
-              + FormatHelper.getDate(data.time)
-            + '</span><span class="month">'
-              + FormatHelper.getMonth(data.time)
-            + '</span></i>'
-          ))))
+  timestamp: function(time, lastTime) {
+    var element = $('<tr/>').addClass('timestamp');
+    
+    var date = FormatHelper.timestamp2date(time);
+    var lastDate = FormatHelper.timestamp2date(lastTime);
+    
+    // Only show date if diff from last one
+    if (lastDate == null || (date.getFullYear() != lastDate.getFullYear() ||
+                             date.getMonth() != lastDate.getMonth() ||
+                             date.getDate() != lastDate.getDate())
+        ) {
+      element
+        .append($('<td/>').addClass('date')
+          .append($('<div/>')
+            .append($('<span/>').addClass('marker').html(
+              '<b><!----></b><i><span class="date">' 
+                + FormatHelper.getDate(time)
+              + '</span><span class="month">'
+                + FormatHelper.getMonth(time)
+              + '</span></i>')
+            )
+          )
+        );
+    } else {
+      element.append($('<td/>'));
+    }
+    
+    element
       .append($('<td/>').addClass('time')
         .append($('<div/>')
-          .append($('<span/>').addClass('marker').attr('time', data.time)
-            .html('<b><!----></b><i>' + FormatHelper.toHumanTime(data.time) + '</i>'))));
-
+          .append($('<span/>').addClass('marker').attr('time', time)
+            .html('<b><!----></b><i>' + FormatHelper.toHumanTime(time) + '</i>')
+          )
+        )
+      );
+    
     element.appendTo('#log');
   }
 }
