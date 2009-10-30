@@ -2,7 +2,7 @@
 
   <h2><%= @title = "My Settings" %></h2>
 
-  <% form_for @user, :url => settings_path, :html => { :class => "lw120" } do |f| %>
+  <% form_for @user, :url => settings_path, :html => { :class => "lw40" } do |f| %>
 
     <%= f.error_messages %>
 
@@ -17,7 +17,7 @@
         <%= f.text_field :email %>
       </p>
       <p class="indent submit">
-        <%= submit_button "Update", :class => "icon ok" %>
+        <%= ok_button "Update" %>
       </p>
     </fieldset>
 
@@ -32,7 +32,7 @@
         <%= f.password_field :password_confirmation %>
       </p>
       <p class="indent submit">
-        <%= submit_button "Change password", :class => "icon ok" %>
+        <%= ok_button "Change password" %>
       </p>
     </fieldset>
 

@@ -173,8 +173,9 @@ html[xmlns] .clearfix
     background = !white
     padding: 40px
     +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
-  &.no-sidebar
-    margin: 0
+  &.dialog
+    margin: 30px auto
+    width: 500px
 #sidebar
   position: fixed
   right: 0
@@ -230,16 +231,17 @@ form
       display: inline
       float: none
       font-weight: normal
-  input[type=text], input[type=password]
+  input[type=text], input[type=password], textarea
     background = !white
     +font_size("medium")
     padding: 5px 3px 0
-    height: 21px
     border = 1px "solid" !white * 0.9 + !black * 0.1
     border-top = 1px "solid" !white * 0.75 + !black * 0.25
     border-left = 1px "solid" !white * 0.75 + !black * 0.25
     margin: 0
-  textarea, select
+  input[type=text], input[type=password]
+    height: 21px
+  select
     +font_size("medium")
   textarea.wide
     width: 100%
@@ -247,6 +249,9 @@ form
     margin: 0 0 20px
     padding: 0
     border: none
+  .fieldWithErrors
+    input, textarea
+      border-color = !colour_negative
   &.lw40
     label
       width: 40px
@@ -667,9 +672,6 @@ div.panel
     :position relative
     :top 5px
     +rounded_corners("all", 3)
-  &.dialog
-    margin: 30px auto
-    width: 300px
 
 // Room Sidebar
 #sidebar
@@ -712,9 +714,9 @@ div.flash
   +rounded_corners("all", 3)
   line-height: normal
 #flash_error
-  background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url(../../images/icons/exclamation-red-frame.png) "no-repeat" 10px "center"
+  background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/icons/exclamation-red.png") "no-repeat" 10px "center"
 #flash_notice
-  background = (!accent_colour * 0.25 + !blue * 0.75) * 0.25 + !white * 0.75 url(../../images/icons/information-frame.png) "no-repeat" 10px "center"
+  background = (!accent_colour * 0.25 + !blue * 0.75) * 0.25 + !white * 0.75 url("/images/icons/information.png") "no-repeat" 10px "center"
 
 // Error Explananation
 #errorExplanation
@@ -723,7 +725,7 @@ div.flash
   +rounded_corners("all", 3)
   margin: 0 0 20px
   color = !black
-  background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url(../../images/icons/exclamation-red-frame.png) "no-repeat" 10px 10px
+  background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/icons/exclamation-red.png") "no-repeat" 10px 10px
   h2
     +font_size("medium")
     margin: 0
@@ -738,3 +740,14 @@ div.flash
       background: url('../../images/icons/exclamation-small-red.png') no-repeat left center
       padding-left: 21px
       list-style: none
+
+div.info
+  margin: 0 0 1.5em
+  color = !black
+  padding: 10px 10px 10px 33px
+  +rounded_corners("all", 3)
+  +font_size("medium")
+  line-height: normal
+  background = !accent_colour * 0.2 + !white * 0.8 url(../../images/icons/information.png) "no-repeat" 10px 10px
+  p
+    margin-bottom: 4px

@@ -243,8 +243,9 @@ html[xmlns] .clearfix {
     box-shadow: 1px 1px 2px #d2d2d2;
     -webkit-box-shadow: 1px 1px 2px #d2d2d2;
     -moz-box-shadow: 1px 1px 2px #d2d2d2; }
-  #main.no-sidebar {
-    margin: 0; }
+  #main.dialog {
+    margin: 30px auto;
+    width: 500px; }
 
 #sidebar {
   position: fixed;
@@ -294,16 +295,17 @@ form label {
     display: inline;
     float: none;
     font-weight: normal; }
-form input[type=text], form input[type=password] {
+form input[type=text], form input[type=password], form textarea {
   background: white;
   font-size: 14px;
   padding: 5px 3px 0;
-  height: 21px;
   border: 1px solid #e5e5e5;
   border-top: 1px solid #bfbfbf;
   border-left: 1px solid #bfbfbf;
   margin: 0; }
-form textarea, form select {
+form input[type=text], form input[type=password] {
+  height: 21px; }
+form select {
   font-size: 14px; }
 form textarea.wide {
   width: 100%; }
@@ -311,6 +313,8 @@ form fieldset {
   margin: 0 0 20px;
   padding: 0;
   border: none; }
+form .fieldWithErrors input, form .fieldWithErrors textarea {
+  border-color: #924f6b; }
 form.lw40 label {
   width: 40px; }
   form.lw40 label.description {
@@ -749,9 +753,6 @@ div.panel {
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px; }
-  div.panel.dialog {
-    margin: 30px auto;
-    width: 300px; }
 
 #sidebar {
   z-index: 100; }
@@ -793,10 +794,10 @@ div.flash {
   line-height: normal; }
 
 #flash_error {
-  background: #f1c8cc url('../../images/icons/exclamation-red-frame.png') no-repeat 10px center; }
+  background: #f1c8cc url('/images/icons/exclamation-red.png') no-repeat 10px center; }
 
 #flash_notice {
-  background: #c1c8fc url('../../images/icons/information-frame.png') no-repeat 10px center; }
+  background: #c1c8fc url('/images/icons/information.png') no-repeat 10px center; }
 
 #errorExplanation {
   color: black;
@@ -806,7 +807,7 @@ div.flash {
   -webkit-border-radius: 3px;
   margin: 0 0 20px;
   color: black;
-  background: #f1c8cc url('../../images/icons/exclamation-red-frame.png') no-repeat 10px 10px; }
+  background: #f1c8cc url('/images/icons/exclamation-red.png') no-repeat 10px 10px; }
   #errorExplanation h2 {
     font-size: 14px;
     margin: 0; }
@@ -821,3 +822,16 @@ div.flash {
       background: url('../../images/icons/exclamation-small-red.png') no-repeat left center;
       padding-left: 21px;
       list-style: none; }
+
+div.info {
+  margin: 0 0 1.5em;
+  color: black;
+  padding: 10px 10px 10px 33px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  font-size: 14px;
+  line-height: normal;
+  background: #d3ebf6 url('../../images/icons/information.png') no-repeat 10px 10px; }
+  div.info p {
+    margin-bottom: 4px; }

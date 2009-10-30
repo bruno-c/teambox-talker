@@ -8,9 +8,9 @@
       <%= text_area_tag :invitees, params[:invitees], :class => "wide", :rows => 10 %>
     </p>
     <p>
-      <%= submit_button "Send Invites", :class => "neutral icon send-email" %>
+      <%= submit_button "Send Invites", :class => "icon send-email" %>
       or
-      <%= link_to "Cancel", users_path, :class => "button negative icon cancel" %>
+      <%= cancel_button users_path %>
     </p>
   <% end %>
 

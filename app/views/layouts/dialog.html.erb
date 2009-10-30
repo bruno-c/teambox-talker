@@ -13,7 +13,7 @@
 <body id="<%= @controller.controller_name %>_controller" class="<%= current_view %>">
 
   <div id="content">
-    <div id="main" class="no-sidebar">
+    <div id="main" class="dialog">
       <%- flash.each do |name, message| -%>
         <div id="flash_<%= name %>" class="flash">
           <%= message %>

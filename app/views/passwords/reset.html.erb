@@ -1,18 +1,25 @@
-<div class="panel dialog">
-  <div class="header">
-    <h3><%=h @title = "Reset Your Password" %></h3>
+<div class="sheet">
+  <h2><%=h @title = "Reset Your Password" %></h2>
+  
+  <div class="info">
+    <p>
+      Enter your email address and if it matches the email of a user in this account we'll send
+      you an email with a link to reset your password.
+    </p>
+    <p>
+      The password wont be sent in clear text in the email, don't worry.
+    </p>
   </div>
-  <div class="content">
-    <% form_tag password_path do %>
-      <p>
-        <%= label_tag :email %>
-        <%= text_field_tag :email, @email, :size => 30 %>
-      </p>
-      <p>
-        <%= submit_button 'Send reset link', :class => "icon send-email" %>
-        or
-        <%= link_to "Login", login_path %>
-      </p>
-    <% end %>
-  </div>
+  
+  <% form_tag password_path, :class => "lw80" do %>
+    <p>
+      <%= label_tag :email %>
+      <%= text_field_tag :email, @email, :size => 30 %>
+    </p>
+    <p class="submit indent">
+      <%= submit_button 'Send reset link', :class => "icon send-email" %>
+      or
+      <%= link_to "Go back to Login", login_path %>
+    </p>
+  <% end %>
 </div>
