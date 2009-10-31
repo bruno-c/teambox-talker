@@ -23,7 +23,7 @@ class LogsControllerTest < ActionController::TestCase
   def test_show
     get :show, :room_id => @room, :year => "2009", :month => "10", :day => "7"
     assert_response :success, @response.body
-    assert_equal Date.new(2009, 10, 7), assigns(:date)
+    assert_equal Time.zone.local(2009, 10, 7).to_datetime, assigns(:date)
   end
   
   def test_search_in_room

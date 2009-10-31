@@ -14,8 +14,8 @@ class LogsController < ApplicationController
   end
   
   def show
-    @date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-    @events = @room.events.on_date(@date)
+    @date = Time.zone.local(params[:year].to_i, params[:month].to_i, params[:day].to_i).to_datetime
+    @events = @room.events.on_date(@date).all(:include => :user)
   end
   
   def search

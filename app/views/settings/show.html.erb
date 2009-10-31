@@ -2,7 +2,7 @@
 
   <h2><%= @title = "My Settings" %></h2>
 
-  <% form_for @user, :url => settings_path, :html => { :class => "lw40" } do |f| %>
+  <% form_for @user, :url => settings_path, :html => { :class => "lw80" } do |f| %>
 
     <%= f.error_messages %>
 
@@ -15,6 +15,10 @@
       <p>
         <%= f.label :email %>
         <%= f.text_field :email %>
+      </p>
+      <p>
+        <%= f.label :time_zone %>
+        <%= f.time_zone_select :time_zone %>
       </p>
       <p class="indent submit">
         <%= ok_button "Update" %>

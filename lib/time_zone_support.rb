@@ -4,24 +4,24 @@ module TimeZoneSupport
   end
   
   protected
-    # Taken from http://techno-weenie.net/2008/2/6/timezone-awareness-in-rails
-    # The browsers give the # of minutes that a local time needs to add to
-    # make it UTC, while TimeZone expects offsets in seconds to add to 
-    # a UTC to make it local.
     def browser_time_zone
       return nil if cookies[:tzoffset].blank?
       min = cookies[:tzoffset].to_i
-      ActiveSupport::TimeZone[-min.minutes]
+      offset_seconds = -min.minutes
+      # Try to find the proper timezone taking into account DST
+      # taken from: http://spongetech.wordpress.com/2009/02/27/detecting-browser-time-zone-with-rails/#comment-725
+      ActiveSupport::TimeZone.all.find { |z| ((z.now.dst? && z.utc_offset == offset_seconds-3600) || (!z.now.dst? && z.utc_offset == offset_seconds)) && !["Arizona","Chihuahua","Mazatlan"].include?(z.name)}
     end
 
     def set_time_zone
-      @browser_time_zone = browser_time_zone
-      
-      if @browser_time_zone && current_account? && current_account.time_zone.nil?
-        logger.info "Setting time zone to #{@browser_time_zone.name}"
-        current_account.update_attribute(:time_zone, @browser_time_zone.name)
+      if logged_in?
+        if current_user.time_zone.nil? && time_zone = browser_time_zone
+          logger.info "Setting time zone to #{time_zone.name}"
+          current_user.update_attribute(:time_zone, time_zone.name)
+        end
+        Time.zone = current_user.time_zone
+      else
+        Time.zone = browser_time_zone
       end
-      
-      Time.zone = current_account? ? current_account.time_zone : @browser_time_zone
     end
 end

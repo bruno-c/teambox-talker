@@ -11,7 +11,9 @@ jQuery.fn.submitWithAjax = function(callback) {
 };
 
 // Pass timezone offset from the browser to backend using a magic cookie
-$.cookie("tzoffset", (new Date()).getTimezoneOffset());
+if (!$.cookie('timezone')) {
+  $.cookie("tzoffset", (new Date()).getTimezoneOffset());
+}
 
 if (typeof console == 'undefined'){
   console = {};

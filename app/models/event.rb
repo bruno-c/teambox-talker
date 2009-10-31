@@ -6,7 +6,7 @@ class Event < ActiveRecord::Base
   set_inheritance_column nil
   
   named_scope :recent, :limit => 25, :order => "id desc"
-  named_scope :on_date, proc { |date| { :conditions => ["DATE(created_at) = ?", date] } }
+  named_scope :on_date, proc { |date| { :conditions => ["created_at BETWEEN ? AND ?", date.beginning_of_day.utc, date.end_of_day.utc] } }
   
   define_index do
     # fields
@@ -27,7 +27,7 @@ class Event < ActiveRecord::Base
   end
   
   def paste
-    @paste ||= Paste.find_by_permalink(paste_permalink)
+    @paste ||= Paste.find_by_permalink(paste_permalink) if paste_permalink.present?
   end
   
   def notice?
@@ -41,7 +41,7 @@ class Event < ActiveRecord::Base
   def to_json(options = {})
     if message?
       { :time => created_at.to_i, :user => user, :type => type, :content => message, 
-        :paste => paste, :room => room.id }.to_json(options)
+        :paste => paste }.to_json(options)
     else # notice?
       { :time => created_at.to_i, :type => type, :content => message, :user => user }.to_json(options)
     end
