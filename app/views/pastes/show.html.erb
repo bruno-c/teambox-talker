@@ -1,0 +1,10 @@
+<% @title = "Paste #" + @paste.permalink %>
+
+<p>
+  Created
+  <span class="date"><%= time_ago_in_words @paste.created_at %></span>
+  ago by
+  <span class="user"><%=h @paste.user.name %></span>
+</p>
+
+<pre><code><%= @paste.content %></code></pre>
