@@ -1,0 +1,10 @@
+<% if @success %>
+  $("#edit_room").hide();
+  $("#room").
+    find(".errors").hide().end().
+    find(".name").html("<%=h @room.name %>").end().
+    find(".description").html("<%=h @room.description %>").end().
+    show();
+<% else %>
+  $("#edit_room .errors").show().html("<%= escape_javascript error_messages_for(:room) %>")
+<% end %>

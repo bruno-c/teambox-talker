@@ -4,7 +4,6 @@ Receiver = {
   // handles all incoming messages in a triage fashion eventually becoming an insertion in the log
   push: function(data, replay, linkToLogs) {
     if (data.type == null) return;
-    console.info(data);
     
     if (typeof Receiver[data.type] == 'function'){
       var lastTime = $('#log p:last[time]').attr('time');

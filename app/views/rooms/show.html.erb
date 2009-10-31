@@ -63,18 +63,33 @@
       <span class="actions">
         <%= link_to "Leave", rooms_path, :title => "Leave this room", :id => "leave", :class => "leave" %>
       </span>
-      <h3><%=h @room.name %></h3>
-      <small><%=h @room.description %></small>
+      <h3 class="name"><%=h @room.name %></h3>
     </div>
     <div class="content">
+      <p class="description"><%=h @room.description %></p>
       <h4>Who&#39;s here?</h4>
       <ul class="people" id="people">
         <%= render :partial => "user", :collection => @room.users %>
       </ul>
     </div>
     <div class="footer">
-      <%= link_to "Chat Logs", room_logs_path(@room), :title => "Chat Logs", :target => "_blank" %>
+      <%= link_to "Edit", room_path(@room), :title => "Edit room name &amp; description", :id => "edit" if admin? %>
+      <%= link_to "Chat Logs", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %>
     </div>
+  </div>
+  <div id="edit_room" class="edit panel" style="display:none">
+    <% form_for @room do |f| %>
+      <div class="errors" style="display:none"></div>
+      <div class="header">
+        <h3><%= f.text_field :name, :size => 15 %></h3>
+      </div>
+      <div class="content">
+        <p class="description"><%= f.text_area :description, :rows => 6 %></p>
+      </div>
+      <div class="footer">
+        <%= buttons "Save", :class => "small" %>
+      </div>
+    <% end %>
   </div>
 <% end %>
 

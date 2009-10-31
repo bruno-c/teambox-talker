@@ -295,7 +295,8 @@ form
       margin-left: 170px
 
 // Buttons
-a.button
+a.button, button
+  cursor: pointer
   display: inline-block
   +rounded_corners("all", 3)
   background = !button_colour_off
@@ -305,19 +306,17 @@ a.button
   text-decoration: none
   padding: 0 10px
   line-height: 27px
+  font: inherit
   +font_size("medium")
-  height: 26px
   +box_shadow(2, 2, 4, !light_grey * 0.5 + !white * 0.5)
   &:hover
     background = !button_colour_on
   &.large
     +font_size("xlarge")
     line-height = 31px
-    height: 29px
   &.small
     +font_size("small")
     line-height = 20px
-    height: 20px
   &.negative
     background = !colour_negative
     +emboss(!colour_negative * 0.75 + !black * 0.25)
@@ -702,13 +701,21 @@ div.panel
 #sidebar
   z-index: 100
   #room
+    .description
+      line-height: 14px
+      +font_size("small")
     div
       &.header
+        .actions
+          margin-top: 4px
         a.leave
           background-image: url('../../images/icons/door.png')
           background-repeat: no-repeat
           background-position: 3px center
           padding: 0 5px 0 21px
+      &.footer
+        a
+          margin-left: 4px
       &.content
         ul.people
           margin: 0 0 -5px
@@ -724,6 +731,12 @@ div.panel
               width: 16px
               position: relative
               top: 3px
+  #edit_room
+    input, textarea
+      font: inherit
+      line-height: normal
+    textarea
+      width: 90%
 
 #footer
   margin: 30px 0 10px 0

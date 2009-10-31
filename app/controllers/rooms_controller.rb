@@ -1,7 +1,8 @@
 class RoomsController < ApplicationController
   before_filter :login_required
   before_filter :account_required
-  before_filter :find_room, :only => [:show]
+  before_filter :admin_required, :only => :update
+  before_filter :find_room, :only => [:show, :update]
   
   def index
     @rooms = current_account.rooms
@@ -24,6 +25,11 @@ class RoomsController < ApplicationController
     else
       render :action => "new"
     end
+  end
+  
+  def update
+    @success = @room.update_attributes(params[:room])
+    respond_to :js
   end
   
   private

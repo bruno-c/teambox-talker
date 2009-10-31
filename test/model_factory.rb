@@ -8,7 +8,7 @@ module ModelFactory
   end
   
   def hash_for_room(attributes={})
-    { :name => 'Main' }.merge(attributes)
+    { :name => 'Awesome' }.merge(attributes)
   end
   
   def hash_for_event(attributes={})

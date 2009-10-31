@@ -39,7 +39,7 @@ $(function() {
         break;
     }
   });
-  $('input.search').keydown(function(e){
+  $('input.search, #edit_room form input, #edit_room form textarea').keydown(function(e){
     e.stopPropagation()
   });
 });

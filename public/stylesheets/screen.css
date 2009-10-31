@@ -352,7 +352,8 @@ form.lw160 label {
 form.lw160 p.indent {
   margin-left: 170px; }
 
-a.button {
+a.button, button {
+  cursor: pointer;
   display: inline-block;
   border-radius: 3px;
   -moz-border-radius: 3px;
@@ -364,22 +365,20 @@ a.button {
   text-decoration: none;
   padding: 0 10px;
   line-height: 27px;
+  font: inherit;
   font-size: 14px;
-  height: 26px;
   box-shadow: 2px 2px 4px #dfdfdf;
   -webkit-box-shadow: 2px 2px 4px #dfdfdf;
   -moz-box-shadow: 2px 2px 4px #dfdfdf; }
-  a.button:hover {
+  a.button:hover, button:hover {
     background: #228dbf; }
-  a.button.large {
+  a.button.large, button.large {
     font-size: 18px;
-    line-height: 31px;
-    height: 29px; }
-  a.button.small {
+    line-height: 31px; }
+  a.button.small, button.small {
     font-size: 12px;
-    line-height: 20px;
-    height: 20px; }
-  a.button.negative {
+    line-height: 20px; }
+  a.button.negative, button.negative {
     background: #924f6b;
     border-top-color: #b59ca7;
     border-left-color: #b59ca7;
@@ -389,11 +388,11 @@ a.button {
     filter: alpha(opacity=80);
     opacity: 0.8;
     -moz-opacity: 0.8; }
-    a.button.negative:hover {
+    a.button.negative:hover, button.negative:hover {
       filter: alpha(opacity=100);
       opacity: 1;
       -moz-opacity: 1; }
-  a.button.neutral, a.button.submit {
+  a.button.neutral, a.button.submit, button.neutral, button.submit {
     background: #f2f2f2;
     border-top-color: #bfbfbf;
     border-left-color: #bfbfbf;
@@ -404,34 +403,34 @@ a.button {
     filter: alpha(opacity=80);
     opacity: 0.8;
     -moz-opacity: 0.8; }
-    a.button.neutral:hover, a.button.submit:hover {
+    a.button.neutral:hover, a.button.submit:hover, button.neutral:hover, button.submit:hover {
       filter: alpha(opacity=100);
       opacity: 1;
       -moz-opacity: 1; }
-  a.button.add {
+  a.button.add, button.add {
     background-image: url('../../images/icons/plus-circle.png');
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
-  a.button.remove {
+  a.button.remove, button.remove {
     background-image: url('../../images/icons/minus-circle.png');
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
-  a.button.update {
+  a.button.update, button.update {
     background-image: url('../../images/icons/document--pencil.png');
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
-  a.button.icon {
+  a.button.icon, button.icon {
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
-  a.button.send-email {
+  a.button.send-email, button.send-email {
     background-image: url(/images/icons/mail--arrow.png); }
-  a.button.delete, a.button.cancel {
+  a.button.delete, a.button.cancel, button.delete, button.cancel {
     background-image: url(/images/icons/cross-circle.png); }
-  a.button.ok {
+  a.button.ok, button.ok {
     background-image: url(/images/icons/tick.png); }
 
 #sidebar #actions a.button {
@@ -780,11 +779,18 @@ div.panel {
 
 #sidebar {
   z-index: 100; }
+  #sidebar #room .description {
+    line-height: 14px;
+    font-size: 12px; }
+  #sidebar #room div.header .actions {
+    margin-top: 4px; }
   #sidebar #room div.header a.leave {
     background-image: url('../../images/icons/door.png');
     background-repeat: no-repeat;
     background-position: 3px center;
     padding: 0 5px 0 21px; }
+  #sidebar #room div.footer a {
+    margin-left: 4px; }
   #sidebar #room div.content ul.people {
     margin: 0 0 -5px; }
     #sidebar #room div.content ul.people li {
@@ -801,6 +807,11 @@ div.panel {
         width: 16px;
         position: relative;
         top: 3px; }
+  #sidebar #edit_room input, #sidebar #edit_room textarea {
+    font: inherit;
+    line-height: normal; }
+  #sidebar #edit_room textarea {
+    width: 90%; }
 
 #footer {
   margin: 30px 0 10px 0;

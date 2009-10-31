@@ -9,7 +9,7 @@
 ✓ Default room on signup [M]
 - Autocomplete (@, /msg) [G]
 - /invite, /me, /msg [G]
-- Add "action" event [M]
+- Add "action" event [M] (ensure it's saved in logger)
 - Growl notification [G]
 - Fix search [G]
 
