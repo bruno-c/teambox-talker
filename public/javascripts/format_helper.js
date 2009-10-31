@@ -27,9 +27,9 @@ var FormatHelper = {
     } else if (content.match(youtube_expression)){
       return content.replace(youtube_expression, function(locator){
         return locator.replace(youtube_expression, '<object width="425" height="355">'
-          + '<param name="movie" value="http://www.youtube.com/v/$1?rel=1&color1=0x2b405b&color2=0x6b8ab6&border=0&fs=1"></param>'
+          + '<param name="movie" value="http://www.youtube.com/v/$1"></param>'
           + '<param name="allowFullScreen" value="true"></param>'
-          + '<embed src="http://www.youtube.com/v/$1?rel=1&color1=0x2b405b&color2=0x6b8ab6&border=1&fs=1"'
+          + '<embed src="http://www.youtube.com/v/$1"'
           + ' type="application/x-shockwave-flash"'
           + '  width="425" height="355" '
           + '  allowfullscreen="true"></embed>'
