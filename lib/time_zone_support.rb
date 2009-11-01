@@ -10,7 +10,7 @@ module TimeZoneSupport
       offset_seconds = -min.minutes
       # Try to find the proper timezone taking into account DST
       # taken from: http://spongetech.wordpress.com/2009/02/27/detecting-browser-time-zone-with-rails/#comment-725
-      ActiveSupport::TimeZone.all.find { |z| ((z.now.dst? && z.utc_offset == offset_seconds-3600) || (!z.now.dst? && z.utc_offset == offset_seconds)) && !["Arizona","Chihuahua","Mazatlan"].include?(z.name)}
+      ActiveSupport::TimeZone.us_zones.find { |z| ((z.now.dst? && z.utc_offset == offset_seconds-3600) || (!z.now.dst? && z.utc_offset == offset_seconds)) && !["Arizona","Chihuahua","Mazatlan"].include?(z.name)}
     end
 
     def set_time_zone
