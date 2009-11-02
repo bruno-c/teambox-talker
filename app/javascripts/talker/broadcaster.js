@@ -32,3 +32,4 @@ _.each(Talker.Broadcaster.callbacks, function(callback){
 });
 
 Talker.plugins = Talker.Broadcaster.plugins;
+Talker.trigger = Talker.Broadcaster.broadcast;

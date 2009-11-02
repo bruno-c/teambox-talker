@@ -18,6 +18,7 @@
       
       Talker.plugins.push(new Talker.Timestamp());
       Talker.plugins.push(new Talker.Logger());
+      Talker.plugins.push(new Talker.Sender($("#msgbox")));
       
       client = new Talker.Client({
         host: '<%= Orbited.talker_host %>', 
