@@ -91,7 +91,7 @@ Talker.Client = function(options) {
     //     after we shutdown orbited.
     protocol.onclose = function() {
       self.reconnect = true;
-      options.onClose();
+      options.callbacks.onClose();
     }
     // TODO what should we do when there is a protocol error?
     protocol.onerror = function(error) { console.error(error); }

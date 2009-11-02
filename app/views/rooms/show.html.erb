@@ -35,6 +35,7 @@
       
       Talker.plugins.push(new Talker.UserList());
       Talker.plugins.push(new Talker.Scroller());
+      Talker.plugins.push(new Talker.MsgCommand());
       
       Talker.trigger("Loaded");
       
@@ -42,7 +43,7 @@
       $("a#leave").click(function() {
         Talker.client.close();
         var link = this;
-        client.options.onClose = function() {
+        Talker.client.options.callbacks.onClose = function() {
           window.location = link.href;
         }
         return false;

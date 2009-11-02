@@ -1,4 +1,4 @@
-Talker.users = {};
+Talker.users = [];
 
 Talker.UserList = function() {
   var self = this;
@@ -37,12 +37,12 @@ Talker.UserList = function() {
         
       presence.animate({opacity: 1.0}, 400);
     }
-    Talker.users[user.id] = user;
+    Talker.users.push(user);
   };
   
   self.remove = function(user) {
     $("#user_" + user.id).animate({opacity: 0.0}, 400, function(){ $(this).remove() });
-    delete Talker.users[user.id];
+    Talker.users = _.reject(Talker.users, function(u) { return u.id == user.id });
   };
 }
 
