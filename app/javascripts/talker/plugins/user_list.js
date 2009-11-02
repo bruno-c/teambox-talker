@@ -15,6 +15,15 @@ Talker.UserList = function() {
     });
   }
   
+  self.onIdle = function(event) {
+    $("#user_" + event.user.id).css('opacity', 0.5).addClass('idle');
+  };
+  
+  self.onBack = function(event) {
+    $("#user_" + event.user.id).css('opacity', 1.0).removeClass('idle');
+  };
+  
+  // private
   self.add = function(user) {
     if ($("#user_" + user.id).length < 1) {
       var presence = $('<li/>')
