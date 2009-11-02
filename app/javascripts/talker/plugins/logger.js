@@ -23,7 +23,7 @@ Talker.Logger = function() {
         .addClass('message')
         .addClass('user_' + event.user.id)
         .addClass('event')
-        .addClass(event.user.id == currentUser.id ? 'me' : '')
+        .addClass(event.user.id == Talker.currentUser.id ? 'me' : '')
         .addClass(event.private ? 'private' : '')
           .append($('<td/>').addClass('author')
             .append('\n' + event.user.name + '\n')

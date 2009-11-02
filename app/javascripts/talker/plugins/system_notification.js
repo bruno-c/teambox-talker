@@ -4,8 +4,8 @@ Talker.SystemNotification = function() {
   self.onNotification = function(event) {
     if (window.notifications.notifications_support()) {
       window.notifications.notify({
-        title: (event.private ? 'Private Message' : 'Message'),
-        description: event.content
+        title: Talker.room.name,
+        description: event.user.name + ": " + event.content
       });
     }
   }
