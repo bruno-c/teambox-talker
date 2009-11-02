@@ -8,6 +8,19 @@ Talker.Broadcaster = {
       var fn = plugin["on" + eventName];
       if (fn) fn(eventData);
     });
+  },
+  
+  broadcastEvent: function(event) {
+    var callbackName;
+    switch (event.type) {
+      case 'message':
+        callbackName = 'MessageReceived';
+        break;
+      default:
+        callbackName = event.type.charAt(0).toUpperCase() + event.type.substr(1, event.type.length);
+        break;
+    }
+    Talker.Broadcaster.broadcast(callbackName, event);
   }
 };
 

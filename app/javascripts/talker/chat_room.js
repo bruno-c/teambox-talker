@@ -120,34 +120,6 @@ var ChatRoom = {
     }
     $(image).css('visibility', 'visible');
     if (!noScroll) ChatRoom.scroller.scrollToBottom(true);
-  },
-  
-  onUsers: function(data){
-    Receiver.push(data);
-  },
-  
-  onJoin: function(data) {
-    Receiver.push(data);
-  },
-
-  onLeave: function(data) {
-    Receiver.push(data);
-  },
-  
-  onConnected: function(data){
-    Receiver.push(data);
-  },
-  
-  onIdle: function(data){
-    ChatRoom.receiver.push(data);
-  },
-  
-  onBack: function(data){
-    ChatRoom.receiver.push(data);
-  },
-  
-  onClose: function(){
-    // Receiver.push({user: {id:0,name:"System"}, type: "close", comment: "the persistent connection to talker is not active."});
   }
 };
 

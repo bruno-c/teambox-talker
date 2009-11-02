@@ -19,7 +19,7 @@
     
     $(function(){
       $.each(<%= escape_json @events.to_json %>, function(){
-        Receiver.push(this, true);
+        Talker.Broadcaster.broadcast(this);
       });
       
       resizeLogElements();
