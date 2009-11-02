@@ -296,12 +296,12 @@ JSON = new function(){
 	
 	Example [Server Time]:
 		>var	phpServerDate = JSON.toDate(<?php echo time(); ?>);
-		>var	csServerDate = JSON.toDate(<%=(DateTime.Now.Ticks/10000-62135596800000)%>/1000);
+		>var	csServerDate = JSON.toDate(<%#(DateTime.Now.Ticks/10000-62135596800000)%>/1000);
 	
 	Example [Server Time Prototype]:
 		>Number.prototype.parseDate = JSON.toDate;
 		>var	phpServerDate = (<?php echo time(); ?>).parseDate();
-		>var	csServerDate = (<%=(DateTime.Now.Ticks/10000-62135596800000)%>/1000).parseDate();
+		>var	csServerDate = (<%#(DateTime.Now.Ticks/10000-62135596800000)%>/1000).parseDate();
 	
 	Note:
 		This method accepts an integer or numeric string too to mantain compatibility with generic server side time() function.
