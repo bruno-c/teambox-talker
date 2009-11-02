@@ -6,11 +6,11 @@ Talker.MsgCommand = function() {
       var userName = event.args[0];
       var user = _.detect(Talker.users, function(user) { return user.name == userName });
       
-      if (user == null){
-        throw new CommandError("Unknown user: " + userName);
-      } else {
-        Talker.client.send({content: event.args.slice(1).join(" "), to: user.id});
-      }
+      if (user == null) throw new CommandError("Unknown user: " + userName);
+      
+      Talker.client.send({content: event.args.slice(1).join(" "), to: user.id});
+      
+      Talker.trigger("MessageSent", event);
     }
   }
 }
