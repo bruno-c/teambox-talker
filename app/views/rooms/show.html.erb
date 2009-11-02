@@ -20,19 +20,14 @@
       Talker.plugins.push(new Talker.Logger());
       Talker.plugins.push(new Talker.Sender($("#msgbox")));
       
-      client = new Talker.Client({
+      Talker.client = new Talker.Client({
         host: '<%= Orbited.talker_host %>', 
         port: <%= Orbited.talker_port %>, 
         room: <%= @room.id %>, 
         user: <%= {:id => current_user.id, :name => current_user.name, :livetyping => current_user.livetyping}.to_json %>,
         token: <%= current_user.talker_token.to_json %>,
         callbacks: Talker.Broadcaster
-      });
-      ChatRoom.current_user = client.options.user;
-      ChatRoom.room = '<%= @room.name %>';
-      ChatRoom.client = client;
-      
-      client.connect();
+      }).connect();
       
       $.each(<%= escape_json @events.to_json %>, function(){
         Talker.Broadcaster.broadcastEvent(this);
@@ -44,7 +39,7 @@
       
       $(window).bind('beforeunload', function() { client.reset() });
       $("a#leave").click(function() {
-        client.close();
+        Talker.client.close();
         var link = this;
         client.options.onClose = function() {
           window.location = link.href;

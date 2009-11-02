@@ -98,6 +98,7 @@ Talker.Client = function(options) {
     protocol.onlinereceived = onLineReceived;
     protocol.onrawdatareceived = onRawDataReceived;
     protocol.open(self.options.host, self.options.port, false);
+    return self;
   };
 
   self.close = function() {

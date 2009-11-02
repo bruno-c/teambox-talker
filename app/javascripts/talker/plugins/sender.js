@@ -1,6 +1,14 @@
 Talker.Sender = function(msgbox) {
   var self = this;
   
+  self.msgbox = msgbox;
+  
+  function sendMessage() {
+    Talker.client.send({content: self.msgbox.val(), type: 'message'});
+    self.msgbox.val('');
+    ChatRoom.scroller.scrollToBottom();
+  }
+  
   self.onMessageSend = function(event) {
     var presences = [];
     var users = {};
@@ -11,31 +19,31 @@ Talker.Sender = function(msgbox) {
     })
 
     var reg_user_list = new RegExp("\/msg (" + presences.join('|') + ") (.+)")
-    var match = reg_user_list.exec($('#msgbox').val());
+    var match = reg_user_list.exec(self.msgbox.val());
     
-    if ($('#msgbox').val().indexOf('/msg') == 0 && match){
-      ChatRoom.client.send({content: match[2], to: users[match[1]]});
+    if (self.msgbox.val().indexOf('/msg') == 0 && match){
+      Talker.client.send({content: match[2], to: users[match[1]]});
       $("#msgbox").val('');
       ChatRoom.scroller.scrollToBottom();
-    } else if ($('#msgbox').val().indexOf('/msg') == 0) {
-      var msgbox = document.getElementById('msgbox');
+    } else if (self.msgbox.val().indexOf('/msg') == 0) {
+      var msgbox = self.msgbox.get(0);
       if (msgbox){
         setCaretTo(msgbox, 5);
         insertAtCaret(msgbox, "unrecognizable user name ");
         setCaretTo(msgbox, 5, 29);
       }
-    } else if ($('#msgbox').val().indexOf('/') == 0){
-      var msgbox = document.getElementById('msgbox');
+    } else if (self.msgbox.val().indexOf('/') == 0){
+      var msgbox = self.msgbox.get(0);
       if (msgbox){
         setCaretTo(msgbox, 1);
         insertAtCaret(msgbox, "unrecognizable command ");
         setCaretTo(msgbox, 1, 23);
       }
     } else {
-      ChatRoom.send();
+      sendMessage();
     }
     
-    Talker.trigger("MessageSent", event);
+    // Talker.trigger("MessageSent", event);
   }
 }
 

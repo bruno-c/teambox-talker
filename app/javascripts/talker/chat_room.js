@@ -55,12 +55,6 @@ var ChatRoom = {
   maxImageWidth: 400,
   current_user: null,
   
-  send: function() {
-    ChatRoom.client.send({content: $('#msgbox').val(), type: 'message'});
-    $("#msgbox").val('');
-    ChatRoom.scroller.scrollToBottom();
-  },
-  
   align: function() {
     ChatRoom.scroller.scrollToBottom();
     var msgbox = document.getElementById('msgbox'); // old school
