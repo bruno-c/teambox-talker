@@ -9,6 +9,15 @@ Talker.Sender = function(msgbox) {
   }
   
   self.onMessageSend = function(event) {
+    if (self.msgbox.val().indexOf("/") == 0) {
+      console.info(self.msgbox.val().substr(0, self.msgbox.val().indexOf(" ")));
+      Talker.trigger("Command", {
+        type: "command", command: self.msgbox.val().substr(0, self.msgbox.val().indexOf(" "))
+      });
+      self.msgbox.val('');
+      return false;
+    }
+    
     var presences = [];
     var users = {};
     

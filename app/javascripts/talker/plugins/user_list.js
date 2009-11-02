@@ -1,3 +1,5 @@
+Talker.users = {};
+
 Talker.UserList = function() {
   var self = this;
   
@@ -30,16 +32,17 @@ Talker.UserList = function() {
         .attr("id", "user_" + user.id)
         .attr('user_id', user.id)
         .attr('user_name', user.name)
-        .html('<img alt="gary" src="/images/avatar_default.png" /> ' + user.name)
+        .html('<img alt="' + user.name + '" src="/images/avatar_default.png" /> ' + user.name)
         .appendTo($('#people'));
         
       presence.animate({opacity: 1.0}, 400);
     }
+    Talker.users[user.id] = user;
   };
   
   self.remove = function(user) {
     $("#user_" + user.id).animate({opacity: 0.0}, 400, function(){ $(this).remove() });
+    delete Talker.users[user.id];
   };
-  
 }
 
