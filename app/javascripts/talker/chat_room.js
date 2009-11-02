@@ -122,10 +122,6 @@ var ChatRoom = {
     if (!noScroll) ChatRoom.scroller.scrollToBottom(true);
   },
   
-  onNewMessage: function(data) {
-    Receiver.push(data);
-  },
-  
   onUsers: function(data){
     Receiver.push(data);
   },
