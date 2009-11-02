@@ -3,11 +3,14 @@ Talker.MsgCommand = function() {
   
   self.onCommand = function(event) {
     if (event.command == "msg") {
-      _.detect(Talker.users, function(user) {
-        
-      });
-      Talker.client.send({content: event.args.slice(1).join(" "), to: event.args[0]});
-      $("#msgbox").val('');
+      var userName = event.args[0];
+      var user = _.detect(Talker.users, function(user) { return user.name == userName });
+      
+      if (user == null){
+        throw new CommandError("Unknown user: " + userName);
+      } else {
+        Talker.client.send({content: event.args.slice(1).join(" "), to: user.id});
+      }
     }
   }
 }
