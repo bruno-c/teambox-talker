@@ -15,20 +15,13 @@
     
     $(function() {
       document.domain = document.domain;
-      client = new TalkerClient({
+      client = new Talker.Client({
         host: '<%= Orbited.talker_host %>', 
         port: <%= Orbited.talker_port %>, 
         room: <%= @room.id %>, 
         user: <%= {:id => current_user.id, :name => current_user.name, :livetyping => current_user.livetyping}.to_json %>,
         token: <%= current_user.talker_token.to_json %>,
-        onNewMessage: ChatRoom.onNewMessage, 
-        onUsers: ChatRoom.onUsers,
-        onJoin: ChatRoom.onJoin, 
-        onLeave: ChatRoom.onLeave,
-        onClose: ChatRoom.onClose,
-        onBack: ChatRoom.onBack,
-        onIdle: ChatRoom.onIdle,
-        onConnected: ChatRoom.onConnected
+        callbacks: Talker.Broadcaster
       });
       ChatRoom.current_user = client.options.user;
       ChatRoom.room = '<%= @room.name %>';

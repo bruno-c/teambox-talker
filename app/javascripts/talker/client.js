@@ -1,6 +1,6 @@
 // Talker client
 // Based on STOMP client shipped with Orbited.
-function TalkerClient(options) {
+Talker.Client = function(options) {
   var log = getTalkerLogger("TalkerClient");
   var self = this;
   var protocol = null;
@@ -21,29 +21,28 @@ function TalkerClient(options) {
     // ugly shit but this will be refactored.
     switch(line.type){
       case 'message':
-        options.onNewMessage(line);
+        options.callbacks.onMessageReceived(line);
         break;
       case 'join':
-        options.onJoin(line);
+        options.callbacks.onJoin(line);
         break;
       case 'users':
-        options.onUsers(line);
+        options.callbacks.onUsers(line);
         break;
       case 'leave':
-        options.onLeave(line);
+        options.callbacks.onLeave(line);
         break;
       case 'error':
-        alert(line.message);
-        window.location = "/rooms";
+        options.callbacks.onError(line);
         break;
       case 'back':
-        options.onBack(line);
+        options.callbacks.onBack(line);
         break;
       case 'idle':
-        options.onIdle(line);
+        options.callbacks.onIdle(line);
         break;
       case 'connected':
-        options.onConnected(line);
+        options.callbacks.onConnected(line);
         break;
       default:
         console.warn("Unknown message type(client error): " + line.type);

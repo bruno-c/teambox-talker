@@ -8,7 +8,7 @@ Talker.Broadcaster = {
       var fn = plugin["on" + eventName];
       if (fn) fn(eventData);
     });
-  },
+  }
 };
 
 // Define all callbacks as a function on<EventName>
