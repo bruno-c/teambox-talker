@@ -1,4 +1,6 @@
 //= require "jquery"
+//= require "underscore"
+//= require "talker"
 
 $(function() {
   
