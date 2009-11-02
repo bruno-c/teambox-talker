@@ -50,5 +50,3 @@ Talker.Timestamp = function() {
     element.appendTo('#log');
   }
 }
-
-Talker.plugins.push(new Talker.Timestamp());

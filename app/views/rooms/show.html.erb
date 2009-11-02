@@ -15,6 +15,11 @@
     
     $(function() {
       document.domain = document.domain;
+      
+      Talker.plugins.push(new Talker.UserList());
+      Talker.plugins.push(new Talker.Timestamp());
+      Talker.plugins.push(new Talker.Logger());
+      
       client = new Talker.Client({
         host: '<%= Orbited.talker_host %>', 
         port: <%= Orbited.talker_port %>, 
