@@ -6,7 +6,6 @@ Talker.Sender = function(msgbox) {
   function sendMessage() {
     Talker.client.send({content: self.msgbox.val(), type: 'message'});
     self.msgbox.val('');
-    ChatRoom.scroller.scrollToBottom();
   }
   
   self.onMessageSend = function(event) {
@@ -24,7 +23,6 @@ Talker.Sender = function(msgbox) {
     if (self.msgbox.val().indexOf('/msg') == 0 && match){
       Talker.client.send({content: match[2], to: users[match[1]]});
       $("#msgbox").val('');
-      ChatRoom.scroller.scrollToBottom();
     } else if (self.msgbox.val().indexOf('/msg') == 0) {
       var msgbox = self.msgbox.get(0);
       if (msgbox){
@@ -43,7 +41,7 @@ Talker.Sender = function(msgbox) {
       sendMessage();
     }
     
-    // Talker.trigger("MessageSent", event);
+    Talker.trigger("MessageSent", event);
   }
 }
 
