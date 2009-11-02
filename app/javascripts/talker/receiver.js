@@ -6,10 +6,6 @@ Receiver = {
     if (data.type == null) return;
     
     if (typeof Receiver[data.type] == 'function'){
-      var lastTime = $('#log p:last[time]').attr('time');
-      if ($.inArray(data.type, ['message', 'join', 'leave']) > -1 && lastTime - data.time < -(5 * 60)){
-        Receiver.timestamp(data.time, lastTime, linkToLogs);
-      }
       Receiver[data.type](data, replay, linkToLogs);
       if (!replay) {
         ChatRoom.scroller.scrollToBottom();
@@ -109,45 +105,6 @@ Receiver = {
       
       element.appendTo('#log');
     }
-  },
-  
-  timestamp: function(time, lastTime, linkToLogs) {
-    var element = $('<tr/>').addClass('timestamp').addClass(linkToLogs ? 'logs' : '');
-    
-    var date = FormatHelper.timestamp2date(time);
-    var lastDate = FormatHelper.timestamp2date(lastTime);
-    
-    // Only show date if diff from last one
-    if (lastDate == null || (date.getFullYear() != lastDate.getFullYear() ||
-                             date.getMonth() != lastDate.getMonth() ||
-                             date.getDate() != lastDate.getDate())
-        ) {
-      element
-        .append($('<td/>').addClass('date')
-          .append($('<div/>')
-            .append($('<span/>').addClass('marker').html(
-              '<b><!----></b><i><span class="date">' 
-                + FormatHelper.getDate(time)
-              + '</span><span class="month">'
-                + FormatHelper.getMonth(time)
-              + '</span></i>')
-            )
-          )
-        );
-    } else {
-      element.append($('<td/>'));
-    }
-    
-    element
-      .append($('<td/>').addClass('time')
-        .append($('<div/>')
-          .append($('<span/>').addClass('marker').attr('time', time)
-            .html('<b><!----></b><i>' + FormatHelper.toHumanTime(time) + '</i>')
-          )
-        )
-      );
-    
-    element.appendTo('#log');
   }
 }
 
