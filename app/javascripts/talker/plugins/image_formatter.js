@@ -12,13 +12,15 @@ Talker.ImageFormatter = function() {
     }
     
     if (image_match){
-      event.complete('loading: ' + image_match[0]);
+      var fallback = $('<a/>').attr('href', image_match[0]).attr('target', '_blank').html(image_match[0]);
+      event.complete(fallback);
       Talker.trigger('Loaded', event);
       
       var img = $('<img/>').load(function(){
         $(this).remove();
-      
-        event.complete('<a href="' 
+        
+        fallback.replaceWith(
+              '<a href="' 
             + image_match[0]
             + '" target="_blank"><img src="' 
             + image_match[0]
