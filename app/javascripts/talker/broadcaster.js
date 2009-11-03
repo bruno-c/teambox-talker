@@ -1,5 +1,8 @@
 Talker.Broadcaster = {
-  callbacks: ["Load", "Join", "Leave", "MessageReceived", "Users", "Back", "Idle", "Connected"],
+  callbacks: ["Load", "MessageReceived",
+              "Join", "Leave", "Back", "Idle",
+              "Users", "Open", "Connected",
+              "Close", "Error"],
   plugins: [],
   
   // Notify all subscribers about an event

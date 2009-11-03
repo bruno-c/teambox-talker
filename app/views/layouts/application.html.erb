@@ -22,7 +22,7 @@
     
     <div id="main">
       <%- flash.each do |name, message| -%>
-        <div id="flash_<%= name %>" class="flash">
+        <div id="flash_<%= name %>" class="flash <%= name %>">
           <%= message %>
         </div>
       <%- end -%>

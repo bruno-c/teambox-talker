@@ -1,18 +1,20 @@
 // Talker client
 // Based on STOMP client shipped with Orbited.
 Talker.Client = function(options) {
-  var log = getTalkerLogger("TalkerClient");
   var self = this;
+  var callbacks = options.callbacks;
   var protocol = null;
-  var buffer = "";
-  var remainingBodyLength = null;
-  self.options = options;
+  var pingTimer = null;
+  var pingInterval = 20000; // 20 sec
+  var reconnectInterval = 2000;
+  var reconnect = true;
 
   // LineProtocol implementation.
   function onLineReceived(line) {
     try {
       var line = eval('(' + line + ')');
     } catch (SyntaxError) {
+      // Ignoring invalid JSON
       return;
     }
     
@@ -21,92 +23,99 @@ Talker.Client = function(options) {
     // ugly shit but this will be refactored.
     switch(line.type){
       case 'message':
-        options.callbacks.onMessageReceived(line);
+        callbacks.onMessageReceived(line);
         break;
       case 'join':
-        options.callbacks.onJoin(line);
+        callbacks.onJoin(line);
         break;
       case 'users':
-        options.callbacks.onUsers(line);
+        callbacks.onUsers(line);
         break;
       case 'leave':
-        options.callbacks.onLeave(line);
+        callbacks.onLeave(line);
         break;
       case 'error':
-        options.callbacks.onError(line);
+        callbacks.onError(line);
         break;
       case 'back':
-        options.callbacks.onBack(line);
+        callbacks.onBack(line);
         break;
       case 'idle':
-        options.callbacks.onIdle(line);
+        callbacks.onIdle(line);
         break;
       case 'connected':
-        options.callbacks.onConnected(line);
+        callbacks.onConnected(line);
         break;
       default:
-        console.warn("Unknown message type(client error): " + line.type);
+        console.warn("Unknown message type (client error): " + line.type);
     } 
   }
   
-  function onRawDataReceived(data) {
-    // console.info("TalkerClient::received raw: " + data);
-  }
-  
   self.resetPing = function() {
-    if (self.pingInterval) clearInterval(self.pingInterval);
-    self.pingInterval = setInterval(function(){
-      self.ping();
-    }, 5000);
+    self.stopPing();
+    pingTimer = setInterval(function(){ self.ping(); }, pingInterval);
+  };
+  
+  self.stopPing = function() {
+    if (pingTimer) clearInterval(pingTimer);
   };
   
   self.ping = function(){
-    if (self.reconnect){
-      location.reload();
-    }else{
-      protocol.send(JSON.encode({type: 'ping'}));
-    }
+    protocol.send(JSON.encode({type: 'ping'}));
   };
   
-  // Methods
   self.sendData = function(message) {
-    // console.info(message);
     protocol.send(JSON.encode(message));
-    self.resetPing();
   };
-
+  
   self.connect = function() {
     protocol = new LineProtocol(new TCPSocket());
+    
     protocol.onopen = function() {
       self.sendData({
         type: "connect", 
-        room: self.options.room, 
-        user: self.options.user, 
-        token: self.options.token,
-        sid: self.options.sid,
-        include_partial: true
+        room: options.room, 
+        user: options.user, 
+        token: options.token
       });
+      callbacks.onOpen();
+      self.resetPing();
     }
-    // XXX even though we are connecting to onclose, this never gets fired
-    //     after we shutdown orbited.
+    
     protocol.onclose = function() {
-      self.reconnect = true;
-      options.callbacks.onClose();
+      self.stopPing();
+      callbacks.onClose();
+      self.reconnect();
     }
-    // TODO what should we do when there is a protocol error?
-    protocol.onerror = function(error) { console.error(error); }
+    protocol.onerror = function(error) {
+      self.stopPing();
+      callbacks.onError({message: error});
+      self.reconnect();
+    }
+    
     protocol.onlinereceived = onLineReceived;
-    protocol.onrawdatareceived = onRawDataReceived;
-    protocol.open(self.options.host, self.options.port, false);
+    protocol.open(options.host, options.port, false);
+    
     return self;
   };
-
-  self.close = function() {
+  
+  self.reconnect = function() {
+    if (reconnect) {
+      setTimeout(function() { self.connect() }, reconnectInterval);
+    }
+  };
+  
+  self.close = function(callback) {
+    reconnect = false;
+    if (callback) callbacks.onClose = callback;
     self.sendData({type: "close"});
   };
+  
   self.reset = function() {
+    callbacks.onClose = function() {};
     protocol.reset();
-  }
+  };
+  
   self.send = function(message) {
     message.type = "message";
     self.sendData(message);

@@ -753,10 +753,10 @@ div.flash
   padding: 10px 10px 10px 31px
   +rounded_corners("all", 3)
   line-height: normal
-#flash_error
-  background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/icons/exclamation-red.png") "no-repeat" 10px "center"
-#flash_notice
-  background = (!accent_colour * 0.25 + !blue * 0.75) * 0.25 + !white * 0.75 url("/images/icons/information.png") "no-repeat" 10px "center"
+  &.error
+    background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/icons/exclamation-red.png") "no-repeat" 10px 10px
+  &.notice
+    background = (!accent_colour * 0.25 + !blue * 0.75) * 0.25 + !white * 0.75 url("/images/icons/information.png") "no-repeat" 10px 10px
 
 // Error Explananation
 #errorExplanation

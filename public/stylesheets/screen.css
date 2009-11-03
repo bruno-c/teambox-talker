@@ -829,12 +829,10 @@ div.flash {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   line-height: normal; }
-
-#flash_error {
-  background: #f1c8cc url('/images/icons/exclamation-red.png') no-repeat 10px center; }
-
-#flash_notice {
-  background: #c1c8fc url('/images/icons/information.png') no-repeat 10px center; }
+  div.flash.error {
+    background: #f1c8cc url('/images/icons/exclamation-red.png') no-repeat 10px 10px; }
+  div.flash.notice {
+    background: #c1c8fc url('/images/icons/information.png') no-repeat 10px 10px; }
 
 #errorExplanation {
   color: black;

@@ -21,6 +21,7 @@
     $(function() {
       document.domain = document.domain;
       
+      Talker.plugins.push(new Talker.ErrorHandler());
       Talker.plugins.push(new Talker.Timestamp());
       Talker.plugins.push(new Talker.Logger());
       Talker.plugins.push(new Talker.Sender($("#msgbox")));
@@ -49,11 +50,8 @@
       
       $(window).bind('beforeunload', function() { Talker.client.reset() });
       $("a#leave").click(function() {
-        Talker.client.close();
         var link = this;
-        Talker.client.options.callbacks.onClose = function() {
-          window.location = link.href;
-        }
+        Talker.client.close(function() { window.location = link.href; });
         return false;
       });
     });
@@ -95,6 +93,7 @@
       </div>
     <% end %>
   </div>
+  <div id="error" class="flash error" style="display:none"></div>
 <% end %>
 
 <div id="top_mask">

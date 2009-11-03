@@ -29,7 +29,7 @@ module Talker
       when "close"
         close
       when "ping"
-        @room.publish_presence "ping", @user
+        @room.publish_presence "ping", @user if @user && @room
       else
         error "Unknown message type: " + message["type"]
       end
