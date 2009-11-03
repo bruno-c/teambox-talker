@@ -10,7 +10,6 @@ Talker.Broadcaster = {
     for (var i = 0; i < this.plugins.length; i++){
       var fn = this.plugins[i]["on" + eventName];
       if (fn && fn(eventData) === false){
-        console.info(eventName  + " cancelling chain.");
         return false;
       }
     };
