@@ -3,21 +3,23 @@ Talker.Logger = function() {
   
   self.onMessageReceived = function(event) {
     // format content appropriately
-    if (event.paste && event.paste != 'null'){
-      event.content = FormatHelper.formatPaste(data);
-    } else {
-      event.content = FormatHelper.text2html(event.content);
-    }
+    // if (event.paste && event.paste != 'null'){
+    //   event.content = FormatHelper.formatPaste(data);
+    // } else {
+    //   event.content = FormatHelper.text2html(event.content);
+    // }
     
     var last_row    = $('#log tr:last');
     var last_author = last_row.attr('author');
-    
+    var container;
+    var appendage; 
     
     if (last_author == event.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !event.private){ // only append to existing blockquote group
-      last_row.find('blockquote')
-        .append($('<p/>').attr('time', event.time).html(event.content));
+      recipient = last_row.find('blockquote');
+      appendage = $('<p/>').attr('time', event.time).html(event.content);
     } else {
-      var element = $('<tr/>')
+      recipient = $('#log');
+      appendage = $('<tr/>')
         .attr('author', event.user.name)
         .addClass('received')
         .addClass('message')
@@ -33,9 +35,15 @@ Talker.Logger = function() {
             .append($('<blockquote/>')
               .append($('<p/>').attr('time', event.time)
                 .html(event.content))));
-      
-      element.appendTo('#log');
     }
+    
+    recipient.append(appendage);
+    // Talker.trigger("FormatMessage", $.extend(event, {
+    //   target: appendage, 
+    //   complete: function(){
+    //     recipient.append(appendage);
+    //   }
+    // }));
   }
   
   self.onJoin = function(event) {
