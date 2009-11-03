@@ -3,11 +3,11 @@ Talker.DefaultFormatter = function() {
   var self = this;
   
   self.onFormatMessage = function(event){
+    console.info("Inside DefaultFormatter.onFormatMessage");
     if (event.content.match(/\n/gim)){
-      $(event.target).html('<div><pre>' + event.content.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre></div>');
+      event.complete('<div><pre>' + event.content.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre></div>');
     } else {
-      $(event.target).html(event.content.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+      event.complete(event.content.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
     }
-    event.complete();
   }
 };

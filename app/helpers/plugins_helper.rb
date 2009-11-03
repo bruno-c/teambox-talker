@@ -12,6 +12,8 @@ module PluginsHelper
     out << install_plugin(:logger)
     out << install_plugin(:youtube_formatter)
     out << install_plugin(:paste_formatter)
+    out << install_plugin(:image_formatter)
+    out << install_plugin(:default_formatter)
     
     out.join("\n")
   end

@@ -4,38 +4,35 @@ Talker.Logger = function() {
   self.onMessageReceived = function(event) {
     var last_row    = $('#log tr:last');
     var last_author = last_row.attr('author');
+    var recipient;
     var container;
     var appendage; 
-    
-    if (last_author == event.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !event.private){ // only append to existing blockquote group
-      recipient = last_row.find('blockquote');
-      appendage = $('<p/>').attr('time', event.time).html(event.content);
-      target    = appendage;
-    } else {
-      recipient  = $('#log');
-      var target = $('<p/>').attr('time', event.time).html(event.content);
-      appendage = $('<tr/>')
-        .attr('author', event.user.name)
-        .addClass('received')
-        .addClass('message')
-        .addClass('user_' + event.user.id)
-        .addClass('event')
-        .addClass(event.user.id == Talker.currentUser.id ? 'me' : '')
-        .addClass(event.private ? 'private' : '')
-          .append($('<td/>').addClass('author')
-            .append('\n' + event.user.name + '\n')
-            .append($('<img/>').attr('src', avatarUrl(event.user)).attr('alt', event.user.name).addClass('avatar'))
-            .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
-          .append($('<td/>').addClass('message')
-            .append($('<blockquote/>')
-              .append(target)));
-    }
+    var target;
+    var complete;
     
     // recipient.append(appendage);
     $.extend(event, {
-      target: target, 
-      complete: function(){
-        recipient.append(appendage);
+      complete: function(content){
+        if (last_author == event.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !event.private){ // only append to existing blockquote group
+          last_row.find('blockquote')
+            .append($('<p/>').attr('time', event.time).html(content));
+        } else {
+          $('#log').append($('<tr/>')
+            .attr('author', event.user.name)
+            .addClass('received')
+            .addClass('message')
+            .addClass('user_' + event.user.id)
+            .addClass('event')
+            .addClass(event.user.id == Talker.currentUser.id ? 'me' : '')
+            .addClass(event.private ? 'private' : '')
+              .append($('<td/>').addClass('author')
+                .append('\n' + event.user.name + '\n')
+                .append($('<img/>').attr('src', avatarUrl(event.user)).attr('alt', event.user.name).addClass('avatar'))
+                .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
+              .append($('<td/>').addClass('message')
+                .append($('<blockquote/>')
+                  .append($('<p/>').attr('time', event.time).html(content)))));
+        }
       }
     });
     Talker.trigger("FormatMessage", event);
@@ -58,6 +55,10 @@ Talker.Logger = function() {
     
     element.appendTo('#log');
   }
+  
+  self.onLoaded = function(event){
+    resizeLogElements();
+  }
 }
 
 
@@ -71,10 +72,10 @@ function resizeLogElements(){
   $('div pre').css('width', maxWidth);
   
   $('#log img').each(function(){
-    $(this).css({width: 'auto'});
+    $(this).css({'max-width': 'auto'});
     
     if ($(this).width() > maxWidth){
-      $(this).css({width: maxWidth + 'px'});
+      $(this).css({'max-width': maxWidth + 'px'});
     }
     $(this).css('visibility', 'visible');
   });
