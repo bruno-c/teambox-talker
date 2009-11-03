@@ -1,10 +1,17 @@
 Talker.Scroller = function() {
   var self = this;
-  var scrollLimit = 85;
+  var scrollLimit = 500;
   
   self.scrollToBottom = function(forceScroll){
     if (self.shouldScrollToBottom() || forceScroll){
       window.scrollTo(0, self.getWindowHeight() + self.getScrollHeight());
+      if (forceScroll){
+        _.each([0,10,20,30,40,50,60,70,80,90,100,110,120,130,150], function(delay){
+          window.setTimeout(function(){
+            self.scrollToBottom();
+          }, delay);
+        })
+      }
     }
   }
   
@@ -34,7 +41,7 @@ Talker.Scroller = function() {
     self.scrollToBottom(true);
   }
   
-  self.onLoaded = function() {
+  self.onLoaded = function(event) {
     self.scrollToBottom(true);
   }
 }

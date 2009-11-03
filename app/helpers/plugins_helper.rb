@@ -7,7 +7,7 @@ module PluginsHelper
   # Install plugins active in chat room and chat logs.
   def install_core_plugins(options={})
     plugins = [
-      :timestamp, :logger, :youtube_formatter
+      :timestamp, :logger, :youtube_formatter, :paste_formatter, :image_formatter, :default_formatter
     ]
     plugins -= Array(options[:except]) if options[:except]
     plugins.map { |p| install_plugin p }.join("\n")
