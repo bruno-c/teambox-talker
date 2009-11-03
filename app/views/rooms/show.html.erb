@@ -1,16 +1,8 @@
 <% content_for :head do %>
   <script type="text/javascript" charset="utf-8">
   //<![CDATA[
-    Talker.currentUser = {
-      id: <%= current_user.id %>,
-      name: <%= current_user.name.to_json %>,
-      email: <%= current_user.email.to_json %>
-    };
-    
-    Talker.room = {
-      id: <%= @room.id %>,
-      name: <%= @room.name.to_json %>
-    };
+    Talker.currentUser = <%= current_user.to_json %>;
+    Talker.room = <%= @room.to_json %>;
 
     Orbited.settings.hostname = '<%= request.host %>';
     Orbited.settings.port = <%= Orbited.port %>;
@@ -22,10 +14,14 @@
       document.domain = document.domain;
       
       Talker.plugins.push(new Talker.ErrorHandler($("#error")));
-      Talker.plugins.push(new Talker.Timestamp());
-      Talker.plugins.push(new Talker.Logger());
-      Talker.plugins.push(new Talker.YoutubeFormatter());
+      <%= install_core_plugins %>
       Talker.plugins.push(new Talker.Sender($("#msgbox")));
+      Talker.plugins.push(new Talker.UserList());
+      Talker.plugins.push(new Talker.Scroller());
+      Talker.plugins.push(new Talker.MsgCommand());
+      Talker.plugins.push(new Talker.Notifier());
+      Talker.plugins.push(new Talker.SystemNotification());
+      Talker.plugins.push(new Talker.TitleNotification());
       
       Talker.client = new Talker.Client({
         host: '<%= Orbited.talker_host %>', 
@@ -39,13 +35,6 @@
       $.each(<%= escape_json @events.to_json %>, function(){
         Talker.Broadcaster.broadcastEvent(this);
       });
-      
-      Talker.plugins.push(new Talker.UserList());
-      Talker.plugins.push(new Talker.Scroller());
-      Talker.plugins.push(new Talker.MsgCommand());
-      Talker.plugins.push(new Talker.Notifier());
-      Talker.plugins.push(new Talker.SystemNotification());
-      Talker.plugins.push(new Talker.TitleNotification());
       
       Talker.trigger("Loaded");
       
@@ -71,9 +60,7 @@
     <div class="content">
       <p class="description"><%=h @room.description %></p>
       <h4>Who&#39;s here?</h4>
-      <ul class="people" id="people">
-        <%= render :partial => "user", :collection => @room.users %>
-      </ul>
+      <ul class="people" id="people"></ul>
     </div>
     <div class="footer">
       <%= link_to "Edit", room_path(@room), :title => "Edit room name &amp; description", :id => "edit" if admin? %>

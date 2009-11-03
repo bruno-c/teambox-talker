@@ -11,25 +11,17 @@
 <% content_for :head do %>
   <script type="text/javascript" charset="utf-8">
   //<![CDATA[
-    var Talker.currentUser = {
-      id: <%= current_user.id %>,
-      name: <%= current_user.name.to_json %>,
-      email: <%= current_user.email.to_json %>
-    };
+    Talker.currentUser = <%= current_user.to_json %>;
+    
+    <%= install_core_plugins %>
     
     $(function(){
+      
       $.each(<%= escape_json @events.to_json %>, function(){
-        Talker.Broadcaster.broadcast(this);
+        Talker.Broadcaster.broadcastEvent(this);
       });
       
-      resizeLogElements();
-      
-      $(window).resize(function(e){
-        resizeLogElements();
-      });
-    
       var timestamp = window.location.href.match(/#(\d+)/);
-    
       if (timestamp && timestamp[1]){
         window.setTimeout(function(){
           $('p[time=' + timestamp[1] + ']').scrollToCenter({
