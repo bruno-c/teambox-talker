@@ -19,9 +19,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect "/avatar/:id.jpg", :controller => "avatars", :action => "show"
   
-  map.prism_app "/talker.webapp", :controller => "apps", :action => "show", :format => "webapp"
-  map.app "/app", :controller => "apps", :action => "show"
-  
   map.reset_password "/passwords/reset/:token", :controller => "passwords", :action => "show", :token => nil, :conditions => { :method => :get }
   map.resource :password
   
