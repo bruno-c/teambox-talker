@@ -26,7 +26,6 @@ Talker.Broadcaster = {
         callbackName = event.type.charAt(0).toUpperCase() + event.type.substr(1, event.type.length);
         break;
     }
-    console.info(callbackName);
     Talker.Broadcaster.broadcast(callbackName, event);
   }
 };

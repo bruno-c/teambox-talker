@@ -361,7 +361,7 @@ a.button, button {
   background: #269ed6;
   color: white;
   text-shadow: -1px -1px 0px #1c76a0;
-  border: 1px solid;
+  border: 1px solid #269ed6;
   text-decoration: none;
   padding: 0 10px;
   line-height: 27px;
@@ -443,7 +443,6 @@ a.button, button {
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  border: none;
   box-shadow: 1px 1px 2px #d2d2d2;
   -webkit-box-shadow: 1px 1px 2px #d2d2d2;
   -moz-box-shadow: 1px 1px 2px #d2d2d2; }
@@ -694,6 +693,9 @@ a.button, button {
       padding: 5px;
       border: 1px solid silver; }
 
+#logs ul {
+  margin-left: 20px; }
+
 div.panel {
   margin: 0 0 20px;
   box-shadow: 1px 1px 2px #d2d2d2;
@@ -766,6 +768,8 @@ div.panel {
     -webkit-border-bottom-left-radius: 3px;
     border-top: 2px solid #f2f2f2;
     background: #f8f8f8; }
+    div.panel div.footer a {
+      margin-left: 4px; }
   div.panel .tag {
     font-size: 12px;
     background-color: #e5952b;
@@ -789,8 +793,6 @@ div.panel {
     background-repeat: no-repeat;
     background-position: 3px center;
     padding: 0 5px 0 21px; }
-  #sidebar #room div.footer a {
-    margin-left: 4px; }
   #sidebar #room div.content ul.people {
     margin: 0 0 -5px; }
     #sidebar #room div.content ul.people li {
