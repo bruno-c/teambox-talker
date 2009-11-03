@@ -3,7 +3,7 @@ Talker.PasteFormatter = function() {
   
   self.onFormatMessage = function(event){
     if (event.paste){
-      $(event.target).html(
+      event.complete(
         "<a target='_blank' title='Paste #" + event.paste.id + "' href='" 
           + window.location.protocol + "//" + window.location.host + "/pastes/" + event.paste.id 
           + "'>View paste</a>"
@@ -14,7 +14,6 @@ Talker.PasteFormatter = function() {
           +  event.content.replace(/</g, '&lt;').replace(/>/g, '&gt;')
           + '</pre></div>'
       );
-      event.complete();
       return false;
     }
   }
