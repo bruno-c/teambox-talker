@@ -99,7 +99,6 @@ Talker.Client = function(options) {
       protocol.onlinereceived = onLineReceived;
       protocol.open(options.host, options.port, false);
     } catch (e) {
-      console.warn("Error connecting, reconnecting: " + e);
       self.reconnect();
     }
     
