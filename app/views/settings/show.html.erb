@@ -17,6 +17,11 @@
         <%= f.text_field :email %>
       </p>
       <p>
+        <%= f.label :avatar %>
+        <%= image_tag avatar_url(@user) %>
+        Get an avatar on <%= link_to "Gravatar", "http://en.gravatar.com/site/signup", :title => "Signup to get your own gravatar" %>
+      </p>
+      <p>
         <%= f.label :time_zone %>
         <%= f.time_zone_select :time_zone %>
       </p>
@@ -24,7 +29,7 @@
         <%= ok_button "Update" %>
       </p>
     </fieldset>
-
+    
     <fieldset id="password">
       <h3>Change Your Password</h3>
       <p>
