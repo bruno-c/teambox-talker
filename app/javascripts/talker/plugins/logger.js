@@ -71,13 +71,9 @@ function resizeLogElements(){
   
   $('div pre').css('width', maxWidth);
   
-  $('#log img').each(function(){
+  $("#log img[class!='avatar']").each(function(){
     $(this).css({'max-width': 'auto'});
-    
-    if ($(this).width() > maxWidth){
-      $(this).css({'max-width': maxWidth + 'px'});
-    }
-    $(this).css('visibility', 'visible');
+    $(this).css({'max-width': maxWidth + 'px'});
   });
 }
 

@@ -4,7 +4,7 @@ Talker.Scroller = function() {
   
   self.scrollToBottom = function(forceScroll){
     if (self.shouldScrollToBottom() || forceScroll){
-      window.scrollTo(0, self.getWindowHeight() + self.getScrollHeight());
+      window.scrollBy(0, 400);
       if (forceScroll){
         _.each([0,10,20,30,40,50,60,70,80,90,100,110,120,130,150], function(delay){
           window.setTimeout(function(){

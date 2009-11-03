@@ -9,16 +9,7 @@ var FormatHelper = {
 
     var content = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         
-    if (content.match(image_expression)){
-      return content.replace(image_expression, function(locator){
-        return '<a href="' 
-          + locator 
-          + '" target="_blank"><img src="' 
-          + locator 
-          + '" style="visibility: hidden;" />'
-          + '</a>';
-      });
-    } else if (content.match(vimeo_expression)){
+    if (content.match(vimeo_expression)){
       return content.replace(vimeo_expression, function(locator){
         return locator.replace(vimeo_expression, '<object width="400" height="220">'
           + '<param name="allowfullscreen" value="true" />'
