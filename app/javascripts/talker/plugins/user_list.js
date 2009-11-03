@@ -2,7 +2,6 @@ Talker.UserList = function(element) {
   var self = this;
   
   function add(user) {
-    
     if ($("#user_" + user.id).length < 1) {
       console.info("Adding user");
       console.info(user);

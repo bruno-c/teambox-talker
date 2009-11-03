@@ -14,4 +14,8 @@ module PluginsHelper
     
     out.join("\n")
   end
+  
+  def render_events(events)
+    "$.each(#{escape_json @events.to_json}, function(){ Talker.Broadcaster.broadcastEvent(this); });"
+  end
 end

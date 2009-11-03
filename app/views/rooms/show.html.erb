@@ -26,9 +26,7 @@
         callbacks: Talker.Broadcaster
       }).connect();
       
-      $.each(<%= escape_json @events.to_json %>, function(){
-        Talker.Broadcaster.broadcastEvent(this);
-      });
+      <%= render_events @events %>
       
       // Chat room plugins
       Talker.plugins.push(new Talker.Sender($("#msgbox")));
