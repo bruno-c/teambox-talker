@@ -16,7 +16,7 @@
       Talker.plugins.push(new Talker.ErrorHandler($("#error")));
       <%= install_core_plugins %>
       Talker.plugins.push(new Talker.Sender($("#msgbox")));
-      Talker.plugins.push(new Talker.UserList());
+      Talker.plugins.push(new Talker.Presence($('#people')));
       Talker.plugins.push(new Talker.Scroller());
       Talker.plugins.push(new Talker.MsgCommand());
       Talker.plugins.push(new Talker.Notifier());
