@@ -14,7 +14,7 @@
       Logged in as
       <%= link_to image_tag(avatar_url(current_user), :alt => h(current_user.name)), settings_path, :title => "Logged in as #{h current_user.name}, manage my account", :class => "avatar" %>
       <%= link_to h(current_user.name), settings_path, :title => "Logged in as #{h current_user.name}, manage my account" %>.
-      <%= link_to "My Settings", settings_path, :title => "Manage my settings", :accesskey => "s" %> or
+      <%= link_to "My Settings", settings_path, :title => "Manage my settings", :accesskey => "m" %> or
       <%= link_to "Logout", logout_path, :title => "Logout" %>
     <% else %>
       <%= link_to "Login", login_path, :title => "Login" %>
