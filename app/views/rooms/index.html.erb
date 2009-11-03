@@ -22,7 +22,7 @@
           <% if room.users.empty? %>
             Nobody
           <% else %>
-            <%= room.users.map { |user| image_tag("avatar_default.png", :alt => "Francis") + " #{h user.name}" }.to_sentence %>
+            <%= room.users.map { |user| image_tag(avatar_url(user), :alt => h(user.name)) + " #{h user.name}" }.to_sentence %>
           <% end %>
         </p>
       </div>

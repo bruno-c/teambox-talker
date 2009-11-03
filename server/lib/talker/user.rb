@@ -7,10 +7,6 @@ module Talker
       @info = info || raise(ArgumentError, "User info required")
     end
     
-    def required_info
-      @required_info ||= {"id" => id, "name" => name}.freeze
-    end
-    
     def id
       @id ||= @info["id"].to_i
     end

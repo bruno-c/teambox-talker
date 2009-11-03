@@ -27,7 +27,7 @@ Talker.Logger = function() {
         .addClass(event.private ? 'private' : '')
           .append($('<td/>').addClass('author')
             .append('\n' + event.user.name + '\n')
-            .append($('<img/>').attr('src', '/images/avatar_default.png').attr('alt', event.user.name).addClass('avatar'))
+            .append($('<img/>').attr('src', avatarUrl(event.user)).attr('alt', event.user.name).addClass('avatar'))
             .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
           .append($('<td/>').addClass('message')
             .append($('<blockquote/>')

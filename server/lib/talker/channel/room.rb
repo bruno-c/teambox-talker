@@ -19,7 +19,7 @@ module Talker
       
       def publish_presence(type, user)
         publish_as_json Queues.presence, :type => type, :room => name,
-                                         :user => user.required_info, :time => Time.now.utc.to_i
+                                         :user => user.info, :time => Time.now.utc.to_i
       end
       
       private

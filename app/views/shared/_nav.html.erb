@@ -12,7 +12,7 @@
   <p class="utilities">
     <% if logged_in? %>
       Logged in as
-      <%= link_to image_tag(current_user.avatar_url, :alt => h(current_user.name)), settings_path, :title => "Logged in as #{h current_user.name}, manage my account", :class => "avatar" %>
+      <%= link_to image_tag(avatar_url(current_user), :alt => h(current_user.name)), settings_path, :title => "Logged in as #{h current_user.name}, manage my account", :class => "avatar" %>
       <%= link_to h(current_user.name), settings_path, :title => "Logged in as #{h current_user.name}, manage my account" %>.
       <%= link_to "My Settings", settings_path, :title => "Manage my settings" %> or
       <%= link_to "Logout", logout_path, :title => "Logout" %>

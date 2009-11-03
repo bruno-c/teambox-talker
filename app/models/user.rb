@@ -78,10 +78,6 @@ class User < ActiveRecord::Base
     super(options.merge(:only => [:name, :email, :id]))
   end
 
-  def avatar_url
-    "/images/avatar_default.png"
-  end
-  
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(email_or_username, password)
     return nil if email_or_username.blank? || password.blank?

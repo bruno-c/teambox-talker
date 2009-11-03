@@ -32,7 +32,7 @@ Talker.UserList = function() {
         .attr("id", "user_" + user.id)
         .attr('user_id', user.id)
         .attr('user_name', user.name)
-        .html('<img alt="' + user.name + '" src="/images/avatar_default.png" /> ' + user.name)
+        .html('<img alt="' + user.name + '" src="' + avatarUrl(user) + '" /> ' + user.name)
         .appendTo($('#people'));
         
       presence.animate({opacity: 1.0}, 400);

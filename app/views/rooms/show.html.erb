@@ -8,6 +8,7 @@
     };
     
     Talker.room = {
+      id: <%= @room.id %>,
       name: <%= @room.name.to_json %>
     };
 
@@ -27,8 +28,8 @@
       Talker.client = new Talker.Client({
         host: '<%= Orbited.talker_host %>', 
         port: <%= Orbited.talker_port %>, 
-        room: <%= @room.id %>, 
-        user: <%= {:id => current_user.id, :name => current_user.name, :livetyping => current_user.livetyping}.to_json %>,
+        room: Talker.room.id,
+        user: Talker.currentUser,
         token: <%= current_user.talker_token.to_json %>,
         callbacks: Talker.Broadcaster
       }).connect();

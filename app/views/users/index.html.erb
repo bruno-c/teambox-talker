@@ -13,7 +13,7 @@
     <div class="panel">
       <div class="header">
         <div class="avatar">
-          <%= image_tag user.avatar_url, :alt => h(user.name) %>
+          <%= image_tag avatar_url(user), :alt => h(user.name) %>
         </div>
         <span class="actions">
           <% if user == current_user %>

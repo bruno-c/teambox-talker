@@ -84,7 +84,7 @@ module Talker
     def broadcast_message(obj, to)
       room_required!
       
-      obj["user"] = @user.required_info
+      obj["user"] = @user.info
       obj["time"] = Time.now.utc.to_i
       
       content = obj["content"]

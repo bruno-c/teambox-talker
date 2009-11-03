@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # For testing exception notifier
   map.signup '/ouch', :controller => 'home', :action => 'ouch'
-
+  
   map.resources :users
   map.resources :invites, :member => { :resend => :post }
   map.resource :account
@@ -17,6 +17,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :rooms
   map.resources :pastes
 
+  map.connect "/avatar/:id.jpg", :controller => "avatars", :action => "show"
+  
   map.prism_app "/talker.webapp", :controller => "apps", :action => "show", :format => "webapp"
   map.app "/app", :controller => "apps", :action => "show"
   
