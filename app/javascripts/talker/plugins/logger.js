@@ -2,13 +2,6 @@ Talker.Logger = function() {
   var self = this;
   
   self.onMessageReceived = function(event) {
-    // format content appropriately
-    // if (event.paste && event.paste != 'null'){
-    //   event.content = FormatHelper.formatPaste(data);
-    // } else {
-    //   event.content = FormatHelper.text2html(event.content);
-    // }
-    
     var last_row    = $('#log tr:last');
     var last_author = last_row.attr('author');
     var container;
@@ -67,8 +60,13 @@ Talker.Logger = function() {
   }
 }
 
+
+function getMaximumContentWidth(){
+  return $('#chat_log').width() - $('#log tr td:first').width() - 41;
+}
+
 function resizeLogElements(){
-  var maxWidth = $('#chat_log').width() - $('#log tr td:first').width() - 41;
+  var maxWidth = getMaximumContentWidth();
   
   $('div pre').css('width', maxWidth);
   
