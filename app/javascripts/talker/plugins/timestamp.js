@@ -1,14 +1,18 @@
-Talker.Timestamp = function() {
+Talker.Timestamp = function(reverse) {
   var self = this;
   var interval = 5 * 60;
+  var lastTime = null;
+
+  // reverse = true if events are shown newest first, like in search results
+  reverse = (reverse === true ? -1 : 1);
   
   self.onJoin = 
   self.onLeave = 
   self.onMessageReceived = function(event) {
-    var lastTime = $('#log p:last[time]').attr('time');
-    if (lastTime - event.time < -interval) {
+    if (lastTime == null || (lastTime - event.time) * reverse < -interval) {
       addToLog(event.time, lastTime);
     }
+    lastTime = event.time;
   }
   
   function addToLog(time, lastTime) {

@@ -12,7 +12,9 @@ end
     Talker.currentUser = <%= current_user.to_json %>;
     
     $(function(){
-      <%= install_core_plugins %>
+      <%= install_plugin :timestamp, true %>
+      <%= install_core_plugins :except => :timestamp %>
+      
       <%= render_events @events %>
     });
   //]]>
