@@ -1,7 +1,8 @@
 Talker.ErrorHandler = function() {
   var self = this;
   
-  self.onOpen = function() {
+  self.onOpen =
+  self.onConnected = function() {
     $("#error").hide().html("");
   }
   

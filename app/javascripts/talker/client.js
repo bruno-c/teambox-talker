@@ -70,9 +70,9 @@ Talker.Client = function(options) {
   
   self.connect = function() {
     try {
-      $("iframe[src*='xsdrBridge.html']").remove()
-      
+      $("iframe[src*='xsdrBridge.html']").remove();
       protocol = new LineProtocol(new TCPSocket());
+      
       protocol.onopen = function() {
         self.sendData({
           type: "connect", 
@@ -89,6 +89,7 @@ Talker.Client = function(options) {
         callbacks.onClose();
         self.reconnect();
       }
+      
       protocol.onerror = function(error) {
         self.stopPing();
         callbacks.onError({message: error});
