@@ -5,6 +5,12 @@ Talker.Scroller = function() {
   self.scrollToBottom = function(forceScroll){
     if (self.shouldScrollToBottom() || forceScroll){
       window.scrollTo(0, self.getWindowHeight() + self.getScrollHeight());
+      // _.each([10,20,30,40,50,60,70,80,90,100], function(delay){
+      //   window.setTimeout(function(){
+      //     console.info("deferred scroll");
+      //     window.scrollTo(0, self.getWindowHeight() + self.getScrollHeight());
+      //   }, delay);
+      // });
     }
   }
   
@@ -21,7 +27,7 @@ Talker.Scroller = function() {
   }
   
   self.getScrollHeight = function(){
-    return Math.max(document.documentElement.offsetHeight, document.body.scrollHeight) - 25;// + 25 for padding and extra display stuff. 
+    return Math.max(document.documentElement.offsetHeight, document.body.scrollHeight) - 400;// + 25 for padding and extra display stuff. 
   }
   
   self.onJoin =

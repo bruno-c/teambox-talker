@@ -17,8 +17,10 @@ Talker.Logger = function() {
     if (last_author == event.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !event.private){ // only append to existing blockquote group
       recipient = last_row.find('blockquote');
       appendage = $('<p/>').attr('time', event.time).html(event.content);
+      target    = appendage;
     } else {
-      recipient = $('#log');
+      recipient  = $('#log');
+      var target = $('<p/>').attr('time', event.time).html(event.content);
       appendage = $('<tr/>')
         .attr('author', event.user.name)
         .addClass('received')
@@ -33,17 +35,17 @@ Talker.Logger = function() {
             .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
           .append($('<td/>').addClass('message')
             .append($('<blockquote/>')
-              .append($('<p/>').attr('time', event.time)
-                .html(event.content))));
+              .append(target)));
     }
     
-    recipient.append(appendage);
-    // Talker.trigger("FormatMessage", $.extend(event, {
-    //   target: appendage, 
-    //   complete: function(){
-    //     recipient.append(appendage);
-    //   }
-    // }));
+    // recipient.append(appendage);
+    $.extend(event, {
+      target: target, 
+      complete: function(){
+        recipient.append(appendage);
+      }
+    });
+    Talker.trigger("FormatMessage", event);
   }
   
   self.onJoin = function(event) {
