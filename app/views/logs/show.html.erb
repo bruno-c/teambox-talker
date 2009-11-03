@@ -1,25 +1,15 @@
 <% @title = "Chat Logs of #{@room.name} for " + human_date(@date) %>
 
-<h2><%=h @title %></h2>
-
-<div id="chat_log">
-  <table id="log">
-  </table>
-</div>
-
-
 <% content_for :head do %>
   <script type="text/javascript" charset="utf-8">
   //<![CDATA[
     Talker.currentUser = <%= current_user.to_json %>;
     
-    <%= install_core_plugins %>
-    
     $(function(){
+      <%= install_core_plugins %>
+      Talker.plugins.push(new Talker.UserList($('#people')));
       
-      $.each(<%= escape_json @events.to_json %>, function(){
-        Talker.Broadcaster.broadcastEvent(this);
-      });
+      <%= render_events @events %>
       
       var timestamp = window.location.href.match(/#(\d+)/);
       if (timestamp && timestamp[1]){
@@ -34,4 +24,20 @@
     });
   //]]>
   </script>
+<% end %>
+
+<h2><%=h @title %></h2>
+
+<div id="chat_log">
+  <table id="log">
+  </table>
+</div>
+
+<% content_for :sidebar do %>
+  <div id="room" class="panel">
+    <div class="content">
+      <h4>Users in this log</h4>
+      <ul class="people" id="people"></ul>
+    </div>
+  </div>
 <% end %>

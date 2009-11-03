@@ -13,3 +13,7 @@ desc "Configure mysql database"
 task "db:config" => :environment do
   ActiveRecord::Base.connection.execute "SET GLOBAL time_zone = '+0:00';"
 end
+
+task :jsmin => "sprockets:install_script" do
+  sh "ruby lib/jsmin.rb < public/talker.js > public/talker.min.js && mv -f public/talker.min.js public/talker.js"
+end

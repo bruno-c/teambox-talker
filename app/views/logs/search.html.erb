@@ -6,29 +6,24 @@ else
 end
 %>
 
-<h2><%=h @title %></h2>
+<% content_for :head do %>
+  <script type="text/javascript" charset="utf-8">
+  //<![CDATA[
+    Talker.currentUser = <%= current_user.to_json %>;
+    
+    $(function(){
+      <%= install_plugin :timestamp, true %>
+      <%= install_core_plugins :except => :timestamp %>
+      
+      <%= render_events @events %>
+    });
+  //]]>
+  </script>
+<% end %>
 
-<%= render :partial => "search_form" %>
+<h2><%=h @title %></h2>
 
 <div id="chat_log">
   <table id="log">
   </table>
 </div>
-
-<% content_for :head do %>
-  <script type="text/javascript" charset="utf-8">
-  //<![CDATA[
-    var Talker.currentUser = {
-      id: <%= current_user.id %>,
-      name: <%= current_user.name.to_json %>,
-      email: <%= current_user.email.to_json %>
-    };
-    
-    $(function(){
-      $.each(<%= escape_json @events.to_json %>, function(){
-        Receiver.push(this, true, true);
-      });
-    });
-  //]]>
-  </script>
-<% end %>

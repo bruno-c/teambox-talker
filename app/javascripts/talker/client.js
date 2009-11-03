@@ -5,7 +5,7 @@ Talker.Client = function(options) {
   var callbacks = options.callbacks;
   var protocol = null;
   var pingTimer = null;
-  var pingInterval = 20000; // 20 sec
+  var pingInterval = 10000;
   var reconnectInterval = 2000;
   var reconnect = true;
 
