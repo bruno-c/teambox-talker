@@ -14,6 +14,7 @@ end
     $(function(){
       <%= install_plugin :timestamp, true %>
       <%= install_core_plugins :except => :timestamp %>
+      <%= install_plugin :search_results, true %>
       
       <%= render_events @events %>
     });
