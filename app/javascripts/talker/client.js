@@ -69,32 +69,38 @@ Talker.Client = function(options) {
   };
   
   self.connect = function() {
-    protocol = new LineProtocol(new TCPSocket());
+    try {
+      $("iframe[src*='xsdrBridge.html']").remove()
+      
+      protocol = new LineProtocol(new TCPSocket());
+      protocol.onopen = function() {
+        self.sendData({
+          type: "connect", 
+          room: options.room, 
+          user: options.user, 
+          token: options.token
+        });
+        callbacks.onOpen();
+        self.resetPing();
+      }
     
-    protocol.onopen = function() {
-      self.sendData({
-        type: "connect", 
-        room: options.room, 
-        user: options.user, 
-        token: options.token
-      });
-      callbacks.onOpen();
-      self.resetPing();
-    }
+      protocol.onclose = function() {
+        self.stopPing();
+        callbacks.onClose();
+        self.reconnect();
+      }
+      protocol.onerror = function(error) {
+        self.stopPing();
+        callbacks.onError({message: error});
+        self.reconnect();
+      }
     
-    protocol.onclose = function() {
-      self.stopPing();
-      callbacks.onClose();
+      protocol.onlinereceived = onLineReceived;
+      protocol.open(options.host, options.port, false);
+    } catch (e) {
+      console.warn("Error connecting, reconnecting: " + e);
       self.reconnect();
     }
-    protocol.onerror = function(error) {
-      self.stopPing();
-      callbacks.onError({message: error});
-      self.reconnect();
-    }
-    
-    protocol.onlinereceived = onLineReceived;
-    protocol.open(options.host, options.port, false);
     
     return self;
   };
