@@ -9,13 +9,7 @@ var FormatHelper = {
 
     var content = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         
-    if (content.match(multiline_expression)){
-      // setup content message inside a div or something with overflow scroll/auto
-      return '<div><pre>'
-            +   content 
-            + '</pre></div>';
-      // add a link to a message display that would show the message in raw text
-    } else if (content.match(image_expression)){
+    if (content.match(image_expression)){
       return content.replace(image_expression, function(locator){
         return '<a href="' 
           + locator 
@@ -23,17 +17,6 @@ var FormatHelper = {
           + locator 
           + '" style="visibility: hidden;" />'
           + '</a>';
-      });
-    } else if (content.match(youtube_expression)){
-      return content.replace(youtube_expression, function(locator){
-        return locator.replace(youtube_expression, '<object width="425" height="355">'
-          + '<param name="movie" value="http://www.youtube.com/v/$1"></param>'
-          + '<param name="allowFullScreen" value="true"></param>'
-          + '<embed src="http://www.youtube.com/v/$1"'
-          + ' type="application/x-shockwave-flash"'
-          + '  width="425" height="355" '
-          + '  allowfullscreen="true"></embed>'
-          + '</object>');
       });
     } else if (content.match(vimeo_expression)){
       return content.replace(vimeo_expression, function(locator){
@@ -59,19 +42,6 @@ var FormatHelper = {
     } else {
       return content;
     }
-  },
-  
-  formatPaste: function(data) {
-    var msg = "<a target='_blank' title='Paste #" + data.paste.id +
-              "' href='" + window.location.protocol + "//" + window.location.host + "/pastes/" + data.paste.id +
-              "'>View paste</a>";
-    if (data.paste.lines > data.paste.preview_lines) {
-      msg += " <span class='more_lines'>(" + (data.paste.lines - data.paste.preview_lines) + " more lines)</span>"
-    }
-    
-    msg += FormatHelper.text2html(data.content);
-    
-    return msg;
   },
   
   timestamp2date: function(timestamp){
