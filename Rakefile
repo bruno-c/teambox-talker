@@ -15,5 +15,5 @@ task "db:config" => :environment do
 end
 
 task :jsmin => "sprockets:install_script" do
-  sh "ruby lib/jsmin.rb < public/talker.js > public/talker.min.js && mv public/talker{.min,}.js"
+  sh "ruby lib/jsmin.rb < public/talker.js > public/talker.min.js && mv -f public/talker.min.js public/talker.js"
 end
