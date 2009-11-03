@@ -7,7 +7,6 @@
   <%= stylesheet_link_tag "print.css", :media => "print" %>
   <!--[if IE]><%= stylesheet_link_tag "ie.css", :media => "screen, projection" %><![endif]-->
   <%= sprockets_include_tag %>
-  <link rel="webapp" href="<%= prism_app_path %>" title="Prism Talker App">
   <%= yield :head %>
 </head>
 
@@ -33,7 +32,6 @@
       &copy Talker
       &mdash;
       <%= mail_to "info@talkerapp.com", "Contact Us" %>
-      <%= link_to "Desktop App", app_path %>
     </div>
   </div>
 

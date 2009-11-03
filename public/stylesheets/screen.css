@@ -377,7 +377,8 @@ a.button, button {
     line-height: 31px; }
   a.button.small, button.small {
     font-size: 12px;
-    line-height: 20px; }
+    line-height: 20px;
+    padding: 0 6px; }
   a.button.negative, button.negative {
     background: #924f6b;
     border-top-color: #b59ca7;
