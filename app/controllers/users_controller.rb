@@ -35,7 +35,7 @@ class UsersController < ApplicationController
       flash[:notice] = "User deleted!"
       @user.destroy
     else
-      flash[:error] = "Can't delete a user that already logged in."
+      flash[:error] = "Cannot delete a user that has already logged in."
     end
     redirect_to users_path
   end
