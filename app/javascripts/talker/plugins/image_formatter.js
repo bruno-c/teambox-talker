@@ -6,7 +6,7 @@ Talker.ImageFormatter = function() {
     var image_match = event.content.match(image_expression);
     
     if ($('#talker_image_preloading_div').length == 0){
-      $("<div/>")
+      $("<div/>").attr('id', 'talker_image_preloading_div')
         .css({position:'absolute', top: '-100px', left: '-100px', height: '100px', width: '100px'})
         .appendTo(document.body);
     }
