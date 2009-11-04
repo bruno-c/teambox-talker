@@ -40,7 +40,7 @@ class PasswordsController < ApplicationController
     
     if @user.update_attributes(params[:user])
       flash[:notice] = "Excellent! Password updated."
-      redirect_to home_url
+      redirect_to rooms_path
     else
       render :show
     end
