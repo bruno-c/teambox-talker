@@ -9,4 +9,7 @@ $(function() {
     return false;
   });
 
+  window.setTimeout(function(){
+    $('#invitees').focus(); 
+  }, 10);
 });
