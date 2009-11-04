@@ -2,7 +2,7 @@ class SettingsController < ApplicationController
   before_filter :login_required
   
   def show
-    @user = current_user
+    @user = current_user.reload
   end
   
   def update
