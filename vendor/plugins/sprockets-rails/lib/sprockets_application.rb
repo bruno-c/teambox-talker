@@ -4,7 +4,7 @@ module SprocketsApplication
   
   class << self
     def routes(map)
-      map.connect "/talker.js", :controller => "sprockets", :action => "show"
+      map.connect "/javascripts/talker.js", :controller => "sprockets", :action => "show"
     end
     
     def source
@@ -34,7 +34,7 @@ module SprocketsApplication
       end
 
       def asset_path
-        File.join(Rails.public_path, "talker.js")
+        File.join(Rails.public_path, "javascripts", "talker.js")
       end
 
       def source_is_unchanged?

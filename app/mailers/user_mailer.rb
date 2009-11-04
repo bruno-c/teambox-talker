@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  FROM = "no-reply@talkerapp.com"
+  FROM = "Talker <no-reply@talkerapp.com>"
   
   def invitation(inviter, url, email)
     recipients  email

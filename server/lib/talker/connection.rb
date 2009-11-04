@@ -31,7 +31,7 @@ module Talker
       when "ping"
         @room.publish_presence "ping", @user if @user && @room
       else
-        error "Unknown message type: " + message["type"]
+        error "Unknown message type: " + message["type"].inspect
       end
     rescue ProtocolError => e
       error e.message
