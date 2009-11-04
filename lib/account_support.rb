@@ -18,9 +18,8 @@ module AccountSupport
       current_account
     end
     
-    # URL helpers
-    def home_url(account=current_account)
-      rooms_url(:host => "#{account.subdomain}.#{request.domain}#{request.port_string}")
+    def account_host(account=current_account)
+      "#{account.subdomain}.#{request.domain}#{request.port_string}"
     end
     
     def top_level_domain_required

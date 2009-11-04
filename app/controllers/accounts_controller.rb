@@ -1,11 +1,15 @@
 class AccountsController < ApplicationController
   before_filter :top_level_domain_required, :only => [:new, :create]
+  ssl_required :new, :create
   
   layout "dialog"
   
   def new
     @account = Account.new
     @user = User.new
+  end
+  
+  def welcome
   end
   
   def create
@@ -19,9 +23,8 @@ class AccountsController < ApplicationController
       @user.activate!
       self.current_user = @user
       remember_me!
-
-      flash[:notice] = "Thanks for signing up!"
-      redirect_to home_url(@account)
+      
+      redirect_to welcome_url(:host => account_host(@account))
     end
     
   rescue ActiveRecord::RecordInvalid

@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title><%=h @room.name %> &#171; TalkerApp</title>
-  <%= stylesheet_link_tag "screen.css", :media => "screen, projection" %>
-  <%= stylesheet_link_tag "print.css", :media => "print" %>
-  <!--[if IE]><%= stylesheet_link_tag "ie.css", :media => "screen, projection" %><![endif]-->
-  <%= sprockets_include_tag %>
-  <%= yield :head %>
-</head>
-
-<body id="<%= @controller.controller_name %>_controller" class="<%= current_view %>">
+<%= render :partial => "layouts/header" %>
 
   <%= render :partial => "shared/nav" %>
 

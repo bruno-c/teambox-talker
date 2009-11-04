@@ -2,7 +2,7 @@
 
   <h2><%= @title = "My Settings" %></h2>
 
-  <% form_for @user, :url => settings_path, :html => { :class => "lw80" } do |f| %>
+  <% form_for @user, :url => settings_path, :html => { :class => "lw80", :autocomplete => "off" } do |f| %>
 
     <%= f.error_messages %>
 
@@ -20,10 +20,6 @@
         <%= f.label :avatar %>
         <%= image_tag avatar_url(@user) %>
         Get an avatar on <%= link_to "Gravatar", "http://en.gravatar.com/site/signup", :title => "Signup to get your own gravatar" %>
-      </p>
-      <p>
-        <%= f.label :time_zone %>
-        <%= f.time_zone_select :time_zone %>
       </p>
       <p class="indent submit">
         <%= ok_button "Update" %>

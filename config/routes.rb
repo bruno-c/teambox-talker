@@ -5,9 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'accounts', :action => 'create'
   map.signup '/signup', :controller => 'accounts', :action => 'new'
-  
-  # For testing exception notifier
-  map.signup '/ouch', :controller => 'home', :action => 'ouch'
+  map.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
   
   map.resources :users
   map.resources :invites, :member => { :resend => :post }
@@ -29,6 +27,4 @@ ActionController::Routing::Routes.draw do |map|
   map.room_log "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "show"
   map.today_log "/rooms/:room_id/logs/today", :controller => "logs", :action => "today"
   map.search_room "/rooms/:room_id/search", :controller => "logs", :action => "search"
-  
-  map.root :controller => "home"
 end

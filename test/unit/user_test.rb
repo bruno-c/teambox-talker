@@ -6,6 +6,15 @@ class UserTest < ActiveSupport::TestCase
     assert user.valid?, user.errors.full_messages.to_sentence
     assert user.pending?
   end
+  
+  def test_name_validation
+    assert_nil create_user(:name => "ma").errors.on(:name)
+    assert_nil create_user(:name => "ma@ossum").errors.on(:name)
+    assert_nil create_user(:name => "ma.n_i-ce").errors.on(:name)
+    assert_nil create_user(:name => "Marc-André").errors.on(:name)
+    assert_not_nil create_user(:name => "").errors.on(:name)
+    assert_not_nil create_user(:name => "ma dude").errors.on(:name)
+  end
 
   def test_activating_should_set_timestamp
     user = create_user

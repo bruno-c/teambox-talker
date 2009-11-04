@@ -1,33 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title><%= strip_tags @title || "Home" %> &#171; TalkerApp</title>
-  <%= stylesheet_link_tag "screen.css", :media => "screen, projection" %>
-  <%= stylesheet_link_tag "print.css", :media => "print" %>
-  <!--[if IE]><%= stylesheet_link_tag "ie.css", :media => "screen, projection" %><![endif]-->
-  <%= sprockets_include_tag %>
-  <%= yield :head %>
-</head>
+<%= render :partial => "layouts/header" %>
 
-<body id="<%= @controller.controller_name %>_controller" class="<%= current_view %>">
-
-  <div id="content">
-    <div id="main" class="dialog">
-      <%- flash.each do |name, message| -%>
-        <div id="flash_<%= name %>" class="flash">
-          <%= message %>
-        </div>
-      <%- end -%>
-      <%= yield %>
-    </div>
-    
-    <div id="footer">
-      &copy Talker
-      &mdash;
-      <%= mail_to "info@talkerapp.com", "Contact Us" %>
-    </div>
+<div id="content">
+  
+  <div id="main" class="dialog">
+    <%= flash_tags %>
+    <%= yield %>
   </div>
 
-</body>
-</html>
+</div>
+
+<%= render :partial => "layouts/footer" %>

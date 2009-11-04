@@ -15,9 +15,10 @@ module TimeZoneSupport
 
     def set_time_zone
       if logged_in?
-        if current_user.time_zone.nil? && time_zone = browser_time_zone
-          logger.info "Setting time zone to #{time_zone.name}"
-          current_user.update_attribute(:time_zone, time_zone.name)
+        @browser_time_zone = browser_time_zone
+        if @browser_time_zone && current_user.time_zone != @browser_time_zone
+          logger.info "Setting time zone to #{@browser_time_zone.name}"
+          current_user.update_attribute(:time_zone, @browser_time_zone.name)
         end
         Time.zone = current_user.time_zone
       else

@@ -1,7 +1,5 @@
 // Pass timezone offset from the browser to backend using a magic cookie
-if (!$.cookie('tzoffset')) {
-  $.cookie("tzoffset", (new Date()).getTimezoneOffset());
-}
+$.cookie("tzoffset", (new Date()).getTimezoneOffset());
 
 $(function() {
 

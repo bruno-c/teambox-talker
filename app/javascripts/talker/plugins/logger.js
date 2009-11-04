@@ -4,13 +4,16 @@ Talker.Logger = function() {
   self.onMessageReceived = function(event) {
     var last_row    = $('#log tr:last');
     var last_author = last_row.attr('author');
+    
+    if (event.user && event.user.name){
+      event.user.name = h(event.user.name);
+    }
 
     $.extend(event, {
       complete: function(content){
         var element;
         if (last_author == event.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !event.private){ // only append to existing blockquote group
           element = last_row.find('blockquote');
-          
         } else {
           $('#log').append($('<tr/>')
             .attr('author', event.user.name)
@@ -40,19 +43,19 @@ Talker.Logger = function() {
   }
   
   self.onJoin = function(event) {
-    var element = $('<tr/>').attr('author', event.user.name).addClass('received').addClass('notice').addClass('user_' + event.user.id).addClass('event')
+    var element = $('<tr/>').attr('author', h(event.user.name)).addClass('received').addClass('notice').addClass('user_' + event.user.id).addClass('event')
       .append($('<td/>').addClass('author'))
       .append($('<td/>').addClass('message')
-        .append($('<p/>').attr('time', event.time).html(event.user.name + ' has entered the room')));
+        .append($('<p/>').attr('time', event.time).html(h(event.user.name) + ' has entered the room')));
     
     element.appendTo('#log');
   }
   
   self.onLeave = function(event) {
-    var element = $('<tr/>').attr('author', event.user.name).addClass('received').addClass('notice').addClass('user_' + event.user.id).addClass('event')
+    var element = $('<tr/>').attr('author', h(event.user.name)).addClass('received').addClass('notice').addClass('user_' + event.user.id).addClass('event')
       .append($('<td/>').addClass('author'))
       .append($('<td/>').addClass('message')
-        .append($('<p/>').attr('time', event.time).html(event.user.name + ' has left the room')));
+        .append($('<p/>').attr('time', event.time).html(h(event.user.name) + ' has left the room')));
     
     element.appendTo('#log');
   }
