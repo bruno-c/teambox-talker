@@ -10,17 +10,6 @@
       Talker.plugins.push(new Talker.UserList($('#people')));
       
       <%= render_events @events %>
-      
-      var timestamp = window.location.href.match(/#(\d+)/);
-      if (timestamp && timestamp[1]){
-        window.setTimeout(function(){
-          $('p[time=' + timestamp[1] + ']').scrollToCenter({
-            complete: function(){
-              $('p[time=' + timestamp[1] + ']').css({border: '1px dashed grey'}).highlight();
-            }
-          });
-        },10);
-      }  
     });
   //]]>
   </script>

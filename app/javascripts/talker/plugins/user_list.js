@@ -3,9 +3,6 @@ Talker.UserList = function(element) {
   
   function add(user) {
     if ($("#user_" + user.id).length < 1) {
-      console.info("Adding user");
-      console.info(user);
-      console.info(element[0]);
       $('<li/>')
         .attr("id", "user_" + user.id)
         .attr('user_id', user.id)

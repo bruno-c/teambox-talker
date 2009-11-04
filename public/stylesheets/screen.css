@@ -655,14 +655,12 @@ a.button, button {
       #chat_log table tr.private.me td.message blockquote {
         background: #fcf6ee;
         border: 2px dotted #f8e4c9; }
-      #chat_log table tr.logs td {
-        padding-bottom: 15px; }
-        #chat_log table tr.logs td a.logs {
+      #chat_log table tr td.log {
+        width: 140px; }
+        #chat_log table tr td.log a {
           float: right;
-          background: #606060;
-          background-image: url('../../images/icons/calendar--arrow.png');
-          background-repeat: no-repeat;
-          background-position: 3px center;
+          background: url('../../images/icons/calendar--arrow.png') no-repeat 3px center;
+          background-color: #606060;
           padding: 0 5px 0 21px;
           height: 20px;
           line-height: 20px;

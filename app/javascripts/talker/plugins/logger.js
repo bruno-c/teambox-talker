@@ -7,9 +7,10 @@ Talker.Logger = function() {
 
     $.extend(event, {
       complete: function(content){
+        var element;
         if (last_author == event.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !event.private){ // only append to existing blockquote group
-          last_row.find('blockquote')
-            .append($('<p/>').attr('time', event.time).html(content));
+          element = last_row.find('blockquote');
+          
         } else {
           $('#log').append($('<tr/>')
             .attr('author', event.user.name)
@@ -24,9 +25,14 @@ Talker.Logger = function() {
                 .append($('<img/>').attr('src', avatarUrl(event.user)).attr('alt', event.user.name).addClass('avatar'))
                 .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
               .append($('<td/>').addClass('message')
-                .append($('<blockquote/>')
-                  .append($('<p/>').attr('time', event.time).html(content)))));
+                .append(element = $('<blockquote/>'))));
         }
+        
+        element.append($('<p/>').attr('id', "event_" + event.time).
+                                 attr('room', (Talker.room || event.room).id). // HACK ...
+                                 attr('time', event.time).
+                                 html(content));
+                                 
         Talker.trigger("PostFormatMessage", event);
       }
     });

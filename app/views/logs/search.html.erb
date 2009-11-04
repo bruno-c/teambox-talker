@@ -17,8 +17,16 @@ end
       
       <%= render_events @events %>
       
-      $("tr#event").each(function() {
-        
+      $("tr.event").each(function() {
+        var element = $(this).find(".message p");
+        var room = element.attr("room");
+        var time = element.attr("time");
+        $(this).append(
+          $("<td/>").addClass("log").html(
+            $("<a/>").attr("href", "/rooms/" + room + "/logs/" + FormatHelper.getUrlDate(time) + "#event_" + time).
+                      text("View in context")
+          )
+        );
       });
     });
   //]]>

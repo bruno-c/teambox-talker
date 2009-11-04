@@ -2,6 +2,7 @@
   $.fn.scrollToCenter = function(opts){
     var html = html || ($('body')[0].scrollHeight == $('html')[0].scrollHeight ? $('body')[0] : $('html')[0]);
     var element = $(this).get(0), top = 0, left = 0;
+    opts = opts || {};
   
     do {
       top  += element.offsetTop  || 0;
