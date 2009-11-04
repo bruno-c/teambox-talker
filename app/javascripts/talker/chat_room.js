@@ -3,7 +3,9 @@ function focusMsgBox() {
   if (msgbox){
     setCaretTo(msgbox, msgbox.value.length);
     msgbox.focus();
+    return true;
   }
+  return false;
 };
 
 $(function() {
@@ -33,8 +35,9 @@ $(function() {
       case 17:  // Ctrl
         break;
       case 13:  // enter
-        focusMsgBox();
-        e.preventDefault();
+        if (focusMsgBox()){
+          e.preventDefault();
+        }
         break;
       default:
         focusMsgBox();
