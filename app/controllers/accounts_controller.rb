@@ -1,5 +1,6 @@
 class AccountsController < ApplicationController
   before_filter :top_level_domain_required, :only => [:new, :create]
+  ssl_required :new, :create
   
   layout "dialog"
   
