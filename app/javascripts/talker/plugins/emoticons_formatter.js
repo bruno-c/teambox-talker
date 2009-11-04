@@ -10,7 +10,7 @@ Talker.EmoticonsFormatter = function() {
                   new RegExp(searchText, 'g') : searchText,
           childNodes = (searchNode || document.body).childNodes,
           cnLength = childNodes.length,
-          excludes = 'html,head,style,title,link,meta,script,object,iframe';
+          excludes = 'html,head,style,title,link,meta,script,object,iframe,pre';
       while (cnLength--) {
           var currentNode = childNodes[cnLength];
           if (currentNode.nodeType === 1 &&
@@ -38,7 +38,11 @@ Talker.EmoticonsFormatter = function() {
   
   self.onPostFormatMessage = function(event){
     $('#log p:last').each(function(){
-      findAndReplace(/:-*\)/, '<img src="/images/icons/smiley.png" class="emoticon" width="16" height="16" alt=":-)" />', $(this).get(0));
+      findAndReplace(/:-*\)/, '<img src="/images/icons/smiley.png" class="emoticon" width="16" height="16" alt=":-)" title="smiling" />',  $(this).get(0));
+      findAndReplace(/:-*D/, '<img src="/images/icons/smiley-grin.png" class="emoticon" width="16" height="16" alt=":-)" title="grin" />', $(this).get(0));
+      findAndReplace(/:-*\(/, '<img src="/images/icons/smiley-sad.png" class="emoticon" width="16" height="16" alt=":-(" title="sad" />', $(this).get(0));
+      findAndReplace(/;-*\(/, '<img src="/images/icons/smiley-cry.png" class="emoticon" width="16" height="16" alt=";-(" title="cry" />', $(this).get(0));
+      findAndReplace(/B-*\)/, '<img src="/images/icons/smiley-cool.png" class="emoticon" width="16" height="16" alt="B-)" title="cool" />', $(this).get(0));
     });
   }
 };
