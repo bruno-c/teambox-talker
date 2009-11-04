@@ -7,6 +7,7 @@ class Account < ActiveRecord::Base
   
   validates_presence_of :subdomain
   validates_uniqueness_of :subdomain
+  validates_format_of :subdomain, :with => /\A[A-Z0-9\-]+\z/i
   validates_exclusion_of :subdomain, :in => %w(www mail smtp ssh ftp dev chat service api admin)
   
   attr_accessor :invitation_code

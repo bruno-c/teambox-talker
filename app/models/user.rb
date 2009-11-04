@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
   
   validates_presence_of     :name
   validates_uniqueness_of   :name,     :scope => :account_id
-  validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message
+  validates_format_of       :name,     :with => /\A[^[:cntrl:]\\<>\/&\s]*\z/,
+                                       :message => "should not contain non-printing characters \\, <, >, & and spaces"
   validates_length_of       :name,     :maximum => 100
 
   validates_presence_of     :email
