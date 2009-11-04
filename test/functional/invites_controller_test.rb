@@ -24,7 +24,8 @@ class InvitesControllerTest < ActionController::TestCase
     get :show, :id => users(:quentin).perishable_token
     assert_nil flash[:error]
     assert_not_nil flash[:notice]
-    assert_redirected_to settings_path
+    assert_response :success, @response.body
+    assert_template :show
   end
 
   def test_show_active_user
