@@ -36,6 +36,7 @@
       Talker.plugins.push(new Talker.Notifier());
       Talker.plugins.push(new Talker.SystemNotification());
       Talker.plugins.push(new Talker.TitleNotification());
+      Talker.plugins.push(new Talker.LogSweeper($("#log")));
       
       Talker.trigger("Loaded");
       
