@@ -780,6 +780,20 @@ div.panel {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px; }
 
+#welcome div.content p {
+  padding: 6px; }
+#welcome div.content .footer {
+  margin-top: 30px; }
+#welcome div.content ul {
+  margin: 6px 20px; }
+  #welcome div.content ul li {
+    background: url("/images/icons/arrow-000-small.png") no-repeat left center;
+    padding: 1px;
+    padding-left: 21px;
+    list-style: none; }
+  #welcome div.content ul.links {
+    font-size: 20px; }
+
 #sidebar {
   z-index: 100; }
   #sidebar #room .description {
@@ -862,7 +876,7 @@ div.flash {
 div.info {
   margin: 0 0 1.5em;
   color: #0f3f55;
-  padding: 10px 10px 10px 33px;
+  padding: 11px 10px 10px 33px;
   border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;

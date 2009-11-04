@@ -9,6 +9,9 @@ class AccountsController < ApplicationController
     @user = User.new
   end
   
+  def welcome
+  end
+  
   def create
     logout_keeping_session!
     @account = Account.new(params[:account])
@@ -20,9 +23,8 @@ class AccountsController < ApplicationController
       @user.activate!
       self.current_user = @user
       remember_me!
-
-      flash[:notice] = "Thanks for signing up!"
-      redirect_to home_url(@account)
+      
+      redirect_to welcome_url(:host => account_host(@account))
     end
     
   rescue ActiveRecord::RecordInvalid

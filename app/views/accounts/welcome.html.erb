@@ -1,0 +1,19 @@
+<div id="welcome" class="sheet">
+  <h2><%= @title = "Welcome to Talker" %></h2>
+  
+  <div class="content">
+    <p>Thank you for trying our app!</p>
+
+    <p>We're in beta, so things might break. If you find any bugs, please let us at <%= mail_to "info@talkerapp.com" %>.</p>
+    <p>To get started, you can:</p>
+    <ul class="links">
+      <li><%= link_to "Invite your colleagues", invites_path %></li>
+      <li><%= link_to "Start chatting now", room_path(current_account.rooms.first) %></li>
+    </ul>
+  
+    <p class="footer">
+      Thanks,<br/>
+      <em>- <%= mail_to "info@talkerapp.com", "The Talker Team" %></em>
+    </p>
+  </div>
+</div>
