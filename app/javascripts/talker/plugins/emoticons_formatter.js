@@ -35,12 +35,12 @@ Talker.EmoticonsFormatter = function() {
           parent.removeChild(currentNode);
       }
   }
-  
+  // :-)) :-) >:-) :-D :-( ;-( B-) :-S :-O x-| :-P
   self.onPostFormatMessage = function(event){
     $('#log p:last').each(function(){
       findAndReplace(/:-*\)\)/i, '<img src="/images/icons/smiley-lol.png" class="emoticon" width="16" height="16" alt=":-O" title="laughing" />', $(this).get(0));
-      findAndReplace(/>:-*\)/i, '<img src="/images/icons/smiley-evil.png" class="emoticon" width="16" height="16" alt=":-O" title="evil" />', $(this).get(0));
       findAndReplace(/:-*\)/, '<img src="/images/icons/smiley.png" class="emoticon" width="16" height="16" alt=":-)" title="smiling" />',  $(this).get(0));
+      findAndReplace(/>:-*\)/i, '<img src="/images/icons/smiley-evil.png" class="emoticon" width="16" height="16" alt=":-O" title="evil" />', $(this).get(0));
       findAndReplace(/:-*D/, '<img src="/images/icons/smiley-grin.png" class="emoticon" width="16" height="16" alt=":-)" title="grin" />', $(this).get(0));
       findAndReplace(/:-*\(/, '<img src="/images/icons/smiley-sad.png" class="emoticon" width="16" height="16" alt=":-(" title="sad" />', $(this).get(0));
       findAndReplace(/;-*\(/, '<img src="/images/icons/smiley-cry.png" class="emoticon" width="16" height="16" alt=";-(" title="cry" />', $(this).get(0));
