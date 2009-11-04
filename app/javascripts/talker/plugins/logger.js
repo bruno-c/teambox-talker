@@ -4,13 +4,7 @@ Talker.Logger = function() {
   self.onMessageReceived = function(event) {
     var last_row    = $('#log tr:last');
     var last_author = last_row.attr('author');
-    var recipient;
-    var container;
-    var appendage; 
-    var target;
-    var complete;
-    
-    // recipient.append(appendage);
+
     $.extend(event, {
       complete: function(content){
         if (last_author == event.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !event.private){ // only append to existing blockquote group
@@ -33,6 +27,7 @@ Talker.Logger = function() {
                 .append($('<blockquote/>')
                   .append($('<p/>').attr('time', event.time).html(content)))));
         }
+        Talker.trigger("PostFormatMessage", event);
       }
     });
     Talker.trigger("FormatMessage", event);

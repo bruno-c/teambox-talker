@@ -36,7 +36,7 @@ Talker.Scroller = function() {
   self.onMessageReceived = function(event) {
     self.scrollToBottom();
   }
-
+  
   self.onMessageSent = function(event) {
     self.scrollToBottom(true);
   }
