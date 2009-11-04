@@ -43,7 +43,7 @@ class InvitesController < ApplicationController
     end
     
     if success_count > 0
-      flash[:notice] = "Yeah! #{success_count} user(s) were invited! You can now edit permissions."
+      flash[:notice] = "Yeah! #{success_count} user(s) invited! You can now edit permissions."
       redirect_to users_path
     else
       render :index
