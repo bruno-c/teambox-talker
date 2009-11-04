@@ -23,7 +23,7 @@
         <%= f.label :subdomain, "http://", :class => "inline" %>
         <%= f.text_field :subdomain, :size => 15 %>
         <%= f.label :subdomain, ".talkerapp.com", :class => "inline" %>
-        <label class="description">You might enter your organization name here.</label>
+        <label class="description">You might enter your organization name here. Use only letters, numbers and <code>-</code>.</label>
       </p>
     </fieldset>
     
@@ -37,7 +37,7 @@
         <p>
           <%= uf.label :name %>
           <%= uf.text_field :name, :size => 20 %>
-          <label class="description">This will be your user name when you chat.</label>
+          <label class="description">This will be your user name when you chat. Avoid non-printing characters, <code>\</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&amp;</code> and spaces</label>
         </p>
         <p>
           <%= uf.label :email %>

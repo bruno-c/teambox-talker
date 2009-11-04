@@ -42,9 +42,9 @@ class InvitesControllerTest < ActionController::TestCase
     assert_difference 'User.count', 2 do
       assert_difference 'ActionMailer::Base.deliveries.size', 2 do
         post :create, :invitees => "one@example.com\ntwo@example.com"
+        assert_nil flash[:error]
       end
     end
-    assert_nil flash[:error]
     assert_redirected_to users_path
   end
   
@@ -53,9 +53,9 @@ class InvitesControllerTest < ActionController::TestCase
     assert_difference 'User.count', 1 do
       assert_difference 'ActionMailer::Base.deliveries.size', 1 do
         post :create, :invitees => "one@example.com\nblablabla"
+        assert_not_nil flash[:error]
       end
     end
-    assert_not_nil flash[:error]
     assert_redirected_to users_path
   end
   
