@@ -4,6 +4,6 @@ module UrlHelper
   end
   
   def root_url
-    "#{request.protocol}://#{request.host}/"
+    "#{request.protocol}#{request.host_with_port}/"
   end
 end
