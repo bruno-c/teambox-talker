@@ -2,7 +2,7 @@
 
   <h2><%= @title = "My Settings" %></h2>
 
-  <% form_for @user, :url => settings_path, :html => { :class => "lw80" } do |f| %>
+  <% form_for @user, :url => settings_path, :html => { :class => "lw80", :autocomplete => "off" } do |f| %>
 
     <%= f.error_messages %>
 

@@ -1,8 +1,6 @@
 module FormHelper
   def submit_button(title="Submit", options={})
     options[:class] = [options.delete(:class), "submit button"].compact.join(" ")
-    # onclick = options[:onclick] || "$(this).parents('form')[0].submit(); return false;"
-    # link_to_function title, onclick, options
     content_tag :button, title, { :type => "submit", :name => "commit", :value => title }.update(options)
   end
   
