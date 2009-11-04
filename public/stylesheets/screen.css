@@ -683,14 +683,14 @@ a.button, button {
   #message_form form.fade {
     height: 80px;
     margin: 20px 230px 0 0;
-    padding: 0 0 0 50px;
+    padding: 0 70px 0 50px;
     background: #e5e5e5;
     box-shadow: 0px -10px 10px #e5e5e5;
     -webkit-box-shadow: 0px -10px 10px #e5e5e5;
     -moz-box-shadow: 0px -10px 10px #e5e5e5; }
     #message_form form.fade textarea {
       height: 50px;
-      width: 95%;
+      width: 100%;
       padding: 5px;
       border: 1px solid silver; }
 
