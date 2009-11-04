@@ -16,8 +16,6 @@
       // Chat logs plugins
       Talker.plugins.push(new Talker.ErrorHandler($("#error")));
       <%= install_core_plugins %>
-      Talker.plugins.push(new Talker.EmoticonsFormatter());
-      Talker.plugins.push(new Talker.HelloWorldCommand());
       
       Talker.client = new Talker.Client({
         host: '<%= Orbited.talker_host %>', 

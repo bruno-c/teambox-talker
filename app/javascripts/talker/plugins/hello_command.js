@@ -1,4 +1,4 @@
-Talker.HelloWorldCommand = function() {
+Talker.HelloCommand = function() {
   var self = this;
   
   self.onCommand = function(event) {
