@@ -13,6 +13,7 @@ class InvitesController < ApplicationController
       if @user.pending?
         flash[:notice] = "You're now logged in! Please change your password."
         @user.activate!
+        redirect_to settings_path
       else
         redirect_to rooms_path
       end
