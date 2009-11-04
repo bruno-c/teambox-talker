@@ -1,29 +1,29 @@
 function focusMsgBox() {
-  var msgbox = document.getElementById('msgbox'); // old school
+  var msgbox = $('#msgbox')[0];
   if (msgbox){
-    var position = msgbox.value.length;
-    setCaretTo(msgbox, position);
-    document.getElementById('msgbox').focus();
+    setCaretTo(msgbox, msgbox.value.length);
+    msgbox.focus();
   }
 };
 
 $(function() {
   $('#msgbox')
     .keydown(function(e){
-      if (e.which == 13){ // enter
-        if (this.value == '') {
-          return false;
-        } else { // we actually have a message
+      switch (e.which){
+        case 13: // enter
+          if (e.shiftKey) return; // line break
+          if (this.value == '') return false; // ignore empty messages
+          
+          // we actually have a message
           Talker.trigger("MessageSend", {type:"message", content:$("#msgbox").val()})
           return false;
-        }
-      } else if (e.which == 27 || e.which == 8 && this.value.length == 1){// esc or backspace on last character
-        $('#msgbox').val('');
+          break;
+          
+        case 27: // esc
+          $('#msgbox').val('');
+          break;
       }
-    })
-    .focus(function(e){
-      e.stopPropagation();
-    })
+    });
   
   $(window).keydown(function(e){
     switch (e.which){
@@ -41,7 +41,8 @@ $(function() {
         break;
     }
   });
-  $('input.search, #edit_room form input, #edit_room form textarea').keydown(function(e){
+  
+  $('#msgbox, input.search, #edit_room form input, #edit_room form textarea').keydown(function(e){
     e.stopPropagation()
   });
 });
