@@ -5,7 +5,7 @@ Talker.SystemNotification = function() {
     if (window.notifications.notifications_support()) {
       window.notifications.notify({
         title: Talker.room.name,
-        description: event.user.name + ": " + event.content
+        description: h(event.user.name) + ": " + event.content
       });
     }
   }
