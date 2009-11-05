@@ -10,6 +10,9 @@ $(function() {
   });
 
   window.setTimeout(function(){
+    $("#invite_talker_team").click(function(){
+      $('#invitees').val('gary@talkerapp.com\nmacournoyer@talkerapp.com\n' + $('#invitees').val());
+    });
     $('#invitees').focus(); 
   }, 10);
 });
