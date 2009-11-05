@@ -7,6 +7,8 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'accounts', :action => 'new'
   map.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
   
+  map.connect "/ouch", :controller => "rooms", :action => "ouch"
+  
   map.resources :users
   map.resources :invites, :member => { :resend => :post }
   map.resource :account
