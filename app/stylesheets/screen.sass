@@ -10,6 +10,8 @@ body
   +font_size("medium")
   background = !black * 0.1 + !white * 0.9
   color = !black
+  &:.blank
+    background-color = !white
 *
   text-shadow: rgba(0, 0, 0, 0.01) 0 0 0
 a
@@ -831,3 +833,8 @@ div.info
       color = !white
     td
       border-bottom = 1px dotted !grey
+
+body#pastes_controller.show
+  background-color = !white
+  #paste
+    padding: 10px

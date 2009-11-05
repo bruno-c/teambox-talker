@@ -61,6 +61,8 @@ body {
   font-size: 14px;
   background: #e5e5e5;
   color: black; }
+  body:.blank {
+    background-color: white; }
 
 * {
   text-shadow: rgba(0, 0, 0, 0.01) 0 0 0; }
@@ -906,3 +908,8 @@ div.info {
     color: white; }
   #admin table td {
     border-bottom: 1px dotted gray; }
+
+body#pastes_controller.show {
+  background-color: white; }
+  body#pastes_controller.show #paste {
+    padding: 10px; }

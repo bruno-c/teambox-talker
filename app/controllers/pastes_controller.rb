@@ -1,6 +1,8 @@
 class PastesController < ApplicationController
   before_filter :login_required
   
+  layout "blank"
+  
   def show
     @paste = Paste.find_by_permalink!(params[:id])
     
