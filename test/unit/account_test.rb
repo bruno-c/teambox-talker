@@ -11,5 +11,7 @@ class AccountTest < ActiveSupport::TestCase
     assert_nil create_account(:subdomain => "0").errors.on(:subdomain)
     assert_not_nil create_account(:subdomain => "").errors.on(:subdomain)
     assert_not_nil create_account(:subdomain => "ma.sub").errors.on(:subdomain)
+    assert_not_nil create_account(:subdomain => "assets0").errors.on(:subdomain)
+    assert_not_nil create_account(:subdomain => "www").errors.on(:subdomain)
   end
 end

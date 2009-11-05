@@ -8,7 +8,8 @@ class Account < ActiveRecord::Base
   validates_presence_of :subdomain
   validates_uniqueness_of :subdomain
   validates_format_of :subdomain, :with => /\A[A-Z0-9\-]+\z/i
-  validates_exclusion_of :subdomain, :in => %w(www mail smtp ssh ftp dev chat service api admin)
+  validates_exclusion_of :subdomain, :in => %w(www mail smtp ssh ftp dev chat service api admin) + 
+                                            (0..3).map { |i| "assets#{i}" } # see action_controller.asset_host
   
   attr_accessor :invitation_code
   validate_on_create { |a| a.errors.add(:invitation_code, "is invalid") unless a.invitation_code == INVITATION_CODE }
