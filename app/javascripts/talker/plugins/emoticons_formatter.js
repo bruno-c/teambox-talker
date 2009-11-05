@@ -1,55 +1,45 @@
 Talker.EmoticonsFormatter = function() {
   var self = this;
-  
-  // giving credits to  http://james.padolsey.com/javascript/find-and-replace-text-with-javascript/
-  function findAndReplace(searchText, replacement, searchNode) {
-      if (!searchText || typeof replacement === 'undefined') {
-          return;
-      }
-      var regex = typeof searchText === 'string' ?
-                  new RegExp(searchText, 'g') : searchText,
-          childNodes = (searchNode || document.body).childNodes,
-          cnLength = childNodes.length,
-          excludes = 'html,head,style,title,link,meta,script,object,iframe,pre';
-      while (cnLength--) {
-          var currentNode = childNodes[cnLength];
-          if (currentNode.nodeType === 1 &&
-              (excludes + ',').indexOf(currentNode.nodeName.toLowerCase() + ',') === -1) {
-              arguments.callee(searchText, replacement, currentNode);
-          }
-          if (currentNode.nodeType !== 3 || !regex.test(currentNode.data) ) {
-              continue;
-          }
-          var parent = currentNode.parentNode,
-              frag = (function(){
-                  var html = currentNode.data.replace(regex, replacement),
-                      wrap = document.createElement('div'),
-                      frag = document.createDocumentFragment();
-                  wrap.innerHTML = html;
-                  while (wrap.firstChild) {
-                      frag.appendChild(wrap.firstChild);
-                  }
-                  return frag;
-              })();
-          parent.insertBefore(frag, currentNode);
-          parent.removeChild(currentNode);
-      }
-  }
-  // :-)) :-) >:-) :-D :-( ;-( B-) :-S :-O x-| :-P
+
   self.onPostFormatMessage = function(event){
-    $('#log p:last').each(function(){
-      findAndReplace(/>:-*\)/gi, '<img src="/images/icons/smiley-evil.png" class="emoticon" width="16" height="16" alt=":-O" title="evil" />', $(this).get(0));
-      findAndReplace(/:-*\)\)/gi, '<img src="/images/icons/smiley-lol.png" class="emoticon" width="16" height="16" alt=":-O" title="laughing" />', $(this).get(0));
-      findAndReplace(/:-*\)/g, '<img src="/images/icons/smiley.png" class="emoticon" width="16" height="16" alt=":-)" title="smiling" />',  $(this).get(0));
-      findAndReplace(/:-*D/g, '<img src="/images/icons/smiley-grin.png" class="emoticon" width="16" height="16" alt=":-)" title="grin" />', $(this).get(0));
-      findAndReplace(/:-*\(/g, '<img src="/images/icons/smiley-sad.png" class="emoticon" width="16" height="16" alt=":-(" title="sad" />', $(this).get(0));
-      findAndReplace(/;-*\(/g, '<img src="/images/icons/smiley-cry.png" class="emoticon" width="16" height="16" alt=";-(" title="cry" />', $(this).get(0));
-      findAndReplace(/B-*\)/g, '<img src="/images/icons/smiley-cool.png" class="emoticon" width="16" height="16" alt="B-)" title="cool" />', $(this).get(0));
-      findAndReplace(/:-*[S|\/]/gi, '<img src="/images/icons/smiley-confuse.png" class="emoticon" width="16" height="16" alt=":-s" title="confused" />', $(this).get(0));
-      findAndReplace(/:-*O/gi, '<img src="/images/icons/smiley-eek.png" class="emoticon" width="16" height="16" alt=":-O" title="shocked" />', $(this).get(0));
-      findAndReplace(/X-*[\)|\|]/gi, '<img src="/images/icons/smiley-mad.png" class="emoticon" width="16" height="16" alt=":-O" title="angry" />', $(this).get(0));
-      findAndReplace(/:-*P/gi, '<img src="/images/icons/smiley-razz.png" class="emoticon" width="16" height="16" alt=":-O" title="razz" />', $(this).get(0));
-      
+    _.each(Talker.emoticons, function(emoticon){
+      emoticon.findAndReplace($('#log p:last').get(0));
     });
   }
 };
+
+Talker.Emoticon = function(regexp, path, meaning){
+  var self = this;
+  
+  self.regexp = regexp;
+  self.path = path;
+  self.meaning = meaning;
+  
+  self.replacementString = '<img src="' 
+      + self.path 
+      + '" class="emoticons" height="16" width="16" alt="' 
+      + self.regexp.toString()
+      + '" title="' 
+      + self.meaning + '"  />';
+  
+  self.findAndReplace = function(domElement){
+    findAndReplace(self.regexp, self.replacementString, domElement);
+  }
+  return self;
+}
+
+if (!Talker.emoticons){
+  Talker.emoticons = [];
+}
+Talker.emoticons.push(new Talker.Emoticon('>:-*\\)',          "/images/icons/smiley-evil.png",    "evil"));
+Talker.emoticons.push(new Talker.Emoticon(/:-*\)\)/gi,        "/images/icons/smiley-lol.png",     "laughing"));
+Talker.emoticons.push(new Talker.Emoticon(/:-*\)/g,           "/images/icons/smiley.png",         "smiling"));
+Talker.emoticons.push(new Talker.Emoticon(/:-*D/g,            "/images/icons/smiley-grin.png",    "grin"));
+Talker.emoticons.push(new Talker.Emoticon(/X-*\(/gi,          "/images/icons/smiley-mad.png",     "angry"));
+Talker.emoticons.push(new Talker.Emoticon(/:-*\(/g,           "/images/icons/smiley-sad.png",     "sad"));
+Talker.emoticons.push(new Talker.Emoticon(/;-*\(/g,           "/images/icons/smiley-cry.png",     "cry"));
+Talker.emoticons.push(new Talker.Emoticon(/B-*\)/g,           "/images/icons/smiley-cool.png",    "cool"));
+Talker.emoticons.push(new Talker.Emoticon(/:-*[S|\/]/gi,      "/images/icons/smiley-confuse.png", "confused"));
+Talker.emoticons.push(new Talker.Emoticon(/:-*O/gi,           "/images/icons/smiley-eek.png",     "shocked"));
+Talker.emoticons.push(new Talker.Emoticon(/:-*P/gi,           "/images/icons/smiley-razz.png",    "razz"));
+
