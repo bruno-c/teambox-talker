@@ -839,7 +839,8 @@ div.panel {
   text-align: center;
   color: gray; }
   #footer a {
-    color: #73afcb; }
+    color: #73afcb;
+    margin-right: 3px; }
 
 div.flash {
   margin: 0 0 1.5em;
