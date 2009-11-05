@@ -888,3 +888,18 @@ div.info {
   background: #d3ebf6 url('/images/icons/information.png') no-repeat 10px 10px; }
   div.info p {
     margin-bottom: 4px; }
+
+#admin div.stats {
+  float: right;
+  color: gray; }
+#admin table {
+  width: 100%;
+  margin-bottom: 20px; }
+  #admin table th, #admin table td {
+    padding: 3px; }
+  #admin table th {
+    font-size: 12px;
+    background-color: #269ed6;
+    color: white; }
+  #admin table td {
+    border-bottom: 1px dotted gray; }

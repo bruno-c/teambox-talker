@@ -1,0 +1,28 @@
+<div id="admin" class="sheet">
+  <h2><%= @title = "Staff Admin Panel" %></h2>
+  
+  <div class="stats">
+    <%= pluralize Account.count, "account" %>,
+    <%= pluralize User.count, "user" %>,
+    <%= pluralize Connection.count, "active connection" %>
+  </div>
+  <h3>Connections</h3>
+  <table id="connections">
+    <tr>
+      <th>Account</th>
+      <th>Room</th>
+      <th>User</th>
+      <th>Created</th>
+      <th>State</th>
+    </tr>
+  <% Connection.all.each do |connection| %>
+    <tr class="connection">
+      <td><%=h connection.room.account.subdomain %></td>
+      <td><%=h connection.room.name %></td>
+      <td><%= mail_to connection.user.email, h(connection.user.name) %></td>
+      <td><%= time_ago_in_words connection.created_at %> ago</td>
+      <td><%= connection.state %></td>
+    </tr>
+  <% end %>
+  </table>
+</div>

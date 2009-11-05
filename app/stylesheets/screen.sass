@@ -812,3 +812,19 @@ div.info
   background = !accent_colour * 0.2 + !white * 0.8 url(/images/icons/information.png) "no-repeat" 10px 10px
   p
     margin-bottom: 4px
+
+#admin
+  div.stats
+    float: right
+    color = !grey
+  table
+    width: 100%
+    margin-bottom: 20px
+    th, td
+      padding: 3px
+    th
+      +font_size("small")
+      background-color = !accent_colour
+      color = !white
+    td
+      border-bottom = 1px dotted !grey

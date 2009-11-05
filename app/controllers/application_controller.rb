@@ -20,8 +20,16 @@ class ApplicationController < ActionController::Base
     end
     helper_method :admin?
     
+    def role_required(role)
+      authorized? && current_user.send(role) || access_denied
+    end
+    
     def admin_required
-      authorized? && current_user.admin || access_denied
+      role_required(:admin)
+    end
+    
+    def staff_required
+      role_required(:staff)
     end
     
     def ssl_required?

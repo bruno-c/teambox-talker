@@ -1,9 +1,7 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 one:
-  room_id: 1
-  user_id: 1
+  room: main
+  user: quentin
 
 two:
-  room_id: 1
-  user_id: 1
+  room: main
+  user: aaron

@@ -11,6 +11,7 @@ quentin:
   state:                     active
   admin:                     true
   time_zone:                 "Eastern Time (US & Canada)"
+  staff:                     true
       
 aaron:
   name:                      aaron
