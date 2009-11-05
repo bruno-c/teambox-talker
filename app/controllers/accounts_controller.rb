@@ -23,6 +23,7 @@ class AccountsController < ApplicationController
       @user.activate!
       self.current_user = @user
       remember_me!
+      MonitorMailer.deliver_signup(@account, @user)
       
       redirect_to welcome_url(:host => account_host(@account))
     end
