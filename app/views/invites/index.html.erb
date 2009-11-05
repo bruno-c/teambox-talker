@@ -15,3 +15,11 @@
   <% end %>
 
 </div>
+
+
+
+<% content_for :sidebar do %>
+  <div id="actions">
+    <%= link_to "Invite Talker Team", '#', :id => "invite_talker_team", :class => "button talker_team" %>
+  </div>
+<% end %>
