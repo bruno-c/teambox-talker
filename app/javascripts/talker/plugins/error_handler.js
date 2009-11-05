@@ -13,8 +13,7 @@ Talker.ErrorHandler = function(element) {
   }
   
   self.onError = function(event) {
-    element.show().html(
-      $("<p/>").html(event.message)
-    );
+    alert(event.message);
+    location.pathname = "/rooms";
   }
 }
