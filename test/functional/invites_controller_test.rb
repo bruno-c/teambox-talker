@@ -43,6 +43,19 @@ class InvitesControllerTest < ActionController::TestCase
       assert_difference 'ActionMailer::Base.deliveries.size', 2 do
         post :create, :invitees => "one@example.com\ntwo@example.com"
         assert_nil flash[:error]
+        assert_equal %w(one@example.com two@example.com), assigns(:emails)
+      end
+    end
+    assert_redirected_to users_path
+  end
+  
+  def test_create_with_coma
+    login_as :quentin
+    assert_difference 'User.count', 2 do
+      assert_difference 'ActionMailer::Base.deliveries.size', 2 do
+        post :create, :invitees => "one@example.com, two@example.com"
+        assert_nil flash[:error]
+        assert_equal %w(one@example.com two@example.com), assigns(:emails)
       end
     end
     assert_redirected_to users_path
