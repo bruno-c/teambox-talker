@@ -25,7 +25,7 @@ class InvitesController < ApplicationController
   end
   
   def create
-    @invitees = params[:invitees].split("\n")
+    @invitees = params[:invitees].split(/[\n,]/).map(&:strip)
     success_count = 0
     
     flash.delete(:error)
