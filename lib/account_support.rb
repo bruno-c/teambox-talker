@@ -18,8 +18,12 @@ module AccountSupport
       current_account
     end
     
+    def account_domain(account=current_account)
+      "#{account.subdomain}.#{request.domain}"
+    end
+    
     def account_host(account=current_account)
-      "#{account.subdomain}.#{request.domain}#{request.port_string}"
+      "#{account_domain(account)}#{request.port_string}"
     end
     
     def top_level_domain_required

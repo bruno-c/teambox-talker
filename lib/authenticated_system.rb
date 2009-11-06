@@ -169,4 +169,10 @@ module AuthenticatedSystem
       @current_user.forget_me if @current_user
       cookies.delete :auth_token
     end
+    
+    def delete_old_cookies
+      [:auth_token, :_talker_session, :tzoffset].each do |name|
+        cookies.delete(name, :domain => (Rails.env.development? ? ".standoutjobs-development.com" : ".talkerapp.com"))
+      end
+    end
 end

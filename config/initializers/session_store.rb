@@ -6,8 +6,7 @@
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
   :key         => '_talker_session',
-  :secret      => '06395bfbc91ec2315bdce0099ce91d2b9728beae76be4ddbc238dff525e118b4427abb5dc43a3dc0012200c5362f0fe64f3f97c5712e9b403c881098b286a6e8',
-  :domain      => Rails.env.development? ? ".standoutjobs-development.com" : ".talkerapp.com"
+  :secret      => '06395bfbc91ec2315bdce0099ce91d2b9728beae76be4ddbc238dff525e118b4427abb5dc43a3dc0012200c5362f0fe64f3f97c5712e9b403c881098b286a6e8'
 }
 
 # Use the database for sessions instead of the cookie-based default,

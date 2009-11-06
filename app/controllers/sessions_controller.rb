@@ -13,10 +13,9 @@ class SessionsController < ApplicationController
     @email = params[:email]
     
     if user = current_account.users.authenticate(@email, params[:password])
-      # Protects against session fixation attacks, causes request forgery
-      # protection if user resubmits an earlier form using back
-      # button. Uncomment if you understand the tradeoffs.
-      # reset_session
+      # Fix for previous crossdomain cookie
+      delete_old_cookies
+      reset_session
       self.current_user = user
       remember_me!
       redirect_back_or_default rooms_path

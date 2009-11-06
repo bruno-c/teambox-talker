@@ -5,11 +5,20 @@ class AccountsController < ApplicationController
   layout "dialog"
   
   def new
+    delete_old_cookies
     @account = Account.new
     @user = User.new
   end
   
   def welcome
+    @token = params[:token]
+    if @user = User.authenticate_by_perishable_token(@token)
+      self.current_user = @user
+      remember_me!
+    else
+      flash[:error] = "Bad authentication token"
+      redirect_to signup_path
+    end
   end
   
   def create
@@ -21,11 +30,11 @@ class AccountsController < ApplicationController
     User.transaction do
       @account.save!
       @user.activate!
-      self.current_user = @user
-      remember_me!
+      
       MonitorMailer.deliver_signup(@account, @user)
       
-      redirect_to welcome_url(:host => account_host(@account))
+      @user.create_perishable_token!
+      redirect_to welcome_url(:host => account_host(@account), :token => @user.perishable_token)
     end
     
   rescue ActiveRecord::RecordInvalid
