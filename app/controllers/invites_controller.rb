@@ -32,7 +32,7 @@ class InvitesController < ApplicationController
     
     @invitees.each do |email|
       email.strip!
-      user = current_account.users.build(:name => email, :email => email)
+      user = current_account.users.build(:name => email.split('@')[0], :email => email)
       if user.save
         send_invitation user
         success_count += 1
