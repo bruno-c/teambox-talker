@@ -10,6 +10,8 @@ body
   +font_size("medium")
   background = !black * 0.1 + !white * 0.9
   color = !black
+  &:.blank
+    background-color = !white
 *
   text-shadow: rgba(0, 0, 0, 0.01) 0 0 0
 a
@@ -302,7 +304,7 @@ a.button, button
   background = !button_colour_off
   color = !white
   +text_shadow(-1, -1, 0, !accent_colour * 0.75 + !black * 0.25)
-  border = 1px "solid"
+  border = 1px "solid" !button_colour_off
   text-decoration: none
   padding: 0 10px
   line-height: 27px
@@ -317,6 +319,7 @@ a.button, button
   &.small
     +font_size("small")
     line-height = 20px
+    padding: 0 6px
   &.negative
     background = !colour_negative
     +emboss(!colour_negative * 0.75 + !black * 0.25)
@@ -369,8 +372,10 @@ a.button, button
       padding: 10px 15px 10px 36px
       background-position: 15px center
       +rounded_corners("all", 5)
-      border: none
       +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
+    a.talker_team
+      +font_size("medium")
+      padding: 10px
 
 // People
 #people
@@ -420,213 +425,215 @@ a.button, button
     background = !black * 0.1 + !white * 0.9
     +box_shadow(0, 20, 20, !black * 0.1 + !white * 0.9)
 
-table#log
+#chat_log
   background = !white
   padding: 5px 10px 5px
   margin: 0 0 60px 0
   +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
-  width: 100%
-  tr
-    position: relative
-    td
-      +font_size("small")
-      img.avatar
-        height: 16px
-        width: 16px
-        position: relative
-        top: 3px
-      &.author
-        padding: 5px 0 10px 0
-        vertical-align: bottom
-        white-space: nowrap
-        text-align: right
-        width: 1%
-        b.blockquote_tail
-          margin: 0 0 0 5px
-          display: inline-block
-          width: 0
-          height: 0
-          border: 5px solid transparent
-          border-left: none
-          border-right = 5px "solid" !accent_colour * 0.15 + !white * 0.85
-      &.message
-        padding: 5px 0
-        blockquote
-          +rounded_corners("all", 3)
-          background = !accent_colour * 0.15 + !white * 0.85
-          font-style: normal
-          padding: 3px 10px
-          overflow: hidden
-          span.marker
-            float: right
-            display: block
-            color = !grey
-            margin: 0 0 5px 5px
-            +font_size("tiny")
-            padding: 0 0 0 19px
-            line-height: 16px
-            white-space: nowrap
-          p
-            margin: 2px 0
-            overflow: auto
-            span.more_lines
-              +font_size("tiny")
-              color = !grey
-            &.typing
-              background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center
-              padding: 0 0 0 19px
-              color = !light_grey
-          pre
-            padding: 10px
-            overflow: auto
-            background = !white
-            border = 1px solid !light_grey
-            margin: 0
-    &.me
+  table
+    width: 100%
+    tr
+      position: relative
       td
-        &.author
-          b.blockquote_tail
-            border-right = 5px solid !alt_colour * 0.15 + !white * 0.85
-        &.message
-          blockquote
-            background = !alt_colour * 0.15 + !white * 0.85
-    &.timestamp
-      td
-        border-top = 1px "dotted" !grey * 0.5 + !white * 0.5
-        height: 0
-        padding: 0
-        div
+        +font_size("small")
+        img.avatar
+          height: 16px
+          width: 16px
           position: relative
-          span.marker
-            display: block
-            z-index: 5
-            position: absolute
-            b
-              display: block
-              height: 0
-              width: 0
-              border: 4px solid transparent
-              border: 5px solid transparent
-              position: relative
-            i
-              display: block
-              background-color = !light_grey
-              background-repeat: no-repeat
-              background-position: 3px center
-              color = !white
-              +font_size("tiny")
-              +rounded_corners("all", 2)
-              padding: 0 5px 0 20px
-              font-style: normal
-              white-space: nowrap
-        &.date
-          div
-            span.marker
-              right: 100%
-              top: -18px
-              margin: 0 -2 0 0
-              b
-                float: right
-                border-left = 5px "solid" !red * 0.5 + !grey * 0.5
-                border-right: none
-                top: 13px
-              i
-                line-height: 1
-                padding: 5px
-                margin: 0 5px 0 0
-                background = !red * 0.5 + !grey * 0.5
-                span
-                  display: block
-                  text-align: center
-                  &.date
-                    font-weight: bold
-                    +font_size("medium")
-                  &.time
-                    text-transform: uppercase
-                    +font_size("tiny")
-
-        &.time
-          div
-            span.marker
-              left: 100%
-              top: -10px
-              margin: 0 0 0 -2px
-              b
-                float: left
-                border-right = 5px "solid" !light_grey
-                border-left: none
-                top: 5px
-              i
-                height: 20px
-                background-image: url('../../images/icons/clock.png')
-                line-height: 20px
-                margin: 0 0 0 5px
-    &.notice
-      td
-        &.message
-          p
-            color = !light_grey
-            +font_size("tiny")
-    &.private
-      td
+          top: 3px
         &.author
+          padding: 5px 0 10px 0
+          vertical-align: bottom
+          white-space: nowrap
+          text-align: right
+          width: 1%
           b.blockquote_tail
-            border-right = 5px solid !accent_colour * 0.25 + !white * 0.75
+            margin: 0 0 0 5px
+            display: inline-block
+            width: 0
+            height: 0
+            border: 5px solid transparent
+            border-left: none
+            border-right = 5px "solid" !accent_colour * 0.15 + !white * 0.85
         &.message
+          padding: 5px 0
           blockquote
-            background = !accent_colour * 0.075 + !white * 0.925
-            border = 2px "dotted" !accent_colour * 0.2 + !white * 0.8
-            padding: 3px 8px
-            span.marker.private
-              background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center
-            p
-              font-style: italic
+            +rounded_corners("all", 3)
+            background = !accent_colour * 0.15 + !white * 0.85
+            font-style: normal
+            padding: 3px 10px
+            overflow: hidden
+            span.marker
+              float: right
+              display: block
               color = !grey
-    &.private.me
-      td
-        &.author
-          b.blockquote_tail
-            border-right = 5px "solid" !alt_colour * 0.25 + !white * 0.75
-        &.message
-          blockquote
-            background = !alt_colour * 0.075 + !white * 0.925
-            border = 2px "dotted" !alt_colour * 0.25 + !white * 0.75
-    &.logs
-      td
-        padding-bottom: 15px
-        a.logs
+              margin: 0 0 5px 5px
+              +font_size("tiny")
+              padding: 0 0 0 19px
+              line-height: 16px
+              white-space: nowrap
+            p
+              margin: 2px 0
+              overflow: auto
+              span.more_lines
+                +font_size("tiny")
+                color = !grey
+              &.typing
+                background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center
+                padding: 0 0 0 19px
+                color = !light_grey
+            pre
+              overflow: auto
+              padding: 10px
+              width: auto
+              background = !white
+              border = 1px solid !light_grey
+              margin: 0 0 5px
+      &.me
+        td
+          &.author
+            b.blockquote_tail
+              border-right = 5px solid !alt_colour * 0.15 + !white * 0.85
+          &.message
+            blockquote
+              background = !alt_colour * 0.15 + !white * 0.85
+      &.timestamp
+        td
+          border-top = 1px "dotted" !grey * 0.5 + !white * 0.5
+          height: 0
+          padding: 0
+          div
+            position: relative
+            span.marker
+              display: block
+              z-index: 5
+              position: absolute
+              b
+                display: block
+                height: 0
+                width: 0
+                border: 4px solid transparent
+                border: 5px solid transparent
+                position: relative
+              i
+                display: block
+                background-color = !light_grey
+                background-repeat: no-repeat
+                background-position: 3px center
+                color = !white
+                +font_size("tiny")
+                +rounded_corners("all", 2)
+                padding: 0 5px 0 20px
+                font-style: normal
+                white-space: nowrap
+          &.date
+            div
+              span.marker
+                right: 100%
+                top: -18px
+                margin: 0 -2 0 0
+                b
+                  float: right
+                  border-left = 5px "solid" !red * 0.5 + !grey * 0.5
+                  border-right: none
+                  top: 13px
+                i
+                  line-height: 1
+                  padding: 5px
+                  margin: 0 5px 0 0
+                  background = !red * 0.5 + !grey * 0.5
+                  span
+                    display: block
+                    text-align: center
+                    &.date
+                      font-weight: bold
+                      +font_size("medium")
+                    &.time
+                      text-transform: uppercase
+                      +font_size("tiny")
+
+          &.time
+            div
+              span.marker
+                left: 100%
+                top: -10px
+                margin: 0 0 0 -2px
+                b
+                  float: left
+                  border-right = 5px "solid" !light_grey
+                  border-left: none
+                  top: 5px
+                i
+                  height: 20px
+                  background-image: url('../../images/icons/clock.png')
+                  line-height: 20px
+                  margin: 0 0 0 5px
+      &.notice
+        td
+          &.message
+            p
+              color = !light_grey
+              +font_size("tiny")
+      &.private
+        td
+          &.author
+            b.blockquote_tail
+              border-right = 5px solid !accent_colour * 0.25 + !white * 0.75
+          &.message
+            blockquote
+              background = !accent_colour * 0.075 + !white * 0.925
+              border = 2px "dotted" !accent_colour * 0.2 + !white * 0.8
+              padding: 3px 8px
+              span.marker.private
+                background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center
+              p
+                font-style: italic
+                color = !grey
+      &.private.me
+        td
+          &.author
+            b.blockquote_tail
+              border-right = 5px "solid" !alt_colour * 0.25 + !white * 0.75
+          &.message
+            blockquote
+              background = !alt_colour * 0.075 + !white * 0.925
+              border = 2px "dotted" !alt_colour * 0.25 + !white * 0.75
+      td.log
+        width: 140px
+        a
           float: right
-          background = !grey * 0.5 + !dark_grey * 0.5
-          background-image: url('../../images/icons/calendar--arrow.png')
-          background-repeat: no-repeat
-          background-position: 3px center
+          background: url('../../images/icons/calendar--arrow.png') no-repeat 3px center
+          background-color = !grey * 0.5 + !dark_grey * 0.5
           padding: 0 5px 0 21px
           height: 20px
           line-height: 20px
           +rounded_corners("all", 3)
           color = !white
           text-decoration: none
-          
 
 #message_form
   position: fixed
   z-index: 10
   bottom: 0
   left: 0
-  height: 80px
+  height: 100px
   overflow: hidden
   width: 100%
-  +box_shadow(0, -10, 10, !black * 0.1 + !white * 0.9)
   form.fade
     height: 80px
-    margin: 0px 0 0 0
-    padding: 0 292px 0 40px
+    margin: 20px 230px 0 0
+    padding: 0 70px 0 50px
     background = !black * 0.1 + !white * 0.9
+    +box_shadow(0, -10, 10, !black * 0.1 + !white * 0.9)
     textarea
       height: 50px
       width: 100%
       padding: 5px
       border = 1px solid !light_grey
+
+#logs
+  ul
+    margin-left: 20px
 
 // Panel
 div.panel
@@ -686,6 +693,8 @@ div.panel
       +rounded_corners("bottom", 3)
       border-top = 2px solid !light_grey * 0.2 + !white * 0.8
       background = !light_grey * 0.1 + !white * 0.9
+      a
+        margin-left: 4px
   .tag
     +font_size("small")
     :background-color = !alt_colour
@@ -694,6 +703,28 @@ div.panel
     :position relative
     :top 5px
     +rounded_corners("all", 3)
+
+#error_page
+  div.content
+    p
+      padding: 6px
+  
+
+#welcome
+  div.content
+    p
+      padding: 6px
+    .footer
+      margin-top: 30px
+    ul
+      margin: 6px 20px
+      li
+        background: url("/images/icons/arrow-000-small.png") no-repeat left center
+        padding: 1px
+        padding-left: 21px
+        list-style: none
+      &.links
+        +font_size("xxlarge")
 
 // Room Sidebar
 #sidebar
@@ -711,9 +742,6 @@ div.panel
           background-repeat: no-repeat
           background-position: 3px center
           padding: 0 5px 0 21px
-      &.footer
-        a
-          margin-left: 4px
       &.content
         ul.people
           margin: 0 0 -5px
@@ -743,6 +771,7 @@ div.panel
   color = !grey
   a
     color = !accent_colour * 0.5 + !light_grey * 0.5
+    margin-right: 3px
 
 // Flash Messages
 div.flash
@@ -751,10 +780,10 @@ div.flash
   padding: 10px 10px 10px 31px
   +rounded_corners("all", 3)
   line-height: normal
-#flash_error
-  background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/icons/exclamation-red.png") "no-repeat" 10px "center"
-#flash_notice
-  background = (!accent_colour * 0.25 + !blue * 0.75) * 0.25 + !white * 0.75 url("/images/icons/information.png") "no-repeat" 10px "center"
+  &.error
+    background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/icons/exclamation-red.png") "no-repeat" 10px 10px
+  &.notice
+    background = (!accent_colour * 0.25 + !blue * 0.75) * 0.25 + !white * 0.75 url("/images/icons/information.png") "no-repeat" 10px 10px
 
 // Error Explananation
 #errorExplanation
@@ -782,10 +811,31 @@ div.flash
 div.info
   margin: 0 0 1.5em
   color = !accent_colour * 0.4
-  padding: 10px 10px 10px 33px
+  padding: 11px 10px 10px 33px
   +rounded_corners("all", 3)
   +font_size("small")
   line-height: normal
   background = !accent_colour * 0.2 + !white * 0.8 url(/images/icons/information.png) "no-repeat" 10px 10px
   p
     margin-bottom: 4px
+
+#admin
+  div.stats
+    float: right
+    color = !grey
+  table
+    width: 100%
+    margin-bottom: 20px
+    th, td
+      padding: 3px
+    th
+      +font_size("small")
+      background-color = !accent_colour
+      color = !white
+    td
+      border-bottom = 1px dotted !grey
+
+body#pastes_controller.show
+  background-color = !white
+  #paste
+    padding: 10px

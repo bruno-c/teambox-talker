@@ -73,10 +73,10 @@ function getMaximumContentWidth(){
 function resizeLogElements(){
   var maxWidth = getMaximumContentWidth();
   
-  $('#log pre').css('width', maxWidth - 22 + 'px');   // handles pastes
-  $('#log blockquote').css('width', maxWidth + 'px'); // handles long ass messages with no spaces
+  $('div pre').css('width', maxWidth);
   
   $("#log img[class!='avatar']").each(function(){
+    $(this).css({'max-width': 'auto'});
     $(this).css({'max-width': maxWidth + 'px'});
   });
 }

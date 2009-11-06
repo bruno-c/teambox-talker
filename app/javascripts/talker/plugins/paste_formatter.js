@@ -10,9 +10,9 @@ Talker.PasteFormatter = function() {
           + ((event.paste.lines > event.paste.preview_lines) 
             ? " <span class='more_lines'>(" + (event.paste.lines - event.paste.preview_lines) + " more lines)</span>"
             : "")
-          + '<pre style="width: ' + getMaximumContentWidth() + 'px;">'
+          + '<div><pre style="width: ' + getMaximumContentWidth() + 'px;">'
           +  event.content.replace(/</g, '&lt;').replace(/>/g, '&gt;')
-          + '</pre>'
+          + '</pre></div>'
       );
       return false;
     }
