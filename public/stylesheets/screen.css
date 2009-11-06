@@ -841,9 +841,9 @@ div.panel {
   font-size: 10px;
   text-align: center;
   color: gray; }
-  #footer a {
+  #footer .links a {
     color: #73afcb;
-    margin-right: 3px; }
+    margin: 0 2px; }
 
 div.flash {
   margin: 0 0 1.5em;

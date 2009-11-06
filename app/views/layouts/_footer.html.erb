@@ -1,9 +1,14 @@
   <div id="footer">
     &copy Talker
     &mdash;
-    <%= mail_to "info@talkerapp.com", "Contact" %>
-    <%= link_to "Blog", "http://talkerapp.tumblr.com" %>
+    <span class="links">
+      <%= mail_to "info@talkerapp.com", "Contact" %>
+      &middot;
+      <%= link_to "Blog", "http://talkerapp.tumblr.com" %>
+      &middot;
+      <%= link_to "Support", "http://talker.tenderapp.com" %>
+    </span>
   </div>
-
+  
 </body>
 </html>
