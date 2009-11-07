@@ -37,6 +37,10 @@ Talker.Scroller = function() {
     self.scrollToBottom();
   }
   
+  self.onScrollNudge = function(event){
+    self.scrollToBottom();
+  }
+  
   self.onMessageSent = function(event) {
     self.scrollToBottom(true);
   }
