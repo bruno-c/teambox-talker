@@ -502,178 +502,177 @@ a.button, button {
     -webkit-box-shadow: 0px 20px 20px #e5e5e5;
     -moz-box-shadow: 0px 20px 20px #e5e5e5; }
 
-#chat_log {
+table#log {
   background: white;
   padding: 5px 10px 5px;
   margin: 0 0 60px 0;
   box-shadow: 1px 1px 2px #d2d2d2;
   -webkit-box-shadow: 1px 1px 2px #d2d2d2;
-  -moz-box-shadow: 1px 1px 2px #d2d2d2; }
-  #chat_log table {
-    width: 100%; }
-    #chat_log table tr {
-      position: relative; }
-      #chat_log table tr td {
-        font-size: 12px; }
-        #chat_log table tr td img.avatar {
-          height: 16px;
-          width: 16px;
-          position: relative;
-          top: 3px; }
-        #chat_log table tr td.author {
-          padding: 5px 0 10px 0;
-          vertical-align: bottom;
-          white-space: nowrap;
-          text-align: right;
-          width: 1%; }
-          #chat_log table tr td.author b.blockquote_tail {
-            margin: 0 0 0 5px;
-            display: inline-block;
-            width: 0;
-            height: 0;
-            border: 5px solid transparent;
-            border-left: none;
-            border-right: 5px solid #ddeff8; }
-        #chat_log table tr td.message {
-          padding: 5px 0; }
-          #chat_log table tr td.message blockquote {
-            border-radius: 3px;
-            -moz-border-radius: 3px;
-            -webkit-border-radius: 3px;
-            background: #ddeff8;
-            font-style: normal;
-            padding: 3px 10px;
-            overflow: hidden; }
-            #chat_log table tr td.message blockquote span.marker {
-              float: right;
-              display: block;
-              color: gray;
-              margin: 0 0 5px 5px;
-              font-size: 10px;
-              padding: 0 0 0 19px;
-              line-height: 16px;
-              white-space: nowrap; }
-            #chat_log table tr td.message blockquote p {
-              margin: 2px 0;
-              overflow: auto; }
-              #chat_log table tr td.message blockquote p span.more_lines {
-                font-size: 10px;
-                color: gray; }
-              #chat_log table tr td.message blockquote p.typing {
-                background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center;
-                padding: 0 0 0 19px;
-                color: silver; }
-            #chat_log table tr td.message blockquote pre {
-              overflow: auto;
-              padding: 10px;
-              width: auto;
-              background: white;
-              border: 1px solid silver;
-              margin: 0 0 5px; }
-      #chat_log table tr.me td.author b.blockquote_tail {
-        border-right: 5px solid #faeede; }
-      #chat_log table tr.me td.message blockquote {
-        background: #faeede; }
-      #chat_log table tr.timestamp td {
-        border-top: 1px dotted #bfbfbf;
-        height: 0;
-        padding: 0; }
-        #chat_log table tr.timestamp td div {
-          position: relative; }
-          #chat_log table tr.timestamp td div span.marker {
-            display: block;
-            z-index: 5;
-            position: absolute; }
-            #chat_log table tr.timestamp td div span.marker b {
-              display: block;
-              height: 0;
-              width: 0;
-              border: 4px solid transparent;
-              border: 5px solid transparent;
-              position: relative; }
-            #chat_log table tr.timestamp td div span.marker i {
-              display: block;
-              background-color: silver;
-              background-repeat: no-repeat;
-              background-position: 3px center;
-              color: white;
-              font-size: 10px;
-              border-radius: 2px;
-              -moz-border-radius: 2px;
-              -webkit-border-radius: 2px;
-              padding: 0 5px 0 20px;
-              font-style: normal;
-              white-space: nowrap; }
-        #chat_log table tr.timestamp td.date div span.marker {
-          right: 100%;
-          top: -18px;
-          margin: 0 -2 0 0; }
-          #chat_log table tr.timestamp td.date div span.marker b {
-            float: right;
-            border-left: 5px solid #bf4040;
-            border-right: none;
-            top: 13px; }
-          #chat_log table tr.timestamp td.date div span.marker i {
-            line-height: 1;
-            padding: 5px;
-            margin: 0 5px 0 0;
-            background: #bf4040; }
-            #chat_log table tr.timestamp td.date div span.marker i span {
-              display: block;
-              text-align: center; }
-              #chat_log table tr.timestamp td.date div span.marker i span.date {
-                font-weight: bold;
-                font-size: 14px; }
-              #chat_log table tr.timestamp td.date div span.marker i span.time {
-                text-transform: uppercase;
-                font-size: 10px; }
-        #chat_log table tr.timestamp td.time div span.marker {
-          left: 100%;
-          top: -10px;
-          margin: 0 0 0 -2px; }
-          #chat_log table tr.timestamp td.time div span.marker b {
-            float: left;
-            border-right: 5px solid silver;
-            border-left: none;
-            top: 5px; }
-          #chat_log table tr.timestamp td.time div span.marker i {
-            height: 20px;
-            background-image: url('../../images/icons/clock.png');
-            line-height: 20px;
-            margin: 0 0 0 5px; }
-      #chat_log table tr.notice td.message p {
-        color: silver;
-        font-size: 10px; }
-      #chat_log table tr.private td.author b.blockquote_tail {
-        border-right: 5px solid #c8e6f4; }
-      #chat_log table tr.private td.message blockquote {
-        background: #edf6fb;
-        border: 2px dotted #d3ebf6;
-        padding: 3px 8px; }
-        #chat_log table tr.private td.message blockquote span.marker.private {
-          background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center; }
-        #chat_log table tr.private td.message blockquote p {
-          font-style: italic;
-          color: gray; }
-      #chat_log table tr.private.me td.author b.blockquote_tail {
-        border-right: 5px solid #f8e4c9; }
-      #chat_log table tr.private.me td.message blockquote {
-        background: #fcf6ee;
-        border: 2px dotted #f8e4c9; }
-      #chat_log table tr td.log {
-        width: 140px; }
-        #chat_log table tr td.log a {
-          float: right;
-          background: url('../../images/icons/calendar--arrow.png') no-repeat 3px center;
-          background-color: #606060;
-          padding: 0 5px 0 21px;
-          height: 20px;
-          line-height: 20px;
+  -moz-box-shadow: 1px 1px 2px #d2d2d2;
+  width: 100%; }
+  table#log tr {
+    position: relative; }
+    table#log tr td {
+      font-size: 12px; }
+      table#log tr td img.avatar {
+        height: 16px;
+        width: 16px;
+        position: relative;
+        top: 3px; }
+      table#log tr td.author {
+        padding: 5px 0 10px 0;
+        vertical-align: bottom;
+        white-space: nowrap;
+        text-align: right;
+        width: 1%; }
+        table#log tr td.author b.blockquote_tail {
+          margin: 0 0 0 5px;
+          display: inline-block;
+          width: 0;
+          height: 0;
+          border: 5px solid transparent;
+          border-left: none;
+          border-right: 5px solid #ddeff8; }
+      table#log tr td.message {
+        padding: 5px 0; }
+        table#log tr td.message blockquote {
           border-radius: 3px;
           -moz-border-radius: 3px;
           -webkit-border-radius: 3px;
-          color: white;
-          text-decoration: none; }
+          background: #ddeff8;
+          font-style: normal;
+          padding: 3px 10px;
+          overflow: hidden; }
+          table#log tr td.message blockquote span.marker {
+            float: right;
+            display: block;
+            color: gray;
+            margin: 0 0 5px 5px;
+            font-size: 10px;
+            padding: 0 0 0 19px;
+            line-height: 16px;
+            white-space: nowrap; }
+          table#log tr td.message blockquote p {
+            margin: 2px 0;
+            overflow: auto; }
+            table#log tr td.message blockquote p span.more_lines {
+              font-size: 10px;
+              color: gray; }
+            table#log tr td.message blockquote p.typing {
+              background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center;
+              padding: 0 0 0 19px;
+              color: silver; }
+          table#log tr td.message blockquote pre {
+            overflow: auto;
+            padding: 10px;
+            width: auto;
+            background: white;
+            border: 1px solid silver;
+            margin: 0 0 5px; }
+    table#log tr.me td.author b.blockquote_tail {
+      border-right: 5px solid #faeede; }
+    table#log tr.me td.message blockquote {
+      background: #faeede; }
+    table#log tr.timestamp td {
+      border-top: 1px dotted #bfbfbf;
+      height: 0;
+      padding: 0; }
+      table#log tr.timestamp td div {
+        position: relative; }
+        table#log tr.timestamp td div span.marker {
+          display: block;
+          z-index: 5;
+          position: absolute; }
+          table#log tr.timestamp td div span.marker b {
+            display: block;
+            height: 0;
+            width: 0;
+            border: 4px solid transparent;
+            border: 5px solid transparent;
+            position: relative; }
+          table#log tr.timestamp td div span.marker i {
+            display: block;
+            background-color: silver;
+            background-repeat: no-repeat;
+            background-position: 3px center;
+            color: white;
+            font-size: 10px;
+            border-radius: 2px;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            padding: 0 5px 0 20px;
+            font-style: normal;
+            white-space: nowrap; }
+      table#log tr.timestamp td.date div span.marker {
+        right: 100%;
+        top: -18px;
+        margin: 0 -2 0 0; }
+        table#log tr.timestamp td.date div span.marker b {
+          float: right;
+          border-left: 5px solid #bf4040;
+          border-right: none;
+          top: 13px; }
+        table#log tr.timestamp td.date div span.marker i {
+          line-height: 1;
+          padding: 5px;
+          margin: 0 5px 0 0;
+          background: #bf4040; }
+          table#log tr.timestamp td.date div span.marker i span {
+            display: block;
+            text-align: center; }
+            table#log tr.timestamp td.date div span.marker i span.date {
+              font-weight: bold;
+              font-size: 14px; }
+            table#log tr.timestamp td.date div span.marker i span.time {
+              text-transform: uppercase;
+              font-size: 10px; }
+      table#log tr.timestamp td.time div span.marker {
+        left: 100%;
+        top: -10px;
+        margin: 0 0 0 -2px; }
+        table#log tr.timestamp td.time div span.marker b {
+          float: left;
+          border-right: 5px solid silver;
+          border-left: none;
+          top: 5px; }
+        table#log tr.timestamp td.time div span.marker i {
+          height: 20px;
+          background-image: url('../../images/icons/clock.png');
+          line-height: 20px;
+          margin: 0 0 0 5px; }
+    table#log tr.notice td.message p {
+      color: silver;
+      font-size: 10px; }
+    table#log tr.private td.author b.blockquote_tail {
+      border-right: 5px solid #c8e6f4; }
+    table#log tr.private td.message blockquote {
+      background: #edf6fb;
+      border: 2px dotted #d3ebf6;
+      padding: 3px 8px; }
+      table#log tr.private td.message blockquote span.marker.private {
+        background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center; }
+      table#log tr.private td.message blockquote p {
+        font-style: italic;
+        color: gray; }
+    table#log tr.private.me td.author b.blockquote_tail {
+      border-right: 5px solid #f8e4c9; }
+    table#log tr.private.me td.message blockquote {
+      background: #fcf6ee;
+      border: 2px dotted #f8e4c9; }
+    table#log tr td.log {
+      width: 140px; }
+      table#log tr td.log a {
+        float: right;
+        background: url('../../images/icons/calendar--arrow.png') no-repeat 3px center;
+        background-color: #606060;
+        padding: 0 5px 0 21px;
+        height: 20px;
+        line-height: 20px;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        color: white;
+        text-decoration: none; }
 
 #message_form {
   position: fixed;
