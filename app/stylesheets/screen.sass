@@ -425,190 +425,191 @@ a.button, button
     background = !black * 0.1 + !white * 0.9
     +box_shadow(0, 20, 20, !black * 0.1 + !white * 0.9)
 
-table#log
+#chat_log
   background = !white
   padding: 5px 10px 5px
   margin: 0 0 60px 0
   +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
-  width: 100%
-  tr
-    position: relative
-    td
-      +font_size("small")
-      img.avatar
-        height: 16px
-        width: 16px
-        position: relative
-        top: 3px
-      &.author
-        padding: 5px 0 10px 0
-        vertical-align: bottom
-        white-space: nowrap
-        text-align: right
-        width: 1%
-        b.blockquote_tail
-          margin: 0 0 0 5px
-          display: inline-block
-          width: 0
-          height: 0
-          border: 5px solid transparent
-          border-left: none
-          border-right = 5px "solid" !accent_colour * 0.15 + !white * 0.85
-      &.message
-        padding: 5px 0
-        blockquote
-          +rounded_corners("all", 3)
-          background = !accent_colour * 0.15 + !white * 0.85
-          font-style: normal
-          padding: 3px 10px
-          overflow: hidden
-          span.marker
-            float: right
-            display: block
-            color = !grey
-            margin: 0 0 5px 5px
-            +font_size("tiny")
-            padding: 0 0 0 19px
-            line-height: 16px
-            white-space: nowrap
-          p
-            margin: 2px 0
-            overflow: auto
-            span.more_lines
-              +font_size("tiny")
-              color = !grey
-            &.typing
-              background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center
-              padding: 0 0 0 19px
-              color = !light_grey
-          pre
-            overflow: auto
-            padding: 10px
-            width: auto
-            background = !white
-            border = 1px solid !light_grey
-            margin: 0 0 5px
-    &.me
+  table
+    width: 100%
+    tr
+      position: relative
       td
-        &.author
-          b.blockquote_tail
-            border-right = 5px solid !alt_colour * 0.15 + !white * 0.85
-        &.message
-          blockquote
-            background = !alt_colour * 0.15 + !white * 0.85
-    &.timestamp
-      td
-        border-top = 1px "dotted" !grey * 0.5 + !white * 0.5
-        height: 0
-        padding: 0
-        div
+        +font_size("small")
+        img.avatar
+          height: 16px
+          width: 16px
           position: relative
-          span.marker
-            display: block
-            z-index: 5
-            position: absolute
-            b
-              display: block
-              height: 0
-              width: 0
-              border: 4px solid transparent
-              border: 5px solid transparent
-              position: relative
-            i
-              display: block
-              background-color = !light_grey
-              background-repeat: no-repeat
-              background-position: 3px center
-              color = !white
-              +font_size("tiny")
-              +rounded_corners("all", 2)
-              padding: 0 5px 0 20px
-              font-style: normal
-              white-space: nowrap
-        &.date
-          div
-            span.marker
-              right: 100%
-              top: -18px
-              margin: 0 -2 0 0
-              b
-                float: right
-                border-left = 5px "solid" !red * 0.5 + !grey * 0.5
-                border-right: none
-                top: 13px
-              i
-                line-height: 1
-                padding: 5px
-                margin: 0 5px 0 0
-                background = !red * 0.5 + !grey * 0.5
-                span
-                  display: block
-                  text-align: center
-                  &.date
-                    font-weight: bold
-                    +font_size("medium")
-                  &.time
-                    text-transform: uppercase
-                    +font_size("tiny")
-
-        &.time
-          div
-            span.marker
-              left: 100%
-              top: -10px
-              margin: 0 0 0 -2px
-              b
-                float: left
-                border-right = 5px "solid" !light_grey
-                border-left: none
-                top: 5px
-              i
-                height: 20px
-                background-image: url('../../images/icons/clock.png')
-                line-height: 20px
-                margin: 0 0 0 5px
-    &.notice
-      td
-        &.message
-          p
-            color = !light_grey
-            +font_size("tiny")
-    &.private
-      td
+          top: 3px
         &.author
+          padding: 5px 0 10px 0
+          vertical-align: bottom
+          white-space: nowrap
+          text-align: right
+          width: 1%
           b.blockquote_tail
-            border-right = 5px solid !accent_colour * 0.25 + !white * 0.75
+            margin: 0 0 0 5px
+            display: inline-block
+            width: 0
+            height: 0
+            border: 5px solid transparent
+            border-left: none
+            border-right = 5px "solid" !accent_colour * 0.15 + !white * 0.85
         &.message
+          padding: 5px 0
           blockquote
-            background = !accent_colour * 0.075 + !white * 0.925
-            border = 2px "dotted" !accent_colour * 0.2 + !white * 0.8
-            padding: 3px 8px
-            span.marker.private
-              background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center
-            p
-              font-style: italic
+            +rounded_corners("all", 3)
+            background = !accent_colour * 0.15 + !white * 0.85
+            font-style: normal
+            padding: 3px 10px
+            overflow: hidden
+            span.marker
+              float: right
+              display: block
               color = !grey
-    &.private.me
-      td
-        &.author
-          b.blockquote_tail
-            border-right = 5px "solid" !alt_colour * 0.25 + !white * 0.75
-        &.message
-          blockquote
-            background = !alt_colour * 0.075 + !white * 0.925
-            border = 2px "dotted" !alt_colour * 0.25 + !white * 0.75
-    td.log
-      width: 140px
-      a
-        float: right
-        background: url('../../images/icons/calendar--arrow.png') no-repeat 3px center
-        background-color = !grey * 0.5 + !dark_grey * 0.5
-        padding: 0 5px 0 21px
-        height: 20px
-        line-height: 20px
-        +rounded_corners("all", 3)
-        color = !white
-        text-decoration: none
+              margin: 0 0 5px 5px
+              +font_size("tiny")
+              padding: 0 0 0 19px
+              line-height: 16px
+              white-space: nowrap
+            p
+              margin: 2px 0
+              overflow: auto
+              span.more_lines
+                +font_size("tiny")
+                color = !grey
+              &.typing
+                background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center
+                padding: 0 0 0 19px
+                color = !light_grey
+            pre
+              overflow: auto
+              padding: 10px
+              width: auto
+              background = !white
+              border = 1px solid !light_grey
+              margin: 0 0 5px
+      &.me
+        td
+          &.author
+            b.blockquote_tail
+              border-right = 5px solid !alt_colour * 0.15 + !white * 0.85
+          &.message
+            blockquote
+              background = !alt_colour * 0.15 + !white * 0.85
+      &.timestamp
+        td
+          border-top = 1px "dotted" !grey * 0.5 + !white * 0.5
+          height: 0
+          padding: 0
+          div
+            position: relative
+            span.marker
+              display: block
+              z-index: 5
+              position: absolute
+              b
+                display: block
+                height: 0
+                width: 0
+                border: 4px solid transparent
+                border: 5px solid transparent
+                position: relative
+              i
+                display: block
+                background-color = !light_grey
+                background-repeat: no-repeat
+                background-position: 3px center
+                color = !white
+                +font_size("tiny")
+                +rounded_corners("all", 2)
+                padding: 0 5px 0 20px
+                font-style: normal
+                white-space: nowrap
+          &.date
+            div
+              span.marker
+                right: 100%
+                top: -18px
+                margin: 0 -2 0 0
+                b
+                  float: right
+                  border-left = 5px "solid" !red * 0.5 + !grey * 0.5
+                  border-right: none
+                  top: 13px
+                i
+                  line-height: 1
+                  padding: 5px
+                  margin: 0 5px 0 0
+                  background = !red * 0.5 + !grey * 0.5
+                  span
+                    display: block
+                    text-align: center
+                    &.date
+                      font-weight: bold
+                      +font_size("medium")
+                    &.time
+                      text-transform: uppercase
+                      +font_size("tiny")
+
+          &.time
+            div
+              span.marker
+                left: 100%
+                top: -10px
+                margin: 0 0 0 -2px
+                b
+                  float: left
+                  border-right = 5px "solid" !light_grey
+                  border-left: none
+                  top: 5px
+                i
+                  height: 20px
+                  background-image: url('../../images/icons/clock.png')
+                  line-height: 20px
+                  margin: 0 0 0 5px
+      &.notice
+        td
+          &.message
+            p
+              color = !light_grey
+              +font_size("tiny")
+      &.private
+        td
+          &.author
+            b.blockquote_tail
+              border-right = 5px solid !accent_colour * 0.25 + !white * 0.75
+          &.message
+            blockquote
+              background = !accent_colour * 0.075 + !white * 0.925
+              border = 2px "dotted" !accent_colour * 0.2 + !white * 0.8
+              padding: 3px 8px
+              span.marker.private
+                background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center
+              p
+                font-style: italic
+                color = !grey
+      &.private.me
+        td
+          &.author
+            b.blockquote_tail
+              border-right = 5px "solid" !alt_colour * 0.25 + !white * 0.75
+          &.message
+            blockquote
+              background = !alt_colour * 0.075 + !white * 0.925
+              border = 2px "dotted" !alt_colour * 0.25 + !white * 0.75
+      td.log
+        width: 140px
+        a
+          float: right
+          background: url('../../images/icons/calendar--arrow.png') no-repeat 3px center
+          background-color = !grey * 0.5 + !dark_grey * 0.5
+          padding: 0 5px 0 21px
+          height: 20px
+          line-height: 20px
+          +rounded_corners("all", 3)
+          color = !white
+          text-decoration: none
 
 #message_form
   position: fixed
