@@ -1,34 +1,28 @@
-// giving credits to  http://james.padolsey.com/javascript/find-and-replace-text-with-javascript/
-function findAndReplace(searchText, replacement, searchNode) {
-    if (!searchText || typeof replacement === 'undefined') {
-        return;
+// replaces strings
+jQuery.fn.findAndReplace = function(string, replacement, options) {
+  function innerfindAndReplace(node, string) {
+    var skip = 0;
+    if (node.nodeType == 3) {
+      var pos = node.data.toUpperCase().indexOf(string);
+      if (pos >= 0) {
+        var spannode = document.createElement('span');
+        var middlebit = node.splitText(pos);
+        var endbit = middlebit.splitText(string.length);
+        var replacementSpan = document.createElement('span');
+        replacementSpan.innerHTML = replacement;
+        spannode.appendChild(replacementSpan);
+        middlebit.parentNode.replaceChild(spannode, middlebit);
+        skip = 1;
+      }
+    } else if (node.nodeType == 1 && node.childNodes && !/(script|style|pre)/i.test(node.tagName)) {
+      for (var i = 0; i < node.childNodes.length; ++i) {
+        i += innerfindAndReplace(node.childNodes[i], string);
+      }
     }
-    var regex = typeof searchText === 'string' ?
-                new RegExp(searchText, 'g') : searchText,
-        childNodes = (searchNode || document.body).childNodes,
-        cnLength = childNodes.length,
-        excludes = 'html,head,style,title,link,meta,script,object,iframe,pre';
-    while (cnLength--) {
-        var currentNode = childNodes[cnLength];
-        if (currentNode.nodeType === 1 &&
-            (excludes + ',').indexOf(currentNode.nodeName.toLowerCase() + ',') === -1) {
-            arguments.callee(searchText, replacement, currentNode);
-        }
-        if (currentNode.nodeType !== 3 || !regex.test(currentNode.data) ) {
-            continue;
-        }
-        var parent = currentNode.parentNode,
-            frag = (function(){
-                var html = currentNode.data.replace(regex, replacement),
-                    wrap = document.createElement('div'),
-                    frag = document.createDocumentFragment();
-                wrap.innerHTML = html;
-                while (wrap.firstChild) {
-                    frag.appendChild(wrap.firstChild);
-                }
-                return frag;
-            })();
-        parent.insertBefore(frag, currentNode);
-        parent.removeChild(currentNode);
-    }
-}
+    return skip;
+  }
+  
+  return this.each(function() {
+    innerfindAndReplace(this, string.toUpperCase());
+  });
+};

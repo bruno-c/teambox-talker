@@ -21,7 +21,6 @@ Talker.Broadcaster = {
                   ? 'MessageReceived' 
                   :  event.type.charAt(0).toUpperCase() + event.type.substr(1, event.type.length));
     Talker.Broadcaster.broadcast(eventName, event);
-    Talker.Broadcaster.broadcast('After' + eventName, event);
   }
 };
 

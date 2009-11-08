@@ -29,6 +29,9 @@ Talker.Logger = {
                              attr('room', (Talker.room || event.room).id). // HACK ...
                              attr('time', event.time).
                              html(content));
+    
+    // for post formatting
+    Talker.trigger('AfterMessageReceived');
   },
   
   lastRow: function(){
