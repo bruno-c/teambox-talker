@@ -17,16 +17,10 @@ Talker.Broadcaster = {
   },
   
   broadcastEvent: function(event) {
-    var callbackName;
-    switch (event.type) {
-      case 'message':
-        callbackName = 'MessageReceived';
-        break;
-      default:
-        callbackName = event.type.charAt(0).toUpperCase() + event.type.substr(1, event.type.length);
-        break;
-    }
-    Talker.Broadcaster.broadcast(callbackName, event);
+    var eventName = (event.type == 'message' 
+                  ? 'MessageReceived' 
+                  :  event.type.charAt(0).toUpperCase() + event.type.substr(1, event.type.length));
+    Talker.Broadcaster.broadcast(eventName, event);
   }
 };
 
