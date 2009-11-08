@@ -1,9 +1,9 @@
 Talker.TwitterStatuses = function() {
   var self = this;
 
-  self.onPostFormatMessage = function(event){
-    var last_insertion = $('#log p:last');
-    var twitter_status_expression = /https+:\/\/twitter.com\/\w+\/status\/(\d+)/i;
+  self.onAfterMessageReceived = function(event){
+    var last_insertion = Talker.Logger.lastRow();
+    var twitter_status_expression = /https*:\/\/twitter.com\/\w+\/status\/(\d+)/i;
     var last_anchor = last_insertion.find('a');
     var last_href = last_anchor.attr('href') || '';
     
@@ -19,8 +19,6 @@ Talker.TwitterStatuses = function() {
           $('<img/>').attr({src: data.user.profile_image_url, height: 48, width: 48})
           .css('margin', '4px')
         ).append('"' + data.text + '"'));
-        
-        Talker.trigger('ScrollNudge');
       });
     }
   }
