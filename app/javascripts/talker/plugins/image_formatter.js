@@ -1,7 +1,7 @@
 Talker.ImageFormatter = function() {
   var self = this;
   
-  self.onFormatMessage = function(event){
+  self.onMessageReceived = function(event){
     var image_expression = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
     var image_match = event.content.match(image_expression);
     
@@ -13,7 +13,7 @@ Talker.ImageFormatter = function() {
     
     if (image_match){
       var fallback = $('<a/>').attr('href', image_match[0]).attr('target', '_blank').html(image_match[0]);
-      event.complete(fallback);
+      Talker.Logger.insertContent(event, fallback);
       Talker.trigger('Loaded', event);
       
       var img = $('<img/>').load(function(){
@@ -24,7 +24,7 @@ Talker.ImageFormatter = function() {
             + image_match[0]
             + '" target="_blank"><img src="' 
             + image_match[0]
-            + '" style="max-height: 400px; max-width: ' + getMaximumContentWidth() + ';" onload=""/>'
+            + '" style="max-height: 400px; max-width: ' + Talker.Logger.maximumContentWidth() + ';" />'
             + '</a>'
         );
         
