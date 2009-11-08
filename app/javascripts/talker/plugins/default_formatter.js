@@ -2,7 +2,7 @@
 Talker.DefaultFormatter = function() {
   var self = this;
   
-  self.onMessageReceived = function(event){
+  self.onMessageReceived = function(event) {
     var url_expression = /(https?:\/\/|www\.)[^\s<]*/gi;
     var protocol_expression  = /^(http|https|ftp|ftps|ssh|irc|mms|file|about|mailto|xmpp):\/\//;
     

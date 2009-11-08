@@ -18,6 +18,7 @@
       // Chat logs plugins
       Talker.plugins.push(new Talker.ErrorHandler($("#error")));
       <%= install_core_plugins %>
+      Talker.plugins.push(new Talker.Users());
       Talker.plugins.push(new Talker.TwitterStatuses());
       
       Talker.client = new Talker.Client({
@@ -33,10 +34,10 @@
       
       // Chat room plugins
       Talker.plugins.push(new Talker.Sender($("#msgbox")));
-      Talker.plugins.push(new Talker.Presence($('#people')));
       Talker.plugins.push(new Talker.Scroller());
       Talker.plugins.push(new Talker.MsgCommand());
       Talker.plugins.push(new Talker.Notifier());
+      Talker.plugins.push(new Talker.UserList($('#people')));
       Talker.plugins.push(new Talker.SystemNotification());
       Talker.plugins.push(new Talker.TitleNotification());
       Talker.plugins.push(new Talker.LogSweeper($("#log")));
