@@ -24,7 +24,7 @@ Talker.ImageFormatter = function() {
             + image_match[0]
             + '" target="_blank"><img src="' 
             + image_match[0]
-            + '" style="max-height: 400px; max-width: ' + Talker.Logger.maximumContentWidth() + ';" />'
+            + '" style="max-height: 300px; max-width: ' + Talker.Logger.maximumContentWidth() + ';" />'
             + '</a>'
         );
         

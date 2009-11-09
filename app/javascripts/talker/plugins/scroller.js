@@ -8,7 +8,7 @@ Talker.Scroller = function() {
       if (forceScroll){
         _.each([0,10,20,30,40,50,60,70,80,90,100,110,120,130,150], function(delay){
           window.setTimeout(function(){
-            self.scrollToBottom();
+            window.scrollBy(0, 400);
           }, delay);
         })
       }
@@ -34,11 +34,8 @@ Talker.Scroller = function() {
   self.onJoin =
   self.onLeave =
   self.onMessageReceived = 
-  self.onInsertion = function(event) {
-    self.scrollToBottom();
-  }
-  
-  self.onScrollNudge = function(event){
+  self.onInsertion = 
+  self.onAfterMessageReceived = function(event) {
     self.scrollToBottom();
   }
   
