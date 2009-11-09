@@ -25,11 +25,11 @@
       Talker.plugins.push(new Talker.LogSweeper($("#log")));
       Talker.plugins.push(new Talker.Notifier()); //provides onblur/onfocus handlers
       Talker.plugins.push(new Talker.UserList($('#people'))); // sidebar updating of users.
+      Talker.plugins.push(new Talker.Timestamp());// << depends on order to be included properly.  I say it should remain mandatory for usability reasons.
       
       // ABOVE THIS SHOULD ALWAYS BE LOADED
       
       // Display plugins
-      Talker.plugins.push(new Talker.Timestamp());
       Talker.plugins.push(new Talker.UserJoin());
       Talker.plugins.push(new Talker.UserLeave());
       
@@ -46,21 +46,18 @@
       // plugins with ajax calls
       Talker.plugins.push(new Talker.TwitterStatuses());
       
-      // notifications
+      // OS integration via Fluid or Prism 
       Talker.plugins.push(new Talker.UserJoinNotifications());
       Talker.plugins.push(new Talker.UserLeaveNotifications());
       Talker.plugins.push(new Talker.NewMessageNotifications());
-      
-      // fluid specifics
       Talker.plugins.push(new Talker.DockBadge());
       
       // title new message count
       Talker.plugins.push(new Talker.TitleMessageCount());
       
-      // default formatter
+      // BELOW THIS SHOULD ALWAYS BE LOADED
       Talker.plugins.push(new Talker.DefaultCommand($('msgbox')));
       Talker.plugins.push(new Talker.DefaultFormatter()); // this is mandatory and should be last.
-      
       
       Talker.client = new Talker.Client({
         host: '<%= Orbited.talker_host %>', 
