@@ -4,7 +4,6 @@ Talker.TitleMessageCount = function() {
   self.count = 0;
   self.originalTitle = document.title;
   
-  
   self.onLoaded = function() {
     self.onBlur = function() {
       self.onMessageReceived = function(event) {
