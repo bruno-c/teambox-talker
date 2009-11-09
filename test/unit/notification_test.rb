@@ -18,4 +18,11 @@ class NotificationTest < ActiveSupport::TestCase
     assert_equal 1, success
     assert_equal 0, failure
   end
+
+  def test_work_fail
+    Notification.any_instance.expects(:perform).once.raises(ArgumentError)
+    success, failure = Notification.work
+    assert_equal 0, success
+    assert_equal 1, failure
+  end
 end

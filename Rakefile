@@ -22,7 +22,7 @@ end
 
 namespace :notifications do
   desc "Run Notifications worker"
-  task :work do
+  task :work => :environment do
     Notification::Worker.new.start
   end
 end

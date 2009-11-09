@@ -1,13 +1,12 @@
 class Notification < ActiveRecord::Base
-  MAX_RUN_TIME = 1.hour
-  INTERVAL = 10.minutes
+  MAX_RUN_TIME   = 1.hour     # Max time a job can run before it is considered as failed
+  INTERVAL       = 10.minutes # Interval of check for due notifications
+  MAX_MESSAGES   = 10         # Make number of message sent per notification fetch
   
   belongs_to :room
   belongs_to :account
   
   validates_presence_of :url
-  
-  before_save { |r| r.ran_at ||= self.class.db_time_now }
   
   # Lot of this shit taken from Delayed::Job
   
@@ -31,11 +30,11 @@ class Notification < ActiveRecord::Base
       perform
       self.failed_at = self.last_error = nil
       return true  # did work
-    rescue Exception => e
+    rescue Exception => error
       self.failed_at = self.class.db_time_now
-      self.last_error = e.message
+      self.last_error = error.message
       logger.error "[Notificaton] ##{id} failed with #{error.class.name}: #{error.message}"
-      logger.error e
+      logger.error error.backtrace.join("\n")
       return false  # work failed
     end
   ensure
@@ -45,12 +44,26 @@ class Notification < ActiveRecord::Base
   end
   
   def perform
-    feed = Feedzirra::Feed.fetch_and_parse(url, :user_agent => "Talker http://talkerapp.com",
-                                                :if_modified_since => fetched_at,
-                                                :if_none_match => etag,
-                                                :http_authentication => ([user_name, password] if user_name.present?))
+    options = { :user_agent => "Talker http://talkerapp.com" }
+    options[:if_modified_since] = fetched_at if fetched_at
+    options[:if_none_match] = etag if etag
+    options[:http_authentication] = [user_name, password] if user_name.present?
     
-    feed.entries.select { |e| e.published > last_published_at }.each do |entry|
+    feed = Feedzirra::Feed.fetch_and_parse(url, options)
+    
+    # Returns a HTTP response code if not modified
+    if feed.is_a?(Fixnum)
+      return
+    end
+    
+    entries = feed.entries
+    
+    # If we already fetch, do not publish duplicates
+    if last_published_at
+      entries = entries.select { |e| e.published > last_published_at }
+    end
+    
+    entries.first(MAX_MESSAGES).each do |entry|
       send_message entry.title
       send_message entry.url
       send_message entry.content
@@ -62,7 +75,7 @@ class Notification < ActiveRecord::Base
   end
   
   def send_message(message)
-    # TODO
+    puts message
   end
   
   def lock
@@ -129,7 +142,7 @@ class Notification < ActiveRecord::Base
   def self.find_available(limit)
     time_now = db_time_now
 
-    conditions = ['ran_at <= ? AND (locked_at IS NULL OR locked_at < ?) OR (locked_by = ?)',
+    conditions = ['(ran_at <= ? or ran_at IS NULL) AND (locked_at IS NULL OR locked_at < ?) OR (locked_by = ?)',
                   time_now - INTERVAL, time_now - MAX_RUN_TIME, worker_name]
 
     records = ActiveRecord::Base.silence do

@@ -12,8 +12,8 @@ class Notification
     def start
       say "*** Starting notification worker #{Notification.worker_name}"
 
-      trap('TERM') { say 'Exiting...'; Notification.stop = true }
-      trap('INT')  { say 'Exiting...'; Notification.stop = true }
+      trap('TERM') { say "Exiting in <= #{SLEEP}s..."; Notification.stop = true }
+      trap('INT')  { say 'Exiting in <= #{SLEEP}s...'; Notification.stop = true }
 
       loop do
         result = nil
