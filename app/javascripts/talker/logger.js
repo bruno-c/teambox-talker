@@ -32,6 +32,7 @@ Talker.Logger = {
     
     // for post formatting
     Talker.trigger('AfterMessageReceived');
+    Talker.trigger('Resize');
   },
   
   lastRow: function(){
@@ -44,17 +45,5 @@ Talker.Logger = {
   
   maximumContentWidth: function() {
     return $('#chat_log').width() - $('#log tr td:first').width() - 41;
-  },
-  
-  resizeLogElements: function() {
-    var maxWidth = Talker.Logger.maximumContentWidth();
-    
-    $('#log pre').css('width', maxWidth - 22 + 'px');   // handles pastes
-    $('#log blockquote').css('width', maxWidth + 'px'); // handles long ass messages with no spaces
-    
-    $("#log img[class!='avatar']").each(function(){
-      $(this).css({'max-width': 'auto'});
-      $(this).css({'max-width': maxWidth + 'px'});
-    });
   }
 }

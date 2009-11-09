@@ -48,4 +48,8 @@ $(function() {
   $('#msgbox, input.search, #edit_room form input, #edit_room form textarea').keydown(function(e){
     e.stopPropagation()
   });
+  
+  $(window).resize(function(){ Talker.trigger('Resize') });
+  
+  Talker.trigger('Resize');
 });

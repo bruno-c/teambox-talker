@@ -38,4 +38,13 @@ Talker.ImageFormatter = function() {
       return false;
     }
   }
+  
+  self.onResize = function() {
+    var maxWidth = Talker.Logger.maximumContentWidth();
+    
+    $("#log img[class!='avatar']").each(function(){
+      $(this).css({'max-width': 'auto'});
+      $(this).css({'max-width': maxWidth + 'px'});
+    });
+  }
 };
