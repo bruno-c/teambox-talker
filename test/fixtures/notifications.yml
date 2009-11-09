@@ -1,10 +1,10 @@
-due:
+thin:
   room: main
   account: master
   url: http://github.com/feeds/macournoyer/commits/thin/master
   ran_at: <%= 12.minutes.ago.to_s(:db) %>
 
-new:
+tinyrb:
   room: main
   account: master
   url: http://github.com/feeds/macournoyer/commits/tinyrb/master
