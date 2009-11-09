@@ -22,6 +22,7 @@ Rails::Initializer.run do |config|
   config.gem "haml"
   config.gem "chriseppstein-compass", :lib => "compass", :source => "http://gems.github.com/"
   config.gem "sprockets"
+  config.gem "tmm1-amqp", :lib => "amqp", :source => "http://gems.github.com"
   config.gem "feedzirra"
 
   # Only load the plugins named here, in the order given (default is alphabetical).

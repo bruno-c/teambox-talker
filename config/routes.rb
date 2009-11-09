@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :account
   map.resource :session
   map.resource :settings
-  map.resources :rooms
+  map.resources :rooms, :has_many => :messages
   map.resources :pastes
   map.resource :admin, :controller => "admin"
 

@@ -20,6 +20,10 @@ class Notification < ActiveRecord::Base
     failed_at
   end
   
+  def run_at
+    ran_at + INTERVAL
+  end
+  
   def run_with_lock
     unless lock
       logger.warn "[Notificaton] Failed to acquire lock for ##{id}"
