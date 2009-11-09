@@ -1,16 +1,15 @@
-Talker.UserJoinNotifications = function() {
+Talker.NewMessageNotifications = function() {
   var self = this;
   
   self.onLoaded = function() {
     self.onBlur = function() {
-      self.onJoin = function(event) {
-        event.content = "has entered the room.";
+      self.onMessageReceived = function(event) {
         notify(event);
       }
     }
     
     self.onFocus = function() {
-      self.onJoin = function() {  }
+      self.onMessageReceived = function(event) { }
     }
   }
   
@@ -22,4 +21,4 @@ Talker.UserJoinNotifications = function() {
       });
     }
   }
-};
+}

@@ -1,7 +1,7 @@
 Talker.UserLeaveNotifications = function() {
   var self = this;
   
-  self.onLoaded = function(){
+  self.onLoaded = function() {
     self.onBlur = function() {
       self.onLeave = function(event) {
         event.content = "has left the room.";
