@@ -94,6 +94,10 @@ class User < ActiveRecord::Base
     end
   end
   
+  def self.talker
+    @talker ||= User.first(:conditions => { :staff => true, :email => "bot@talkerapp.com" })
+  end
+  
   private
     def password_required?
       (crypted_password.blank? && password) || password.present?
