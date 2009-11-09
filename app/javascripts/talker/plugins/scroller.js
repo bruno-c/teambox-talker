@@ -1,22 +1,34 @@
+// FF cannot be smart enough to fire onscroll event in the right order.
+// the good news is that FF does provide mousedown and mouseup events when you touch the scrollbars.
+// so for Safari we use the canScroll variable to determine wether or not to enabled/disabled the autoscrolling.
+// in FF we will disable autoscroll if scrolling occurs between mousedown and mouseup events... provided the user
+// hasn't scrolled to the bottom of the page.
 Talker.Scroller = function() {
   var self = this;
-  var scrollLimit = 500;
+  var scrollLimit = 50;
+  
+  self.scrollingWithScript = false;
   
   self.scrollToBottom = function(forceScroll){
     if (self.shouldScrollToBottom() || forceScroll){
-      window.scrollBy(0, 400);
-      if (forceScroll){
-        _.each([0,10,20,30,40,50,60,70,80,90,100,110,120,130,150], function(delay){
-          window.setTimeout(function(){
-            window.scrollBy(0, 400);
-          }, delay);
-        })
-      }
+      self.scrollNudge();
     }
   }
   
+  self.scrollNudge = function(amount){
+    window.scrollBy(0, (amount || 500000));
+  }
+  
+  $(window).mousewheel(function(event, delta) {
+    self.allowScrollingToBottom = (self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight()) == 0;
+  });
+  
   self.shouldScrollToBottom = function(){
-    return (self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight() + scrollLimit) > 0
+    return self.allowScrollingToBottom;
+  }
+  
+  self.atBottom = function(){
+    return self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight() > 0
   }
   
   self.getWindowHeight = function(){
@@ -28,22 +40,19 @@ Talker.Scroller = function() {
   }
   
   self.getScrollHeight = function(){
-    return Math.max(document.documentElement.offsetHeight, document.body.scrollHeight) - 25;// + 25 for padding and extra display stuff. 
+    return Math.max(document.documentElement.offsetHeight, document.body.scrollHeight);
   }
   
   self.onJoin =
   self.onLeave =
   self.onMessageReceived = 
-  self.onInsertion = 
+  self.onInsertion = // also called when an image is loaded
   self.onAfterMessageReceived = function(event) {
     self.scrollToBottom();
   }
   
+  self.onLoaded = 
   self.onMessageSent = function(event) {
-    self.scrollToBottom(true);
-  }
-  
-  self.onLoaded = function(event) {
     self.scrollToBottom(true);
   }
 }

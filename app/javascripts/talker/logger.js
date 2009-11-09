@@ -31,6 +31,7 @@ Talker.Logger = {
                              html(content));
     
     // for post formatting
+    Talker.trigger('Insertion');
     Talker.trigger('AfterMessageReceived');
     Talker.trigger('Resize');
   },
