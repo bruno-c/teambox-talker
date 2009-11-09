@@ -8,7 +8,6 @@ Talker.Sender = function(msgbox) {
       try {
         var args = shellwords(self.msgbox.val().substr(1));
         Talker.trigger("Command", {type: "command", command: args[0], args: args.slice(1)});
-        self.msgbox.val('');
       } catch (e) {
         if (e.name == "ParseError" || e.name == "CommandError") {
           alert(e.message);

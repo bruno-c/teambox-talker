@@ -40,8 +40,8 @@
       Talker.plugins.push(new Talker.EmoticonsFormatter());
       
       // Commands
-      Talker.plugins.push(new Talker.MsgCommand());
-      Talker.plugins.push(new Talker.HelloCommand());
+      Talker.plugins.push(new Talker.MsgCommand($('#msgbox')));
+      Talker.plugins.push(new Talker.HelloCommand($('#msgbox')));
       
       // plugins with ajax calls
       Talker.plugins.push(new Talker.TwitterStatuses());
@@ -58,6 +58,7 @@
       Talker.plugins.push(new Talker.TitleMessageCount());
       
       // default formatter
+      Talker.plugins.push(new Talker.DefaultCommand($('msgbox')));
       Talker.plugins.push(new Talker.DefaultFormatter()); // this is mandatory and should be last.
       
       
