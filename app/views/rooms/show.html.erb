@@ -50,6 +50,12 @@
       Talker.plugins.push(new Talker.UserLeaveNotifications());
       Talker.plugins.push(new Talker.NewMessageNotifications());
       
+      // fluid specifics
+      Talker.plugins.push(new Talker.DockBadge());
+      
+      // title new message count
+      Talker.plugins.push(new Talker.TitleMessageCount());
+      
       // default formatter
       Talker.plugins.push(new Talker.DefaultFormatter());
       
