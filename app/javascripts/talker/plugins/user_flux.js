@@ -1,3 +1,4 @@
+// shows who joins and leaves in the log
 Talker.UserFlux = function() {
   var self = this;
   
@@ -9,7 +10,7 @@ Talker.UserFlux = function() {
     
     element.appendTo('#log');
   }
-    
+  
   self.onLeave = function(event) {
     var element = $('<tr/>').attr('author', h(event.user.name)).addClass('received').addClass('notice').addClass('user_' + event.user.id).addClass('event')
       .append($('<td/>').addClass('author'))

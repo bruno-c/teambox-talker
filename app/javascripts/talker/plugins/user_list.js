@@ -1,27 +1,30 @@
+// updates user lists on the sidebar
 Talker.UserList = function(element) {
   var self = this;
   
-  self.onIdle = function(event) {
-    $("#user_" + event.user.id).css('opacity', 0.5).addClass('idle');
-  };
-  
-  self.onBack = function(event) {
-    $("#user_" + event.user.id).css('opacity', 1.0).removeClass('idle');
-  };
-  
-  self.onJoin = 
-  self.onMessageReceived = function(event) {
-    add(event.user);
-  };
-  
-  self.onLeave = function(event) {
-    remove(event.user);
-  }
-  
-  self.onUsers = function(event) {
-    $(event.users).each(function(){
-      add(this);
-    });
+  self.onLoaded = function(){
+    self.onJoin = 
+    self.onMessageReceived = function(event) {
+      add(event.user);
+    };
+
+    self.onLeave = function(event) {
+      remove(event.user);
+    }
+    
+    self.onIdle = function(event) {
+      $("#user_" + event.user.id).css('opacity', 0.5).addClass('idle');
+    };
+
+    self.onBack = function(event) {
+      $("#user_" + event.user.id).css('opacity', 1.0).removeClass('idle');
+    };
+
+    self.onUsers = function(event) { // this only ever occurs from talker directly so no worries about logs impeding.
+      $(event.users).each(function(){
+        add(this);
+      });
+    }
   }
   
   // private

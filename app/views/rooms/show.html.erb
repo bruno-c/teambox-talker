@@ -19,7 +19,7 @@
       
       // Functional plugins that have bearing on wether other plugins work or not
       Talker.plugins.push(new Talker.ErrorHandler($("#error")));
-      Talker.plugins.push(new Talker.Users());
+      Talker.plugins.push(new Talker.Users()); // used only to keep track of which users are present for up to date knowledge of presence
       Talker.plugins.push(new Talker.Sender($("#msgbox")));
       Talker.plugins.push(new Talker.Scroller());
       Talker.plugins.push(new Talker.LogSweeper($("#log")));
