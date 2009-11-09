@@ -436,6 +436,16 @@ a.button, button
       position: relative
       td
         +font_size("small")
+        a.log
+          float: right
+          background: url('../../images/icons/calendar--arrow.png') no-repeat 3px center
+          background-color = !grey * 0.5 + !dark_grey * 0.5
+          padding: 0 5px 0 21px
+          height: 20px
+          line-height: 20px
+          +rounded_corners("all", 3)
+          color = !white
+          text-decoration: none
         img.avatar
           height: 16px
           width: 16px
@@ -598,18 +608,6 @@ a.button, button
             blockquote
               background = !alt_colour * 0.075 + !white * 0.925
               border = 2px "dotted" !alt_colour * 0.25 + !white * 0.75
-      td.log
-        width: 140px
-        a
-          float: right
-          background: url('../../images/icons/calendar--arrow.png') no-repeat 3px center
-          background-color = !grey * 0.5 + !dark_grey * 0.5
-          padding: 0 5px 0 21px
-          height: 20px
-          line-height: 20px
-          +rounded_corners("all", 3)
-          color = !white
-          text-decoration: none
 
 #message_form
   position: fixed

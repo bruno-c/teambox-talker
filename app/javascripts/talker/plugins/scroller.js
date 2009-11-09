@@ -33,7 +33,8 @@ Talker.Scroller = function() {
   
   self.onJoin =
   self.onLeave =
-  self.onMessageReceived = function(event) {
+  self.onMessageReceived = 
+  self.onInsertion = function(event) {
     self.scrollToBottom();
   }
   

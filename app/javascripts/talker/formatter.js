@@ -3,7 +3,12 @@ var FormatHelper = {
     if (timestamp) return new Date(timestamp * 1000);
     return null;
   },
-
+  
+  getUrlDate: function(timestamp){
+    var d = FormatHelper.timestamp2date(timestamp);
+    return [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('/')
+  },
+  
   getMonth: function(timestamp){
     var months = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ');
     return months[FormatHelper.timestamp2date(timestamp).getMonth()];

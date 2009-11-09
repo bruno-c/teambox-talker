@@ -7,14 +7,14 @@ Talker.ImageFormatter = function() {
     
     if ($('#talker_image_preloading_div').length == 0){
       $("<div/>").attr('id', 'talker_image_preloading_div')
-        .css({position:'absolute', top: '-100px', left: '-100px', height: '100px', width: '100px'})
+        .css({position:'absolute', top: '-100px', left: '-100px', height: '100px', width: '100px', overflow: 'hidden'})
         .appendTo(document.body);
     }
     
     if (image_match){
       var fallback = $('<a/>').attr('href', image_match[0]).attr('target', '_blank').html(image_match[0]);
       Talker.Logger.insertContent(event, fallback);
-      Talker.trigger('Loaded', event);
+      Talker.trigger('Insertion', event);
       
       var img = $('<img/>').load(function(){
         $(this).remove();
@@ -28,7 +28,7 @@ Talker.ImageFormatter = function() {
             + '</a>'
         );
         
-        Talker.trigger('Loaded', event);
+        Talker.trigger('Insertion', event);
       });
     
       $('#talker_image_preloading_div').append(

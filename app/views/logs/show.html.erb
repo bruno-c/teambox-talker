@@ -6,8 +6,20 @@
     Talker.currentUser = <%= current_user.to_json %>;
     
     $(function(){
-      <%= install_core_plugins %>
-      Talker.plugins.push(new Talker.UserList($('#people')));
+      <%#= install_core_plugins %>
+      
+      Talker.plugins.push(new Talker.Timestamp());
+      Talker.plugins.push(new Talker.UserJoin());
+      Talker.plugins.push(new Talker.UserLeave());
+      
+      Talker.plugins.push(new Talker.YoutubeFormatter());
+      Talker.plugins.push(new Talker.PasteFormatter());
+      Talker.plugins.push(new Talker.ImageFormatter());
+      Talker.plugins.push(new Talker.EmoticonsFormatter());
+      
+      Talker.plugins.push(new Talker.LogsUserList($('#people')));
+      
+      Talker.plugins.push(new Talker.DefaultFormatter());
       
       <%= render_events @events %>
     });
