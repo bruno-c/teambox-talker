@@ -62,7 +62,8 @@ ActiveRecord::Schema.define(:version => 20091107024653) do
     t.string   "locked_by"
     t.datetime "locked_at"
     t.datetime "failed_at"
-    t.string   "response_code"
+    t.string   "last_error"
+    t.datetime "ran_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

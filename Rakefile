@@ -19,3 +19,10 @@ task :jsmin => "sprockets:install_script" do
   sh "ruby lib/jsmin.rb < #{file} > #{file}.min && " +
      "mv -f #{file}.min #{file}"
 end
+
+namespace :notifications do
+  desc "Run Notifications worker"
+  task :work do
+    Notification::Worker.new.start
+  end
+end

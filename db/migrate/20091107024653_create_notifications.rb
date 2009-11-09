@@ -14,8 +14,10 @@ class CreateNotifications < ActiveRecord::Migration
       t.datetime :locked_at
       
       t.datetime :failed_at
-      t.string :response_code
-
+      t.string :last_error
+      
+      t.datetime :ran_at
+      
       t.timestamps
     end
   end

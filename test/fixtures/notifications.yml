@@ -1,11 +1,11 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+due:
+  room: main
+  account: master
+  url: http://github.com/feeds/macournoyer/commits/thin/master
+  ran_at: <%= 12.minutes.ago.to_s(:db) %>
 
-one:
-  room: 
-  account: 
-  url: MyString
-
-two:
-  room: 
-  account: 
-  url: MyString
+new:
+  room: main
+  account: master
+  url: http://github.com/feeds/macournoyer/commits/tinyrb/master
+  ran_at: <%= 10.seconds.ago.to_s(:db) %>
