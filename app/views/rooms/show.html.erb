@@ -23,7 +23,7 @@
       Talker.plugins.push(new Talker.Sender($("#msgbox")));
       Talker.plugins.push(new Talker.Scroller());
       Talker.plugins.push(new Talker.LogSweeper($("#log")));
-      Talker.plugins.push(new Talker.Notifier());
+      Talker.plugins.push(new Talker.Notifier()); //provides onblur/onfocus handlers
       
       // Display plugins
       Talker.plugins.push(new Talker.Timestamp());
@@ -46,7 +46,8 @@
       Talker.plugins.push(new Talker.TwitterStatuses());
       
       // notifications
-      // Talker.plugins.push(new Talker.FluxNotifications());
+      Talker.plugins.push(new Talker.UserJoinNotifications());
+      Talker.plugins.push(new Talker.UserLeaveNotifications());
       // Talker.plugins.push(new Talker.NewMessageNotifications());
       
       // default formatter
