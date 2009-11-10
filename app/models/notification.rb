@@ -3,6 +3,8 @@ class Notification < ActiveRecord::Base
   INTERVAL       = 2.minutes  # Interval of check for due notifications
   MAX_MESSAGES   = 3          # Make number of message sent per notification fetch
   
+  class BadResponse < RuntimeError; end
+  
   belongs_to :room
   belongs_to :account
   
@@ -53,9 +55,10 @@ class Notification < ActiveRecord::Base
     
     feed = Feedzirra::Feed.fetch_and_parse(url, options)
     
-    # Returns a HTTP response code if not modified
-    if feed.is_a?(Fixnum)
+    if feed == 304 # not modified
       return
+    elsif feed.is_a?(Fixnum)
+      raise BadResponse, "Got #{feed} response from server"
     end
     
     entries = feed.entries

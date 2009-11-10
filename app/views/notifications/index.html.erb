@@ -10,7 +10,14 @@
   <table id="notifications">
   <% @notifications.each do |notification| %>
     <tr>
-      <td><%= image_tag "icons/feed.png" %> <%= link_to h(notification.url), notification.url %></td>
+      <td>
+        <% if notification.failed? %>
+          <%= image_tag "icons/feed--exclamation.png", :title => h(notification.last_error) %>
+        <% else %>
+          <%= image_tag "icons/feed.png" %>
+        <% end %>
+        <%= link_to h(notification.url), notification.url %>
+      </td>
       <td><%= image_tag "icons/arrow.png", :class => "to", :title => "Send to room" %></td>
       <td><%=h notification.room.name %></td>
       <td class="actions">
