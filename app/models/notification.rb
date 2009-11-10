@@ -8,6 +8,7 @@ class Notification < ActiveRecord::Base
   
   validates_presence_of :url
   validates_uniqueness_of :url, :scope => :room_id
+  validates_format_of :url, :with => /\A(https?:\/\/|www\.)[^\s<]*\z/i
   
   # Lot of this shit taken from Delayed::Job
   

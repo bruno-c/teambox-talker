@@ -1,0 +1,13 @@
+<div class="sheet">
+  <h2><%= @title = "Edit notification" %></h2>
+
+  <% form_for @notification, :html => { :class => "lw120" } do |f| %>
+    <%= f.error_messages %>
+    
+    <%= render f %>
+    
+    <p class="indent submit">
+      <%= buttons "Update", :cancel_to => notifications_path %>
+    </p>
+  <% end %>
+</div>

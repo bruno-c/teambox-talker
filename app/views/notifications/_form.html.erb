@@ -1,3 +1,27 @@
-<td><%= form.text_field :url, :size => 60, :class => "url" %></td>
-<td><%= image_tag "icons/arrow.png", :class => "to" %></td>
-<td><%= form.select :room_id, current_account.rooms.map {|r| [ r.name, r.id ] } %></td>
+<fieldset id="info">
+  <p>
+    <%= form.label :url, "Feed URL" %>
+    <%= form.text_field :url, :size => 60 %>
+    <label class="description">Enter the URL of an Atom or RSS feed.</label>
+  </p>
+  <p>
+    <%= form.label :room_id, "Send to room" %>
+    <%= form.select :room_id, current_account.rooms.map {|r| [ r.name, r.id ] } %>
+    <label class="description">Each time a new entry is published in the feed, a message will be sent to this room.</label>
+  </p>
+</fieldset>
+
+<fieldset id="authentication">
+  <h3>Authentication</h3>
+  <p class="info indent">
+    If the feed requires <%= link_to "Basic access authentication", "http://en.wikipedia.org/wiki/Basic_access_authentication" %>, specify your user name and password.
+  </p>
+  <p>
+    <%= form.label :user_name %>
+    <%= form.text_field :user_name %>
+  </p>
+  <p>
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </p>
+</fieldset>

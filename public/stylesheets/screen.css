@@ -908,17 +908,16 @@ div.info {
   #admin table td {
     border-bottom: 1px dotted gray; }
 
-#notifications {
+table#notifications {
+  width: 100%;
   margin: 10px 0; }
-  #notifications input.url {
-    background: url('/images/icons/feed.png') no-repeat;
-    padding-left: 16px; }
-  #notifications img.to {
+  table#notifications img.to {
     position: relative;
     top: 3px;
     margin: 0 6px; }
-  #notifications td.actions {
-    padding: 6px; }
+  table#notifications td.actions {
+    padding: 6px;
+    text-align: right; }
 
 body#pastes_controller.show {
   background-color: white; }
