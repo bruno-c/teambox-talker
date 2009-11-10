@@ -1,0 +1,28 @@
+<div class="sheet">
+  <h2><%= @title = "Notifications" %></h2>
+  
+  <div class="info">
+    You can send a notification to a room each time a feed is updated.
+    Simply add the URL to the Atom or RSS feed and specify to which room the
+    notification should go.
+  </div>
+  
+  <table id="notifications">
+  <% @notifications.each do |notification| %>
+    <% form_for notification do |f| %>
+    <tr>
+      <%= render f %>
+      <td class="actions"><%= ok_button "Save", :class => "small" %></td>
+    </tr>
+    <% end %>
+  <% end %>
+    
+    <!-- New form -->
+    <% form_for Notification.new do |f| %>
+    <tr>
+      <%= render f %>
+      <td class="actions"><%= submit_button "Add", :class => "add small" %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>

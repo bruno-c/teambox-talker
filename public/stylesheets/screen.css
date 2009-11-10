@@ -910,6 +910,18 @@ div.info {
   #admin table td {
     border-bottom: 1px dotted gray; }
 
+#notifications {
+  margin: 10px 0; }
+  #notifications input.url {
+    background: url('/images/icons/feed.png') no-repeat;
+    padding-left: 16px; }
+  #notifications img.to {
+    position: relative;
+    top: 3px;
+    margin: 0 6px; }
+  #notifications td.actions {
+    padding: 6px; }
+
 body#pastes_controller.show {
   background-color: white; }
   body#pastes_controller.show #paste {

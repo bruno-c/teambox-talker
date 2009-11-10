@@ -16,6 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :settings
   map.resources :rooms, :has_many => :messages
   map.resources :pastes
+  map.resources :notifications
   map.resource :admin, :controller => "admin"
 
   map.connect "/avatar/:id.jpg", :controller => "avatars", :action => "show"

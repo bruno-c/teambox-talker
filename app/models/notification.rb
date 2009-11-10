@@ -7,6 +7,7 @@ class Notification < ActiveRecord::Base
   belongs_to :account
   
   validates_presence_of :url
+  validates_uniqueness_of :url, :scope => :room_id
   
   # Lot of this shit taken from Delayed::Job
   
