@@ -8,8 +8,7 @@ class NotificationsController < ApplicationController
   def update
     @notification = current_account.notifications.find(params[:id])
     
-    if @notification.update_attributes(params[:notification])
-    else
+    unless @notification.update_attributes(params[:notification])
       flash[:error] = @notification.errors.full_messages.to_sentence
     end
 
@@ -19,8 +18,7 @@ class NotificationsController < ApplicationController
   def create
     @notification = current_account.notifications.build(params[:notification])
     
-    if @notification.save
-    else
+    unless @notification.save
       flash[:error] = @notification.errors.full_messages.to_sentence
     end
     

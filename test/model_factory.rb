@@ -19,6 +19,10 @@ module ModelFactory
     { :content => "...", :user => User.first }.merge(attributes)
   end
   
+  def hash_for_notification(attributes={})
+    { :url => "http://github.com/feeds/macournoyer/commits/orange/master", :room => Room.first }.merge(attributes)
+  end
+  
   # Simulates model creation methods based on has_for_<model_name>:
   #   create_<model_name>:  will instantiate w/ attributes and call save
   #   create_<model_name>!: will instantiate w/ attributes and call save!
