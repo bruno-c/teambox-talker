@@ -5,22 +5,20 @@
 // hasn't scrolled to the bottom of the page.
 Talker.Scroller = function() {
   var self = this;
-  var scrollLimit = 50;
+  self.scrollAmount = 0;
   
-  self.scrollingWithScript = false;
-  
-  self.scrollToBottom = function(forceScroll){
-    if (self.shouldScrollToBottom() || forceScroll){
-      self.scrollNudge();
+  self.scrollToBottom = function(){
+    if (self.scrollAmount){
+      window.scrollBy(0, self.scrollAmount);
     }
   }
   
-  self.scrollNudge = function(amount){
-    window.scrollBy(0, (amount || 500000));
-  }
-  
   $(window).mousewheel(function(event, delta) {
-    self.allowScrollingToBottom = (self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight()) == 0;
+    if (delta > 0){
+      self.disableAutoScrolling();
+    } else if (self.atBottom()) {
+      self.enableAutoScrolling();
+    }
   });
   
   self.shouldScrollToBottom = function(){
@@ -28,7 +26,7 @@ Talker.Scroller = function() {
   }
   
   self.atBottom = function(){
-    return self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight() > 0
+    return self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight() >= 0;
   }
   
   self.getWindowHeight = function(){
@@ -42,6 +40,20 @@ Talker.Scroller = function() {
   self.getScrollHeight = function(){
     return Math.max(document.documentElement.offsetHeight, document.body.scrollHeight);
   }
+  
+  self.scrollInterval = window.setInterval(function(){
+    self.scrollToBottom();
+  }, 10);
+  
+  self.enableAutoScrolling = function(){
+    self.scrollAmount = 500000;
+  }
+  
+  self.disableAutoScrolling = function(){
+    self.scrollAmount = 0;
+  }
+  
+  self.enableAutoScrolling();
   
   self.onJoin =
   self.onLeave =
