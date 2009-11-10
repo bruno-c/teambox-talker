@@ -16,7 +16,7 @@ class CreateNotifications < ActiveRecord::Migration
       t.datetime :failed_at
       t.string :last_error
       
-      t.datetime :ran_at
+      t.datetime :run_at
       
       t.timestamps
     end

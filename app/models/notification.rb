@@ -20,10 +20,6 @@ class Notification < ActiveRecord::Base
     failed_at
   end
   
-  def run_at
-    ran_at + INTERVAL
-  end
-  
   def run_with_lock
     unless lock
       logger.warn "[Notificaton] Failed to acquire lock for ##{id}"
@@ -43,7 +39,7 @@ class Notification < ActiveRecord::Base
     end
   ensure
     unlock
-    self.ran_at = self.class.db_time_now
+    self.run_at = self.class.db_time_now + INTERVAL
     save(false)
   end
   
@@ -68,9 +64,7 @@ class Notification < ActiveRecord::Base
     end
     
     entries.first(MAX_MESSAGES).each do |entry|
-      send_message entry.title
-      send_message entry.url
-      send_message entry.content
+      send_messages [entry.title, entry.url, entry.content]
       self.last_published_at = entry.published
     end
     
@@ -78,12 +72,13 @@ class Notification < ActiveRecord::Base
     self.etag = feed.etag
   end
   
-  def send_message(message)
-    room.send_message(message, User.talker)
+  def send_messages(messages)
+    room.send_messages(messages, User.talker)
   end
   
   def lock
     now = self.class.db_time_now
+    
     affected_rows = if locked_by != worker_name
       # We don't own this job so we will update the locked_by name and the locked_at
       self.class.update_all(["locked_at = ?, locked_by = ?", now, worker_name], ["id = ? and (locked_at is null or locked_at < ?)", id, (now - MAX_RUN_TIME.to_i)])
@@ -92,9 +87,10 @@ class Notification < ActiveRecord::Base
       # Simply resume and update the locked_at
       self.class.update_all(["locked_at = ?", now], ["id = ? and locked_by = ?", id, worker_name])
     end
+    
     if affected_rows == 1
-      self.locked_at    = now
-      self.locked_by    = worker_name
+      self.locked_at = now
+      self.locked_by = worker_name
       return true
     else
       return false
@@ -130,7 +126,6 @@ class Notification < ActiveRecord::Base
   # Run the next job we can get an exclusive lock on.
   # If no jobs are left we return nil
   def self.reserve_and_run_one
-
     # We get up to 5 jobs from the db. In case we cannot get exclusive access to a job we try the next.
     # this leads to a more even distribution of jobs across the worker processes
     find_available(5).each do |notifcation|
@@ -146,13 +141,13 @@ class Notification < ActiveRecord::Base
   def self.find_available(limit)
     time_now = db_time_now
 
-    conditions = ['(ran_at <= ? or ran_at IS NULL) AND (locked_at IS NULL OR locked_at < ?) OR (locked_by = ?)',
-                  time_now - INTERVAL, time_now - MAX_RUN_TIME, worker_name]
+    conditions = ['(run_at <= ? or run_at IS NULL) AND (locked_at IS NULL OR locked_at < ?) OR (locked_by = ?)',
+                  time_now, time_now - MAX_RUN_TIME, worker_name]
 
     records = ActiveRecord::Base.silence do
-      find(:all, :conditions => conditions, :order => "ran_at ASC", :limit => limit)
+      find(:all, :conditions => conditions, :order => "run_at ASC", :limit => limit)
     end
-
+    
     records.sort_by { rand() }
   end
   

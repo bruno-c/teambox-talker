@@ -2,10 +2,10 @@ thin:
   room: main
   account: master
   url: http://github.com/feeds/macournoyer/commits/thin/master
-  ran_at: <%= 12.minutes.ago.to_s(:db) %>
+  run_at: <%= 1.minute.ago.to_s(:db) %>
 
 tinyrb:
   room: main
   account: master
   url: http://github.com/feeds/macournoyer/commits/tinyrb/master
-  ran_at: <%= 10.seconds.ago.to_s(:db) %>
+  run_at: <%= 10.minutes.since.to_s(:db) %>

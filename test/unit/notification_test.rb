@@ -38,14 +38,14 @@ class NotificationTest < ActiveSupport::TestCase
     assert_nil notification.locked_at
   end
   
-  def test_perform
+  def test_perform_3_fetches
     notification = notifications(:thin)
     Feedzirra::Feed.expects(:fetch_and_parse).with(notification.url, anything).
                                               returns(Feedzirra::Feed.parse(File.read(self.class.fixture_path + "/feeds/thin.xml")))
-    notification.expects(:send_message).times(3 * 10)
+    notification.expects(:send_messages).times(3)
     notification.perform
     
-    assert_equal DateTime.parse("Thu, 29 Oct 2009 13:23:22 UTC +00:00"), notification.last_published_at
+    assert_equal DateTime.parse("Thu, 05 Nov 2009 02:26:41 UTC +00:00"), notification.last_published_at
     assert_equal DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00"), notification.fetched_at
     assert_equal nil, notification.etag
   end

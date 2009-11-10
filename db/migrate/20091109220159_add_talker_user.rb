@@ -6,5 +6,6 @@ class AddTalkerUser < ActiveRecord::Migration
   end
 
   def self.down
+    User.talker.try(:destroy)
   end
 end
