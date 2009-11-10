@@ -1,7 +1,7 @@
 Talker.PasteFormatter = function() {
   var self = this;
   
-  self.onFormatMessage = function(event){
+  self.onFormatMessage = function(event) {
     if (event.paste){
       event.complete(
         "<a target='_blank' title='Paste #" + event.paste.id + "' href='" 
@@ -17,4 +17,6 @@ Talker.PasteFormatter = function() {
       return false;
     }
   }
+  
+  // resizer is in default formatter
 };

@@ -12,22 +12,20 @@ end
     Talker.currentUser = <%= current_user.to_json %>;
     
     $(function(){
-      <%= install_plugin :timestamp, true %>
-      <%= install_core_plugins :except => :timestamp %>
+      <%#= install_plugin :timestamp, true %>
+      <%#= install_core_plugins :except => :timestamp %>
+      
+      Talker.plugins.push(new Talker.Timestamp(true));
+      
+      Talker.plugins.push(new Talker.YoutubeFormatter());
+      Talker.plugins.push(new Talker.PasteFormatter());
+      Talker.plugins.push(new Talker.ImageFormatter());
+      Talker.plugins.push(new Talker.EmoticonsFormatter());
+      
+      Talker.plugins.push(new Talker.LogsViewInContext());
+      Talker.plugins.push(new Talker.DefaultFormatter());
       
       <%= render_events @events %>
-      
-      $("tr.event").each(function() {
-        var element = $(this).find(".message p");
-        var room = element.attr("room");
-        var time = element.attr("time");
-        $(this).append(
-          $("<td/>").addClass("log").html(
-            $("<a/>").attr("href", "/rooms/" + room + "/logs/" + FormatHelper.getUrlDate(time) + "#event_" + time).
-                      text("View in context")
-          )
-        );
-      });
     });
   //]]>
   </script>

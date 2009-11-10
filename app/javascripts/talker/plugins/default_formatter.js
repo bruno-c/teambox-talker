@@ -2,14 +2,14 @@
 Talker.DefaultFormatter = function() {
   var self = this;
   
-  self.onFormatMessage = function(event){
+  self.onMessageReceived = function(event) {
     var url_expression = /(https?:\/\/|www\.)[^\s<]*/gi;
     var protocol_expression  = /^(http|https|ftp|ftps|ssh|irc|mms|file|about|mailto|xmpp):\/\//;
     
     var content = event.content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     
     if (content.match(url_expression)){
-      event.complete(content.replace(url_expression, function(locator){
+      Talker.Logger.insertContent(event, content.replace(url_expression, function(locator){
         return '<a href="' 
           +  (!locator.match(protocol_expression) ? 'http://' : '') + locator
           + '" target="_blank">' 
@@ -17,9 +17,16 @@ Talker.DefaultFormatter = function() {
           + "</a>";
       }));
     } else if (event.content.match(/\n/gim)){
-      event.complete('<div><pre>' + content + '</pre></div>');
+      Talker.Logger.insertContent(event, '<div><pre>' + content + '</pre></div>');
     } else {
-      event.complete(content);
+      Talker.Logger.insertContent(event, content);
     }
+  }
+  
+  self.onResize = function(event) {
+    var maxWidth = Talker.Logger.maximumContentWidth();
+    
+    $('#log pre').css('width', maxWidth - 22 + 'px');// pastes and messages sent with multilines
+    $('#log blockquote').css('width', maxWidth + 'px');// long sentences with no line breaks
   }
 };

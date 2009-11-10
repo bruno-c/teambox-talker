@@ -12,6 +12,9 @@ $(function() {
   $('#msgbox')
     .keydown(function(e){
       switch (e.which){
+        case 33:
+        case 34:
+          break;
         case 13: // enter
           if (e.shiftKey) return; // line break
           if (this.value == '') return false; // ignore empty messages
@@ -33,6 +36,8 @@ $(function() {
       case 91:  // Cmd in Safari
       case 67:  // Cmd+c Ctrl+c
       case 17:  // Ctrl
+      case 33:  // PageUp 
+      case 34:  // PageDown
         break;
       case 13:  // enter
         if (focusMsgBox()){
@@ -46,6 +51,14 @@ $(function() {
   });
   
   $('#msgbox, input.search, #edit_room form input, #edit_room form textarea').keydown(function(e){
-    e.stopPropagation()
+    if (e.which == 33 || e.which == 34){
+      return;
+    } else {
+      e.stopPropagation();
+    }
   });
+  
+  $(window).resize(function(){ Talker.trigger('Resize') });
+  
+  Talker.trigger('Resize');
 });
