@@ -37,15 +37,10 @@
       Talker.plugins.push(new Talker.ImageFormatter());
       Talker.plugins.push(new Talker.EmoticonsFormatter());
       
-      // ABOVE THIS SHOULD ALWAYS BE LOADED //
+      // Account plugins
       <%= install_plugins %>
+      // 
       
-      // Display plugins
-      Talker.plugins.push(new Talker.UserJoin());
-      // Talker.plugins.push(new Talker.UserLeave());
-      
-      
-      // BELOW THIS ALWAYS LOADED //
       Talker.plugins.push(new Talker.DefaultCommand($('msgbox')));
       Talker.plugins.push(new Talker.DefaultFormatter()); // this is mandatory and should be last.
       
