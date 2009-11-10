@@ -83,10 +83,11 @@ class Notification < ActiveRecord::Base
     title = sanitize(entry.title)
     url = entry.url
     content = sanitize(entry.content)
+    truncated_content = Paste.truncate(content)
     
     room.send_messages [
       "#{entry.author}: #{title} #{url}",
-      (content unless title == content)
+      (truncated_content unless title == content)
     ].compact
   end
   
