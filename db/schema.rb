@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091109220159) do
+ActiveRecord::Schema.define(:version => 20091110191551) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(:version => 20091109220159) do
     t.integer  "account_id"
     t.string   "url"
     t.string   "user_name"
-    t.string   "password"
+    t.string   "encrypted_password"
     t.datetime "last_published_at"
     t.datetime "fetched_at"
     t.string   "etag"

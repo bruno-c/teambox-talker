@@ -1,7 +1,7 @@
 <div class="sheet">
   <h2><%= @title = "Edit notification" %></h2>
 
-  <% form_for @notification, :html => { :class => "lw120" } do |f| %>
+  <% form_for @notification, :html => { :class => "lw120", :autocomplete => "off" } do |f| %>
     <%= f.error_messages %>
     
     <%= render f %>

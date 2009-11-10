@@ -25,6 +25,7 @@ Rails::Initializer.run do |config|
   config.gem "tmm1-amqp", :lib => "amqp", :source => "http://gems.github.com"
   config.gem "feedzirra"
   config.gem "nokogiri"
+  config.gem "shuber-attr_encrypted", :lib => "attr_encrypted", :source => "http://gems.github.com"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

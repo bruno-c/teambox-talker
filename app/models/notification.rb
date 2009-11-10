@@ -12,6 +12,8 @@ class Notification < ActiveRecord::Base
   validates_uniqueness_of :url, :scope => :room_id
   validates_format_of :url, :with => /\A(https?:\/\/|www\.)[^\s<]*\z/i
   
+  attr_encrypted :password, :key => ENCRYPT_KEY
+  
   # Lot of this shit taken from Delayed::Job
   
   cattr_accessor :worker_name
