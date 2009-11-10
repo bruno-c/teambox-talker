@@ -1,3 +1,5 @@
+- Load db events w/ an Ajax call after page load [MA]
+
 - Integrate design [G/M]
 ✓ Edit room [MA]
 - Package Prism [MA]

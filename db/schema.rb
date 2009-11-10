@@ -9,7 +9,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20091110165431) do
+=======
+ActiveRecord::Schema.define(:version => 20091110191551) do
+>>>>>>> 8ce75a7ccc6b32b5d9a69f92312f80310c6e1b20
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -50,6 +54,24 @@ ActiveRecord::Schema.define(:version => 20091110165431) do
     t.datetime "updated_at"
   end
 
+  create_table "notifications", :force => true do |t|
+    t.integer  "room_id"
+    t.integer  "account_id"
+    t.string   "url"
+    t.string   "user_name"
+    t.string   "encrypted_password"
+    t.datetime "last_published_at"
+    t.datetime "fetched_at"
+    t.string   "etag"
+    t.string   "locked_by"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "last_error"
+    t.datetime "run_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "pastes", :force => true do |t|
     t.integer  "user_id"
     t.text     "content"
@@ -59,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20091110165431) do
     t.datetime "updated_at"
   end
 
+<<<<<<< HEAD
   add_index "pastes", ["permalink"], :name => "index_pastes_on_permalink", :unique => true
 
   create_table "plugins", :force => true do |t|
@@ -71,6 +94,8 @@ ActiveRecord::Schema.define(:version => 20091110165431) do
     t.datetime "updated_at"
   end
 
+=======
+>>>>>>> 8ce75a7ccc6b32b5d9a69f92312f80310c6e1b20
   create_table "rooms", :force => true do |t|
     t.string   "name"
     t.text     "description"

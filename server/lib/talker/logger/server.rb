@@ -11,7 +11,8 @@ module Talker
       
       def initialize(options={})
         EventedMysql.settings.update options
-        EventedMysql.settings.update :encoding => ENCODING
+        EventedMysql.settings.update :encoding => ENCODING,
+                                     :connections => 1 # only 1 connection to ensure correct ordering
         @queue = Queues.logger
         @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name, self) }
       end

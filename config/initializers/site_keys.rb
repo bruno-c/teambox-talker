@@ -36,3 +36,5 @@ REST_AUTH_SITE_KEY         = 'a8d623ed03ab377eda108e3973c819555863f929'
 # * "An Illustrated Guide to Cryptographic Hashes":http://www.unixwiz.net/techtips/iguide-crypto-hashes.html
 
 REST_AUTH_DIGEST_STRETCHES = 10
+
+ENCRYPT_KEY = "FZbWr3xCYAab377eda108e3973YE4VohvRWp"

@@ -1,0 +1,92 @@
+--- !ruby/object:Gem::Specification 
+name: shuber-attr_encrypted
+version: !ruby/object:Gem::Version 
+  version: 1.0.8
+platform: ruby
+authors: 
+- Sean Huber
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2009-01-13 00:00:00 -05:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: shuber-eigenclass
+  type: :runtime
+  version_requirement: 
+  version_requirements: !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        version: 1.0.1
+    version: 
+- !ruby/object:Gem::Dependency 
+  name: shuber-encryptor
+  type: :runtime
+  version_requirement: 
+  version_requirements: !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        version: 1.0.0
+    version: 
+description: Generates attr_accessors that encrypt and decrypt attributes transparently
+email: shuber@huberry.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: []
+
+files: 
+- CHANGELOG
+- lib/attr_encrypted.rb
+- lib/huberry/attr_encrypted/adapters/active_record.rb
+- lib/huberry/attr_encrypted/adapters/data_mapper.rb
+- lib/huberry/attr_encrypted/adapters/sequel.rb
+- MIT-LICENSE
+- Rakefile
+- README.markdown
+- test/test_helper.rb
+- test/active_record_test.rb
+- test/attr_encrypted_test.rb
+- test/data_mapper_test.rb
+- test/sequel_test.rb
+has_rdoc: true
+homepage: http://github.com/shuber/attr_encrypted
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --line-numbers
+- --inline-source
+- --main
+- README.markdown
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.3.5
+signing_key: 
+specification_version: 2
+summary: Generates attr_accessors that encrypt and decrypt attributes transparently
+test_files: 
+- test/active_record_test.rb
+- test/attr_encrypted_test.rb
+- test/data_mapper_test.rb
+- test/sequel_test.rb

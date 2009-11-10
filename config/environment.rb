@@ -21,8 +21,11 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "haml"
   config.gem "chriseppstein-compass", :lib => "compass", :source => "http://gems.github.com/"
-  config.gem "zipruby"
   config.gem "sprockets"
+  config.gem "tmm1-amqp", :lib => "amqp", :source => "http://gems.github.com"
+  config.gem "feedzirra"
+  config.gem "nokogiri"
+  config.gem "shuber-attr_encrypted", :lib => "attr_encrypted", :source => "http://gems.github.com"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

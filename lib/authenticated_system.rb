@@ -65,10 +65,10 @@ module AuthenticatedSystem
       respond_to do |format|
         format.html do
           store_location
-          flash[:error] = "Access denied!"
+          flash[:error] = "Please login"
           redirect_to login_url
         end
-        error = { :type => "error", :message => "Access denied" }
+        error = { :type => "error", :message => "Please login" }
         format.json { render :json => error }
         format.xml { render :xml => error }
         # format.any doesn't work in rails version < http://dev.rubyonrails.org/changeset/8987
