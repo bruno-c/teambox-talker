@@ -1,6 +1,6 @@
 class Notification < ActiveRecord::Base
   MAX_RUN_TIME   = 1.hour     # Max time a job can run before it is considered as failed
-  INTERVAL       = 10.minutes # Interval of check for due notifications
+  INTERVAL       = 2.minutes  # Interval of check for due notifications
   MAX_MESSAGES   = 3          # Make number of message sent per notification fetch
   
   belongs_to :room
