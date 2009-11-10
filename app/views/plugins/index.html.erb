@@ -1,0 +1,33 @@
+<% @title = "Plugins" %>
+
+<h2>Plugins</h2>
+
+<div id="plugins">
+<% @plugins.each_with_index do |plugin, i| %>
+  <% content_tag_for :li, plugin do %>
+    <div class="panel">
+      <div class="header">
+        <h3><%= link_to h(plugin.name), plugin, :accesskey => i+1 %></h3>
+      </div>
+      
+      <div class="content">
+        <% if plugin.description %>
+          <p class="description">
+            <%=h plugin.description %>
+          </p>
+        <% end %>
+      </div>
+    
+      <div class="footer">
+        by: <%= h plugin.author.name %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+</div>
+
+<% content_for :sidebar do %>
+  <div id="actions">
+    <%= link_to "Create a plugin", new_plugin_path, :title => "Create a plugin", :class => "button add" %>
+  </div>
+<% end %>

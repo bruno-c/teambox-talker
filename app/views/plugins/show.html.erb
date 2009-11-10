@@ -1,0 +1,13 @@
+<p>
+  <b>Name:</b>
+  <%=h @plugin.name %>
+</p>
+
+<p>
+  <b>Source:</b>
+  <%=h @plugin.source %>
+</p>
+
+
+<%= link_to 'Edit', edit_plugin_path(@plugin) %> |
+<%= link_to 'Back', plugins_path %>

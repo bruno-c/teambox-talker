@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   include Authentication::ByPassword
   
   belongs_to :account
+  has_many :plugins
   
   before_create             :create_talker_token
   
@@ -92,6 +93,10 @@ class User < ActiveRecord::Base
       user.clear_perishable_token!
       user
     end
+  end
+  
+  def self.talker
+    @talker ||= User.first(:conditions => { :staff => true, :email => "bot@talkerapp.com" })
   end
   
   private

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091105164556) do
+ActiveRecord::Schema.define(:version => 20091110165431) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -60,6 +60,16 @@ ActiveRecord::Schema.define(:version => 20091105164556) do
   end
 
   add_index "pastes", ["permalink"], :name => "index_pastes_on_permalink", :unique => true
+
+  create_table "plugins", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.text     "source"
+    t.text     "author_id"
+    t.boolean  "enabled_by_default"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "rooms", :force => true do |t|
     t.string   "name"

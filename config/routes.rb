@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :plugins
+
   SprocketsApplication.routes(map)
   
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

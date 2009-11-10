@@ -2,6 +2,9 @@
 
 <% content_for :head do %>
   <script type="text/javascript" charset="utf-8">
+    <%= install_plugins_source %>
+  </script>
+  <script type="text/javascript" charset="utf-8">
   //<![CDATA[
     Talker.currentUser = <%= current_user.to_json %>;
     Talker.room = <%= @room.to_json %>;
@@ -26,12 +29,7 @@
       Talker.plugins.push(new Talker.Notifier()); //provides onblur/onfocus handlers
       Talker.plugins.push(new Talker.UserList($('#people'))); // sidebar updating of users.
       Talker.plugins.push(new Talker.Timestamp());// << depends on order to be included properly.  I say it should remain mandatory for usability reasons.
-      
-      // ABOVE THIS SHOULD ALWAYS BE LOADED
-      
-      // Display plugins
-      Talker.plugins.push(new Talker.UserJoin());
-      Talker.plugins.push(new Talker.UserLeave());
+      Talker.plugins.push(new Talker.MsgCommand($('#msgbox'))); // will always be loaded...
       
       // formatters to provide basic functionalities.
       Talker.plugins.push(new Talker.YoutubeFormatter());
@@ -39,23 +37,15 @@
       Talker.plugins.push(new Talker.ImageFormatter());
       Talker.plugins.push(new Talker.EmoticonsFormatter());
       
-      // Commands
-      Talker.plugins.push(new Talker.MsgCommand($('#msgbox')));
-      Talker.plugins.push(new Talker.HelloCommand($('#msgbox')));
+      // ABOVE THIS SHOULD ALWAYS BE LOADED //
+      <%= install_plugins %>
       
-      // plugins with ajax calls
-      Talker.plugins.push(new Talker.TwitterStatuses());
+      // Display plugins
+      Talker.plugins.push(new Talker.UserJoin());
+      // Talker.plugins.push(new Talker.UserLeave());
       
-      // OS integration via Fluid or Prism 
-      Talker.plugins.push(new Talker.UserJoinNotifications());
-      Talker.plugins.push(new Talker.UserLeaveNotifications());
-      Talker.plugins.push(new Talker.NewMessageNotifications());
-      Talker.plugins.push(new Talker.DockBadge());
       
-      // title new message count
-      // Talker.plugins.push(new Talker.TitleMessageCount());
-      
-      // BELOW THIS SHOULD ALWAYS BE LOADED
+      // BELOW THIS ALWAYS LOADED //
       Talker.plugins.push(new Talker.DefaultCommand($('msgbox')));
       Talker.plugins.push(new Talker.DefaultFormatter()); // this is mandatory and should be last.
       
