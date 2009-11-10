@@ -1,12 +1,12 @@
 Talker.YoutubeFormatter = function() {
   var self = this;
   
-  self.onFormatMessage = function(event){
+  self.onMessageReceived = function(event){
     var youtube_expression = /^(?:http\S+youtube\.com\/watch\?v=)([\w-]+)(?:\S*)$/;
     var youtube_match  = event.content.match(youtube_expression);
     
     if (youtube_match){
-      event.complete(
+      Talker.Logger.insertContent(event,
         '<object width="425" height="355">'
         + '<param name="movie" value="http://www.youtube.com/v/' + youtube_match[1] + '"></param>'
         + '<param name="allowFullScreen" value="true"></param>'
