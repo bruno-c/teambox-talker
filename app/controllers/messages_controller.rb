@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
   def create
     render :json => "Missing message", :status => 400 and return unless params[:message]
     
-    @message = @room.send_message(params[:message], current_user)
+    @message = @room.send_message(params[:message], :user => current_user)
     
     render :json => @message, :status => :created
   end

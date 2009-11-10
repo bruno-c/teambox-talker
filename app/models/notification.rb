@@ -69,7 +69,7 @@ class Notification < ActiveRecord::Base
     end
     
     entries.first(MAX_MESSAGES).each do |entry|
-      send_messages [entry.title, entry.url, entry.content]
+      publish entry
       self.last_published_at = entry.published
     end
     
@@ -77,8 +77,19 @@ class Notification < ActiveRecord::Base
     self.etag = feed.etag
   end
   
-  def send_messages(messages)
-    room.send_messages(messages, User.talker)
+  def publish(entry)
+    title = sanitize(entry.title)
+    url = entry.url
+    content = sanitize(entry.content)
+    
+    room.send_messages [
+      "#{entry.author}: #{title} #{url}",
+      (content unless title == content)
+    ].compact
+  end
+  
+  def sanitize(content)
+    Nokogiri::HTML(content).text
   end
   
   def lock
@@ -146,7 +157,7 @@ class Notification < ActiveRecord::Base
   def self.find_available(limit)
     time_now = db_time_now
 
-    conditions = ['(run_at <= ? or run_at IS NULL) AND (locked_at IS NULL OR locked_at < ?) OR (locked_by = ?)',
+    conditions = ['(run_at <= ? or run_at IS NULL) AND ((locked_at IS NULL OR locked_at < ?) OR locked_by = ?)',
                   time_now, time_now - MAX_RUN_TIME, worker_name]
 
     records = ActiveRecord::Base.silence do

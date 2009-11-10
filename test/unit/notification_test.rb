@@ -42,7 +42,7 @@ class NotificationTest < ActiveSupport::TestCase
     notification = notifications(:thin)
     Feedzirra::Feed.expects(:fetch_and_parse).with(notification.url, anything).
                                               returns(Feedzirra::Feed.parse(File.read(self.class.fixture_path + "/feeds/thin.xml")))
-    notification.expects(:send_messages).times(3)
+    notification.room.expects(:send_messages).times(3)
     notification.perform
     
     assert_equal DateTime.parse("Thu, 05 Nov 2009 02:26:41 UTC +00:00"), notification.last_published_at
@@ -53,7 +53,7 @@ class NotificationTest < ActiveSupport::TestCase
   def test_perform_with_return_code
     notification = notifications(:thin)
     Feedzirra::Feed.expects(:fetch_and_parse).returns(304)
-    notification.expects(:send_message).never
+    notification.room.expects(:send_messages).never
     notification.perform
     
     assert_nil notification.last_published_at

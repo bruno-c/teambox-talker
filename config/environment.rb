@@ -24,6 +24,7 @@ Rails::Initializer.run do |config|
   config.gem "sprockets"
   config.gem "tmm1-amqp", :lib => "amqp", :source => "http://gems.github.com"
   config.gem "feedzirra"
+  config.gem "nokogiri"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

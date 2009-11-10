@@ -11,14 +11,14 @@ class Room < ActiveRecord::Base
     super(options.merge(:only => [:name, :id]))
   end
   
-  def send_message(message, user=nil)
-    event = { :type => "message", :content => message, :user => user, :time => Time.now.to_i }
+  def send_message(message, options={})
+    event = { :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options)
     publish event.to_json
     event
   end
   
-  def send_messages(messages, user=nil)
-    events = messages.map { |message| { :type => "message", :content => message, :user => user, :time => Time.now.to_i } }
+  def send_messages(messages, options={})
+    events = messages.map { |message| { :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options) }
     publish events.map(&:to_json).join("\n")
     events
   end

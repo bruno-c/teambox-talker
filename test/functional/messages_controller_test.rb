@@ -7,7 +7,7 @@ class MessagesControllerTest < ActionController::TestCase
   end
   
   def test_create
-    Room.any_instance.expects(:send_message).with("ohaie", users(:quentin)).returns({})
+    Room.any_instance.expects(:send_message).with("ohaie", :user => users(:quentin)).returns({})
     post :create, :message => "ohaie", :room_id => Room.first
     assert_response :created, @response.body
   end
