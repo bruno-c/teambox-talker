@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091110191551) do
+ActiveRecord::Schema.define(:version => 20091110214425) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -56,8 +56,7 @@ ActiveRecord::Schema.define(:version => 20091110191551) do
     t.string   "url"
     t.string   "user_name"
     t.string   "encrypted_password"
-    t.datetime "last_published_at"
-    t.datetime "fetched_at"
+    t.datetime "last_modified_at"
     t.string   "etag"
     t.string   "locked_by"
     t.datetime "locked_at"
@@ -100,7 +99,6 @@ ActiveRecord::Schema.define(:version => 20091110191551) do
     t.string   "state",                           :default => "pending"
     t.datetime "deleted_at"
     t.datetime "activated_at"
-    t.boolean  "livetyping",                      :default => true
     t.string   "time_zone"
     t.boolean  "staff",                           :default => false
   end

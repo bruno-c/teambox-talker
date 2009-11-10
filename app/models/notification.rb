@@ -51,7 +51,7 @@ class Notification < ActiveRecord::Base
   
   def perform
     options = { :user_agent => "Talker http://talkerapp.com" }
-    options[:if_modified_since] = fetched_at if fetched_at
+    options[:if_modified_since] = last_modified_at if last_modified_at
     options[:if_none_match] = etag if etag
     options[:http_authentication] = [user_name, password] if user_name.present?
     
@@ -66,16 +66,15 @@ class Notification < ActiveRecord::Base
     entries = feed.entries
     
     # If we already fetch, do not publish duplicates
-    if last_published_at
-      entries = entries.select { |e| e.published > last_published_at }
+    if last_modified_at
+      entries = entries.select { |e| e.published > last_modified_at }
     end
     
     entries.first(MAX_MESSAGES).each do |entry|
       publish entry
-      self.last_published_at = entry.published
     end
     
-    self.fetched_at = feed.last_modified
+    self.last_modified_at = feed.last_modified
     self.etag = feed.etag
   end
   
