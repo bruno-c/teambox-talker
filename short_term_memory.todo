@@ -1,2 +1,4 @@
+- Make sure plugin title name is useful to non power users.
+- show installed plugins in a different color than non installed plugins.
 ✓ fix tests for plugin installations
 ✓ ensure that Rooms >> show.html.erb has the list of enabled plugins.
