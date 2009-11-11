@@ -4,7 +4,8 @@ class CreatePlugins < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.text :source
-      t.text :author_id
+      t.integer :author_id
+      t.integer :account_id
       t.boolean :shared, :default => false
 
       t.timestamps
@@ -248,5 +249,6 @@ eos
 
   def self.down
     drop_table :plugins
+    drop_table :plugin_installations
   end
 end

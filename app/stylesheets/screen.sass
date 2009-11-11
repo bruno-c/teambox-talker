@@ -191,7 +191,7 @@ html[xmlns] .clearfix
     padding-top: 0
 
 // Rooms
-#rooms, #plugins
+#rooms
   overflow: hidden
   li
     display: block
@@ -205,6 +205,22 @@ html[xmlns] .clearfix
           p
             &.description
               +font_size("small")
+            &.people
+              label
+                color = !grey
+              img
+                height: 16px
+                width: 16px
+                position: relative
+                top: 3px
+#plugins
+  li
+    display: inline
+    width: 280px
+    div.panel
+      div
+        &.content
+          p
             &.people
               label
                 color = !grey

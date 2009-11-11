@@ -259,24 +259,35 @@ html[xmlns] .clearfix {
 #accounts_controller.new #content {
   padding-top: 0; }
 
-#rooms, #plugins {
+#rooms {
   overflow: hidden; }
-  #rooms li, #plugins li {
+  #rooms li {
     display: block;
     width: 280px;
     margin: 0 10px 10px 0;
     float: left; }
-    #rooms li div.panel div.content, #plugins li div.panel div.content {
+    #rooms li div.panel div.content {
       min-height: 90px; }
-      #rooms li div.panel div.content p.description, #plugins li div.panel div.content p.description {
+      #rooms li div.panel div.content p.description {
         font-size: 12px; }
-      #rooms li div.panel div.content p.people label, #plugins li div.panel div.content p.people label {
+      #rooms li div.panel div.content p.people label {
         color: gray; }
-      #rooms li div.panel div.content p.people img, #plugins li div.panel div.content p.people img {
+      #rooms li div.panel div.content p.people img {
         height: 16px;
         width: 16px;
         position: relative;
         top: 3px; }
+
+#plugins li {
+  display: inline;
+  width: 280px; }
+  #plugins li div.panel div.content p.people label {
+    color: gray; }
+  #plugins li div.panel div.content p.people img {
+    height: 16px;
+    width: 16px;
+    position: relative;
+    top: 3px; }
 
 form p {
   line-height: 28px;

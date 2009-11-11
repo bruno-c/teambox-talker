@@ -3,27 +3,61 @@
 <h2>Plugins</h2>
 
 <div id="plugins">
-<% @plugins.each_with_index do |plugin, i| %>
-  <% content_tag_for :li, plugin do %>
-    <div class="panel">
-      <div class="header">
-        <h3><%= link_to h(plugin.name), plugin, :accesskey => i+1 %></h3>
-      </div>
+  <h3>My Plugins</h3>
+  
+  <div class="sheet">
+    <% if @plugins.empty? %>
+      You have not authored any plugins yet but you can <%= link_to "create one now", new_plugin_path, :title => "create a plugin" %>.
+    <% end %>
+    <% @plugins.each_with_index do |plugin, i| %>
+      <% content_tag_for :li, plugin do %>
+        <div class="panel">
+          <div class="header">
+            <h3><%= link_to h(plugin.name), plugin, :accesskey => i+1 %></h3>
+          </div>
       
-      <div class="content">
-        <% if plugin.description %>
-          <p class="description">
-            <%=h plugin.description %>
-          </p>
-        <% end %>
-      </div>
+          <div class="content">
+            <% if plugin.description %>
+              <p class="description">
+                <%=h plugin.description %>
+              </p>
+            <% end %>
+          </div>
     
-      <div class="footer">
-        <%= image_tag avatar_url(plugin.author), :alt => h(plugin.author.name) %> <%= h plugin.author.name %>
-      </div>
-    </div>
-  <% end %>
-<% end %>
+          <div class="footer">
+            <%= image_tag avatar_url(plugin.author), :alt => h(plugin.author.name) %> <%= h plugin.author.name %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <br/>
+  <br/>
+  
+  <h3>Shared Plugins</h3>
+  <div class="sheet">
+    <% @shared.each_with_index do |plugin, i| %>
+      <% content_tag_for :li, plugin do %>
+        <div class="panel">
+          <div class="header">
+            <h3><%= link_to h(plugin.name), plugin, :accesskey => i+1 %></h3>
+          </div>
+      
+          <div class="content">
+            <% if plugin.description %>
+              <p class="description">
+                <%=h plugin.description %>
+              </p>
+            <% end %>
+          </div>
+    
+          <div class="footer">
+            <%= image_tag avatar_url(plugin.author), :alt => h(plugin.author.name) %> <%= h plugin.author.name %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 
 <% content_for :sidebar do %>

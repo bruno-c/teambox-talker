@@ -5,18 +5,15 @@ class PluginsController < ApplicationController
   
   def index
     @plugins = current_account.plugins
-
-    respond_to do |format|
-      format.html # index.html.erb
-    end
+    @shared  = Plugin.shared
   end
 
   def new
-    @plugin = Plugin.new
+    @plugin = current_account.plugins.new
   end
 
   def edit
-    @plugin = Plugin.find(params[:id])
+    @plugin = current_account.plugins.find(params[:id])
   end
 
   def create
@@ -32,7 +29,7 @@ class PluginsController < ApplicationController
   end
 
   def update
-    @plugin = Plugin.find(params[:id])
+    @plugin = current_account.plugins.find(params[:id])
 
     if @plugin.update_attributes(params[:plugin])
       flash[:notice] = 'Plugin was successfully updated.'
@@ -43,7 +40,7 @@ class PluginsController < ApplicationController
   end
 
   def destroy
-    @plugin = Plugin.find(params[:id])
+    @plugin = current_account.plugins.find(params[:id])
     @plugin.destroy
 
     redirect_to(plugins_url)

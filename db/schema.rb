@@ -90,7 +90,8 @@ ActiveRecord::Schema.define(:version => 20091110222809) do
     t.string   "name"
     t.string   "description"
     t.text     "source"
-    t.text     "author_id"
+    t.integer  "author_id"
+    t.integer  "account_id"
     t.boolean  "shared",      :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
