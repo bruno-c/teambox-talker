@@ -18,12 +18,13 @@ class CreatePlugins < ActiveRecord::Migration
       t.timestamps
     end
     
-    Plugin.create(
-      :name => 'Talker.HelloCommand',
-      :description => "Sample plugin to greet the world and cure world hunger.",
-      :author_id => User.talker.id,
-      :shared => true,
-      :source => <<-eos
+    
+    p = Plugin.new
+    p.name = 'Talker.HelloCommand'
+    p.description = "Sample plugin to greet the world and cure world hunger."
+    p.author_id = User.talker.id
+    p.shared = true
+    p.source = <<-eos
       Talker.HelloCommand = function() {
         var self = this;
         
@@ -36,13 +37,15 @@ class CreatePlugins < ActiveRecord::Migration
         }
       }
 eos
-)
-    Plugin.create(
-      :name => 'Talker.DockBadge',
-      :description => "Dock icon warns you of what new messages you had while you were away.  Only works with Fluid and Prism.",
-      :author_id => User.talker.id,
-      :shared => true,
-      :source => <<-eos
+    p.save
+    
+    
+    p = Plugin.new
+    p.name = 'Talker.DockBadge'
+    p.description = "Dock icon warns you of what new messages you had while you were away.  Only works with Fluid and Prism."
+    p.author_id = User.talker.id
+    p.shared = true
+    p.source = <<-eos
       Talker.DockBadge = function() {
         var self = this;
 
@@ -64,13 +67,14 @@ eos
         }
       }
 eos
-)
-    Plugin.create(
-      :name => 'Talker.NewMessageNotifications',
-      :description => "Provides Growl notifications of new messages when Talker is behind other windows.  Only works with Fluid and Prism.",
-      :author_id => User.talker.id,
-      :shared => true,
-      :source => <<-eos
+    p.save
+    
+    p = Plugin.new
+    p.name = 'Talker.NewMessageNotifications'
+    p.description = "Provides Growl notifications of new messages when Talker is behind other windows.  Only works with Fluid and Prism."
+    p.author_id = User.talker.id
+    p.shared = true
+    p.source = <<-eos
       Talker.NewMessageNotifications = function() {
         var self = this;
 
@@ -87,14 +91,14 @@ eos
         }
       }
 eos
-)
+        p.save
 
-    Plugin.create(
-      :name => 'Talker.UserLeaveNotifications',
-      :description => "Provides Growl notifications of users leaving the room when Talker is behind other windows.  Only works with Fluid and Prism.",
-      :author_id => User.talker.id,
-      :shared => true,
-      :source => <<-eos
+    p = Plugin.new
+    p.name = 'Talker.UserLeaveNotifications'
+    p.description = "Provides Growl notifications of users leaving the room when Talker is behind other windows.  Only works with Fluid and Prism."
+    p.author_id = User.talker.id
+    p.shared = true
+    p.source = <<-eos
       Talker.UserLeaveNotifications = function() {
         var self = this;
 
@@ -112,14 +116,14 @@ eos
         }
       };
 eos
-)
+        p.save
 
-    Plugin.create(
-      :name => 'Talker.UserJoinNotifications',
-      :description => "Provides Growl notifications of users joining the room when Talker is behind other windows.  Only works with Fluid and Prism.",
-      :author_id => User.talker.id,
-      :shared => true,
-      :source => <<-eos
+    p = Plugin.new
+    p.name = 'Talker.UserJoinNotifications'
+    p.description = "Provides Growl notifications of users joining the room when Talker is behind other windows.  Only works with Fluid and Prism."
+    p.author_id = User.talker.id
+    p.shared = true
+    p.source = <<-eos
       Talker.UserJoinNotifications = function() {
         var self = this;
 
@@ -137,13 +141,13 @@ eos
         }
       };
 eos
-)
-    Plugin.create(
-      :name => 'Talker.TitleMessageCount',
-      :description => "Updates the title with message count when Talker is behind other windows.",
-      :author_id => User.talker.id,
-      :shared => true,
-      :source => <<-eos
+        p.save
+    p = Plugin.new
+    p.name = 'Talker.TitleMessageCount'
+    p.description = "Updates the title with message count when Talker is behind other windows."
+    p.author_id = User.talker.id
+    p.shared = true
+    p.source = <<-eos
       Talker.TitleMessageCount = function() {
         var self = this;
 
@@ -166,14 +170,14 @@ eos
         }
       };
 eos
-)
+        p.save
 
-     Plugin.create(
-      :name => 'Talker.TwitterStatuses',
-      :description => "Converts twitter links to preview of twitter status.",
-      :author_id => User.talker.id,
-      :shared => true,
-      :source => <<-eos
+    p = Plugin.new
+    p.name = 'Talker.TwitterStatuses'
+    p.description = "Converts twitter links to preview of twitter status."
+    p.author_id = User.talker.id
+    p.shared = true
+    p.source = <<-eos
       Talker.TwitterStatuses = function() {
         var self = this;
 
@@ -189,7 +193,7 @@ eos
 
             $.getJSON(url, function(data){
               last_insertion.find('a').html($('<q/>').css({
-                clear: 'both',
+                clear: 'both'
                 float: 'left'
               }).append(
                 $('<img/>').attr({src: data.user.profile_image_url, height: 48, width: 48})
@@ -200,14 +204,14 @@ eos
         }
       };
 eos
-)
+     p.save
    
-     Plugin.create(
-      :name => 'Talker.UserLeave',
-      :description => "Shows who leaves the room in the log.",
-      :author_id => User.talker.id,
-      :shared => true,
-      :source => <<-eos
+     p = Plugin.new
+     p.name = 'Talker.UserLeave'
+     p.description = "Shows who leaves the room in the log."
+     p.author_id = User.talker.id
+     p.shared = true
+     p.source = <<-eos
       Talker.UserLeave = function() {
         var self = this;
 
@@ -221,14 +225,14 @@ eos
         }
       }
 eos
-)
+        p.save
 
-     Plugin.create(
-      :name => 'Talker.UserJoin',
-      :description => "Shows who leaves the room in the log.",
-      :author_id => User.talker.id,
-      :shared => true,
-      :source => <<-eos
+      p = Plugin.new
+      p.name = 'Talker.UserJoin'
+      p.description = "Shows who leaves the room in the log."
+      p.author_id = User.talker.id
+      p.shared = true
+      p.source = <<-eos
       Talker.UserJoin = function() {
         var self = this;
 
@@ -240,11 +244,73 @@ eos
 
           element.appendTo('#log');
         }
-      }
-      
+      } 
 eos
-)
-    
+      p.save
+      
+      p = Plugin.new
+      p.name = 'Talker.EmoticonsFormatter'
+      p.description = "Shows common emoticons."
+      p.author_id = User.talker.id
+      p.shared = true
+      p.source = <<-eos
+      Talker.EmoticonsFormatter = function() {
+        var self = this;
+
+        self.onAfterMessageReceived = function(event){
+          _.each(Talker.emoticons, function(emoticon){
+            var element = Talker.Logger.lastRow().find('p:last').get(0);
+            emoticon.findAndReplace(element);
+          });
+        }
+      };
+
+      Talker.Emoticon = function(matchers, path, meaning){
+        var self = this;
+
+        self.strings = matchers ;
+        self.path = path;
+        self.meaning = meaning;
+
+        self.findAndReplace = function(domElement){
+          _.each(self.strings, function(string){
+           $(domElement).findAndReplace(string, self.replacementString(string));
+          });
+        }
+
+        self.replacementString = function(string){
+          return '<img src="' 
+              + self.path 
+              + '" class="emoticons" height="16" width="16" alt="' 
+              + string
+              + '" title="' 
+              + self.meaning + '"  />';
+        }
+
+        return self;
+      }
+
+      if (!Talker.emoticons){
+        Talker.emoticons = [];
+      }
+
+      Talker.emoticons.push(new Talker.Emoticon(['>:-)', '>:)'],            "/images/icons/smiley-evil.png",    "evil"));
+      Talker.emoticons.push(new Talker.Emoticon([':-))', ':))'],            "/images/icons/smiley-lol.png",     "laughing"));
+      Talker.emoticons.push(new Talker.Emoticon([':-)',  ':)'],             "/images/icons/smiley.png",         "smiling"));
+      Talker.emoticons.push(new Talker.Emoticon([':-D'],                    "/images/icons/smiley-grin.png",    "grin"));
+      Talker.emoticons.push(new Talker.Emoticon(['X(', 'X-('],              "/images/icons/smiley-mad.png",     "angry"));
+      Talker.emoticons.push(new Talker.Emoticon([':(', ':-('],              "/images/icons/smiley-sad.png",     "sad"));
+      Talker.emoticons.push(new Talker.Emoticon([';(', ';-('],              "/images/icons/smiley-cry.png",     "cry"));
+      Talker.emoticons.push(new Talker.Emoticon(['B)', 'B-)', '8)', '8-)'], "/images/icons/smiley-cool.png",    "cool"));
+      Talker.emoticons.push(new Talker.Emoticon([':S', ':-S'],              "/images/icons/smiley-confuse.png", "confused"));
+      Talker.emoticons.push(new Talker.Emoticon([':O', ':-O'],              "/images/icons/smiley-eek.png",     "shocked"));
+      Talker.emoticons.push(new Talker.Emoticon([':P', ':-P'],              "/images/icons/smiley-razz.png",    "razz"));
+eos
+    p.save
+      
+    Account.all.each do |account|
+      account.create_default_plugin_installations
+    end
   end
 
   def self.down

@@ -7,7 +7,7 @@ class Account < ActiveRecord::Base
   has_many :notifications
   has_many :plugin_installations
   has_many :installed_plugins, :through => :plugin_installations, :source => :plugin
-  has_many :plugins, :conditions => { :account_id => id, :shared => true }
+  has_many :plugins
   
   validates_presence_of :subdomain
   validates_uniqueness_of :subdomain
@@ -19,6 +19,7 @@ class Account < ActiveRecord::Base
   validate_on_create { |a| a.errors.add(:invitation_code, "is invalid") unless a.invitation_code == INVITATION_CODE }
   
   after_create :create_default_rooms
+  after_create :create_default_plugin_installations
   
   # TODO determine if account have SSL depending on plan
   def ssl
@@ -27,5 +28,11 @@ class Account < ActiveRecord::Base
   
   def create_default_rooms
     rooms.create :name => "Lobby", :description => "Chat about the weather and the color of your socks."
+  end
+  
+  def create_default_plugin_installations
+    %w(UserLeave UserJoin TitleMessageCount UserLeaveNotifications UserJoinNotifications DockBadge).each do |name|
+      plugin_installations.create(:plugin_id => Plugin.find_by_name('Talker.' + name).id)
+    end
   end
 end
