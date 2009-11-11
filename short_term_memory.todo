@@ -1,2 +1,2 @@
-- fix tests for plugin installations
-- ensure that Rooms >> show.html.erb has the list of enabled plugins.
+✓ fix tests for plugin installations
+✓ ensure that Rooms >> show.html.erb has the list of enabled plugins.
