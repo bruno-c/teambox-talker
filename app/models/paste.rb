@@ -32,4 +32,14 @@ class Paste < ActiveRecord::Base
     { :id => permalink, :syntax => syntax,
       :lines => lines, :preview_lines => PREVIEW_LINES }.to_json(*a)
   end
+  
+  def self.truncate(content)
+    lines = content.to_s.split("\n")
+    
+    if lines.size > PREVIEW_LINES
+      lines.first(PREVIEW_LINES).join("\n") + "\n..."
+    else
+      content.to_s
+    end
+  end
 end

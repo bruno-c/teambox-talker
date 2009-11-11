@@ -16,7 +16,7 @@
         <% else %>
           <%= image_tag "icons/feed.png" %>
         <% end %>
-        <%= link_to h(notification.url), notification.url %>
+        <%= link_to truncate(h(notification.url), :length => 60), notification.url, :title => h(notification.url) %>
       </td>
       <td><%= image_tag "icons/arrow.png", :class => "to", :title => "Send to room" %></td>
       <td><%=h notification.room.name %></td>

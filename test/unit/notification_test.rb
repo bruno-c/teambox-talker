@@ -45,8 +45,7 @@ class NotificationTest < ActiveSupport::TestCase
     notification.room.expects(:send_messages).times(3)
     notification.perform
     
-    assert_equal DateTime.parse("Thu, 05 Nov 2009 02:26:41 UTC +00:00"), notification.last_published_at
-    assert_equal DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00"), notification.fetched_at
+    assert_equal DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00"), notification.last_modified_at
     assert_equal nil, notification.etag
   end
 
@@ -56,7 +55,6 @@ class NotificationTest < ActiveSupport::TestCase
     notification.room.expects(:send_messages).never
     notification.perform
     
-    assert_nil notification.last_published_at
-    assert_nil notification.fetched_at
+    assert_nil notification.last_modified_at
   end
 end

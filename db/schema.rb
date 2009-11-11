@@ -56,8 +56,7 @@ ActiveRecord::Schema.define(:version => 20091110222809) do
     t.string   "url"
     t.string   "user_name"
     t.string   "encrypted_password"
-    t.datetime "last_published_at"
-    t.datetime "fetched_at"
+    t.datetime "last_modified_at"
     t.string   "etag"
     t.string   "locked_by"
     t.datetime "locked_at"
@@ -120,7 +119,6 @@ ActiveRecord::Schema.define(:version => 20091110222809) do
     t.string   "state",                           :default => "pending"
     t.datetime "deleted_at"
     t.datetime "activated_at"
-    t.boolean  "livetyping",                      :default => true
     t.string   "time_zone"
     t.boolean  "staff",                           :default => false
   end
