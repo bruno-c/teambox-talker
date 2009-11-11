@@ -28,18 +28,20 @@
       <div class="content">
         <ul class="roles">
           <li>
-            <%= check_box_tag "admin", "1", user.admin, :id => dom_id(user, :admin), :class => "admin" %>
+            <%= check_box_tag "admin", "1", user.admin, :id => dom_id(user, :admin), :class => "admin", :disabled => (user == current_user) %>
             <%= label_tag dom_id(user, :admin), "Administrator", :class => "inline", :title => "Administrators can edit and invite users, manage rooms and change account settings." %>
           </li>
           <li>
-            <%= check_box_tag "suspended", "1", user.suspended?, :id => dom_id(user, :suspended), :class => "suspended" %>
+            <%= check_box_tag "suspended", "1", user.suspended?, :id => dom_id(user, :suspended), :class => "suspended", :disabled => (user == current_user) %>
             <%= label_tag dom_id(user, :suspended), "Access suspended", :class => "inline", :title => "Suspending access will prevent this user from logging in." %>
           </li>
         </ul>
       </div>
       <div class="footer">
-        <%= link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete, :class => "button negative small icon delete" if user.pending? %>
-        <%= link_to "Send Invite", resend_invite_path(user), :method => :post, :class => "button neutral small icon send-email", :title => "Sending email invitation" %>
+        <% unless user == current_user %>
+          <%= link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete, :class => "button negative small icon delete" if user.pending? %>
+          <%= link_to "Send Invite", resend_invite_path(user), :method => :post, :class => "button neutral small icon send-email", :title => "Sending email invitation" %>
+        <% end %>
       </div>
     </div>
   </li>

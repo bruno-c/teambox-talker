@@ -484,6 +484,8 @@ a.button, button {
       border-bottom-left-radius: 3px;
       -moz-border-radius-bottomleft: 3px;
       -webkit-border-bottom-left-radius: 3px; }
+    #people li.user div.panel div.footer {
+      height: 22px; }
 
 #top_mask {
   position: fixed;
