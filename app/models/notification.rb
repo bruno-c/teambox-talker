@@ -70,7 +70,7 @@ class Notification < ActiveRecord::Base
       entries = entries.select { |e| e.published > last_modified_at }
     end
     
-    entries.first(MAX_MESSAGES).each do |entry|
+    entries.first(MAX_MESSAGES).reverse.each do |entry|
       publish entry
     end
     
