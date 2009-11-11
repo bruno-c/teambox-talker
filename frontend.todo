@@ -1,3 +1,4 @@
-- reconnect w/o page refresh on error
-- UTF8 support
-- OS Specific Notifications (http://github.com/adityavm/notifyLibJS)
+✓ reconnect w/o page refresh on error
+✓ UTF8 support
+✓ OS Specific Notifications (http://github.com/adityavm/notifyLibJS)
+- Do not add Talker user to user list (or user sending message from API)

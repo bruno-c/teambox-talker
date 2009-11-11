@@ -1,4 +1,5 @@
 Talker Server:
+- Create a paste when message sent from API
 - renaming a user
 - Handle incoming malformed events (in logger especially)
 - Support other types of channels (room, paste, etc)
