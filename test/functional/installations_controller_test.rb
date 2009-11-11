@@ -16,10 +16,10 @@ class InstallationsControllerTest < ActionController::TestCase
   end
 
   test "should destroy plugin installation" do
-    # assert_difference('PluginInstallation.count', -1) do
-    #   delete :destroy, :id => plugins_installations(:one).to_param
-    # end
-    # 
-    # assert_response :success
+    assert_difference('PluginInstallation.count', -1) do
+      delete :destroy, :plugin_id => plugin_installations(:one).id
+    end
+    
+    assert_response :success
   end
 end
