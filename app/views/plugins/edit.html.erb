@@ -11,11 +11,11 @@
     </p>
     <p>
       <%= f.label :description %>
-      <%= f.text_field :description %>
+      <%= f.text_field :description, :size => 60 %>
     </p>
     <p>
       <%= f.label :source %>
-      <%= f.text_area :source, :rows => 4 %>
+      <%= f.text_area :source, :rows => 12, :cols => 60 %>
     </p>
     <p class="indent submit">
       <%= buttons "Create", :cancel_to => plugins_path %>

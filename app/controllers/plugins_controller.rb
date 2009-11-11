@@ -33,7 +33,7 @@ class PluginsController < ApplicationController
 
     if @plugin.update_attributes(params[:plugin])
       flash[:notice] = 'Plugin was successfully updated.'
-      redirect_to(@plugin)
+      redirect_to plugins_path
     else
       render :action => "edit"
     end

@@ -37,7 +37,7 @@ class PluginsControllerTest < ActionController::TestCase
 
   test "should update plugin" do
     put :update, :id => plugins(:one).to_param, :plugin => { }
-    assert_redirected_to plugin_path(assigns(:plugin))
+    assert_redirected_to plugins_path
   end
 
   test "should destroy plugin" do

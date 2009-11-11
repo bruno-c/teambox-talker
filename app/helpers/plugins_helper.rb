@@ -23,7 +23,7 @@ module PluginsHelper
   end
   
   def install_plugins_source
-    plugins = Plugin.all.map do |plugin|
+    plugins = current_account.installed_plugins.map do |plugin|
       "\n#{plugin.source}"
     end
     
@@ -32,7 +32,7 @@ module PluginsHelper
   
   # temporary... just for testing.
   def install_plugins
-    plugins = Plugin.all.map do |plugin|
+    plugins = current_account.installed_plugins.map do |plugin|
       "Talker.plugins.push(new #{plugin.name}());"
     end
     
