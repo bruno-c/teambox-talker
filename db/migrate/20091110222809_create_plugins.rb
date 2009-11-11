@@ -193,7 +193,7 @@ eos
 
             $.getJSON(url, function(data){
               last_insertion.find('a').html($('<q/>').css({
-                clear: 'both'
+                clear: 'both',
                 float: 'left'
               }).append(
                 $('<img/>').attr({src: data.user.profile_image_url, height: 48, width: 48})
