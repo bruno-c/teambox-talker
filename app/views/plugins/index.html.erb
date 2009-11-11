@@ -31,7 +31,7 @@
       <% end %>
     <% end %>
   </div>
-  <br/>
+  
   <br/>
   
   <h3>Shared Plugins</h3>
@@ -52,6 +52,10 @@
           </div>
     
           <div class="footer">
+           <span class="enable_button">
+             <!-- Enabled -->
+            </span>
+            
             <%= image_tag avatar_url(plugin.author), :alt => h(plugin.author.name) %> <%= h plugin.author.name %>
           </div>
         </div>

@@ -4,6 +4,8 @@ class Plugin < ActiveRecord::Base
   
   named_scope :shared, :conditions => { :shared => true }
   
+  attr_accessible :name, :description, :source
+  
   def installed?(account)
     account.plugins.include?(self)
   end

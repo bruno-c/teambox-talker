@@ -783,6 +783,8 @@ div.panel {
     background: #f8f8f8; }
     div.panel div.footer a {
       margin-left: 4px; }
+    div.panel div.footer .enable_button {
+      float: left; }
   div.panel .tag {
     font-size: 12px;
     background-color: #e5952b;

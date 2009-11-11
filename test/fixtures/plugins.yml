@@ -4,10 +4,12 @@ one:
   name: MyPlugin
   description: Nothing at all.
   source: MyPlugin = function(){}
-  author: <%= User.talker %>
+  author: quentin
+  account: master
 
 two:
   name: MyPlugin2
   description: Nothing at all.
   source: MyPlugin2 = function(){}
-  author: <%= User.talker %>
+  author: talker
+  account: master

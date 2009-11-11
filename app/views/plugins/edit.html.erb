@@ -1,20 +1,24 @@
 <h1>Editing plugin</h1>
 
-<% form_for(@plugin) do |f| %>
-  <%= f.error_messages %>
+<div class="sheet">
+  <h2><%= @title = "New Plugin" %></h2>
 
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :source %><br />
-    <%= f.text_area :source %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
-<% end %>
-
-<%= link_to 'Show', @plugin %> |
-<%= link_to 'Back', plugins_path %>
+  <% form_for @plugin, :html => { :class => "lw120" } do |f| %>
+    <%= f.error_messages %>
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :description %>
+      <%= f.text_field :description %>
+    </p>
+    <p>
+      <%= f.label :source %>
+      <%= f.text_area :source, :rows => 4 %>
+    </p>
+    <p class="indent submit">
+      <%= buttons "Create", :cancel_to => plugins_path %>
+    </p>
+  <% end %>
+</div>
