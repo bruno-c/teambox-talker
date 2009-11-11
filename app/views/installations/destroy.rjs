@@ -1,0 +1,1 @@
+page.replace_html "enable_#{dom_id(@plugin)}", install_plugin(@plugin)

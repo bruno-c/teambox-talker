@@ -13,6 +13,14 @@ module PluginsHelper
   #   plugins.map { |p| install_plugin p }.join("\n")
   # end
   # 
+
+  def install_plugin(plugin)
+    if plugin.installed?(current_account)
+      button_to_remote "Disable this plugin", :url => plugin_installation_path(plugin), :method => 'delete'
+    else
+      button_to_remote "Enable this plugin", :url => plugin_installation_path(plugin), :method => 'post'
+    end
+  end
   
   def install_plugins_source
     plugins = Plugin.all.map do |plugin|

@@ -7,7 +7,7 @@ class Account < ActiveRecord::Base
   has_many :notifications
   has_many :plugin_installations
   has_many :installed_plugins, :through => :plugin_installations, :source => :plugin
-  has_many :plugins
+  has_many :plugins, :conditions => { :account_id => id, :shared => true }
   
   validates_presence_of :subdomain
   validates_uniqueness_of :subdomain

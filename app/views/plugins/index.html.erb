@@ -52,10 +52,11 @@
           </div>
     
           <div class="footer">
-           <span class="enable_button">
-             <!-- Enabled -->
+            <span class="buttons">
+              <span id="enable_<%= dom_id(plugin) %>" class="plugin_enable_flag">
+                <%= install_plugin(plugin) %>
+              </span>
             </span>
-            
             <%= image_tag avatar_url(plugin.author), :alt => h(plugin.author.name) %> <%= h plugin.author.name %>
           </div>
         </div>

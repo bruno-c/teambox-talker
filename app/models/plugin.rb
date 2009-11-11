@@ -7,6 +7,6 @@ class Plugin < ActiveRecord::Base
   attr_accessible :name, :description, :source
   
   def installed?(account)
-    account.plugins.include?(self)
+    account.installed_plugins.include?(self)
   end
 end

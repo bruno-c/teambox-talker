@@ -1,6 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :plugins
-
   SprocketsApplication.routes(map)
   
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
@@ -20,7 +18,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pastes
   map.resources :notifications
   map.resource :admin, :controller => "admin"
-
+  map.resources :plugins, :has_one => :installation
+  
   map.connect "/avatar/:id.jpg", :controller => "avatars", :action => "show"
   
   map.reset_password "/passwords/reset/:token", :controller => "passwords", :action => "show", :token => nil, :conditions => { :method => :get }

@@ -709,8 +709,11 @@ div.panel
       background = !light_grey * 0.1 + !white * 0.9
       a
         margin-left: 4px
-      .enable_button
+      .buttons
         float: left
+        position: relative
+        .plugin_enable_flag
+          float: left
   .tag
     +font_size("small")
     :background-color = !alt_colour
