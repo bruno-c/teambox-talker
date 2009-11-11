@@ -26,3 +26,9 @@ aaron:
   state:                     active
   admin:                     false
   time_zone:                 "Atlantic Time (Canada)"
+
+talker:
+  name:                     Talker
+  email:                    bot@talkerapp.com
+  staff:                    true
+  time_zone:                 "Atlantic Time (Canada)"

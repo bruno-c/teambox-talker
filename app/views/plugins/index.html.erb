@@ -19,7 +19,7 @@
       </div>
     
       <div class="footer">
-        by: <%= h plugin.author.name %>
+        <%= image_tag avatar_url(plugin.author), :alt => h(plugin.author.name) %> <%= h plugin.author.name %>
       </div>
     </div>
   <% end %>

@@ -5,6 +5,12 @@ class Account < ActiveRecord::Base
   has_many :rooms
   has_many :events, :through => :rooms
   has_many :notifications
+  has_many :plugin_installations
+  has_many :plugins, :through => :plugin_installations
+  
+  def self.plugins
+    Plugin.all(:conditions => ["author_id = ? OR shared = 1", id])
+  end
   
   validates_presence_of :subdomain
   validates_uniqueness_of :subdomain

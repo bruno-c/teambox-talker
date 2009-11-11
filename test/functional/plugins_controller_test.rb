@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class PluginsControllerTest < ActionController::TestCase
+  def setup
+    @account = accounts(:master)
+    subdomain :master
+    login_as :quentin
+  end
+  
   test "should get index" do
     get :index
     assert_response :success
@@ -14,15 +20,14 @@ class PluginsControllerTest < ActionController::TestCase
 
   test "should create plugin" do
     assert_difference('Plugin.count') do
-      post :create, :plugin => { }
+      post :create, :plugin => {
+        :name => 'Talker.SomethingCommand',
+        :description => 'Says something on demand!!',
+        :source => 'Talker.SomethingCommand = function(){ alert("says something right now.") }'
+      }
     end
 
-    assert_redirected_to plugin_path(assigns(:plugin))
-  end
-
-  test "should show plugin" do
-    get :show, :id => plugins(:one).to_param
-    assert_response :success
+    assert_redirected_to plugins_path
   end
 
   test "should get edit" do

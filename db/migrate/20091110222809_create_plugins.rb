@@ -5,16 +5,23 @@ class CreatePlugins < ActiveRecord::Migration
       t.string :description
       t.text :source
       t.text :author_id
-      t.boolean :enabled_by_default
+      t.boolean :shared, :default => false
 
+      t.timestamps
+    end
+    
+    create_table :plugin_installations do |t|
+      t.integer :account_id
+      t.integer :plugin_id
+      
       t.timestamps
     end
     
     Plugin.create(
       :name => 'Talker.HelloCommand',
-      :description => "Greets the world and cures frowns.",
+      :description => "Sample plugin to greet the world and cure world hunger.",
       :author_id => User.talker.id,
-      :enabled_by_default => false,
+      :shared => true,
       :source => <<-eos
       Talker.HelloCommand = function() {
         var self = this;
@@ -33,7 +40,7 @@ eos
       :name => 'Talker.DockBadge',
       :description => "Dock icon warns you of what new messages you had while you were away.  Only works with Fluid and Prism.",
       :author_id => User.talker.id,
-      :enabled_by_default => true,
+      :shared => true,
       :source => <<-eos
       Talker.DockBadge = function() {
         var self = this;
@@ -61,7 +68,7 @@ eos
       :name => 'Talker.NewMessageNotifications',
       :description => "Provides Growl notifications of new messages when Talker is behind other windows.  Only works with Fluid and Prism.",
       :author_id => User.talker.id,
-      :enabled_by_default => true,
+      :shared => true,
       :source => <<-eos
       Talker.NewMessageNotifications = function() {
         var self = this;
@@ -85,7 +92,7 @@ eos
       :name => 'Talker.UserLeaveNotifications',
       :description => "Provides Growl notifications of users leaving the room when Talker is behind other windows.  Only works with Fluid and Prism.",
       :author_id => User.talker.id,
-      :enabled_by_default => true,
+      :shared => true,
       :source => <<-eos
       Talker.UserLeaveNotifications = function() {
         var self = this;
@@ -110,7 +117,7 @@ eos
       :name => 'Talker.UserJoinNotifications',
       :description => "Provides Growl notifications of users joining the room when Talker is behind other windows.  Only works with Fluid and Prism.",
       :author_id => User.talker.id,
-      :enabled_by_default => true,
+      :shared => true,
       :source => <<-eos
       Talker.UserJoinNotifications = function() {
         var self = this;
@@ -134,7 +141,7 @@ eos
       :name => 'Talker.TitleMessageCount',
       :description => "Updates the title with message count when Talker is behind other windows.",
       :author_id => User.talker.id,
-      :enabled_by_default => true,
+      :shared => true,
       :source => <<-eos
       Talker.TitleMessageCount = function() {
         var self = this;
@@ -164,7 +171,7 @@ eos
       :name => 'Talker.TwitterStatuses',
       :description => "Converts twitter links to preview of twitter status.",
       :author_id => User.talker.id,
-      :enabled_by_default => false,
+      :shared => true,
       :source => <<-eos
       Talker.TwitterStatuses = function() {
         var self = this;
@@ -198,7 +205,7 @@ eos
       :name => 'Talker.UserLeave',
       :description => "Shows who leaves the room in the log.",
       :author_id => User.talker.id,
-      :enabled_by_default => true,
+      :shared => true,
       :source => <<-eos
       Talker.UserLeave = function() {
         var self = this;
@@ -219,7 +226,7 @@ eos
       :name => 'Talker.UserJoin',
       :description => "Shows who leaves the room in the log.",
       :author_id => User.talker.id,
-      :enabled_by_default => true,
+      :shared => true,
       :source => <<-eos
       Talker.UserJoin = function() {
         var self = this;

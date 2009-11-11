@@ -1,23 +1,16 @@
 class PluginsController < ApplicationController
+  before_filter :login_required
+  before_filter :account_required
+  before_filter :admin_required, :only => [:update, :ouch]
+  
   # GET /plugins
   # GET /plugins.xml
   def index
-    @plugins = Plugin.all
+    @plugins = current_account.plugins
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @plugins }
-    end
-  end
-
-  # GET /plugins/1
-  # GET /plugins/1.xml
-  def show
-    @plugin = Plugin.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @plugin }
     end
   end
 
@@ -40,16 +33,15 @@ class PluginsController < ApplicationController
   # POST /plugins
   # POST /plugins.xml
   def create
-    @plugin = Plugin.new(params[:plugin])
-
+    @plugin = current_account.plugins.build(params[:plugin])
+    @plugin.author = current_user
+    
     respond_to do |format|
       if @plugin.save
         flash[:notice] = 'Plugin was successfully created.'
-        format.html { redirect_to(@plugin) }
-        format.xml  { render :xml => @plugin, :status => :created, :location => @plugin }
+        format.html { redirect_to plugins_path }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @plugin.errors, :status => :unprocessable_entity }
       end
     end
   end

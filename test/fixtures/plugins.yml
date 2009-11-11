@@ -1,9 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  name: MyString
-  source: MyText
+  name: MyPlugin
+  description: Nothing at all.
+  source: MyPlugin = function(){}
+  author: <%= User.talker %>
 
 two:
-  name: MyString
-  source: MyText
+  name: MyPlugin2
+  description: Nothing at all.
+  source: MyPlugin2 = function(){}
+  author: <%= User.talker %>
