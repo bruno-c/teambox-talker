@@ -1,7 +1,8 @@
-Talker.MsgCommand = function(msgbox) {
+Talker.MsgCommand = function() {
   var self = this;
   
-  self.msgbox = msgbox;
+  self.command = 'msg';
+  self.usage = '/msg "username" This is your message.';
   
   self.onCommand = function(event) {
     if (event.command == "msg") {
@@ -11,7 +12,7 @@ Talker.MsgCommand = function(msgbox) {
       if (user == null) throw new CommandError("Unknown user: " + userName);
       
       Talker.client.send({content: event.args.slice(1).join(" "), to: user.id});
-      self.msgbox.val('');
+      $('#msgbox').val('');
       Talker.trigger("MessageSent", event);
       
       return false;

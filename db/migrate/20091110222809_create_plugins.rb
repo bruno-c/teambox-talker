@@ -25,6 +25,9 @@ class CreatePlugins < ActiveRecord::Migration
     p.author_id = User.talker.id
     p.shared = true
     p.source = <<-eos
+plugin.command = 'hello';
+plugin.usage = '/hello';
+
 plugin.onCommand = function(event) {
   if (event.command == "hello") {
     alert('Hello world!');
