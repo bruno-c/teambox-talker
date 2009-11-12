@@ -13,7 +13,7 @@ Talker.ImageFormatter = function() {
     
     if (image_match){
       var fallback = $('<a/>').attr('href', image_match[0]).attr('target', '_blank').html(image_match[0]);
-      Talker.Logger.insertContent(event, fallback);
+      Talker.insertMessage(event, fallback);
       Talker.trigger('Insertion', event);
       
       var img = $('<img/>').load(function(){

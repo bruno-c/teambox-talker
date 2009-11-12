@@ -3,7 +3,7 @@ Talker.PasteFormatter = function() {
   
   self.onMessageReceived = function(event) {
     if (event.paste){
-      Talker.Logger.insertContent(event,
+      Talker.insertMessage(event,
         "<a target='_blank' title='Paste #" + event.paste.id + "' href='" 
           + window.location.protocol + "//" + window.location.host + "/pastes/" + event.paste.id 
           + "'>View paste</a>"
