@@ -3,7 +3,6 @@ module Talker
     class Room < EventChannel
       def initialize(name)
         super
-        @last_sid = 0
       end
       
       def subscribe(user, &callback)
@@ -24,7 +23,7 @@ module Talker
       
       private
         def generate_sid
-          @last_sid += 1
+          Kernel.rand(999_999_999_999)
         end
     end
   end

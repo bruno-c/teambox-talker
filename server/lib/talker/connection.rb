@@ -66,9 +66,8 @@ module Talker
             # Broadcast presence
             @room.publish_presence "join", @user
           rescue Exception => e
-            raise
             Talker::Notifier.error "Error while authenticating", e
-            error "Error while authenticating: #{e.class}"
+            error "Error while authenticating"
           end
         
         else
