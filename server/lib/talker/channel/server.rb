@@ -66,8 +66,8 @@ module Talker
         @on_stop.call if @on_stop && @connections.empty?
       end
     
-      def authenticate(room, user, token, &callback)
-        @authenticator.authenticate(room, user, token, &callback)
+      def authenticate(*args, &callback)
+        @authenticator.authenticate(*args, &callback)
       end
       
       def to_s

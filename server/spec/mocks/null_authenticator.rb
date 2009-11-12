@@ -1,5 +1,5 @@
 class NullAuthenticator
-  def authenticate(room_id, user_id, token, &callback)
-    callback.call(true)
+  def authenticate(room_id, token)
+    yield Talker::User.new("id" => token, "name" => "user#{token}", "email" => "user#{token}@example.com")
   end
 end

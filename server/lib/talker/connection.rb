@@ -23,7 +23,7 @@ module Talker
       
       case message["type"]
       when "connect"
-        authenticate message["room"], message["user"], message["token"], message
+        authenticate message["room"], message["token"], message
       when "message"
         broadcast_message message, message.delete("to")
       when "close"
@@ -36,6 +36,7 @@ module Talker
     rescue ProtocolError => e
       error e.message
     rescue Exception => e
+      raise
       Talker::Notifier.error "Error in Connection#message_parsed", e
       error "Error processing command"
     end
@@ -43,21 +44,17 @@ module Talker
     
     ## Message types
     
-    def authenticate(room_name, user_info, token, options)
-      if room_name.nil? || user_info.nil? || token.nil?
+    def authenticate(room_name, token, options)
+      if room_name.nil? || token.nil?
         raise ProtocolError, "Authentication failed"
       end
       
-      if !user_info.is_a?(Hash) || !(user_info.key?("id") && user_info.key?("name"))
-        raise ProtocolError, "You must specify your user id and name"
-      end
-      
-      @server.authenticate(room_name, user_info["id"], token) do |success|
+      @server.authenticate(room_name, token) do |user|
         
-        if success
+        if user
           begin
             @room = @server.rooms[room_name]
-            @user = User.new(user_info)
+            @user = user
             @user.token = token
             
             # Listen to message in the room

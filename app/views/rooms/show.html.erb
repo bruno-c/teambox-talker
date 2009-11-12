@@ -47,7 +47,6 @@
         host: '<%= Orbited.talker_host %>', 
         port: <%= Orbited.talker_port %>, 
         room: Talker.room.id,
-        user: Talker.currentUser,
         token: <%= current_user.talker_token.to_json %>,
         callbacks: Talker.Broadcaster
       }).connect();

@@ -22,7 +22,7 @@ module Helpers
   end
   
   def connect(options={}, &block)
-    Talker::Client.connect({ :room => 1, :user => {:id => 1}, :token => "valid", :port => TEST_PORT }.merge(options), &block)
+    Talker::Client.connect({ :room => 1, :token => 1, :port => TEST_PORT }.merge(options), &block)
   end
 end
 

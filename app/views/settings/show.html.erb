@@ -40,6 +40,17 @@
         <%= ok_button "Change password" %>
       </p>
     </fieldset>
+    
+    <fieldset id="api">
+      <h3>Your Talker API Token</h3>
+      <p class="indent">
+        Your Talker token is like a password, you shouldn't show it or share it with anyone.
+        You can use it to access the API or connect directly to the Talker server.
+      </p>
+      <p class="indent">
+        <strong><%=h @user.talker_token %></strong>
+      </p>
+    </fieldset>
 
   <% end %>
 

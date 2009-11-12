@@ -1,4 +1,6 @@
 - Load db events w/ an Ajax call after page load [MA]
+- Delete rooms
+- lock down rooms
 
 - Integrate design [G/M]
 ✓ Edit room [MA]

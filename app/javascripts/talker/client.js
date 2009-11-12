@@ -77,7 +77,6 @@ Talker.Client = function(options) {
         self.sendData({
           type: "connect", 
           room: options.room, 
-          user: options.user, 
           token: options.token
         });
         callbacks.onOpen();

@@ -6,12 +6,12 @@ module Talker
       EventedMysql.settings.update options
     end
     
-    def authenticate(room_id, user_id, token, &callback)
+    def authenticate(room_id, token, &callback)
       sql = <<-SQL
-        SELECT talker_token
+        SELECT users.id AS id, users.name AS name, users.email AS email
         FROM users
         INNER JOIN rooms ON rooms.account_id = users.account_id
-        WHERE users.id = #{user_id.to_i}
+        WHERE users.talker_token = '#{quote(token)}'
           AND users.state = 'active'
           AND rooms.id = #{room_id.to_i}
         LIMIT 1
@@ -20,16 +20,19 @@ module Talker
       Talker.logger.debug{"Querying for authentication:\n#{sql}"}
       
       EventedMysql.select(sql) do |results|
-        result = results[0]
-        
-        if result && result.key?("talker_token")
-          Talker.logger.debug{"Authentication succeded for user ##{user_id} in room ##{room_id}"}
-          callback.call results[0]["talker_token"] == token
+        if result = results[0]
+          user = User.new("id" => result["id"].to_i, "name" => result["name"], "email" => result["email"])
+          Talker.logger.debug{"Authentication succeded for user ##{user.name} in room ##{room_id}"}
+          callback.call(user)
         else
-          Talker.logger.warn "Authentication failed for user ##{user_id} in room ##{room_id} with token #{token}"
-          callback.call(false)
+          Talker.logger.warn "Authentication failed in room ##{room_id} with token #{token}"
+          callback.call(nil)
         end
       end
+    end
+    
+    def quote(s)
+      s.gsub(/\\/, '\&\&').gsub(/'/, "''")
     end
   end
 end
