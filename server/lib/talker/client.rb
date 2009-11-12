@@ -11,12 +11,10 @@ module Talker
       host = options[:host] || Talker::Channel::Server::DEFAULT_HOST
       port = options[:port] || Talker::Channel::Server::DEFAULT_PORT
       room = options[:room]
-      user = options[:user]
       token = options[:token]
       
       EM.connect host, port, self do |c|
         c.room = room
-        c.user = Talker::User.new("id" => user[:id], "name" => user[:name])
         c.token = token
         yield c if block_given?
       end
@@ -49,8 +47,7 @@ module Talker
     end
     
     def connection_completed
-      send "type" => "connect", "room" => @room, "user" => @user.info, "token" => @token
-      @users[@user.id] = @user
+      send "type" => "connect", "room" => @room, "token" => @token
       EM.add_periodic_timer(20) { send "type" => "ping" }
     end
     
@@ -82,10 +79,8 @@ module Talker
         trigger :presence, @users.values
       when "join"
         user = Talker::User.new(message["user"])
-        unless user.id == @user.id
-          @users[user.id] = user
-          trigger :join, user, message
-        end
+        @users[user.id] = user
+        trigger :join, user, message
       when "leave"
         user = Talker::User.new(message["user"])
         @users.delete(user.id)

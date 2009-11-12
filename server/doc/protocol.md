@@ -6,7 +6,7 @@ All events are in JSON format. They contain a hash ({...}) and end with a line b
 ## Authentication
 Before sending and receiving events in a room, the client must connect to the room by sending the following message:
 
-    {"type":"connect","room":"unique room id","user":{"id":"unique id","name":"user name",...},"token":"user secret token"}
+    {"type":"connect","room":"unique room id","token":"user secret token"}
 
 Attributes:
 

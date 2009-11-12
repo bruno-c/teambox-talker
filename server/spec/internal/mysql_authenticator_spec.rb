@@ -8,29 +8,24 @@ EM.describe Talker::MysqlAuthenticator do
   end
   
   it "should authenticate valid token" do
-    @authenticator.authenticate(1, 1, "valid") do |success|
-      success.should be_true
+    @authenticator.authenticate(1, "valid") do |user|
+      user.id.should == 1
+      user.name.should == "user 1"
+      user.info["email"].should == "user1@example.com"
       done
     end
   end
 
   it "should not authenticate invalid token" do
-    @authenticator.authenticate(1, 1, "invalid") do |success|
-      success.should be_false
-      done
-    end
-  end
-
-  it "should not authenticate invalid user" do
-    @authenticator.authenticate(99999, 1, "valid") do |success|
-      success.should be_false
+    @authenticator.authenticate(1, "invalid") do |user|
+      user.should be_nil
       done
     end
   end
 
   it "should not authenticate invalid room" do
-    @authenticator.authenticate(1, 999999, "valid") do |success|
-      success.should be_false
+    @authenticator.authenticate(999999, "valid") do |user|
+      user.should be_nil
       done
     end
   end

@@ -21,7 +21,7 @@ EM.describe "Messages" do
   end
 
   it "should be received by other clients" do
-    connect :user => {:id => 1} do |client|
+    connect :token => 1 do |client|
       client.on_message do |user, message|
         user.id.should == 2
         message.should == "hi"
@@ -31,7 +31,7 @@ EM.describe "Messages" do
       client.on_close { done }
     end
     
-    connect :user => {:id => 2} do |client|
+    connect :token => 2 do |client|
       client.on_connected do
         EM.next_tick { client.send_message("hi") }
       end

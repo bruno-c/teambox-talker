@@ -3,16 +3,18 @@ require File.dirname(__FILE__) + "/spec_helper"
 EM.describe "Presence info" do
   it "should be broadcasted on join" do
     # User 1 will receive notification of join
-    connect :user => {:id => 1, :name => "user1"} do |client|
+    connect :token => 1 do |client|
       client.on_join do |user, attributes|
-        user.id.should == 2
-        user.name.should == "user2"
-        attributes.should have_key("time")
+        unless user.id == 1
+          user.id.should == 2
+          user.name.should == "user2"
+          attributes.should have_key("time")
+        end
       end
     end
     
     # User 2 receives presence info
-    connect :user => {:id => 2, :name => "user2"} do |client|
+    connect :token => 2 do |client|
       client.on_presence do |users|
         user = users.first
         user.id.should == 1
@@ -26,7 +28,7 @@ EM.describe "Presence info" do
 
   it "should be broadcasted on close" do
     # User 1 will receive notification of leave
-    connect :user => {:id => 1, :name => "user1"} do |client|
+    connect :token => 1 do |client|
       client.on_leave do |user, attributes|
         user.id.should == 2
         attributes.should have_key("time")
@@ -37,7 +39,7 @@ EM.describe "Presence info" do
     end
     
     # User 2 just close the connection
-    connect :user => {:id => 2, :name => "user2"} do |client|
+    connect :token => 2 do |client|
       client.on_connected do
         client.close
       end

@@ -11,13 +11,13 @@ EM.describe "A user that connects to a room" do
   end
 
   it "should be connected if already connected" do
-    connect :user => {:id => 1} do |client|
+    connect :token => 1 do |client|
       client.on_error do |message|
         fail message
       end
     end
     
-    connect :user => {:id => 1} do |client|
+    connect :token => 1 do |client|
       client.on_error do |message|
         fail message
       end
