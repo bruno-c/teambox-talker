@@ -43,7 +43,7 @@ Talker.insertLine = function(event, content) {
 
   element.appendTo('#log');
   
-  Talker.trigger('MessageInsertion');
+  Talker.trigger('LineInsertion');
 }
 
 Talker.getLastRow = function() {
