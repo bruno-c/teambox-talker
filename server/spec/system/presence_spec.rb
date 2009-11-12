@@ -45,4 +45,15 @@ EM.describe "Presence info" do
       end
     end
   end
+  
+  it "should accept room as string" do
+    connect :token => 1, :room => 1
+    connect :token => 1, :room => "1"
+    connect :token => 1, :room => "1" do |client|
+      client.on_presence do |users|
+        users.size.should == 1
+        done
+      end
+    end
+  end
 end

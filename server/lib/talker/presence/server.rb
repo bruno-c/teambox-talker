@@ -52,7 +52,7 @@ module Talker
         Talker.logger.debug{"<<< " + message.inspect}
         
         type = message["type"]
-        room = @rooms[message["room"]]
+        room = @rooms[message["room"].to_i]
         user = User.new(message["user"])
         time = message["time"]
         
