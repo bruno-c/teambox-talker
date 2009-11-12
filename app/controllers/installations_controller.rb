@@ -1,6 +1,4 @@
 class InstallationsController < ApplicationController
-  before_filter :login_required
-  before_filter :account_required
   before_filter :admin_required
   
   def create
@@ -9,7 +7,7 @@ class InstallationsController < ApplicationController
   end
 
   def destroy
-    @installation = current_account.plugin_installations.find_by_plugin_id(params[:plugin_id])
+    @installation = current_account.plugin_installations.find_by_plugin_id!(params[:plugin_id])
     @plugin = @installation.plugin
     
     @installation.destroy
