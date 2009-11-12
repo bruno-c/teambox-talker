@@ -44,16 +44,18 @@ module Talker
     
     ## Message types
     
-    def authenticate(room_name, token, options)
-      if room_name.nil? || token.nil?
+    def authenticate(room, token, options)
+      if room.nil? || token.nil?
         raise ProtocolError, "Authentication failed"
       end
       
-      @server.authenticate(room_name, token) do |user|
+      room = room.to_i
+      
+      @server.authenticate(room, token) do |user|
         
         if user
           begin
-            @room = @server.rooms[room_name]
+            @room = @server.rooms[room]
             @user = user
             @user.token = token
             
