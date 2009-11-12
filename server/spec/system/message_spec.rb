@@ -37,4 +37,16 @@ EM.describe "Messages" do
       end
     end
   end
+  
+  it "should sanitize messages content" do
+    connect do |client|
+      client.on_connected do
+        client.send_message(1)
+      end
+      client.on_message do |user, message|
+        message.should == "1"
+        done
+      end
+    end
+  end
 end
