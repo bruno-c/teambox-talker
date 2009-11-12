@@ -24,7 +24,7 @@ Talker.ImageFormatter = function() {
             + image_match[0]
             + '" target="_blank"><img src="' 
             + image_match[0]
-            + '" style="max-height: 300px; max-width: ' + Talker.Logger.maximumContentWidth() + ';" />'
+            + '" style="max-height: 300px; max-width: ' + Talker.getMaxContentWidth() + ';" />'
             + '</a>'
         );
         
@@ -40,7 +40,7 @@ Talker.ImageFormatter = function() {
   }
   
   self.onResize = function() {
-    var maxWidth = Talker.Logger.maximumContentWidth();
+    var maxWidth = Talker.getMaxContentWidth();
     
     $("#log img[class!='avatar']").each(function(){
       $(this).css({'max-width': 'auto'});

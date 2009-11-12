@@ -24,7 +24,7 @@ Talker.DefaultFormatter = function() {
   }
   
   self.onResize = function(event) {
-    var maxWidth = Talker.Logger.maximumContentWidth();
+    var maxWidth = Talker.getMaxContentWidth();
     
     $('#log pre').css('width', maxWidth - 22 + 'px');// pastes and messages sent with multilines
     $('#log blockquote').css('width', maxWidth + 'px');// long sentences with no line breaks

@@ -4,10 +4,8 @@ Talker = {};
 //= require "talker/client"
 
 Talker.insertMessage = function(event, content) {
-  // insert content in #log
-  // handles private messages differently
-  var last_row = Talker.Logger.lastRow();
-  var last_author = Talker.Logger.lastAuthor();
+  var last_row = Talker.getLastRow();
+  var last_author = Talker.getLastAuthor();
   
   var element;
   if (last_author == event.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !event.private){ // only append to existing blockquote group
@@ -49,6 +47,18 @@ Talker.insertLine = function(event, content) {
   Talker.trigger('Insertion');
   Talker.trigger('AfterMessageReceived');
   Talker.trigger('Resize');
+}
+
+Talker.getLastRow = function() {
+  return $('#log tr:last');
+}
+
+Talker.getLastAuthor = function() {
+  return Talker.getLastRow().attr('author');
+}
+
+Talker.getMaxContentWidth = function() {
+  return $('#chat_log').width() - $('#log tr td:first').width() - 41;
 }
 
 Talker.notify = function(event) {

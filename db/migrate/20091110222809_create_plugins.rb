@@ -155,7 +155,7 @@ eos
     p.shared = true
     p.source = <<-eos
 plugin.onAfterMessageReceived = function(event){
-  var last_insertion = Talker.Logger.lastRow();
+  var last_insertion = Talker.getLastRow();
   var twitter_status_expression = /https*:\\/\\/twitter.com\\/\\w+\\/status\\/(\\d+)/i;
   var last_anchor = last_insertion.find('a');
   var last_href = last_anchor.attr('href') || '';
@@ -245,7 +245,7 @@ plugin.emoticons.push(new plugin.Emoticon([':P', ':-P'],              "/images/i
 
 plugin.onAfterMessageReceived = function(event){
   _.each(plugin.emoticons, function(emoticon){
-    var element = Talker.Logger.lastRow().find('p:last').get(0);
+    var element = Talker.getLastRow().find('p:last').get(0);
     emoticon.findAndReplace(element);
   });
 }
