@@ -31,8 +31,8 @@ class Account < ActiveRecord::Base
   end
   
   def create_default_plugin_installations
-    %w(UserLeave UserJoin TitleMessageCount UserLeaveNotifications UserJoinNotifications DockBadge).each do |name|
-      plugin_installations.create(:plugin_id => Plugin.find_by_name('Talker.' + name).id)
+    Plugin.shared.each do |shared|
+      plugin_installations.create(:plugin_id => shared.id) unless shared.name = 'Emoticons Formatter'
     end
   end
 end

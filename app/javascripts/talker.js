@@ -11,3 +11,10 @@ Talker.notify = function(event) {
     });
   }
 }
+
+Talker.error = function(error, msg){
+  if (console.error){
+    console.info(error);
+    console.error(msg + " caused a problem");
+  }
+}

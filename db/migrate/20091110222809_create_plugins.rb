@@ -20,7 +20,7 @@ class CreatePlugins < ActiveRecord::Migration
     
     
     p = Plugin.new
-    p.name = 'Talker.HelloCommand'
+    p.name = 'Hello Command'
     p.description = "Sample plugin to greet the world and cure world hunger."
     p.author_id = User.talker.id
     p.shared = true
@@ -37,7 +37,7 @@ eos
     
     
     p = Plugin.new
-    p.name = 'Talker.DockBadge'
+    p.name = 'Dock Badge'
     p.description = "Dock icon warns you of what new messages you had while you were away.  Only works with Fluid and Prism."
     p.author_id = User.talker.id
     p.shared = true
@@ -62,7 +62,7 @@ eos
     p.save
     
     p = Plugin.new
-    p.name = 'Talker.NewMessageNotifications'
+    p.name = 'New Message Notifications'
     p.description = "Provides Growl notifications of new messages when Talker is behind other windows.  Only works with Fluid and Prism."
     p.author_id = User.talker.id
     p.shared = true
@@ -82,7 +82,7 @@ eos
     p.save
 
     p = Plugin.new
-    p.name = 'Talker.UserLeaveNotifications'
+    p.name = 'User Leave Notifications'
     p.description = "Provides Growl notifications of users leaving the room when Talker is behind other windows.  Only works with Fluid and Prism."
     p.author_id = User.talker.id
     p.shared = true
@@ -103,7 +103,7 @@ eos
     p.save
 
     p = Plugin.new
-    p.name = 'Talker.UserJoinNotifications'
+    p.name = 'User Join Notifications'
     p.description = "Provides Growl notifications of users joining the room when Talker is behind other windows.  Only works with Fluid and Prism."
     p.author_id = User.talker.id
     p.shared = true
@@ -123,7 +123,7 @@ plugin.onLoaded = function() {
 eos
     p.save
     p = Plugin.new
-    p.name = 'Talker.TitleMessageCount'
+    p.name = 'Title Message Count'
     p.description = "Updates the title with message count when Talker is behind other windows."
     p.author_id = User.talker.id
     p.shared = true
@@ -149,7 +149,7 @@ eos
     p.save
 
     p = Plugin.new
-    p.name = 'Talker.TwitterStatuses'
+    p.name = 'Twitter Statuses'
     p.description = "Converts twitter links to preview of twitter status."
     p.author_id = User.talker.id
     p.shared = true
@@ -179,7 +179,7 @@ eos
      p.save
    
      p = Plugin.new
-     p.name = 'Talker.UserLeave'
+     p.name = 'User Leave'
      p.description = "Shows who leaves the room in the log."
      p.author_id = User.talker.id
      p.shared = true
@@ -196,7 +196,7 @@ eos
       p.save
 
       p = Plugin.new
-      p.name = 'Talker.UserJoin'
+      p.name = 'User Join'
       p.description = "Shows who leaves the room in the log."
       p.author_id = User.talker.id
       p.shared = true
@@ -213,23 +213,17 @@ eos
       p.save
       
       p = Plugin.new
-      p.name = 'Talker.EmoticonsFormatter'
+      p.name = 'Emoticons Formatter'
       p.description = "Shows common emoticons."
       p.author_id = User.talker.id
       p.shared = true
       p.source = <<-eos
 plugin.Emoticon = function(matchers, path, meaning){
   var self = this;
-
+  
   self.strings = matchers ;
   self.path = path;
   self.meaning = meaning;
-
-  self.findAndReplace = function(domElement){
-    _.each(self.strings, function(string){
-     $(domElement).findAndReplace(string, plugin.replacementString(string));
-    });
-  }
 
   self.replacementString = function(string){
     return '<img src="' 
@@ -239,33 +233,39 @@ plugin.Emoticon = function(matchers, path, meaning){
         + '" title="' 
         + self.meaning + '"  />';
   }
-
-  return self;
+  
+  this.findAndReplace = function(domElement){
+    _.each(self.strings, function(string){
+      $(domElement).findAndReplace(string, self.replacementString(string));
+    });
+  }
 }
+plugin.emoticons = [];
+plugin.emoticons.push(new plugin.Emoticon(['>:-)', '>:)'],            "/images/icons/smiley-evil.png",    "evil"));
+plugin.emoticons.push(new plugin.Emoticon([':-))', ':))'],            "/images/icons/smiley-lol.png",     "laughing"));
+plugin.emoticons.push(new plugin.Emoticon([':-)',  ':)'],             "/images/icons/smiley.png",         "smiling"));
+plugin.emoticons.push(new plugin.Emoticon([':-D'],                    "/images/icons/smiley-grin.png",    "grin"));
+plugin.emoticons.push(new plugin.Emoticon(['X(', 'X-('],              "/images/icons/smiley-mad.png",     "angry"));
+plugin.emoticons.push(new plugin.Emoticon([':(', ':-('],              "/images/icons/smiley-sad.png",     "sad"));
+plugin.emoticons.push(new plugin.Emoticon([';(', ';-('],              "/images/icons/smiley-cry.png",     "cry"));
+plugin.emoticons.push(new plugin.Emoticon(['B)', 'B-)', '8)', '8-)'], "/images/icons/smiley-cool.png",    "cool"));
+plugin.emoticons.push(new plugin.Emoticon([':S', ':-S'],              "/images/icons/smiley-confuse.png", "confused"));
+plugin.emoticons.push(new plugin.Emoticon([':O', ':-O'],              "/images/icons/smiley-eek.png",     "shocked"));
+plugin.emoticons.push(new plugin.Emoticon([':P', ':-P'],              "/images/icons/smiley-razz.png",    "razz"));
 
 plugin.onAfterMessageReceived = function(event){
-  _.each(Talker.emoticons, function(emoticon){
+  _.each(plugin.emoticons, function(emoticon){
     var element = Talker.Logger.lastRow().find('p:last').get(0);
     emoticon.findAndReplace(element);
   });
 }
-
-plugin.emoticons = [];
-plugin.emoticons.push(new Talker.Emoticon(['>:-)', '>:)'],            "/images/icons/smiley-evil.png",    "evil"));
-plugin.emoticons.push(new Talker.Emoticon([':-))', ':))'],            "/images/icons/smiley-lol.png",     "laughing"));
-plugin.emoticons.push(new Talker.Emoticon([':-)',  ':)'],             "/images/icons/smiley.png",         "smiling"));
-plugin.emoticons.push(new Talker.Emoticon([':-D'],                    "/images/icons/smiley-grin.png",    "grin"));
-plugin.emoticons.push(new Talker.Emoticon(['X(', 'X-('],              "/images/icons/smiley-mad.png",     "angry"));
-plugin.emoticons.push(new Talker.Emoticon([':(', ':-('],              "/images/icons/smiley-sad.png",     "sad"));
-plugin.emoticons.push(new Talker.Emoticon([';(', ';-('],              "/images/icons/smiley-cry.png",     "cry"));
-plugin.emoticons.push(new Talker.Emoticon(['B)', 'B-)', '8)', '8-)'], "/images/icons/smiley-cool.png",    "cool"));
-plugin.emoticons.push(new Talker.Emoticon([':S', ':-S'],              "/images/icons/smiley-confuse.png", "confused"));
-plugin.emoticons.push(new Talker.Emoticon([':O', ':-O'],              "/images/icons/smiley-eek.png",     "shocked"));
-plugin.emoticons.push(new Talker.Emoticon([':P', ':-P'],              "/images/icons/smiley-razz.png",    "razz"));
-
 eos
     p.save
-      
+    
+    Plugin.reset_column_information
+    PluginInstallation.reset_column_information
+    Account.reset_column_information
+    
     Account.all.each do |account|
       account.create_default_plugin_installations
     end
