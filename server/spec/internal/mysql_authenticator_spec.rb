@@ -29,4 +29,11 @@ EM.describe Talker::MysqlAuthenticator do
       done
     end
   end
+  
+  it "should prevent SQL injection" do
+    @authenticator.authenticate(1, "' OR 1=1 '") do |user|
+      user.should be_nil
+      done
+    end
+  end
 end
