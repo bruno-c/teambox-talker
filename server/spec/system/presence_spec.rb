@@ -16,8 +16,8 @@ EM.describe "Presence info" do
     # User 2 receives presence info
     connect :token => 2 do |client|
       client.on_presence do |users|
-        user = users.first
-        user.id.should == 1
+        user = users.detect { |u| u.id == 1 }
+        user.should_not be_nil
         user.name.should == "user1"
         client.close
       end

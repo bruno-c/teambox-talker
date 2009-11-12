@@ -50,6 +50,7 @@ module Talker
       end
       
       room = room.to_i
+      token = token.to_s
       
       @server.authenticate(room, token) do |user|
         
@@ -84,6 +85,9 @@ module Talker
       
       obj["user"] = @user.info
       obj["time"] = Time.now.utc.to_i
+      
+      # Sanitize the message
+      obj["content"] = obj["content"].to_s
       
       content = obj["content"]
       
@@ -145,7 +149,7 @@ module Talker
       def send_message(event, to=nil)
         if to
           event["private"] = true
-          @room.publish event, to
+          @room.publish event, to.to_i
         else
           @room.publish event
         end
