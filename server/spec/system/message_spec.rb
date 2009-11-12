@@ -38,7 +38,7 @@ EM.describe "Messages" do
     end
   end
   
-  it "should sanitize messages" do
+  it "should sanitize messages content" do
     connect do |client|
       client.on_connected do
         client.send_message(1)

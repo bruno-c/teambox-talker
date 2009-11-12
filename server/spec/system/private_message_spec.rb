@@ -23,4 +23,13 @@ EM.describe "Private messages" do
       end
     end
   end
+  
+  it "should sanitize user id" do
+    connect do |client|
+      client.on_connected do
+        client.send_private_message("*", 0)
+        done
+      end
+    end
+  end
 end
