@@ -28,7 +28,7 @@ Talker.insertMessage = function(event, content) {
   }
 
   element.append($('<p/>').attr('id', "event_" + event.time).
-                           attr('room', (Talker.room || event.room).id). // HACK ...
+                           attr('room', (Talker.getRoom() || event.room).id). // HACK ...
                            attr('time', event.time).
                            html(content));
 
@@ -61,7 +61,7 @@ Talker.getMaxContentWidth = function() {
 Talker.notify = function(event) {
   if (window.notifications && window.notifications.notifications_support()) {
     window.notifications.notify({
-      title: Talker.room.name,
+      title: Talker.getRoomName(),
       description: h(event.user.name) + ": " + event.content
     });
   }
@@ -72,4 +72,23 @@ Talker.error = function(error, msg){
     console.info(error);
     console.error(msg + " caused a problem");
   }
+}
+
+Talker.getCommands = function() {
+  return _.pluck(
+    _.select(Talker.plugins, function(plugin) { return plugin.command }),
+    'command'
+  );
+}
+
+Talker.getRoom = function() {
+  return Talker.room;
+}
+
+Talker.getRoomName = function() {
+  return Talker.getRoom().name;
+}
+
+Talker.getRoomUsers = function() {
+  return Talker.users;
 }
