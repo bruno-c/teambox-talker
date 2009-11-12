@@ -57,9 +57,8 @@ Talker.Scroller = function() {
   
   self.onJoin =
   self.onLeave =
-  self.onMessageReceived = 
-  self.onInsertion = // also called when an image is loaded
-  self.onAfterMessageReceived = function(event) {
+  self.onLineInsertion =
+  self.onMessageInsertion = function(event) {
     self.scrollToBottom();
   }
   

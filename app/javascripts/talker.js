@@ -32,9 +32,7 @@ Talker.insertMessage = function(event, content) {
                            attr('time', event.time).
                            html(content));
 
-  Talker.trigger('Insertion');
-  Talker.trigger('AfterMessageReceived');
-  Talker.trigger('Resize');
+  Talker.trigger('MessageInsertion');
 }
 
 Talker.insertLine = function(event, content) {
@@ -44,9 +42,8 @@ Talker.insertLine = function(event, content) {
       .append($('<p/>').attr('time', event.time).html(h(content))));
 
   element.appendTo('#log');
-  Talker.trigger('Insertion');
-  Talker.trigger('AfterMessageReceived');
-  Talker.trigger('Resize');
+  
+  Talker.trigger('MessageInsertion');
 }
 
 Talker.getLastRow = function() {

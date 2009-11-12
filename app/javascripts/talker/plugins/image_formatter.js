@@ -14,7 +14,6 @@ Talker.ImageFormatter = function() {
     if (image_match){
       var fallback = $('<a/>').attr('href', image_match[0]).attr('target', '_blank').html(image_match[0]);
       Talker.insertMessage(event, fallback);
-      Talker.trigger('Insertion', event);
       
       var img = $('<img/>').load(function(){
         $(this).remove();
@@ -28,7 +27,7 @@ Talker.ImageFormatter = function() {
             + '</a>'
         );
         
-        Talker.trigger('Insertion', event);
+        Talker.trigger('MessageInsertion', event);
       });
     
       $('#talker_image_preloading_div').append(

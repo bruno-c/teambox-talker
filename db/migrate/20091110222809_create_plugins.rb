@@ -154,7 +154,7 @@ eos
     p.author_id = User.talker.id
     p.shared = true
     p.source = <<-eos
-plugin.onAfterMessageReceived = function(event){
+plugin.onMessageInsertion = function(event){
   var last_insertion = Talker.getLastRow();
   var twitter_status_expression = /https*:\\/\\/twitter.com\\/\\w+\\/status\\/(\\d+)/i;
   var last_anchor = last_insertion.find('a');
@@ -243,7 +243,7 @@ plugin.emoticons.push(new plugin.Emoticon([':S', ':-S'],              "/images/i
 plugin.emoticons.push(new plugin.Emoticon([':O', ':-O'],              "/images/icons/smiley-eek.png",     "shocked"));
 plugin.emoticons.push(new plugin.Emoticon([':P', ':-P'],              "/images/icons/smiley-razz.png",    "razz"));
 
-plugin.onAfterMessageReceived = function(event){
+plugin.onMessageInsertion = function(event){
   _.each(plugin.emoticons, function(emoticon){
     var element = Talker.getLastRow().find('p:last').get(0);
     emoticon.findAndReplace(element);
