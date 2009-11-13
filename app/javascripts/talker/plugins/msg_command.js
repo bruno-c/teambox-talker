@@ -2,11 +2,11 @@ Talker.MsgCommand = function() {
   var self = this;
   
   self.command = 'msg';
-  self.usage = '/msg "username" This is your message.';
+  self.usage = '/msg username This is your message. \n /msg @username This is your message';
   
   self.onCommand = function(event) {
     if (event.command == "msg") {
-      var userName = event.args[0];
+      var userName = event.args[0].replace('@', '');
       var user = _.detect(Talker.users, function(user) { return user.name == userName });
       
       if (user == null) throw new CommandError("Unknown user: " + userName);
