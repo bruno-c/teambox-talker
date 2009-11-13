@@ -64,7 +64,7 @@ module Talker
     def object_parsed(message)
       case message["type"]
       when "connected"
-        trigger :connected
+        trigger :connected, User.new(message["user"])
       when "error"
         if @on_error
           @on_error.call(message["message"])
