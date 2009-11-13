@@ -7,14 +7,14 @@ Talker.UsernameAutocompleter = function(){
     var caret_position = $('#msgbox').getCaretPosition();
     
     if (caret_position > 0 && $('#msgbox').val().substring(caret_position - 1, caret_position) == '@'){
-      if (e.which == 9){
+      if (e.which == 9) { // tab
         var user = self.nextUserName();
         $('#msgbox').insertAtCaret(user);
         $('#msgbox').setCaretPosition(caret_position, caret_position + user.length + 1)
         e.preventDefault();
       }
       
-      if (e.which == 32) {
+      if (e.which == 32) { // space
         $('#msgbox').insertAtCaret($('#msgbox').getSelectedText() + ' ');
         e.preventDefault();
       }

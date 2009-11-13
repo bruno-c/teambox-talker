@@ -5,14 +5,14 @@ Talker.CommandAutocompleter = function(){
   
   $('#msgbox').keydown(function(e){
     if ($('#msgbox').getCaretPosition() == 1 && $('#msgbox').val().substring(0, 1) == '/'){
-      if (e.which == 9){
+      if (e.which == 9) { // tab
         var command = self.nextCommand();
         $('#msgbox').insertAtCaret(command);
         $('#msgbox').setCaretPosition(1, command.length + 1)
         e.preventDefault();
       }
       
-      if (e.which == 32) {
+      if (e.which == 32) { // space
         $('#msgbox').insertAtCaret($('#msgbox').getSelectedText() + ' ');
         e.preventDefault();
       }
