@@ -85,7 +85,7 @@ eos
     p.save
 
     p = Plugin.new
-    p.name = 'User Leave Notifications'
+    p.name = 'Leave & Join Notifications'
     p.description = "Provides Growl notifications of users leaving the room when Talker is behind other windows.  Only works with Fluid and Prism."
     p.author_id = User.talker.id
     p.shared = true
@@ -96,23 +96,6 @@ plugin.onLoaded = function() {
       event.content = "has left the room.";
       Talker.notify(event);
     }
-  }
-
-  plugin.onFocus = function() {
-    plugin.onLeave = function() {  }
-  }
-}
-eos
-    p.save
-
-    p = Plugin.new
-    p.name = 'User Join Notifications'
-    p.description = "Provides Growl notifications of users joining the room when Talker is behind other windows.  Only works with Fluid and Prism."
-    p.author_id = User.talker.id
-    p.shared = true
-    p.source = <<-eos
-plugin.onLoaded = function() {
-  plugin.onBlur = function() {
     plugin.onJoin = function(event) {
       event.content = "has entered the room.";
       Talker.notify(event);
@@ -120,10 +103,13 @@ plugin.onLoaded = function() {
   }
 
   plugin.onFocus = function() {
+    plugin.onLeave = function() {  }
     plugin.onJoin = function() {  }
   }
 }
 eos
+    p.save
+
     p.save
     p = Plugin.new
     p.name = 'Title Message Count'
@@ -180,25 +166,16 @@ plugin.onMessageInsertion = function(event){
 }
 eos
      p.save
-   
-     p = Plugin.new
-     p.name = 'User Leave'
-     p.description = "Shows who leaves the room in the log."
-     p.author_id = User.talker.id
-     p.shared = true
-     p.source = <<-eos
-plugin.onLeave = function(event) {
-  Talker.insertLine(event, h(event.user.name) + ' has left the room');
-}
-eos
-      p.save
 
       p = Plugin.new
-      p.name = 'User Join'
-      p.description = "Shows who leaves the room in the log."
+      p.name = 'Leave & Join'
+      p.description = "Shows who leaves and joins the room in the log."
       p.author_id = User.talker.id
       p.shared = true
       p.source = <<-eos
+plugin.onLeave = function(event) {
+  Talker.insertLine(event, h(event.user.name) + ' has left the room');
+}
 plugin.onJoin = function(event) {
   Talker.insertLine(event, h(event.user.name) + ' has entered the room');
 }
