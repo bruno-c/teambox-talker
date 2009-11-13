@@ -6,7 +6,7 @@ Talker.CommandAutocompleter = function(){
   $('#msgbox').keydown(function(e){
     if ($('#msgbox').getCaretPosition() == 1 && $('#msgbox').val().substring(0, 1) == '/'){
       if (e.which == 9) { // tab
-        var command = self.nextCommand();
+        var command = self.nextCommand(e.shiftKey); // shift key reverses cycling
         $('#msgbox').insertAtCaret(command);
         $('#msgbox').setCaretPosition(1, command.length + 1)
         e.preventDefault();
@@ -19,8 +19,10 @@ Talker.CommandAutocompleter = function(){
     }
   });
   
-  self.nextCommand = function() {
+  self.nextCommand = function(reverse) {
     var commands = Talker.getCommands();
+    
+    commands = (reverse ? commands.reverse() : commands);
     
     if (self.current_cycle_command == null || _.indexOf(commands, self.current_cycle_command) == commands.length - 1) {
       return self.current_cycle_command = commands[0];

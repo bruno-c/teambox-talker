@@ -8,7 +8,7 @@ Talker.UsernameAutocompleter = function(){
     
     if (caret_position > 0 && $('#msgbox').val().substring(caret_position - 1, caret_position) == '@'){
       if (e.which == 9) { // tab
-        var user = self.nextUserName();
+        var user = self.nextUserName(e.shiftKey); // shift key reverses cycling
         $('#msgbox').insertAtCaret(user);
         $('#msgbox').setCaretPosition(caret_position, caret_position + user.length + 1)
         e.preventDefault();
@@ -21,10 +21,12 @@ Talker.UsernameAutocompleter = function(){
     }
   });
   
-  self.nextUserName = function() {
+  self.nextUserName = function(reverse) {
     var users = _.reject(Talker.getRoomUsernames(), function(user) {
       return user == Talker.currentUser.name;
     });
+    
+    users = (reverse ? users.reverse() : users );
     
     if (self.current_cycle_username == null || _.indexOf(users, self.current_cycle_username) == users.length - 1) {
       return self.current_cycle_username = users[0];
