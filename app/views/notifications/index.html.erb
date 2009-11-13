@@ -11,12 +11,11 @@
   <% @notifications.each do |notification| %>
     <tr>
       <td>
-        <% if notification.failed? %>
-          <%= image_tag "icons/feed--exclamation.png", :title => h(notification.last_error) %>
-        <% else %>
-          <%= image_tag "icons/feed.png" %>
-        <% end %>
+        <%= image_tag "icons/feed.png" %>
         <%= link_to truncate(h(notification.url), :length => 60), notification.url, :title => h(notification.url) %>
+        <% if notification.failed? %>
+          <span class="error">Error: <%=h notification.last_error %> <%= link_to "(?)", "http://en.wikipedia.org/wiki/List_of_HTTP_status_codes" %></span>
+        <% end %>
       </td>
       <td><%= image_tag "icons/arrow.png", :class => "to", :title => "Send to room" %></td>
       <td><%=h notification.room.name %></td>
