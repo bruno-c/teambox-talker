@@ -92,3 +92,9 @@ Talker.getRoomName = function() {
 Talker.getRoomUsers = function() {
   return Talker.users;
 }
+
+Talker.getRoomUsernames = function() {
+  return _.map(Talker.getRoomUsers(), function(user) {
+    return user.name;
+  })
+}

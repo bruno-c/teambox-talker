@@ -27,11 +27,5 @@ Talker.CommandAutocompleter = function(){
     } else {
       return self.current_cycle_command = commands[_.indexOf(commands, self.current_cycle_command) + 1];
     }
-  }
-  
-  self.selectionIsCommand = function() {
-    return _.any(Talker.getCommands(), function(command) {
-      return $('#msgbox').getSelection();
-    });
-  }
+  };
 }
