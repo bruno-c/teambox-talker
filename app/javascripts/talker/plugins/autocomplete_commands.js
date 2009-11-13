@@ -1,4 +1,4 @@
-Talker.Autocompleter = function(){
+Talker.CommandAutocompleter = function(){
   var self = this;
   
   self.current_cycle_command = null;
