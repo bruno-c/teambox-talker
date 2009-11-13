@@ -13,6 +13,7 @@ module Talker
     def post_init
       @parser = Yajl::Parser.new
       @parser.on_parse_complete = method(:message_parsed)
+      @encoder = Yajl::Encoder.new
       
       @room = @user = @subscription = nil
     end
@@ -64,7 +65,7 @@ module Talker
             @subscription = @room.subscribe(@user) { |message| send_data message }
             
             # Tell the user he's connected
-            send_data %({"type":"connected"}\n)
+            send_event :type => "connected", :user => @user.info
             
             # Broadcast presence
             @room.publish_presence "join", @user
@@ -95,10 +96,10 @@ module Talker
         @server.paster.paste(@user.token, content) do |truncated_content, paste|
           obj["content"] = truncated_content
           obj["paste"] = paste if paste
-          send_message obj, to
+          publish_message obj, to
         end
       else
-        send_message obj, to
+        publish_message obj, to
       end
     end
     
@@ -114,7 +115,7 @@ module Talker
     
     def error(message)
       Talker.logger.debug {"#{to_s}>>>error: #{message}"}
-      send_data(%Q|{"type":"error","message":"#{message}"}\n|)
+      send_event :type => "error", :message => message
       close
     end
     
@@ -146,7 +147,11 @@ module Talker
         raise ProtocolError, "Not connected to a room" unless @room
       end
       
-      def send_message(event, to=nil)
+      def send_event(event)
+        send_data @encoder.encode(event) + "\n" 
+      end
+      
+      def publish_message(event, to=nil)
         if to
           event["private"] = true
           @room.publish event, to.to_i
