@@ -12,6 +12,6 @@ Talker.notify = function(event) {
   }
 };
 
-Talker.send = function(message) {
-  return Talker.trigger("MessageSend", {type:"message", message});
+Talker.sendMessage = function(message) {
+  return Talker.trigger("MessageSend", {type:"message", content: message});
 };

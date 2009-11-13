@@ -22,7 +22,7 @@ $(function() {
       onComplete: function(file, response) {
         alert("Upload done!");
         console.info(response);
-        Talker.send(response.url);
+        Talker.sendMessage(response.url);
       }
     });
   }
