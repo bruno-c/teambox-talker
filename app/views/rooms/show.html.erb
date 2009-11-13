@@ -30,6 +30,7 @@
       Talker.plugins.push(new Talker.UserList($('#people'))); // sidebar updating of users.
       Talker.plugins.push(new Talker.Timestamp());// << depends on order to be included properly.  I say it should remain mandatory for usability reasons.
       Talker.plugins.push(new Talker.MsgCommand($('#msgbox'))); // will always be loaded...
+      Talker.plugins.push(new Talker.Autocompleter($('#msgbox'))); // will always be loaded...
       
       // formatters to provide basic functionalities.
       Talker.plugins.push(new Talker.YoutubeFormatter());

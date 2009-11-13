@@ -78,7 +78,7 @@ Talker.getCommands = function() {
   return _.pluck(
     _.select(Talker.plugins, function(plugin) { return plugin.command }),
     'command'
-  );
+  ).sort();
 }
 
 Talker.getRoom = function() {
