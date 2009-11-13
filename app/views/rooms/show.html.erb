@@ -97,7 +97,8 @@
     </div>
     <div class="footer">
       <%= link_to "Edit", room_path(@room), :title => "Edit room name &amp; description", :id => "edit" if admin? %>
-      <%= link_to "Chat Logs", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %>
+      <%= link_to "Upload a file", room_attachments_path(@room), :title => "Upload a file", :id => "upload" %>
+      <%= link_to "Chat logs", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %>
     </div>
   </div>
   <div id="edit_room" class="edit panel" style="display:none">

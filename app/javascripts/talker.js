@@ -10,4 +10,8 @@ Talker.notify = function(event) {
       description: h(event.user.name) + ": " + event.content
     });
   }
-}
+};
+
+Talker.send = function(message) {
+  return Talker.trigger("MessageSend", {type:"message", message});
+};

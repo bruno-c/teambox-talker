@@ -2,6 +2,7 @@ class Room < ActiveRecord::Base
   has_many :events
   has_many :connections
   has_many :users, :through => :connections
+  has_many :attachments, :class_name => "::Attachment" # FIX class w/ Paperclip::Attachment
   belongs_to :account
   
   validates_presence_of :name

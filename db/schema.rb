@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091110214425) do
+ActiveRecord::Schema.define(:version => 20091112202405) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -18,6 +18,17 @@ ActiveRecord::Schema.define(:version => 20091110214425) do
   end
 
   add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true
+
+  create_table "attachments", :force => true do |t|
+    t.integer  "room_id"
+    t.integer  "user_id"
+    t.string   "data_file_name"
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.datetime "data_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "connections", :force => true do |t|
     t.integer  "room_id"

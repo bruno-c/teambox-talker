@@ -13,4 +13,18 @@ $(function() {
       return false;
     });
   
+  // File Upload
+  if ($("#room")[0]) {
+    new AjaxUpload('upload', {
+      action: $("#upload").attr("href"),
+      name: "data",
+      responseType: "json",
+      onComplete: function(file, response) {
+        alert("Upload done!");
+        console.info(response);
+        Talker.send(response.url);
+      }
+    });
+  }
+  
 });
