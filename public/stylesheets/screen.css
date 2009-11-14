@@ -844,6 +844,7 @@ div.panel {
           -moz-border-radius: 3px;
           -webkit-border-radius: 3px; }
           #sidebar #room div.header h3 span.switch_rooms #rooms a {
+            min-width: 80px;
             margin: 0 0 1px;
             font-size: 12px;
             display: block;
