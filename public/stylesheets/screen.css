@@ -233,6 +233,8 @@ html[xmlns] .clearfix {
         position: relative;
         top: 3px; }
 
+#content {
+  padding: 40px 0 0; }
 
 #main {
   margin: 0 240px 0 0;
@@ -253,6 +255,9 @@ html[xmlns] .clearfix {
   float: right;
   width: 195px;
   padding: 37px 37px 37px 0; }
+
+body#rooms_controller.show #content {
+  padding: 0; }
 
 #accounts_controller.new #content {
   padding-top: 0; }
