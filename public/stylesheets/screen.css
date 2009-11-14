@@ -913,6 +913,11 @@ div.info {
 table#notifications {
   width: 100%;
   margin: 10px 0; }
+  table#notifications span.error {
+    font-size: 12px;
+    color: #7f0000; }
+    table#notifications span.error a {
+      color: inherit; }
   table#notifications img.to {
     position: relative;
     top: 3px;

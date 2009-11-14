@@ -4,7 +4,16 @@ EM.describe "A user that connects to a room" do
   it "should be connected" do
     connect do |client|
       client.on_connected do
-        connected = true
+        done
+      end
+    end
+  end
+
+  it "should receive user info" do
+    connect do |client|
+      client.on_connected do |user|
+        user.id.should == 1
+        user.name.should == "user1"
         done
       end
     end

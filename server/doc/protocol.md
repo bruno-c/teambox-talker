@@ -16,7 +16,7 @@ Attributes:
 
 If the authentication is successful, the connection is left open and the server replies with:
 
-    {"type":"connected"}
+    {"type":"connected","user":{"id":"unique id","name":"user name"}}
 
 The client must wait for this event before sending any message or else an error will be returned and connection will be closed.
 

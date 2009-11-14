@@ -12,7 +12,7 @@ module ModelFactory
   end
   
   def hash_for_event(attributes={})
-    { :message => '...', :room => Room.first, :user => User.first, :type => "message" }.merge(attributes)
+    { :content => '...', :room => Room.first, :type => "message" }.merge(attributes)
   end
   
   def hash_for_paste(attributes={})

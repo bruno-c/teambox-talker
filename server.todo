@@ -1,4 +1,6 @@
 Talker Server:
+- Fix Notifier hanging and add failsafe or wathing process
+- Implement simple syntax for formatting messages (Markdown + special paste)
 - Create a paste when message sent from API
 - renaming a user
 - Handle incoming malformed events (in logger especially)
@@ -7,7 +9,6 @@ Talker Server:
 - Use whycats Bundler to manage gems
 
 Chef:
-✓ Setup proxy_pass in Nginx for /avatar/...
 - Only allow connections to Orbited from talkerapp.com (see chef/roles/web.rb:40)
 - Setup emergency_mailer, see http://pauldowman.com/2008/02/17/smtp-mail-from-ec2-web-server-setup/
 - Tweaks mysql recipe (use the one from opscode?); using too much mem
