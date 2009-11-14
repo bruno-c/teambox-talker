@@ -3,6 +3,6 @@
 - larger editable area in the form.
 - documentation
 ✓ discoverability of commands for autocomplete
-- show installed plugins in a different color than non installed plugins.
+✓ show installed plugins in a different color than non installed plugins.
 ✓ fix tests for plugin installations
 ✓ ensure that Rooms >> show.html.erb has the list of enabled plugins.

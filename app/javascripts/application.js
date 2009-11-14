@@ -22,5 +22,9 @@ $(function() {
     $(this).find('span.switch_rooms').toggleClass('hide_rooms').toggleClass('show_rooms');
   })
   
+  if ($.browser.safari){
+    $('#rooms_controller.show input.search').css('width', '100%')
+  }
+  
 });
 

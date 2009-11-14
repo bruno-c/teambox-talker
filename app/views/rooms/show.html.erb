@@ -69,6 +69,7 @@
 <% end %>
 
 <% content_for :sidebar do %>
+  <div id="error" class="flash error" style="display:none"></div>
 
   <div id="room" class="panel">
     <div class="header">
@@ -83,31 +84,33 @@
           </div>
         </span>
       </h3>
-      <small><%=h @room.description %></small>
     </div>
     <div class="content">
-      <%= render :partial => "logs/search_form" %>
-    </div>
-    <div class="footer">
-      <%= link_to "Room Log", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %>
-    </div>
-  </div>
-
-  <div id="whos_here" class="panel">
-    <div class="header">
-      <h3 class="name">Who&#39;s here?</h3>
-    </div>
-    <div class="content">
+      <p><%=h @room.description %></p>
+      <h4>Who's here?</h4>
       <ul class="people" id="people"></ul>
     </div>
     <div class="footer">
+      <%= link_to "Room Log", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %>
       <%= link_to "My Settings", settings_path, :title => "Manage my settings", :accesskey => "m" %>
       <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
   </div>
 
-  <div id="error" class="flash error" style="display:none"></div>
+  <%= render :partial => "logs/search_form" %>
 
+  
+  <div id="admin" class="panel">
+    <div class="header">
+      <h3 class="name">Administration</h3>
+    </div>
+    <div class="footer">
+      <%= link_to "Users", users_path, :title => "Users", :accesskey => "u" %>
+      <%= link_to "Rooms", rooms_path, :title => "Rooms", :accesskey => "r" %>
+      <%= link_to "Plugins", plugins_path, :title => "Plugins", :accesskey => "p" %>
+      <%= link_to "Notifications", notifications_path, :title => "Notifications", :accesskey => "n" %>
+    </div>
+  </div>
 <% end %>
 
 <div id="top_mask">

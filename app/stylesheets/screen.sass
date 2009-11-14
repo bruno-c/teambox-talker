@@ -687,7 +687,7 @@ a.button, button
 
 // Panel
 div.panel
-  margin: 0 0 20px
+  margin: 0 0 10px
   +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
   div
     &.header
@@ -783,111 +783,131 @@ div.panel
         +font_size("xxlarge")
 
 // Room Sidebar
-#sidebar
-  z-index: 100
-  #room
-    .description
-      line-height: 14px
+#rooms_controller.show
+  #sidebar
+    #room_expander
+      position: relative
+      top: 3px
+    padding: 37px 20px 37px 0
+    z-index: 100
+    input
       +font_size("small")
-    div
-      &.header
-        position: relative
-        h3
-          cursor: pointer
-          span.switch_rooms
-            position: relative
-            top: 5px
-            background = !grey * 0.15 + !dark_grey * 0.85
-            display: inline-block
-            height: 20px
-            width: 20px
-            +rounded_corners("all", 3)
-            &.show_rooms
-              b
-                border-bottom = 5px "solid" !white
-                border-top: none
-            &.hide_rooms
-              b
-                border-bottom: none
-                border-top = 5px "solid" !white
-            b
+      height: 16px
+      width: 170px
+      padding: 4px 2px 0 21px
+      +rounded_corners("all", 2)
+      border: none
+      background-image: url('../../images/icons/magnifier.png')
+      background-repeat: no-repeat
+      background-position: 2px center
+      border = 1px "solid" !light_grey
+    #room
+      .description
+        line-height: 14px
+        +font_size("small")
+      div
+        &.header
+          position: relative
+          h3
+            cursor: pointer
+            span.switch_rooms
               position: relative
-              top: 7px
-              left: 5px
-              display: block
-              height: 0
-              width: 0
-              border: 5px solid transparent
-            #rooms
-              display: none
-              position: absolute
-              right: 0
-              top: 21px
-              padding: 3px 3px 2px
-              background = !grey * 0.5 + !dark_grey * 0.5
+              top: 5px
+              background = !grey * 0.15 + !dark_grey * 0.85
+              display: inline-block
+              height: 20px
+              width: 20px
               +rounded_corners("all", 3)
-              a
-                min-width: 80px
-                margin: 0 0 1px
-                font-size: 12px
+              &.show_rooms
+                b
+                  border-bottom = 5px "solid" !white
+                  border-top: none
+              &.hide_rooms
+                b
+                  border-bottom: none
+                  border-top = 5px "solid" !white
+              b
+                position: relative
+                top: 7px
+                left: 5px
                 display: block
-                padding: 5px
-                line-height: 1
-                background = !white
-                color = !accent_colour * 0.75 + !black * 0.25
-                white-space: nowrap
-                text-decoration: none
-                +rounded_corners("all", 2)
-                &:hover
-                  background = !light_grey * 0.1 + !white * 0.9
-            &:hover
-              span.switch_rooms
+                height: 0
+                width: 0
+                border: 5px solid transparent
+              #rooms
+                display: none
+                position: absolute
+                right: 0
+                top: 21px
+                padding: 3px 3px 2px
                 background = !grey * 0.5 + !dark_grey * 0.5
-      &.content
-        form
-          margin: 0
-          p
-            padding: 0
-            margin: 0
-            line-height: normal
-            input
+                +rounded_corners("all", 3)
+                a
+                  min-width: 80px
+                  margin: 0 0 1px
+                  font-size: 12px
+                  display: block
+                  padding: 5px
+                  line-height: 1
+                  background = !white
+                  color = !accent_colour * 0.75 + !black * 0.25
+                  white-space: nowrap
+                  text-decoration: none
+                  +rounded_corners("all", 2)
+                  &:hover
+                    background = !light_grey * 0.1 + !white * 0.9
+              &:hover
+                span.switch_rooms
+                  background = !grey * 0.5 + !dark_grey * 0.5
+        &.content
+          ul.people
+            margin: 0 0 -5px
+            overflow: hidden
+            li
+              display: block
+              float: left
+              margin: 0 5px 5px 0
+              padding: 2px 5px
+              background = !light_grey * 0.15 + !white * 0.85
+              +rounded_corners("all", 3)
               +font_size("small")
-              height: 16px
-              width: 151px
-              padding: 4px 2px 0 21px
-              +rounded_corners("all", 2)
-              border: none
-              background-image: url('../../images/icons/magnifier.png')
-              background-repeat: no-repeat
-              background-position: 2px center
-              border = 1px "solid" !light_grey
+              img
+                height: 16px
+                width: 16px
+                position: relative
+                top: 3px
+          form
+            margin: 0
+            p
+              padding: 0
+              margin: 0
+              line-height: normal
+    #edit_room
+      input, textarea
+        font: inherit
+        line-height: normal
+      textarea
+        width: 90%
+    #whos_here
+      div
+        &.content
+          ul.people
+            margin: 0 0 -5px
+            overflow: hidden
+            li
+              display: block
+              float: left
+              margin: 0 5px 5px 0
+              padding: 2px 5px
+              background = !light_grey * 0.15 + !white * 0.85
+              +rounded_corners("all", 3)
+              +font_size("small")
+              img
+                height: 16px
+                width: 16px
+                position: relative
+                top: 3px
 
-  #edit_room
-    input, textarea
-      font: inherit
-      line-height: normal
-    textarea
-      width: 90%
-  #whos_here
-    div
-      &.content
-        ul.people
-          margin: 0 0 -5px
-          overflow: hidden
-          li
-            display: block
-            float: left
-            margin: 0 5px 5px 0
-            padding: 2px 5px
-            background = !light_grey * 0.15 + !white * 0.85
-            +rounded_corners("all", 3)
-            +font_size("small")
-            img
-              height: 16px
-              width: 16px
-              position: relative
-              top: 3px
-        
 
 
 #footer
