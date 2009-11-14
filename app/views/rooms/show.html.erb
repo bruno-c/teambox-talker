@@ -91,7 +91,7 @@
         <span class="switch_rooms">
           <b><!----></b>
           <div id="rooms">
-            <% @rooms.each do |room| %>
+            <% @rooms.reject{ |room| room == @room }.each do |room| %>
               <%= link_to room.name, room_path(room), :title => "#{room.name} : #{room.description}" %>
             <% end %>
           </div>
