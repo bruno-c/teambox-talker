@@ -807,55 +807,59 @@ div.panel {
     font-size: 12px; }
   #sidebar #room div.header {
     position: relative; }
-    #sidebar #room div.header h3 span.switch_rooms {
-      position: relative;
-      top: 5px;
-      background: #494949;
-      display: inline-block;
-      height: 20px;
-      width: 20px;
-      border-radius: 3px;
-      -moz-border-radius: 3px;
-      -webkit-border-radius: 3px; }
-      #sidebar #room div.header h3 span.switch_rooms b {
+    #sidebar #room div.header h3 {
+      cursor: pointer; }
+      #sidebar #room div.header h3 span.switch_rooms {
         position: relative;
-        top: 7px;
-        left: 5px;
-        display: block;
-        height: 0;
-        width: 0;
-        border: 5px solid transparent;
-        border-top: 5px solid white;
-        border-bottom: none; }
-        #sidebar #room div.header h3 span.switch_rooms b.show_lobbies {
-          border-bottom: 5px solid white;
-          border-top: none; }
-      #sidebar #room div.header h3 span.switch_rooms #rooms {
-        position: absolute;
-        right: 0;
-        top: 21px;
-        padding: 3px 3px 2px;
-        background: #606060;
+        top: 5px;
+        background: #494949;
+        display: inline-block;
+        height: 20px;
+        width: 20px;
         border-radius: 3px;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px; }
-        #sidebar #room div.header h3 span.switch_rooms #rooms a {
-          margin: 0 0 1px;
-          font-size: 12px;
+        #sidebar #room div.header h3 span.switch_rooms.show_rooms b {
+          border-bottom: 5px solid white;
+          border-top: none; }
+        #sidebar #room div.header h3 span.switch_rooms.hide_rooms b {
+          border-bottom: none;
+          border-top: 5px solid white; }
+        #sidebar #room div.header h3 span.switch_rooms b {
+          position: relative;
+          top: 7px;
+          left: 5px;
           display: block;
-          padding: 5px;
-          line-height: 1;
-          background: white;
-          color: #1c76a0;
-          white-space: nowrap;
-          text-decoration: none;
-          border-radius: 2px;
-          -moz-border-radius: 2px;
-          -webkit-border-radius: 2px; }
-          #sidebar #room div.header h3 span.switch_rooms #rooms a:hover {
-            background: #f8f8f8; }
-      #sidebar #room div.header h3 span.switch_rooms:hover span.switch_rooms {
-        background: #606060; }
+          height: 0;
+          width: 0;
+          border: 5px solid transparent; }
+        #sidebar #room div.header h3 span.switch_rooms #rooms {
+          display: none;
+          position: absolute;
+          right: 0;
+          top: 21px;
+          padding: 3px 3px 2px;
+          background: #606060;
+          border-radius: 3px;
+          -moz-border-radius: 3px;
+          -webkit-border-radius: 3px; }
+          #sidebar #room div.header h3 span.switch_rooms #rooms a {
+            margin: 0 0 1px;
+            font-size: 12px;
+            display: block;
+            padding: 5px;
+            line-height: 1;
+            background: white;
+            color: #1c76a0;
+            white-space: nowrap;
+            text-decoration: none;
+            border-radius: 2px;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px; }
+            #sidebar #room div.header h3 span.switch_rooms #rooms a:hover {
+              background: #f8f8f8; }
+        #sidebar #room div.header h3 span.switch_rooms:hover span.switch_rooms {
+          background: #606060; }
   #sidebar #room div.content form {
     margin: 0; }
     #sidebar #room div.content form p {

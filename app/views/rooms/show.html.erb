@@ -86,9 +86,9 @@
 
   <div id="room" class="panel">
     <div class="header">
-      <h3 class="name">
+      <h3 class="name" id="room_name">
         <%=h @room.name %>
-        <span class="switch_rooms">
+        <span class="switch_rooms hide_rooms">
           <b><!----></b>
           <div id="rooms">
             <% @rooms.reject{ |room| room == @room }.each do |room| %>

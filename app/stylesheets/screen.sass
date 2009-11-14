@@ -736,6 +736,7 @@ div.panel
       &.header
         position: relative
         h3
+          cursor: pointer
           span.switch_rooms
             position: relative
             top: 5px
@@ -744,6 +745,14 @@ div.panel
             height: 20px
             width: 20px
             +rounded_corners("all", 3)
+            &.show_rooms
+              b
+                border-bottom = 5px "solid" !white
+                border-top: none
+            &.hide_rooms
+              b
+                border-bottom: none
+                border-top = 5px "solid" !white
             b
               position: relative
               top: 7px
@@ -752,12 +761,8 @@ div.panel
               height: 0
               width: 0
               border: 5px solid transparent
-              border-top = 5px "solid" !white
-              border-bottom: none
-              &.show_lobbies
-                border-bottom = 5px "solid" !white
-                border-top: none
             #rooms
+              display: none
               position: absolute
               right: 0
               top: 21px
