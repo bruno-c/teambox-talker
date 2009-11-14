@@ -194,7 +194,7 @@ body#rooms_controller.show
     padding-top: 0
 
 // Rooms
-#rooms, #plugins
+#rooms
   overflow: hidden
   li
     display: block
@@ -202,9 +202,10 @@ body#rooms_controller.show
     margin: 0 10px 10px 0
     float: left
     div.panel
+      margin: 0
       div
         &.content
-          min-height: 90px
+          min-height: 80px
           p
             &.description
               +font_size("small")
@@ -216,6 +217,52 @@ body#rooms_controller.show
                 width: 16px
                 position: relative
                 top: 3px
+
+// Plugins
+#plugins
+  overflow: hidden
+  &>div
+    margin: 0 0 20px
+    li
+      display: block
+      margin: 0 10px 10px 0
+      div.panel
+        margin: 0
+        div
+          &.header
+            h3
+              font-size: 14px
+              font-weight: bold
+            span.author
+              float: right
+              font-size: 12px
+              color = !light_grey
+              img
+                position: relative
+                top: 3px
+          &.content
+            p
+              &.description
+                +font_size("small")
+              &.people
+                label
+                  color = !grey
+                img
+                  height: 16px
+                  width: 16px
+                  position: relative
+                  top: 3px
+      &.enabled
+        +opacity(100)
+        div.panel
+          div.header
+            background = !accent_colour * 0.75 + !black * 0.25
+            span.author
+              color = !white
+      &.disabled
+        +opacity(50)
+      &:hover
+        +opacity(100)
 
 // Form Elements
 form
@@ -669,7 +716,10 @@ div.panel
         color = !white
         +font_size("xlarge")
         a
+          text-decoration: none
           color: inherit
+          &:hover
+            text-decoration: underline
       small
         display: block
         color = !light_grey
@@ -696,13 +746,11 @@ div.panel
       +rounded_corners("bottom", 3)
       border-top = 2px solid !light_grey * 0.2 + !white * 0.8
       background = !light_grey * 0.1 + !white * 0.9
+      overflow: hidden
       a
         margin-left: 4px
-      .buttons
-        float: left
-        position: relative
-        .plugin_enable_flag
-          float: left
+      span.actions
+        float: right
   .tag
     +font_size("small")
     :background-color = !alt_colour

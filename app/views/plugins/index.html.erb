@@ -3,71 +3,75 @@
 <h2>Plugins</h2>
 
 <div id="plugins">
-  <h3>My Plugins</h3>
-  
-  <% if @plugins.empty? %>
-    You have not authored any plugins yet but you can <%= link_to "create one now", new_plugin_path, :title => "create a plugin" %>.
-  <% end %>
-  <% @plugins.each_with_index do |plugin, i| %>
-    <% content_tag_for :li, plugin do %>
-      <div class="panel">
-        <div class="header">
-          <h3><%= link_to h(plugin.name), plugin, :accesskey => i+1 %></h3>
-        </div>
-    
-        <div class="content">
-          <% if plugin.description %>
-            <p class="description">
-              <%=h plugin.description %>
-            </p>
-          <% end %>
-        </div>
-  
-        <div class="footer">
-          <span class="buttons">
-            <span id="enable_<%= dom_id(plugin) %>" class="plugin_enable_flag">
-              <%= install_plugin(plugin) %>
-            </span>
-            <span id="edit_<%= dom_id(plugin) %>" class="plugin_enable_flag">
-              <%= link_to "Edit", edit_plugin_path(plugin) %>
-            </span>
-          </span>
-          <%= image_tag avatar_url(plugin.author), :alt => h(plugin.author.name) %> <%= h plugin.author.name %>
-        </div>
-      </div>
+
+  <div id="my_plugins">
+    <h3>My Plugins</h3>
+    <% if @plugins.empty? %>
+      You have not authored any plugins yet but you can <%= link_to "create one now", new_plugin_path, :title => "create a plugin" %>.
     <% end %>
-  <% end %>
-  
-  <br style="clear:both"/>
-  
-  <h3>Shared Plugins</h3>
-  
-  <% @shared.each_with_index do |plugin, i| %>
-    <% content_tag_for :li, plugin do %>
-      <div class="panel">
-        <div class="header">
-          <h3><%= link_to h(plugin.name), plugin, :accesskey => i+1 %></h3>
-        </div>
-    
-        <div class="content">
-          <% if plugin.description %>
-            <p class="description">
-              <%=h plugin.description %>
-            </p>
-          <% end %>
-        </div>
-  
-        <div class="footer">
-          <span class="buttons">
-            <span id="enable_<%= dom_id(plugin) %>" class="plugin_enable_flag">
-              <%= install_plugin(plugin) %>
+    <% @plugins.each_with_index do |plugin, i| %>
+      <% content_tag_for :li, plugin do %>
+        <div class="panel">
+          <div class="header">
+            <span class="actions">
+              <span id="enable_<%= dom_id(plugin) %>" class="plugin_enable_flag">
+                <%= install_plugin(plugin) %>
+              </span>
+              <span id="edit_<%= dom_id(plugin) %>" class="plugin_enable_flag">
+                <%= link_to "Edit", edit_plugin_path(plugin) %>
+              </span>
             </span>
-          </span>
-          <%= image_tag avatar_url(plugin.author), :alt => h(plugin.author.name) %> <%= h plugin.author.name %>
+            <h3><%= link_to h(plugin.name), plugin, :accesskey => i+1 %></h3>
+          </div>
+
+          <div class="content">
+            <% if plugin.description %>
+              <p class="description">
+                <%=h plugin.description %>
+              </p>
+            <% end %>
+          </div>
+
+          <div class="footer">
+            <%= image_tag avatar_url(plugin.author), :alt => h(plugin.author.name) %> <%= h plugin.author.name %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
+  
+  <div id="shared_plugins">
+    <h3>Shared Plugins</h3>
+    <% @shared.each_with_index do |plugin, i| %>
+      <li id="<%= dom_id(plugin) %>" class="<%= plugin.installed?(@current_account) ? 'enabled' : 'disabled' %>">
+        <div class="panel">
+          <div class="header">
+            <span class="author">
+              <%= image_tag avatar_url(plugin.author), :alt => h(plugin.author.name) %> <%= h plugin.author.name %>
+            </span>
+            <h3><%= link_to h(plugin.name), plugin, :accesskey => i+1 %></h3>
+          </div>
+
+          <div class="content">
+            <% if plugin.description %>
+              <p class="description">
+                <%=h plugin.description %>
+              </p>
+            <% end %>
+          </div>
+
+          <div class="footer">
+            <span class="actions">
+              <span id="enable_<%= dom_id(plugin) %>" class="plugin_enable_flag">
+                <%= install_plugin(plugin) %>
+              </span>
+            </span>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </div>
+
 </div>
 
 <% content_for :sidebar do %>

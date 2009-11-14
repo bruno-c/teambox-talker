@@ -4,6 +4,8 @@ class InstallationsController < ApplicationController
   def create
     @installation = current_account.plugin_installations.create!(:plugin_id => params[:plugin_id])
     @plugin = @installation.plugin
+    
+    render :toggle
   end
 
   def destroy
@@ -11,5 +13,6 @@ class InstallationsController < ApplicationController
     @plugin = @installation.plugin
     
     @installation.destroy
+    render :toggle
   end
 end

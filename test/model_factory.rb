@@ -23,6 +23,10 @@ module ModelFactory
     { :url => "http://github.com/feeds/macournoyer/commits/orange/master", :room => Room.first }.merge(attributes)
   end
   
+  def hash_for_plugin(attributes={})
+    { :name => "My Name", :description => "My Description", :source => "plugin.onLoad = function(){ alert('hello world') }" }
+  end
+  
   # Simulates model creation methods based on has_for_<model_name>:
   #   create_<model_name>:  will instantiate w/ attributes and call save
   #   create_<model_name>!: will instantiate w/ attributes and call save!

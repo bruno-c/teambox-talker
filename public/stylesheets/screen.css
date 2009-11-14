@@ -262,24 +262,71 @@ body#rooms_controller.show #content {
 #accounts_controller.new #content {
   padding-top: 0; }
 
-#rooms, #plugins {
+#rooms {
   overflow: hidden; }
-  #rooms li, #plugins li {
+  #rooms li {
     display: block;
     width: 280px;
     margin: 0 10px 10px 0;
     float: left; }
-    #rooms li div.panel div.content, #plugins li div.panel div.content {
-      min-height: 90px; }
-      #rooms li div.panel div.content p.description, #plugins li div.panel div.content p.description {
-        font-size: 12px; }
-      #rooms li div.panel div.content p.people label, #plugins li div.panel div.content p.people label {
-        color: gray; }
-      #rooms li div.panel div.content p.people img, #plugins li div.panel div.content p.people img {
-        height: 16px;
-        width: 16px;
-        position: relative;
-        top: 3px; }
+    #rooms li div.panel {
+      margin: 0; }
+      #rooms li div.panel div.content {
+        min-height: 80px; }
+        #rooms li div.panel div.content p.description {
+          font-size: 12px; }
+        #rooms li div.panel div.content p.people label {
+          color: gray; }
+        #rooms li div.panel div.content p.people img {
+          height: 16px;
+          width: 16px;
+          position: relative;
+          top: 3px; }
+
+#plugins {
+  overflow: hidden; }
+  #plugins>div {
+    margin: 0 0 20px; }
+    #plugins>div li {
+      display: block;
+      margin: 0 10px 10px 0; }
+      #plugins>div li div.panel {
+        margin: 0; }
+        #plugins>div li div.panel div.header h3 {
+          font-size: 14px;
+          font-weight: bold; }
+        #plugins>div li div.panel div.header span.author {
+          float: right;
+          font-size: 12px;
+          color: silver; }
+          #plugins>div li div.panel div.header span.author img {
+            position: relative;
+            top: 3px; }
+        #plugins>div li div.panel div.content p.description {
+          font-size: 12px; }
+        #plugins>div li div.panel div.content p.people label {
+          color: gray; }
+        #plugins>div li div.panel div.content p.people img {
+          height: 16px;
+          width: 16px;
+          position: relative;
+          top: 3px; }
+      #plugins>div li.enabled {
+        filter: alpha(opacity=100);
+        opacity: 1;
+        -moz-opacity: 1; }
+        #plugins>div li.enabled div.panel div.header {
+          background: #1c76a0; }
+          #plugins>div li.enabled div.panel div.header span.author {
+            color: white; }
+      #plugins>div li.disabled {
+        filter: alpha(opacity=50);
+        opacity: 0.5;
+        -moz-opacity: 0.5; }
+      #plugins>div li:hover {
+        filter: alpha(opacity=100);
+        opacity: 1;
+        -moz-opacity: 1; }
 
 form p {
   line-height: 28px;
@@ -743,7 +790,10 @@ div.panel {
       color: white;
       font-size: 18px; }
       div.panel div.header h3 a {
+        text-decoration: none;
         color: inherit; }
+        div.panel div.header h3 a:hover {
+          text-decoration: underline; }
     div.panel div.header small {
       display: block;
       color: silver;
@@ -774,14 +824,12 @@ div.panel {
     -moz-border-radius-bottomleft: 3px;
     -webkit-border-bottom-left-radius: 3px;
     border-top: 2px solid #f2f2f2;
-    background: #f8f8f8; }
+    background: #f8f8f8;
+    overflow: hidden; }
     div.panel div.footer a {
       margin-left: 4px; }
-    div.panel div.footer .buttons {
-      float: left;
-      position: relative; }
-      div.panel div.footer .buttons .plugin_enable_flag {
-        float: left; }
+    div.panel div.footer span.actions {
+      float: right; }
   div.panel .tag {
     font-size: 12px;
     background-color: #e5952b;
