@@ -1,7 +1,7 @@
 function focusMsgBox() {
   var msgbox = $('#msgbox')[0];
   if (msgbox){
-    setCaretTo(msgbox, msgbox.value.length);
+    $('#msgbox').setCaretPosition(msgbox.value.length);
     msgbox.focus();
     return true;
   }
