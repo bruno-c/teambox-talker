@@ -96,21 +96,22 @@
       <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
   </div>
-
-  <%= render :partial => "logs/search_form" %>
-
   
-  <div id="admin" class="panel">
-    <div class="header">
-      <h3 class="name">Administration</h3>
+  <% if admin? %>
+    <div id="admin" class="panel">
+      <div class="header">
+        <h3 class="name">Administration</h3>
+      </div>
+      <div class="footer">
+        <%= link_to "Users", users_path, :title => "Users", :accesskey => "u" %>
+        <%= link_to "Rooms", rooms_path, :title => "Rooms", :accesskey => "r" %>
+        <%= link_to "Plugins", plugins_path, :title => "Plugins", :accesskey => "p" %>
+        <%= link_to "Notifications", notifications_path, :title => "Notifications", :accesskey => "n" %>
+      </div>
     </div>
-    <div class="footer">
-      <%= link_to "Users", users_path, :title => "Users", :accesskey => "u" %>
-      <%= link_to "Rooms", rooms_path, :title => "Rooms", :accesskey => "r" %>
-      <%= link_to "Plugins", plugins_path, :title => "Plugins", :accesskey => "p" %>
-      <%= link_to "Notifications", notifications_path, :title => "Notifications", :accesskey => "n" %>
-    </div>
-  </div>
+  <% end %>
+  
+  <%= render :partial => "logs/search_form" %>
 <% end %>
 
 <div id="top_mask">
