@@ -9,6 +9,7 @@ class RoomsController < ApplicationController
   end
 
   def show
+    @rooms = current_account.rooms
     @events = @room.events.recent.reverse
     render :layout => "room"
   end

@@ -233,8 +233,6 @@ html[xmlns] .clearfix {
         position: relative;
         top: 3px; }
 
-#content {
-  padding: 40px 0 0 0; }
 
 #main {
   margin: 0 240px 0 0;
@@ -489,15 +487,15 @@ a.button, button {
 
 #top_mask {
   position: fixed;
-  z-index: 5;
-  top: 0;
+  z-index: 99;
+  top: -40px;
   left: 0;
   height: 80px;
   overflow: hidden;
   width: 100%;
   margin: 0 240px 0 0; }
   #top_mask div.fade {
-    z-index: 4;
+    z-index: 98;
     height: 40px;
     background: #e5e5e5;
     box-shadow: 0px 20px 20px #e5e5e5;
@@ -807,34 +805,99 @@ div.panel {
   #sidebar #room .description {
     line-height: 14px;
     font-size: 12px; }
-  #sidebar #room div.header .actions {
-    margin-top: 4px; }
-  #sidebar #room div.header a.leave {
-    background-image: url('../../images/icons/door.png');
-    background-repeat: no-repeat;
-    background-position: 3px center;
-    padding: 0 5px 0 21px; }
-  #sidebar #room div.content ul.people {
-    margin: 0 0 -5px; }
-    #sidebar #room div.content ul.people li {
+  #sidebar #room div.header {
+    position: relative; }
+    #sidebar #room div.header h3 span.switch_rooms {
+      position: relative;
+      top: 5px;
+      background: #494949;
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px; }
+      #sidebar #room div.header h3 span.switch_rooms b {
+        position: relative;
+        top: 7px;
+        left: 5px;
+        display: block;
+        height: 0;
+        width: 0;
+        border: 5px solid transparent;
+        border-top: 5px solid white;
+        border-bottom: none; }
+        #sidebar #room div.header h3 span.switch_rooms b.show_lobbies {
+          border-bottom: 5px solid white;
+          border-top: none; }
+      #sidebar #room div.header h3 span.switch_rooms #rooms {
+        position: absolute;
+        right: 0;
+        top: 21px;
+        padding: 3px 3px 2px;
+        background: #606060;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px; }
+        #sidebar #room div.header h3 span.switch_rooms #rooms a {
+          margin: 0 0 1px;
+          font-size: 12px;
+          display: block;
+          padding: 5px;
+          line-height: 1;
+          background: white;
+          color: #1c76a0;
+          white-space: nowrap;
+          text-decoration: none;
+          border-radius: 2px;
+          -moz-border-radius: 2px;
+          -webkit-border-radius: 2px; }
+          #sidebar #room div.header h3 span.switch_rooms #rooms a:hover {
+            background: #f8f8f8; }
+      #sidebar #room div.header h3 span.switch_rooms:hover span.switch_rooms {
+        background: #606060; }
+  #sidebar #room div.content form {
+    margin: 0; }
+    #sidebar #room div.content form p {
+      padding: 0;
+      margin: 0;
+      line-height: normal; }
+      #sidebar #room div.content form p input {
+        font-size: 12px;
+        height: 16px;
+        width: 151px;
+        padding: 4px 2px 0 21px;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border: none;
+        background-image: url('../../images/icons/magnifier.png');
+        background-repeat: no-repeat;
+        background-position: 2px center;
+        border: 1px solid silver; }
+  #sidebar #edit_room input, #sidebar #edit_room textarea {
+    font: inherit;
+    line-height: normal; }
+  #sidebar #edit_room textarea {
+    width: 90%; }
+  #sidebar #whos_here div.content ul.people {
+    margin: 0 0 -5px;
+    overflow: hidden; }
+    #sidebar #whos_here div.content ul.people li {
       display: block;
-      margin: 0 0 5px;
+      float: left;
+      margin: 0 5px 5px 0;
       padding: 2px 5px;
       background: #f4f4f4;
       border-radius: 3px;
       -moz-border-radius: 3px;
       -webkit-border-radius: 3px;
       font-size: 12px; }
-      #sidebar #room div.content ul.people li img {
+      #sidebar #whos_here div.content ul.people li img {
         height: 16px;
         width: 16px;
         position: relative;
         top: 3px; }
-  #sidebar #edit_room input, #sidebar #edit_room textarea {
-    font: inherit;
-    line-height: normal; }
-  #sidebar #edit_room textarea {
-    width: 90%; }
 
 #footer {
   margin: 30px 0 10px 0;
