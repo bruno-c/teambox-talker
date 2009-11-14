@@ -8,17 +8,19 @@ ActionController::Routing::Routes.draw do |map|
   map.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
   
   map.connect "/ouch", :controller => "rooms", :action => "ouch"
+  map.public_room "/r/:token", :controller => "rooms", :action => "show"
   
   map.resources :users
   map.resources :invites, :member => { :resend => :post }
   map.resource :account
   map.resource :session
   map.resource :settings
-  map.resources :rooms, :has_many => :messages
+  map.resources :rooms, :has_many => :messages, :member => { :open => :post, :close => :post }
   map.resources :pastes
   map.resources :notifications
   map.resource :admin, :controller => "admin"
-
+  
+  
   map.connect "/avatar/:id.jpg", :controller => "avatars", :action => "show"
   
   map.reset_password "/passwords/reset/:token", :controller => "passwords", :action => "show", :token => nil, :conditions => { :method => :get }

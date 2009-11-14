@@ -1,5 +1,5 @@
 Talker Server:
-- Fix Notifier hanging and add failsafe or wathing process
+- Restart rake worker on each deploy
 - Implement simple syntax for formatting messages (Markdown + special paste)
 - Create a paste when message sent from API
 - renaming a user

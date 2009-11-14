@@ -7,6 +7,17 @@ class Room < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :account_id
   
+  def create_public_token!
+    self.public_token = ActiveSupport::SecureRandom.hex(10)
+    save(false)
+    public_token
+  end
+  
+  def clear_public_token!
+    self.public_token = nil
+    save(false)
+  end
+  
   def to_json(options = {})
     super(options.merge(:only => [:name, :id]))
   end

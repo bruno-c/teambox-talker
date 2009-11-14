@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   
   # Token used to authenticate the user in Talker server
   def create_talker_token
-    self.talker_token = ActiveSupport::SecureRandom.hex(10)
+    self.talker_token = ActiveSupport::SecureRandom.hex(20)
     self
   end
   
