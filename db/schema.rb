@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091110214425) do
+ActiveRecord::Schema.define(:version => 20091113222506) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -18,6 +18,17 @@ ActiveRecord::Schema.define(:version => 20091110214425) do
   end
 
   add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true
+
+  create_table "attachments", :force => true do |t|
+    t.integer  "room_id"
+    t.integer  "user_id"
+    t.string   "data_file_name"
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.datetime "data_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "connections", :force => true do |t|
     t.integer  "room_id"
@@ -41,13 +52,12 @@ ActiveRecord::Schema.define(:version => 20091110214425) do
   end
 
   create_table "events", :force => true do |t|
-    t.integer  "user_id"
     t.integer  "room_id"
-    t.text     "message"
-    t.string   "type",            :limit => 15
+    t.text     "content"
+    t.string   "type",       :limit => 15
     t.datetime "created_at"
-    t.string   "paste_permalink"
     t.datetime "updated_at"
+    t.text     "payload"
   end
 
   create_table "notifications", :force => true do |t|
@@ -72,6 +82,24 @@ ActiveRecord::Schema.define(:version => 20091110214425) do
     t.text     "content"
     t.string   "permalink"
     t.string   "syntax"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "plugin_installations", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "plugin_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "plugins", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.text     "source"
+    t.integer  "author_id"
+    t.integer  "account_id"
+    t.boolean  "shared",      :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
