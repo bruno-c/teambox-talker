@@ -1,5 +1,6 @@
 Talker Server:
 - Fix Notifier hanging and add failsafe or wathing process
+- Implement simple syntax for formatting messages (Markdown + special paste)
 - Create a paste when message sent from API
 - renaming a user
 - Handle incoming malformed events (in logger especially)
