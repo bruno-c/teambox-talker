@@ -48,9 +48,9 @@ module Talker
       private
         def insert_event(event)
           room_id = @name.to_i
-          type = event["type"]
-          content = event["content"]
-          time = event["time"] || Time.now.utc.to_i
+          type = event["type"].to_s
+          content = event["content"].to_s
+          time = (event["time"] || Time.now.utc).to_i
           payload = @encoder.encode(event)
           
           sql = "INSERT INTO events (room_id, type, content, payload, created_at, updated_at) " +
