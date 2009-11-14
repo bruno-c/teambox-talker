@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091110222809) do
+ActiveRecord::Schema.define(:version => 20091113222506) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -41,13 +41,12 @@ ActiveRecord::Schema.define(:version => 20091110222809) do
   end
 
   create_table "events", :force => true do |t|
-    t.integer  "user_id"
     t.integer  "room_id"
-    t.text     "message"
-    t.string   "type",            :limit => 15
+    t.text     "content"
+    t.string   "type",       :limit => 15
     t.datetime "created_at"
-    t.string   "paste_permalink"
     t.datetime "updated_at"
+    t.text     "payload"
   end
 
   create_table "notifications", :force => true do |t|

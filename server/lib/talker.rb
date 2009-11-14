@@ -13,6 +13,7 @@ module Talker
 
   autoload :Client, "talker/client"
   autoload :Connection, "talker/connection"
+  autoload :Escaping, "talker/escaping"
   autoload :EventChannel, "talker/event_channel"
   
   module Logger

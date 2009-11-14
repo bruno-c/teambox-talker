@@ -15,4 +15,12 @@ $(function() {
     });
     $('#invitees').focus(); 
   }, 10);
+  
+  
+  $('#room_name').click(function() {
+    $('#rooms').toggle();
+    $(this).find('span.switch_rooms').toggleClass('hide_rooms').toggleClass('show_rooms');
+  })
+  
 });
+

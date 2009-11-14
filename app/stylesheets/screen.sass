@@ -167,7 +167,7 @@ html[xmlns] .clearfix
 
 // Layout
 #content
-  padding: 40px 0 0 0
+  padding: 40px 0 0
 #main
   margin: 0 240px 0 0
   padding: 40px
@@ -184,6 +184,9 @@ html[xmlns] .clearfix
   float: right
   width: 195px
   padding: 37px 37px 37px 0
+body#rooms_controller.show
+  #content
+    padding: 0
 
 // Page specific layout fixes
 #accounts_controller.new
@@ -414,15 +417,15 @@ a.button, button
 // Chat Log
 #top_mask
   position: fixed
-  z-index: 5
-  top: 0
+  z-index: 99
+  top: -40px
   left: 0
   height: 80px
   overflow: hidden
   width: 100%
   margin: 0 240px 0 0
   div.fade
-    z-index: 4
+    z-index: 98
     height: 40px
     background = !black * 0.1 + !white * 0.9
     +box_shadow(0, 20, 20, !black * 0.1 + !white * 0.9)
@@ -740,19 +743,93 @@ div.panel
       +font_size("small")
     div
       &.header
-        .actions
-          margin-top: 4px
-        a.leave
-          background-image: url('../../images/icons/door.png')
-          background-repeat: no-repeat
-          background-position: 3px center
-          padding: 0 5px 0 21px
+        position: relative
+        h3
+          cursor: pointer
+          span.switch_rooms
+            position: relative
+            top: 5px
+            background = !grey * 0.15 + !dark_grey * 0.85
+            display: inline-block
+            height: 20px
+            width: 20px
+            +rounded_corners("all", 3)
+            &.show_rooms
+              b
+                border-bottom = 5px "solid" !white
+                border-top: none
+            &.hide_rooms
+              b
+                border-bottom: none
+                border-top = 5px "solid" !white
+            b
+              position: relative
+              top: 7px
+              left: 5px
+              display: block
+              height: 0
+              width: 0
+              border: 5px solid transparent
+            #rooms
+              display: none
+              position: absolute
+              right: 0
+              top: 21px
+              padding: 3px 3px 2px
+              background = !grey * 0.5 + !dark_grey * 0.5
+              +rounded_corners("all", 3)
+              a
+                min-width: 80px
+                margin: 0 0 1px
+                font-size: 12px
+                display: block
+                padding: 5px
+                line-height: 1
+                background = !white
+                color = !accent_colour * 0.75 + !black * 0.25
+                white-space: nowrap
+                text-decoration: none
+                +rounded_corners("all", 2)
+                &:hover
+                  background = !light_grey * 0.1 + !white * 0.9
+            &:hover
+              span.switch_rooms
+                background = !grey * 0.5 + !dark_grey * 0.5
+      &.content
+        form
+          margin: 0
+          p
+            padding: 0
+            margin: 0
+            line-height: normal
+            input
+              +font_size("small")
+              height: 16px
+              width: 151px
+              padding: 4px 2px 0 21px
+              +rounded_corners("all", 2)
+              border: none
+              background-image: url('../../images/icons/magnifier.png')
+              background-repeat: no-repeat
+              background-position: 2px center
+              border = 1px "solid" !light_grey
+
+  #edit_room
+    input, textarea
+      font: inherit
+      line-height: normal
+    textarea
+      width: 90%
+  #whos_here
+    div
       &.content
         ul.people
           margin: 0 0 -5px
+          overflow: hidden
           li
             display: block
-            margin: 0 0 5px
+            float: left
+            margin: 0 5px 5px 0
             padding: 2px 5px
             background = !light_grey * 0.15 + !white * 0.85
             +rounded_corners("all", 3)
@@ -762,12 +839,8 @@ div.panel
               width: 16px
               position: relative
               top: 3px
-  #edit_room
-    input, textarea
-      font: inherit
-      line-height: normal
-    textarea
-      width: 90%
+        
+
 
 #footer
   margin: 30px 0 10px 0
