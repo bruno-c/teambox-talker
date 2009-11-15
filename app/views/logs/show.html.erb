@@ -15,13 +15,12 @@
       Talker.plugins.push(new Talker.YoutubeFormatter());
       Talker.plugins.push(new Talker.PasteFormatter());
       Talker.plugins.push(new Talker.ImageFormatter());
-      Talker.plugins.push(new Talker.EmoticonsFormatter());
       
       Talker.plugins.push(new Talker.LogsUserList($('#people')));
       
       Talker.plugins.push(new Talker.DefaultFormatter());
       
-      <%= render_events @events %>
+      <%= render_events_for_logs @events %>
     });
   //]]>
   </script>
