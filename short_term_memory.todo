@@ -1,4 +1,4 @@
 - regexp search and replace of dom element text
-- larger editable area in the form.
+✓ larger editable area in the form.
 - documentation
 - fix logs so that they can load with shit loads of events.
