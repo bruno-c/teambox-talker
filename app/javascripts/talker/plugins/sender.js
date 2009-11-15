@@ -1,12 +1,10 @@
 Talker.Sender = function(msgbox) {
   var self = this;
   
-  self.msgbox = msgbox;
-  
   self.onMessageSend = function(event) {
-    if (self.msgbox.val().indexOf("/") == 0) {
+    if (event.content.indexOf("/") == 0) {
       try {
-        var args = shellwords(self.msgbox.val().substr(1));
+        var args = shellwords(event.content.substr(1));
         Talker.trigger("Command", {type: "command", command: args[0], args: args.slice(1)});
       } catch (e) {
         if (e.name == "ParseError" || e.name == "CommandError") {
@@ -18,8 +16,11 @@ Talker.Sender = function(msgbox) {
       return;
     }
     
-    Talker.client.send({content: self.msgbox.val(), type: 'message'});
-    self.msgbox.val('');
+    Talker.client.send({content: event.content, type: 'message'});
+    
+    // Clear message box only if message sent was from it
+    if (msgbox.val() === event.content)
+      msgbox.val('');
     
     Talker.trigger("MessageSent", event);
   }

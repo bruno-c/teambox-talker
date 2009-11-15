@@ -11,9 +11,11 @@ class AttachmentsController < ApplicationController
     @attachment.user = current_user
     
     if @attachment.save
-      render :json => { :url => room_attachment_path(@room, @attachment, :format => @attachment.ext) }, :status => :created
+      @data = { :url => room_attachment_url(@room, @attachment, :format => @attachment.ext) }
+      render :layout => false, :status => :created
     else
-      render :json => { :errors => @attachment.errors }, :status => :unprocessable_entity
+      @data = { :error => @attachment.errors }
+      render :layout => false, :status => :unprocessable_entity
     end
   end
   

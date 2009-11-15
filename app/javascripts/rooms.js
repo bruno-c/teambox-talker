@@ -19,12 +19,13 @@ $(function() {
       action: $("#upload").attr("href"),
       closeConnection: "/close_connection",
       name: "data",
-      // responseType: "json",
-      responseType: false,
+      responseType: "json",
       onComplete: function(file, response) {
-        alert("Upload done!");
-        console.info(response);
-        // Talker.sendMessage(response.url);
+        if (response.error) {
+          alert("Error uploading file: " + response.error);
+        } else {
+          Talker.sendMessage(response.url);
+        }
       }
     });
   }
