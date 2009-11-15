@@ -20,7 +20,13 @@ $(function() {
       closeConnection: "/close_connection",
       name: "data",
       responseType: "json",
+      onSubmit: function() {
+        $("#upload").hide();
+        $("#upload_loader").show();
+      },
       onComplete: function(file, response) {
+        $("#upload").show();
+        $("#upload_loader").hide();
         if (response.error) {
           alert("Error uploading file: " + response.error);
         } else {

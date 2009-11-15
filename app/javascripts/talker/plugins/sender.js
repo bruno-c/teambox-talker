@@ -2,6 +2,8 @@ Talker.Sender = function(msgbox) {
   var self = this;
   
   self.onMessageSend = function(event) {
+    if (!event.content) return;
+    
     if (event.content.indexOf("/") == 0) {
       try {
         var args = shellwords(event.content.substr(1));

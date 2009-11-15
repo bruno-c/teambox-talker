@@ -116,6 +116,7 @@
     </div>
     <div class="footer">
       <%= link_to "Upload a file", room_attachments_path(@room), :title => "Upload a file", :id => "upload" %>
+      <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
       <%= link_to "My Settings", settings_path, :title => "Manage my settings", :accesskey => "m" %>
       <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
