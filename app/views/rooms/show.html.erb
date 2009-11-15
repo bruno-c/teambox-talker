@@ -5,7 +5,7 @@
   //<![CDATA[
     Talker.currentUser = <%= current_user.to_json %>;
     Talker.room = <%= @room.to_json %>;
-    
+
     Orbited.settings.hostname = '<%= request.host %>';
     Orbited.settings.port = <%= Orbited.port %>;
     Orbited.settings.protocol = '<%= request.ssl? ? "https" : "http" %>'
@@ -83,39 +83,45 @@
 <% end %>
 
 <% content_for :sidebar do %>
+
   <div id="room" class="panel">
     <div class="header">
-      <span class="actions">
-        <%= link_to "Leave", rooms_path, :title => "Leave this room", :id => "leave", :class => "leave" %>
-      </span>
-      <h3 class="name"><%=h @room.name %></h3>
+      <h3 class="name" id="room_name">
+        <%=h @room.name %>
+        <span class="switch_rooms hide_rooms">
+          <b><!----></b>
+          <div id="rooms">
+            <% @rooms.reject{ |room| room == @room }.each do |room| %>
+              <%= link_to room.name, room_path(room), :title => "#{room.name} : #{room.description}" %>
+            <% end %>
+          </div>
+        </span>
+      </h3>
+      <small><%=h @room.description %></small>
     </div>
     <div class="content">
-      <p class="description"><%=h @room.description %></p>
-      <h4>Who&#39;s here?</h4>
+      <%= render :partial => "logs/search_form" %>
+    </div>
+    <div class="footer">
+      <%= link_to "Room Log", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %>
+    </div>
+  </div>
+
+  <div id="whos_here" class="panel">
+    <div class="header">
+      <h3 class="name">Who&#39;s here?</h3>
+    </div>
+    <div class="content">
       <ul class="people" id="people"></ul>
     </div>
     <div class="footer">
-      <%= link_to "Edit", room_path(@room), :title => "Edit room name &amp; description", :id => "edit" if admin? %>
-      <%= link_to "Upload a file", room_attachments_path(@room), :title => "Upload a file", :id => "upload" %>
-      <%= link_to "Chat logs", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %>
+      <%= link_to "My Settings", settings_path, :title => "Manage my settings", :accesskey => "m" %>
+      <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
   </div>
-  <div id="edit_room" class="edit panel" style="display:none">
-    <% form_for @room do |f| %>
-      <div class="errors" style="display:none"></div>
-      <div class="header">
-        <h3><%= f.text_field :name, :size => 15 %></h3>
-      </div>
-      <div class="content">
-        <p class="description"><%= f.text_area :description, :rows => 6 %></p>
-      </div>
-      <div class="footer">
-        <%= buttons "Save", :class => "small" %>
-      </div>
-    <% end %>
-  </div>
+
   <div id="error" class="flash error" style="display:none"></div>
+
 <% end %>
 
 <div id="top_mask">
