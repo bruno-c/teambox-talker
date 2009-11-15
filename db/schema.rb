@@ -22,10 +22,10 @@ ActiveRecord::Schema.define(:version => 20091113222506) do
   create_table "attachments", :force => true do |t|
     t.integer  "room_id"
     t.integer  "user_id"
-    t.string   "data_file_name"
-    t.string   "data_content_type"
-    t.integer  "data_file_size"
-    t.datetime "data_updated_at"
+    t.string   "upload_file_name"
+    t.string   "upload_content_type"
+    t.integer  "upload_file_size"
+    t.datetime "upload_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -82,6 +82,24 @@ ActiveRecord::Schema.define(:version => 20091113222506) do
     t.text     "content"
     t.string   "permalink"
     t.string   "syntax"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "plugin_installations", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "plugin_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "plugins", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.text     "source"
+    t.integer  "author_id"
+    t.integer  "account_id"
+    t.boolean  "shared",      :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

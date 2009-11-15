@@ -3,10 +3,10 @@ class CreateAttachments < ActiveRecord::Migration
     create_table :attachments do |t|
       t.belongs_to :room
       t.belongs_to :user
-      t.string   :data_file_name
-      t.string   :data_content_type
-      t.integer  :data_file_size
-      t.datetime :data_updated_at
+      t.string   :upload_file_name
+      t.string   :upload_content_type
+      t.integer  :upload_file_size
+      t.datetime :upload_updated_at
             
       t.timestamps
     end

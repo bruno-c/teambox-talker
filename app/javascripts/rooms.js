@@ -18,7 +18,7 @@ $(function() {
     new AjaxUpload('upload', {
       action: $("#upload").attr("href"),
       closeConnection: "/close_connection",
-      name: "data",
+      name: "upload",
       responseType: "json",
       onSubmit: function() {
         $("#upload").hide();

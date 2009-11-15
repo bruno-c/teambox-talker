@@ -18,18 +18,16 @@ class AttachmentsControllerTest < ActionController::TestCase
     Attachment.any_instance.expects(:id).returns(1)
     Attachment.any_instance.expects(:ext).returns("jpg")
     
-    post :create, :room_id => @room, :data => nil
+    post :create, :room_id => @room, :upload => nil
     assert_response :created, @response.body
-    json = ActiveSupport::JSON.decode(@response.body)
-    assert_match %r{/rooms/\d+/attachments/1.jpg}, json["url"]
+    assert_match %r{/rooms/\d+/attachments/1.jpg}, @response.body
   end
 
   def test_create_fail
     Attachment.any_instance.expects(:save).returns(false)
     
-    post :create, :room_id => @room, :data => nil
+    post :create, :room_id => @room, :upload => nil
     assert_response :unprocessable_entity, @response.body
-    json = ActiveSupport::JSON.decode(@response.body)
-    assert_not_nil json["errors"]
+    assert_match "error", @response.body
   end
 end

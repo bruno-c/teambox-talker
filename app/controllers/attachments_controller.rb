@@ -7,14 +7,14 @@ class AttachmentsController < ApplicationController
   end
   
   def create
-    @attachment = @room.attachments.build(:data => params[:data])
+    @attachment = @room.attachments.build(:upload => params[:upload])
     @attachment.user = current_user
     
     if @attachment.save
       @data = { :url => room_attachment_url(@room, @attachment, :format => @attachment.ext) }
       render :layout => false, :status => :created
     else
-      @data = { :error => @attachment.errors }
+      @data = { :error => @attachment.errors.full_messages.to_sentence }
       render :layout => false, :status => :unprocessable_entity
     end
   end
