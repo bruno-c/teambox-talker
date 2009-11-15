@@ -12,6 +12,10 @@ class PluginsController < ApplicationController
     @plugin = current_account.plugins.new
   end
 
+  def show
+    @plugin = Plugin.shared.find_by_id(params[:id]) || current_account.plugins.find_by_id(params[:id])
+  end
+
   def edit
     @plugin = current_account.plugins.find(params[:id])
   end
