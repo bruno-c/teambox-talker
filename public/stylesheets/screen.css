@@ -330,7 +330,8 @@ body#rooms_controller.show #content {
 
 #plugins_controller.show pre {
   padding: 20px 20px 0 20px;
-  background: white; }
+  background: white;
+  overflow: auto; }
 
 form p {
   line-height: 28px;

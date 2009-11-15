@@ -27,6 +27,7 @@
           <span class="actions">
             <span id="enable_<%= dom_id(@plugin) %>" class="plugin_enable_flag">
               <%= link_to "Edit", edit_plugin_path(@plugin) if current_account.plugins.include?(@plugin) %>
+              <%= install_plugin(@plugin) %>
             </span>
           </span>
         </div>
