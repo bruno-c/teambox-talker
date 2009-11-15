@@ -17,12 +17,14 @@ $(function() {
   if ($("#room")[0]) {
     new AjaxUpload('upload', {
       action: $("#upload").attr("href"),
+      closeConnection: "/close_connection",
       name: "data",
-      responseType: "json",
+      // responseType: "json",
+      responseType: false,
       onComplete: function(file, response) {
         alert("Upload done!");
         console.info(response);
-        Talker.sendMessage(response.url);
+        // Talker.sendMessage(response.url);
       }
     });
   }

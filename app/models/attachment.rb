@@ -5,7 +5,8 @@ class Attachment < ActiveRecord::Base
   has_attached_file :data, :storage => :s3,
                            :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
                            :s3_permissions => "authenticated-read",
-                           :s3_protocol => "https"
+                           :s3_protocol => "https",
+                           :path => "attachments/:id/:style/:filename"
   
   def ext
     File.extname(data.original_filename).gsub(/^\.+/, "") if data.original_filename

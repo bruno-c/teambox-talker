@@ -20,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :admin, :controller => "admin"
 
   map.connect "/avatar/:id.jpg", :controller => "avatars", :action => "show"
+  map.connect "/close_connection", :controller => "attachments", :action => "close_connection"
   
   map.reset_password "/passwords/reset/:token", :controller => "passwords", :action => "show", :token => nil, :conditions => { :method => :get }
   map.resource :password

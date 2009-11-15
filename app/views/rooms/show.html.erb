@@ -5,7 +5,7 @@
   //<![CDATA[
     Talker.currentUser = <%= current_user.to_json %>;
     Talker.room = <%= @room.to_json %>;
-
+    
     Orbited.settings.hostname = '<%= request.host %>';
     Orbited.settings.port = <%= Orbited.port %>;
     Orbited.settings.protocol = '<%= request.ssl? ? "https" : "http" %>'

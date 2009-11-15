@@ -1,6 +1,6 @@
 class AttachmentsController < ApplicationController
   before_filter :login_required
-  before_filter :find_room
+  before_filter :find_room, :except => :close_connection
   
   def show
     redirect_to @room.attachments.find(params[:id]).url
@@ -15,6 +15,11 @@ class AttachmentsController < ApplicationController
     else
       render :json => { :errors => @attachment.errors }, :status => :unprocessable_entity
     end
+  end
+  
+  # Fixes Safari hanging problem with Ajax upload
+  def close_connection
+    head "Connection" => "close"
   end
   
   private
