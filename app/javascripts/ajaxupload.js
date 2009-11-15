@@ -564,7 +564,7 @@ AjaxUpload.prototype = {
 				toDeleteFlag = true;
 				
 				// Fix IE mixed content issue
-				iframe.src = "javascript:'<html></html>';";		 								
+				//iframe.src = "javascript:'<html></html>';";		 								
 			});
 	
 		} else {
