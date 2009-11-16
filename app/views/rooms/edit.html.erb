@@ -1,10 +1,10 @@
 <div class="sheet">
-  <h2><%= @title = "New room" %></h2>
+  <h2><%=h @title = "Edit #{@room.name}" %></h2>
 
   <% form_for @room, :html => { :class => "lw120" } do |f| %>
     <%= render f %>
     <p class="indent submit">
-      <%= buttons "Create", :cancel_to => rooms_path %>
+      <%= buttons "Update", :cancel_to => rooms_path %>
     </p>
   <% end %>
 </div>

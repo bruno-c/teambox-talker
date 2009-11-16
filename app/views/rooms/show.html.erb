@@ -79,10 +79,10 @@
         <span class="switch_rooms hide_rooms">
           <b><!----></b>
           <div id="rooms">
-            <% @rooms.each do |room| %>
-              <%= link_to h(room.name), room_path(room), :title => "#{room.name} : #{room.description}", :class => ("current" if room == @room) %>
+            <% @rooms.each_with_index do |room, i| %>
+              <%= link_to h(room.name), room_path(room), :title => "#{room.name} : #{room.description}", :class => ("current" if room == @room), :accesskey => i+1 %>
             <% end %>
-            <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back" %>
+            <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back", :accesskey => "r" %>
           </div>
         </span>
       </h3>
