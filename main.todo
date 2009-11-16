@@ -1,5 +1,5 @@
 Blocking bugs:
-- logs JS error
+- logs JS error [GH] 1
 
 Functionalities:
 - Delete Rooms
@@ -8,10 +8,11 @@ Functionalities:
 - /clear
 - /invite
 - /me
+- /help
 
 Documentation:
-- Room /help + help link
-- Plugin API (50%)
+- Room help link
+- Plugin API (50%) [GH] 2
 - REST API
 
 Exclusive must haves:
