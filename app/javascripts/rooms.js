@@ -14,7 +14,7 @@ $(function() {
     });
   
   // File Upload
-  if ($("#room")[0]) {
+  if ($("#room #upload")[0]) {
     new AjaxUpload('upload', {
       action: $("#upload").attr("href"),
       closeConnection: "/close_connection",
