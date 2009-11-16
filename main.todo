@@ -4,7 +4,7 @@ Functionalities:
 - lock down rooms
 ✓ /clear
 ✓ /me
-- /invite
+✓ /invite
 - /help
 
 Documentation:
