@@ -19,7 +19,7 @@ module ModelFactory
     { :content => "...", :user => User.first }.merge(attributes)
   end
   
-  def hash_for_notification(attributes={})
+  def hash_for_feed(attributes={})
     { :url => "http://github.com/feeds/macournoyer/commits/orange/master", :room => Room.first }.merge(attributes)
   end
   

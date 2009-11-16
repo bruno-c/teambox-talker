@@ -1,0 +1,35 @@
+<div class="sheet">
+  <h2><%= @title = "Feeds" %></h2>
+  
+  <div class="info">
+    You can send a notification to a room each time a feed is updated.
+    Simply add the URL to the Atom or RSS feed and specify to which room the
+    notification should go.
+  </div>
+  
+  <table id="feeds">
+  <% @feeds.each do |feed| %>
+    <tr>
+      <td>
+        <%= image_tag "icons/feed.png" %>
+        <%= link_to truncate(h(feed.url), :length => 60), feed.url, :title => h(feed.url) %>
+        <% if feed.failed? %>
+          <span class="error">Error: <%=h feed.last_error %> <%= link_to "(?)", "http://en.wikipedia.org/wiki/List_of_HTTP_status_codes" %></span>
+        <% end %>
+      </td>
+      <td><%= image_tag "icons/arrow.png", :class => "to", :title => "Send to room" %></td>
+      <td><%=h feed.room.name %></td>
+      <td class="actions">
+        <%= link_to "Edit", edit_feed_path(feed), :class => "button neutral icon update" %>
+        <%= link_to "Remove", feed_path(feed), :class => "button negative icon remove", :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+</div>
+
+<% content_for :sidebar do %>
+  <div id="actions">
+    <%= link_to "Add a feed", new_feed_path, :title => "Add a feed", :class => "button add" %>
+  </div>
+<% end %>

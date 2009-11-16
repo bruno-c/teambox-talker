@@ -1,0 +1,13 @@
+<div class="sheet">
+  <h2><%= @title = "Edit feed" %></h2>
+
+  <% form_for @feed, :html => { :class => "lw120", :autocomplete => "off" } do |f| %>
+    <%= f.error_messages %>
+    
+    <%= render f %>
+    
+    <p class="indent submit">
+      <%= buttons "Update", :cancel_to => feeds_path %>
+    </p>
+  <% end %>
+</div>

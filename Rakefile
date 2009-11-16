@@ -20,9 +20,9 @@ task :jsmin => "sprockets:install_script" do
      "mv -f #{file}.min #{file}"
 end
 
-namespace :notifications do
-  desc "Run Notifications worker"
+namespace :feeds do
+  desc "Run Feeds worker"
   task :work => :environment do
-    Notification::Worker.new.start
+    Feed::Worker.new.start
   end
 end

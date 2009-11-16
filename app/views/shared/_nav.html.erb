@@ -2,10 +2,9 @@
   <ul>
     <% if logged_in? %>
       <li><%= link_to_with_active "Rooms", rooms_path, :title => "Rooms", :accesskey => "r" %></li>
-      <li><%= link_to_with_active "Chat Logs", logs_path, :accesskey => "l" %></li>
       <% if admin? %>
         <li><%= link_to_with_active "Plugins", plugins_path, :accesskey => "p" %></li>
-        <li><%= link_to_with_active "Notifications", notifications_path, :accesskey => "n" %></li>
+        <li><%= link_to_with_active "Feeds", feeds_path, :accesskey => "f" %></li>
         <li><%= link_to_with_active "Users", users_path, :accesskey => "u" %></li>
       <% end %>
       <li><%= render :partial => "logs/search_form" %></li>
