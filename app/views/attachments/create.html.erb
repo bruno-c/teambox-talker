@@ -1,0 +1,14 @@
+<%# 
+HACK to make sure Ajax Upload works w/ cross-subdomain we add 'document.domain = document.domain;' in
+the head of the HTML that is rendered in the iframe.
+%>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>File upload frame</title>
+    <script type="text/javascript" charset="utf-8">
+      document.domain = document.domain;
+    </script>
+  </head>
+  <body><%= @data.to_json %></body>
+</html>

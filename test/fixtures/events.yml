@@ -1,0 +1,11 @@
+event1:
+  room: main
+  payload: <%= {"time" => 1258314754,"type" => "leave","user" => {"name" => "ma","id" => 1,"email" => "macournoyer@gmail.com"}}.to_json %>
+  type: join
+  content: ""
+
+event2:
+  room: main
+  payload: <%= {"time" => 1258314754,"type" => "message","content" => "ohaie","user" => {"name" => "ma","id" => 1,"email" => "macournoyer@gmail.com"}}.to_json %>
+  type: message
+  content: "ohaie"
