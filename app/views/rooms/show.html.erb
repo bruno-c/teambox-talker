@@ -114,12 +114,14 @@
       <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m" %>
       <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
+    <% if admin? %>
     <div class="footer" id="admin_actions">
       <label>Manage:</label>
-      <%= link_to "Plugins", "#", :title => "Manage plugins" %>
+      <%# link_to "Plugins", "#", :title => "Manage plugins" %>
       <%= link_to "Feeds", notifications_path, :title => "Manage feeds" %>
       <%= link_to "Users", users_path, :title => "Manage users" %>
     </div>
+    <% end %>
   </div>
 
   <div id="error" class="flash error" style="display:none"></div>
