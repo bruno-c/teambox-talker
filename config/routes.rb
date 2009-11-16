@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :settings
   map.resources :rooms, :has_many => [:messages, :attachments]
   map.resources :pastes
-  map.resources :notifications
+  map.resources :feeds
   map.resource :admin, :controller => "admin"
   map.resources :plugins, :has_one => :installation
   

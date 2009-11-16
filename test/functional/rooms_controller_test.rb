@@ -37,8 +37,13 @@ class RoomsControllerTest < ActionController::TestCase
     assert_template "new"
   end
   
+  def test_edit
+    get :edit, :id => @room
+    assert_response :success, @response.body
+  end
+  
   def test_update
     put :update, :id => @room, :room => hash_for_room
-    assert_response :success, @response.body
+    assert_redirected_to rooms_path
   end
 end

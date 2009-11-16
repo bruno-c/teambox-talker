@@ -979,18 +979,30 @@ div.info
     td
       border-bottom = 1px dotted !grey
 
-table#notifications
+table
+  tr.odd
+    background = !accent_colour * 0.05 + !white * 0.95
+
+table#feeds
   width: 100%
   margin: 10px 0
-  span.error
-    +font_size("small")
-    color = !red * 0.5
-    a
-      color: inherit
-  img.to
-    position: relative
-    top: 3px
-    margin: 0 6px
+  th
+    +font_size("tiny")
+    padding: 0 6px
+    color = !light_grey
+  td
+    border-bottom = 1px dotted !light_grey
+    padding: 0 6px
+    span.error
+      +font_size("small")
+      color = !red * 0.5
+      a
+        color: inherit
+    img
+      position: relative
+      top: 3px
+      &.to
+        margin: 0 6px
   td.actions
     padding: 6px
     text-align: right

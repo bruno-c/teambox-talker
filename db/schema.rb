@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091116193953) do
+ActiveRecord::Schema.define(:version => 20091116194344) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20091116193953) do
     t.text     "payload"
   end
 
-  create_table "notifications", :force => true do |t|
+  create_table "feeds", :force => true do |t|
     t.integer  "room_id"
     t.integer  "account_id"
     t.string   "url"

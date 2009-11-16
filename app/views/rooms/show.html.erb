@@ -79,10 +79,10 @@
         <span class="switch_rooms hide_rooms">
           <b><!----></b>
           <div id="rooms">
-            <% @rooms.each do |room| %>
-              <%= link_to h(room.name), room_path(room), :title => "#{room.name} : #{room.description}", :class => ("current" if room == @room) %>
+            <% @rooms.each_with_index do |room, i| %>
+              <%= link_to h(room.name), room_path(room), :title => "#{room.name} : #{room.description}", :class => ("current" if room == @room), :accesskey => i+1 %>
             <% end %>
-            <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back" %>
+            <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back", :accesskey => "r" %>
           </div>
         </span>
       </h3>
@@ -106,7 +106,7 @@
     <div class="footer" id="admin_actions">
       <label>Manage:</label>
       <%= link_to "Plugins", plugins_path, :title => "Manage plugins", :target => "_blank" %>
-      <%= link_to "Feeds", notifications_path, :title => "Manage feeds", :target => "_blank" %>
+      <%= link_to "Feeds", feeds_path, :title => "Manage feeds", :target => "_blank" %>
       <%= link_to "Users", users_path, :title => "Manage users", :target => "_blank" %>
     </div>
     <% end %>

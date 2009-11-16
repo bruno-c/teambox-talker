@@ -1,4 +1,4 @@
-class Notification < ActiveRecord::Base
+class Feed < ActiveRecord::Base
   MAX_RUN_TIME   = 1.hour     # Max time a job can run before it is considered as failed
   INTERVAL       = 2.minutes  # Interval of check for due notifications
   MAX_MESSAGES   = 3          # Make number of message sent per notification fetch
@@ -28,7 +28,7 @@ class Notification < ActiveRecord::Base
   
   def run_with_lock
     unless lock
-      logger.warn "[Notificaton] Failed to acquire lock for ##{id}"
+      logger.warn "[Feed] Failed to acquire lock for ##{id}"
       return nil
     end
     
@@ -39,7 +39,7 @@ class Notification < ActiveRecord::Base
     rescue Exception => error
       self.failed_at = self.class.db_time_now
       self.last_error = error.message
-      logger.error "[Notificaton] ##{id} failed with #{error.class.name}: #{error.message}"
+      logger.error "[Feed] ##{id} failed with #{error.class.name}: #{error.message}"
       logger.error error.backtrace.join("\n")
       return false  # work failed
     end
@@ -55,7 +55,7 @@ class Notification < ActiveRecord::Base
     options[:if_none_match] = etag if etag
     options[:http_authentication] = [user_name, password] if user_name.present?
     
-    feed = Feedzirra::Feed.fetch_and_parse(url, options)
+    feed = Feedzirra::Feed.fetch_and_parse(normalized_url, options)
     
     if feed == 304 # not modified
       return
@@ -88,6 +88,12 @@ class Notification < ActiveRecord::Base
       "#{entry.author}: #{title} #{url}",
       (truncated_content unless title == content)
     ].compact
+  end
+  
+  def normalized_url
+    url.to_s.
+        gsub("feed:http", "http").
+        gsub("feed://", "http://")
   end
   
   def sanitize(content)

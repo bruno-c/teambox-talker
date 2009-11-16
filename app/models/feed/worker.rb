@@ -1,4 +1,4 @@
-class Notification
+class Feed
   class Worker
     SLEEP = 5
 
@@ -10,37 +10,37 @@ class Notification
     end
 
     def start
-      say "*** Starting notification worker #{Notification.worker_name}"
+      say "*** Starting notification worker #{Feed.worker_name}"
 
-      trap('TERM') { say "Exiting in ~ #{SLEEP}s..."; Notification.stop = true }
-      trap('INT')  { say "Exiting in ~ #{SLEEP}s..."; Notification.stop = true }
+      trap('TERM') { say "Exiting in ~ #{SLEEP}s..."; Feed.stop = true }
+      trap('INT')  { say "Exiting in ~ #{SLEEP}s..."; Feed.stop = true }
       
       EM.run do
         run
       end
 
     ensure
-      Notification.clear_locks!
+      Feed.clear_locks!
     end
     
     def run
       result = nil
       
-      stop and return if Notification.stop
+      stop and return if Feed.stop
 
       realtime = Benchmark.realtime do
-        result = Notification.work
+        result = Feed.work
       end
 
       count = result.sum
 
-      stop and return if Notification.stop
+      stop and return if Feed.stop
 
       if count.zero?
         EM.add_timer(SLEEP) { run }
         return
       else
-        say "#{count} notifications processed at %.4f j/s, %d failed ..." % [count / realtime, result.last]
+        say "#{count} feeds processed at %.4f j/s, %d failed ..." % [count / realtime, result.last]
         EM.next_tick { run }
       end
     end
