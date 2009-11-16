@@ -1056,18 +1056,29 @@ div.info {
   #admin table td {
     border-bottom: 1px dotted gray; }
 
+table tr.odd {
+  background: #f3f9fc; }
+
 table#feeds {
   width: 100%;
   margin: 10px 0; }
-  table#feeds span.error {
-    font-size: 12px;
-    color: #7f0000; }
-    table#feeds span.error a {
-      color: inherit; }
-  table#feeds img.to {
-    position: relative;
-    top: 3px;
-    margin: 0 6px; }
+  table#feeds th {
+    font-size: 10px;
+    padding: 0 6px;
+    color: silver; }
+  table#feeds td {
+    border-bottom: 1px dotted silver;
+    padding: 0 6px; }
+    table#feeds td span.error {
+      font-size: 12px;
+      color: #7f0000; }
+      table#feeds td span.error a {
+        color: inherit; }
+    table#feeds td img {
+      position: relative;
+      top: 3px; }
+      table#feeds td img.to {
+        margin: 0 6px; }
   table#feeds td.actions {
     padding: 6px;
     text-align: right; }

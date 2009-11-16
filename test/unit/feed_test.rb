@@ -57,4 +57,10 @@ class FeedTest < ActiveSupport::TestCase
     
     assert_nil feed.last_modified_at
   end
+  
+  def test_normalized_url
+    assert_equal "https://github.com/feeds/macournoyer/commits/talker/master", Feed.new(:url => "https://github.com/feeds/macournoyer/commits/talker/master").normalized_url
+    assert_equal "http://github.com/feeds/macournoyer/commits/thin/master", Feed.new(:url => "feed://github.com/feeds/macournoyer/commits/thin/master").normalized_url
+    assert_equal "https://github.com/feeds/macournoyer/commits/talker/master", Feed.new(:url => "feed:https://github.com/feeds/macournoyer/commits/talker/master").normalized_url
+  end
 end
