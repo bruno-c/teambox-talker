@@ -48,5 +48,11 @@ $(function() {
     });
   }
   
+  $('#toggle_extras').click(function() {
+    var expanded_src = '/images/icons/toggle.png';
+    var normal_src = '/images/icons/toggle-expand.png';
+    
+    $('#toggle_extras').attr('src', $('#toggle_extras').attr('src') == expanded_src ? normal_src : expanded_src );
+    $('#log_links').slideToggle(100, 'swing');
+  })
 });
-

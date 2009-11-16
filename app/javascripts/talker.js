@@ -98,3 +98,7 @@ Talker.getRoomUsernames = function() {
     return user.name;
   })
 }
+
+Talker.sendMessage = function(message) {
+  return Talker.trigger("MessageSend", {type:"message", content: message});
+};

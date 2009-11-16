@@ -93,13 +93,12 @@
     <div class="footer">
       <%= link_to "Upload a file", room_attachments_path(@room), :title => "Upload a file", :id => "upload" %>
       <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
-      <%= link_to "Room Log", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %>
       <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m" %>
       <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
   </div>
   
-  <% if admin? %>
+  <!-- <% if admin? %>
     <div id="admin" class="panel">
       <div class="header">
         <h3 class="name">Administration</h3>
@@ -111,9 +110,25 @@
         <%= link_to "Notifications", notifications_path, :title => "Notifications", :accesskey => "n" %>
       </div>
     </div>
-  <% end %>
+  <% end %> -->
   
   <%= render :partial => "logs/search_form" %>
+  
+  <div id="extra_links">
+    <%= image_tag "/images/icons/toggle-expand.png", :height => "16", :width => "16", :alt => "Toggle extra feature Links", :id => "toggle_extras"  %>
+    <br/>
+    <ul id="log_links" style="display: none">
+      <li><%= link_to "Room Log", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %></li>
+      <li><%= link_to "Rooms", rooms_path, :title => "Rooms", :accesskey => "r" %></li>
+      <% if admin? %>
+        <li><%= link_to "Users", users_path, :title => "Users", :accesskey => "u" %></li>
+        <li><%= link_to "Notifications", notifications_path, :title => "Notifications", :accesskey => "n" %></li>
+        <li><%= link_to "Plugins", plugins_path, :title => "Plugins", :accesskey => "p" %></li>
+      <% end %>
+    </ul>
+  </div>
+  
+  
 <% end %>
 
 <div id="top_mask">

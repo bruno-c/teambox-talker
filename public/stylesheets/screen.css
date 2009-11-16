@@ -988,6 +988,20 @@ div.panel {
         width: 16px;
         position: relative;
         top: 3px; }
+  #rooms_controller.show #sidebar #extra_links {
+    cursor: pointer;
+    text-align: right; }
+    #rooms_controller.show #sidebar #extra_links img {
+      padding-bottom: 15px; }
+    #rooms_controller.show #sidebar #extra_links #log_links {
+      list-style: none;
+      position: relative;
+      top: -10px;
+      text-align: right; }
+      #rooms_controller.show #sidebar #extra_links #log_links a {
+        text-decoration: none; }
+      #rooms_controller.show #sidebar #extra_links #log_links a:hover {
+        text-decoration: underline; }
 
 #footer {
   margin: 30px 0 10px 0;
