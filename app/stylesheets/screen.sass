@@ -741,6 +741,9 @@ div.panel
         position: relative
         h3
           cursor: pointer
+          span.back_rooms
+            +font_size("medium")
+            color = !grey
           span.switch_rooms
             position: relative
             top: 5px
@@ -791,6 +794,22 @@ div.panel
               span.switch_rooms
                 background = !grey * 0.5 + !dark_grey * 0.5
       &.content
+        ul.people
+          margin: 0 0 -5px
+          overflow: hidden
+          li
+            display: block
+            float: left
+            margin: 0 5px 5px 0
+            padding: 2px 5px
+            background = !light_grey * 0.15 + !white * 0.85
+            +rounded_corners("all", 3)
+            +font_size("small")
+            img
+              height: 16px
+              width: 16px
+              position: relative
+              top: 3px
         form
           margin: 0
           p
@@ -808,6 +827,10 @@ div.panel
               background-repeat: no-repeat
               background-position: 2px center
               border = 1px "solid" !light_grey
+          &.search_form
+            padding-bottom: 10px
+            a.browse
+              +font_size("small")
 
   #edit_room
     input, textarea
@@ -815,26 +838,6 @@ div.panel
       line-height: normal
     textarea
       width: 90%
-  #whos_here
-    div
-      &.content
-        ul.people
-          margin: 0 0 -5px
-          overflow: hidden
-          li
-            display: block
-            float: left
-            margin: 0 5px 5px 0
-            padding: 2px 5px
-            background = !light_grey * 0.15 + !white * 0.85
-            +rounded_corners("all", 3)
-            +font_size("small")
-            img
-              height: 16px
-              width: 16px
-              position: relative
-              top: 3px
-        
 
 
 #footer

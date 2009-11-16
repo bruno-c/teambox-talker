@@ -96,21 +96,18 @@
             <% end %>
           </div>
         </span>
+        <span class="back_rooms">
+          &laquo; <%= link_to "Rooms", rooms_path %>
+        </span>
       </h3>
     </div>
     <div class="content">
-      <%= render :partial => "logs/search_form" %>
-    </div>
-    <div class="footer">
-      <%= link_to "Room Log", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %>
-    </div>
-  </div>
-
-  <div id="whos_here" class="panel">
-    <div class="header">
-      <h3 class="name">Who&#39;s here?</h3>
-    </div>
-    <div class="content">
+      <% form_tag @room ? search_room_path(@room) : search_path, :method => :get, :class => "search_form" do %>
+        <%= text_field_tag :q, @query, :class => "search", :type => "search", :results => 5, :placeholder => "Search logs ...", :size => 16, :accesskey => "s" %>
+        <%= link_to "Browse", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank", :class => "browse" %>
+        </p>
+      <% end %>
+      <h4 class="name">Who&#39;s here?</h4>
       <ul class="people" id="people"></ul>
     </div>
     <div class="footer">
@@ -118,6 +115,11 @@
       <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
       <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m" %>
       <%= link_to "Logout", logout_path, :title => "Logout" %>
+    </div>
+    <div class="footer">
+      <%= link_to "Plugins", notifications_path, :title => "Manage plugins" %>
+      <%= link_to "Feeds", notifications_path, :title => "Manage feeds" %>
+      <%= link_to "Users", users_path, :title => "Manage users" %>
     </div>
   </div>
 

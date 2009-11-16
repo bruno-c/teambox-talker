@@ -814,6 +814,9 @@ div.panel {
     position: relative; }
     #sidebar #room div.header h3 {
       cursor: pointer; }
+      #sidebar #room div.header h3 span.back_rooms {
+        font-size: 14px;
+        color: gray; }
       #sidebar #room div.header h3 span.switch_rooms {
         position: relative;
         top: 5px;
@@ -866,6 +869,24 @@ div.panel {
               background: #f8f8f8; }
         #sidebar #room div.header h3 span.switch_rooms:hover span.switch_rooms {
           background: #606060; }
+  #sidebar #room div.content ul.people {
+    margin: 0 0 -5px;
+    overflow: hidden; }
+    #sidebar #room div.content ul.people li {
+      display: block;
+      float: left;
+      margin: 0 5px 5px 0;
+      padding: 2px 5px;
+      background: #f4f4f4;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      font-size: 12px; }
+      #sidebar #room div.content ul.people li img {
+        height: 16px;
+        width: 16px;
+        position: relative;
+        top: 3px; }
   #sidebar #room div.content form {
     margin: 0; }
     #sidebar #room div.content form p {
@@ -885,29 +906,15 @@ div.panel {
         background-repeat: no-repeat;
         background-position: 2px center;
         border: 1px solid silver; }
+    #sidebar #room div.content form.search_form {
+      padding-bottom: 10px; }
+      #sidebar #room div.content form.search_form a.browse {
+        font-size: 12px; }
   #sidebar #edit_room input, #sidebar #edit_room textarea {
     font: inherit;
     line-height: normal; }
   #sidebar #edit_room textarea {
     width: 90%; }
-  #sidebar #whos_here div.content ul.people {
-    margin: 0 0 -5px;
-    overflow: hidden; }
-    #sidebar #whos_here div.content ul.people li {
-      display: block;
-      float: left;
-      margin: 0 5px 5px 0;
-      padding: 2px 5px;
-      background: #f4f4f4;
-      border-radius: 3px;
-      -moz-border-radius: 3px;
-      -webkit-border-radius: 3px;
-      font-size: 12px; }
-      #sidebar #whos_here div.content ul.people li img {
-        height: 16px;
-        width: 16px;
-        position: relative;
-        top: 3px; }
 
 #footer {
   margin: 30px 0 10px 0;
