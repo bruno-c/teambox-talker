@@ -25,27 +25,7 @@ $(function() {
   
   // search input fixes for various browsers.
   if ($.browser.safari) {
-    $('#rooms_controller.show input.search').css('width', '100%')
-  }
-  
-  if ($.browser.mozilla) {
-    $('input[placeholder]').each(function(){
-      $(this).data('original_color', $(this).css('color'));
-      
-      if ($(this).val() == '' || $(this).val() == $(this).attr('placeholder')){
-        $(this).val($(this).attr('placeholder')).css('color', '#CCC');
-      }
-      
-      $(this).focus(function(){
-        $(this).css('color', $(this).data('original_color')).val($(this).val() == $(this).attr('placeholder') ? '' : $(this).val());
-      }).blur(function() {
-        if ($(this).val() == '' || $(this).val() == $(this).attr('placeholder')){
-          $(this).css('color', '#CCC').val($(this).attr('placeholder'));
-        } else {
-          $(this).css('color', $(this).attr('original_color'));
-        }
-      })
-    });
+    $('#rooms_controller.show input.search').css('width', '120px')
   }
   
   $('#toggle_extras').click(function() {
