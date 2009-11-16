@@ -814,9 +814,6 @@ div.panel {
     position: relative; }
     #sidebar #room div.header h3 {
       cursor: pointer; }
-      #sidebar #room div.header h3 span.back_rooms {
-        font-size: 14px;
-        color: gray; }
       #sidebar #room div.header h3 span.switch_rooms {
         position: relative;
         top: 5px;
@@ -910,6 +907,9 @@ div.panel {
       padding-bottom: 10px; }
       #sidebar #room div.content form.search_form a.browse {
         font-size: 12px; }
+  #sidebar #room div.footer#admin_actions label {
+    font-size: 10px;
+    color: gray; }
   #sidebar #edit_room input, #sidebar #edit_room textarea {
     font: inherit;
     line-height: normal; }

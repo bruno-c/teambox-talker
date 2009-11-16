@@ -94,10 +94,8 @@
             <% @rooms.reject{ |room| room == @room }.each do |room| %>
               <%= link_to room.name, room_path(room), :title => "#{room.name} : #{room.description}" %>
             <% end %>
+            <%= link_to "&laquo; Back to Rooms", rooms_path %>
           </div>
-        </span>
-        <span class="back_rooms">
-          &laquo; <%= link_to "Rooms", rooms_path %>
         </span>
       </h3>
     </div>
@@ -110,13 +108,14 @@
       <h4 class="name">Who&#39;s here?</h4>
       <ul class="people" id="people"></ul>
     </div>
-    <div class="footer">
+    <div class="footer" id="user_actions">
       <%= link_to "Upload a file", room_attachments_path(@room), :title => "Upload a file", :id => "upload" %>
       <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
       <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m" %>
       <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
-    <div class="footer">
+    <div class="footer" id="admin_actions">
+      <label>Manage:</label>
       <%= link_to "Plugins", notifications_path, :title => "Manage plugins" %>
       <%= link_to "Feeds", notifications_path, :title => "Manage feeds" %>
       <%= link_to "Users", users_path, :title => "Manage users" %>

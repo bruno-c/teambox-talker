@@ -741,9 +741,6 @@ div.panel
         position: relative
         h3
           cursor: pointer
-          span.back_rooms
-            +font_size("medium")
-            color = !grey
           span.switch_rooms
             position: relative
             top: 5px
@@ -831,7 +828,10 @@ div.panel
             padding-bottom: 10px
             a.browse
               +font_size("small")
-
+      &.footer#admin_actions
+        label
+          +font_size("tiny")
+          color= !grey
   #edit_room
     input, textarea
       font: inherit
