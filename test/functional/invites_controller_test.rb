@@ -61,6 +61,25 @@ class InvitesControllerTest < ActionController::TestCase
     assert_redirected_to users_path
   end
   
+  def test_create_with_invite_command
+    login_as :quentin
+    assert_difference 'User.count', 1 do
+      assert_difference 'ActionMailer::Base.deliveries.size', 1 do
+        xhr :post, :create, :invitees => "one@example.com"
+        assert_nil flash[:error]
+        assert_equal %w(one@example.com), assigns(:invitees)
+      end
+    end
+    assert_response :success
+  end
+  
+  def test_create_with_invite_command_but_improper_email
+    login_as :quentin
+    xhr :post, :create, :invitees => "asdfasdf"
+    assert_template "error"
+    assert_response :success
+  end
+  
   def test_create_with_invalid_email
     login_as :quentin
     assert_difference 'User.count', 1 do
