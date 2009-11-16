@@ -2,9 +2,9 @@ Functionalities:
 - Delete Rooms
 - Open Rooms
 - lock down rooms
-- /clear
-- /invite
+✓ /clear
 - /me
+- /invite
 - /help
 
 Documentation:
