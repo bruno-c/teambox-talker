@@ -85,6 +85,12 @@ Talker.getCommands = function() {
   ).sort();
 }
 
+Talker.getCommandsAndUsage = function(){
+  return  _.select(Talker.plugins, function(plugin) { return plugin.command }).map(function(command) {
+    return [command.command, command.usage]
+  }).sort();
+}
+
 Talker.getRoom = function() {
   return Talker.room;
 }
