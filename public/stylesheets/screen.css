@@ -863,7 +863,13 @@ div.panel {
             -moz-border-radius: 2px;
             -webkit-border-radius: 2px; }
             #sidebar #room div.header h3 span.switch_rooms #rooms a:hover {
-              background: #f8f8f8; }
+              background: #cccccc; }
+            #sidebar #room div.header h3 span.switch_rooms #rooms a.current {
+              background: gray;
+              color: white; }
+            #sidebar #room div.header h3 span.switch_rooms #rooms a.back {
+              background: #606060;
+              color: white; }
         #sidebar #room div.header h3 span.switch_rooms:hover span.switch_rooms {
           background: #606060; }
   #sidebar #room div.content ul.people {

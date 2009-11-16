@@ -91,10 +91,10 @@
         <span class="switch_rooms hide_rooms">
           <b><!----></b>
           <div id="rooms">
-            <% @rooms.reject{ |room| room == @room }.each do |room| %>
-              <%= link_to room.name, room_path(room), :title => "#{room.name} : #{room.description}" %>
+            <% @rooms.each do |room| %>
+              <%= link_to h(room.name), room_path(room), :title => "#{room.name} : #{room.description}", :class => ("current" if room == @room) %>
             <% end %>
-            <%= link_to "&laquo; Back to Rooms", rooms_path %>
+            <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back" %>
           </div>
         </span>
       </h3>

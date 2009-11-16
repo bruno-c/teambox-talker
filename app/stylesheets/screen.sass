@@ -786,7 +786,13 @@ div.panel
                 text-decoration: none
                 +rounded_corners("all", 2)
                 &:hover
-                  background = !light_grey * 0.1 + !white * 0.9
+                  background = !light_grey * 0.8 + !white * 0.2
+                &.current
+                  background = !grey
+                  color = !white
+                &.back
+                  background = !grey * 0.5 + !dark_grey * 0.5
+                  color = !white
             &:hover
               span.switch_rooms
                 background = !grey * 0.5 + !dark_grey * 0.5
