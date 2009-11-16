@@ -4,13 +4,11 @@
   <script type="text/javascript" charset="utf-8">
   //<![CDATA[
     Talker.currentUser = <%= current_user.to_json %>;
+    Talker.room = <%= @room.to_json %>;
     
     $(function(){
-      <%#= install_core_plugins %>
-      
       Talker.plugins.push(new Talker.Timestamp());
-      Talker.plugins.push(new Talker.UserJoin());
-      Talker.plugins.push(new Talker.UserLeave());
+      Talker.plugins.push(new Talker.LogsJoinLeave());
       
       Talker.plugins.push(new Talker.YoutubeFormatter());
       Talker.plugins.push(new Talker.PasteFormatter());

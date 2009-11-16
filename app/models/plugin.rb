@@ -4,7 +4,8 @@ class Plugin < ActiveRecord::Base
     "New Message Notifications",
     "Leave & Join Notifications",
     "Title Message Count",
-    "Leave & Join"
+    "Leave & Join",
+    "Clear Command"
   ]
   
   belongs_to :author, :class_name => "User"

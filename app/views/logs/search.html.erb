@@ -10,6 +10,7 @@ end
   <script type="text/javascript" charset="utf-8">
   //<![CDATA[
     Talker.currentUser = <%= current_user.to_json %>;
+    Talker.room = <%= @room.to_json %>;
     
     $(function(){
       <%#= install_plugin :timestamp, true %>
