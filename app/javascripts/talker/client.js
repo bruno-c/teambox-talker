@@ -32,7 +32,7 @@ Talker.Client = function(options) {
       case 'back':
       case 'idle':
       case 'connected':
-        Talker.trigger('on' + line.type.charAt(1).toUpperCase() + line.type.substring(1, line.type.length-1))
+        Talker.trigger(line.type.charAt(0).toUpperCase() + line.type.substring(1, line.type.length), line)
         break;
       default:
         console.warn("Unknown message type (client error): " + line.type);
