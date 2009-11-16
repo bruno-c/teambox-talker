@@ -49,15 +49,6 @@ class RoomsController < ApplicationController
     end
   end
   
-  def open
-    render :json => { :url => @room.create_public_token! }
-  end
-  
-  def close
-    @room.clear_public_token!
-    head :ok
-  end
-  
   def ouch
     raise "This is just a test"
   end

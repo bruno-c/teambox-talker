@@ -76,15 +76,17 @@
     <div class="header">
       <h3 class="name" id="room_name">
         <%=h @room.name %>
-        <span class="switch_rooms hide_rooms">
-          <b><!----></b>
-          <div id="rooms">
-            <% @rooms.each_with_index do |room, i| %>
-              <%= link_to h(room.name), room_path(room), :title => "#{room.name} : #{room.description}", :class => ("current" if room == @room), :accesskey => i+1 %>
-            <% end %>
-            <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back", :accesskey => "r" %>
-          </div>
-        </span>
+        <% unless @rooms.empty? %>
+          <span class="switch_rooms hide_rooms">
+            <b><!----></b>
+            <div id="rooms">
+              <% @rooms.each_with_index do |room, i| %>
+                <%= link_to h(room.name), room_path(room), :title => "#{room.name} : #{room.description}", :class => ("current" if room == @room), :accesskey => i+1 %>
+              <% end %>
+              <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back", :accesskey => "r" %>
+            </div>
+          </span>
+        <% end %>
       </h3>
     </div>
     <div class="content">
