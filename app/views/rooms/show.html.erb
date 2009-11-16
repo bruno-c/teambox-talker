@@ -18,8 +18,6 @@
     $(function() {
       document.domain = document.domain;
       
-      <%#= install_core_plugins %>
-      
       // Functional plugins that have bearing on wether other plugins work or not
       Talker.plugins.push(new Talker.ErrorHandler($("#error")));
       Talker.plugins.push(new Talker.Users()); // used only to keep track of which users are present for up to date knowledge of presence
@@ -32,6 +30,7 @@
       <%= install_plugins %>
       // 
       
+      Talker.plugins.push(new Talker.MeCommand()); // will always be loaded...
       Talker.plugins.push(new Talker.MsgCommand($('#msgbox'))); // will always be loaded...
       Talker.plugins.push(new Talker.CommandAutocompleter()); // will always be loaded...
       Talker.plugins.push(new Talker.UsernameAutocompleter()); // will always be loaded...
