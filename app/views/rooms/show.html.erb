@@ -59,6 +59,7 @@
       <%= render_events @events %>
       
       Talker.trigger("Loaded");
+      Talker.trigger("Resize");
       
       $(window).bind('beforeunload', function() { Talker.client.reset() });
       $("a#leave").click(function() {
