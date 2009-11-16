@@ -1,6 +1,5 @@
 module PluginsHelper
   def install_plugin(plugin)
-    puts plugin.installed?(current_account)
     if plugin.installed?(current_account)
       button_to_remote "Disable this plugin", :url => plugin_installation_path(plugin), :method => 'delete'
     else
