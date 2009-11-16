@@ -13,8 +13,7 @@ Talker.ImageFormatter = function() {
     
     if (image_match){
       var fallback = $('<a/>').attr('href', image_match[0]).attr('target', '_blank').html(image_match[0]);
-      Talker.Logger.insertContent(event, fallback);
-      Talker.trigger('Insertion', event);
+      Talker.insertMessage(event, fallback);
       
       var img = $('<img/>').load(function(){
         $(this).remove();
@@ -24,11 +23,11 @@ Talker.ImageFormatter = function() {
             + image_match[0]
             + '" target="_blank"><img src="' 
             + image_match[0]
-            + '" style="max-height: 300px; max-width: ' + Talker.Logger.maximumContentWidth() + ';" />'
+            + '" style="max-height: 300px; max-width: ' + Talker.getMaxContentWidth() + ';" />'
             + '</a>'
         );
         
-        Talker.trigger('Insertion', event);
+        Talker.trigger('MessageInsertion', event);
       });
     
       $('#talker_image_preloading_div').append(
@@ -40,7 +39,7 @@ Talker.ImageFormatter = function() {
   }
   
   self.onResize = function() {
-    var maxWidth = Talker.Logger.maximumContentWidth();
+    var maxWidth = Talker.getMaxContentWidth();
     
     $("#log img[class!='avatar']").each(function(){
       $(this).css({'max-width': 'auto'});

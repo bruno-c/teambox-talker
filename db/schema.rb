@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091113222506) do
+ActiveRecord::Schema.define(:version => 20091116194344) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -22,10 +22,10 @@ ActiveRecord::Schema.define(:version => 20091113222506) do
   create_table "attachments", :force => true do |t|
     t.integer  "room_id"
     t.integer  "user_id"
-    t.string   "data_file_name"
-    t.string   "data_content_type"
-    t.integer  "data_file_size"
-    t.datetime "data_updated_at"
+    t.string   "upload_file_name"
+    t.string   "upload_content_type"
+    t.integer  "upload_file_size"
+    t.datetime "upload_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20091113222506) do
     t.text     "payload"
   end
 
-  create_table "notifications", :force => true do |t|
+  create_table "feeds", :force => true do |t|
     t.integer  "room_id"
     t.integer  "account_id"
     t.string   "url"
@@ -85,6 +85,8 @@ ActiveRecord::Schema.define(:version => 20091113222506) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "pastes", ["permalink"], :name => "index_pastes_on_permalink", :unique => true
 
   create_table "plugin_installations", :force => true do |t|
     t.integer  "account_id"

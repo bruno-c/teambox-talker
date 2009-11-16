@@ -15,13 +15,14 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :account
   map.resource :session
   map.resource :settings
-  map.resources :rooms, :has_many => :messages, :member => { :open => :post, :close => :post }
+  map.resources :rooms, :has_many => [:messages, :attachments]
   map.resources :pastes
-  map.resources :notifications
+  map.resources :feeds
   map.resource :admin, :controller => "admin"
-  
+  map.resources :plugins, :has_one => :installation
   
   map.connect "/avatar/:id.jpg", :controller => "avatars", :action => "show"
+  map.connect "/close_connection", :controller => "attachments", :action => "close_connection"
   
   map.reset_password "/passwords/reset/:token", :controller => "passwords", :action => "show", :token => nil, :conditions => { :method => :get }
   map.resource :password

@@ -167,7 +167,7 @@ html[xmlns] .clearfix
 
 // Layout
 #content
-  padding: 40px 0 0 0
+  padding: 40px 0 0
 #main
   margin: 0 240px 0 0
   padding: 40px
@@ -184,6 +184,9 @@ html[xmlns] .clearfix
   float: right
   width: 195px
   padding: 37px 37px 37px 0
+body#rooms_controller.show
+  #content
+    padding: 0
 
 // Page specific layout fixes
 #accounts_controller.new
@@ -199,9 +202,10 @@ html[xmlns] .clearfix
     margin: 0 10px 10px 0
     float: left
     div.panel
+      margin: 0
       div
         &.content
-          min-height: 90px
+          min-height: 80px
           p
             &.description
               +font_size("small")
@@ -213,6 +217,58 @@ html[xmlns] .clearfix
                 width: 16px
                 position: relative
                 top: 3px
+
+// Plugins
+#plugins
+  overflow: hidden
+  &>div
+    margin: 0 0 20px
+    li
+      display: block
+      margin: 0 10px 10px 0
+      div.panel
+        margin: 0
+        div
+          &.header
+            h3
+              font-size: 14px
+              font-weight: bold
+            span.author
+              float: right
+              font-size: 12px
+              color = !light_grey
+              img
+                position: relative
+                top: 3px
+          &.content
+            p
+              &.description
+                +font_size("small")
+              &.people
+                label
+                  color = !grey
+                img
+                  height: 16px
+                  width: 16px
+                  position: relative
+                  top: 3px
+      &.enabled
+        +opacity(100)
+        div.panel
+          div.header
+            background = !accent_colour * 0.75 + !black * 0.25
+            span.author
+              color = !white
+      &.disabled
+        +opacity(50)
+      &:hover
+        +opacity(100)
+
+#plugins_controller.show
+  pre
+    padding: 20px 20px 0 20px
+    background: white
+    overflow: auto
 
 // Form Elements
 form
@@ -414,15 +470,15 @@ a.button, button
 // Chat Log
 #top_mask
   position: fixed
-  z-index: 5
-  top: 0
+  z-index: 99
+  top: -40px
   left: 0
   height: 80px
   overflow: hidden
   width: 100%
   margin: 0 240px 0 0
   div.fade
-    z-index: 4
+    z-index: 98
     height: 40px
     background = !black * 0.1 + !white * 0.9
     +box_shadow(0, 20, 20, !black * 0.1 + !white * 0.9)
@@ -454,8 +510,8 @@ a.button, button
           position: relative
           top: 3px
         &.author
-          padding: 5px 0 10px 0
-          vertical-align: bottom
+          padding: 8px 0 0 0
+          vertical-align: top
           white-space: nowrap
           text-align: right
           width: 1%
@@ -637,7 +693,7 @@ a.button, button
 
 // Panel
 div.panel
-  margin: 0 0 20px
+  margin: 0 0 10px
   +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
   div
     &.header
@@ -666,7 +722,10 @@ div.panel
         color = !white
         +font_size("xlarge")
         a
+          text-decoration: none
           color: inherit
+          &:hover
+            text-decoration: underline
       small
         display: block
         color = !light_grey
@@ -693,8 +752,11 @@ div.panel
       +rounded_corners("bottom", 3)
       border-top = 2px solid !light_grey * 0.2 + !white * 0.8
       background = !light_grey * 0.1 + !white * 0.9
+      overflow: hidden
       a
         margin-left: 4px
+      span.actions
+        float: right
   .tag
     +font_size("small")
     :background-color = !alt_colour
@@ -735,19 +797,74 @@ div.panel
       +font_size("small")
     div
       &.header
-        .actions
-          margin-top: 4px
-        a.leave
-          background-image: url('../../images/icons/door.png')
-          background-repeat: no-repeat
-          background-position: 3px center
-          padding: 0 5px 0 21px
+        position: relative
+        h3
+          cursor: pointer
+          span.switch_rooms
+            position: relative
+            top: 5px
+            background = !grey * 0.15 + !dark_grey * 0.85
+            display: inline-block
+            height: 20px
+            width: 20px
+            +rounded_corners("all", 3)
+            &.show_rooms
+              b
+                border-bottom = 5px "solid" !white
+                border-top: none
+            &.hide_rooms
+              b
+                border-bottom: none
+                border-top = 5px "solid" !white
+            b
+              position: relative
+              top: 7px
+              left: 5px
+              display: block
+              height: 0
+              width: 0
+              border: 5px solid transparent
+            #rooms
+              z-index: 10
+              display: none
+              position: absolute
+              right: 0
+              top: 21px
+              padding: 3px 3px 2px
+              background = !grey * 0.5 + !dark_grey * 0.5
+              +rounded_corners("all", 3)
+              a
+                min-width: 80px
+                margin: 0 0 1px
+                font-size: 12px
+                display: block
+                padding: 5px
+                line-height: 1
+                background = !white
+                color = !accent_colour * 0.75 + !black * 0.25
+                white-space: nowrap
+                text-decoration: none
+                +rounded_corners("all", 2)
+                &:hover
+                  background = !light_grey * 0.8 + !white * 0.2
+                &.current
+                  background = !accent_colour
+                  color = !white
+                &.back
+                  background = !grey * 0.5 + !dark_grey * 0.5
+                  color = !white
+                  +font_size("tiny")
+            &:hover
+              span.switch_rooms
+                background = !grey * 0.5 + !dark_grey * 0.5
       &.content
         ul.people
           margin: 0 0 -5px
+          overflow: hidden
           li
             display: block
-            margin: 0 0 5px
+            float: left
+            margin: 0 5px 5px 0
             padding: 2px 5px
             background = !light_grey * 0.15 + !white * 0.85
             +rounded_corners("all", 3)
@@ -757,6 +874,31 @@ div.panel
               width: 16px
               position: relative
               top: 3px
+        form
+          margin: 0
+          p
+            padding: 0
+            margin: 0
+            line-height: normal
+            input
+              +font_size("small")
+              height: 16px
+              width: 151px
+              padding: 4px 2px 0 21px
+              +rounded_corners("all", 2)
+              border: none
+              background-image: url('../../images/icons/magnifier.png')
+              background-repeat: no-repeat
+              background-position: 2px center
+              border = 1px "solid" !light_grey
+          &.search_form
+            padding-bottom: 10px
+            a.browse
+              +font_size("small")
+      &.footer#admin_actions
+        label
+          +font_size("tiny")
+          color= !grey
   #edit_room
     input, textarea
       font: inherit
@@ -764,6 +906,7 @@ div.panel
     textarea
       width: 90%
 
+       
 #footer
   margin: 30px 0 10px 0
   +font_size("tiny")
@@ -836,18 +979,30 @@ div.info
     td
       border-bottom = 1px dotted !grey
 
-table#notifications
+table
+  tr.odd
+    background = !accent_colour * 0.05 + !white * 0.95
+
+table#feeds
   width: 100%
   margin: 10px 0
-  span.error
-    +font_size("small")
-    color = !red * 0.5
-    a
-      color: inherit
-  img.to
-    position: relative
-    top: 3px
-    margin: 0 6px
+  th
+    +font_size("tiny")
+    padding: 0 6px
+    color = !light_grey
+  td
+    border-bottom = 1px dotted !light_grey
+    padding: 0 6px
+    span.error
+      +font_size("small")
+      color = !red * 0.5
+      a
+        color: inherit
+    img
+      position: relative
+      top: 3px
+      &.to
+        margin: 0 6px
   td.actions
     padding: 6px
     text-align: right

@@ -2,4 +2,4 @@
 //= require "jquery/jquery-ui"
 //= require "jquery/jquery.cookie"
 //= require "jquery/jquery.scrollToCenter"
-//= require "jquery/jquery.insertAtCaret"
+//= require "jquery/jquery.caret"

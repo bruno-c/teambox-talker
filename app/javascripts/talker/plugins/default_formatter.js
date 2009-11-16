@@ -9,7 +9,7 @@ Talker.DefaultFormatter = function() {
     var content = event.content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     
     if (content.match(url_expression)){
-      Talker.Logger.insertContent(event, content.replace(url_expression, function(locator){
+      Talker.insertMessage(event, content.replace(url_expression, function(locator){
         return '<a href="' 
           +  (!locator.match(protocol_expression) ? 'http://' : '') + locator
           + '" target="_blank">' 
@@ -17,14 +17,14 @@ Talker.DefaultFormatter = function() {
           + "</a>";
       }));
     } else if (event.content.match(/\n/gim)){
-      Talker.Logger.insertContent(event, '<div><pre>' + content + '</pre></div>');
+      Talker.insertMessage(event, '<div><pre>' + content + '</pre></div>');
     } else {
-      Talker.Logger.insertContent(event, content);
+      Talker.insertMessage(event, content);
     }
   }
   
   self.onResize = function(event) {
-    var maxWidth = Talker.Logger.maximumContentWidth();
+    var maxWidth = Talker.getMaxContentWidth();
     
     $('#log pre').css('width', maxWidth - 22 + 'px');// pastes and messages sent with multilines
     $('#log blockquote').css('width', maxWidth + 'px');// long sentences with no line breaks

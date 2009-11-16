@@ -1,0 +1,2 @@
+$('#<%= dom_id(@plugin) %>').toggleClass('disabled').toggleClass('enabled')
+$("#enable_<%= dom_id(@plugin) %>").html('<%= escape_javascript install_plugin(@plugin) %>')

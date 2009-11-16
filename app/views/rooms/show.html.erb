@@ -2,6 +2,9 @@
 
 <% content_for :head do %>
   <script type="text/javascript" charset="utf-8">
+    <%= install_plugins_source %>
+  </script>
+  <script type="text/javascript" charset="utf-8">
   //<![CDATA[
     Talker.currentUser = <%= current_user.to_json %>;
     Talker.room = <%= @room.to_json %>;
@@ -20,44 +23,28 @@
       // Functional plugins that have bearing on wether other plugins work or not
       Talker.plugins.push(new Talker.ErrorHandler($("#error")));
       Talker.plugins.push(new Talker.Users()); // used only to keep track of which users are present for up to date knowledge of presence
-      Talker.plugins.push(new Talker.Sender($("#msgbox")));
       Talker.plugins.push(new Talker.Scroller());
-      Talker.plugins.push(new Talker.LogSweeper($("#log")));
       Talker.plugins.push(new Talker.Notifier()); //provides onblur/onfocus handlers
       Talker.plugins.push(new Talker.UserList($('#people'))); // sidebar updating of users.
       Talker.plugins.push(new Talker.Timestamp());// << depends on order to be included properly.  I say it should remain mandatory for usability reasons.
       
-      // ABOVE THIS SHOULD ALWAYS BE LOADED
+      // Account plugins
+      <%= install_plugins %>
+      // 
       
-      // Display plugins
-      Talker.plugins.push(new Talker.UserJoin());
-      Talker.plugins.push(new Talker.UserLeave());
+      Talker.plugins.push(new Talker.MsgCommand($('#msgbox'))); // will always be loaded...
+      Talker.plugins.push(new Talker.CommandAutocompleter()); // will always be loaded...
+      Talker.plugins.push(new Talker.UsernameAutocompleter()); // will always be loaded...
       
       // formatters to provide basic functionalities.
       Talker.plugins.push(new Talker.YoutubeFormatter());
       Talker.plugins.push(new Talker.PasteFormatter());
       Talker.plugins.push(new Talker.ImageFormatter());
-      // Talker.plugins.push(new Talker.EmoticonsFormatter());
       
-      // Commands
-      Talker.plugins.push(new Talker.MsgCommand($('#msgbox')));
-      Talker.plugins.push(new Talker.HelloCommand($('#msgbox')));
-      
-      // plugins with ajax calls
-      Talker.plugins.push(new Talker.TwitterStatuses());
-      
-      // OS integration via Fluid or Prism 
-      Talker.plugins.push(new Talker.UserJoinNotifications());
-      Talker.plugins.push(new Talker.UserLeaveNotifications());
-      Talker.plugins.push(new Talker.NewMessageNotifications());
-      Talker.plugins.push(new Talker.DockBadge());
-      
-      // title new message count
-      // Talker.plugins.push(new Talker.TitleMessageCount());
-      
-      // BELOW THIS SHOULD ALWAYS BE LOADED
+      Talker.plugins.push(new Talker.Sender($("#msgbox")));
       Talker.plugins.push(new Talker.DefaultCommand($('msgbox')));
       Talker.plugins.push(new Talker.DefaultFormatter()); // this is mandatory and should be last.
+      Talker.plugins.push(new Talker.LogSweeper($("#log")));
       
       Talker.client = new Talker.Client({
         host: '<%= Orbited.talker_host %>', 
@@ -83,38 +70,47 @@
 <% end %>
 
 <% content_for :sidebar do %>
+  <div id="error" class="flash error" style="display:none"></div>
+
   <div id="room" class="panel">
     <div class="header">
-      <span class="actions">
-        <%= link_to "Leave", rooms_path, :title => "Leave this room", :id => "leave", :class => "leave" %>
-      </span>
-      <h3 class="name"><%=h @room.name %></h3>
+      <h3 class="name" id="room_name">
+        <%=h @room.name %>
+        <span class="switch_rooms hide_rooms">
+          <b><!----></b>
+          <div id="rooms">
+            <% @rooms.each_with_index do |room, i| %>
+              <%= link_to h(room.name), room_path(room), :title => "#{room.name} : #{room.description}", :class => ("current" if room == @room), :accesskey => i+1 %>
+            <% end %>
+            <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back", :accesskey => "r" %>
+          </div>
+        </span>
+      </h3>
     </div>
     <div class="content">
-      <p class="description"><%=h @room.description %></p>
-      <h4>Who&#39;s here?</h4>
+      <% form_tag @room ? search_room_path(@room) : search_path, :method => :get, :class => "search_form" do %>
+        <%= text_field_tag :q, @query, :class => "search", :type => "search", :results => 5, :placeholder => "Search logs ...", :size => 16, :accesskey => "s" %>
+        <%= link_to "Browse", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank", :class => "browse" %>
+        </p>
+      <% end %>
+      <h4 class="name">Who&#39;s here?</h4>
       <ul class="people" id="people"></ul>
     </div>
-    <div class="footer">
-      <%= link_to "Edit", room_path(@room), :title => "Edit room name &amp; description", :id => "edit" if admin? %>
-      <%= link_to "Chat Logs", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %>
+    <div class="footer" id="user_actions">
+      <%= link_to "Upload", room_attachments_path(@room), :title => "Upload a file", :id => "upload" %>
+      <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
+      <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %>
+      <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
-  </div>
-  <div id="edit_room" class="edit panel" style="display:none">
-    <% form_for @room do |f| %>
-      <div class="errors" style="display:none"></div>
-      <div class="header">
-        <h3><%= f.text_field :name, :size => 15 %></h3>
-      </div>
-      <div class="content">
-        <p class="description"><%= f.text_area :description, :rows => 6 %></p>
-      </div>
-      <div class="footer">
-        <%= buttons "Save", :class => "small" %>
-      </div>
+    <% if admin? %>
+    <div class="footer" id="admin_actions">
+      <label>Manage:</label>
+      <%= link_to "Plugins", plugins_path, :title => "Manage plugins", :target => "_blank" %>
+      <%= link_to "Feeds", feeds_path, :title => "Manage feeds", :target => "_blank" %>
+      <%= link_to "Users", users_path, :title => "Manage users", :target => "_blank" %>
+    </div>
     <% end %>
   </div>
-  <div id="error" class="flash error" style="display:none"></div>
 <% end %>
 
 <div id="top_mask">

@@ -1,7 +1,7 @@
 function focusMsgBox() {
   var msgbox = $('#msgbox')[0];
   if (msgbox){
-    setCaretTo(msgbox, msgbox.value.length);
+    $('#msgbox').setCaretPosition(-1);
     msgbox.focus();
     return true;
   }
@@ -20,7 +20,7 @@ $(function() {
           if (this.value == '') return false; // ignore empty messages
           
           // we actually have a message
-          Talker.trigger("MessageSend", {type:"message", content:$("#msgbox").val()})
+          Talker.sendMessage($("#msgbox").val());
           return false;
           break;
           

@@ -1,0 +1,37 @@
+<div id="plugins">
+  <div id="my_plugins">
+    <li id="<%= dom_id(@plugin) %>" class="<%= @plugin.installed?(@current_account) ? 'enabled' : 'disabled' %>">
+      <div class="panel">
+        <div class="header">
+          <span class="author">
+            <%= image_tag avatar_url(@plugin.author), :alt => h(@plugin.author.name) %> <%= h @plugin.author.name %>
+          </span>
+          <h3><%= link_to h(@plugin.name), @plugin, :accesskey => 1 %></h3>
+        </div>
+
+        <div class="content">
+          <% if @plugin.description %>
+            <p class="description">
+              <%=h @plugin.description %>
+            </p>
+          <% end %>
+        </div>
+        
+        <div class="source">
+          <pre>
+<%= h @plugin.source %>
+          </pre>
+        </div>
+
+        <div class="footer">
+          <span class="actions">
+            <span id="enable_<%= dom_id(@plugin) %>" class="plugin_enable_flag">
+              <%= link_to "Edit", edit_plugin_path(@plugin) if current_account.plugins.include?(@plugin) %>
+              <%= install_plugin(@plugin) %>
+            </span>
+          </span>
+        </div>
+      </div>
+    </li>
+  </div>
+</div>

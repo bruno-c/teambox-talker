@@ -28,8 +28,12 @@
       </div>
     
       <div class="footer">
+        <% if admin? %>
+          <%= link_to "Edit", edit_room_path(room), :title => "Edit this room" %>
+        <% end %>
         <%= link_to "Chat Logs", room_logs_path(room), :title => "Chat Logs" %>
       </div>
+
     </div>
   <% end %>
 <% end %>

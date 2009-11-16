@@ -6,7 +6,7 @@ Talker.YoutubeFormatter = function() {
     var youtube_match  = event.content.match(youtube_expression);
     
     if (youtube_match){
-      Talker.Logger.insertContent(event,
+      Talker.insertMessage(event,
         '<object width="425" height="355">'
         + '<param name="movie" value="http://www.youtube.com/v/' + youtube_match[1] + '"></param>'
         + '<param name="allowFullScreen" value="true"></param>'

@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   include Authentication::ByPassword
   
   belongs_to :account
+  has_many :plugins
   
   before_create             :create_talker_token
   

@@ -1,8 +1,8 @@
 class RoomsController < ApplicationController
   before_filter :login_required, :except => :show
   before_filter :account_required
-  before_filter :admin_required, :only => [:update, :ouch, :open, :close]
-  before_filter :find_room, :only => [:show, :update, :open, :close]
+  before_filter :admin_required, :only => [:edit, :update, :ouch]
+  before_filter :find_room, :only => [:show, :edit, :update]
   
   def index
     @rooms = current_account.rooms
@@ -11,9 +11,11 @@ class RoomsController < ApplicationController
   def show
     if @token = params[:token]
       # Public room, came from a shared link
+      @rooms = []
       @events = []
       @public = true
     else
+      @rooms = current_account.rooms
       @events = @room.events.recent.reverse
       @public = false
     end
@@ -35,9 +37,16 @@ class RoomsController < ApplicationController
     end
   end
   
+  def edit
+  end
+  
   def update
-    @success = @room.update_attributes(params[:room])
-    respond_to :js
+    if @room.update_attributes(params[:room])
+      flash[:notice] = "Amazing work! Room updated."
+      redirect_to rooms_path
+    else
+      render :edit
+    end
   end
   
   def open

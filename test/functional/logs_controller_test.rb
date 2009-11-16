@@ -21,9 +21,10 @@ class LogsControllerTest < ActionController::TestCase
   end
 
   def test_show
-    get :show, :room_id => @room, :year => "2009", :month => "10", :day => "7"
+    date = Event.first.created_at
+    get :show, :room_id => @room, :year => date.year, :month => date.month, :day => date.day
     assert_response :success, @response.body
-    assert_equal Time.zone.local(2009, 10, 7).to_datetime, assigns(:date)
+    assert_equal date.to_date, assigns(:date).to_date
   end
   
   def test_search_in_room

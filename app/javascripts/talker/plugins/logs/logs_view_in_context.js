@@ -1,8 +1,8 @@
 Talker.LogsViewInContext = function(){
   var self = this;
   
-  self.onAfterMessageReceived = function(event){
-    var last_row = Talker.Logger.lastRow();
+  self.onMessageInsertion = function(event){
+    var last_row = Talker.getLastRow();
     var last_p = $(last_row).find('p:last');
     
     var room = last_p.attr('room');

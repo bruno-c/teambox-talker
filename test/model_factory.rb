@@ -19,8 +19,12 @@ module ModelFactory
     { :content => "...", :user => User.first }.merge(attributes)
   end
   
-  def hash_for_notification(attributes={})
+  def hash_for_feed(attributes={})
     { :url => "http://github.com/feeds/macournoyer/commits/orange/master", :room => Room.first }.merge(attributes)
+  end
+  
+  def hash_for_plugin(attributes={})
+    { :name => "My Name", :description => "My Description", :source => "plugin.onLoad = function(){ alert('hello world') }" }
   end
   
   # Simulates model creation methods based on has_for_<model_name>:

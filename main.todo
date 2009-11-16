@@ -1,44 +1,43 @@
-- Load db events w/ an Ajax call after page load [MA]
-- Delete rooms
+Functionalities:
+✓ Edit rooms
+- Delete Rooms
+- Open Rooms
 - lock down rooms
+✓ /clear
+- /me
+- /invite
+- /help
 
-- Integrate design [G/M]
-✓ Edit room [MA]
-- Package Prism [MA]
-- Package Fluid [MA]
-- Deal w/ conn. errors [G]
-✓ Fix chat logs [G]
-✓ Design signup [M]
-✓ UTF8 in message [M]
-✓ Default room on signup [M]
-- Autocomplete (@, /msg) [G]
-- /invite, /me, /msg [G]
-- Add "action" event [M] (ensure it's saved in logger)
-- Growl notification [G]
-- Fix search [G]
+Documentation:
+- Room help link
+- Plugin API (50%) [GH] 2
+- REST API
 
 Exclusive must haves:
 - Import campfire logs
-- Typing user state
-- Exclusive alerts by keywords / username
-- Avatar (using Gravatar)
-- Hide join/leaves
-- REST API
-- Interactive pastes
+- plugin to alert by keywords / username 
 
 After beta:
 - Review invitation process
   - Change name in room
   - Invite link go directly in room
-  - Generate random password
 - Review signup process
-  - Create default rooms
 - Create landing page
-- Add support for Flash sockets in Orbited
+- cleaner REGEXP find and replace for dom text elements.
+- Billing
+- Restrict features per plan
 
-API:
-- Create Ruby Talker client gem talker.rb
-- Create Python Talker client package talker.py
+Talker Server:
+- Fix db writes ordering in logger
+- Create a paste when message sent from API
+- Renaming a user in presence server
+- Support other types of channels (room, paste, etc)
+- Benchmark against ejabberd
 
-Crazy Ideas:
-- Give each user a color for messages background (and highlight conversation w/ that @user w/ that color)
+Chef:
+- Use whycats Bundler to manage gems
+- Only allow connections to Orbited from talkerapp.com (see chef/roles/web.rb:40)
+- Setup emergency_mailer, see http://pauldowman.com/2008/02/17/smtp-mail-from-ec2-web-server-setup/
+- Put talker servers behind haproxy
+- Have a fallback or multiple logger and presence instances running
+- Implement nicer Zero downtime thing, see http://www.igvita.com/2008/12/02/zero-downtime-restarts-with-haproxy/

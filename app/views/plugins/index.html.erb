@@ -1,0 +1,26 @@
+<% @title = "Plugins" %>
+
+<div id="plugins">
+  <div id="my_plugins">
+    <h3>My Plugins</h3>
+    <% if @plugins.empty? %>
+      You have not authored any plugins yet but you can <%= link_to "create one now", new_plugin_path, :title => "create a plugin" %>.
+    <% end %>
+    <% @plugins.each_with_index do |plugin, i| %>
+      <%= render :partial => "plugin", :locals => {:plugin => plugin, :i => i}  %>
+    <% end %>
+  </div>
+  
+  <div id="shared_plugins">
+    <h3>Shared Plugins</h3>
+    <% @shared.each_with_index do |plugin, i| %>
+      <%= render :partial => "plugin", :locals => {:plugin => plugin, :i => i}  %>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :sidebar do %>
+  <div id="actions">
+    <%= link_to "Create a plugin", new_plugin_path, :title => "Create a plugin", :class => "button add" %>
+  </div>
+<% end %>
