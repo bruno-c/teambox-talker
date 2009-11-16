@@ -28,6 +28,11 @@
       Talker.plugins.push(new Talker.Notifier()); //provides onblur/onfocus handlers
       Talker.plugins.push(new Talker.UserList($('#people'))); // sidebar updating of users.
       Talker.plugins.push(new Talker.Timestamp());// << depends on order to be included properly.  I say it should remain mandatory for usability reasons.
+      
+      // Account plugins
+      <%= install_plugins %>
+      // 
+      
       Talker.plugins.push(new Talker.MsgCommand($('#msgbox'))); // will always be loaded...
       Talker.plugins.push(new Talker.CommandAutocompleter()); // will always be loaded...
       Talker.plugins.push(new Talker.UsernameAutocompleter()); // will always be loaded...
@@ -36,10 +41,6 @@
       Talker.plugins.push(new Talker.YoutubeFormatter());
       Talker.plugins.push(new Talker.PasteFormatter());
       Talker.plugins.push(new Talker.ImageFormatter());
-      
-      // Account plugins
-      <%= install_plugins %>
-      // 
       
       Talker.plugins.push(new Talker.Sender($("#msgbox")));
       Talker.plugins.push(new Talker.DefaultCommand($('msgbox')));
