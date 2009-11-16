@@ -105,7 +105,7 @@
     <% if admin? %>
     <div class="footer" id="admin_actions">
       <label>Manage:</label>
-      <%# link_to "Plugins", "#", :title => "Manage plugins", :target => "_blank" %>
+      <%= link_to "Plugins", plugins_path, :title => "Manage plugins", :target => "_blank" %>
       <%= link_to "Feeds", notifications_path, :title => "Manage feeds", :target => "_blank" %>
       <%= link_to "Users", users_path, :title => "Manage users", :target => "_blank" %>
     </div>

@@ -31,8 +31,8 @@ class Account < ActiveRecord::Base
   end
   
   def create_default_plugin_installations
-    Plugin.shared.each do |shared|
-      plugin_installations.create(:plugin_id => shared.id) unless shared.name == 'Emoticons Formatter'
+    Plugin.defaults.each do |plugin|
+      plugin_installations.create(:plugin => plugin)
     end
   end
 end
