@@ -99,15 +99,15 @@
     <div class="footer" id="user_actions">
       <%= link_to "Upload", room_attachments_path(@room), :title => "Upload a file", :id => "upload" %>
       <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
-      <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m" %>
+      <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %>
       <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
     <% if admin? %>
     <div class="footer" id="admin_actions">
       <label>Manage:</label>
-      <%# link_to "Plugins", "#", :title => "Manage plugins" %>
-      <%= link_to "Feeds", notifications_path, :title => "Manage feeds" %>
-      <%= link_to "Users", users_path, :title => "Manage users" %>
+      <%# link_to "Plugins", "#", :title => "Manage plugins", :target => "_blank" %>
+      <%= link_to "Feeds", notifications_path, :title => "Manage feeds", :target => "_blank" %>
+      <%= link_to "Users", users_path, :title => "Manage users", :target => "_blank" %>
     </div>
     <% end %>
   </div>
