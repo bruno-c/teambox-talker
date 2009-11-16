@@ -766,6 +766,7 @@ div.panel
               width: 0
               border: 5px solid transparent
             #rooms
+              z-index: 10
               display: none
               position: absolute
               right: 0
@@ -788,11 +789,12 @@ div.panel
                 &:hover
                   background = !light_grey * 0.8 + !white * 0.2
                 &.current
-                  background = !grey
+                  background = !accent_colour
                   color = !white
                 &.back
                   background = !grey * 0.5 + !dark_grey * 0.5
                   color = !white
+                  +font_size("tiny")
             &:hover
               span.switch_rooms
                 background = !grey * 0.5 + !dark_grey * 0.5

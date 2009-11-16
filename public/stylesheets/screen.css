@@ -839,6 +839,7 @@ div.panel {
           width: 0;
           border: 5px solid transparent; }
         #sidebar #room div.header h3 span.switch_rooms #rooms {
+          z-index: 10;
           display: none;
           position: absolute;
           right: 0;
@@ -865,11 +866,12 @@ div.panel {
             #sidebar #room div.header h3 span.switch_rooms #rooms a:hover {
               background: #cccccc; }
             #sidebar #room div.header h3 span.switch_rooms #rooms a.current {
-              background: gray;
+              background: #269ed6;
               color: white; }
             #sidebar #room div.header h3 span.switch_rooms #rooms a.back {
               background: #606060;
-              color: white; }
+              color: white;
+              font-size: 10px; }
         #sidebar #room div.header h3 span.switch_rooms:hover span.switch_rooms {
           background: #606060; }
   #sidebar #room div.content ul.people {
