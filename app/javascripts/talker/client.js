@@ -23,28 +23,16 @@ Talker.Client = function(options) {
     // ugly shit but this will be refactored.
     switch(line.type){
       case 'message':
-        callbacks.onMessageReceived(line);
+        Talker.trigger('MessageReceived', line);
         break;
       case 'join':
-        callbacks.onJoin(line);
-        break;
       case 'users':
-        callbacks.onUsers(line);
-        break;
       case 'leave':
-        callbacks.onLeave(line);
-        break;
       case 'error':
-        callbacks.onError(line);
-        break;
       case 'back':
-        callbacks.onBack(line);
-        break;
       case 'idle':
-        callbacks.onIdle(line);
-        break;
       case 'connected':
-        callbacks.onConnected(line);
+        Talker.trigger('on' + line.type.charAt(1).toUpperCase() + line.type.substring(1, line.type.length-1))
         break;
       default:
         console.warn("Unknown message type (client error): " + line.type);

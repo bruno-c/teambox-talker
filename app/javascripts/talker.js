@@ -3,6 +3,10 @@ Talker = {};
 //= require "talker/orbited"
 //= require "talker/client"
 
+Talker.sendMessage = function(message) {
+  return Talker.trigger("MessageSend", {type:"message", content: message});
+};
+
 Talker.insertMessage = function(event, content) {
   var last_row = Talker.getLastRow();
   var last_author = Talker.getLastAuthor();
@@ -98,7 +102,3 @@ Talker.getRoomUsernames = function() {
     return user.name;
   })
 }
-
-Talker.sendMessage = function(message) {
-  return Talker.trigger("MessageSend", {type:"message", content: message});
-};
