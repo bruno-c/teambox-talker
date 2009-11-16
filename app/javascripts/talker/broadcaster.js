@@ -1,4 +1,8 @@
 Talker.Broadcaster = {
+  callbacks: ["Load", "MessageReceived",
+              "Join", "Leave", "Back", "Idle",
+              "Users", "Open", "Connected",
+              "Close", "Error"],
   plugins: [],
   
   // Notify all subscribers about an event
@@ -19,6 +23,13 @@ Talker.Broadcaster = {
     Talker.Broadcaster.broadcast(eventName, event);
   }
 };
+
+// Define all callbacks as a function on<EventName>
+_.each(Talker.Broadcaster.callbacks, function(callback){
+  Talker.Broadcaster["on" + callback] = function(data) {
+    Talker.Broadcaster.broadcast(callback, data);
+  };
+});
 
 Talker.plugins = Talker.Broadcaster.plugins;
 Talker.trigger = Talker.Broadcaster.broadcast;
