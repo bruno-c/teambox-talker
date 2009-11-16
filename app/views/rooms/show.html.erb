@@ -79,57 +79,38 @@
         <span class="switch_rooms hide_rooms">
           <b><!----></b>
           <div id="rooms">
-            <% @rooms.reject{ |room| room == @room }.each do |room| %>
-              <%= link_to room.name, room_path(room), :title => "#{room.name} : #{room.description}" %>
+            <% @rooms.each do |room| %>
+              <%= link_to h(room.name), room_path(room), :title => "#{room.name} : #{room.description}", :class => ("current" if room == @room) %>
             <% end %>
+            <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back" %>
           </div>
         </span>
       </h3>
     </div>
     <div class="content">
-      <p><%=h @room.description %></p>
-      <h4>Who's here?</h4>
+      <% form_tag @room ? search_room_path(@room) : search_path, :method => :get, :class => "search_form" do %>
+        <%= text_field_tag :q, @query, :class => "search", :type => "search", :results => 5, :placeholder => "Search logs ...", :size => 16, :accesskey => "s" %>
+        <%= link_to "Browse", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank", :class => "browse" %>
+        </p>
+      <% end %>
+      <h4 class="name">Who&#39;s here?</h4>
       <ul class="people" id="people"></ul>
     </div>
-    <div class="footer">
-      <%= link_to "Upload a file", room_attachments_path(@room), :title => "Upload a file", :id => "upload" %>
+    <div class="footer" id="user_actions">
+      <%= link_to "Upload", room_attachments_path(@room), :title => "Upload a file", :id => "upload" %>
       <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
       <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m" %>
       <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
-  </div>
-  
-  <!-- <% if admin? %>
-    <div id="admin" class="panel">
-      <div class="header">
-        <h3 class="name">Administration</h3>
-      </div>
-      <div class="footer">
-        <%= link_to "Users", users_path, :title => "Users", :accesskey => "u" %>
-        <%= link_to "Rooms", rooms_path, :title => "Rooms", :accesskey => "r" %>
-        <%= link_to "Plugins", plugins_path, :title => "Plugins", :accesskey => "p" %>
-        <%= link_to "Notifications", notifications_path, :title => "Notifications", :accesskey => "n" %>
-      </div>
+    <% if admin? %>
+    <div class="footer" id="admin_actions">
+      <label>Manage:</label>
+      <%# link_to "Plugins", "#", :title => "Manage plugins" %>
+      <%= link_to "Feeds", notifications_path, :title => "Manage feeds" %>
+      <%= link_to "Users", users_path, :title => "Manage users" %>
     </div>
-  <% end %> -->
-  
-  <%= render :partial => "logs/search_form" %>
-  
-  <div id="extra_links">
-    <%= image_tag "/images/icons/toggle-expand.png", :height => "16", :width => "16", :alt => "Toggle extra feature Links", :id => "toggle_extras"  %>
-    <br/>
-    <ul id="log_links" style="display: none">
-      <li><%= link_to "Room Log", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank" %></li>
-      <li><%= link_to "Rooms", rooms_path, :title => "Rooms", :accesskey => "r" %></li>
-      <% if admin? %>
-        <li><%= link_to "Users", users_path, :title => "Users", :accesskey => "u" %></li>
-        <li><%= link_to "Notifications", notifications_path, :title => "Notifications", :accesskey => "n" %></li>
-        <li><%= link_to "Plugins", plugins_path, :title => "Plugins", :accesskey => "p" %></li>
-      <% end %>
-    </ul>
+    <% end %>
   </div>
-  
-  
 <% end %>
 
 <div id="top_mask">
