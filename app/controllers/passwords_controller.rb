@@ -1,6 +1,6 @@
 class PasswordsController < ApplicationController
   before_filter :account_required
-  before_filter :login_required, :except => [:reset, :show, :create]
+  before_filter :registered_user_required, :except => [:reset, :show, :create]
   
   layout "dialog"
   

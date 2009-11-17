@@ -1,8 +1,7 @@
-require 'test_helper'
+require File.dirname(__FILE__) + "/../test_helper"
 
 class GuestsControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  def test_case_name
+    
   end
 end

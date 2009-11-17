@@ -32,6 +32,10 @@ class ApplicationController < ActionController::Base
       role_required(:staff)
     end
     
+    def registered_user_required
+      role_required(:registered)
+    end
+    
     def ssl_required?
       if Rails.env.production?
         current_account? && current_account.ssl || super

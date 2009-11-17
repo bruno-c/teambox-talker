@@ -1,25 +1,23 @@
 class RoomsController < ApplicationController
-  before_filter :login_required, :except => :show
   before_filter :account_required
+
+  before_filter :registered_user_required, :except => :show
   before_filter :admin_required, :only => [:edit, :update, :ouch]
-  before_filter :find_room, :only => [:edit, :update]
+
+  before_filter :find_room, :only => [:show, :edit, :update]
   
   def index
     @rooms = current_account.rooms
   end
   
   def show
-    if @token = params[:token]
+    if current_user.guest
       # Public room, came from a shared link
-      @room = current_account.rooms.find_by_public_token!(@token)
       @rooms = []
       @events = []
-      @public = true
     else
-      @room = find_room
       @rooms = current_account.rooms
       @events = @room.events.recent.reverse
-      @public = false
     end
     
     render :layout => "room"
