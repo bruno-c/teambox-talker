@@ -9,6 +9,7 @@ class GuestsController < ApplicationController
   end
   
   def disable
+    @room.guests.clear
     @room.clear_public_token!
     head :ok
   end
@@ -26,6 +27,7 @@ class GuestsController < ApplicationController
   
   def create
     @user = current_account.users.build(params[:user])
+    @user.room = @room
     @user.guest = true
     
     if @user.save

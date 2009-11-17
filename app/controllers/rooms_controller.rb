@@ -12,7 +12,11 @@ class RoomsController < ApplicationController
   
   def show
     if current_user.guest
-      # Public room, came from a shared link
+      # User is a guest, make sure we disable everything he shouldn't have access to
+      if current_user.room != @room
+        access_denied
+        return
+      end
       @rooms = []
       @events = []
     else

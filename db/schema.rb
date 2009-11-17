@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20091117142041) do
     t.string   "time_zone"
     t.boolean  "staff",                           :default => false
     t.boolean  "guest",                           :default => false
+    t.integer  "room_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

@@ -1,8 +1,10 @@
 class Room < ActiveRecord::Base
-  has_many :events
-  has_many :connections
+  has_many :events, :dependent => :destroy
+  has_many :connections, :dependent => :destroy
   has_many :users, :through => :connections
-  has_many :attachments, :class_name => "::Attachment" # FIX class w/ Paperclip::Attachment
+  has_many :guests, :class_name => "User", :dependent => :destroy
+  has_many :attachments, :class_name => "::Attachment", # FIX class w/ Paperclip::Attachment
+                         :dependent => :destroy
   belongs_to :account
   
   validates_presence_of :name

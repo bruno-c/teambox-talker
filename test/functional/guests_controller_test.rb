@@ -4,6 +4,7 @@ class GuestsControllerTest < ActionController::TestCase
   def setup
     subdomain :master
     @room = Room.first
+    @guest = users(:guest)
   end
   
   def test_enable
@@ -17,9 +18,12 @@ class GuestsControllerTest < ActionController::TestCase
   def test_disable
     login_as :quentin
     @room.create_public_token!
-    post :disable, :room_id => @room
-    assert_response :success, @response.body
+    assert_difference "User.count", -1 do
+      post :disable, :room_id => @room
+      assert_response :success, @response.body
+    end
     assert_nil assigns(:room).public_token
+    assert !User.exists?(@guest.id), "room guest accounts should be deleted"
   end
   
   def test_new
@@ -28,8 +32,14 @@ class GuestsControllerTest < ActionController::TestCase
     assert_equal @room, assigns(:room)
   end
   
+  def test_new_with_invalid_token
+    assert_raise(ActiveRecord::RecordNotFound) do
+      get :new, :token => "invalid"
+    end
+  end
+  
   def test_logged_in_new_redirects_to_room
-    login_as :quentin
+    login_as :guest
     get :new, :token => @room.create_public_token!
     assert_redirected_to @room
   end

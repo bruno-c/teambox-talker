@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
   
+  belongs_to :room # access restricted to this room if user is a guest, nil otherwise
+
   belongs_to :account
   has_many :plugins
   

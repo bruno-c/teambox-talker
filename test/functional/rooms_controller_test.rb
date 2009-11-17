@@ -19,6 +19,22 @@ class RoomsControllerTest < ActionController::TestCase
     assert_equal assigns(:room), @room
   end
   
+  def test_show_for_guest
+    login_as :guest
+    get :show, :id => @room
+    assert_response :success
+    assert_equal assigns(:room), @room
+    assert_equal [], assigns(:events)
+    assert_equal [], assigns(:rooms)
+  end
+  
+  def test_show_for_wrong_room_guest
+    users(:guest).update_attribute :room_id, nil
+    login_as :guest
+    get :show, :id => @room
+    assert_access_denied
+  end
+  
   def test_new
     get :new
     assert_response :success
