@@ -47,7 +47,7 @@ Talker.insertNotice = function(event, content) {
 
   element.appendTo('#log');
   
-  Talker.trigger('LineInsertion');
+  Talker.trigger('NoticeInsertion');
 }
 
 Talker.getLastRow = function() {
@@ -62,11 +62,11 @@ Talker.getMaxContentWidth = function() {
   return $('#chat_log').width() - $('#log tr td:first').width() - 25;
 }
 
-Talker.notify = function(event) {
+Talker.notify = function(event, content) {
   if (window.notifications && window.notifications.notifications_support()) {
     window.notifications.notify({
       title: Talker.getRoomName(),
-      description: h(event.user.name) + ": " + event.content
+      description: h(event.user.name) + ": " + (content || event.content)
     });
   }
 }
