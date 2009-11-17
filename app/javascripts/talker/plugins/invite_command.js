@@ -16,11 +16,4 @@ Talker.InviteCommand = function(options) {
       return false;
     }
   }
-  
-  self.onMessageReceived = function(event) {
-    if (event.content.substring(0,4) == '/me ') {
-      Talker.insertLine(event, h(event.user.name) + ' ' + shellwords(event.content).slice(1).join(" "));
-      return false;
-    }
-  }
 }

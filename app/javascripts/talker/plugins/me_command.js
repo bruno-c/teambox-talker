@@ -6,7 +6,7 @@ Talker.MeCommand = function() {
   
   self.onCommand = function(event) {
     if (event.command == "me") {
-      Talker.client.send({content: '/me ' + event.args.join(" ")});
+      Talker.client.send({content: event.args.join(" "), action: true});
       $('#msgbox').val('');
       Talker.trigger("MessageSent", event);
       return false;
@@ -14,8 +14,8 @@ Talker.MeCommand = function() {
   }
   
   self.onMessageReceived = function(event) {
-    if (event.content.substring(0,4) == '/me ') {
-      Talker.insertLine(event, h(event.user.name) + ' ' + shellwords(event.content).slice(1).join(" "));
+    if (event.action) {
+      Talker.insertLine(event, event.user.name + ' ' + event.content);
       return false;
     }
   }
