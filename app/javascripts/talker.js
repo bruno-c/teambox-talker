@@ -59,7 +59,7 @@ Talker.getLastAuthor = function() {
 }
 
 Talker.getMaxContentWidth = function() {
-  return $('#chat_log').width() - $('#log tr td:first').width() - 41;
+  return $('#chat_log').width() - $('#log tr td:first').width() - 25;
 }
 
 Talker.notify = function(event) {
