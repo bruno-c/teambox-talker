@@ -27,19 +27,22 @@ class Room < ActiveRecord::Base
   
   def send_message(message, options={})
     event = { :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options)
-    publish event.to_json
+    publish event
     event
   end
   
   def send_messages(messages, options={})
     events = messages.map { |message| { :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options) }
-    publish events.map(&:to_json).join("\n")
+    publish *events
     events
   end
   
-  def publish(data)
-    topic = MQ.new(self.class.amqp_connection).topic("talker.chat", :durable => true)
-    topic.publish data + "\n", :key => "talker.room.#{id}", :persistent => true
+  def topic
+    MQ.new(self.class.amqp_connection).topic("talker.chat", :durable => true)
+  end
+  
+  def publish(*events)
+    topic.publish events.map(&:to_json).join("\n") + "\n", :key => "talker.room.#{id}", :persistent => true
   end
   
   def self.amqp_connection

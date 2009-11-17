@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
   belongs_to :room # access restricted to this room if user is a guest, nil otherwise
 
   belongs_to :account
-  has_many :plugins
+  has_many :connections,    :dependent => :destroy
+  has_many :plugins,        :foreign_key => "author_id", :dependent => :destroy
   
   before_create             :create_talker_token
   
