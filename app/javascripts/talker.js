@@ -39,7 +39,7 @@ Talker.insertMessage = function(event, content) {
   Talker.trigger('MessageInsertion');
 }
 
-Talker.insertLine = function(event, content) {
+Talker.insertNotice = function(event, content) {
   var element = $('<tr/>').attr('author', h(event.user.name)).addClass('received').addClass('notice').addClass('user_' + event.user.id).addClass('event')
     .append($('<td/>').addClass('author'))
     .append($('<td/>').addClass('message')
