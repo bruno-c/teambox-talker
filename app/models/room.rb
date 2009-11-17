@@ -9,7 +9,7 @@ class Room < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => :account_id
   
   def create_public_token!
-    self.public_token = ActiveSupport::SecureRandom.hex(10)
+    self.public_token = ActiveSupport::SecureRandom.hex(3)
     save(false)
     public_token
   end

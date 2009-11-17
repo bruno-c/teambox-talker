@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
   
   map.connect "/ouch", :controller => "rooms", :action => "ouch"
-  map.public_room "/r/:token", :controller => "rooms", :action => "show"
+  map.public_room "/r/:token", :controller => "guests", :action => "show"
   
   map.resources :users
   map.resources :invites, :member => { :resend => :post }
@@ -18,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :rooms, :has_many => [:messages, :attachments]
   map.resources :pastes
   map.resources :feeds
-  map.resources :guests
+  map.resource :guest
   map.resource :admin, :controller => "admin"
   map.resources :plugins, :has_one => :installation
   

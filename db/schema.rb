@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20091116194344) do
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "public_token"
   end
 
   create_table "users", :force => true do |t|
