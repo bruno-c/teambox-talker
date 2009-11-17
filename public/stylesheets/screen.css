@@ -278,8 +278,8 @@ html[xmlns] .clearfix {
     #nav p.utilities a {
       color: white; }
       #nav p.utilities a.avatar img {
-        height: 16px;
-        width: 16px;
+        height: 18px;
+        width: 18px;
         position: relative;
         top: 3px; }
 
@@ -328,8 +328,8 @@ body#rooms_controller.show #content {
         #rooms li div.panel div.content p.people label {
           color: gray; }
         #rooms li div.panel div.content p.people img {
-          height: 16px;
-          width: 16px;
+          height: 18px;
+          width: 18px;
           position: relative;
           top: 3px; }
 
@@ -357,8 +357,8 @@ body#rooms_controller.show #content {
         #plugins>div li div.panel div.content p.people label {
           color: gray; }
         #plugins>div li div.panel div.content p.people img {
-          height: 16px;
-          width: 16px;
+          height: 18px;
+          width: 18px;
           position: relative;
           top: 3px; }
       #plugins>div li.enabled {
@@ -613,9 +613,9 @@ a.button, button {
   background: white;
   padding: 5px 10px 5px;
   margin: 0 0 60px 0;
-  box-shadow: 1px 1px 2px #d2d2d2;
-  -webkit-box-shadow: 1px 1px 2px #d2d2d2;
-  -moz-box-shadow: 1px 1px 2px #d2d2d2; }
+  box-shadow: 0px 0px 16px #a0a0a0;
+  -webkit-box-shadow: 0px 0px 16px #a0a0a0;
+  -moz-box-shadow: 0px 0px 16px #a0a0a0; }
   #chat_log table {
     width: 100%; }
     #chat_log table tr {
@@ -635,8 +635,8 @@ a.button, button {
           color: white;
           text-decoration: none; }
         #chat_log table tr td img.avatar {
-          height: 16px;
-          width: 16px;
+          height: 18px;
+          width: 18px;
           position: relative;
           top: 3px; }
         #chat_log table tr td.author {
@@ -935,100 +935,104 @@ div.panel {
         filter: alpha(opacity=100);
         opacity: 1;
         -moz-opacity: 1; }
-  #sidebar #room .description {
-    line-height: 14px;
-    font-size: 12px; }
-  #sidebar #room div.header {
-    position: relative; }
-    #sidebar #room div.header h3 {
-      cursor: pointer; }
-      #sidebar #room div.header h3 span.switch_rooms {
-        position: relative;
-        top: 5px;
-        background: #494949;
-        display: inline-block;
-        height: 20px;
-        width: 20px;
-        border-radius: 3px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px; }
-        #sidebar #room div.header h3 span.switch_rooms.show_rooms b {
-          border-bottom: 5px solid white;
-          border-top: none; }
-        #sidebar #room div.header h3 span.switch_rooms.hide_rooms b {
-          border-bottom: none;
-          border-top: 5px solid white; }
-        #sidebar #room div.header h3 span.switch_rooms b {
+  #sidebar #room {
+    box-shadow: 0px 0px 8px #b1b1b1;
+    -webkit-box-shadow: 0px 0px 8px #b1b1b1;
+    -moz-box-shadow: 0px 0px 8px #b1b1b1; }
+    #sidebar #room .description {
+      line-height: 14px;
+      font-size: 12px; }
+    #sidebar #room div.header {
+      position: relative; }
+      #sidebar #room div.header h3 {
+        cursor: pointer; }
+        #sidebar #room div.header h3 span.switch_rooms {
           position: relative;
-          top: 7px;
-          left: 5px;
-          display: block;
-          height: 0;
-          width: 0;
-          border: 5px solid transparent; }
-        #sidebar #room div.header h3 span.switch_rooms #rooms {
-          z-index: 10;
-          display: none;
-          position: absolute;
-          right: 0;
-          top: 21px;
-          padding: 3px 3px 2px;
-          background: #606060;
+          top: 5px;
+          background: #494949;
+          display: inline-block;
+          height: 20px;
+          width: 20px;
           border-radius: 3px;
           -moz-border-radius: 3px;
           -webkit-border-radius: 3px; }
-          #sidebar #room div.header h3 span.switch_rooms #rooms a {
-            min-width: 80px;
-            margin: 0 0 1px;
-            font-size: 12px;
+          #sidebar #room div.header h3 span.switch_rooms.show_rooms b {
+            border-bottom: 5px solid white;
+            border-top: none; }
+          #sidebar #room div.header h3 span.switch_rooms.hide_rooms b {
+            border-bottom: none;
+            border-top: 5px solid white; }
+          #sidebar #room div.header h3 span.switch_rooms b {
+            position: relative;
+            top: 7px;
+            left: 5px;
             display: block;
-            padding: 5px;
-            line-height: 1;
-            background: white;
-            color: #1c76a0;
-            white-space: nowrap;
-            text-decoration: none;
-            border-radius: 2px;
-            -moz-border-radius: 2px;
-            -webkit-border-radius: 2px; }
-            #sidebar #room div.header h3 span.switch_rooms #rooms a:hover {
-              background: #cccccc; }
-            #sidebar #room div.header h3 span.switch_rooms #rooms a.current {
-              background: #269ed6;
-              color: white; }
-            #sidebar #room div.header h3 span.switch_rooms #rooms a.back {
-              background: #606060;
-              color: white;
-              font-size: 10px; }
-        #sidebar #room div.header h3 span.switch_rooms:hover span.switch_rooms {
-          background: #606060; }
-  #sidebar #room div.content ul.people {
-    margin: 0 0 -5px;
-    overflow: hidden; }
-    #sidebar #room div.content ul.people li {
-      display: block;
-      float: left;
-      margin: 0 5px 5px 0;
-      padding: 2px 5px;
-      background: #f4f4f4;
-      border-radius: 3px;
-      -moz-border-radius: 3px;
-      -webkit-border-radius: 3px;
-      font-size: 12px; }
-      #sidebar #room div.content ul.people li img {
-        height: 16px;
-        width: 16px;
-        position: relative;
-        top: 3px; }
-  #sidebar #room div.content form {
-    margin: 0; }
-    #sidebar #room div.content form.search_form {
-      padding-bottom: 10px; }
-      #sidebar #room div.content form.search_form a.browse {
+            height: 0;
+            width: 0;
+            border: 5px solid transparent; }
+          #sidebar #room div.header h3 span.switch_rooms #rooms {
+            z-index: 10;
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 21px;
+            padding: 3px 3px 2px;
+            background: #606060;
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px; }
+            #sidebar #room div.header h3 span.switch_rooms #rooms a {
+              min-width: 80px;
+              margin: 0 0 1px;
+              font-size: 12px;
+              display: block;
+              padding: 5px;
+              line-height: 1;
+              background: white;
+              color: #1c76a0;
+              white-space: nowrap;
+              text-decoration: none;
+              border-radius: 2px;
+              -moz-border-radius: 2px;
+              -webkit-border-radius: 2px; }
+              #sidebar #room div.header h3 span.switch_rooms #rooms a:hover {
+                background: #cccccc; }
+              #sidebar #room div.header h3 span.switch_rooms #rooms a.current {
+                background: #269ed6;
+                color: white; }
+              #sidebar #room div.header h3 span.switch_rooms #rooms a.back {
+                background: #606060;
+                color: white;
+                font-size: 10px; }
+          #sidebar #room div.header h3 span.switch_rooms:hover span.switch_rooms {
+            background: #606060; }
+    #sidebar #room div.content ul.people {
+      margin: 0 0 -5px;
+      overflow: hidden; }
+      #sidebar #room div.content ul.people li {
+        display: block;
+        float: left;
+        margin: 0 5px 5px 0;
+        padding: 2px 5px;
+        background: #f4f4f4;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
         font-size: 12px; }
-  #sidebar #room div.footer#admin_actions label {
-    font-size: 10px;
-    color: gray; }
+        #sidebar #room div.content ul.people li img {
+          height: 18px;
+          width: 18px;
+          position: relative;
+          top: 3px; }
+    #sidebar #room div.content form {
+      margin: 0; }
+      #sidebar #room div.content form.search_form {
+        padding-bottom: 10px; }
+        #sidebar #room div.content form.search_form a.browse {
+          font-size: 12px; }
+    #sidebar #room div.footer#admin_actions label {
+      font-size: 10px;
+      color: gray; }
 
 #footer {
   margin: 30px 0 10px 0;
