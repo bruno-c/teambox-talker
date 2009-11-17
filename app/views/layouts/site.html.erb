@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  
+  <!--[if IE]><link rel="SHORTCUT ICON" href="<%= root_url + 'images/favicon.ico' %>" /><![endif]-->
+  <![if !IE]>
+    <link rel="icon" type="image/vnd.microsoft.icon" href="<%= root_url + 'images/favicon.ico' %>" />
+    <link rel="fluid-icon" href="<%= root_url + 'images/favicon.png' %>" title="Talker" />
+  <![endif]>
+  
+  <title><%= strip_tags @title || "Home" %> &#171; TalkerApp</title>
+  <%= stylesheet_link_tag "public.css", :media => "screen, projection" %>
+  <%= stylesheet_link_tag "print.css", :media => "print" %>
+  <!--[if IE]><%= stylesheet_link_tag "ie.css", :media => "screen, projection" %><![endif]-->
+  <%= yield :head %>
+</head>
+
+<body id="<%= @controller.controller_name %>_controller" class="<%= current_view %>">
+
+<%= yield %>
+
+</body>
+</html>
