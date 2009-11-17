@@ -1089,6 +1089,10 @@ div.info {
   div.info p {
     margin-bottom: 4px; }
 
+#guest_login .user_list {
+  padding: 10px;
+  margin-top: -20px; }
+
 #admin div.stats {
   float: right;
   color: gray; }

@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   # anything else you want your user to change should be added here.
   attr_accessible :email, :name, :password, :password_confirmation, :time_zone
   
+  named_scope :registered, :conditions => { :guest => false }
+  
   
   acts_as_state_machine :initial => :pending
   state :pending

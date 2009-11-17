@@ -3,12 +3,12 @@ $(function() {
   if (!$.browser.safari) {
     $("input[type=text], input[type=search]").
       focus(function() { 
-        if ($(this).val() == $(this).attr('placeholder')) {
+        if ($(this).attr('placeholder') && $(this).val() == $(this).attr('placeholder')) {
           $(this).val('').removeClass("placeholder");
         }
       }).
       blur(function() {
-        if ($(this).val() == '' || $(this).val() == $(this).attr('placeholder')) {
+        if ($(this).attr('placeholder') && ($(this).val() == '' || $(this).val() == $(this).attr('placeholder'))) {
           $(this).addClass("placeholder").val($(this).attr('placeholder'));
         } 
       }).

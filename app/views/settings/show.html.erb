@@ -26,31 +26,33 @@
       </p>
     </fieldset>
     
-    <fieldset id="password">
-      <h3>Change Your Password</h3>
-      <p>
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-      </p>
-      <p>
-        <%= f.label :password_confirmation, "Confirmation" %>
-        <%= f.password_field :password_confirmation %>
-      </p>
-      <p class="indent submit">
-        <%= ok_button "Change password" %>
-      </p>
-    </fieldset>
+    <% if registered? %>
+      <fieldset id="password">
+        <h3>Change Your Password</h3>
+        <p>
+          <%= f.label :password %>
+          <%= f.password_field :password %>
+        </p>
+        <p>
+          <%= f.label :password_confirmation, "Confirmation" %>
+          <%= f.password_field :password_confirmation %>
+        </p>
+        <p class="indent submit">
+          <%= ok_button "Change password" %>
+        </p>
+      </fieldset>
     
-    <fieldset id="api">
-      <h3>Your Talker API Token</h3>
-      <p class="indent">
-        Your Talker token is like a password, you shouldn't show it or share it with anyone.
-        You can use it to access the API or connect directly to the Talker server.
-      </p>
-      <p class="indent">
-        <strong><%=h @user.talker_token %></strong>
-      </p>
-    </fieldset>
+      <fieldset id="api">
+        <h3>Your Talker API Token</h3>
+        <p class="indent">
+          Your Talker token is like a password, you shouldn't show it or share it with anyone.
+          You can use it to access the API or connect directly to the Talker server.
+        </p>
+        <p class="indent">
+          <strong><%=h @user.talker_token %></strong>
+        </p>
+      </fieldset>
+    <% end %>
 
   <% end %>
 
