@@ -62,20 +62,15 @@
       Talker.trigger("Resize");
       
       $(window).bind('beforeunload', function() { Talker.client.reset() });
-      $("a#leave").click(function() {
-        var link = this;
-        Talker.client.close(function() { window.location = link.href; });
-        return false;
-      });
     });
   //]]>
   </script>
 <% end %>
 
 <% content_for :sidebar do %>
-  <div id="logo_div" style="text-align: center; position: relative; top: -32px; left: 16px ; float: right; opacity: 0.5; ">
+  <!-- <div id="logo_div" style="text-align: center; position: relative; top: -32px; left: 16px ; float: right; opacity: 0.5; ">
     <%= image_tag "/images/logo.png", :height => "54", :width => "80", :alt => "Talker Fish Loves Thee" %>
-  </div>
+  </div> -->
 
   <div id="error" class="flash error" style="display:none"></div>
 
@@ -98,7 +93,6 @@
       <% form_tag @room ? search_room_path(@room) : search_path, :method => :get, :class => "search_form" do %>
         <%= text_field_tag :q, @query, :class => "search", :type => "search", :results => 5, :placeholder => "Search logs ...", :size => 16, :accesskey => "s" %>
         <%= link_to "Browse", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank", :class => "browse" %>
-        </p>
       <% end %>
       <h4 class="name">Who&#39;s here?</h4>
       <ul class="people" id="people"></ul>
@@ -118,6 +112,9 @@
     </div>
     <% end %>
   </div>
+  <a id="logo" href="http://talkerapp.com">
+    Talker <%= image_tag "/images/favicon.png", :height => "18", :width => "18", :alt => "Talker Fish Loves Thee" %> Group Chat
+  </a>
 <% end %>
 
 <div id="top_mask">
