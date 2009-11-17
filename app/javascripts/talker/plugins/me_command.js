@@ -15,7 +15,7 @@ Talker.MeCommand = function() {
   
   self.onMessageReceived = function(event) {
     if (event.action) {
-      Talker.insertLine(event, event.user.name + ' ' + event.content);
+      Talker.insertNotice(event, event.user.name + ' ' + event.content);
       return false;
     }
   }
