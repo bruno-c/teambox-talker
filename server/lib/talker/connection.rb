@@ -24,7 +24,7 @@ module Talker
       
       case message["type"]
       when "connect"
-        authenticate message["room"], message["token"], message
+        authenticate message["room"], message["token"], message["user"]
       when "message"
         broadcast_message message, message.delete("to")
       when "close"
@@ -45,7 +45,7 @@ module Talker
     
     ## Message types
     
-    def authenticate(room, token, options)
+    def authenticate(room, token, user_info)
       if room.nil? || token.nil?
         raise ProtocolError, "Authentication failed"
       end
@@ -53,7 +53,7 @@ module Talker
       room = room.to_i
       token = token.to_s
       
-      @server.authenticate(room, token) do |user|
+      @server.authenticator.authenticate(room, token, user_info) do |user|
         
         if user
           begin
