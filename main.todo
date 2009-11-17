@@ -1,12 +1,15 @@
+Blocking Bugs:
+- notifications duplicates
+
 Functionalities:
 ✓ Edit rooms
 - Delete Rooms
 - Open Rooms
 - lock down rooms
 ✓ /clear
-- /me
-- /invite
-- /help
+✓ /me
+✓ /invite
+✓ /help
 
 Documentation:
 - Room help link

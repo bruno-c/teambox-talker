@@ -1,17 +1,9 @@
 $(function() {
-  
-  $("#room a#edit").click(function() {
-    $("#room").hide();
-    $("#edit_room").show();
-    return false;
+  // Room name dropdown
+  $('#room_name').click(function() {
+    $('#rooms').toggle();
+    $(this).find('span.switch_rooms').toggleClass('hide_rooms').toggleClass('show_rooms');
   });
-  $("#edit_room form").
-    submitWithAjax().
-    find("a.cancel").click(function() {
-      $("#room").show();
-      $("#edit_room").hide();
-      return false;
-    });
   
   // File Upload
   if ($("a#upload")[0]) {

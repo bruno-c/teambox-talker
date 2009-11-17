@@ -42,12 +42,18 @@ class InvitesController < ApplicationController
         flash[:error] += "<p><strong>" + email + "</strong>: " + user.errors.full_messages.to_sentence + "</p>"
       end
     end
-    
-    if success_count > 0
-      flash[:notice] = "Yeah! #{success_count} user(s) invited! You can now edit permissions."
-      redirect_to users_path
-    else
-      render :index
+
+    respond_to do |format|
+      if success_count > 0
+        format.html {
+          flash[:notice] = "Yeah! #{success_count} user(s) invited! You can now edit permissions."
+          redirect_to users_path
+        }
+        format.js
+      else
+        format.html { render :index }
+        format.js   { render :error }
+      end
     end
   end
   

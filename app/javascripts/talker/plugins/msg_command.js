@@ -2,7 +2,7 @@ Talker.MsgCommand = function() {
   var self = this;
   
   self.command = 'msg';
-  self.usage = '/msg username This is your message. \n /msg @username This is your message';
+  self.usage = '/msg @username This is your message';
   
   self.onCommand = function(event) {
     if (event.command == "msg") {

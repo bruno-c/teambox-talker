@@ -25,7 +25,8 @@ $(function() {
           break;
           
         case 27: // esc
-          $('#msgbox').val('');
+          $('#msgbox').focus().val('');
+          $(document).trigger('close.facebox');
           break;
       }
     });
