@@ -5,7 +5,7 @@ class GuestsController < ApplicationController
   layout "dialog"
   
   def enable
-    render :json => { :url => @room.create_public_token! }
+    render :json => { :url => public_room_url(@room.create_public_token!) }
   end
   
   def disable

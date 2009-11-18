@@ -21,6 +21,10 @@ class Room < ActiveRecord::Base
     save(false)
   end
   
+  def guest_allowed?
+    !!public_token
+  end
+  
   def to_json(options = {})
     super(options.merge(:only => [:name, :id]))
   end

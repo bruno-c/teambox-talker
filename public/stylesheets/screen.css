@@ -1026,9 +1026,11 @@ div.panel {
       padding-bottom: 10px; }
       #sidebar #room div.content form.search_form a.browse {
         font-size: 12px; }
-  #sidebar #room div.footer#admin_actions label {
+  #sidebar #room div.footer label {
     font-size: 10px;
     color: gray; }
+  #sidebar #room div.footer #guest_url {
+    font-size: 10px; }
 
 #footer {
   margin: 30px 0 10px 0;

@@ -108,8 +108,16 @@
       <%= link_to "Plugins", plugins_path, :title => "Manage plugins", :target => "_blank" %>
       <%= link_to "Feeds", feeds_path, :title => "Manage feeds", :target => "_blank" %>
       <%= link_to "Users", users_path, :title => "Manage users", :target => "_blank" %>
-      <%= link_to_remote "Enable Guests", :url => enable_room_guest_path(@room) %>
-      <%= link_to_remote "Disable Guests", :url => disable_room_guest_path(@room) %>
+    </div>
+    <div class="footer" id="guest_access">
+      <label title="Guest Access allow people to access this room without creating a user account">Guest Access:</label>
+      <span class="enable" <% if @room.guest_allowed? %>style="display:none"<% end %>>
+        <%= link_to "Enable", enable_room_guest_path(@room) %>
+      </span>
+      <span class="disable" <% unless @room.guest_allowed? %>style="display:none"<% end %>>
+        <%= link_to "Disable", disable_room_guest_path(@room) %><br/>
+        <span id="guest_url" title="Send this link to someone to invite him to this room"><%= public_room_url(@room.public_token) if @room.public_token %></span>
+      </span>
     </div>
     <% end %>
   </div>

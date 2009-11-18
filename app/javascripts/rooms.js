@@ -28,4 +28,25 @@ $(function() {
     });
   }
   
+  $("div#guest_access").
+    find(".enable a").
+      click(function() {
+        var link = $(this);
+        $.post(this.href, function(data) {
+          $("#guest_url").text(data.url);
+          link.parent().hide().next(".disable").show();
+        }, "json");
+        return false;
+      }).
+    end().
+    find(".disable a").
+      click(function() {
+        var link = $(this);
+        $.post(this.href, function() {
+          link.parent().hide().prev(".enable").show();
+        });
+        return false;
+      }).
+    end();
+    
 });
