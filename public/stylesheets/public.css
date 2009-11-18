@@ -261,6 +261,12 @@ html[xmlns] .clearfix {
         text-decoration: none; }
       #content #navigation li a:hover {
         text-decoration: underline; }
+    #content #navigation li.contextual {
+      font-size: 10px;
+      margin-top: 4px;
+      color: #a8a8a8; }
+    #content #navigation li.dev {
+      float: right; }
   #content div.feature {
     width: 230px;
     height: 120px;

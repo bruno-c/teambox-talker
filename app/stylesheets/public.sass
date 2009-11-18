@@ -121,7 +121,6 @@ html[xmlns] .clearfix
   padding: 0
   margin: auto
   
-  
 #content
   background = !white - !black * 0.1
   text-align: left
@@ -145,6 +144,12 @@ html[xmlns] .clearfix
         text-decoration: none
       a:hover
         text-decoration: underline
+    li.contextual
+      +font_size("tiny")
+      margin-top: 4px
+      color = !black  + !white * 0.66
+    li.dev
+      float: right
   div.feature
     width: 230px
     height: 120px
