@@ -1035,6 +1035,13 @@ div.panel {
       color: gray; }
     #sidebar #room div.footer #guest_url {
       font-size: 10px; }
+  #sidebar #beta_message {
+    margin-top: 40px;
+    clear: both;
+    height: 300px;
+    overflow: auto; }
+    #sidebar #beta_message p {
+      font-size: 10px; }
 
 #footer {
   margin: 30px 0 10px 0;
