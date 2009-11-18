@@ -253,8 +253,7 @@ html[xmlns] .clearfix {
       display: inline-block;
       padding: 5px 10px 5px 10px;
       color: #ff8405;
-      font-weight: bold;
-      font-family: "Courier New", monospace; }
+      font-weight: bold; }
       #content #navigation li a {
         font-weight: bold;
         color: white;
