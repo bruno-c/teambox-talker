@@ -20,6 +20,6 @@ $(function() {
 });
 
 function avatarUrl(user, size) {
-  size = size || 16;
+  size = size || 18;
   return "/avatar/" + MD5(user.email || "") + ".jpg?s=" + size;
 }

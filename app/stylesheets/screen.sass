@@ -161,8 +161,8 @@ html[xmlns] .clearfix
       color = !white
       &.avatar
         img
-          height: 16px
-          width: 16px
+          height: 18px
+          width: 18px
           position: relative
           top: 3px
 
@@ -214,8 +214,8 @@ body#rooms_controller.show
               label
                 color = !grey
               img
-                height: 16px
-                width: 16px
+                height: 18px
+                width: 18px
                 position: relative
                 top: 3px
 
@@ -249,8 +249,8 @@ body#rooms_controller.show
                 label
                   color = !grey
                 img
-                  height: 16px
-                  width: 16px
+                  height: 18px
+                  width: 18px
                   position: relative
                   top: 3px
       &.enabled
@@ -488,7 +488,7 @@ a.button, button
   background = !white
   padding: 5px 10px 5px
   margin: 0 0 60px 0
-  +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
+  +box_shadow(0, 0, 16, !grey * 0.66 + !white * 0.3)
   table
     width: 100%
     tr
@@ -506,8 +506,8 @@ a.button, button
           color = !white
           text-decoration: none
         img.avatar
-          height: 16px
-          width: 16px
+          height: 18px
+          width: 18px
           position: relative
           top: 3px
         &.author
@@ -809,6 +809,7 @@ div.panel
       img
         +opacity(100)
   #room
+    +box_shadow(0, 0, 8, !light_grey * 0.66 + !white * 0.20)
     .description
       line-height: 14px
       +font_size("small")
@@ -887,8 +888,8 @@ div.panel
             +rounded_corners("all", 3)
             +font_size("small")
             img
-              height: 16px
-              width: 16px
+              height: 18px
+              width: 18px
               position: relative
               top: 3px
         form

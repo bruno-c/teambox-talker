@@ -1,0 +1,159 @@
+@import reset.sass
+@import colors.sass
+@import public_colors.sass
+@import styling.sass
+@import facebox.sass
+
+body
+  height: 100%
+  position: relative
+  font-family: helvetica, arial, sans-serif
+  +font_size("medium")
+  background = !background_colour
+  color = black
+  text-align: center
+  &:.blank
+    background-color = white
+*
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 0
+a
+  color = black
+  outline: none
+  &.negative
+    color = !colour_negative
+  &.disabled
+    color = !grey
+    text-decoration: none
+    cursor: default
+  &:hover
+    text-decoration: none
+h1
+  font: 54px "Courier New", arial, sans-serif
+  font-weight: bold
+  letter-spacing: 2px
+  +text_shadow(-1, -1, 2, !off_white)
+  img
+    margin: 12px 20px -8px -7px
+    position: relative
+    left: -6px
+h2
+  +font_size("xxxlarge")
+  margin: 0 0 1em
+  font-weight: bold
+h3
+  +font_size("xxlarge")
+  margin: 0 0 0.66em
+  color = !dark_grey
+h4
+  +font_size("xlarge")
+  font-weight: bold
+  margin: 0 0 0.5em
+p
+  color = !dark_grey
+  &.more
+    margin: 0 0 10px
+  &.pagination
+    overflow: hidden
+    a
+      font-weight: bold
+      text-decoration: none
+      display: block
+      padding: 0 10px
+      height: 22px
+      line-height: 22px
+      +rounded_corners("all", 3)
+      border = 1px "solid" !light_grey * 0.25 + white * 0.75
+      border-right = 1px "solid" !light_grey * 0.5 + white * 0.5
+      border-bottom = 1px "solid" !light_grey * 0.5 + white * 0.5
+      &:hover
+        background = !accent_colour * 0.5 + white * 0.5
+      b
+        display: block
+      &.previous
+        float: left
+        b
+          float: left
+          border: 5px solid transparent
+          border-left: none
+          border-right = 8px "solid" !light_grey
+          margin: 5px 5px 0 0
+      &.next
+        float: right
+        b
+          float: right
+          border: 5px solid transparent
+          border-right: none
+          border-left = 8px "solid" !light_grey
+          margin: 5px 0 0 5px
+input, select, textarea
+  font-family: helvetica, arial, sans-serif
+  +font_size("small")
+input.placeholder
+  color = !light_grey
+em
+  font-style: oblique
+hr
+  height: 0
+  border: none
+  border-top = 1px "solid" !light_grey
+  margin: 0 0 1.5em
+pre
+  font-family: monospace
+
+.clearfix
+  display: inline-block
+  &:after
+    content: "."
+    display: block
+    clear: both
+    visibility: hidden
+    line-height: 0
+    height: 0
+html[xmlns] .clearfix
+  display: block
+* html .clearfix
+  height: 1%
+
+
+#header
+  text-align: left
+  width: 890px
+  padding: 0
+  margin: auto
+  
+#content
+  background = !white - !black * 0.1
+  text-align: left
+  width: 890px
+  height: 600px
+  padding: 0
+  margin: auto
+  #navigation
+    list-style: none
+    background = !dark_grey * 0.66
+    +box_shadow(0, 0, 15, !dark_grey)
+    li
+      display: inline-block
+      padding: 5px 10px 5px 10px
+      color = !accent_colour
+      font-weight: bold
+      font-family: "Courier New", monospace
+      a
+        font-weight: bold
+        color: white
+        text-decoration: none
+      a:hover
+        text-decoration: underline
+    li.contextual
+      +font_size("tiny")
+      margin-top: 4px
+      color = !black  + !white * 0.66
+    li.dev
+      float: right
+  div.feature
+    width: 230px
+    height: 120px
+    float: left
+    margin: 30px 30px 0px 30px
+    h2
+      margin: 0px

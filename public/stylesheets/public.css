@@ -1,0 +1,276 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, pre, a, abbr, acronym, address, code, del, dfn, em, img, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption, tbody, tfoot, thead, tr {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline; }
+
+body {
+  line-height: 1.5; }
+
+blockquote, q {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  quotes: "" ""; }
+
+blockquote:before, q:before, blockquote:after, q:after {
+  content: ""; }
+
+th, td, caption {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+table {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle; }
+
+a img {
+  border: none; }
+
+#facebox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  text-align: left;
+  box-shadow: 0px 0px 27px gray;
+  -webkit-box-shadow: 0px 0px 27px gray;
+  -moz-box-shadow: 0px 0px 27px gray;
+  border: 1px solid #AAA; }
+  #facebox .popup {
+    position: relative; }
+  #facebox table {
+    border-collapse: collapse; }
+  #facebox td {
+    border-bottom: 0;
+    padding: 0; }
+  #facebox .body {
+    padding: 10px;
+    background: #fff;
+    width: 370px; }
+  #facebox .loading, #facebox .image {
+    text-align: center; }
+  #facebox img {
+    border: 0;
+    margin: 0; }
+  #facebox .footer {
+    border-top: 1px solid #DDDDDD;
+    padding-top: 5px;
+    margin-top: 10px;
+    text-align: right; }
+
+#facebox_overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%; }
+
+.facebox_hide {
+  z-index: -100; }
+
+.facebox_overlayBG {
+  background-color: #000;
+  z-index: 999; }
+
+* html #facebox_overlay {
+  position: absolute;
+  height: expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px'); }
+
+body {
+  height: 100%;
+  position: relative;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 14px;
+  background: #0085c4;
+  color: black;
+  text-align: center; }
+  body:.blank {
+    background-color: white; }
+
+* {
+  text-shadow: rgba(0, 0, 0, 0.01) 0 0 0; }
+
+a {
+  color: black;
+  outline: none; }
+  a.negative {
+    color: #924f6b; }
+  a.disabled {
+    color: gray;
+    text-decoration: none;
+    cursor: default; }
+  a:hover {
+    text-decoration: none; }
+
+h1 {
+  font: 54px "Courier New", arial, sans-serif;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-shadow: -1px -1px 2px #f0f0f0; }
+  h1 img {
+    margin: 12px 20px -8px -7px;
+    position: relative;
+    left: -6px; }
+
+h2 {
+  font-size: 22px;
+  margin: 0 0 1em;
+  font-weight: bold; }
+
+h3 {
+  font-size: 20px;
+  margin: 0 0 0.66em;
+  color: #404040; }
+
+h4 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 0.5em; }
+
+p {
+  color: #404040; }
+  p.more {
+    margin: 0 0 10px; }
+  p.pagination {
+    overflow: hidden; }
+    p.pagination a {
+      font-weight: bold;
+      text-decoration: none;
+      display: block;
+      padding: 0 10px;
+      height: 22px;
+      line-height: 22px;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      border: 1px solid #efefef;
+      border-right: 1px solid #dfdfdf;
+      border-bottom: 1px solid #dfdfdf; }
+      p.pagination a:hover {
+        background: #fec181; }
+      p.pagination a b {
+        display: block; }
+      p.pagination a.previous {
+        float: left; }
+        p.pagination a.previous b {
+          float: left;
+          border: 5px solid transparent;
+          border-left: none;
+          border-right: 8px solid silver;
+          margin: 5px 5px 0 0; }
+      p.pagination a.next {
+        float: right; }
+        p.pagination a.next b {
+          float: right;
+          border: 5px solid transparent;
+          border-right: none;
+          border-left: 8px solid silver;
+          margin: 5px 0 0 5px; }
+
+input, select, textarea {
+  font-family: helvetica, arial, sans-serif;
+  font-size: 12px; }
+
+input.placeholder {
+  color: silver; }
+
+em {
+  font-style: oblique; }
+
+hr {
+  height: 0;
+  border: none;
+  border-top: 1px solid silver;
+  margin: 0 0 1.5em; }
+
+pre {
+  font-family: monospace; }
+
+.clearfix {
+  display: inline-block; }
+  .clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0; }
+
+html[xmlns] .clearfix {
+  display: block; }
+
+* html .clearfix {
+  height: 1%; }
+
+#header {
+  text-align: left;
+  width: 890px;
+  padding: 0;
+  margin: auto; }
+
+#content {
+  background: white;
+  text-align: left;
+  width: 890px;
+  height: 600px;
+  padding: 0;
+  margin: auto; }
+  #content #navigation {
+    list-style: none;
+    background: #2a2a2a;
+    box-shadow: 0px 0px 15px #404040;
+    -webkit-box-shadow: 0px 0px 15px #404040;
+    -moz-box-shadow: 0px 0px 15px #404040; }
+    #content #navigation li {
+      display: inline-block;
+      padding: 5px 10px 5px 10px;
+      color: #ff8405;
+      font-weight: bold;
+      font-family: "Courier New", monospace; }
+      #content #navigation li a {
+        font-weight: bold;
+        color: white;
+        text-decoration: none; }
+      #content #navigation li a:hover {
+        text-decoration: underline; }
+    #content #navigation li.contextual {
+      font-size: 10px;
+      margin-top: 4px;
+      color: #a8a8a8; }
+    #content #navigation li.dev {
+      float: right; }
+  #content div.feature {
+    width: 230px;
+    height: 120px;
+    float: left;
+    margin: 30px 30px 0px 30px; }
+    #content div.feature h2 {
+      margin: 0px; }

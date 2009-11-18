@@ -7,6 +7,9 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'accounts', :action => 'new'
   map.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
   
+  map.features '/features', :controller => 'site', :action => 'features'
+  map.frontend_api '/frontend_api', :controller => 'site', :action => 'frontend_api'
+  
   map.connect "/ouch", :controller => "rooms", :action => "ouch"
   
   map.public_room "/r/:token", :controller => "guests", :action => "new"
