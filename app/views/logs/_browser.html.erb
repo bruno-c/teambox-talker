@@ -1,0 +1,7 @@
+<div class="log_browser <%= position %>">
+  <% if @date %>
+    <%= link_to_log @room, @date - 1.day, :prefix => "&laquo;", :class => "prev" %>
+    <%= link_to_log @room, @date + 1.day, :postfix => "&raquo;", :class => "next" %>
+    <h2 class="current"><%= human_date @date %></h2>
+  <% end %>
+</div>

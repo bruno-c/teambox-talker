@@ -1,8 +1,6 @@
 Functionalities:
 ✓ Edit rooms
-- Notifier stop notifying after a while
 ✓ Update Guest access section for all admin users
-- Room permissions
 ✓ Delete Rooms
 ✓ Open Rooms
 - lock down rooms
@@ -29,6 +27,7 @@ After beta:
 - cleaner REGEXP find and replace for dom text elements.
 - Billing
 - Restrict features per plan
+- Room permissions
 
 Talker Server:
 - Allow connecting to a room by name

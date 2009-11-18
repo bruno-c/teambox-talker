@@ -1155,3 +1155,23 @@ body#pastes_controller.show {
   background-color: white; }
   body#pastes_controller.show #paste {
     padding: 10px; }
+
+div.log_browser {
+  margin-bottom: 14px; }
+  div.log_browser.bottom {
+    margin-top: -30px; }
+  div.log_browser .current {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    top: -9px;
+    width: 300px;
+    margin: 0 auto;
+    z-index: 1; }
+  div.log_browser a {
+    display: block;
+    z-index: 2; }
+    div.log_browser a.prev {
+      float: left; }
+    div.log_browser a.next {
+      float: right; }

@@ -7,8 +7,9 @@
   
   <% @dates.each do |date| %>
     <div class="log-entry">
-      <h3><%= link_to human_date(date), room_log_path(@room, date.year, date.month, date.day) %></h3>
+      <h4><%= link_to human_date(date), room_log_path(@room, date.year, date.month, date.day) %></h4>
     </div>
   <% end %>
-
+  
+  <%= will_paginate @events %>
 </div>

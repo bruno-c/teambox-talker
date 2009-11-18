@@ -43,7 +43,10 @@ Talker.Plugin_#{plugin.id} = function(){ // #{plugin.name} by #{plugin.author.na
 var talker_events = #{escape_json @events.to_json};
 
 var loading_interval = window.setInterval(function(){
-  Talker.Broadcaster.broadcastEvent(talker_events.shift())
+  for (var i=0; i < 25; i++) {
+    var event = talker_events.shift();
+    if (event) Talker.Broadcaster.broadcastEvent(event);
+  }
   if (talker_events.length == 0){
     window.clearInterval(loading_interval);
   }

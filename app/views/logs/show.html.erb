@@ -25,16 +25,24 @@
   </script>
 <% end %>
 
-<h2><%=h @title %></h2>
-
+<%= render :partial => "browser", :locals => { :position => "top" } %>
 <div id="chat_log">
+  <% if @events.empty? %>
+    <p class="empty">That day was pretty quiet.</p>
+  <% end %>
   <table id="log">
   </table>
 </div>
+<%= render :partial => "browser", :locals => { :position => "bottom" } %>
 
 <% content_for :sidebar do %>
   <div id="room" class="panel">
+    <div class="header">
+      <h3 class="name" id="room_name">Log for <%=h @room.name %></h3>
+    </div>
     <div class="content">
+      <%= render :partial => "rooms/search" %>
+
       <h4>Users in this log</h4>
       <ul class="people" id="people"></ul>
     </div>

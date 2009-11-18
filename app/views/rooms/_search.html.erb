@@ -1,0 +1,4 @@
+<% form_tag search_room_path(@room), :method => :get, :class => "search_form" do %>
+  <%= text_field_tag :q, @query, :class => "search", :type => "search", :results => 5, :placeholder => "Search logs ...", :size => 16, :accesskey => "s" %>
+  <%= link_to "Browse", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank", :class => "browse" %>
+<% end %>
