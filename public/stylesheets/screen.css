@@ -536,7 +536,10 @@ a.button, button {
     padding-left: 31px; }
   a.button.send-email, button.send-email {
     background-image: url(/images/icons/mail--arrow.png); }
-  a.button.delete, a.button.cancel, button.delete, button.cancel {
+  a.button.delete, button.delete {
+    background-image: url(/images/icons/cross-circle.png); }
+  a.button.cancel, button.cancel {
+    background-color: #ddc9d2;
     background-image: url(/images/icons/cross-circle.png); }
   a.button.ok, button.ok {
     background-image: url(/images/icons/tick.png); }

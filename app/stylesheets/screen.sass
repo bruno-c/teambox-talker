@@ -413,7 +413,10 @@ a.button, button
     padding-left: 31px
   &.send-email
     background-image: url(/images/icons/mail--arrow.png)
-  &.delete, &.cancel
+  &.delete
+    background-image: url(/images/icons/cross-circle.png)
+  &.cancel
+    background-color = !colour_negative * 0.3 + !white * 0.7
     background-image: url(/images/icons/cross-circle.png)
   &.ok
     background-image: url(/images/icons/tick.png)

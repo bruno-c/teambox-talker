@@ -9,7 +9,7 @@ module FormHelper
   end
 
   def cancel_button(url=:back, options={})
-    link_to "Cancel", url, options.merge(:class => "button negative icon cancel #{options[:class]}")
+    link_to "Cancel", url, options.merge(:class => "button neutral icon cancel #{options[:class]}")
   end
   
   def buttons(ok_title="Save", options={})

@@ -1,9 +1,9 @@
 Functionalities:
 ✓ Edit rooms
 - Notifier stop notifying after a while
-- Update Guest access section for all admin users
+✓ Update Guest access section for all admin users
 - Room permissions
-- Delete Rooms
+✓ Delete Rooms
 ✓ Open Rooms
 - lock down rooms
 ✓ /clear
@@ -31,6 +31,7 @@ After beta:
 - Restrict features per plan
 
 Talker Server:
+- Allow connecting to a room by name
 - Fix db writes ordering in logger
 - Create a paste when message sent from API
 - Renaming a user in presence server

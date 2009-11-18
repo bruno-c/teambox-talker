@@ -3,9 +3,9 @@ class RoomsController < ApplicationController
   
   before_filter :login_required
   before_filter :registered_user_required, :except => :show
-  before_filter :admin_required, :only => [:edit, :update, :ouch]
+  before_filter :admin_required, :only => [:edit, :update, :destroy, :ouch]
 
-  before_filter :find_room, :only => [:show, :edit, :update, :refresh]
+  before_filter :find_room, :only => [:show, :edit, :update, :destroy, :refresh]
   
   def index
     @rooms = current_account.rooms
@@ -52,6 +52,12 @@ class RoomsController < ApplicationController
     else
       render :edit
     end
+  end
+  
+  def destroy
+    @room.destroy
+    flash[:notice] = "Goodbye #{@room.name}!"
+    redirect_to rooms_path
   end
   
   def refresh
