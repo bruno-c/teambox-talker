@@ -23,10 +23,19 @@ Talker.DefaultFormatter = function() {
     }
   }
   
-  self.onResize = function(event) {
+  self.onMessageInsertion = function(event) {
     var maxWidth = Talker.getMaxContentWidth();
     
-    $('#log pre').css('width', maxWidth - 22 + 'px');// pastes and messages sent with multilines
-    $('#log blockquote').css('width', maxWidth + 'px');// long sentences with no line breaks
+    Talker.getLastRow().find('pre').css('width', maxWidth - 22 + 'px');   // pastes and messages sent with multilines
+    Talker.getLastRow().find('blockquote').css('width', maxWidth + 'px'); // long sentences with no line breaks
+  }
+  
+  self.onResize = function() {
+    window.setTimeout(function(){
+      var maxWidth = Talker.getMaxContentWidth();
+
+      $('#log pre').css('width', maxWidth - 22 + 'px');   // pastes and messages sent with multilines
+      $('#log blockquote').css('width', maxWidth + 'px'); // long sentences with no line breaks
+    },0);
   }
 };

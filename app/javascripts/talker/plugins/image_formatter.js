@@ -23,7 +23,7 @@ Talker.ImageFormatter = function() {
             + image_match[0]
             + '" target="_blank"><img src="' 
             + image_match[0]
-            + '" style="max-height: 300px; max-width: ' + Talker.getMaxContentWidth() + ';" />'
+            + '" style="max-height: 300px; max-width: ' + Talker.getMaxContentWidth() + ';" class="from_url" />'
             + '</a>'
         );
         
@@ -38,10 +38,19 @@ Talker.ImageFormatter = function() {
     }
   }
   
+  self.onMessageInsertion = function() {
+    var maxWidth = Talker.getMaxContentWidth();
+    
+    Talker.getLastRow().find("img[class='from_url']").each(function(){
+      $(this).css({'max-width': 'auto'});
+      $(this).css({'max-width': maxWidth + 'px'});
+    });
+  }
+  
   self.onResize = function() {
     var maxWidth = Talker.getMaxContentWidth();
     
-    $("#log img[class!='avatar']").each(function(){
+    $("#log img[class='from_url']").each(function(){
       $(this).css({'max-width': 'auto'});
       $(this).css({'max-width': maxWidth + 'px'});
     });
