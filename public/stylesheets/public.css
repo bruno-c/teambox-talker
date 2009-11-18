@@ -303,7 +303,7 @@ html[xmlns] .clearfix {
   font-size: 10px; }
   #footer a#logo img {
     position: relative;
-    top: 5px;
+    top: 9px;
     filter: alpha(opacity=50);
     opacity: 0.5;
     -moz-opacity: 0.5; }
