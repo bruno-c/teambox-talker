@@ -304,6 +304,8 @@ AjaxUpload.prototype = {
 		input.setAttribute('type', 'file');
 		input.setAttribute('name', this._settings.name);
 		input.title = self._button.title;
+		input.accessKey = self._button.accessKey;
+		self._button.accessKey = null;
 		var styles = {
 			'position' : 'absolute'
 			,'margin': '-5px 0 0 -175px'

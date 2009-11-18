@@ -95,7 +95,7 @@
       <ul class="people" id="people"></ul>
     </div>
     <div class="footer" id="user_actions">
-      <%= link_to "Upload", room_attachments_path(@room), :title => "Upload a file", :id => "upload" %>
+      <%= link_to "Upload", room_attachments_path(@room), :title => "Upload a file", :id => "upload", :accesskey => "f" %>
       <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
       <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %>
       <%= link_to "Logout", logout_path, :title => "Logout" %>
@@ -103,9 +103,9 @@
     <% if admin? %>
     <div class="footer" id="admin_actions">
       <label>Manage:</label>
-      <%= link_to "Plugins", plugins_path, :title => "Manage plugins", :target => "_blank" %>
-      <%= link_to "Feeds", feeds_path, :title => "Manage feeds", :target => "_blank" %>
-      <%= link_to "Users", users_path, :title => "Manage users", :target => "_blank" %>
+      <%= link_to "Plugins", plugins_path, :title => "Manage plugins", :target => "_blank", :accesskey => "p" %>
+      <%= link_to "Feeds", feeds_path, :title => "Manage feeds", :target => "_blank", :accesskey => "f" %>
+      <%= link_to "Users", users_path, :title => "Manage users", :target => "_blank", :accesskey => "u" %>
     </div>
     <div class="footer" id="guest_access">
       <%= render :partial => "guest_access" %>
@@ -117,7 +117,6 @@
   </a>
   <div id="beta_message">
     <p>This is beta software.  Send us <a href="http://talker.tenderapp.com/">feedback and bug reports</a> to help make things better and check out our <%= link_to "features and documentation", features_path %>.</p>
-    
   </div>
 <% end %>
 
