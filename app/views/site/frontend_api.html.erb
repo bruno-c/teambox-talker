@@ -1,1 +1,231 @@
-<p>this is the front end API documentation</p>
+<div class="main">
+  <h2>Talker FrontEnd Plugin API Documentation</h2>
+
+  <h3>What can front end plugins do?</h3>
+
+  <h4>Formatting</h4>
+
+  <ul>
+  <li>Convert urls or text into content that is more meaningful to your team.</li>
+  <li>Create slash commands to interact with your team and the log in ways that you want.</li>
+  <li>Highlight specific text for easier scanning of your log. </li>
+  </ul>
+
+  <h4>Create Powerful Commands</h4>
+
+  <ul>
+  <li>add slash commands (like the /msg and /hello commands) to interact with your co-workers or your log</li>
+  <li>make the log react to user actions</li>
+  </ul>
+
+  <h4>Desktop Integration</h4>
+
+  <ul>
+  <li>Integrate with your favorite SSB (Site Specific Browser) and receive notifications for the Talker events you want.</li>
+  </ul>
+
+  <h3 id="anatomyofaplugin.">Anatomy of a plugin.</h3>
+
+  <p>A plugin responds to a Talker event by defining a callback method.  It can stop further plugins from executing their callbacks by returning false.</p>
+
+  <p>Here is an example plugin that alert the message being sent:</p>
+
+  <pre><code>plugin.onMessageSend = function(talkerEvent){
+    alert(talkerEvent.content);
+  }
+  </code></pre>
+
+  <p>A Talker event is a JSON line received from the server or constructed by a plugin.</p>
+
+  <p>Sample :</p>
+
+  <pre><code>{
+    "type": "message",
+    "content" : "Elvis is alive!",
+    "user" : {
+      "id": 2,
+      "name": "Eugene"
+    },
+    "time": 1255447115
+  }
+  </code></pre>
+
+  <p>Each Talker event has a type associated with it.</p>
+
+  <h4>onMessageSend(talkerEvent)</h4>
+
+  <p>Occurs whenever someone sends a message either with the current built in mechanism or with a plugin.</p>
+
+  <h4>onMessageSent(talkerEvent)</h4>
+
+  <p>Occurs after a message was sent.</p>
+
+  <h4>onLoaded()</h4>
+
+  <p>Called after the log recent messages are fully loaded.  It is similar to a normal Javascript onload event.  This particular event does not receive any event object.</p>
+
+  <h4 id="onmessagereceivedtalkereventtodothisisambiguous.sometimesitisntamessageinthevernacularsensebutjsonoutputfromtheserver.">onMessageReceived(talkerEvent)  TODO this is ambiguous.  Sometimes it isn&#8217;t a message in the vernacular sense but JSON output from the server.</h4>
+
+  <p>Whenever a JSON message is received.</p>
+
+  <h4>onMessageInsertion(talkerEvent)</h4>
+
+  <p>When a message is inserted into the log within a bubble.</p>
+
+  <h4>onNoticeInsertion(talkerEvent)</h4>
+
+  <p>When a line is inserted into the log like the one that says &#8220;John has entered the room&#8221;.</p>
+
+  <h4>onJoin(talkerEvent)</h4>
+
+  <p>When a user enters the room.</p>
+
+  <h4>onLeave(talkerEvent)</h4>
+
+  <p>When a user leaves the room.</p>
+
+  <h4>onIdle(talkerEvent)</h4>
+
+  <p>When a user hasn&#8217;t been sent the server any sign of life for a given amount of time.</p>
+
+  <h4>onBack(talkerEvent)</h4>
+
+  <p>When a user starts giving signs of life after a short period of radio silence.</p>
+
+  <h4>onUsers(talkerEvent)</h4>
+
+  <p>This is a utility Talker event used to populate the sidebar&#8217;s &#8220;Who&#8217;s there&#8221; section.  But also useful for 
+  keeping track of who&#8217;s available for private messages. See Talker.getRoomUsers() for more details.</p>
+
+  <h4>onOpen(talkerEvent)</h4>
+
+  <h4>onConnected(talkerEvent)</h4>
+
+  <h4>onClose(talkerEvent)</h4>
+
+  <h4>onError(talkerEvent)</h4>
+
+  <p>These are utility events used to determine connection status and error handling.</p>
+
+  <h3>What Talker methods can I use in plugins?</h3>
+
+  <p>Talker also provides some methods for doing common actions.</p>
+
+  <h4 id="talker.sendmessagemessage">Talker.sendMessage(message)</h4>
+
+  <p>Sends a message to the current room.</p>
+
+  <pre><code>Talker.sendMessage("I love the new interface!")
+  </code></pre>
+
+  <h4 id="talker.insertmessagetalkereventcontent">Talker.insertMessage(talkerEvent, content)</h4>
+
+  <p>Inserts a string within the room&#8217;s log.  It is smart enough to group content by user so if it&#8217;s the 
+  second (or more) message from the same user in a row it&#8217;ll appear in the same bubble.</p>
+
+  <p>Once the action has executed an onMessageInsertion event is triggered.</p>
+
+  <pre><code>Talker.insertMessage(talkerEvent, 'I will be in earlier tomorrow.  Will anyone want donuts?');
+  </code></pre>
+
+  <h4 id="talker.insertnoticetalkereventcontenttriggeranonnoticeinsertionevent.">Talker.insertNotice(talkerEvent, content) => trigger an onNoticeInsertion event.</h4>
+
+  <p>Inserts a string within the room&#8217;s log but as a simple line rather than a grouped message. The join 
+  and leave messages are inserted using this method.</p>
+
+  <p>Once the action has executed an onNoticeInsertion event is triggered.</p>
+
+  <pre><code>Talker.insertNotice(talkerEvent, 'loves tango');
+  </code></pre>
+
+  <h4 id="talker.getlastrowreturnsjqueryobject">Talker.getLastRow() => returns jQuery object</h4>
+
+  <p>Useful if you want to update or style the previously inserted row.</p>
+
+  <h4 id="talker.getlastauthorreturnsstring">Talker.getLastAuthor() => returns string</h4>
+
+  <p>Tells you the name of the previous author.</p>
+
+  <h4 id="talker.getmaxcontentwidthreturnsinteger">Talker.getMaxContentWidth() => returns integer</h4>
+
+  <p>You can update the size of your content with the onResize event.  The Talker.getMaxContentWidth() method
+  comes in really handy for such a purpose. It tells you in pixels how much room you have to work with.</p>
+
+  <h4 id="talker.notifytalkereventcontent">Talker.notify(talkerEvent, content)</h4>
+
+  <p>Prism and Fluid offer system notifications when the appropriate system client is installed.  On  OS X 
+  we often use Growl to receive notifications from applications.  A notification will display the 
+  room name as title and either use the content argument or the event&#8217;s content property to display.</p>
+
+  <p>With an event in room &#8220;Lobby&#8221;:</p>
+
+  <pre><code>{
+    "type": "message",
+    "content" : "Elvis is alive!",
+    "user" : {
+      "id": 2,
+      "name": "Eugene"
+    },
+    "time": 1255447115
+  }
+
+  Talker.notify(talkerEvent);
+  </code></pre>
+
+  <p>Would send a growl notification with <em>&#8220;Lobby&#8221;</em> as the title and the content would be <em>&#8216;Eugene : Elvis is alive!&#8217;</em>.</p>
+
+  <pre><code>Talker.notify(talkerEvent, 'sent a new message.');
+  </code></pre>
+
+  <p>Would send a growl notification with <em>&#8220;Lobby&#8221;</em> as the title and the content would be <em>&#8216;Eugene : sent a new message.&#8217;</em>.</p>
+
+  <h4 id="talker.errorerrormsg">Talker.error(error, msg)</h4>
+
+  <p>Provides a mechanism for alerting users of errors.</p>
+
+  <h4 id="talker.getcommands">Talker.getCommands()</h4>
+
+  <p>Lists the available slash commands.</p>
+
+  <h4 id="talker.getroom">Talker.getRoom()</h4>
+
+  <p>Gets the currently active room.</p>
+
+  <p>Sample:</p>
+
+  <pre><code>{
+    "name": "Lobby",
+    "id": 1
+  }
+  </code></pre>
+
+  <h4 id="talker.getroomname">Talker.getRoomName()</h4>
+
+  <p>Returns only the name.</p>
+
+  <h4 id="talker.getroomusers">Talker.getRoomUsers()</h4>
+
+  <p>A user list is sent to everyone connecting to the room and is updated with joins and leaves.  Talker.getRoomUsers() 
+  will provide you an up to date list.</p>
+
+  <pre><code>{
+    {
+      'name': 'John',
+      'id': '1',
+      'email': 'John.Doe@somewhere.com'
+    },
+    {
+      'name': 'David',
+      'id': '2',
+      'email': 'David.Dolt@somewhere.com'
+    }
+  }
+  </code></pre>
+
+  <h4 id="talker.getroomusernames">Talker.getRoomUsernames</h4>
+
+  <p>Returns only the user names as an array.</p>
+
+  <pre><code>['John', 'David']
+  </code></pre>
+</div>
