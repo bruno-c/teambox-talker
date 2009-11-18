@@ -1,0 +1,27 @@
+<% @title = "Chat Invitation" %>
+
+<div class="sheet" id="guest_login">
+  <h2>Someone invited you to chat with:</h2>
+  
+  <div class="user_list">
+    <p><%= avatars(@room.users) %></p>
+  </div>
+  
+  <div class="info">
+    Simply enter your name and click the button bellow to
+    accept the invitation.
+  </div>
+  
+  <% form_for @user, :url => room_guest_path(@room), :html => { :class => "lw120" } do |f| %>
+    <%= f.error_messages %>
+    <p>
+      <%= f.label :name, "User name" %>
+      <%= f.text_field :name, :size => 20 %>
+      <label class="description">This will be your user name when you chat. Avoid non-printing characters, <code>\</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&amp;</code> and spaces</label>
+    </p>
+    
+    <p class="submit indent">
+      <%= ok_button "Enter the chat room" %>
+    </p>
+  <% end %>
+</div>

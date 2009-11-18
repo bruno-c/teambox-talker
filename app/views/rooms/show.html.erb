@@ -73,21 +73,25 @@
     <div class="header">
       <h3 class="name" id="room_name">
         <%=h @room.name %>
-        <span class="switch_rooms hide_rooms">
-          <b><!----></b>
-          <div id="rooms">
-            <% @rooms.each_with_index do |room, i| %>
-              <%= link_to h(room.name), room_path(room), :title => h("#{room.name} : #{room.description}"), :class => ("current" if room == @room), :accesskey => i+1 %>
-            <% end %>
-            <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back", :accesskey => "r" %>
-          </div>
-        </span>
+        <% unless @rooms.empty? %>
+          <span class="switch_rooms hide_rooms">
+            <b><!----></b>
+            <div id="rooms">
+              <% @rooms.each_with_index do |room, i| %>
+                <%= link_to h(room.name), room_path(room), :title => h("#{room.name} : #{room.description}"), :class => ("current" if room == @room), :accesskey => i+1 %>
+              <% end %>
+              <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back", :accesskey => "r" %>
+            </div>
+          </span>
+        <% end %>
       </h3>
     </div>
     <div class="content">
-      <% form_tag @room ? search_room_path(@room) : search_path, :method => :get, :class => "search_form" do %>
-        <%= text_field_tag :q, @query, :class => "search", :type => "search", :results => 5, :placeholder => "Search logs ...", :size => 16, :accesskey => "s" %>
-        <%= link_to "Browse", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank", :class => "browse" %>
+      <% if registered? %>
+        <% form_tag @room ? search_room_path(@room) : search_path, :method => :get, :class => "search_form" do %>
+          <%= text_field_tag :q, @query, :class => "search", :type => "search", :results => 5, :placeholder => "Search logs ...", :size => 16, :accesskey => "s" %>
+          <%= link_to "Browse", room_logs_path(@room), :title => "Browse chat logs for this room", :target => "_blank", :class => "browse" %>
+        <% end %>
       <% end %>
       <h4 class="name">Who&#39;s here?</h4>
       <ul class="people" id="people"></ul>
@@ -104,6 +108,16 @@
       <%= link_to "Plugins", plugins_path, :title => "Manage plugins", :target => "_blank" %>
       <%= link_to "Feeds", feeds_path, :title => "Manage feeds", :target => "_blank" %>
       <%= link_to "Users", users_path, :title => "Manage users", :target => "_blank" %>
+    </div>
+    <div class="footer" id="guest_access">
+      <label title="Guest Access allow people to access this room without creating a user account">Guest Access:</label>
+      <span class="enable" <% if @room.guest_allowed? %>style="display:none"<% end %>>
+        <%= link_to "Enable", enable_room_guest_path(@room) %>
+      </span>
+      <span class="disable" <% unless @room.guest_allowed? %>style="display:none"<% end %>>
+        <%= link_to "Disable", disable_room_guest_path(@room) %><br/>
+        <span id="guest_url" title="Send this link to someone to invite him to this room"><%= public_room_url(@room.public_token) %></span>
+      </span>
     </div>
     <% end %>
   </div>

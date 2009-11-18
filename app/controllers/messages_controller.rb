@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_filter :login_required
+  before_filter :registered_user_required
   before_filter :find_room
   
   def create

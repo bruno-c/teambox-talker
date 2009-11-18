@@ -31,6 +31,7 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_destroy_pending_user
+    Connection.any_instance.expects(:force_close).once
     users(:aaron).update_attribute :state, "pending"
     assert_difference "User.count", -1 do
       delete :destroy, :id => users(:aaron)

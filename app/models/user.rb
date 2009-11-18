@@ -2,8 +2,11 @@ class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
   
+  belongs_to :room # access restricted to this room if user is a guest, nil otherwise
+
   belongs_to :account
-  has_many :plugins
+  has_many :connections,    :dependent => :destroy
+  has_many :plugins,        :foreign_key => "author_id", :dependent => :destroy
   
   before_create             :create_talker_token
   
@@ -13,14 +16,16 @@ class User < ActiveRecord::Base
                                        :message => "should not contain non-printing characters \\, <, >, & and spaces"
   validates_length_of       :name,     :maximum => 100
 
-  validates_presence_of     :email
-  validates_length_of       :email,    :within => 6..100 #r@a.wk
-  validates_uniqueness_of   :email,    :scope => :account_id
-  validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
+  validates_presence_of     :email,    :unless => :guest
+  validates_length_of       :email,    :allow_nil => true, :within => 6..100 #r@a.wk
+  validates_uniqueness_of   :email,    :allow_nil => true, :scope => :account_id
+  validates_format_of       :email,    :allow_nil => true, :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible :email, :name, :password, :password_confirmation, :time_zone
+  
+  named_scope :registered, :conditions => { :guest => false }
   
   
   acts_as_state_machine :initial => :pending
@@ -42,6 +47,10 @@ class User < ActiveRecord::Base
   end
   
   
+  def registered
+    !guest
+  end
+  
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
   end
@@ -62,7 +71,7 @@ class User < ActiveRecord::Base
   
   # Token used to authenticate the user in Talker server
   def create_talker_token
-    self.talker_token = ActiveSupport::SecureRandom.hex(10)
+    self.talker_token = ActiveSupport::SecureRandom.hex(20)
     self
   end
   

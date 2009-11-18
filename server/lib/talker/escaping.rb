@@ -3,7 +3,7 @@ module Talker
     private
       def quote(s)
         return "" if s.nil?
-        s.gsub(/\\/, '\&\&').gsub(/'/, "''")
+        s.to_s.gsub(/\\/, '\&\&').gsub(/'/, "''")
       end
   end
 end

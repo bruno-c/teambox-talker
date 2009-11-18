@@ -32,3 +32,8 @@ talker:
   email:                    bot@talkerapp.com
   staff:                    true
   time_zone:                 "Atlantic Time (Canada)"
+  
+guest:
+  name:                     Guest
+  guest:                    true
+  room:                     main

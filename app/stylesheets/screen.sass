@@ -898,10 +898,12 @@ div.panel
             padding-bottom: 10px
             a.browse
               +font_size("small")
-      &.footer#admin_actions
+      &.footer
         label
           +font_size("tiny")
           color= !grey
+        #guest_url
+          +font_size("tiny")
        
 #footer
   margin: 30px 0 10px 0
@@ -958,6 +960,11 @@ div.info
   background = !accent_colour * 0.2 + !white * 0.8 url(/images/icons/information.png) "no-repeat" 10px 10px
   p
     margin-bottom: 4px
+
+#guest_login
+  .user_list
+    padding: 10px
+    margin-top: -20px
 
 #admin
   div.stats

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :admin_required
   
   def index
-    @users = current_account.users
+    @users = current_account.users.registered
   end
   
   def update

@@ -1,6 +1,6 @@
 <div id="nav">
   <ul>
-    <% if logged_in? %>
+    <% if registered? %>
       <li><%= link_to_with_active "Rooms", rooms_path, :title => "Rooms", :accesskey => "r" %></li>
       <% if admin? %>
         <li><%= link_to_with_active "Plugins", plugins_path, :accesskey => "p" %></li>

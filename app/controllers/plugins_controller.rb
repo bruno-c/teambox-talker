@@ -1,6 +1,4 @@
 class PluginsController < ApplicationController
-  before_filter :login_required
-  before_filter :account_required
   before_filter :admin_required
   
   def index

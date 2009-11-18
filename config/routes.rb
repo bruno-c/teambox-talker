@@ -12,12 +12,16 @@ ActionController::Routing::Routes.draw do |map|
   
   map.connect "/ouch", :controller => "rooms", :action => "ouch"
   
+  map.public_room "/r/:token", :controller => "guests", :action => "new"
+  
   map.resources :users
   map.resources :invites, :member => { :resend => :post }
   map.resource :account
   map.resource :session
   map.resource :settings
-  map.resources :rooms, :has_many => [:messages, :attachments]
+  map.resources :rooms, :has_many => [:messages, :attachments] do |rooms|
+    rooms.resource :guest, :member => { :enable => :post, :disable => :post }
+  end
   map.resources :pastes
   map.resources :feeds
   map.resource :admin, :controller => "admin"

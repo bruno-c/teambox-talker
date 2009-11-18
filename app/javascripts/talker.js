@@ -3,8 +3,12 @@ Talker = {};
 //= require "talker/orbited"
 //= require "talker/client"
 
-Talker.sendMessage = function(content) {
-  return Talker.trigger("MessageSend", {type:"message", content: message});
+Talker.sendMessage = function(message) {
+  Talker.client.send({content: message, type: 'message'});
+};
+
+Talker.sendAction = function(message) {
+  Talker.client.send({content: message, type: 'message', action: true});
 };
 
 Talker.insertMessage = function(talkerEvent, content) {

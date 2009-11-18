@@ -1,16 +1,29 @@
 class RoomsController < ApplicationController
-  before_filter :login_required
   before_filter :account_required
+
+  before_filter :registered_user_required, :except => :show
   before_filter :admin_required, :only => [:edit, :update, :ouch]
+
   before_filter :find_room, :only => [:show, :edit, :update]
   
   def index
     @rooms = current_account.rooms
   end
-
+  
   def show
-    @rooms = current_account.rooms
-    @events = @room.events.recent.reverse
+    if current_user.guest
+      # User is a guest, make sure we disable everything he shouldn't have access to
+      if current_user.room != @room
+        access_denied
+        return
+      end
+      @rooms = []
+      @events = []
+    else
+      @rooms = current_account.rooms
+      @events = @room.events.recent.reverse
+    end
+    
     render :layout => "room"
   end
 
@@ -33,7 +46,7 @@ class RoomsController < ApplicationController
   
   def update
     if @room.update_attributes(params[:room])
-      flash[:notice] = "Amazing work! Room updated."
+      flash[:notice] = "Nicely Done! Room updated."
       redirect_to rooms_path
     else
       render :edit

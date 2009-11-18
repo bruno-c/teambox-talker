@@ -1,7 +1,8 @@
 Functionalities:
 ✓ Edit rooms
+- Room persmissions
 - Delete Rooms
-- Open Rooms
+✓ Open Rooms
 - lock down rooms
 ✓ /clear
 ✓ /me

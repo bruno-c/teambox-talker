@@ -20,7 +20,7 @@ $(function() {
           if (this.value == '') return false; // ignore empty messages
           
           // we actually have a message
-          Talker.sendMessage($("#msgbox").val());
+          Talker.trigger("MessageSend", {type:"message", content: $("#msgbox").val()});
           return false;
           break;
           
