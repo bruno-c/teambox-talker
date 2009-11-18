@@ -18,7 +18,14 @@
 
 <body id="<%= @controller.controller_name %>_controller" class="<%= current_view %>">
 
-<%= yield %>
+  <div id="header">
+    <h1>talker <%= image_tag "/images/logo.png", :width => 80 %></h1>
+  </div>
+
+  <div id="content">
+    <%= render :partial => "public_nav" %>
+    <%= yield %>
+  </div>
 
 </body>
 </html>
