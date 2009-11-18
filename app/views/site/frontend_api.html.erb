@@ -64,9 +64,9 @@
 
   <p>Called after the log recent messages are fully loaded.  It is similar to a normal Javascript onload event.  This particular event does not receive any event object.</p>
 
-  <h4 id="onmessagereceivedtalkereventtodothisisambiguous.sometimesitisntamessageinthevernacularsensebutjsonoutputfromtheserver.">onMessageReceived(talkerEvent)  TODO this is ambiguous.  Sometimes it isn&#8217;t a message in the vernacular sense but JSON output from the server.</h4>
+  <h4>onMessageReceived(talkerEvent)</h4>
 
-  <p>Whenever a JSON message is received.</p>
+  <p>Whenever a talker event with type 'message' is received.</p>
 
   <h4>onMessageInsertion(talkerEvent)</h4>
 
@@ -78,15 +78,15 @@
 
   <h4>onJoin(talkerEvent)</h4>
 
-  <p>When a user enters the room.</p>
+  <p>This occurs when a user enters the room.  This talker even has a 'join' type property.</p>
 
   <h4>onLeave(talkerEvent)</h4>
 
-  <p>When a user leaves the room.</p>
+  <p>When a user leaves the room.  This talker event has a 'leave' type property.</p>
 
   <h4>onIdle(talkerEvent)</h4>
 
-  <p>When a user hasn&#8217;t been sent the server any sign of life for a given amount of time.</p>
+  <p>When a user hasn&#8217;t been sending the server any sign of life for a given amount of time.  The event type is... you guessed it 'idle'.  I'll let you guess what are the next event types. It's a sort of game.</p>
 
   <h4>onBack(talkerEvent)</h4>
 

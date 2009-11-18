@@ -240,7 +240,7 @@ html[xmlns] .clearfix {
   background: white;
   text-align: left;
   width: 890px;
-  min-height: 600px;
+  overflow: hidden;
   padding: 0;
   margin: auto; }
   #content #navigation {
