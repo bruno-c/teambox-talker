@@ -39,18 +39,18 @@ Talker.Plugin_#{plugin.id} = function(){ // #{plugin.name} by #{plugin.author.na
   end
   
   def render_events_for_logs(events)
-"
-var talker_events = #{escape_json @events.to_json};
+    <<-EOS
+var talkerEvents = #{escape_json @events.to_json};
 
-var loading_interval = window.setInterval(function(){
+var loadingInterval = window.setInterval(function(){
   for (var i=0; i < 25; i++) {
-    var event = talker_events.shift();
+    var event = talkerEvents.shift();
     if (event) Talker.Broadcaster.broadcastEvent(event);
   }
-  if (talker_events.length == 0){
-    window.clearInterval(loading_interval);
+  if (talkerEvents.length == 0){
+    window.clearInterval(loadingInterval);
   }
 }, 0);
-    "
+EOS
   end
 end
