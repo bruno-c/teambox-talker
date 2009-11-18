@@ -8,5 +8,5 @@ namespace :worker do
     end
   end
   
-  after "deploy:symlink", :restart
+  after "deploy:symlink", "worker:restart"
 end

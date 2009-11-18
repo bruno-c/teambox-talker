@@ -11,7 +11,7 @@ namespace :deploy do
   end
   
   # Symlink config files
-  before :finalize_update do
+  before "deploy:finalize_update" do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
   end
 end
