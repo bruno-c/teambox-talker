@@ -126,7 +126,7 @@ a {
     color: gray;
     text-decoration: none;
     cursor: default; }
-  a:hover {
+  a:hover, a.hover {
     text-decoration: none; }
 
 h2 {

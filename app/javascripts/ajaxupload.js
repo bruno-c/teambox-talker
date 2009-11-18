@@ -303,6 +303,7 @@ AjaxUpload.prototype = {
 		var input = d.createElement("input");
 		input.setAttribute('type', 'file');
 		input.setAttribute('name', this._settings.name);
+		input.title = self._button.title;
 		var styles = {
 			'position' : 'absolute'
 			,'margin': '-5px 0 0 -175px'
