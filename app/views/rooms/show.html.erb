@@ -24,6 +24,7 @@
       Talker.plugins.push(new Talker.Scroller());
       Talker.plugins.push(new Talker.Notifier()); //provides onblur/onfocus handlers
       Talker.plugins.push(new Talker.UserList($('#people'))); // sidebar updating of users.
+      Talker.plugins.push(new Talker.RoomUpdater('<%= refresh_room_path(@room) %>')); // update room info
       Talker.plugins.push(new Talker.Timestamp());// << depends on order to be included properly.  I say it should remain mandatory for usability reasons.
       
       // Account plugins
@@ -110,14 +111,7 @@
       <%= link_to "Users", users_path, :title => "Manage users", :target => "_blank" %>
     </div>
     <div class="footer" id="guest_access">
-      <label title="Guest Access allow people to access this room without creating a user account">Guest Access:</label>
-      <span class="enable" <% if @room.guest_allowed? %>style="display:none"<% end %>>
-        <%= link_to "Enable", enable_room_guest_path(@room) %>
-      </span>
-      <span class="disable" <% unless @room.guest_allowed? %>style="display:none"<% end %>>
-        <%= link_to "Disable", disable_room_guest_path(@room) %><br/>
-        <span id="guest_url" title="Send this link to someone to invite him to this room"><%= public_room_url(@room.public_token) %></span>
-      </span>
+      <%= render :partial => "guest_access" %>
     </div>
     <% end %>
   </div>

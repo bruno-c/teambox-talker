@@ -1,5 +1,6 @@
 Functionalities:
 ✓ Edit rooms
+- Notifier stop notifying after a while
 - Update Guest access section for all admin users
 - Room permissions
 - Delete Rooms

@@ -5,7 +5,7 @@ class RoomsController < ApplicationController
   before_filter :registered_user_required, :except => :show
   before_filter :admin_required, :only => [:edit, :update, :ouch]
 
-  before_filter :find_room, :only => [:show, :edit, :update]
+  before_filter :find_room, :only => [:show, :edit, :update, :refresh]
   
   def index
     @rooms = current_account.rooms
@@ -52,6 +52,10 @@ class RoomsController < ApplicationController
     else
       render :edit
     end
+  end
+  
+  def refresh
+    respond_to :js
   end
   
   def ouch

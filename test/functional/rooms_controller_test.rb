@@ -28,7 +28,7 @@ class RoomsControllerTest < ActionController::TestCase
   def test_show_for_guest
     login_as :guest
     get :show, :id => @room
-    assert_response :success
+    assert_response :success, @response.body
     assert_equal assigns(:room), @room
     assert_equal [], assigns(:events)
     assert_equal [], assigns(:rooms)
@@ -67,5 +67,10 @@ class RoomsControllerTest < ActionController::TestCase
   def test_update
     put :update, :id => @room, :room => hash_for_room
     assert_redirected_to rooms_path
+  end
+  
+  def test_refresh
+    get :refresh, :id => @room
+    assert_response :success, @response.body
   end
 end

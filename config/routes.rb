@@ -19,7 +19,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :account
   map.resource :session
   map.resource :settings
-  map.resources :rooms, :has_many => [:messages, :attachments] do |rooms|
+  map.resources :rooms, :has_many => [:messages, :attachments], :member => { :refresh => :get } do |rooms|
     rooms.resource :guest, :member => { :enable => :post, :disable => :post }
   end
   map.resources :pastes

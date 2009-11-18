@@ -28,29 +28,19 @@ $(function() {
     });
   }
   
-  $("div#guest_access").
-    find(".enable a").
-      click(function() {
-        var link = $(this);
-        // enable link
-        $.post(this.href, null, function(data) {
-          $("#guest_url").text(data.url);
-          link.parent().hide().next(".disable").show();
-          Talker.sendAction("enabled guest access");
-        }, "json");
-        return false;
-      }).
-    end().
-    find(".disable a").
-      click(function() {
-        var link = $(this);
-        // disable link
-        $.post(this.href, function() {
-          link.parent().hide().prev(".enable").show();
-          Talker.sendAction("disabled guest access");
-        });
-        return false;
-      }).
-    end();
+  $("div#guest_access a").
+    live("click", function() {
+      var link = $(this);
+      link.hide();
+      $("#guest_access_loader").show();
+      $.post(this.href, function() {
+        if (link.hasClass("enable"))
+          var action = "enabled";
+        else
+          var action = "disabled";
+        Talker.sendAction(action + " guest access", {update:true});
+      });
+      return false;
+    });
     
 });

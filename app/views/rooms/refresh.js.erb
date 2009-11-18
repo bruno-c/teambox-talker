@@ -1,0 +1,3 @@
+<% if admin? %>
+  $("#guest_access").html('<%= escape_javascript render(:partial => "guest_access") %>')
+<% end %>
