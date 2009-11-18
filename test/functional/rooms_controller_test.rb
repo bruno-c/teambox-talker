@@ -13,6 +13,12 @@ class RoomsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:rooms)
   end
   
+  def test_show_denied
+    login_as nil
+    get :show, :id => @room
+    assert_access_denied
+  end
+  
   def test_show
     get :show, :id => @room
     assert_response :success

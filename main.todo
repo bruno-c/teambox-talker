@@ -1,6 +1,7 @@
 Functionalities:
 ✓ Edit rooms
-- Room persmissions
+- Update Guest access section for all admin users
+- Room permissions
 - Delete Rooms
 ✓ Open Rooms
 - lock down rooms

@@ -1,6 +1,7 @@
 class RoomsController < ApplicationController
   before_filter :account_required
-
+  
+  before_filter :login_required
   before_filter :registered_user_required, :except => :show
   before_filter :admin_required, :only => [:edit, :update, :ouch]
 
