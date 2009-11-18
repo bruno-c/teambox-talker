@@ -32,9 +32,11 @@ $(function() {
     find(".enable a").
       click(function() {
         var link = $(this);
-        $.post(this.href, function(data) {
+        // enable link
+        $.post(this.href, null, function(data) {
           $("#guest_url").text(data.url);
           link.parent().hide().next(".disable").show();
+          Talker.sendAction("enabled guest access");
         }, "json");
         return false;
       }).
@@ -42,8 +44,10 @@ $(function() {
     find(".disable a").
       click(function() {
         var link = $(this);
+        // disable link
         $.post(this.href, function() {
           link.parent().hide().prev(".enable").show();
+          Talker.sendAction("disabled guest access");
         });
         return false;
       }).

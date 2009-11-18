@@ -4,7 +4,11 @@ Talker = {};
 //= require "talker/client"
 
 Talker.sendMessage = function(message) {
-  return Talker.trigger("MessageSend", {type:"message", content: message});
+  Talker.client.send({content: message, type: 'message'});
+};
+
+Talker.sendAction = function(message) {
+  Talker.client.send({content: message, type: 'message', action: true});
 };
 
 Talker.insertMessage = function(event, content) {

@@ -6,7 +6,7 @@ Talker.MeCommand = function() {
   
   self.onCommand = function(event) {
     if (event.command == "me") {
-      Talker.client.send({content: event.args.join(" "), action: true});
+      Talker.sendAction(event.args.join(" "));
       $('#msgbox').val('');
       Talker.trigger("MessageSent", event);
       return false;
