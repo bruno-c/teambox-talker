@@ -9,10 +9,12 @@ body
   position: relative
   font-family: helvetica, arial, sans-serif
   +font_size("medium")
-  background = !black * 0.1 + !white * 0.9
   color = !black
+  background = !black * 0.1 + !white * 0.9
   &:.blank
     background-color = !white
+html
+  height: 100%
 *
   text-shadow: rgba(0, 0, 0, 0.01) 0 0 0
 a
@@ -913,6 +915,9 @@ div.panel
           color= !grey
         #guest_url
           +font_size("tiny")
+          width: 100%
+          border: 0
+          background = !light_grey * 0.1 + !white * 0.9
   #beta_message
     margin-top: 40px
     clear: both

@@ -109,10 +109,13 @@ body {
   position: relative;
   font-family: helvetica, arial, sans-serif;
   font-size: 14px;
-  background: #e5e5e5;
-  color: black; }
+  color: black;
+  background: #e5e5e5; }
   body:.blank {
     background-color: white; }
+
+html {
+  height: 100%; }
 
 * {
   text-shadow: rgba(0, 0, 0, 0.01) 0 0 0; }
@@ -1043,7 +1046,10 @@ div.panel {
       font-size: 10px;
       color: gray; }
     #sidebar #room div.footer #guest_url {
-      font-size: 10px; }
+      font-size: 10px;
+      width: 100%;
+      border: 0;
+      background: #f8f8f8; }
   #sidebar #beta_message {
     margin-top: 40px;
     clear: both;
