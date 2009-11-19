@@ -14,7 +14,8 @@ Talker.UsernameAutocompleter = function(){
       }
     }).
     keyup(function(e){
-      // TODO ignore non-printable keys, space, arrows, backspace, etc.
+      // ignore non-printable characters
+      if (!tab && String.fromCharCode(event.keyCode).match(/[^\w]/)) return;
       
       var position = $('#msgbox').getCaretPosition();
       var value = $('#msgbox').val();
@@ -28,28 +29,28 @@ Talker.UsernameAutocompleter = function(){
         var pattern = value.substring(nameStart, nameEnd);
         var users = findUsers(pattern);
         var name = nextUserName(users);
-        if (name) var completion = name.substring(pattern.length);
-        if (tab && users.length == 2) { // HACK should == 1, Talker.getRoomUsernames returns duplicates
-          $('#msgbox').insertAtCaret(completion + " ").
-                       setCaretPosition(position + completion.length + 1);
-        } else {
-          $('#msgbox').insertAtCaret(completion).
-                       setCaretPosition(position, position + completion.length);
+        console.info(users)
+        if (name) {
+          var completion = name.substring(pattern.length);
+          if (tab && users.length == 2) { // HACK should == 1, Talker.getRoomUsernames returns duplicates
+            $('#msgbox').insertAtCaret(completion + " ").
+                         setCaretPosition(position + completion.length + 1);
+          } else {
+            $('#msgbox').insertAtCaret(completion).
+                         setCaretPosition(position, position + completion.length);
+          }
         }
       }
     });
   
   function findUsers(pattern) {
-    return _.select(Talker.getRoomUsernames(), function(name) { return name.match("^" + pattern); });
+    var names = _.select(Talker.getRoomUsernames(), function(name) { return name.match("^" + pattern); });
+    names = _.reject(names, function(name) { return name === Talker.currentUser.name });
+    return names;
   }
   
-  function nextUserName(usernames, reverse) {
-    // TODO remove current user
-    // var users = _.reject(usernames, function(user) {
-    //   return user == Talker.currentUser.name;
-    // });
-    var users = usernames;
-    
+  function nextUserName(users, reverse) {
+    // TODO reverse
     users = (reverse ? users.reverse() : users);
     
     if (currentCycle == null || _.indexOf(users, currentCycle) == users.length - 1) {
