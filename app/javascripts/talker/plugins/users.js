@@ -13,15 +13,14 @@ Talker.Users = function(element) {
       self.remove(event.user);
     }
   
-    self.onUsers = function(event) {
-      $(event.users).each(function(){
-        self.add(this);
-      });
-    }
-    // private
-    self.add = function(user) {
-      Talker.users.push(user);
-    };
+  self.onUsers = function(event) {
+    Talker.users = event.users;
+  }
+  // private
+  self.add = function(user) {
+    self.remove(user);
+    Talker.users.push(user);
+  };
   
     self.remove = function(user) {
       Talker.users = _.reject(Talker.users, function(u) { return u.id == user.id });

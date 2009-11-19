@@ -1,8 +1,14 @@
 $(function() {
   // Room name dropdown
-  $('#room_name').click(function() {
+  $('#room_name').click(function(e) {
     $('#rooms').toggle();
     $(this).find('span.switch_rooms').toggleClass('hide_rooms').toggleClass('show_rooms');
+    e.stopPropagation();
+  });
+  
+  $(document).click(function(e){
+    $('#rooms').hide();
+    $('#room span.switch_rooms').removeClass('show_rooms').addClass('hide_rooms');
   });
   
   // File Upload

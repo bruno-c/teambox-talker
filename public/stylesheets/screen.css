@@ -378,6 +378,10 @@ body#rooms_controller.show #content {
         opacity: 1;
         -moz-opacity: 1; }
 
+#plugins_controller.show #plugins>div li {
+  filter: alpha(opacity=100);
+  opacity: 1;
+  -moz-opacity: 1; }
 #plugins_controller.show pre {
   padding: 20px 20px 0 20px;
   background: white;
