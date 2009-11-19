@@ -17,15 +17,15 @@ Fixes:
 ✓ feedback: add Talker.currentUser to doc
 - feedback: better handling of privates messages.  Callbacks and all.
 ✓ feedback: edit link on plugin disappears at times.
-- feedback: hover on show page should not be there.
+✓ feedback: hover on show page should not be there.
 
 Plugin Ideas:
 - feedback: highlighting of paragraphs with your name in them (I plan on doing this in a plugin)
 - feedback: click the name and you get a @username that appears in text box
 
 Documentation:
-- Room help link
-- Plugin API (50%) [GH] 2
+✓ Room help link
+✓ Plugin API (50%) [GH] 2
 - REST API
 
 Exclusive must haves:
