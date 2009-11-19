@@ -13,12 +13,11 @@ Talker.Users = function(element) {
   }
   
   self.onUsers = function(event) {
-    $(event.users).each(function(){
-      self.add(this);
-    });
+    Talker.users = event.users;
   }
   // private
   self.add = function(user) {
+    self.remove(user);
     Talker.users.push(user);
   };
   
