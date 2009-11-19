@@ -48,5 +48,8 @@ $(function() {
       });
       return false;
     });
-    
+  
+  $("input#guest_url").live("click", function() {
+    this.select();
+  });
 });

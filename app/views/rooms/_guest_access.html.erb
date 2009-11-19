@@ -4,7 +4,7 @@
 
 <% if @room.guest_allowed? %>
   <%= link_to "Disable", disable_room_guest_path(@room), :class => "disable" %><br/>
-  <span id="guest_url" title="Send this link to someone to invite him to this room"><%= public_room_url(@room.public_token) %></span>
+  <input type="text" id="guest_url" title="Send this link to someone to invite him to this room" value="<%= public_room_url(@room.public_token) %>"/>
 <% else %>
   <%= link_to "Enable", enable_room_guest_path(@room), :class => "enable" %>
 <% end %>
