@@ -11,7 +11,7 @@ Functionalities:
 
 Fixes:
 ✓ feedback: the fucking resizer needs work
-- feedback: display private messages to the sender
+✓ feedback: display private messages to the sender
 - feedback: scroller is a bitch
 - feedback: clicking away should remove the list of rooms
 - feedback: add Talker.currentUser to doc
