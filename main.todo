@@ -33,6 +33,9 @@ Exclusive must haves:
 - plugin to alert by keywords / username 
 
 After beta:
+- Add unique ID to message
+- Browse to log from message ID
+- Better 404 page when guest access is disabled or on wrong token
 - Review invitation process
   - Change name in room
   - Invite link go directly in room
