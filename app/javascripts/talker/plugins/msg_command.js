@@ -6,8 +6,8 @@ Talker.MsgCommand = function() {
   
   self.onCommand = function(event) {
     if (event.command == "msg") {
-      var userName = event.args[0].replace('@', '');
-      var user = _.detect(Talker.users, function(user) { return user.name == userName });
+      var userName = event.args[0].replace('@', '').toLowerCase();
+      var user = _.detect(Talker.users, function(user) { return user.name.toLowerCase() == userName });
       
       if (user == null) throw new CommandError("Unknown user: " + userName);
       
