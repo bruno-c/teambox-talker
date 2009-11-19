@@ -15,7 +15,6 @@ class PastesController < ApplicationController
   def create
     @paste = Paste.new
     @paste.content = params[:content]
-    @paste.user = current_user
     
     respond_to do |format|
       if @paste.save

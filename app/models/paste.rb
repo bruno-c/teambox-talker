@@ -1,10 +1,7 @@
 class Paste < ActiveRecord::Base
   PREVIEW_LINES = 15 # Same as in Talker::Paster (server/lib/talker/paster.rb)
   
-  belongs_to :user
-  
   validates_presence_of :content
-  validates_presence_of :user
   
   before_create { |p| p.permalink = ActiveSupport::SecureRandom.hex(10) }
   
@@ -18,19 +15,12 @@ class Paste < ActiveRecord::Base
     @lines ||= content.count("\n")
   end
   
-  def more_lines
-    @more_lines ||= begin
-      if lines < PREVIEW_LINES
-        0
-      else
-        lines - PREVIEW_LINES
-      end
-    end
+  def truncated
+    Paste.truncate(content)
   end
   
   def to_json(*a)
-    { :id => permalink, :syntax => syntax,
-      :lines => lines, :preview_lines => PREVIEW_LINES }.to_json(*a)
+    { :id => permalink, :lines => lines, :preview_lines => PREVIEW_LINES }.to_json(*a)
   end
   
   def self.truncate(content)
@@ -40,6 +30,15 @@ class Paste < ActiveRecord::Base
       lines.first(PREVIEW_LINES).join("\n") + "\n..."
     else
       content.to_s
+    end
+  end
+  
+  def self.filter(content)
+    if content.include?("\n")
+      yield paste = Paste.create(:content => content)
+      paste.truncated
+    else
+      content
     end
   end
 end

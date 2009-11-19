@@ -31,6 +31,28 @@ class Room < ActiveRecord::Base
   
   def send_message(message, options={})
     event = { :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options)
+    
+    # Paste the message if required
+    unless FalseClass === options.delete(:paste)
+      event[:content] = Paste.filter(message) do |paste|
+        event[:paste] = paste
+      end
+    end
+    
+    publish event
+    event
+  end
+  
+  def send_message(message, options={})
+    event = { :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options)
+    
+    # Paste the message if required
+    unless FalseClass === options.delete(:paste)
+      event[:content] = Paste.filter(message) do |paste|
+        event[:paste] = paste
+      end
+    end
+    
     publish event
     event
   end

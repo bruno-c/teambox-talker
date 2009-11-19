@@ -16,7 +16,7 @@ module ModelFactory
   end
   
   def hash_for_paste(attributes={})
-    { :content => "...", :user => User.first }.merge(attributes)
+    { :content => "..." }.merge(attributes)
   end
   
   def hash_for_feed(attributes={})

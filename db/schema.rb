@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091117142041) do
+ActiveRecord::Schema.define(:version => 20091119005020) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -78,7 +78,6 @@ ActiveRecord::Schema.define(:version => 20091117142041) do
   end
 
   create_table "pastes", :force => true do |t|
-    t.integer  "user_id"
     t.text     "content"
     t.string   "permalink"
     t.string   "syntax"

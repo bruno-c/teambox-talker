@@ -44,7 +44,7 @@ After beta:
 Talker Server:
 - Allow connecting to a room by name
 - Fix db writes ordering in logger
-- Create a paste when message sent from API
+✓ Create a paste when message sent from API
 - Renaming a user in presence server
 - Support other types of channels (room, paste, etc)
 - Benchmark against ejabberd

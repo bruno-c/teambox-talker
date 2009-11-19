@@ -11,4 +11,13 @@ class PasteTest < ActiveSupport::TestCase
     assert_equal "o\n" * 15 + "...", Paste.truncate("o\n" * 20)
     assert_equal "", Paste.truncate(nil)
   end
+  
+  def test_filter
+    paste = nil
+    content = Paste.filter("ohaie\nthere") do |p|
+      paste = p
+    end
+    assert_equal "ohaie\nthere", content
+    assert_not_nil paste
+  end
 end
