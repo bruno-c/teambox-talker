@@ -4,13 +4,14 @@ Talker.users = [];
 Talker.Users = function(element) {
   var self = this;
   
-  self.onJoin = function(event) {
-    self.add(event.user);
-  }
+  self.onLoaded = function() {
+    self.onJoin = function(event) {
+      self.add(event.user);
+    }
 
-  self.onLeave = function(event) {
-    self.remove(event.user);
-  }
+    self.onLeave = function(event) {
+      self.remove(event.user);
+    }
   
   self.onUsers = function(event) {
     Talker.users = event.users;
@@ -21,8 +22,9 @@ Talker.Users = function(element) {
     Talker.users.push(user);
   };
   
-  self.remove = function(user) {
-    Talker.users = _.reject(Talker.users, function(u) { return u.id == user.id });
+    self.remove = function(user) {
+      Talker.users = _.reject(Talker.users, function(u) { return u.id == user.id });
+    };
   };
 }
 

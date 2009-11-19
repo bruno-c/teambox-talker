@@ -1,37 +1,64 @@
 Talker.UsernameAutocompleter = function(){
   var self = this;
+  var currentCycle = null;
+  var tab = false;
   
-  self.current_cycle_username = null;
-  
-  $('#msgbox').keydown(function(e){
-    var caret_position = $('#msgbox').getCaretPosition();
-    
-    if (caret_position > 0 && $('#msgbox').val().substring(caret_position - 1, caret_position) == '@'){
+  $('#msgbox').
+    keydown(function(e) {
       if (e.which == 9) { // tab
-        var user = self.nextUserName(e.shiftKey); // shift key reverses cycling
-        $('#msgbox').insertAtCaret(user);
-        $('#msgbox').setCaretPosition(caret_position, caret_position + user.length + 1)
+        tab = true;
         e.preventDefault();
+      } else {
+        tab = false;
+        currentCycle = null;
       }
+    }).
+    keyup(function(e){
+      // ignore non-printable characters
+      if (!tab && controlChar(event.keyCode)) return;
       
-      if (e.which == 32) { // space
-        $('#msgbox').insertAtCaret($('#msgbox').getSelectedText() + ' ');
-        e.preventDefault();
+      var position = $('#msgbox').getCaretPosition();
+      var value = $('#msgbox').val();
+      var nameStart = value.lastIndexOf("@", position);
+    
+      if (nameStart != -1 && value.lastIndexOf(" ", position) < nameStart) {
+        nameStart = nameStart + 1
+        var nameEnd = value.indexOf(" ", position);
+        if (nameEnd == -1) nameEnd = position;
+      
+        var pattern = value.substring(nameStart, nameEnd);
+        var users = findUsers(pattern);
+        var name = nextUserName(users, e.shiftKey);
+        if (name) {
+          var completion = name.substring(pattern.length);
+          if (tab && users.length == 1) {
+            $('#msgbox').insertAtCaret(completion + " ").
+                         setCaretPosition(position + completion.length + 1);
+          } else {
+            $('#msgbox').insertAtCaret(completion).
+                         setCaretPosition(position, position + completion.length);
+          }
+        }
       }
-    }
-  });
-  
-  self.nextUserName = function(reverse) {
-    var users = _.reject(Talker.getRoomUsernames(), function(user) {
-      return user == Talker.currentUser.name;
     });
+  
+  function controlChar(keyCode) {
+    return String.fromCharCode(event.keyCode).match(/[^\w]/);
+  }
+  
+  function findUsers(pattern) {
+    var names = _.select(Talker.getRoomUsernames(), function(name) { return name.match("^" + pattern); });
+    names = _.reject(names, function(name) { return name === Talker.currentUser.name });
+    return names;
+  }
+  
+  function nextUserName(users, reverse) {
+    users = (reverse ? users.reverse() : users);
     
-    users = (reverse ? users.reverse() : users );
-    
-    if (self.current_cycle_username == null || _.indexOf(users, self.current_cycle_username) == users.length - 1) {
-      return self.current_cycle_username = users[0];
+    if (currentCycle == null || _.indexOf(users, currentCycle) == users.length - 1) {
+      return currentCycle = users[0];
     } else {
-      return self.current_cycle_username = users[_.indexOf(users, self.current_cycle_username) + 1];
+      return currentCycle = users[_.indexOf(users, currentCycle) + 1];
     }
   };
 }
