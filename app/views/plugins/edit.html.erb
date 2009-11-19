@@ -1,5 +1,3 @@
-<h1>Editing plugin</h1>
-
 <div class="sheet">
   <h2><%= @title = "New Plugin" %></h2>
 
@@ -22,3 +20,8 @@
     </p>
   <% end %>
 </div>
+
+<% content_for :sidebar do %>
+<h2>Writing a plugin?</h2>
+<p>Check out our <%= link_to "plugin API", plugin_api_path %></p>
+<% end %>
