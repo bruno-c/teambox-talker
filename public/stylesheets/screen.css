@@ -109,10 +109,13 @@ body {
   position: relative;
   font-family: helvetica, arial, sans-serif;
   font-size: 14px;
-  background: #e5e5e5;
-  color: black; }
+  color: black;
+  background: #e5e5e5; }
   body:.blank {
     background-color: white; }
+
+html {
+  height: 100%; }
 
 * {
   text-shadow: rgba(0, 0, 0, 0.01) 0 0 0; }
