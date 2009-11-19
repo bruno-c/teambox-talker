@@ -903,6 +903,8 @@ div.panel {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px; }
 
+#error_page h2 {
+  text-align: center; }
 #error_page div.content p {
   padding: 6px; }
 

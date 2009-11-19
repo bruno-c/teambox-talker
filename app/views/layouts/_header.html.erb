@@ -15,6 +15,9 @@
   <!--[if IE]><%= stylesheet_link_tag "ie.css", :media => "screen, projection" %><![endif]-->
   <%= sprockets_include_tag %>
   <%= yield :head %>
+  <noscript>
+    <meta http-equiv="refresh" content="0;URL=noscript.html" />
+  </noscript>
 </head>
 
 <body id="<%= @controller.controller_name %>_controller" class="<%= current_view %>">
