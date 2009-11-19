@@ -19,6 +19,8 @@ Fixes:
 ✓ feedback: edit link on plugin disappears at times.
 ✓ feedback: hover on show page should not be there.
 - resize on bigger username (test with /clear)
+- Log page is broken
+- Delta indexing doesn't seem to work
 
 Plugin Ideas:
 - feedback: highlighting of paragraphs with your name in them (I plan on doing this in a plugin)
