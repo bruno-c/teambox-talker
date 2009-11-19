@@ -11,9 +11,20 @@ Talker.MsgCommand = function() {
       
       if (user == null) throw new CommandError("Unknown user: " + userName);
       
-      Talker.client.send({content: event.args.slice(1).join(" "), to: user.id});
+      var content = event.args.slice(1).join(" ");
+      
+      Talker.client.send({content: content, to: user.id});
       $('#msgbox').val('');
       Talker.trigger("MessageSent", event);
+
+      Talker.insertMessage({
+        content: 'to ' + user.name  + '&nbsp;&nbsp;<img src="' + avatarUrl(user) + '" height="16" width="16" alt="' + user.name + '" class="avatar private" />&nbsp;' + content,
+        private: true,
+        time: parseInt(new Date().getTime() / 1000),
+        type: "message",
+        user: Talker.currentUser,
+      });
+      
       
       return false;
     }

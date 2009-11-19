@@ -38,7 +38,7 @@ Talker.insertMessage = function(talkerEvent, content) {
   element.append($('<p/>').attr('id', "event_" + talkerEvent.time).
                            attr('room', (Talker.getRoom() || talkerEvent.room).id). // HACK ...
                            attr('time', talkerEvent.time).
-                           html(content));
+                           html(content || talkerEvent.content));
 
   Talker.trigger('MessageInsertion');
 }
