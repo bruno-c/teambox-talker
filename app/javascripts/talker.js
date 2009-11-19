@@ -95,7 +95,7 @@ Talker.getCommandsAndUsage = function(){
   }).sort();
 }
 
-Talker.getCurrentUser() {
+Talker.getCurrentUser = function() {
   return Talker.currentUser;
 }
 

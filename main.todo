@@ -16,7 +16,7 @@ Fixes:
 ✓ feedback: clicking away should remove the list of rooms
 ✓ feedback: add Talker.currentUser to doc
 - feedback: better handling of privates messages.  Callbacks and all.
-- feedback: edit link on plugin disapears at times.
+- feedback: edit link on plugin disappears at times.
 - feedback: hover on show page should not be there.
 
 Plugin Ideas:
