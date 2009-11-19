@@ -15,7 +15,7 @@ Talker.UsernameAutocompleter = function(){
     }).
     keyup(function(e){
       // ignore non-printable characters
-      if (!tab && controlChar(event.keyCode)) return;
+      if (!tab && controlChar(e.keyCode)) return;
       
       var position = $('#msgbox').getCaretPosition();
       var value = $('#msgbox').val();
@@ -42,7 +42,7 @@ Talker.UsernameAutocompleter = function(){
       }
     });
   
-  function controlChar(keyCode) {
+  function controlChar(event) {
     return String.fromCharCode(event.keyCode).match(/[^\w]/);
   }
   
