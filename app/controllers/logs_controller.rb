@@ -5,7 +5,7 @@ class LogsController < ApplicationController
   
   def index
     if @room
-      @events = @room.events.date_grouped.paginate(:page => params[:page])
+      @events = @room.events.date_grouped #.paginate(:page => params[:page])
       @dates = @events.map(&:created_at).compact
       render :room_index
     else
