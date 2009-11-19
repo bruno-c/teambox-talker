@@ -6,7 +6,7 @@ $(function() {
     e.stopPropagation();
   });
   
-  $(document).click(function(e){    console.info("document click");
+  $(document).click(function(e){
     $('#rooms').hide();
     $('#room span.switch_rooms').removeClass('show_rooms').addClass('hide_rooms');
   });
