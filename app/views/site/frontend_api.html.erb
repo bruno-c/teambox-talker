@@ -24,15 +24,15 @@
   <li>Integrate with your favorite SSB (Site Specific Browser) and receive notifications for the Talker events you want.</li>
   </ul>
 
-  <h3 id="anatomyofaplugin.">Anatomy of a plugin.</h3>
+  <h3>Anatomy of a plugin.</h3>
 
   <p>A plugin responds to a Talker event by defining a callback method.  It can stop further plugins from executing their callbacks by returning false.</p>
 
   <p>Here is an example plugin that alert the message being sent:</p>
 
   <pre><code>plugin.onMessageSend = function(talkerEvent){
-    alert(talkerEvent.content);
-  }
+  alert(talkerEvent.content);
+}
   </code></pre>
 
   <p>A Talker event is a JSON line received from the server or constructed by a plugin.</p>
@@ -40,14 +40,14 @@
   <p>Sample :</p>
 
   <pre><code>{
-    "type": "message",
-    "content" : "Elvis is alive!",
-    "user" : {
-      "id": 2,
-      "name": "Eugene"
-    },
-    "time": 1255447115
-  }
+  "type": "message",
+  "content" : "Elvis is alive!",
+  "user" : {
+    "id": 2,
+    "name": "Eugene"
+  },
+  "time": 1255447115
+}
   </code></pre>
 
   <p>Each Talker event has a type associated with it.</p>
@@ -111,47 +111,45 @@
 
   <p>Talker also provides some methods for doing common actions.</p>
 
-  <h4 id="talker.sendmessagemessage">Talker.sendMessage(message)</h4>
+  <h4>Talker.sendMessage(message)</h4>
 
   <p>Sends a message to the current room.</p>
 
   <pre><code>Talker.sendMessage("I love the new interface!")
   </code></pre>
 
-  <h4 id="talker.insertmessagetalkereventcontent">Talker.insertMessage(talkerEvent, content)</h4>
+  <h4>Talker.insertMessage(talkerEvent, content)</h4>
 
   <p>Inserts a string within the room&#8217;s log.  It is smart enough to group content by user so if it&#8217;s the 
   second (or more) message from the same user in a row it&#8217;ll appear in the same bubble.</p>
 
   <p>Once the action has executed an onMessageInsertion event is triggered.</p>
 
-  <pre><code>Talker.insertMessage(talkerEvent, 'I will be in earlier tomorrow.  Will anyone want donuts?');
-  </code></pre>
+  <pre><code>Talker.insertMessage(talkerEvent, 'I will be in earlier tomorrow.  Will anyone want donuts?');</code></pre>
 
-  <h4 id="talker.insertnoticetalkereventcontenttriggeranonnoticeinsertionevent.">Talker.insertNotice(talkerEvent, content) => trigger an onNoticeInsertion event.</h4>
+  <h4>Talker.insertNotice(talkerEvent, content) => trigger an onNoticeInsertion event.</h4>
 
   <p>Inserts a string within the room&#8217;s log but as a simple line rather than a grouped message. The join 
   and leave messages are inserted using this method.</p>
 
   <p>Once the action has executed an onNoticeInsertion event is triggered.</p>
 
-  <pre><code>Talker.insertNotice(talkerEvent, 'loves tango');
-  </code></pre>
+  <pre><code>Talker.insertNotice(talkerEvent, 'loves tango');</code></pre>
 
-  <h4 id="talker.getlastrowreturnsjqueryobject">Talker.getLastRow() => returns jQuery object</h4>
+  <h4>Talker.getLastRow() => returns jQuery object</h4>
 
   <p>Useful if you want to update or style the previously inserted row.</p>
 
-  <h4 id="talker.getlastauthorreturnsstring">Talker.getLastAuthor() => returns string</h4>
+  <h4>Talker.getLastAuthor() => returns string</h4>
 
   <p>Tells you the name of the previous author.</p>
 
-  <h4 id="talker.getmaxcontentwidthreturnsinteger">Talker.getMaxContentWidth() => returns integer</h4>
+  <h4>Talker.getMaxContentWidth() => returns integer</h4>
 
   <p>You can update the size of your content with the onResize event.  The Talker.getMaxContentWidth() method
   comes in really handy for such a purpose. It tells you in pixels how much room you have to work with.</p>
 
-  <h4 id="talker.notifytalkereventcontent">Talker.notify(talkerEvent, content)</h4>
+  <h4>Talker.notify(talkerEvent, content)</h4>
 
   <p>Prism and Fluid offer system notifications when the appropriate system client is installed.  On  OS X 
   we often use Growl to receive notifications from applications.  A notification will display the 
@@ -160,30 +158,28 @@
   <p>With an event in room &#8220;Lobby&#8221;:</p>
 
   <pre><code>{
-    "type": "message",
-    "content" : "Elvis is alive!",
-    "user" : {
-      "id": 2,
-      "name": "Eugene"
-    },
-    "time": 1255447115
-  }
+  "type": "message",
+  "content" : "Elvis is alive!",
+  "user" : {
+    "id": 2,
+    "name": "Eugene"
+  },
+  "time": 1255447115
+}
 
-  Talker.notify(talkerEvent);
-  </code></pre>
+Talker.notify(talkerEvent);</code></pre>
 
   <p>Would send a growl notification with <em>&#8220;Lobby&#8221;</em> as the title and the content would be <em>&#8216;Eugene : Elvis is alive!&#8217;</em>.</p>
 
-  <pre><code>Talker.notify(talkerEvent, 'sent a new message.');
-  </code></pre>
+  <pre><code>Talker.notify(talkerEvent, 'sent a new message.');</code></pre>
 
   <p>Would send a growl notification with <em>&#8220;Lobby&#8221;</em> as the title and the content would be <em>&#8216;Eugene : sent a new message.&#8217;</em>.</p>
 
-  <h4 id="talker.errorerrormsg">Talker.error(error, msg)</h4>
+  <h4>Talker.error(error, msg)</h4>
 
   <p>Provides a mechanism for alerting users of errors.</p>
 
-  <h4 id="talker.getcommands">Talker.getCommands()</h4>
+  <h4>Talker.getCommands()</h4>
 
   <p>Lists the available slash commands.</p>
 
@@ -194,11 +190,10 @@
   <p>Sample:</p>
 
   <pre><code>{
-    "name": "John",
-    "email": "john.doe@company.com",
-    "id": "5"
-  }
-  </code></pre>
+  "name": "John",
+  "email": "john.doe@company.com",
+  "id": "5"
+}</code></pre>
 
   <h4>Talker.getRoom()</h4>
 
@@ -207,38 +202,35 @@
   <p>Sample:</p>
 
   <pre><code>{
-    "name": "Lobby",
-    "id": 1
-  }
-  </code></pre>
+  "name": "Lobby",
+  "id": 1
+} </code></pre>
 
-  <h4 id="talker.getroomname">Talker.getRoomName()</h4>
+  <h4>Talker.getRoomName()</h4>
 
   <p>Returns only the name.</p>
 
-  <h4 id="talker.getroomusers">Talker.getRoomUsers()</h4>
+  <h4>Talker.getRoomUsers()</h4>
 
   <p>A user list is sent to everyone connecting to the room and is updated with joins and leaves.  Talker.getRoomUsers() 
   will provide you an up to date list.</p>
 
   <pre><code>{
-    {
-      'name': 'John',
-      'id': '1',
-      'email': 'John.Doe@somewhere.com'
-    },
-    {
-      'name': 'David',
-      'id': '2',
-      'email': 'David.Dolt@somewhere.com'
-    }
+  {
+    'name': 'John',
+    'id': '1',
+    'email': 'John.Doe@somewhere.com'
+  },
+  {
+    'name': 'David',
+    'id': '2',
+    'email': 'David.Dolt@somewhere.com'
   }
-  </code></pre>
+}</code></pre>
 
-  <h4 id="talker.getroomusernames">Talker.getRoomUsernames</h4>
+  <h4>Talker.getRoomUsernames</h4>
 
   <p>Returns only the user names as an array.</p>
 
-  <pre><code>['John', 'David']
-  </code></pre>
+  <pre><code>['John', 'David']</code></pre>
 </div>
