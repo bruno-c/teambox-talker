@@ -15,7 +15,7 @@ Talker.UsernameAutocompleter = function(){
     }).
     keyup(function(e){
       // ignore non-printable characters
-      if (!tab && String.fromCharCode(event.keyCode).match(/[^\w]/)) return;
+      if (!tab && controlChar(event.keyCode)) return;
       
       var position = $('#msgbox').getCaretPosition();
       var value = $('#msgbox').val();
@@ -28,8 +28,7 @@ Talker.UsernameAutocompleter = function(){
       
         var pattern = value.substring(nameStart, nameEnd);
         var users = findUsers(pattern);
-        var name = nextUserName(users);
-        console.info(users)
+        var name = nextUserName(users, e.shiftKey);
         if (name) {
           var completion = name.substring(pattern.length);
           if (tab && users.length == 1) {
@@ -43,6 +42,10 @@ Talker.UsernameAutocompleter = function(){
       }
     });
   
+  function controlChar(keyCode) {
+    return String.fromCharCode(event.keyCode).match(/[^\w]/);
+  }
+  
   function findUsers(pattern) {
     var names = _.select(Talker.getRoomUsernames(), function(name) { return name.match("^" + pattern); });
     names = _.reject(names, function(name) { return name === Talker.currentUser.name });
@@ -50,7 +53,6 @@ Talker.UsernameAutocompleter = function(){
   }
   
   function nextUserName(users, reverse) {
-    // TODO reverse
     users = (reverse ? users.reverse() : users);
     
     if (currentCycle == null || _.indexOf(users, currentCycle) == users.length - 1) {
