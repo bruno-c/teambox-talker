@@ -95,6 +95,10 @@ Talker.getCommandsAndUsage = function(){
   }).sort();
 }
 
+Talker.getCurrentUser() {
+  return Talker.currentUser;
+}
+
 Talker.getRoom = function() {
   return Talker.room;
 }
