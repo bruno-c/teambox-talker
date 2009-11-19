@@ -8,9 +8,9 @@ Talker.YoutubeFormatter = function() {
     if (youtube_match){
       Talker.insertMessage(event,
         '<object width="425" height="355">'
-        + '<param name="movie" value="http://www.youtube.com/v/' + youtube_match[1] + '"></param>'
+        + '<param name="movie" value="http://www.youtube.com/v/' + youtube_match[1] + '&fs=1"></param>'
         + '<param name="allowFullScreen" value="true"></param>'
-        + '<embed src="http://www.youtube.com/v/' + youtube_match[1] + '"'
+        + '<embed src="http://www.youtube.com/v/' + youtube_match[1] + '&fs=1"'
         + ' type="application/x-shockwave-flash"'
         + '  width="425" height="355" '
         + '  allowfullscreen="true"></embed>'
