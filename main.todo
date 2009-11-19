@@ -38,7 +38,7 @@ Feature Request:
 Documentation:
 ✓ Room help link
 ✓ Plugin API (50%) [GH] 2
-- REST API
+✓ REST API
 
 Exclusive must haves:
 - Import campfire logs
