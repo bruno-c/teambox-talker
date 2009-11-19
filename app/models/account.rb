@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  INVITATION_CODE = "this is not a fish"
+  INVITATION_CODES = ["this is not a fish", "1711514"]
   
   has_many :users
   has_many :rooms
@@ -16,7 +16,7 @@ class Account < ActiveRecord::Base
                                             (0..3).map { |i| "assets#{i}" } # see action_controller.asset_host
   
   attr_accessor :invitation_code
-  validate_on_create { |a| a.errors.add(:invitation_code, "is invalid") unless a.invitation_code == INVITATION_CODE }
+  validate_on_create { |a| a.errors.add(:invitation_code, "is invalid") unless INVITATION_CODES.include?(a.invitation_code) }
   
   after_create :create_default_rooms
   after_create :create_default_plugin_installations

@@ -1,8 +1,12 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
 class AccountTest < ActiveSupport::TestCase
-  def test_creation
-    create_account!
+  def test_first_inviation_code
+    create_account!(:invitation_code => "this is not a fish")
+  end
+  
+  def test_second_invitation_code
+    create_account!(:invitation_code => "1711514")
   end
   
   def test_subdomain_validation

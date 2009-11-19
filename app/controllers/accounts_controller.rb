@@ -6,7 +6,7 @@ class AccountsController < ApplicationController
   
   def new
     delete_old_cookies
-    @account = Account.new(:invitation_code => params[:invitation_code])
+    @account = Account.new(:invitation_code => params[:code])
     @user = User.new
   end
   
