@@ -1,29 +1,14 @@
 Functionalities:
-✓ Edit rooms
-✓ Update Guest access section for all admin users
-✓ Delete Rooms
-✓ Open Rooms
 - lock down rooms
-✓ /clear
-✓ /me
-✓ /invite
-✓ /help
 
 Fixes:
-✓ feedback: the fucking resizer needs work
-✓ feedback: display private messages to the sender
 - feedback: scroller is a bitch
-✓ feedback: clicking away should remove the list of rooms
-✓ feedback: add Talker.currentUser to doc
 - feedback: better handling of privates messages.  Callbacks and all.
-✓ feedback: edit link on plugin disappears at times.
-✓ feedback: hover on show page should not be there.
 - resize on bigger username (test with /clear)
 - facebox/closelabel.gif missing.
 - feedback: find ways to make scroll easier for people.
 - Guest users are lost when they see a blank page.  Perhaps a message for first person (when no events exist and one for guest users).
 - IMPORTANT: Noisier alerts when plugins fuck up.
-✓ Unread count in title should be on the left to be useful in many tabs.
 - image pattern should be able to handle ?138171616
 
 Plugin Ideas:
