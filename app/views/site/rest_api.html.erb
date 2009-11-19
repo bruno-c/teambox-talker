@@ -1,0 +1,21 @@
+<div class="main">
+  <h2>Talker REST API</h2>
+  
+  <p>You can send messages to a room using the REST API by sending a <code>POST</code> request to
+    <code>https://youraccount.talkerapp.com/rooms/ROOM_ID/messages.json</code>.</p>
+  
+  <p>Here's an example using <code>curl</code>:</p>
+  
+  <pre>curl -H 'Accept: application/json' -H 'Content-Type: application/json' \
+     -H 'X-Talker-Token: YOUR_TALKER_TOKEN' \
+     -d '{"message":"This is your message"}' \
+     https://youraccount.talkerapp.com/rooms/ROOM_ID/messages.json</pre>
+  
+  <p>You can find your Talker Token on your settings page.</p>
+
+  <p>The Room ID is the last part of the URL of the room you want to send a message to: <code>https://myaccount.talkerapp.com/rooms/&lt;room_id&gt;</code>.</p>
+  
+  <h3>Talker Real-Time Ruby Client</h3>
+  
+  <p>If you need full interaction with a room, you can use the Ruby client at: <%= link_to "http://github.com/macournoyer/talker.rb", "http://github.com/macournoyer/talker.rb" %></p>
+</div>

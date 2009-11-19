@@ -8,7 +8,8 @@ ActionController::Routing::Routes.draw do |map|
   map.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
   
   map.features '/features', :controller => 'site', :action => 'features'
-  map.frontend_api '/frontend_api', :controller => 'site', :action => 'frontend_api'
+  map.plugin_api '/api/plugin', :controller => 'site', :action => 'frontend_api'
+  map.rest_api '/api/rest', :controller => 'site', :action => 'rest_api'
   
   map.connect "/ouch", :controller => "rooms", :action => "ouch"
   
