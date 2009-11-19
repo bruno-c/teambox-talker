@@ -23,7 +23,7 @@ Fixes:
 - feedback: find ways to make scroll easier for people.
 - Guest users are lost when they see a blank page.  Perhaps a message for first person (when no events exist and one for guest users).
 - IMPORTANT: Noisier alerts when plugins fuck up.
-- Unread count in title should be on the left to be useful in many tabs.
+✓ Unread count in title should be on the left to be useful in many tabs.
 - image pattern should be able to handle ?138171616
 
 Plugin Ideas:
