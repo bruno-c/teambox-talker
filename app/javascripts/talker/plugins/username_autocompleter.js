@@ -32,7 +32,7 @@ Talker.UsernameAutocompleter = function(){
         console.info(users)
         if (name) {
           var completion = name.substring(pattern.length);
-          if (tab && users.length == 2) { // HACK should == 1, Talker.getRoomUsernames returns duplicates
+          if (tab && users.length == 1) {
             $('#msgbox').insertAtCaret(completion + " ").
                          setCaretPosition(position + completion.length + 1);
           } else {
