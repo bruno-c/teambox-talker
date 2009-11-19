@@ -19,6 +19,9 @@ Fixes:
 ✓ feedback: edit link on plugin disappears at times.
 ✓ feedback: hover on show page should not be there.
 - resize on bigger username (test with /clear)
+- facebox/closelabel.gif missing.
+- feedback: find ways to make scroll easier for people.
+- IMPORTANT: FAILSAFE MODE FOR WHEN PLUGINS FUCK THINGS UP.
 
 Plugin Ideas:
 - feedback: highlighting of paragraphs with your name in them (I plan on doing this in a plugin)
