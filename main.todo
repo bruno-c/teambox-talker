@@ -10,6 +10,7 @@ Fixes:
 - Guest users are lost when they see a blank page.  Perhaps a message for first person (when no events exist and one for guest users).
 - IMPORTANT: Noisier alerts when plugins fuck up.
 - image pattern should be able to handle ?138171616
+- bigger default font size.
 
 Plugin Ideas:
 - feedback: highlighting of paragraphs with your name in them (I plan on doing this in a plugin)
