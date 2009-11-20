@@ -3,7 +3,7 @@ Functionalities:
 
 Fixes:
 ✓ feedback: scroller is a bitch
-- scroll down on resize.
+✓ scroll down on resize.
 - feedback: better handling of privates messages.  Callbacks and all.
 ✓ resize on bigger username (test with /clear)
 - facebox/closelabel.gif missing.

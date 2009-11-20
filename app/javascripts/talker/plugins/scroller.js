@@ -35,11 +35,9 @@ Talker.MainScroller = Class.extend({
     self.onJoin =
     self.onLeave =
     self.onNoticeInsertion =
-    self.onMessageInsertion = function(event) {
-      self.scrollToBottom();
-    }
-
+    self.onMessageInsertion = 
     self.onLoaded = 
+    self.onResize = 
     self.onMessageSent = function(event) {
       self.scrollToBottom();
     }
