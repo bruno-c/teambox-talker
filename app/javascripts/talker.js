@@ -75,10 +75,13 @@ Talker.notify = function(talkerEvent, content) {
   }
 }
 
-Talker.error = function(error, msg){
+Talker.error = function(error, culprit){
   if (console.error){
-    console.info(error);
-    console.error(msg + " caused a problem");
+    alert('An error occured.  Check your Javascript console for details.')
+    console.error(error);
+    console.error(culprit + " seems to be the cause of the problem");
+  } else {
+    alert(error + (culprit || ''));
   }
 }
 
