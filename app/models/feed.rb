@@ -59,6 +59,8 @@ class Feed < ActiveRecord::Base
     
     if feed == 304 # not modified
       return
+    elsif feed.nil?
+      raise BadResponse, "Invalid feed or error from server"
     elsif feed.is_a?(Fixnum)
       raise BadResponse, "Got #{feed} response from server"
     end
@@ -72,9 +74,10 @@ class Feed < ActiveRecord::Base
     
     entries.first(MAX_MESSAGES).reverse.each do |entry|
       publish entry
+      self.last_modified_at = entry.published
     end
     
-    self.last_modified_at = feed.last_modified
+    self.last_modified_at = feed.last_modified if feed.last_modified > last_modified_at
     self.etag = feed.etag
   end
   
