@@ -26,7 +26,7 @@ end
       Talker.plugins.push(new Talker.MeCommand());
       Talker.plugins.push(new Talker.DefaultFormatter());
       
-      <%= render_events_for_logs @events %>
+      <%= render_events_for_logs @events, :include => :room %>
     });
   //]]>
   </script>
@@ -35,6 +35,9 @@ end
 <h2><%=h @title %></h2>
 
 <div id="chat_log">
+  <% if @events.empty? %>
+    <p>No results.</p>
+  <% end %>
   <table id="log">
   </table>
 </div>

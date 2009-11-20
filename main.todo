@@ -10,8 +10,6 @@ Fixes:
 - Guest users are lost when they see a blank page.  Perhaps a message for first person (when no events exist and one for guest users).
 - image pattern should be able to handle ?138171616
 - bigger default font size.
-✓ Log page is broken
-- Delta indexing doesn't seem to work
 
 Plugin Ideas:
 - feedback: highlighting of paragraphs with your name in them (I plan on doing this in a plugin)
@@ -43,7 +41,6 @@ After beta:
 Talker Server:
 - Allow connecting to a room by name
 - Fix db writes ordering in logger
-✓ Create a paste when message sent from API
 - Renaming a user in presence server
 - Support other types of channels (room, paste, etc)
 - Benchmark against ejabberd
