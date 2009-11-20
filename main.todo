@@ -10,7 +10,7 @@ Fixes:
 - Guest users are lost when they see a blank page.  Perhaps a message for first person (when no events exist and one for guest users).
 - image pattern should be able to handle ?138171616
 - bigger default font size.
-- Log page is broken
+✓ Log page is broken
 - Delta indexing doesn't seem to work
 
 Plugin Ideas:
