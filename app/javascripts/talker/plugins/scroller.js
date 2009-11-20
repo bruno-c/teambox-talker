@@ -31,10 +31,6 @@ Talker.Scroller = function() {
     });
   }
   
-  self.shouldScrollToBottom = function(){
-    return self.allowScrollingToBottom;
-  }
-  
   self.atBottom = function(){
     return self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight() >= 0;
   }
