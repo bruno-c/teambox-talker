@@ -2,7 +2,7 @@ Talker.ImageFormatter = function() {
   var self = this;
   
   self.onMessageReceived = function(event){
-    var image_expression = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)$)/gi;
+    var image_expression = /(^https?:\/\/[^\s]+\.(?:gif|png|jpeg|jpg)(\?)*(\d+)*$)/gi;
     var image_match = event.content.match(image_expression);
     
     if ($('#talker_image_preloading_div').length == 0){
