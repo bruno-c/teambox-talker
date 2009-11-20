@@ -302,6 +302,8 @@ html[xmlns] .clearfix {
   #main.dialog {
     margin: 0 auto;
     width: 500px; }
+    #main.dialog div.sheet {
+      min-width: 0; }
 
 #sidebar {
   position: fixed;
