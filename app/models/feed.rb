@@ -55,7 +55,7 @@ class Feed < ActiveRecord::Base
     options[:if_none_match] = etag if etag
     options[:http_authentication] = [user_name, password] if user_name.present?
     
-    feed = Feedzirra::Feed.fetch_and_parse(normalized_url, options)
+    feed = Feedzirra::Feed.fetch_and_parse(url, options)
     
     if feed == 304 # not modified
       return
@@ -88,12 +88,6 @@ class Feed < ActiveRecord::Base
       "#{entry.author}: #{title} #{url}",
       (truncated_content unless title == content)
     ].compact
-  end
-  
-  def normalized_url
-    url.to_s.
-        gsub("feed:http", "http").
-        gsub("feed://", "http://")
   end
   
   def sanitize(content)
