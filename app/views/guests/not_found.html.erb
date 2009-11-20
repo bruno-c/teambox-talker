@@ -1,0 +1,15 @@
+<% @title = "Chat Invitation Expired" %>
+
+<div class="sheet">
+  <h2>Your <%= @title %></h2>
+  
+  <div class="content">
+    <p>This invitation for chatting on <%=h possessive(current_account.subdomain.titleize) %>
+      group chat has expired or is invalid.</p>
+  
+    <ul>
+      <li>Ask the person who sent you this link for a new one.</li>
+      <li>Maybe you pasted this link and forgot some characters, hey happens to everyone!</li>
+    </ul>
+  </div>
+</div>

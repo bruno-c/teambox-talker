@@ -784,7 +784,7 @@ div.panel
       padding: 6px
   
 
-#welcome
+div.dialog
   div.content
     p
       padding: 6px
@@ -793,12 +793,14 @@ div.panel
     ul
       margin: 6px 20px
       li
-        background: url("/images/icons/arrow-000-small.png") no-repeat left center
+        background: url("/images/icons/arrow-000-small.png") no-repeat left 4px
         padding: 1px
         padding-left: 21px
         list-style: none
       &.links
         +font_size("xxlarge")
+        li
+          background-position-y: center
 
 // Room Sidebar
 #sidebar

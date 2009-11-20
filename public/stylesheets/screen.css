@@ -911,19 +911,21 @@ div.panel {
 #error_page div.content p {
   padding: 6px; }
 
-#welcome div.content p {
+div.dialog div.content p {
   padding: 6px; }
-#welcome div.content .footer {
+div.dialog div.content .footer {
   margin-top: 30px; }
-#welcome div.content ul {
+div.dialog div.content ul {
   margin: 6px 20px; }
-  #welcome div.content ul li {
-    background: url("/images/icons/arrow-000-small.png") no-repeat left center;
+  div.dialog div.content ul li {
+    background: url("/images/icons/arrow-000-small.png") no-repeat left 4px;
     padding: 1px;
     padding-left: 21px;
     list-style: none; }
-  #welcome div.content ul.links {
+  div.dialog div.content ul.links {
     font-size: 20px; }
+    div.dialog div.content ul.links li {
+      background-position-y: center; }
 
 #sidebar {
   z-index: 100; }

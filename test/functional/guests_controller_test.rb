@@ -33,9 +33,8 @@ class GuestsControllerTest < ActionController::TestCase
   end
   
   def test_new_with_invalid_token
-    assert_raise(ActiveRecord::RecordNotFound) do
-      get :new, :token => "invalid"
-    end
+    get :new, :token => "invalid"
+    assert_template :not_found
   end
   
   def test_logged_in_new_redirects_to_room

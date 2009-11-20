@@ -12,7 +12,9 @@ class AccountsController < ApplicationController
   
   def welcome
     @token = params[:token]
-    if @user = User.authenticate_by_perishable_token(@token)
+    if logged_in?
+      # just render
+    elsif @user = User.authenticate_by_perishable_token(@token)
       self.current_user = @user
       remember_me!
     else
