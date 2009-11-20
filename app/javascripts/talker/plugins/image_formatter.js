@@ -12,28 +12,32 @@ Talker.ImageFormatter = function() {
     }
     
     if (image_match){
+      console.info("image received!!");
+      console.info(image_match);
       var fallback = $('<a/>').attr('href', image_match[0]).attr('target', '_blank').html(image_match[0]);
       Talker.insertMessage(event, fallback);
       
       var img = $('<img/>').load(function(){
         $(this).remove();
         
-        fallback.replaceWith(
-              '<a href="' 
-            + image_match[0]
-            + '" target="_blank"><img src="' 
-            + image_match[0]
-            + '" style="max-height: 300px; max-width: ' + Talker.getMaxContentWidth() + ';" class="from_url" />'
-            + '</a>'
-        );
-        
-        Talker.trigger('MessageInsertion', event);
-        
         // detect size of last image.
         var imageForHeight = new Image();
         imageForHeight.src = image_match[0];
-        
-        Talker.trigger('Nudge', imageForHeight.height + 50); // + 50 for borders and container margins.
+
+        window.setTimeout(function() { // give it time to figure out the height of the image.
+          fallback.replaceWith(
+                '<a href="' 
+              + image_match[0]
+              + '" target="_blank"><img src="' 
+              + image_match[0]
+              + '" style="max-height: 300px; max-width: ' + Talker.getMaxContentWidth() + ';" class="from_url" />'
+              + '</a>'
+          );
+          
+          Talker.trigger('MessageInsertion', event);
+          
+          Talker.trigger('Nudge', imageForHeight.height + 50); // + 50 for borders and container margins.
+        }, 10);
       });
     
       $('#talker_image_preloading_div').append(
