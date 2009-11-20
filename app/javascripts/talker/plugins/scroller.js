@@ -6,10 +6,18 @@
 Talker.Scroller = function() {
   var self = this;
   self.scrollAmount = 0;
+  self.js_initiated_scroll = false;
   
-  self.scrollToBottom = function(){
+  self.scrollToBottom = function(force){
+    if (force){
+      self.forcing = true;
+      window.scrollBy(0, self.scrollAmount = 500000);
+      self.forcing = false;
+    }
     if (self.scrollAmount){
+      self.js_initiated_scroll = false;
       window.scrollBy(0, self.scrollAmount);
+      self.js_initiated_scroll = true;
     }
   }
   
@@ -21,7 +29,7 @@ Talker.Scroller = function() {
     }
   });
 
-  if ($.browser.mozilla){
+  if ($.browser.mozilla) {
     $(document).mousedown(function(e) {
       self.disableAutoScrolling()
     }).mouseup(function(e) {
@@ -29,22 +37,19 @@ Talker.Scroller = function() {
         self.enableAutoScrolling();
       }
     });
+  } else if ($.browser.safari) {
+    $(window).scroll(function(e) {
+      if (self.js_initiated_scroll && self.atBottom()) {
+        self.enableAutoScrolling();
+      } else {
+        if (self.forcing){ return }
+        self.disableAutoScrolling();
+      }
+    })
   }
   
   self.atBottom = function(){
-    return self.getWindowHeight() + self.getScrollOffset() - self.getScrollHeight() >= 0;
-  }
-  
-  self.getWindowHeight = function(){
-    return window.innerHeight || document.body.clientHeight
-  }
-  
-  self.getScrollOffset = function(){
-    return window.pageYOffset || document.documentElement.scrollTop  || document.body.scrollTop
-  }
-  
-  self.getScrollHeight = function(){
-    return Math.max(document.documentElement.offsetHeight, document.body.scrollHeight);
+    return $(window).height() - $(document).height() + $(window).scrollTop() >= 0;
   }
   
   self.scrollInterval = window.setInterval(function(){
