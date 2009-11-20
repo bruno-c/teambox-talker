@@ -15,6 +15,37 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil create_user(:name => "").errors.on(:name)
     assert_not_nil create_user(:name => "ma dude").errors.on(:name)
   end
+  
+  def test_generate_name
+    user = build_user(:email => "ma@gmail.com")
+    user.generate_name
+    user.save!
+    assert_equal "ma", user.name
+    
+    user = build_user(:email => "ma@hotmail.com")
+    user.generate_name
+    user.save!
+    assert_equal "ma_1", user.name
+    
+    user = build_user(:email => "ma@yahoo.com")
+    user.generate_name
+    user.save!
+    assert_equal "ma_2", user.name
+  end
+  
+  def test_generate_name_without_email
+    user = build_user(:email => nil)
+    user.guest = true
+    user.generate_name
+    user.save!
+    assert_equal "user", user.name
+    
+    user = build_user(:email => nil)
+    user.guest = true
+    user.generate_name
+    user.save!
+    assert_equal "user_1", user.name
+  end
 
   def test_activating_should_set_timestamp
     user = create_user

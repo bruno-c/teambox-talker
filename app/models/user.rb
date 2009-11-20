@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   validates_length_of       :email,    :allow_nil => true, :within => 6..100 #r@a.wk
   validates_uniqueness_of   :email,    :allow_nil => true, :scope => :account_id
   validates_format_of       :email,    :allow_nil => true, :with => Authentication.email_regex, :message => Authentication.bad_email_message
-
+  
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible :email, :name, :password, :password_confirmation, :time_zone
@@ -53,6 +53,16 @@ class User < ActiveRecord::Base
   
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
+  end
+  
+  def generate_name
+    name = name_prefix = email.to_s.split('@').first || "user"
+    uid = 0
+    while account.users.find_by_name(name)
+      uid += 1
+      name = "#{name_prefix}_#{uid}"
+    end
+    self.name = name
   end
   
   def remember_token?
