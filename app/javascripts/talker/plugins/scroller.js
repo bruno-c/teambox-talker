@@ -5,7 +5,7 @@
 // hasn't scrolled to the bottom of the page.
 Talker.Scroller = function() {
   var self = this;
-  self.scrollAmount = 0;
+  self.scrollAmount = 500000;
   self.js_initiated_scroll = false;
   
   self.scrollToBottom = function(force){
@@ -19,6 +19,12 @@ Talker.Scroller = function() {
       window.scrollBy(0, self.scrollAmount);
       self.js_initiated_scroll = true;
     }
+  }
+  
+  self.nudge = function(height) {
+    self.js_initiated_scroll = false;false;
+    window.scrollBy(0, height);
+    self.js_initiated_scroll = true;
   }
   
   $(window).mousewheel(function(event, delta) {
@@ -48,8 +54,16 @@ Talker.Scroller = function() {
     })
   }
   
-  self.atBottom = function(){
-    return $(window).height() - $(document).height() + $(window).scrollTop() >= 0;
+  $(window).load(function() {
+    self.scrollToBottom(true);
+  });
+  
+  self.atBottom = function() {
+    return self.scrollPosition() >= 0;
+  }
+  
+  self.scrollPosition = function() {
+    return $(window).height() - $(document).height() + $(window).scrollTop()
   }
   
   self.scrollInterval = window.setInterval(function(){
@@ -64,12 +78,14 @@ Talker.Scroller = function() {
     self.scrollAmount = 0;
   }
   
-  self.enableAutoScrolling();
-  
   self.onJoin =
   self.onLeave =
   self.onNoticeInsertion =
   self.onMessageInsertion = function(event) {
+    var lastInsertionHeight = $('#log p').height();
+    if (self.scrollPosition() - lastInsertionHeight <= 0){
+      self.nudge(lastInsertionHeight);
+    }
     self.scrollToBottom();
   }
   
