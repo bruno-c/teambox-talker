@@ -20,6 +20,16 @@ Talker.Scroller = function() {
       self.enableAutoScrolling();
     }
   });
+
+  if ($.browser.mozilla){
+    $(document).mousedown(function(e) {
+      self.disableAutoScrolling()
+    }).mouseup(function(e) {
+      if (self.atBottom()){
+        self.enableAutoScrolling();
+      }
+    });
+  }
   
   self.shouldScrollToBottom = function(){
     return self.allowScrollingToBottom;
