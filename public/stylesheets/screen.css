@@ -927,28 +927,30 @@ div.dialog div.content ul {
     div.dialog div.content ul.links li {
       background-position-y: center; }
 
+a#logo {
+  text-decoration: none;
+  color: silver;
+  font-size: 10px; }
+  a#logo img {
+    position: relative;
+    top: 5px;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+    -moz-opacity: 0.5; }
+  a#logo:hover {
+    color: #269ed6; }
+    a#logo:hover img {
+      filter: alpha(opacity=100);
+      opacity: 1;
+      -moz-opacity: 1; }
+
 #sidebar {
   z-index: 100; }
   #sidebar a#logo {
-    text-decoration: none;
     display: block;
     float: right;
     margin-top: -10px;
-    padding: 0 6px;
-    color: silver;
-    font-size: 10px; }
-    #sidebar a#logo img {
-      position: relative;
-      top: 5px;
-      filter: alpha(opacity=50);
-      opacity: 0.5;
-      -moz-opacity: 0.5; }
-    #sidebar a#logo:hover {
-      color: #269ed6; }
-      #sidebar a#logo:hover img {
-        filter: alpha(opacity=100);
-        opacity: 1;
-        -moz-opacity: 1; }
+    padding: 0 6px; }
   #sidebar #room {
     box-shadow: 0px 0px 8px #b1b1b1;
     -webkit-box-shadow: 0px 0px 8px #b1b1b1;
@@ -1065,6 +1067,8 @@ div.dialog div.content ul {
   font-size: 10px;
   text-align: center;
   color: gray; }
+  #footer a#logo img {
+    margin: 0 4px; }
   #footer .links a {
     color: #73afcb;
     margin: 0 2px; }
