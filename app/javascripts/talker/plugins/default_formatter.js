@@ -23,13 +23,7 @@ Talker.DefaultFormatter = function() {
     }
   }
   
-  self.onMessageInsertion = function(event) {
-    var maxWidth = Talker.getMaxContentWidth();
-    
-    Talker.getLastRow().find('pre').css('width', maxWidth - 22 + 'px');   // pastes and messages sent with multilines
-    Talker.getLastRow().find('blockquote').css('width', maxWidth + 'px'); // long sentences with no line breaks
-  }
-  
+  self.onMessageInsertion = 
   self.onResize = function() {
     window.setTimeout(function(){
       var maxWidth = Talker.getMaxContentWidth();
