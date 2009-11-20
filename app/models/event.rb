@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   # Do not use +type+ column for single-inheritance crap
   set_inheritance_column nil
   
-  named_scope :recent, :limit => 25, :order => "created_at desc, id desc"
+  named_scope :recent, :limit => 50, :order => "created_at desc, id desc"
   named_scope :on_date, proc { |date| { :conditions => ["created_at BETWEEN ? AND ?", date.beginning_of_day.utc, date.end_of_day.utc] } }
   
   named_scope :date_grouped, proc {
