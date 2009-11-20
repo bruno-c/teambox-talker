@@ -84,7 +84,7 @@ Talker.Scroller = function() {
   self.onMessageInsertion = function(event) {
     var lastInsertionHeight = $('#log p').height();
     if (self.scrollPosition() - lastInsertionHeight <= 0){
-      self.nudge(lastInsertionHeight + 50); // + 50 for PREs
+      self.nudge(lastInsertionHeight + 80); // + 80 for PREs and Youtubes
     }
     self.scrollToBottom();
   }
