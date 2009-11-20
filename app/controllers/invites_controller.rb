@@ -33,13 +33,14 @@ class InvitesController < ApplicationController
     
     @invitees.each do |email|
       email.strip!
-      user = current_account.users.build(:name => email.split('@')[0], :email => email)
+      user = current_account.users.build(:email => email)
+      user.generate_name
       if user.save
         send_invitation user
         success_count += 1
       else
-        flash[:error] ||= "<h3>Some errors occured while sending invitations:</h3>"
-        flash[:error] += "<p><strong>" + email + "</strong>: " + user.errors.full_messages.to_sentence + "</p>"
+        flash.now[:error] ||= "<h3>Some errors occured while sending invitations:</h3>"
+        flash.now[:error] += "<p><strong>" + email + "</strong>: " + user.errors.full_messages.to_sentence + "</p>"
       end
     end
 

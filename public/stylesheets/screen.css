@@ -297,10 +297,13 @@ html[xmlns] .clearfix {
     padding: 40px;
     box-shadow: 1px 1px 2px #d2d2d2;
     -webkit-box-shadow: 1px 1px 2px #d2d2d2;
-    -moz-box-shadow: 1px 1px 2px #d2d2d2; }
+    -moz-box-shadow: 1px 1px 2px #d2d2d2;
+    min-width: 700px; }
   #main.dialog {
     margin: 0 auto;
     width: 500px; }
+    #main.dialog div.sheet {
+      min-width: 0; }
 
 #sidebar {
   position: fixed;
@@ -911,42 +914,46 @@ div.panel {
 #error_page div.content p {
   padding: 6px; }
 
-#welcome div.content p {
+div.dialog div.content p {
   padding: 6px; }
-#welcome div.content .footer {
+div.dialog div.content .footer {
   margin-top: 30px; }
-#welcome div.content ul {
+div.dialog div.content ul {
   margin: 6px 20px; }
-  #welcome div.content ul li {
-    background: url("/images/icons/arrow-000-small.png") no-repeat left center;
+  div.dialog div.content ul li {
+    background: url("/images/icons/arrow-000-small.png") no-repeat left 4px;
     padding: 1px;
     padding-left: 21px;
     list-style: none; }
-  #welcome div.content ul.links {
+  div.dialog div.content ul.links {
     font-size: 20px; }
+    div.dialog div.content ul.links li {
+      background-position-y: center; }
+
+a#logo {
+  text-decoration: none;
+  color: silver;
+  font-size: 10px; }
+  a#logo img {
+    position: relative;
+    top: 5px;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+    -moz-opacity: 0.5; }
+  a#logo:hover {
+    color: #269ed6; }
+    a#logo:hover img {
+      filter: alpha(opacity=100);
+      opacity: 1;
+      -moz-opacity: 1; }
 
 #sidebar {
   z-index: 100; }
   #sidebar a#logo {
-    text-decoration: none;
     display: block;
     float: right;
     margin-top: -10px;
-    padding: 0 6px;
-    color: silver;
-    font-size: 10px; }
-    #sidebar a#logo img {
-      position: relative;
-      top: 5px;
-      filter: alpha(opacity=50);
-      opacity: 0.5;
-      -moz-opacity: 0.5; }
-    #sidebar a#logo:hover {
-      color: #269ed6; }
-      #sidebar a#logo:hover img {
-        filter: alpha(opacity=100);
-        opacity: 1;
-        -moz-opacity: 1; }
+    padding: 0 6px; }
   #sidebar #room {
     box-shadow: 0px 0px 8px #b1b1b1;
     -webkit-box-shadow: 0px 0px 8px #b1b1b1;
@@ -1063,6 +1070,8 @@ div.panel {
   font-size: 10px;
   text-align: center;
   color: gray; }
+  #footer a#logo img {
+    margin: 0 4px; }
   #footer .links a {
     color: #73afcb;
     margin: 0 2px; }

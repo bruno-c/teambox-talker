@@ -18,7 +18,7 @@
     <tr class=<%= cycle :even, :odd %>>
       <td>
         <%= image_tag "icons/feed.png" %>
-        <%= link_to truncate(h(feed.url), :length => 60), feed.url, :title => h(feed.url) %>
+        <%= link_to truncate(h(feed.url), :length => 50), feed.url, :title => h(feed.url) %>
         <% if feed.failed? %>
           <span class="error">Error: <%=h feed.last_error %> (<%= link_to "?", "http://en.wikipedia.org/wiki/List_of_HTTP_status_codes" %>)</span>
         <% end %>

@@ -19,7 +19,7 @@ class RoomsController < ApplicationController
         return
       end
       @rooms = []
-      @events = []
+      @events = @room.events.recent.since(@room.opened_at).reverse
     else
       @rooms = current_account.rooms
       @events = @room.events.recent.reverse

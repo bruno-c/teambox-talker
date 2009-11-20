@@ -8,10 +8,12 @@ class Event < ActiveRecord::Base
   named_scope :on_date, proc { |date| { :conditions => ["created_at BETWEEN ? AND ?", date.beginning_of_day.utc, date.end_of_day.utc] } }
   
   named_scope :date_grouped, proc {
-                              { :order => "created_at desc",
+                              { :order => "events.created_at desc",
                                 # Convert the created_at datetime to the user's time zone inside mysql
                                 :group => "DATE(CONVERT_TZ(events.created_at, '+0:00', '#{Time.zone.utc_offset / 1.hour}:00'))" }
                              }
+  
+  named_scope :since, proc { |date| { :conditions => ["events.created_at >= ?", date] } }
   
   define_index do
     # fields

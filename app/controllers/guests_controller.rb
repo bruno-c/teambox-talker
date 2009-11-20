@@ -17,12 +17,16 @@ class GuestsController < ApplicationController
 
   def new
     @token = params[:token]
-    @room = current_account.rooms.find_by_public_token!(@token)
-
-    if logged_in?
-      redirect_to @room
+    @room = current_account.rooms.find_by_public_token(@token)
+    
+    if @room
+      if logged_in?
+        redirect_to @room
+      else
+        @user = User.new
+      end
     else
-      @user = User.new
+      render :not_found
     end
   end
   

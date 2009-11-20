@@ -12,6 +12,7 @@ class Room < ActiveRecord::Base
   
   def create_public_token!
     self.public_token = ActiveSupport::SecureRandom.hex(3)
+    self.opened_at = Time.now
     save(false)
     public_token
   end
