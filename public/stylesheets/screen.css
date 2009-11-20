@@ -297,7 +297,8 @@ html[xmlns] .clearfix {
     padding: 40px;
     box-shadow: 1px 1px 2px #d2d2d2;
     -webkit-box-shadow: 1px 1px 2px #d2d2d2;
-    -moz-box-shadow: 1px 1px 2px #d2d2d2; }
+    -moz-box-shadow: 1px 1px 2px #d2d2d2;
+    min-width: 700px; }
   #main.dialog {
     margin: 0 auto;
     width: 500px; }
