@@ -206,6 +206,19 @@ hr {
 pre {
   font-family: monospace; }
 
+.highlight {
+  background: #EFEF00;
+  color: black;
+  font-weight: bold;
+  margin: 4px;
+  padding: 2px 5px 2px 5px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  box-shadow: 0px 0px 4px #d2d2d2;
+  -webkit-box-shadow: 0px 0px 4px #d2d2d2;
+  -moz-box-shadow: 0px 0px 4px #d2d2d2; }
+
 .clearfix {
   display: inline-block; }
   .clearfix:after {

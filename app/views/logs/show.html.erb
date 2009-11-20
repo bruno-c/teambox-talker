@@ -6,6 +6,21 @@
     Talker.currentUser = <%= current_user.to_json %>;
     Talker.room = <%= @room.to_json %>;
     
+    var contextEventElement = location.href.indexOf('#') != -1 ? '#' + location.href.split('#')[1] : false ;
+    
+    if (contextEventElement){
+      Talker.LogFindInterval = window.setInterval(function() {
+        if ($(contextEventElement).length){
+          $(contextEventElement).scrollToCenter({
+            complete: function() {
+              $(contextEventElement).addClass('highlight');
+            }
+          });
+          window.clearInterval(Talker.LogFindInterval);
+        }
+      }, 200);
+    }
+    
     $(function(){
       Talker.plugins.push(new Talker.Timestamp());
       Talker.plugins.push(new Talker.LogsJoinLeave());
@@ -20,6 +35,7 @@
       Talker.plugins.push(new Talker.DefaultFormatter());
       
       <%= render_events_for_logs @events %>
+      
     });
   //]]>
   </script>
