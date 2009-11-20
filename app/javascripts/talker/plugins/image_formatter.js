@@ -28,6 +28,12 @@ Talker.ImageFormatter = function() {
         );
         
         Talker.trigger('MessageInsertion', event);
+        
+        // detect size of last image.
+        var imageForHeight = new Image();
+        imageForHeight.src = image_match[0];
+        
+        Talker.trigger('Nudge', imageForHeight.height)
       });
     
       $('#talker_image_preloading_div').append(
