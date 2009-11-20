@@ -33,7 +33,7 @@ Talker.ImageFormatter = function() {
         var imageForHeight = new Image();
         imageForHeight.src = image_match[0];
         
-        Talker.trigger('Nudge', imageForHeight.height)
+        Talker.trigger('Nudge', imageForHeight.height + 50); // + 50 for borders and container margins.
       });
     
       $('#talker_image_preloading_div').append(
