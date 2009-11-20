@@ -12,8 +12,6 @@ Talker.ImageFormatter = function() {
     }
     
     if (image_match){
-      console.info("image received!!");
-      console.info(image_match);
       var fallback = $('<a/>').attr('href', image_match[0]).attr('target', '_blank').html(image_match[0]);
       Talker.insertMessage(event, fallback);
       
