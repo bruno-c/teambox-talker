@@ -1,8 +1,15 @@
 (function($){
-  $.fn.autocompleter = function(trigger, finder) {
+  /** Add CLI-style autocomplete to an element.
+      options:
+        trigger: char that will trigger autocompletion.
+        finder: finction called when an autocomplete is done.
+        options.startOnly: true to trigger only at the start of the content.
+  **/
+  $.fn.autocompleter = function(trigger, finder, options) {
     var element = $(this);
     var currentCycle = null;
     var tab = false;
+    options = options || {};
     
     element.
       keydown(function(e) {
@@ -17,8 +24,10 @@
       keyup(function(e){
         // ignore non-printable characters
         if (!tab && controlChar(e.keyCode)) return;
-
+        
         var position = element.getCaretPosition();
+        if (options.startOnly && position > trigger.length + 1) return;
+
         var value = element.val();
         var nameStart = value.lastIndexOf(trigger, position);
 
