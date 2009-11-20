@@ -48,13 +48,32 @@ class FeedTest < ActiveSupport::TestCase
     assert_equal DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00"), feed.last_modified_at
     assert_equal nil, feed.etag
   end
+  
+  def test_only_publish_new_entries
+    feed = feeds(:thin)
+    feed.update_attribute :last_modified_at, DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00") - 1.hour
+    Feedzirra::Feed.expects(:fetch_and_parse).with(feed.url, anything).
+                                              returns(Feedzirra::Feed.parse(File.read(self.class.fixture_path + "/feeds/thin.xml")))
+    feed.room.expects(:send_messages).times(1)
+    feed.perform
+  end
 
-  def test_perform_with_return_code
+  def test_run_with_return_code
     feed = feeds(:thin)
     Feedzirra::Feed.expects(:fetch_and_parse).returns(304)
     feed.room.expects(:send_messages).never
-    feed.perform
+    feed.run_with_lock
     
     assert_nil feed.last_modified_at
+  end
+
+  def test_run_with_nil_response
+    feed = feeds(:thin)
+    Feedzirra::Feed.expects(:fetch_and_parse).returns(nil)
+    feed.room.expects(:send_messages).never
+    feed.run_with_lock
+    
+    assert_nil feed.last_modified_at
+    assert_not_nil feed.last_error
   end
 end
