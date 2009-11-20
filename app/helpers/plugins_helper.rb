@@ -38,9 +38,9 @@ Talker.Plugin_#{plugin.id} = function(){ // #{plugin.name} by #{plugin.author.na
    "$.each(#{escape_json @events.to_json}, function(){ Talker.Broadcaster.broadcastEvent(this); });"
   end
   
-  def render_events_for_logs(events)
+  def render_events_for_logs(events, json_options={})
     <<-EOS
-var talkerEvents = #{escape_json @events.to_json};
+var talkerEvents = #{escape_json @events.to_json(json_options)};
 
 var loadingInterval = window.setInterval(function(){
   for (var i=0; i < 25; i++) {

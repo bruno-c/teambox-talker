@@ -5,8 +5,8 @@ Talker.LogsViewInContext = function(){
     var last_row = Talker.getLastRow();
     var last_p = $(last_row).find('p:last');
     
-    var room = last_p.attr('room');
-    var time = last_p.attr('time');
+    var room = event.room.id;
+    var time = event.time;
     
     last_p.prepend(
       $("<a/>").addClass('log')

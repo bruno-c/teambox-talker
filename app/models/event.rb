@@ -39,7 +39,17 @@ class Event < ActiveRecord::Base
     type == "message"
   end
   
-  def to_json(*a)
-    payload
+  def payload_object
+    ActiveSupport::JSON.decode(payload)
+  end
+  
+  def to_json(options={})
+    if options.key?(:include) # Simulate normal to_json(:include => ...) behaviour
+      object = payload_object
+      Array(options[:include]).each { |attr| object[attr] = send(attr) }
+      object.to_json
+    else
+      payload
+    end
   end
 end
