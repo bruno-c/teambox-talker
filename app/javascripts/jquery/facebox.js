@@ -80,7 +80,7 @@
       opacity      : 0,
       overlay      : true,
       loadingImage : '/images/facebox/loading.gif',
-      closeImage   : '/images/facebox/closelabel.gif',
+      closeImage   : '/images/facebox/closelabel.gif', // why is this here if we need to set it manually after?
       imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
       faceboxHtml  : '\
     <div id="facebox" style="display:none;"> \
@@ -97,7 +97,7 @@
                 </div> \
                 <div class="footer"> \
                   <a href="#" class="close"> \
-                    <img src="/facebox/closelabel.gif" title="close" class="close_image" /> \
+                    <img src="/images/facebox/closelabel.gif" title="close" class="close_image" /> \
                   </a> \
                 </div> \
               </td> \
