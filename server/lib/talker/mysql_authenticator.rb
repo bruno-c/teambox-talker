@@ -4,10 +4,6 @@ module Talker
   class MysqlAuthenticator
     include Escaping
     
-    def initialize(options)
-      EventedMysql.settings.update options
-    end
-    
     def authenticate(room_id, token, &callback)
       sql = <<-SQL
         SELECT users.id AS id, users.name AS name, users.email AS email

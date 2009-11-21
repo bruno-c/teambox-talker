@@ -11,10 +11,6 @@ module ModelFactory
     { :name => 'Awesome' }.merge(attributes)
   end
   
-  def hash_for_event(attributes={})
-    { :content => '...', :room => Room.first, :type => "message" }.merge(attributes)
-  end
-  
   def hash_for_paste(attributes={})
     { :content => "..." }.merge(attributes)
   end

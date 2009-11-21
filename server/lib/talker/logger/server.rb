@@ -5,14 +5,9 @@ require "yajl"
 module Talker
   module Logger
     class Server
-      ENCODING = "utf8"
-      
       attr_accessor :rooms, :queue
       
-      def initialize(options={})
-        EventedMysql.settings.update options
-        EventedMysql.settings.update :encoding => ENCODING,
-                                     :connections => 1 # only 1 connection to ensure correct ordering
+      def initialize
         @queue = Queues.logger
         @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name, self) }
       end
@@ -26,7 +21,6 @@ module Talker
       end
     
       def start
-        Talker.logger.info "Pool of #{db.connection_pool.size} connections"
         Talker.logger.info "Logging to #{options[:database]}@#{options[:host]}"
         
         subscribe

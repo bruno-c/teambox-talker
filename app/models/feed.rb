@@ -87,10 +87,8 @@ class Feed < ActiveRecord::Base
     content = sanitize(entry.content)
     truncated_content = Paste.truncate(content)
     
-    room.send_messages [
-      "#{entry.author}: #{title} #{url}",
-      (truncated_content unless title == content)
-    ].compact
+    room.send_message "#{entry.author}: #{title} #{url}"
+    room.send_message truncated_content unless title == content
   end
   
   def sanitize(content)

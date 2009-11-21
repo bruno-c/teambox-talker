@@ -6,24 +6,24 @@ module Talker
       DEFAULT_HOST = "0.0.0.0"
       DEFAULT_TIMEOUT = 30.0 # sec
       DEFAULT_PORT = 8500
-    
+      
       attr_reader :host, :port, :rooms
       
       # Pluggable services
       attr_accessor :authenticator, :paster
-  
+      
       def initialize(options={})
         @host = options[:host] || DEFAULT_HOST
         @port = options[:port] || DEFAULT_PORT
         @timeout = options[:timeout] || DEFAULT_TIMEOUT
-
+        
         @authenticator = nil
         @signature = nil
         @connections = {}
         @on_stop = nil
         @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
       end
-  
+      
       def start
         raise ArgumentError, "No authenticator specified" if @authenticator.nil?
         raise ArgumentError, "No paster specified" if @paster.nil?
@@ -41,7 +41,7 @@ module Talker
       def running?
         !!@signature
       end
-    
+      
       def stop(&callback)
         if running?
           # Stop accepting connections

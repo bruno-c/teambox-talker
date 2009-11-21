@@ -4,10 +4,6 @@ module Talker
   module Presence
     # Persistence presence info in a MySQL db.
     class MysqlPersister
-      def initialize(options)
-        EventedMysql.settings.update options
-      end
-      
       def store(room_id, user_id, state)
         sql = <<-SQL
           INSERT INTO connections (room_id, user_id, state, created_at, updated_at)

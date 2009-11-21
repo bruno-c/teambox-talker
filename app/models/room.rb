@@ -44,32 +44,12 @@ class Room < ActiveRecord::Base
     event
   end
   
-  def send_message(message, options={})
-    event = { :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options)
-    
-    # Paste the message if required
-    unless FalseClass === options.delete(:paste)
-      event[:content] = Paste.filter(message) do |paste|
-        event[:paste] = paste
-      end
-    end
-    
-    publish event
-    event
-  end
-  
-  def send_messages(messages, options={})
-    events = messages.map { |message| { :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options) }
-    publish *events
-    events
-  end
-  
   def topic
     MQ.new(self.class.amqp_connection).topic("talker.chat", :durable => true)
   end
   
-  def publish(*events)
-    topic.publish events.map(&:to_json).join("\n") + "\n", :key => "talker.room.#{id}", :persistent => true
+  def publish(event)
+    topic.publish event.to_json + "\n", :key => "talker.room.#{id}", :persistent => true
   end
   
   def self.amqp_connection

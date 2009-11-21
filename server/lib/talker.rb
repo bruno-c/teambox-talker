@@ -15,6 +15,7 @@ module Talker
   autoload :Connection, "talker/connection"
   autoload :Escaping, "talker/escaping"
   autoload :EventChannel, "talker/event_channel"
+  autoload :IdGenerator, "talker/id_generator"
   
   module Logger
     autoload :Room, "talker/logger/room"

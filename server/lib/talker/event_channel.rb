@@ -15,6 +15,7 @@ module Talker
     
     def publish(event, user_id=nil)
       key = routing_key(user_id)
+      event[:id] = IdGenerator.next
       
       Talker.logger.debug{"#{key}>>> #{event.inspect}"}
       

@@ -49,6 +49,8 @@ module Talker
       
       EM.run do
         start_amqp
+        start_mysql
+        
         create_queues
         
         server = case service
@@ -63,12 +65,33 @@ module Talker
                                ", accepted services are: channel, presence, logger"
         end
         
-        install_signals server
-
-        $0 = "talker-#{server.to_s}"
-        log "Starting #{server.to_s} ..."
-        server.start
+        start_services do
+          install_signals server
+        
+          $0 = "talker-#{server.to_s}"
+          log "Starting #{server.to_s} ..."
+          server.start
+        end
       end
+    end
+    
+    def start_services
+      log "Starting ID generator ..."
+      IdGenerator.start { yield }
+    end
+    
+    def start_mysql
+      require "em/mysql"
+      db = EventedMysql.settings
+      
+      # default options
+      db.update :encoding => "utf8",
+                :connections => 4,
+                :on_error => proc { |e| Talker::Notifier.error "Unexpected MySQL Error", e }
+                     
+      db.update options[:database]
+      
+      Talker.logger.info "#{EventedMysql.connection_pool.size} connections to MySQL #{db[:database]}@#{db[:host]}"
     end
     
     def start_amqp
@@ -137,18 +160,18 @@ module Talker
     
     def build_channel_server
       server = Talker::Channel::Server.new(:host => options[:host], :port => options[:port])
-      server.authenticator = Talker::MysqlAuthenticator.new(options[:database])
+      server.authenticator = Talker::MysqlAuthenticator.new
       server.paster = Talker::Paster.new(options[:paste_url])
       server
     end
 
     def build_presence_server
-      persister = Talker::Presence::MysqlPersister.new(options[:database])
+      persister = Talker::Presence::MysqlPersister.new
       Talker::Presence::Server.new(persister)
     end
     
     def build_logger
-      Talker::Logger::Server.new options[:database]
+      Talker::Logger::Server.new
     end
     
     def log(msg)
