@@ -2,6 +2,7 @@ Functionalities:
 - lock down rooms
 
 Fixes:
+- Improve paste for HUUUUGE pastes. Save directly in db from server.
 ✓ feedback: scroller is a bitch
 ✓ scroll down on resize.
 - feedback: better handling of privates messages.  Callbacks and all.
