@@ -42,15 +42,44 @@ Talker.Plugin_#{plugin.id} = function(){ // #{plugin.name} by #{plugin.author.na
     <<-EOS
 var talkerEvents = #{escape_json @events.to_json(json_options)};
  
-var loadingInterval = window.setInterval(function(){
-  for (var i=0; i < 25; i++) {
-    var event = talkerEvents.shift();
-    if (event) Talker.Broadcaster.broadcastEvent(event);
-  }
-  if (talkerEvents.length == 0){
-    window.clearInterval(loadingInterval);
-  }
-}, 0);
+// dom calls are what's hurting here but it will not hurt to optimize this part.
+var len = talkerEvents.length;
+var talkerEvents = talkerEvents.reverse(); // so we can trick with n-- instead of forward loop.
+var broadcaster = Talker.Broadcaster.broadcastEvent;
+
+var n = len % 25;
+while (n--) {
+  broadcaster(talkerEvents.pop());
+}
+
+$(document).everyTime(0, 'Jquery Time Delay Duff Device', function(){
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+  broadcaster(talkerEvents.pop());
+}, parseInt(len / 25));
+
 EOS
   end
 end

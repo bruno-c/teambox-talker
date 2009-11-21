@@ -7,7 +7,7 @@ Talker.Broadcaster = {
   
   // Notify all subscribers about an event
   broadcast: function(eventName, eventData) {
-    for (var i = 0; i < this.plugins.length; i++){
+    for (var i = 0, len = this.plugins.length; i < len; i++){
       var fn = this.plugins[i]["on" + eventName];
       if (fn && fn(eventData) === false){
         return false;
