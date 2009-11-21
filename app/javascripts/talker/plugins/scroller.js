@@ -31,7 +31,12 @@ Talker.MainScroller = Class.extend({
         self.defaultScrollAmount = 50000;
       }
     });
-
+    
+    $(document).everyTime(50, 'scroll down continuously', function(i) {
+      self.scrollToBottom();
+    });
+    
+    // these actions will all call a scroll so that things are snappy.
     self.onJoin =
     self.onLeave =
     self.onNoticeInsertion =
