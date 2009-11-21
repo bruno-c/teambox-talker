@@ -3,14 +3,9 @@ Functionalities:
 
 Fixes:
 - Improve paste for HUUUUGE pastes. Save directly in db from server.
-✓ feedback: scroller is a bitch
-✓ scroll down on resize.
 - feedback: better handling of privates messages.  Callbacks and all.
-✓ resize on bigger username (test with /clear)
 - facebox/closelabel.gif missing.
-✓ feedback: find ways to make scroll easier for people.
 - Guest users are lost when they see a blank page.  Perhaps a message for first person (when no events exist and one for guest users).
-- image pattern should be able to handle ?138171616
 - bigger default font size.
 
 Plugin Ideas:
