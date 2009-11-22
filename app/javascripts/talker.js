@@ -35,7 +35,7 @@ Talker.insertMessage = function(talkerEvent, content) {
           .append(element = $('<blockquote/>'))));
   }
 
-  element.append($('<p/>').attr('id', "event_" + talkerEvent.time).
+  element.append($('<p/>').attr('id', "event_" + talkerEvent.id).
                            attr('time', talkerEvent.time).
                            html(content || talkerEvent.content));
 
@@ -46,7 +46,9 @@ Talker.insertNotice = function(talkerEvent, content) {
   var element = $('<tr/>').attr('author', h(talkerEvent.user.name)).addClass('received').addClass('notice').addClass('user_' + talkerEvent.user.id).addClass('event')
     .append($('<td/>').addClass('author'))
     .append($('<td/>').addClass('message')
-      .append($('<p/>').attr('time', talkerEvent.time).html(h(content))));
+      .append($('<p/>').attr('id', "event_" + talkerEvent.id).
+                        attr('time', talkerEvent.time).
+                        html(h(content))));
 
   element.appendTo('#log');
   
