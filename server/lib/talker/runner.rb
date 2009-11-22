@@ -65,19 +65,12 @@ module Talker
                                ", accepted services are: channel, presence, logger"
         end
         
-        start_services do
-          install_signals server
-        
-          $0 = "talker-#{server.to_s}"
-          log "Starting #{server.to_s} ..."
-          server.start
-        end
+        install_signals server
+      
+        $0 = "talker-#{server.to_s}"
+        log "Starting #{server.to_s} ..."
+        server.start
       end
-    end
-    
-    def start_services
-      log "Starting ID generator ..."
-      IdGenerator.start { yield }
     end
     
     def start_mysql

@@ -1,4 +1,6 @@
 class Room < ActiveRecord::Base
+  UUID_GENERATOR = UUID.new
+  
   has_many :events, :dependent => :destroy
   has_many :connections, :dependent => :destroy
   has_many :users, :through => :connections
@@ -31,7 +33,7 @@ class Room < ActiveRecord::Base
   end
   
   def send_message(message, options={})
-    event = { :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options)
+    event = { :id => UUID_GENERATOR.generate(:compact), :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options)
     
     # Paste the message if required
     unless FalseClass === options.delete(:paste)

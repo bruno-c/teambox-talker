@@ -1,9 +1,11 @@
 require "mq"
 require "yajl"
+require "uuid"
 
 module Talker
   class EventChannel
     EVENT_DELIMITER = "\n".freeze
+    UUID_GENERATOR = UUID.new
     
     attr_reader :name, :exchange
     
@@ -15,7 +17,8 @@ module Talker
     
     def publish(event, user_id=nil)
       key = routing_key(user_id)
-      event[:id] = IdGenerator.next
+      
+      event[:id] = UUID_GENERATOR.generate(:compact)
       
       Talker.logger.debug{"#{key}>>> #{event.inspect}"}
       

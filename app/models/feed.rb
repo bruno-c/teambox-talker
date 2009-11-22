@@ -88,7 +88,7 @@ class Feed < ActiveRecord::Base
     truncated_content = Paste.truncate(content)
     
     room.send_message "#{entry.author}: #{title} #{url}"
-    room.send_message truncated_content unless title == content
+    room.send_message truncated_content, :paste => false unless title == content
   end
   
   def sanitize(content)

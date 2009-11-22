@@ -47,7 +47,7 @@ module Talker
       
       private
         def insert_event(event)
-          id = event["id"].to_i
+          id = event["id"].to_s
           room_id = @name.to_i
           type = event["type"].to_s
           content = event["content"].to_s
@@ -55,7 +55,7 @@ module Talker
           payload = @encoder.encode(event)
           
           sql = "INSERT INTO events (id, room_id, type, content, payload, created_at, updated_at) " +
-                "VALUES (#{id}, #{room_id}, '#{quote(type)}', '#{quote(content)}', '#{quote(payload)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
+                "VALUES ('#{quote(id)}', #{room_id}, '#{quote(type)}', '#{quote(content)}', '#{quote(payload)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
           
           Talker.logger.debug sql
           db.insert sql, @callback, errback_for(event)
