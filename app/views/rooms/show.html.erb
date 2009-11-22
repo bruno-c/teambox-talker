@@ -19,6 +19,7 @@
       document.domain = document.domain;
       
       // Functional plugins that have bearing on wether other plugins work or not
+      Talker.plugins.push(new Talker.Pending()); // updates pending status of messages when a new message is received from the server.
       Talker.plugins.push(new Talker.ErrorHandler($("#error")));
       Talker.plugins.push(new Talker.Users()); // used only to keep track of which users are present for up to date knowledge of presence
       Talker.plugins.push(new Talker.Scroller());

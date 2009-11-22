@@ -18,7 +18,7 @@ Talker.Sender = function(msgbox) {
       return;
     }
     
-    Talker.client.send({content: event.content, type: 'message'});
+    Talker.sendMessage(event.content);
     
     // Clear message box only if message sent was from it
     if (msgbox.val() === event.content)

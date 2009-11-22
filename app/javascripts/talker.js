@@ -3,8 +3,15 @@ Talker = {};
 //= require "talker/orbited"
 //= require "talker/client"
 
-Talker.sendMessage = function(message, options) {
-  Talker.client.send($.extend({content: message, type: 'message'}, options));
+Talker.sendMessage = function(message) {
+  var talkerEvent = {};
+  if (typeof message == 'string'){
+    talkerEvent = {content:message, type: 'message'};
+  } else {
+    $.extend(true, talkerEvent, message);
+  }
+  Talker.trigger('MessageReceived', $.extend(true, {id: 'pending', user: Talker.currentUser, time: (new Date().getTime() / 1000)}, talkerEvent));
+  Talker.client.send(talkerEvent);
 };
 
 Talker.sendAction = function(message, options) {
@@ -35,9 +42,11 @@ Talker.insertMessage = function(talkerEvent, content) {
           .append(element = $('<blockquote/>'))));
   }
 
-  element.append($('<p/>').attr('id', "event_" + talkerEvent.id).
-                           attr('time', talkerEvent.time).
-                           html(content || talkerEvent.content));
+  element.append($('<p/>')
+                  .addClass(talkerEvent.pending ? 'pending' : '')
+                  .attr('id', "event_" + talkerEvent.id)
+                  .attr('time', talkerEvent.time)
+                  .html(content || talkerEvent.content));
 
   Talker.trigger('MessageInsertion', talkerEvent);
 }
