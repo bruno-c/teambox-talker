@@ -2,67 +2,7 @@ Talker = {};
 
 //= require "talker/orbited"
 //= require "talker/client"
-
-Talker.sendMessage = function(message) {
-  var talkerEvent = {};
-  if (typeof message == 'string'){
-    talkerEvent = {content:message, type: 'message'};
-  } else {
-    $.extend(true, talkerEvent, message);
-  }
-  Talker.trigger('MessageReceived', $.extend(true, {id: 'pending', user: Talker.currentUser, time: (new Date().getTime() / 1000)}, talkerEvent));
-  Talker.client.send(talkerEvent);
-};
-
-Talker.sendAction = function(message, options) {
-  Talker.client.send($.extend({content: message, type: 'message', action: true}, options));
-};
-
-Talker.insertMessage = function(talkerEvent, content) {
-  var last_row = Talker.getLastRow();
-  var last_author = Talker.getLastAuthor();
-  
-  var element;
-  if (last_author == talkerEvent.user.name && last_row.hasClass('message') && !last_row.hasClass('private') && !talkerEvent.private){ // only append to existing blockquote group
-    element = last_row.find('blockquote');
-  } else {
-    $('#log').append($('<tr/>')
-      .attr('author', talkerEvent.user.name)
-      .addClass('received')
-      .addClass('message')
-      .addClass('user_' + talkerEvent.user.id)
-      .addClass('event')
-      .addClass(talkerEvent.user.id == Talker.currentUser.id ? 'me' : '')
-      .addClass(talkerEvent.private ? 'private' : '')
-        .append($('<td/>').addClass('author')
-          .append('\n' + talkerEvent.user.name + '\n')
-          .append($('<img/>').attr('src', avatarUrl(talkerEvent.user)).attr('alt', talkerEvent.user.name).addClass('avatar'))
-          .append($('<b/>').addClass('blockquote_tail').html('<!-- display fix --->')))
-        .append($('<td/>').addClass('message')
-          .append(element = $('<blockquote/>'))));
-  }
-
-  element.append($('<p/>')
-                  .addClass(talkerEvent.pending ? 'pending' : '')
-                  .attr('id', "event_" + talkerEvent.id)
-                  .attr('time', talkerEvent.time)
-                  .html(content || talkerEvent.content));
-
-  Talker.trigger('MessageInsertion', talkerEvent);
-}
-
-Talker.insertNotice = function(talkerEvent, content) {
-  var element = $('<tr/>').attr('author', h(talkerEvent.user.name)).addClass('received').addClass('notice').addClass('user_' + talkerEvent.user.id).addClass('event')
-    .append($('<td/>').addClass('author'))
-    .append($('<td/>').addClass('message')
-      .append($('<p/>').attr('id', "event_" + talkerEvent.id).
-                        attr('time', talkerEvent.time).
-                        html(h(content))));
-
-  element.appendTo('#log');
-  
-  Talker.trigger('NoticeInsertion');
-}
+//= require "talker/events"
 
 Talker.getLastRow = function() {
   return $('#log tr:last');

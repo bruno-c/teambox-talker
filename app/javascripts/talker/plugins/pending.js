@@ -1,13 +1,23 @@
-// cancels all actions on a pending message.
+// Sweep pending events.
 Talker.Pending = function() {
   var self = this;
   
-  // after consideration... animating would only remove the feeling of responsiveness.
+  self.onMessageInsertion =
+  self.onNoticeInsertion = function(talkerEvent) {
+    if (talkerEvent.id == "pending") {
+      Talker.getLastRow().find("p:last").addClass("pending").attr("id", "");
+    }
+  };
+  
+  // Remove first pending message if we receive a message from the current user.
   self.onMessageReceived = function(talkerEvent) {
-    var pending = $('#event_pending').get(0);
+    if (talkerEvent.id == "pending") return;
     
-    if (pending) {
-      $(pending).attr('id', 'event_' + talkerEvent.id).attr('time', talkerEvent.time);
+    var pending = $("#log .pending:first");
+    
+    if (pending[0] && talkerEvent.user.id == Talker.currentUser.id) {
+      pending.attr("id", "event_" + talkerEvent.id).
+              removeClass("pending");
       return false;
     }
   }

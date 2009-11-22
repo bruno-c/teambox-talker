@@ -206,11 +206,6 @@ hr {
 pre {
   font-family: monospace; }
 
-.pending {
-  filter: alpha(opacity=50);
-  opacity: 0.5;
-  -moz-opacity: 0.5; }
-
 .highlight {
   background: #EFEF00;
   color: black;
