@@ -1,7 +1,7 @@
 Fixes:
 - Remove "Send invite" if user not pending
 - Add some feedback that info is saved on users page.
-- Improve paste for HUUUUGE pastes. Save directly in db from server.
+✓ Improve paste for HUUUUGE pastes. Save directly in db from server.
 - feedback: better handling of privates messages.  Callbacks and all. <-- not sure what to do exactly about this.
 - Guest users are lost when they see a blank page.  Perhaps a message for first person (when no events exist and one for guest users).
 - admin should be the only people who see /invite
