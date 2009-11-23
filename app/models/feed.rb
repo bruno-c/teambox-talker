@@ -87,12 +87,14 @@ class Feed < ActiveRecord::Base
     content = sanitize(entry.content)
     truncated_content = Paste.truncate(content)
     
-    room.send_message "#{entry.author}: #{title} #{url}"
-    room.send_message truncated_content, :paste => false unless title == content
+    room.send_message [
+      "#{entry.author}: #{title} #{url}",
+      (truncated_content unless title == content)
+    ].compact, :paste => false
   end
   
   def sanitize(content)
-    Nokogiri::HTML(content).text
+    Nokogiri::HTML(content).text.strip
   end
   
   def lock

@@ -42,7 +42,7 @@ class FeedTest < ActiveSupport::TestCase
     feed = feeds(:thin)
     Feedzirra::Feed.expects(:fetch_and_parse).with(feed.url, anything).
                                               returns(Feedzirra::Feed.parse(File.read(self.class.fixture_path + "/feeds/thin.xml")))
-    feed.room.expects(:send_message).times(3 * 2)
+    feed.room.expects(:send_message).times(3)
     feed.perform
     
     assert_equal DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00"), feed.last_modified_at
@@ -54,7 +54,7 @@ class FeedTest < ActiveSupport::TestCase
     feed.update_attribute :last_modified_at, DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00") - 1.hour
     Feedzirra::Feed.expects(:fetch_and_parse).with(feed.url, anything).
                                               returns(Feedzirra::Feed.parse(File.read(self.class.fixture_path + "/feeds/thin.xml")))
-    feed.room.expects(:send_message).times(2)
+    feed.room.expects(:send_message).times(1)
     feed.perform
   end
 
