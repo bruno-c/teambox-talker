@@ -18,8 +18,6 @@ Talker.Client = function(options) {
       return;
     }
     
-    console.debug(line);
-    
     // ugly shit but this will be refactored.
     switch(line.type){
       case 'message':
