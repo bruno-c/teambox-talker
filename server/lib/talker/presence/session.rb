@@ -10,18 +10,22 @@ module Talker
         @state = state.to_sym if state
       end
       
+      def update(user)
+        @user.info = user.info
+      end
+      
       def touch(time)
         @updated_at = time
       end
       
       def join!
         @state = :online
-        store :online
+        store
       end
       
       def back!
         @state = :online
-        update :online
+        update_storage
       end
       
       def online?
@@ -30,7 +34,7 @@ module Talker
       
       def idle!
         @state = :idle
-        update :idle
+        update_storage
       end
       
       def idle?
@@ -47,12 +51,12 @@ module Talker
       end
       
       private
-        def store(state)
-          Talker.storage.store_connection(@room.name, @user.id, state.to_s)
+        def store
+          Talker.storage.store_connection(@room.name, @user.id, @state.to_s)
         end
         
-        def update(store)
-          Talker.storage.update_connection(@room.name, @user.id, state.to_s)
+        def update_storage
+          Talker.storage.update_connection(@room.name, @user.id, @state.to_s)
         end
         
         def delete

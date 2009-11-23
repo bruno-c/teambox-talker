@@ -1,7 +1,6 @@
 module Talker
   class User
-    attr_reader :info
-    attr_accessor :token
+    attr_accessor :info, :token
     
     def initialize(info)
       @info = info || raise(ArgumentError, "User info required")
@@ -12,7 +11,7 @@ module Talker
     end
     
     def name
-      @name ||= @info["name"].freeze
+      @info["name"]
     end
   end
 end

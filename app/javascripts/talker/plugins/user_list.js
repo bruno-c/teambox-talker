@@ -16,10 +16,12 @@ Talker.UserList = function(element) {
     }
     
     self.onIdle = function(event) {
+      update(event.user);
       userElement(event.user).css('opacity', 0.5).addClass('idle');
     };
 
     self.onBack = function(event) {
+      update(event.user);
       userElement(event.user).css('opacity', 1.0).removeClass('idle');
     };
 
@@ -41,7 +43,9 @@ Talker.UserList = function(element) {
   
   function add(user) {
     if (userElement(user).length < 1) {
-      updateUserElement($('<li/>'), user).appendTo(element);
+      updateUserElement($('<li/>'), user).attr("id", "user_" + user.id). // ID never changes
+                                          attr('user_id', user.id).
+                                          appendTo(element);
     }
   };
   
@@ -53,11 +57,15 @@ Talker.UserList = function(element) {
   }
   
   function updateUserElement(userElement, user) {
-    userElement
-      .attr("id", "user_" + user.id)
-      .attr('user_id', user.id)
-      .attr('user_name', user.name)
-      .html('<img alt="' + user.name + '" src="' + avatarUrl(user) + '" /> ' + user.name);
+    var oldName = userElement.attr('user_name');
+    if (user.name != oldName) {
+      userElement.attr('user_name', user.name).
+                  html(
+                    $("<img/>").attr("alt", h(user.name)).
+                                attr("src", avatarUrl(user))
+                  ).
+                  append("\n" + h(user.name));
+    }
     return userElement;
   };
 }

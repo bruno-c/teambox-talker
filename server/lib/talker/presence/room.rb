@@ -25,6 +25,7 @@ module Talker
       
       def join(user, time=Time.now.utc.to_i)
         if session = session_for(user)
+          session.update(user)
           back user, time
           
         # New user in room if not present
@@ -40,10 +41,13 @@ module Talker
       end
       
       def back(user, time=Time.now.utc.to_i)
-        session = session_for(user)
-        if session && session.idle?
-          session.back!
-          publish :type => "back", :user => user.info, :time => time
+        if session = session_for(user)
+          session.update(user)
+          
+          if session.idle?
+            session.back!
+            publish :type => "back", :user => user.info, :time => time
+          end
         end
       end
       
