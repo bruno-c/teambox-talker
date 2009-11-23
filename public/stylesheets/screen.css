@@ -894,6 +894,8 @@ div.panel {
       margin-left: 20px; }
     div.panel div.content h4 {
       font-size: 16px; }
+    div.panel div.content .loader {
+      float: right; }
   div.panel div.footer {
     text-align: right;
     font-size: 12px;

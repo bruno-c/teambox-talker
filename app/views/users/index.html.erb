@@ -26,6 +26,7 @@
         <h3 title="<%=h user.name %>"><%=h truncate(user.name, :length => 13) %></h3>
       </div>
       <div class="content">
+        <%= image_tag "loader.gif", :class => "loader", :style => "display:none" %>
         <ul class="roles">
           <li>
             <%= check_box_tag "admin", "1", user.admin, :id => dom_id(user, :admin), :class => "admin", :disabled => (user == current_user) %>
@@ -38,8 +39,8 @@
         </ul>
       </div>
       <div class="footer">
-        <% unless user == current_user %>
-          <%= link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete, :class => "button negative small icon delete" if user.pending? %>
+        <% if user != current_user && user.pending? %>
+          <%= link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete, :class => "button negative small icon delete" %>
           <%= link_to "Send Invite", resend_invite_path(user), :method => :post, :class => "button neutral small icon send-email", :title => "Sending email invitation" %>
         <% end %>
       </div>

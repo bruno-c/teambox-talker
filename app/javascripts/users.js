@@ -4,13 +4,17 @@ $.cookie("tzoffset", (new Date()).getTimezoneOffset());
 $(function() {
 
   $("#people input.admin, #people input.suspended").click(function () {
-    var url = $(this).parents("form")[0].action;
+    var self = $(this);
+    var url = self.parents("form")[0].action;
     var state = this.name;
-  
+    var loader = self.parents(".content").find(".loader");
+    
+    loader.show();
     $.ajax({
       type: "POST",
       url: url,
       data: "_method=put&" + state + "=" + (this.checked ? "1" : "0"),
+      complete: function() { loader.hide() },
       error: function() {
         alert("Failed to update this user. Refresh and try again");
       }
