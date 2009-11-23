@@ -7,11 +7,10 @@ module Helpers
   
   def start_server(options={})
     @server = Talker::Channel::Server.new({ :port => TEST_PORT, :timeout => 1 }.merge(options))
-    @server.authenticator = NullAuthenticator.new
     @server.paster = Talker::Paster.new("http://localhost:3000/pastes.json")
     @server.start
     
-    @presence = Talker::Presence::Server.new(NullPersister.new)
+    @presence = Talker::Presence::Server.new
     @presence.start
     
     @server

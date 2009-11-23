@@ -3,8 +3,7 @@ module Talker
     class Session
       attr_reader :user, :room, :updated_at, :state
       
-      def initialize(persister, user, room, state=nil)
-        @persister = persister
+      def initialize(user, room, state=nil)
         @user = user
         @room = room
         @updated_at = Time.now.utc.to_i
@@ -49,15 +48,15 @@ module Talker
       
       private
         def store(state)
-          @persister.store(@room.name, @user.id, state.to_s)
+          Talker.storage.store_connection(@room.name, @user.id, state.to_s)
         end
         
         def update(store)
-          @persister.update(@room.name, @user.id, state.to_s)
+          Talker.storage.update_connection(@room.name, @user.id, state.to_s)
         end
         
         def delete
-          @persister.delete(@room.name, @user.id)
+          Talker.storage.delete_connection(@room.name, @user.id)
         end
     end
   end

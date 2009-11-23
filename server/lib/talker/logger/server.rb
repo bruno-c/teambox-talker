@@ -12,21 +12,7 @@ module Talker
         @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name, self) }
       end
     
-      def db
-        EventedMysql
-      end
-      
-      def options
-        EventedMysql.settings
-      end
-    
       def start
-        Talker.logger.info "Logging to #{options[:database]}@#{options[:host]}"
-        
-        subscribe
-      end
-      
-      def subscribe
         Talker.logger.info "Subscribing to #{@queue.name}"
         @queue.subscribe(:ack => true) do |headers, message|
           

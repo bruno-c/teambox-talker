@@ -1,9 +1,8 @@
 module Talker
   module Presence
     class Room < EventChannel
-      def initialize(name, persister)
+      def initialize(name)
         super(name)
-        @persister = persister
         @sessions = {}
       end
       
@@ -21,7 +20,7 @@ module Talker
       
       # Create a new user session
       def new_session(user, state=nil)
-        @sessions[user.id] = Session.new(@persister, user, self, state)
+        @sessions[user.id] = Session.new(user, self, state)
       end
       
       def join(user, time=Time.now.utc.to_i)

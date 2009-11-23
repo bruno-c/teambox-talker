@@ -10,14 +10,13 @@ module Talker
       attr_reader :host, :port, :rooms
       
       # Pluggable services
-      attr_accessor :authenticator, :paster
+      attr_accessor :paster
       
       def initialize(options={})
         @host = options[:host] || DEFAULT_HOST
         @port = options[:port] || DEFAULT_PORT
         @timeout = options[:timeout] || DEFAULT_TIMEOUT
         
-        @authenticator = nil
         @signature = nil
         @connections = {}
         @on_stop = nil
@@ -25,7 +24,6 @@ module Talker
       end
       
       def start
-        raise ArgumentError, "No authenticator specified" if @authenticator.nil?
         raise ArgumentError, "No paster specified" if @paster.nil?
         
         Talker.logger.info "Pasting to #{@paster.server_url}"
@@ -66,10 +64,6 @@ module Talker
         @on_stop.call if @on_stop && @connections.empty?
       end
     
-      def authenticate(*args, &callback)
-        @authenticator.authenticate(*args, &callback)
-      end
-      
       def to_s
         "channel-server:#{@port}"
       end

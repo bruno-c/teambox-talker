@@ -53,7 +53,7 @@ module Talker
       room = room.to_i
       token = token.to_s
       
-      @server.authenticate(room, token) do |user|
+      Talker.storage.authenticate(room, token) do |user|
         
         if user
           begin

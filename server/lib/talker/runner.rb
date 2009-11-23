@@ -74,17 +74,7 @@ module Talker
     end
     
     def start_mysql
-      require "em/mysql"
-      db = EventedMysql.settings
-      
-      # default options
-      db.update :encoding => "utf8",
-                :connections => 4,
-                :on_error => proc { |e| Talker::Notifier.error "Unexpected MySQL Error", e }
-                     
-      db.update options[:database]
-      
-      Talker.logger.info "#{EventedMysql.connection_pool.size} connections to MySQL #{db[:database]}@#{db[:host]}"
+      Talker.storage = MysqlAdapter.new(options[:database])
     end
     
     def start_amqp
@@ -153,14 +143,12 @@ module Talker
     
     def build_channel_server
       server = Talker::Channel::Server.new(:host => options[:host], :port => options[:port])
-      server.authenticator = Talker::MysqlAuthenticator.new
       server.paster = Talker::Paster.new(options[:paste_url])
       server
     end
 
     def build_presence_server
-      persister = Talker::Presence::MysqlPersister.new
-      Talker::Presence::Server.new(persister)
+      Talker::Presence::Server.new
     end
     
     def build_logger

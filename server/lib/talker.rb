@@ -13,7 +13,6 @@ module Talker
 
   autoload :Client, "talker/client"
   autoload :Connection, "talker/connection"
-  autoload :Escaping, "talker/escaping"
   autoload :EventChannel, "talker/event_channel"
   
   module Logger
@@ -22,13 +21,12 @@ module Talker
   end
   
   autoload :Mailer, "talker/mailer"
-  autoload :MysqlAuthenticator, "talker/mysql_authenticator"
+  autoload :MysqlAdapter, "talker/mysql_adapter"
   autoload :Notifier, "talker/notifier"
   autoload :Paster, "talker/paster"
 
   module Presence
     autoload :Room, "talker/presence/room"
-    autoload :MysqlPersister, "talker/presence/mysql_persister"
     autoload :Server, "talker/presence/server"
     autoload :Session, "talker/presence/session"
     autoload :Sweeper, "talker/presence/sweeper"
@@ -40,5 +38,6 @@ module Talker
   
   class << self
     attr_accessor :logger
+    attr_accessor :storage
   end
 end

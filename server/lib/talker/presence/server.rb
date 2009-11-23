@@ -6,11 +6,8 @@ module Talker
     class Server
       DEFAULT_TIMEOUT = 30.0 # sec
       
-      attr_accessor :logger
-      
-      def initialize(persister, options={})
-        @persister = persister
-        @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name, @persister) }
+      def initialize(options={})
+        @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
         @queue = Queues.presence
         @sweeper = Sweeper.new(self, options[:timeout] || DEFAULT_TIMEOUT)
         @sweeper.start
@@ -39,9 +36,8 @@ module Talker
       end
     
       def load
-        @persister.load do |room_id, user_info, state|
+        Talker.storage.load_connections do |room_id, user, state|
           room = @rooms[room_id]
-          user = User.new(user_info)
           session = @rooms[room_id].new_session(user, state)
           
           Talker.logger.debug{"loaded connection: room##{room.name} => #{user.name} (#{session.state})"}
