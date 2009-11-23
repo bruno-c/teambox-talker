@@ -16,7 +16,7 @@ Talker.DefaultFormatter = function() {
           +   locator 
           + "</a>";
       }));
-    } else if (event.content.match(/\n/gim)){
+    } else if (Talker.isPaste(event)) {
       Talker.insertMessage(event, '<div><pre>' + content + '</pre></div>');
     } else {
       Talker.insertMessage(event, content);

@@ -4,7 +4,7 @@ Talker.Sender = function(msgbox) {
   self.onMessageSend = function(event) {
     if (!event.content) return;
     
-    if (event.content.indexOf("/") == 0) {
+    if (!Talker.isPaste(event) && event.content.indexOf("/") == 0) {
       try {
         var args = shellwords(event.content.substr(1));
         Talker.trigger("Command", {type: "command", command: args[0], args: args.slice(1)});

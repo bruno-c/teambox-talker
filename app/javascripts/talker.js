@@ -69,3 +69,7 @@ Talker.getRoomUsernames = function() {
     return user.name;
   })
 }
+
+Talker.isPaste = function(talkerEvent) {
+  return talkerEvent.content.match(/\n/gim) || talkerEvent.paste;
+}
