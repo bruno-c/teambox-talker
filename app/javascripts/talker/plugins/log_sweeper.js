@@ -1,6 +1,6 @@
 Talker.LogSweeper = function(logElement) {
   var self = this;
-  var maxLogSize = 30;
+  var maxLogSize = 50;
   
   self.onJoin = 
   self.onLeave = 
