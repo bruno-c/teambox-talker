@@ -9,9 +9,6 @@ module Talker
       
       attr_reader :host, :port, :rooms
       
-      # Pluggable services
-      attr_accessor :paster
-      
       def initialize(options={})
         @host = options[:host] || DEFAULT_HOST
         @port = options[:port] || DEFAULT_PORT
@@ -24,9 +21,6 @@ module Talker
       end
       
       def start
-        raise ArgumentError, "No paster specified" if @paster.nil?
-        
-        Talker.logger.info "Pasting to #{@paster.server_url}"
         Talker.logger.info "Listening on #{@host}:#{@port}"
         
         @signature = EM.start_server(@host, @port, Connection) do |connection|

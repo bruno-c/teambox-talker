@@ -3,6 +3,8 @@ require 'spec'
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require "talker"
 
+$TALKER_DEBUG = true
+
 # Disable logger
 require "logger"
 Talker.logger = ::Logger.new(nil)

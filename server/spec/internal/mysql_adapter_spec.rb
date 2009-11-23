@@ -38,4 +38,10 @@ EM.describe Talker::MysqlAdapter do
       done
     end
   end
+  
+  it "should insert paste" do
+    @adapter.insert_paste("abc123", "ohaie") do
+      done
+    end
+  end
 end

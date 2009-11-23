@@ -19,8 +19,7 @@ module Talker
           :user => "root",
           :password => "",
           :host => "localhost"
-        },
-        :paste_url => "http://talkerapp.com/pastes.json"
+        }
       }
     end
     
@@ -142,9 +141,7 @@ module Talker
     end
     
     def build_channel_server
-      server = Talker::Channel::Server.new(:host => options[:host], :port => options[:port])
-      server.paster = Talker::Paster.new(options[:paste_url])
-      server
+      Talker::Channel::Server.new(:host => options[:host], :port => options[:port])
     end
 
     def build_presence_server

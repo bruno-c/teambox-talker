@@ -1,10 +1,7 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
 EM.describe Talker::Paster do
-  before do
-    @paster = Talker::Paster.new("http://talkerapp.com/pastes.json")
-    
-    @code = <<-EOS
+  CODE = <<-EOS
 class Awesome
   def name
     'Bob "Brown" The Great'
@@ -23,21 +20,23 @@ class Awesome
   end
 end
 EOS
-  end
   
   after do
     done
   end
   
   it "should detect pastable code" do
-    @paster.pastable?(@code).should be_true
-    @paster.pastable?("oh\naie").should be_true
-    @paster.pastable?("ohaie").should be_false
-    @paster.pastable?("").should be_false
+    Talker::Paster.pastable?(CODE).should be_true
+    Talker::Paster.pastable?("oh\naie").should be_true
+    Talker::Paster.pastable?("ohaie").should be_false
+    Talker::Paster.pastable?("").should be_false
   end
   
   it "should truncate to 15 lines" do
-    @paster.truncate(@code).should == [<<-EOS.chomp, 17, 15]
+    Talker::Paster.truncate(CODE) do |content, paste|
+      paste["lines"].should == 17
+      paste["preview_lines"].should == 15
+      content.should == <<-EOS.chomp
 class Awesome
   def name
     'Bob "Brown" The Great'
@@ -55,9 +54,14 @@ class Awesome
     end
 ...
 EOS
+    end
   end
 
   it "should not truncate if less than 15 lines" do
-    @paster.truncate("oh\naie").should == ["oh\naie", 2, 2]
+    Talker::Paster.truncate("oh\naie") do |content, paste|
+      content.should == "oh\naie"
+      paste["lines"].should == 2
+      paste["preview_lines"].should == 2
+    end
   end
 end

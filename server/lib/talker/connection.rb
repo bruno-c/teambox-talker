@@ -26,7 +26,7 @@ module Talker
       when "connect"
         authenticate message["room"], message["token"], message
       when "message"
-        broadcast_message message, message.delete("to")
+        broadcast_message message
       when "close"
         close
       when "ping"
@@ -37,7 +37,7 @@ module Talker
     rescue ProtocolError => e
       error e.message
     rescue Exception => e
-      raise
+      raise if $TALKER_DEBUG
       Talker::Notifier.error "Error in Connection#message_parsed", e
       error "Error processing command"
     end
@@ -81,25 +81,24 @@ module Talker
       end
     end
     
-    def broadcast_message(obj, to)
+    def broadcast_message(obj)
       room_required!
       
+      to = obj.delete("to")
       obj["user"] = @user.info
       obj["time"] = Time.now.utc.to_i
+      content = obj["content"] = obj["content"].to_s
       
-      # Sanitize the message
-      obj["content"] = obj["content"].to_s
-      
-      content = obj["content"]
-      
-      if @server.paster.pastable?(content) || obj.delete("paste")
-        @server.paster.paste(@user.token, content) do |truncated_content, paste|
-          obj["content"] = truncated_content
-          obj["paste"] = paste if paste
-          publish_message obj, to
+      Paster.truncate(content, obj.delete("paste")) do |truncated_content, paste|
+        obj["content"] = truncated_content
+        obj["paste"] = paste if paste
+        
+        if to
+          obj["private"] = true
+          @room.publish obj, to.to_i
+        else
+          @room.publish obj
         end
-      else
-        publish_message obj, to
       end
     end
     
@@ -149,15 +148,6 @@ module Talker
       
       def send_event(event)
         send_data @encoder.encode(event) + "\n" 
-      end
-      
-      def publish_message(event, to=nil)
-        if to
-          event["private"] = true
-          @room.publish event, to.to_i
-        else
-          @room.publish event
-        end
       end
   end
 end

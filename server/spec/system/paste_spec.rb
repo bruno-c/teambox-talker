@@ -21,10 +21,6 @@ class Awesome
 end
 EOS
   
-  before do
-    $paster_response = nil
-  end
-  
   it "should be received w/ paste id" do
     connect do |client|
       client.on_connected do
@@ -32,7 +28,9 @@ EOS
       end
 
       client.on_message do |user, message, attributes|
-        attributes["paste"].should == {"id" => "THIS_IS_MOCKED", "lines" => 2, "preview_lines" => 2}
+        attributes["paste"]["id"].should_not be_nil
+        attributes["paste"]["lines"].should == 2
+        attributes["paste"]["preview_lines"].should == 2
         client.close
       end
       
@@ -71,17 +69,15 @@ EOS
     end
   end
   
-  it "should not be truncated on service failure" do
-    $paster_response = :fail
-    
+  it "should not be truncated long message" do
     connect do |client|
       client.on_connected do
-        client.send_message(CODE)
+        client.send_message("X" * (1024 ** 2))
       end
 
       client.on_message do |user, message, attributes|
         attributes["paste"].should be_nil
-        attributes["content"].should == CODE
+        attributes["content"].size.should == (1024 * 500)
         client.close
       end
     

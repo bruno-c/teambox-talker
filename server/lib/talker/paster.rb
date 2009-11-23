@@ -1,44 +1,22 @@
-require "em-http"
-require "cgi"
+require "openssl"
 
 module Talker
   class Paster
+    MAX_LENGTH = 500 * 1024 # 500 KB
     PREVIEW_LINES = 15
     
-    attr_reader :server_url
-    
-    def initialize(server_url)
-      @server_url = server_url
-    end
-    
-    def post(options)
-      EM::HttpRequest.new(@server_url).post(options)
-    end
-    
-    def paste(token, content, &callback)
-      http = post :head => { "X-Talker-Token" => token, "Content-Type" => "application/x-www-form-urlencoded" },
-                  :body => { "content" => CGI.escape(content) }
+    def self.truncate(content, force=false)
+      content = content[0, MAX_LENGTH] if content.size > MAX_LENGTH
       
-      http.errback do
-        handle_failure content, callback, http.errors
-      end
-      
-      http.callback do
-        if http.response_header.status == 201 && location = http.response_header["LOCATION"]
-          truncated_content, lines, preview_lines = truncate(content)
-          
-          callback.call truncated_content, "id" => location[/\/(\w+)$/, 1],
-                                           "lines" => lines,
-                                           "preview_lines" => preview_lines
-        
-        # Request succeeded, but got bad response
-        else
-          handle_failure content, callback, "[#{http.response_header.status}] #{http.response}"
-        end
+      if pastable?(content) || force
+        truncated_content, paste_info = paste(content)
+        yield truncated_content, paste_info
+      else
+        yield content, nil
       end
     end
     
-    def truncate(content)
+    def self.paste(content)
       lines = content.split("\n")
       
       if lines.size > PREVIEW_LINES
@@ -49,18 +27,27 @@ module Talker
         truncated_content = content
       end
       
-      [truncated_content, lines.size, preview_lines.size]
+      permalink = generate_permalink
+      
+      # Insert in DB
+      Talker.storage.insert_paste(permalink, content)
+      
+      paste_info = {
+        "id" => permalink,
+        "lines" => lines.size,
+        "preview_lines" => preview_lines.size
+      }
+      
+      [truncated_content, paste_info]
     end
     
-    # If something fails we just don't paste the thing and return the full content
-    # to degrate as gracefully as a ballet dancer eating a cookie with a fork.
-    def handle_failure(content, callback, error)
-      Talker::Notifier.error "Error pasting: #{error}"
-      callback.call content, nil
-    end
-    
-    def pastable?(content)
+    def self.pastable?(content)
       content.include?("\n")
+    end
+    
+    def self.generate_permalink
+      # Same as ActiveSupport::SecureRandom.hex(10) in Rails
+      OpenSSL::Random.random_bytes(10).unpack("H*")[0]
     end
   end
 end

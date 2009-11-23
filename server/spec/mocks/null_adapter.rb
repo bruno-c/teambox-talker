@@ -14,6 +14,9 @@ class NullAdapter
   
   def load_connections(&callback)
   end
+  
+  def insert_paste(permalink, content)
+  end
 end
 
 Talker.storage = NullAdapter.new
