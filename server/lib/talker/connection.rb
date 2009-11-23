@@ -24,7 +24,7 @@ module Talker
       
       case message["type"]
       when "connect"
-        authenticate message["room"], message["token"], message
+        authenticate message
       when "message"
         broadcast_message message
       when "close"
@@ -45,14 +45,15 @@ module Talker
     
     ## Message types
     
-    def authenticate(room, token, options)
+    def authenticate(event)
+      room = event["room"].to_i
+      token = event["token"].to_s
+      last_event_id = event["last_event_id"]
+      
       if room.nil? || token.nil?
         raise ProtocolError, "Authentication failed"
       end
-      
-      room = room.to_i
-      token = token.to_s
-      
+
       Talker.storage.authenticate(room, token) do |user|
         
         if user
@@ -69,7 +70,16 @@ module Talker
             
             # Broadcast presence
             @room.publish_presence "join", @user
+            
+            # If requested, send recent events
+            if last_event_id
+              Talker.storage.load_events(room, last_event_id) do |encoded_event|
+                send_data encoded_event + "\n"
+              end
+            end
+            
           rescue Exception => e
+            raise if $TALKER_DEBUG
             Talker::Notifier.error "Error while authenticating", e
             error "Error while authenticating"
           end

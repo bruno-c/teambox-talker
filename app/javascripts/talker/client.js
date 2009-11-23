@@ -74,7 +74,8 @@ Talker.Client = function(options) {
         self.sendData({
           type: "connect", 
           room: options.room, 
-          token: options.token
+          token: options.token,
+          last_event_id: options.lastEventId
         });
         callbacks.onOpen();
         self.resetPing();

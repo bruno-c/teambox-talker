@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + "/spec_helper"
 EM.describe Talker::MysqlAdapter do
   before do
     execute_sql_file "delete_all"
-    execute_sql_file "insert_users"
+    execute_sql_file "insert_all"
     @adapter = Talker::MysqlAdapter.new :database => "talker_test",
                                         :user => "root",
                                         :connections => 1
@@ -41,6 +41,13 @@ EM.describe Talker::MysqlAdapter do
   
   it "should insert paste" do
     @adapter.insert_paste("abc123", "ohaie") do
+      done
+    end
+  end
+  
+  it "should load events" do
+    @adapter.load_events(1, '1') do |event|
+      Yajl::Parser.parse(event)["id"].should == "2"
       done
     end
   end

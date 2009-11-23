@@ -127,6 +127,30 @@ module Talker
       db.insert sql, callback, errback_for(event)
     end
     
+    # Load events that happened since a give event (by ID)
+    # yields raw JSON encoded event, NOT objects.
+    def load_events(room_id, last_event_id, &callback)
+      room_id = room_id.to_i
+      last_event_id = last_event_id.to_s
+      
+      sql = <<-SQL
+        SELECT payload
+        FROM events
+        WHERE room_id = #{room_id}
+          AND created_at > (SELECT created_at FROM events WHERE id = '#{quote(last_event_id)}')
+          AND id > '#{quote(last_event_id)}'
+        ORDER BY created_at desc, id desc
+        LIMIT 50
+      SQL
+      
+      Talker.logger.debug sql
+      db.select sql do |results|
+        results.reverse.each do |result|
+          yield result["payload"]
+        end
+      end
+    end
+    
     
     private
       def quote(s)

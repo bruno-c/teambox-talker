@@ -1,11 +1,15 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
 EM.describe Talker::Logger do
-  before do
+  before(:all) do
     @old_adapter = Talker.storage
     Talker.storage = Talker::MysqlAdapter.new :database => "talker_test",
                                          :user => "root",
                                          :connections => 1
+  end
+  
+  before do
+    execute_sql_file "delete_all"
     @logger = Talker::Logger::Server.new
     @logger.start
     
@@ -14,18 +18,20 @@ EM.describe Talker::Logger do
   end
   
   after do
-    Talker.storage.db.raw("DELETE FROM events")
     @logger.stop
+  end
+  
+  after(:all) do
     Talker.storage = @old_adapter
   end
   
   it "should insert message" do
-    message = { "id" => "1", "type" => "message", "user" => {"id" => 1},
+    message = { "type" => "message", "user" => {"id" => 1},
                 "time" => 5, "content" => "ohaie" }
     
     @exchange.publish encode(message), :key => "talker.room.1"
     
-    expect_last_event do |event|
+    expect_event do |event|
       event["room_id"].should == "1"
       event["type"].should == "message"
       event["content"].should == "ohaie"
@@ -37,11 +43,11 @@ EM.describe Talker::Logger do
   end
   
   it "should insert join" do
-    message = { "id" => "2", "type" => "join", "user" => {"id" => 1}, "time" => 5 }
+    message = { "type" => "join", "user" => {"id" => 1}, "time" => 5 }
     
     @exchange.publish encode(message), :key => "talker.room.1"
     
-    expect_last_event do |event|
+    expect_event do |event|
       event["room_id"].should == "1"
       event["type"].should == "join"
       event["content"].should == ""
@@ -53,11 +59,11 @@ EM.describe Talker::Logger do
   end
   
   it "should insert leave" do
-    message = { "id" => "3", "type" => "leave", "user" => {"id" => 1}, "time" => 5 }
+    message = { "type" => "leave", "user" => {"id" => 1}, "time" => 5 }
     
     @exchange.publish encode(message), :key => "talker.room.1"
     
-    expect_last_event do |event|
+    expect_event do |event|
       event["room_id"].should == "1"
       event["type"].should == "leave"
       event["content"].should == ""
@@ -69,13 +75,13 @@ EM.describe Talker::Logger do
   end
   
   it "should insert paste" do
-    message = { "id" => "4", "type" => "message", "user" => {"id" => 1},
+    message = { "type" => "message", "user" => {"id" => 1},
                 "time" => 5, "content" => "ohaie...", 
                 "paste" => {"id" => "abc123", "lines" => 5, "preview_lines" => 3} }
     
     @exchange.publish encode(message), :key => "talker.room.1"
     
-    expect_last_event do |event|
+    expect_event do |event|
       event["room_id"].should == "1"
       event["type"].should == "message"
       event["content"].should == "ohaie..."
@@ -86,10 +92,13 @@ EM.describe Talker::Logger do
     end
   end
   
-  def expect_last_event
-    Talker.storage.db.select("SELECT * FROM events ORDER BY id LIMIT 1") do |results|
-      result = results.first || fail("No event created")
-      yield result
+  def expect_event
+    EM.next_tick do
+      # Talker.storage.db.select("SELECT * FROM events") { |results| p results }
+      Talker.storage.db.select("SELECT * FROM events ORDER BY id desc LIMIT 1") do |results|
+        result = results.first || fail("No event created: ID = #{id}")
+        yield result
+      end
     end
   end
 end

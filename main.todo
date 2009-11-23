@@ -1,4 +1,5 @@
 Fixes:
+- http://talker.tenderapp.com/discussions/problems/14-link-dup-ing-glitch
 ✓ Remove "Send invite" if user not pending
 ✓ Add some feedback that info is saved on users page.
 ✓ Improve paste for HUUUUGE pastes. Save directly in db from server.
@@ -40,7 +41,7 @@ After beta:
 
 Talker Server:
 ✓ Renaming a user in presence server
-- Fetch events since ID on connections
+✓ Fetch events since ID on connections
 - Allow connecting to a room by name
 ✓ Fix db writes ordering in logger
 - Support other types of channels (room, paste, etc)
