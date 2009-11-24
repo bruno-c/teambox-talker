@@ -1,5 +1,4 @@
 Fixes:
-- Fix last_event_id
 - http://talker.tenderapp.com/discussions/problems/14-link-dup-ing-glitch
 ✓ Remove "Send invite" if user not pending
 ✓ Add some feedback that info is saved on users page.
@@ -13,6 +12,7 @@ Documentation:
 - Document Talker.sendAction
 
 Plugin Ideas:
+- fredbrunel: hide timestamps
 - feedback: highlighting of paragraphs with your name in them (I plan on doing this in a plugin)
 - feedback: click the name and you get a @username that appears in text box
 
@@ -39,6 +39,7 @@ After beta:
 - Restrict features per plan
 - Room permissions
 - Lock down rooms (potential problem: allow reconnect but not new connections.)
+- Send more info w/ feed notification (send in Hash w/ favicon, etc.)
 
 Talker Server:
 - Backup DB to raw SQL dump file too
