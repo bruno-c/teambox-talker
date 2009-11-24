@@ -33,11 +33,13 @@ class Room < ActiveRecord::Base
   end
   
   def send_message(messages, options={})
+    can_paste = options.delete(:paste) != false
+    
     events = Array(messages).map do |message|
       event = { :id => UUID_GENERATOR.generate(:compact), :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options)
       
       # Paste the message if required
-      unless FalseClass === options.delete(:paste)
+      if can_paste
         event[:content] = Paste.filter(message) do |paste|
           event[:paste] = paste
         end
