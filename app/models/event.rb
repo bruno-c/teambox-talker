@@ -44,13 +44,13 @@ class Event < ActiveRecord::Base
   end
   
   def payload_object
-    ActiveSupport::JSON.decode(payload)
-  rescue ActiveSupport::JSON::ParseError
+    Yajl::Parser.parse(payload)
+  rescue Yajl::ParseError
     nil
   end
   
   def payload_object=(object)
-    self.payload = object.to_json
+    self.payload = Yajl::Encoder.encode(object)
   end
   
   def to_json(options={})
