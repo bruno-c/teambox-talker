@@ -120,7 +120,7 @@ module Talker
       time = (event["time"] || Time.now.utc).to_i
       payload = @encoder.encode(event)
       
-      sql = "INSERT INTO events (id, room_id, type, content, payload, created_at, updated_at) " +
+      sql = "INSERT INTO events (uuid, room_id, type, content, payload, created_at, updated_at) " +
             "VALUES ('#{quote(id)}', #{room_id}, '#{quote(type)}', '#{quote(content)}', '#{quote(payload)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
       
       Talker.logger.debug sql
@@ -137,8 +137,8 @@ module Talker
         SELECT payload
         FROM events
         WHERE room_id = #{room_id}
-          AND created_at > (SELECT created_at FROM events WHERE id = '#{quote(last_event_id)}')
-          AND id > '#{quote(last_event_id)}'
+          AND created_at > (SELECT created_at FROM events WHERE uuid = '#{quote(last_event_id)}')
+          AND uuid > '#{quote(last_event_id)}'
         ORDER BY created_at desc, id desc
         LIMIT 50
       SQL

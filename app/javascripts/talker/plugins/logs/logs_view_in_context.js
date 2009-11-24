@@ -10,7 +10,7 @@ Talker.LogsViewInContext = function(){
     
     last_p.prepend(
       $("<a/>").addClass('log')
-        .attr("href", "/rooms/" + room + "/logs/" + FormatHelper.getUrlDate(time) + "#event_" + id)
+        .attr("href", "/rooms/" + room + "/logs/" + FormatHelper.getUrlDate(event.time) + "#event_" + id)
         .text("View in context")
     );
   }

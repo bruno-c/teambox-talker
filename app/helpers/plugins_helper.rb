@@ -45,7 +45,9 @@ var talkerEvents = #{escape_json @events.to_json(json_options)};
 // dom calls are what's hurting here but it will not hurt to optimize this part.
 var len = talkerEvents.length;
 var talkerEvents = talkerEvents.reverse(); // so we can trick with n-- instead of forward loop.
-var broadcaster = Talker.Broadcaster.broadcastEvent;
+var broadcaster = function(event) {
+  if (event) Talker.Broadcaster.broadcastEvent(event);
+}
 
 var n = len % 25;
 while (n--) {

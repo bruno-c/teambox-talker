@@ -6,7 +6,7 @@ class Event < ActiveRecord::Base
   
   before_create { |r| raise RuntimeError, "Can't create events from here" }
   
-  named_scope :recent, :limit => 50, :order => "created_at desc, id desc"
+  named_scope :recent, :limit => 50, :order => "created_at desc, uuid desc"
   named_scope :on_date, proc { |date| { :conditions => ["created_at BETWEEN ? AND ?", date.beginning_of_day.utc, date.end_of_day.utc] } }
   
   named_scope :date_grouped, proc {
@@ -45,6 +45,10 @@ class Event < ActiveRecord::Base
   
   def payload_object
     ActiveSupport::JSON.decode(payload)
+  end
+  
+  def payload_object=(object)
+    self.payload = object.to_json
   end
   
   def to_json(options={})
