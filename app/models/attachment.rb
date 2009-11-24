@@ -15,7 +15,15 @@ class Attachment < ActiveRecord::Base
     File.extname(upload.original_filename).gsub(/^\.+/, "") if upload.original_filename
   end
   
+  def basename
+    File.basename(upload.original_filename, ".*") if upload.original_filename
+  end
+  
   def url(style = upload.default_style)
-    AWS::S3::S3Object.url_for(upload.path(style), upload.bucket_name, :use_ssl => true)
+    AWS::S3::S3Object.url_for(upload.path(style), upload.bucket_name, :use_ssl => room.account.ssl)
+  end
+  
+  def to_param
+    "#{id}-#{basename}"
   end
 end

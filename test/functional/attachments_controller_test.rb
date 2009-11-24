@@ -16,11 +16,12 @@ class AttachmentsControllerTest < ActionController::TestCase
   def test_create
     Attachment.any_instance.expects(:save).returns(true)
     Attachment.any_instance.expects(:id).returns(1)
+    Attachment.any_instance.expects(:basename).returns("ohaie")
     Attachment.any_instance.expects(:ext).returns("jpg")
     
     post :create, :room_id => @room, :upload => nil
     assert_response :created, @response.body
-    assert_match %r{/rooms/\d+/attachments/1.jpg}, @response.body
+    assert_match %r{/rooms/\d+/attachments/1-ohaie.jpg}, @response.body
   end
 
   def test_create_fail
