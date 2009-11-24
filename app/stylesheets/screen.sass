@@ -454,6 +454,9 @@ a.button, button
     a.talker_team
       +font_size("medium")
       padding: 10px
+  .info
+    margin: 20px 0
+    border = solid 1px !white
 
 // People
 #people
@@ -1000,6 +1003,7 @@ div.info
   +font_size("small")
   line-height: normal
   background = !accent_colour * 0.2 + !white * 0.8 url(/images/icons/information.png) "no-repeat" 10px 10px
+  +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
   p
     margin-bottom: 4px
 
@@ -1051,6 +1055,11 @@ table#feeds
   td.actions
     padding: 6px
     text-align: right
+    a
+      margin: 0 1px
+      +font_size("small")
+      &.remove
+        color = !red * 0.6 + !accent_colour * 0.4
 
 body#pastes_controller.show
   background-color = !white

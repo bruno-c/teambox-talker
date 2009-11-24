@@ -583,6 +583,9 @@ a.button, button {
 #sidebar #actions a.talker_team {
   font-size: 14px;
   padding: 10px; }
+#sidebar .info {
+  margin: 20px 0;
+  border: solid 1px white; }
 
 #people {
   overflow: hidden; }
@@ -1137,7 +1140,10 @@ div.info {
   -webkit-border-radius: 3px;
   font-size: 12px;
   line-height: normal;
-  background: #d3ebf6 url('/images/icons/information.png') no-repeat 10px 10px; }
+  background: #d3ebf6 url('/images/icons/information.png') no-repeat 10px 10px;
+  box-shadow: 1px 1px 2px #d2d2d2;
+  -webkit-box-shadow: 1px 1px 2px #d2d2d2;
+  -moz-box-shadow: 1px 1px 2px #d2d2d2; }
   div.info p {
     margin-bottom: 4px; }
 
@@ -1186,6 +1192,11 @@ table#feeds {
   table#feeds td.actions {
     padding: 6px;
     text-align: right; }
+    table#feeds td.actions a {
+      margin: 0 1px;
+      font-size: 12px; }
+      table#feeds td.actions a.remove {
+        color: #a83f55; }
 
 body#pastes_controller.show {
   background-color: white; }

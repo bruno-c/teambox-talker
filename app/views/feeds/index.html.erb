@@ -1,12 +1,6 @@
 <div class="sheet">
   <h2><%= @title = "Feeds" %></h2>
   
-  <div class="info">
-    You can send a notification to a room each time a feed is updated.
-    Simply add the URL to the Atom or RSS feed and specify to which room the
-    notification should go.
-  </div>
-  
   <table id="feeds">
     <tr>
       <th>Feed URL</th>
@@ -26,8 +20,8 @@
       <td><%= image_tag "icons/arrow.png", :class => "to", :title => "Send to room" %></td>
       <td><%=h feed.room.name %></td>
       <td class="actions">
-        <%= link_to "Edit", edit_feed_path(feed), :class => "button neutral icon update" %>
-        <%= link_to "Remove", feed_path(feed), :class => "button negative icon remove", :method => :delete %>
+        <%= link_to "Edit", edit_feed_path(feed), :class => "edit" %>
+        <%= link_to "Remove", feed_path(feed), :class => "remove", :confirm => "Are your sure?", :method => :delete %>
       </td>
     </tr>
   <% end %>
@@ -38,4 +32,11 @@
   <div id="actions">
     <%= link_to "Add a feed", new_feed_path, :title => "Add a feed", :class => "button add" %>
   </div>
+  
+  <div class="info">
+    <p>You can send a notification to a room each time a feed is updated.</p>
+    <p>Simply add the URL to the Atom or RSS feed and specify to which room the
+    notification should go.</p>
+  </div>
+  
 <% end %>
