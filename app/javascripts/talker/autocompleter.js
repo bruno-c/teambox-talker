@@ -26,10 +26,9 @@
         if (!tab && controlChar(e.keyCode)) return;
         
         var position = element.getCaretPosition();
-        if (options.startOnly && position > trigger.length + 1) return;
-
         var value = element.val();
         var nameStart = value.lastIndexOf(trigger, position);
+        if (options.startOnly && nameStart > 0) return;
 
         if (nameStart != -1 && value.lastIndexOf(" ", position) < nameStart) {
           nameStart = nameStart + 1

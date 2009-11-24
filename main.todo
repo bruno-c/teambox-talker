@@ -1,4 +1,5 @@
 Fixes:
+- Fix last_event_id
 - http://talker.tenderapp.com/discussions/problems/14-link-dup-ing-glitch
 ✓ Remove "Send invite" if user not pending
 ✓ Add some feedback that info is saved on users page.
