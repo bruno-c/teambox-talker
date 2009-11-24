@@ -71,5 +71,5 @@ Talker.getRoomUsernames = function() {
 }
 
 Talker.isPaste = function(talkerEvent) {
-  return talkerEvent.content.match(/\n/gim) || talkerEvent.paste;
+  return (typeof talkerEvent.content == "string" && talkerEvent.content.match(/\n/gim)) || talkerEvent.paste;
 }

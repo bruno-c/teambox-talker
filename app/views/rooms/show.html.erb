@@ -98,7 +98,7 @@
       <ul class="people" id="people"></ul>
     </div>
     <div class="footer" id="user_actions">
-      <%= link_to "Upload", room_attachments_path(@room), :title => "Upload a file", :id => "upload", :accesskey => "f" %>
+      <%= link_to "Upload", room_attachments_path(@room), :onclick => "return false", :title => "Upload a file", :id => "upload", :accesskey => "f" %>
       <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
       <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %>
       <%= link_to "Logout", logout_path, :title => "Logout" %>
