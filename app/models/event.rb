@@ -45,6 +45,8 @@ class Event < ActiveRecord::Base
   
   def payload_object
     ActiveSupport::JSON.decode(payload)
+  rescue ActiveSupport::JSON::ParseError
+    nil
   end
   
   def payload_object=(object)
