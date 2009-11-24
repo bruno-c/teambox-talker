@@ -10,6 +10,8 @@ set :user, "admin"
 
 set :scm, :git
 
+set :volume_id, "vol-df8876b6"
+
 server = "ec2-174-129-29-3.compute-1.amazonaws.com"
 role :app, server
 role :web, server
