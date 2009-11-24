@@ -133,13 +133,15 @@ module Talker
       room_id = room_id.to_i
       last_event_id = last_event_id.to_s
       
+      find_event_sql = "(SELECT created_at FROM events WHERE uuid = '#{quote(last_event_id)}')"
       sql = <<-SQL
         SELECT payload
         FROM events
         WHERE room_id = #{room_id}
-          AND created_at > (SELECT created_at FROM events WHERE uuid = '#{quote(last_event_id)}')
-          AND uuid > '#{quote(last_event_id)}'
-        ORDER BY created_at desc, id desc
+          AND created_at > #{find_event_sql}
+           OR (created_at = #{find_event_sql}
+               AND uuid > '#{quote(last_event_id)}')
+        ORDER BY created_at desc, uuid desc
         LIMIT 50
       SQL
       

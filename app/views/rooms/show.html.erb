@@ -54,7 +54,7 @@
         host: '<%= Orbited.talker_host %>', 
         port: <%= Orbited.talker_port %>, 
         room: Talker.room.id,
-        // <% unless @events.empty? %>lastEventId: '<%= @events.last.id %>',<% end %>
+        <% unless @events.empty? %>lastEventId: '<%= @events.last.id %>',<% end %>
         token: <%= current_user.talker_token.to_json %>,
         callbacks: Talker.Broadcaster
       }).connect();
