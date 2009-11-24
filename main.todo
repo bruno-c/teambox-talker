@@ -40,6 +40,7 @@ After beta:
 - Lock down rooms (potential problem: allow reconnect but not new connections.)
 
 Talker Server:
+- Backup DB to raw SQL dump file too
 ✓ Renaming a user in presence server
 ✓ Fetch events since ID on connections
 - Allow connecting to a room by name
