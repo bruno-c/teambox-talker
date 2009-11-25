@@ -6,9 +6,10 @@ class RoomsController < ApplicationController
   before_filter :admin_required, :only => [:edit, :update, :destroy, :ouch]
 
   before_filter :find_room, :only => [:show, :edit, :update, :destroy, :refresh]
+  before_filter :check_permission, :only => [:show, :refresh]
   
   def index
-    @rooms = current_account.rooms
+    @rooms = current_account.rooms.with_permission(current_user)
   end
   
   def show
@@ -21,7 +22,7 @@ class RoomsController < ApplicationController
       @rooms = []
       @events = @room.events.recent.since(@room.opened_at).reverse
     else
-      @rooms = current_account.rooms
+      @rooms = current_account.rooms.with_permission(current_user)
       @events = @room.events.recent.reverse
     end
     
@@ -71,5 +72,9 @@ class RoomsController < ApplicationController
   private
     def find_room
       @room = current_account.rooms.find(params[:id])
+    end
+    
+    def check_permission
+      access_denied unless current_user.permission?(@room)
     end
 end

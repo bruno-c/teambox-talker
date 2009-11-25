@@ -96,8 +96,12 @@ class User < ActiveRecord::Base
     save(false)
   end
   
+  def can_access_all_rooms?
+    admin || !restricted
+  end
+  
   def permission?(room)
-    admin || !restricted || permissions.to?(room)
+    permissions.allow?(self, room)
   end
   
   def room_access=(allowed_rooms)

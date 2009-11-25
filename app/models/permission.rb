@@ -12,4 +12,8 @@ class Permission < ActiveRecord::Base
   def self.to?(room)
     for_room(room).present?
   end
+  
+  def self.allow?(user, room)
+    user.admin || !user.restricted || user.permissions.to?(room)
+  end
 end

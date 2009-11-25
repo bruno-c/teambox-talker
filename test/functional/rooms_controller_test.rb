@@ -25,6 +25,12 @@ class RoomsControllerTest < ActionController::TestCase
     assert_equal assigns(:room), @room
   end
   
+  def test_show_without_permission
+    User.any_instance.expects(:permission?).returns(false)
+    get :show, :id => @room
+    assert_access_denied
+  end
+  
   def test_show_for_guest
     login_as :guest
     get :show, :id => @room
