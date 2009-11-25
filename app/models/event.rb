@@ -44,7 +44,12 @@ class Event < ActiveRecord::Base
   end
   
   def payload_object
-    Yajl::Parser.parse(payload)
+    object = Yajl::Parser.parse(payload)
+    if object.is_a?(Hash)
+      return object
+    else
+      return nil
+    end
   rescue Yajl::ParseError
     nil
   end
