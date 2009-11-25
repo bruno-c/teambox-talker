@@ -453,6 +453,8 @@ form div.fieldWithErrors {
   display: inline; }
   form div.fieldWithErrors input, form div.fieldWithErrors textarea {
     border-color: #924f6b; }
+form p.actions {
+  margin-bottom: 30px; }
 form.lw40 label {
   width: 40px; }
   form.lw40 label.description {
