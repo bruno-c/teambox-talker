@@ -17,7 +17,7 @@ class Room < ActiveRecord::Base
       {}
     else
       # TODO maybe use a JOIN someday...
-      { :conditions => { :id => user.permissions(:include => :room).map(&:room_id) } }
+      { :conditions => { :id => user.permissions.map(&:room_id) } }
     end
   }
   
