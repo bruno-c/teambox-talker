@@ -32,6 +32,20 @@ EM.describe Talker::MysqlAdapter do
     end
   end
   
+  it "should not authenticate without permission" do
+    @adapter.authenticate(1, "restricted") do |user|
+      user.should be_nil
+      done
+    end
+  end
+  
+  it "should authenticate with permission" do
+    @adapter.authenticate(2, "restricted") do |user|
+      user.should_not be_nil
+      done
+    end
+  end
+  
   it "should prevent SQL injection" do
     @adapter.authenticate(1, "' OR 1=1 '") do |user|
       user.should be_nil

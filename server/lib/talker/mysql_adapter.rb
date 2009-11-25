@@ -25,13 +25,22 @@ module Talker
     
     ## Authentication
     def authenticate(room_id, token, &callback)
+      room_id = room_id.to_i
+      
       sql = <<-SQL
         SELECT users.id AS id, users.name AS name, users.email AS email
         FROM users
         INNER JOIN rooms ON rooms.account_id = users.account_id
         WHERE users.talker_token = '#{quote(token)}'
           AND users.state = 'active'
-          AND rooms.id = #{room_id.to_i}
+          AND rooms.id = #{room_id}
+          AND (users.admin = 1
+               OR users.restricted = 0
+               OR EXISTS (SELECT *
+                          FROM permissions
+                          WHERE user_id = users.id
+                            AND room_id = #{room_id})
+              )
         LIMIT 1
       SQL
       
