@@ -6,7 +6,7 @@ class RoomsController < ApplicationController
   before_filter :admin_required, :only => [:edit, :update, :destroy, :ouch]
 
   before_filter :find_room, :only => [:show, :edit, :update, :destroy, :refresh]
-  before_filter :check_permission, :only => [:show, :refresh]
+  before_filter :room_permission_required, :only => [:show, :refresh]
   
   def index
     @rooms = current_account.rooms.with_permission(current_user)
@@ -72,9 +72,5 @@ class RoomsController < ApplicationController
   private
     def find_room
       @room = current_account.rooms.find(params[:id])
-    end
-    
-    def check_permission
-      access_denied unless current_user.permission?(@room)
     end
 end

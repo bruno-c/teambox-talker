@@ -2,6 +2,7 @@ class LogsController < ApplicationController
   before_filter :registered_user_required
   before_filter :account_required
   before_filter :find_room
+  before_filter :room_permission_required
   
   def index
     if @room
@@ -9,7 +10,7 @@ class LogsController < ApplicationController
       @dates = @events.map(&:created_at).compact
       render :room_index
     else
-      @rooms = current_account.rooms
+      @rooms = current_account.rooms.with_permission(current_user)
       render :index
     end
   end

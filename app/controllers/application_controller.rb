@@ -41,6 +41,10 @@ class ApplicationController < ActionController::Base
       role_required(:registered)
     end
     
+    def room_permission_required
+      access_denied unless @room.nil? || current_user.permission?(@room)
+    end
+    
     def ssl_required?
       if Rails.env.production?
         current_account? && current_account.ssl || super
