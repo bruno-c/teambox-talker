@@ -96,6 +96,10 @@ class User < ActiveRecord::Base
     save(false)
   end
   
+  def permission?(room)
+    admin || !restricted || permissions.to?(room)
+  end
+  
   def to_json(options = {})
     super(options.merge(:only => [:name, :email, :id]))
   end
