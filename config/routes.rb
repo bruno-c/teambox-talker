@@ -15,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.public_room "/r/:token", :controller => "guests", :action => "new"
   
-  map.resources :users
+  map.resources :users, :member => { :suspend => :delete, :unsuspend => :post }
   map.resources :invites, :member => { :resend => :post }
   map.resource :account
   map.resource :session
