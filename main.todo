@@ -39,7 +39,7 @@ After beta:
 - cleaner REGEXP find and replace for dom text elements.
 - Billing
 - Restrict features per plan
-- Room permissions
+✓ Room permissions
 - Lock down rooms (potential problem: allow reconnect but not new connections.)
 - Send more info w/ feed notification (send in Hash w/ favicon, etc.)
 
