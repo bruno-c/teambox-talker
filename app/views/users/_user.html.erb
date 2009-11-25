@@ -33,7 +33,7 @@
           <%= link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete, :class => "button negative small icon delete" %>
           <%= link_to "Send Invite", resend_invite_path(user), :method => :post, :class => "button neutral small icon send-email", :title => "Sending email invitation" %>
         <% else %>
-          <%= link_to "Edit permissions", edit_user_path(user) %>
+          <%= link_to "Edit permissions", edit_user_path(user), :class => "button neutral small icon update" %>
         <% end %>
       <% end %>
     </div>
