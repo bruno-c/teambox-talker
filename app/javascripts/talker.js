@@ -12,6 +12,10 @@ Talker.getLastAuthor = function() {
   return Talker.getLastRow().attr('author');
 }
 
+Talker.getLastInsertion = function() {
+  return $('#log p:last');
+}
+
 Talker.getMaxContentWidth = function() {
   return $('#chat_log').width() - $('#log tr td:first').width() - 25;
 }
