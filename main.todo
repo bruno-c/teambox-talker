@@ -44,7 +44,7 @@ After beta:
 - Send more info w/ feed notification (send in Hash w/ favicon, etc.)
 
 Talker Server:
-- Backup DB to raw SQL dump file too
+- Backup DB hourly using mysql hot backup
 ✓ Renaming a user in presence server
 ✓ Fetch events since ID on connections
 - Allow connecting to a room by name
