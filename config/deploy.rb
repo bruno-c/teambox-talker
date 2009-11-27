@@ -16,3 +16,5 @@ server = "ec2-174-129-29-3.compute-1.amazonaws.com"
 role :app, server
 role :web, server
 role :db,  server, :primary => true
+
+role :data, "ec2-174-129-164-217.compute-1.amazonaws.com"
