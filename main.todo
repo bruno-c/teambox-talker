@@ -9,6 +9,7 @@ Fixes:
 - Guest users are lost when they see a blank page.  Perhaps a message for first person (when no events exist and one for guest users).
 ✓ admin should be the only people who see /invite
 ✓ bigger default font size.
+- timestamps get in a traffic jam when user join/leaves do not appear.  Perhaps onBeforeInsertion ??
 
 Documentation:
 - Document Talker.sendAction
