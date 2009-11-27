@@ -338,13 +338,15 @@ form
     display: inline
     input, textarea
       border-color = !colour_negative
+  p.actions
+    margin-bottom: 30px
   &.lw40
     label
       width: 40px
       &.description
         width: auto
         margin-left: 50px
-    p.indent
+    .indent
       margin-left: 50px
   &.lw80
     label
@@ -352,7 +354,7 @@ form
       &.description
         width: auto
         margin-left: 90px
-    p.indent
+    .indent
       margin-left: 90px
   &.lw120
     label
@@ -360,7 +362,7 @@ form
       &.description
         width: auto
         margin-left: 130px
-    p.indent
+    .indent
       margin-left: 130px
   &.lw160
     label
@@ -368,7 +370,7 @@ form
       &.description
         width: auto
         margin-left: 170px
-    p.indent
+    .indent
       margin-left: 170px
 
 // Buttons
@@ -469,8 +471,6 @@ a.button, button
     &.pending
       div.header
         :background-color = !grey
-        .tag.pending
-          :background-color = !light_grey
     ul.roles
       :list-style none
     div.panel
@@ -485,10 +485,14 @@ a.button, button
               width: 40px
           h3
             margin: 0 0 0 50px
+          .tag.you
+            :background-color = !light_grey
         &.content
           min-height: 40px
           padding: 8px 10px 9px 60px
           +rounded_corners("bottom", 3)
+          p
+            +font_size("small")
         &.footer
           height: 22px
 
@@ -1079,3 +1083,8 @@ div.log_browser
       float: left
     &.next
       float: right
+
+#permissions
+  ul
+    list-style: none
+    margin-bottom: 20px

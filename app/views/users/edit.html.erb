@@ -1,0 +1,56 @@
+<div class="sheet" id="permissions">
+  <h2>
+    <%= image_tag avatar_url(@user, 16), :alt => h(@user.name) %>
+    <%=h @title = "#{possessive @user.name} Permissions" %>
+  </h2>
+  
+  <div class="content">
+    <% form_for @user do |f| %>
+      <%= f.error_messages %>
+      
+      <h3>Administrator access</h3>
+      <p>
+        <%= f.check_box :admin %>
+        <%= f.label :admin, "Administrator: can edit rooms, feeds, plugins and manage users.", :class => "inline" %>
+      </p>
+      
+      <h3>Room permissions</h3>
+      <p>
+        This user will only be able to access the following rooms:
+      </p>
+  
+      <ul id="room_access">
+      <% @rooms.each do |room| %>
+        <li><%= check_box_tag "room_access[]", room.id, @user.permission?(room), :id => dom_id(room) %> <%= label_tag dom_id(room), room.name, :class => "inline" %></li>
+      <% end %>
+      </ul>
+      
+      <p class="actions">
+        <%= buttons "Update", :cancel_to => users_path %>
+      </p>
+
+      <fieldset id="suspend">
+        <h3>Suspend access</h3>
+        
+        <% if @user.suspended? %>
+          <p>
+            You can allow this user to log in by unsuspending his access.
+          </p>
+        
+          <p>
+            <%= link_to "Unsuspend access", unsuspend_user_path(@user), :class => "button neutral icon ok", :method => :post %>
+          </p>
+        <% else %>
+          <p>
+            You can prevent this user from logging-in in the future by suspending his access.
+          </p>
+      
+          <p>
+            <%= link_to "Suspend access", suspend_user_path(@user), :class => "button negative icon delete", :method => :delete %>
+          </p>
+        <% end %>
+      </fieldset>
+      
+    <% end %>
+  </div>
+</div>

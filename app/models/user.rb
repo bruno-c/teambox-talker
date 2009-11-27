@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   belongs_to :account
   has_many :connections,    :dependent => :destroy
   has_many :plugins,        :foreign_key => "author_id", :dependent => :destroy
+  has_many :permissions,    :dependent => :destroy
   
   before_create             :create_talker_token
   
@@ -93,6 +94,25 @@ class User < ActiveRecord::Base
   def clear_perishable_token!
     self.perishable_token = nil
     save(false)
+  end
+  
+  def can_access_all_rooms?
+    admin || !restricted
+  end
+  
+  def permission?(room)
+    permissions.allow?(self, room)
+  end
+  
+  def room_access=(allowed_rooms)
+    Permission.transaction do
+      permissions.clear
+      return if account.room_ids.sort == allowed_rooms.map(&:id).sort
+      
+      account.rooms.each do |room|
+        permissions.create :room => room if allowed_rooms.include?(room)
+      end
+    end
   end
   
   def to_json(options = {})

@@ -20,6 +20,12 @@ class LogsControllerTest < ActionController::TestCase
     assert_template :room_index
   end
 
+  def test_index_in_room_requires_permission
+    User.any_instance.expects(:permission?).returns(false)
+    get :index, :room_id => @room
+    assert_access_denied
+  end
+
   def test_show
     date = Event.first.created_at
     get :show, :room_id => @room, :year => date.year, :month => date.month, :day => date.day

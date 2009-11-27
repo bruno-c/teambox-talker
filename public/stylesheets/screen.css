@@ -453,33 +453,35 @@ form div.fieldWithErrors {
   display: inline; }
   form div.fieldWithErrors input, form div.fieldWithErrors textarea {
     border-color: #924f6b; }
+form p.actions {
+  margin-bottom: 30px; }
 form.lw40 label {
   width: 40px; }
   form.lw40 label.description {
     width: auto;
     margin-left: 50px; }
-form.lw40 p.indent {
+form.lw40 .indent {
   margin-left: 50px; }
 form.lw80 label {
   width: 80px; }
   form.lw80 label.description {
     width: auto;
     margin-left: 90px; }
-form.lw80 p.indent {
+form.lw80 .indent {
   margin-left: 90px; }
 form.lw120 label {
   width: 120px; }
   form.lw120 label.description {
     width: auto;
     margin-left: 130px; }
-form.lw120 p.indent {
+form.lw120 .indent {
   margin-left: 130px; }
 form.lw160 label {
   width: 160px; }
   form.lw160 label.description {
     width: auto;
     margin-left: 170px; }
-form.lw160 p.indent {
+form.lw160 .indent {
   margin-left: 170px; }
 
 a.button, button {
@@ -596,8 +598,6 @@ a.button, button {
     float: left; }
     #people li.user.pending div.header {
       background-color: gray; }
-      #people li.user.pending div.header .tag.pending {
-        background-color: silver; }
     #people li.user ul.roles {
       list-style: none; }
     #people li.user div.panel div.header div.avatar {
@@ -609,6 +609,8 @@ a.button, button {
         width: 40px; }
     #people li.user div.panel div.header h3 {
       margin: 0 0 0 50px; }
+    #people li.user div.panel div.header .tag.you {
+      background-color: silver; }
     #people li.user div.panel div.content {
       min-height: 40px;
       padding: 8px 10px 9px 60px;
@@ -618,6 +620,8 @@ a.button, button {
       border-bottom-left-radius: 3px;
       -moz-border-radius-bottomleft: 3px;
       -webkit-border-bottom-left-radius: 3px; }
+      #people li.user div.panel div.content p {
+        font-size: 12px; }
     #people li.user div.panel div.footer {
       height: 22px; }
 
@@ -1212,3 +1216,7 @@ div.log_browser {
       float: left; }
     div.log_browser a.next {
       float: right; }
+
+#permissions ul {
+  list-style: none;
+  margin-bottom: 20px; }

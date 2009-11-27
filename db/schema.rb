@@ -90,6 +90,13 @@ ActiveRecord::Schema.define(:version => 20091126024900) do
 
   add_index "pastes", ["permalink"], :name => "index_pastes_on_permalink", :unique => true
 
+  create_table "permissions", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "room_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "plugin_installations", :force => true do |t|
     t.integer  "account_id"
     t.integer  "plugin_id"
@@ -137,6 +144,7 @@ ActiveRecord::Schema.define(:version => 20091126024900) do
     t.boolean  "staff",                           :default => false
     t.boolean  "guest",                           :default => false
     t.integer  "room_id"
+    t.boolean  "restricted",                      :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

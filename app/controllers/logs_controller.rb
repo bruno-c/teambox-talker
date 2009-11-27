@@ -2,6 +2,7 @@ class LogsController < ApplicationController
   before_filter :registered_user_required
   before_filter :account_required
   before_filter :find_room
+  before_filter :room_permission_required
   
   def index
     if @room
@@ -9,7 +10,7 @@ class LogsController < ApplicationController
       @dates = @events.map(&:created_at).compact
       render :room_index
     else
-      @rooms = current_account.rooms
+      @rooms = current_account.rooms.with_permission(current_user)
       render :index
     end
   end
@@ -26,6 +27,9 @@ class LogsController < ApplicationController
       with = { :room_id => @room.id }
     else
       with = { :account_id => current_account.id }
+      
+      # Limit search to room with permissions
+      with[:room_id] = current_user.permissions.map(&:room_id) unless current_user.can_access_all_rooms?
     end
     
     @events = Event.search @query, :order => :created_at, :sort_mode => :desc, :with => with

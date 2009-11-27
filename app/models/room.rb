@@ -12,6 +12,15 @@ class Room < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :account_id
   
+  named_scope :with_permission, proc { |user|
+    if user.can_access_all_rooms?
+      {}
+    else
+      # TODO maybe use a JOIN someday...
+      { :conditions => { :id => user.permissions.map(&:room_id) } }
+    end
+  }
+  
   def create_public_token!
     self.public_token = ActiveSupport::SecureRandom.hex(3)
     self.opened_at = Time.now
