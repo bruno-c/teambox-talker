@@ -1,18 +1,12 @@
 <% @title = "Create an Account" %>
 
 <div class="sheet">
-  <h2>Create a Talker Account</h2>
+  <h2>Create a <%=h @account.plan.name %> Talker Account</h2>
   
   <% form_for @account, :url => register_path, :html => { :class => "lw120" } do |f| %>
-    <%= f.error_messages %>
-    <fieldset id="info">
-      <p>
-        <%= f.label :invitation_code %>
-        <%= f.text_field :invitation_code %>
-        <label class="description">Since we're in private beta for now, you'll need an invitation code to create an account. <%= mail_to "info@talkerapp.com", "Contact us" %> if you'd like to try Talker.</label>
-      </p>
-    </fieldset>
+    <%= f.hidden_field :plan_id %>
     
+    <%= f.error_messages %>
     <fieldset id="subdomain">
       <h3>Account Information</h3>
       <div class="info">
@@ -55,7 +49,11 @@
     </fieldset>
     
     <p class="submit indent">
-      <%= ok_button "Create my account" %>
+      <% if @account.plan.free? %>
+        <%= ok_button "Create my account" %>
+      <% else %>
+        <%= next_button "Enter your billing information" %>
+      <% end %>
     </p>
   <% end %>
 </div>

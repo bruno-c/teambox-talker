@@ -1,6 +1,4 @@
 class Account < ActiveRecord::Base
-  INVITATION_CODES = ["this is not a fish", "1711514"]
-  
   has_many :users
   has_many :rooms
   has_many :events, :through => :rooms
@@ -14,9 +12,6 @@ class Account < ActiveRecord::Base
   validates_format_of :subdomain, :with => /\A[A-Z0-9\-]+\z/i
   validates_exclusion_of :subdomain, :in => %w(www mail smtp ssh ftp dev chat service api admin) + 
                                             (0..3).map { |i| "assets#{i}" } # see action_controller.asset_host
-  
-  attr_accessor :invitation_code
-  validate_on_create { |a| a.errors.add(:invitation_code, "is invalid") unless INVITATION_CODES.include?(a.invitation_code) }
   
   after_create :create_default_rooms
   after_create :create_default_plugin_installations
@@ -36,10 +31,18 @@ class Account < ActiveRecord::Base
     end
   end
   
-  def subscribe_url(plan_id, user, return_url)
-    Spreedly.subscribe_url(id, plan_id) + "?" +
-      Rack::Utils.build_query(:email => user.email,
-                              :first_name => user.name,
-                              :return_url => return_url)
+  def plan
+    Plan.find(plan_id)
+  end
+  
+  def subscribe_url(user, return_url)
+    if free?
+      return_url
+    else
+      Spreedly.subscribe_url(id, plan_id) + "?" +
+        Rack::Utils.build_query(:email => user.email,
+                                :first_name => user.name,
+                                :return_url => return_url)
+    end
   end
 end

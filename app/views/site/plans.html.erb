@@ -1,0 +1,11 @@
+<div class="main">
+  <h2>Choose a Plan</h2>
+  
+  <% Plan.all.each do |plan| %>
+    <div class="plan">
+      <h3><%= plan.name %></h3>
+      <p>TODO: Plan specs here</p>
+      <%= link_to "Subscribe", signup_path(plan.id) %>
+    </div>
+  <% end %>
+</div>

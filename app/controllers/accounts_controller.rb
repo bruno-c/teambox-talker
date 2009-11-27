@@ -6,7 +6,7 @@ class AccountsController < ApplicationController
   
   def new
     delete_old_cookies
-    @account = Account.new(:invitation_code => params[:code])
+    @account = Account.new(:plan_id => params[:plan_id])
     @user = User.new
   end
   
@@ -36,7 +36,7 @@ class AccountsController < ApplicationController
       MonitorMailer.deliver_signup(@account, @user)
       
       @user.create_perishable_token!
-      redirect_to welcome_url(:host => account_host(@account), :token => @user.perishable_token)
+      redirect_to @account.subscribe_url(@user, welcome_url(:host => account_host(@account), :token => @user.perishable_token))
     end
     
   rescue ActiveRecord::RecordInvalid

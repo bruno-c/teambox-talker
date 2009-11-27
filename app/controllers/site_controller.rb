@@ -7,4 +7,8 @@ class SiteController < ApplicationController
   
   def features
   end
+  
+  def plans
+    
+  end
 end

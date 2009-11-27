@@ -568,6 +568,8 @@ a.button, button {
     background-image: url(/images/icons/cross-circle.png); }
   a.button.ok, button.ok {
     background-image: url(/images/icons/tick.png); }
+  a.button.next, button.next {
+    background-image: url(/images/icons/arrow.png); }
 
 #sidebar #actions a.button {
   font-size: 18px;
