@@ -35,4 +35,11 @@ class Account < ActiveRecord::Base
       plugin_installations.create(:plugin => plugin)
     end
   end
+  
+  def subscribe_url(plan_id, user, return_url)
+    Spreedly.subscribe_url(id, plan_id) + "?" +
+      Rack::Utils.build_query(:email => user.email,
+                              :first_name => user.name,
+                              :return_url => return_url)
+  end
 end
