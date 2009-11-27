@@ -628,19 +628,11 @@ a.button, button {
 #top_mask {
   position: fixed;
   z-index: 99;
-  top: -40px;
-  left: 0;
-  height: 80px;
-  overflow: hidden;
+  top: -300px;
+  left: 0px;
+  background: url(../../images/top_fader.png);
   width: 100%;
-  margin: 0 240px 0 0; }
-  #top_mask div.fade {
-    z-index: 98;
-    height: 40px;
-    background: #e5e5e5;
-    box-shadow: 0px 20px 20px #e5e5e5;
-    -webkit-box-shadow: 0px 20px 20px #e5e5e5;
-    -moz-box-shadow: 0px 20px 20px #e5e5e5; }
+  height: 320px; }
 
 #chat_log {
   background: white;
@@ -820,15 +812,13 @@ a.button, button {
   left: 0;
   height: 100px;
   overflow: hidden;
-  width: 100%; }
+  width: 100%;
+  margin: 0px 230px 0 0;
+  background: url('../../images/bottom_fader.png'); }
   #message_form form.fade {
     height: 80px;
     margin: 20px 230px 0 0;
-    padding: 0 70px 0 50px;
-    background: #e5e5e5;
-    box-shadow: 0px -10px 10px #e5e5e5;
-    -webkit-box-shadow: 0px -10px 10px #e5e5e5;
-    -moz-box-shadow: 0px -10px 10px #e5e5e5; }
+    padding: 0 70px 0 50px; }
     #message_form form.fade textarea {
       height: 50px;
       width: 100%;
