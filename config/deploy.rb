@@ -17,4 +17,5 @@ role :app, server
 role :web, server
 role :db,  server, :primary => true
 
-role :data, "ec2-174-129-164-217.compute-1.amazonaws.com"
+# TODO This gets automaticly included in default server list
+# role :data, "ec2-174-129-164-217.compute-1.amazonaws.com"
