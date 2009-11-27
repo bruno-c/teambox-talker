@@ -646,7 +646,7 @@ a.button, button {
     #chat_log table tr {
       position: relative; }
       #chat_log table tr td {
-        font-size: 12px; }
+        font-size: 14px; }
         #chat_log table tr td a.log {
           float: right;
           background: url('../../images/icons/calendar--arrow.png') no-repeat 3px center;
@@ -787,7 +787,7 @@ a.button, button {
             margin: 0 0 0 5px; }
       #chat_log table tr.notice td.message p {
         color: silver;
-        font-size: 10px; }
+        font-size: 12px; }
       #chat_log table tr.private td.author b.blockquote_tail {
         border-right: 5px solid #c8e6f4; }
       #chat_log table tr.private td.message blockquote {
