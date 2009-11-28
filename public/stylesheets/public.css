@@ -205,6 +205,15 @@ input.placeholder {
 em {
   font-style: oblique; }
 
+em, .warning {
+  padding: 4px;
+  margin: 3px;
+  font-weight: bold;
+  background: #FFA;
+  box-shadow: 0px 0px 10px #ffaaaa;
+  -webkit-box-shadow: 0px 0px 10px #ffaaaa;
+  -moz-box-shadow: 0px 0px 10px #ffaaaa; }
+
 hr {
   height: 0;
   border: none;

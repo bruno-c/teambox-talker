@@ -1,27 +1,31 @@
 <div class="main">
   <h2>Talker FrontEnd Plugin API Documentation</h2>
+  
+  <p class="warning">
+    Plugins are powerful ways to break or enhance your user interface.  Test them with a free account before you enable them for your team.  We suggest using <a href="http://getfirebug.com/">Firebug</a> and limiting oneself to one glass of hard liquor per hour.
+  </p>
 
   <h3>What can front end plugins do?</h3>
-
+  
   <h4>Formatting</h4>
 
   <ul>
-  <li>Convert urls or text into content that is more meaningful to your team.</li>
-  <li>Create slash commands to interact with your team and the log in ways that you want.</li>
-  <li>Highlight specific text for easier scanning of your log. </li>
+    <li>Convert urls or text into content that is more meaningful to your team.</li>
+    <li>Create slash commands to interact with your team and the log in ways that you want.</li>
+    <li>Highlight specific text for easier scanning of your log. </li>
   </ul>
 
   <h4>Create Powerful Commands</h4>
 
   <ul>
-  <li>add slash commands (like the /msg and /hello commands) to interact with your co-workers or your log</li>
-  <li>make the log react to user actions</li>
+    <li>add slash commands (like the /msg and /hello commands) to interact with your co-workers or your log</li>
+    <li>make the log react to user actions</li>
   </ul>
 
   <h4>Desktop Integration</h4>
 
   <ul>
-  <li>Integrate with your favorite SSB (Site Specific Browser) and receive notifications for the Talker events you want.</li>
+    <li>Integrate with your favorite SSB (Site Specific Browser) and receive notifications for the Talker events you want.</li>
   </ul>
 
   <h3>Anatomy of a plugin.</h3>
@@ -32,8 +36,7 @@
 
   <pre><code>plugin.onMessageSend = function(talkerEvent){
   alert(talkerEvent.content);
-}
-  </code></pre>
+}</code></pre>
 
   <p>A Talker event is a JSON line received from the server or constructed by a plugin.</p>
 
@@ -47,22 +50,52 @@
     "name": "Eugene"
   },
   "time": 1255447115
-}
-  </code></pre>
+}</code></pre>
 
-  <p>Each Talker event has a type associated with it.</p>
+  <p>Each Talker event has a type associated with it.  Your plugin can assign a handler to these events using the following method names:</p>
 
   <h4>onMessageSend(talkerEvent)</h4>
 
-  <p>Occurs whenever someone sends a message either with the current built in mechanism or with a plugin.</p>
+  <p>Occurs whenever someone sends a message with `Talker.sendMessage`.  It allows you to cancel the sending of a message by returning false.</p>
+  
+  <p>This following example would stop you from sending 'your mom' even though that joke has proven its worth to humankind:</p>
+  
+  <pre><code>plugin.onMessageSend = function(talkerEvent){
+  if (/your\smom/gi.test(talkerEvent.content)) {
+    alert('Do not insult a mother.');
+    return false;
+  }
+}</code></pre>
 
   <h4>onMessageSent(talkerEvent)</h4>
 
-  <p>Occurs after a message was sent.</p>
+  <p>Occurs after a message was sent with `Talker.sendMessage`.</p>
+  
+  <p>This following example would update the document title with the amount of messages you sent since last refresh:</p>
+  
+  <pre><code>plugin.onMessageSent(talkerEvent) {
+  var title = parseInt(document.title);
+  document.title = isNaN(title) ? 1 : title + 1; 
+}</code></pre>
 
   <h4>onLoaded()</h4>
 
   <p>Called after the log recent messages are fully loaded.  It is similar to a normal Javascript onload event.  This particular event does not receive any event object.</p>
+  
+  <p>The events added to your log when you refresh the page use the same plugin mechanism as you do when you receive messages in real time.</p>
+  
+  <p>The following example calculates how long <a href="http://en.wikipedia.org/wiki/Godwin's_law" target="_blank">Godwin's Law</a> takes to apply after you refreshed a page:</p>
+  
+  <pre><code>plugin.onLoaded = function() {
+  var loadedTime = new Date().getTime();
+  plugin.onMessageReceived = function(talkerEvent) {
+    if (/hitler/gi.test(talkerEvent.content)) {
+      var lawAppliedAt = new Date().getTime();
+      alert("It took " + (lawAppliedAt - loadedTime) + " milliseconds to prove.");
+    }
+  }
+}</code></pre>
+  
 
   <h4>onMessageReceived(talkerEvent)</h4>
 
@@ -115,8 +148,7 @@
 
   <p>Sends a message to the current room.</p>
 
-  <pre><code>Talker.sendMessage("I love the new interface!")
-  </code></pre>
+  <pre><code>Talker.sendMessage("I love the new interface!")</code></pre>
 
   <h4>Talker.insertMessage(talkerEvent, content)</h4>
 
@@ -155,9 +187,9 @@
 
   <h4>Talker.notify(talkerEvent, content)</h4>
 
-  <p>Prism and Fluid offer system notifications when the appropriate system client is installed.  On  OS X 
-  we often use Growl to receive notifications from applications.  A notification will display the 
-  room name as title and either use the content argument or the event&#8217;s content property to display.</p>
+  <p>Prism and Fluid offer system notifications when the appropriate system client is installed.  On OS X 
+  we use Growl to receive notifications from applications.  A notification will display the room name as 
+  title and either use the content argument or the event&#8217;s content property to display.</p>
 
   <p>With an event in room &#8220;Lobby&#8221;:</p>
 
