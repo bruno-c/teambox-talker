@@ -28,8 +28,12 @@ class AccountTest < ActiveSupport::TestCase
   end
 
   def test_paying_subscribe_url
-    assert_equal "https://spreedly.com/talker-test/subscribers/1341495104/subscribe/3016/superawesome?return_url=%2F&first_name=quentin&email=quentin%40example.com",
-                 create_account(:plan_id => Plan.all[1].id).subscribe_url(users(:quentin), "/")
+    url = create_account(:plan_id => Plan.all[1].id).subscribe_url(users(:quentin), "/")
+    assert_match "https://spreedly.com/", url
+    assert_match "/superawesome?", url
+    assert_match "return_url=%2F", url
+    assert_match "first_name=quentin", url
+    assert_match "email=quentin%40example.com", url
   end
   
   def test_active?
