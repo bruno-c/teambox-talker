@@ -9,13 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091127220427) do
+ActiveRecord::Schema.define(:version => 20091128042904) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "plan_id"
+    t.datetime "active_until"
+    t.boolean  "active",         :default => false
+    t.boolean  "on_trial",       :default => true
+    t.string   "spreedly_token"
   end
 
   add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true

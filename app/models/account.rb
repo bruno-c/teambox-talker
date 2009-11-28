@@ -46,4 +46,19 @@ class Account < ActiveRecord::Base
                                 :return_url => return_url)
     end
   end
+  
+  def subscriber
+    Spreedly::Subscriber.find(id)
+  end
+  
+  def active?
+    active && (active_until.nil? || active_until >= Time.now)
+  end
+  
+  def update_subscription_info(subscriber)
+    self.active_until = subscriber.active_until
+    self.active = subscriber.active
+    self.on_trial = subscriber.on_trial
+    self.spreedly_token = subscriber.token
+  end
 end
