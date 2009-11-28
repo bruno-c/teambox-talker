@@ -33,7 +33,7 @@ class Account < ActiveRecord::Base
   end
   
   def plan
-    Plan.find(plan_id)
+    @plan ||= Plan.find(plan_id)
   end
   
   def subscribe_url(user, return_url)

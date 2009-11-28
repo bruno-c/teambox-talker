@@ -2,8 +2,14 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class AccountsControllerTest < ActionController::TestCase
   def test_new
-    get :new
+    get :new, :plan_id => Plan.free.id
     assert_response :success
+  end
+  
+  def test_new_invalid_plan
+    assert_raise(ActiveRecord::RecordNotFound) do
+      get :new, :plan_id => 0
+    end
   end
   
   def test_valid_create

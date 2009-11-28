@@ -9,6 +9,10 @@ class Plan
     @level == "free"
   end
   
+  def to_param
+    @id
+  end
+  
   def self.all
     @all ||= [
       Plan.new(:id => 2869, :name => "Free", :level => "free"),
@@ -16,7 +20,12 @@ class Plan
     ]
   end
   
+  def self.free
+    @free ||= all.detect { |plan| plan.free? }
+  end
+  
   def self.find(id)
-    all.detect { |plan| plan.id == id.to_i } || raise(ActiveRecord::RecordNotFound, "Can't find plan with id = #{id}")
+    id = id.to_param.to_i
+    all.detect { |plan| plan.id == id } || raise(ActiveRecord::RecordNotFound, "Can't find plan with id = #{id}")
   end
 end

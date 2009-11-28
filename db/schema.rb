@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(:version => 20091128042904) do
     t.datetime "updated_at"
     t.integer  "plan_id"
     t.datetime "active_until"
-    t.boolean  "active",         :default => false
+    t.boolean  "active",         :default => true
     t.boolean  "on_trial",       :default => true
     t.string   "spreedly_token"
   end

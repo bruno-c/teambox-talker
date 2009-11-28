@@ -18,6 +18,13 @@ module AccountSupport
       current_account
     end
     
+    def active_account_required
+      if current_account? && !current_account.active?
+        flash[:error] = "Uho... your account is inactive, please update your subscription."
+        redirect_to account_path
+      end
+    end
+    
     def account_domain(account=current_account)
       "#{account.subdomain}.#{request.domain}"
     end
