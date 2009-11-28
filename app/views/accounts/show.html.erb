@@ -1,0 +1,28 @@
+<div class="sheet">
+  <h2><%= @title = "Your Account" %></h2>
+  
+  <div class="content">
+    <% form_for @account, :html => { :class => "lw80" } do |f| %>
+      <%= f.error_messages %>
+    
+      <h3>Subscription Plan</h3>
+      <ul>
+      <% Plan.all.each do |plan| %>
+        <li>
+          <%= plan.name %>
+          <% if plan == @account.plan %>
+            <strong>Current</strong>
+          <% else %>
+            <%= link_to (plan > @account.plan ? "Upgrade" : "Downgrade"), plan.subscribe_url(@account, current_url) %>
+          <% end %>
+        </li>
+      <% end %>
+      </ul>
+    
+      <% if @account.can_edit_subscription? %>
+        <p><%= link_to "Update your subscription information", @account.edit_subscriber_url(current_url) %></p>
+      <% end %>
+    
+    <% end %>
+  </div>
+</div>

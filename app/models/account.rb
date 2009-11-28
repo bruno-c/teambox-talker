@@ -15,11 +15,15 @@ class Account < ActiveRecord::Base
   
   after_create :create_default_rooms
   after_create :create_default_plugin_installations
-  after_create { |account| Delayed::Job.enqueue CreateSpreedlySubscription.new(account) }
+  after_create :create_subscription
   
   # TODO determine if account have SSL depending on plan
   def ssl
     true
+  end
+  
+  def owner
+    users.first(:conditions => "admin = 1", :order => "id")
   end
   
   def create_default_rooms
@@ -36,15 +40,14 @@ class Account < ActiveRecord::Base
     @plan ||= Plan.find(plan_id)
   end
   
-  def subscribe_url(user, return_url)
-    if plan.free?
-      return_url
-    else
-      Spreedly.subscribe_url(id, plan_id, subdomain) + "?" +
-        Rack::Utils.build_query(:email => user.email,
-                                :first_name => user.name,
-                                :return_url => return_url)
+  def edit_subscriber_url(return_url)
+    if spreedly_token
+      Spreedly.edit_subscriber_url(spreedly_token) + "?" + Rack::Utils.build_query(:return_url => return_url)
     end
+  end
+  
+  def can_edit_subscription?
+    spreedly_token && !plan.free?
   end
   
   def subscriber
@@ -55,10 +58,19 @@ class Account < ActiveRecord::Base
     active && (active_until.nil? || active_until >= Time.now)
   end
   
-  def update_subscription_info(subscriber)
-    self.active_until = subscriber.active_until
-    self.active = subscriber.active
-    self.on_trial = subscriber.on_trial
-    self.spreedly_token = subscriber.token
+  def create_subscription
+    Delayed::Job.enqueue CreateSpreedlySubscription.new(self) unless spreedly_token
+  end
+  
+  def update_subscription_info(subscriber=nil)
+    if subscriber
+      self.active_until = subscriber.active_until
+      self.active = subscriber.active
+      self.on_trial = subscriber.on_trial
+      self.spreedly_token = subscriber.token
+      save(false)
+    else
+      Delayed::Job.enqueue UpdateSpreedlySubscription.new(self)
+    end
   end
 end

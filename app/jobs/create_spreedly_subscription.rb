@@ -8,7 +8,7 @@ class CreateSpreedlySubscription
   end
   
   def user
-    @user ||= account.users.first
+    @user ||= account.owner
   end
   
   def create_subscriber

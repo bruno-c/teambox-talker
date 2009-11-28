@@ -1,7 +1,9 @@
 class Plan
-  DB_FILE = "#{RAILS_ROOT}/db/plans.yml"
+  include Comparable
   
+  DB_FILE = "#{RAILS_ROOT}/db/plans.yml"
   ATTRIBUTES = %w( id name feature_level price description plan_type )
+  
   attr_accessor *ATTRIBUTES
   
   def initialize(attributes_or_subscription_plan={})
@@ -20,6 +22,21 @@ class Plan
   
   def to_param
     @id
+  end
+  
+  def <=>(other)
+    @price <=> other.price
+  end
+  
+  def subscribe_url(account, return_url, user=account.owner)
+    if free?
+      return_url
+    else
+      Spreedly.subscribe_url(account.id, @id, account.subdomain) + "?" +
+        Rack::Utils.build_query(:email => user.email,
+                                :first_name => user.name,
+                                :return_url => return_url)
+    end
   end
   
   def self.all

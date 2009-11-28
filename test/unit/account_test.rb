@@ -23,19 +23,6 @@ class AccountTest < ActiveSupport::TestCase
     assert_equal Plan.free, create_account(:plan_id => Plan.free.id).plan
   end
   
-  def test_free_subscribe_url
-    assert_equal "/", create_account(:plan_id => Plan.free.id).subscribe_url(users(:quentin), "/")
-  end
-
-  def test_paying_subscribe_url
-    url = create_account(:plan_id => Plan.all[1].id).subscribe_url(users(:quentin), "/")
-    assert_match "https://spreedly.com/", url
-    assert_match "/superawesome?", url
-    assert_match "return_url=%2F", url
-    assert_match "first_name=quentin", url
-    assert_match "email=quentin%40example.com", url
-  end
-  
   def test_active?
     assert ! create_account(:active => false).active?
     assert ! create_account(:active_until => 1.day.ago).active?
