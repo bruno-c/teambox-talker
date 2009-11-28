@@ -8,7 +8,8 @@ Talker.HighlightMe = function(){
       if ($(this).html().replace(/<\/?[^>]+>/gi, ' ').match(me)) {
         $(this).css({
           '-moz-box-shadow': '0 0 10px yellow',
-          '-webkit-box-shadow': '0 0 10px yellow'
+          '-webkit-box-shadow': '0 0 10px yellow',
+          'box-shadow': '0 0 10px yellow'
         });
       }
     });
