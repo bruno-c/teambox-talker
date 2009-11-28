@@ -51,4 +51,8 @@ class Plan
     id = id.to_param.to_i
     all.detect { |plan| plan.id == id } || raise(ActiveRecord::RecordNotFound, "Can't find plan with id = #{id}")
   end
+
+  def self.find_by_name(name)
+    all.detect { |plan| plan.name == name } || raise(ActiveRecord::RecordNotFound, "Can't find plan with name = #{name}")
+  end
 end

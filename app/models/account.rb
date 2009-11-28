@@ -40,6 +40,11 @@ class Account < ActiveRecord::Base
     @plan ||= Plan.find(plan_id)
   end
   
+  def plan=(p)
+    self.plan_id = p.id
+    @plan = p
+  end
+  
   def edit_subscriber_url(return_url)
     if spreedly_token
       Spreedly.edit_subscriber_url(spreedly_token) + "?" + Rack::Utils.build_query(:return_url => return_url)
@@ -64,6 +69,7 @@ class Account < ActiveRecord::Base
   
   def update_subscription_info(subscriber=nil)
     if subscriber
+      self.plan = Plan.find_by_name(subscriber.subscription_plan_name)
       self.active_until = subscriber.active_until
       self.active = subscriber.active
       self.on_trial = subscriber.on_trial
