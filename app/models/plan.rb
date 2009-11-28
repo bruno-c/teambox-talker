@@ -1,12 +1,21 @@
 class Plan
-  attr_accessor :id, :name, :level
+  DB_FILE = "#{RAILS_ROOT}/db/plans.yml"
   
-  def initialize(attributes={})
+  ATTRIBUTES = %w( id name feature_level price description plan_type )
+  attr_accessor *ATTRIBUTES
+  
+  def initialize(attributes_or_subscription_plan={})
+    if attributes_or_subscription_plan.is_a?(Spreedly::SubscriptionPlan)
+      attributes = attributes_or_subscription_plan.instance_variable_get(:@data).slice(*ATTRIBUTES)
+    else
+      attributes = attributes_or_subscription_plan
+    end
+    
     attributes.each_pair { |attr, value| send "#{attr}=", value }
   end
   
   def free?
-    @level == "free"
+    @feature_level == "free"
   end
   
   def to_param
@@ -14,10 +23,7 @@ class Plan
   end
   
   def self.all
-    @all ||= [
-      Plan.new(:id => 2869, :name => "Free", :level => "free"),
-      Plan.new(:id => 3016, :name => "Basic", :level => "basic")
-    ]
+    @all ||= YAML.load_file(DB_FILE)[RAILS_ENV]
   end
   
   def self.free

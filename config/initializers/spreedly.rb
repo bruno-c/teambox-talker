@@ -1,7 +1,11 @@
-if Rails.env.test?
+SPREEDLY_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/spreedly.yml")
+
+config = SPREEDLY_CONFIG[RAILS_ENV].symbolize_keys
+
+if config[:mock]
   require "spreedly/mock"
 else
   require "spreedly"
 end
 
-Spreedly.configure "talker-test", "41ea4f065686cec137a32fd3a43e39c9cd314b22"
+Spreedly.configure config[:site], config[:token]
