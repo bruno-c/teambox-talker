@@ -16,6 +16,10 @@ Talker.Timestamp = function(reverse) {
   }
   
   function addToLog(time, lastTime) {
+    var last_row = Talker.getLastRow();
+    if (last_row.hasClass('timestamp')) {
+      last_row.remove();
+    }
     var element = $('<tr/>').addClass('timestamp');
     
     var date = FormatHelper.timestamp2date(time);
