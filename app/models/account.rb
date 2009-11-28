@@ -15,6 +15,7 @@ class Account < ActiveRecord::Base
   
   after_create :create_default_rooms
   after_create :create_default_plugin_installations
+  after_create { |account| Delayed::Job.enqueue CreateSpreedlySubscription.new(account) }
   
   # TODO determine if account have SSL depending on plan
   def ssl
@@ -36,10 +37,10 @@ class Account < ActiveRecord::Base
   end
   
   def subscribe_url(user, return_url)
-    if free?
+    if plan.free?
       return_url
     else
-      Spreedly.subscribe_url(id, plan_id) + "?" +
+      Spreedly.subscribe_url(id, plan_id, subdomain) + "?" +
         Rack::Utils.build_query(:email => user.email,
                                 :first_name => user.name,
                                 :return_url => return_url)
