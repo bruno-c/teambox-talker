@@ -1,6 +1,7 @@
 Fixes:
 - Raggi's Textile plugin borks w/ blockquote cause it's creating <p> tags.
   We should add a special class to ours.
+- insert an image then paste some code.  Image disapears.
 - FIXED but waiting on deploy before answering. http://talker.tenderapp.com/discussions/problems/14-link-dup-ing-glitch
 ✓ Remove "Send invite" if user not pending
 ✓ Add some feedback that info is saved on users page.
