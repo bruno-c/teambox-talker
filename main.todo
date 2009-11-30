@@ -1,6 +1,7 @@
 Fixes:
 - Raggi's Textile plugin borks w/ blockquote cause it's creating <p> tags.
   We should add a special class to ours.
+- insert an image then paste some code.  Image disapears.
 - FIXED but waiting on deploy before answering. http://talker.tenderapp.com/discussions/problems/14-link-dup-ing-glitch
 ✓ Remove "Send invite" if user not pending
 ✓ Add some feedback that info is saved on users page.
@@ -9,6 +10,7 @@ Fixes:
 - Guest users are lost when they see a blank page.  Perhaps a message for first person (when no events exist and one for guest users).
 ✓ admin should be the only people who see /invite
 ✓ bigger default font size.
+✓ timestamps get in a traffic jam when user join/leaves do not appear.  Perhaps onBeforeInsertion ??
 
 Documentation:
 - Document Talker.sendAction
@@ -17,6 +19,7 @@ Plugin Ideas:
 - fredbrunel: hide timestamps
 - feedback: highlighting of paragraphs with your name in them (I plan on doing this in a plugin)
 - feedback: click the name and you get a @username that appears in text box
+- Interobang &#8253; link to tenderapp.
 
 Feature Request:
 - feedback: iphone capable version (iphone apple touch image 404 too)

@@ -32,10 +32,7 @@ h1
   font-weight: bold
   letter-spacing: 2px
   +text_shadow(-1, -1, 2, !off_white)
-  img
-    margin: 12px 20px -8px -7px
-    position: relative
-    left: -6px
+
 h2
   +font_size("xxxlarge")
   margin: 0 0 1em
@@ -92,6 +89,12 @@ input.placeholder
   color = !light_grey
 em
   font-style: oblique
+em, .warning
+  padding: 4px
+  margin: 3px
+  font-weight: bold
+  background: #FFA
+  +box_shadow(0, 0, 10, #FAA)
 hr
   height: 0
   border: none
@@ -115,65 +118,144 @@ html[xmlns] .clearfix
   height: 1%
 
 
-#header
-  text-align: left
-  width: 890px
+#site_controller.home
+  background = url("/images/white_fade.png") repeat-x !background_colour + !white * 0.15
+  margin: 0
   padding: 0
-  margin: auto
-  
-#content
-  background = !white - !black * 0.1
-  text-align: left
-  width: 890px
-  overflow: hidden
-  padding: 0
-  margin: auto
-  #navigation
-    list-style: none
-    background = !dark_grey * 0.66
-    +box_shadow(0, 0, 15, !dark_grey)
-    li
-      display: inline-block
-      padding: 5px 10px 5px 10px
-      color = !accent_colour
-      font-weight: bold
+  text-align: center
+  #header
+    background: black
+    +font_size("large")
+    width: 100%
+    #header_center
+      margin: auto
+      width: 900px
+      text-align: right
+      padding: 10px
       a
-        font-weight: bold
         color: white
         text-decoration: none
+        padding: 0 0 0 15px
       a:hover
         text-decoration: underline
-    li.contextual
-      +font_size("tiny")
-      margin-top: 4px
-      color = !black  + !white * 0.66
-    li.dev
+  #container
+    text-align: left
+    width: 900px
+    margin: auto
+    #left
+      width: 380px
+      padding: 20px
+      h1
+        font-size: 40px
+        padding: 0
+        margin: 0
+        img
+          position: relative
+          left: 5px
+          margin: 0
+          padding: 0
+      h2
+        padding: 0
+        margin-top: 10px
+        font-size: 35px
+        line-height: 32px
+        letter-spacing: -3px
+      h3
+        width: 300px
+      .plans  
+        text-decoration: none
+        display: block
+        margin: 15px 0px 0px 0px
+        padding: 10px
+        -moz-border-radius: 6px
+        -webkit-border-radius: 6px
+        -moz-box-shadow = 0px 0px 30px #333
+        -webkit-box-shadow = 0px 0px 30px #333
+        text-align: center
+        background = !accent_colour + !white * 0.33
+        font-size: 16px
+        strong
+          display: block
+          font-size: 20px
+          width: 100%
+          padding: 5px
+          line-height: 10px
+      .plans:hover
+        -moz-box-shadow = 0px 0px 30px #FFF
+        -webkit-box-shadow = 0px 0px 30px #FFF
+    #right
       float: right
-  div.feature
-    width: 230px
-    height: 120px
-    float: left
-    margin: 30px 30px 0px 30px
-    h2
-      margin: 0px
-  div.main
-    margin: 30px
-    ul
-      margin-left: 45px
-    h3
-      font-weight: bold
-      margin: 20px 0 0 -5px
-      padding: 5px
-    h4
-      margin: 20px 0 0 0
-    h3 + p
-      margin: 20px 0 0 5px
-    p
-      margin: 10px 0px 10px 5px
-    pre
-      margin: 10px 0px 10px 15px
-      padding: 10px
-      +box_shadow(0, 0, 15, !dark_grey + !white * 0.66)
+      position: relative
+      top: 77px
+      left: 20px
+      img
+        -webkit-box-shadow = 0px 0px 12px !accent_colour, 0px 20px 100px Black
+
+#site_controller.features, #site_controller.rest_api, #site_controller.frontend_api
+  h1
+    img
+      margin: 12px 20px -8px -7px
+      position: relative
+      left: -6px
+  #header
+    text-align: left
+    width: 890px
+    padding: 0
+    margin: auto
+  
+  #content
+    background = !white - !black * 0.1
+    text-align: left
+    width: 890px
+    overflow: hidden
+    padding: 0
+    margin: auto
+    #navigation
+      list-style: none
+      background = !dark_grey * 0.66
+      +box_shadow(0, 0, 15, !dark_grey)
+      li
+        display: inline-block
+        padding: 5px 10px 5px 10px
+        color = !accent_colour
+        font-weight: bold
+        a
+          font-weight: bold
+          color: white
+          text-decoration: none
+        a:hover
+          text-decoration: underline
+      li.contextual
+        +font_size("tiny")
+        margin-top: 4px
+        color = !black  + !white * 0.66
+      li.dev
+        float: right
+    div.feature
+      width: 230px
+      height: 120px
+      float: left
+      margin: 30px 30px 0px 30px
+      h2
+        margin: 0px
+    div.main
+      margin: 30px
+      ul
+        margin-left: 45px
+      h3
+        font-weight: bold
+        margin: 20px 0 0 -5px
+        padding: 5px
+      h4
+        margin: 20px 0 0 0
+      h3 + p
+        margin: 20px 0 0 5px
+      p
+        margin: 10px 0px 10px 5px
+      pre
+        margin: 10px 0px 10px 15px
+        padding: 10px
+        +box_shadow(0, 0, 15, !dark_grey + !white * 0.66)
 
 #footer
   a#logo
