@@ -4,30 +4,30 @@
 development: 
 - !ruby/object:Plan 
   description: 
-  feature_level: free
-  id: 2869
-  name: Free
-  plan_type: free_trial
-  price: 0.0
-- !ruby/object:Plan 
-  description: 
   feature_level: basic
   id: 3016
   name: Basic
   plan_type: regular
   price: 12.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: plus
+  id: 3045
+  name: Plus
+  plan_type: regular
+  price: 24.0
 test: 
 - !ruby/object:Plan 
   description: 
-  feature_level: free
-  id: 2869
-  name: Free
-  plan_type: free_trial
-  price: 0.0
-- !ruby/object:Plan 
-  description: 
   feature_level: basic
   id: 3016
   name: Basic
   plan_type: regular
   price: 12.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: plus
+  id: 3045
+  name: Plus
+  plan_type: regular
+  price: 24.0

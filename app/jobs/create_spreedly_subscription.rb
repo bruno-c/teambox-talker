@@ -18,10 +18,6 @@ class CreateSpreedlySubscription
   def perform
     subscriber = account.subscriber || create_subscriber
     
-    if account.plan.free?
-      subscriber.activate_free_trial(account.plan.id)
-    end
-    
     account.update_subscription_info(subscriber)
   end
 end

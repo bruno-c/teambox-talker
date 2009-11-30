@@ -8,7 +8,7 @@ class AccountsControllerTest < ActionController::TestCase
   
   def test_new_invalid_plan
     assert_raise(ActiveRecord::RecordNotFound) do
-      get :new, :plan_id => 0
+      get :new, :plan_id => 10
     end
   end
   
@@ -21,6 +21,7 @@ class AccountsControllerTest < ActionController::TestCase
     assert_equal assigns(:user).account, assigns(:account)
     assert assigns(:user).admin, "1st user must be admin"
     assert assigns(:user).active?, "1st user must be active"
+    assert_equal assigns(:user), assigns(:account).owner
   end
 
   def test_invalid_create

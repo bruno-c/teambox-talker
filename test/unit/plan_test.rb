@@ -1,10 +1,6 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
 class PlanTest < ActiveSupport::TestCase
-  def test_free_subscribe_url
-    assert_equal "/", Plan.free.subscribe_url(accounts(:master), "/")
-  end
-
   def test_paying_subscribe_url
     url = Plan.all[1].subscribe_url(accounts(:master), "/")
     assert_match "https://spreedly.com/", url

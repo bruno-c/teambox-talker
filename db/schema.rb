@@ -17,9 +17,12 @@ ActiveRecord::Schema.define(:version => 20091128042904) do
     t.datetime "updated_at"
     t.integer  "plan_id"
     t.datetime "active_until"
-    t.boolean  "active",         :default => true
-    t.boolean  "on_trial",       :default => true
+    t.boolean  "active",                    :default => true
+    t.boolean  "on_trial",                  :default => true
     t.string   "spreedly_token"
+    t.datetime "grace_until"
+    t.boolean  "subscription_info_changed", :default => false
+    t.boolean  "recurring",                 :default => false
   end
 
   add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true

@@ -23,10 +23,12 @@ class AccountTest < ActiveSupport::TestCase
     assert_equal Plan.free, create_account(:plan_id => Plan.free.id).plan
   end
   
-  def test_active?
-    assert ! create_account(:active => false).active?
-    assert ! create_account(:active_until => 1.day.ago).active?
-    assert create_account(:active_until => nil).active?
-    assert create_account(:active_until => 1.day.since).active?
+  def test_paying_active?
+    assert ! create_account(:plan => Plan.all[1], :active => false).active?
+    assert create_account(:plan => Plan.all[1], :active => true).active?
+  end
+
+  def test_free_is_always_active
+    assert create_account(:plan => Plan.free, :active => false).active?
   end
 end

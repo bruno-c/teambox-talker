@@ -45,14 +45,26 @@ class Account < ActiveRecord::Base
     @plan = p
   end
   
+  def change_plan(new_plan, return_url)
+    current_plan = plan
+    update_attribute :subscription_info_changed, true
+    
+    if new_plan.free?
+      Delayed::Job.enqueue StopSubscriptionAutoRenew.new(self) if subscribed? && !current_plan.free?
+      return return_url
+    else
+      return new_plan.subscribe_url(self, return_url)
+    end
+  end
+  
   def edit_subscriber_url(return_url)
     if spreedly_token
       Spreedly.edit_subscriber_url(spreedly_token) + "?" + Rack::Utils.build_query(:return_url => return_url)
     end
   end
   
-  def can_edit_subscription?
-    spreedly_token && !plan.free?
+  def subscribed?
+    spreedly_token.present?
   end
   
   def subscriber
@@ -60,23 +72,31 @@ class Account < ActiveRecord::Base
   end
   
   def active?
-    active && (active_until.nil? || active_until >= Time.now)
+    plan.free? || active
   end
   
   def create_subscription
-    Delayed::Job.enqueue CreateSpreedlySubscription.new(self) unless spreedly_token
+    Delayed::Job.enqueue CreateSpreedlySubscription.new(self) unless subscribed?
   end
   
   def update_subscription_info(subscriber=nil)
     if subscriber
       self.plan = Plan.find_by_name(subscriber.subscription_plan_name)
+      self.active = plan.free? || subscriber.active
       self.active_until = subscriber.active_until
-      self.active = subscriber.active
+      self.grace_until = subscriber.grace_until
       self.on_trial = subscriber.on_trial
+      self.recurring = subscriber.recurring
       self.spreedly_token = subscriber.token
+      self.subscription_info_changed = false
       save(false)
     else
       Delayed::Job.enqueue UpdateSpreedlySubscription.new(self)
     end
+  end
+  
+  def update_subscription_info!
+    subscriber_info = subscriber
+    update_subscription_info subscriber_info if subscriber_info 
   end
 end

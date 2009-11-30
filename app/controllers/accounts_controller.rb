@@ -38,7 +38,7 @@ class AccountsController < ApplicationController
       MonitorMailer.deliver_signup(@account, @user)
       
       @user.create_perishable_token!
-      redirect_to @account.plan.subscribe_url(@account.plan, welcome_url(:host => account_host(@account), :token => @user.perishable_token), @user)
+      redirect_to @account.change_plan(@account.plan, welcome_url(:host => account_host(@account), :token => @user.perishable_token))
     end
     
   rescue ActiveRecord::RecordInvalid

@@ -6,7 +6,6 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register', :controller => 'accounts', :action => 'create'
   map.signup '/signup/:plan_id', :controller => 'accounts', :action => 'new'
   map.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
-  map.plans '/plans', :controller => 'site', :action => 'plans'
   
   map.features '/features', :controller => 'site', :action => 'features'
   map.plugin_api '/api/plugin', :controller => 'site', :action => 'frontend_api'
@@ -21,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :account
   map.resource :session
   map.resource :settings
+  map.resources :plans
   map.resources :rooms, :has_many => [:messages, :attachments], :member => { :refresh => :get } do |rooms|
     rooms.resource :guest, :member => { :enable => :post, :disable => :post }
   end

@@ -4,23 +4,33 @@
   <div class="content">
     <% form_for @account, :html => { :class => "lw80" } do |f| %>
       <%= f.error_messages %>
-    
+      
       <h3>Subscription Plan</h3>
-      <ul>
-      <% Plan.all.each do |plan| %>
-        <li>
-          <%= plan.name %>
-          <% if plan == @account.plan %>
-            <strong>Current</strong>
-          <% else %>
-            <%= link_to (plan > @account.plan ? "Upgrade" : "Downgrade"), plan.subscribe_url(@account, current_url) %>
-          <% end %>
-        </li>
-      <% end %>
-      </ul>
-    
-      <% if @account.can_edit_subscription? %>
-        <p><%= link_to "Update your subscription information", @account.edit_subscriber_url(current_url) %></p>
+      <% if @account.subscription_info_changed %>
+        <p>Your subscription is being updated ...</p>
+      <% else %>
+        
+        <!-- Change plan -->
+        <ul>
+        <% Plan.all.each do |plan| %>
+          <li>
+            <%= plan.name %>
+            
+            <% if plan == @account.plan %>
+              <strong>Current</strong>
+              <% unless will_downgrade_to(plan) %>
+                <small>This plan won't renew and you'll be downgraded to the Free plan once it expires.</small>
+              <% end %>
+              <%= link_to "Update", @account.edit_subscriber_url(current_url), :title => "Update your subscription information" unless plan.free? %>
+              
+            <% elsif !will_downgrade_to(plan) %>
+              <%= link_to up_down_grade(plan), plan_path(plan, :return_url => current_url), :method => :put %>
+              
+            <% end %>
+          </li>
+        <% end %>
+        </ul>
+        
       <% end %>
     
     <% end %>

@@ -21,7 +21,7 @@ class Plan
   end
   
   def to_param
-    @id
+    @id.to_s
   end
   
   def <=>(other)
@@ -29,30 +29,34 @@ class Plan
   end
   
   def subscribe_url(account, return_url, user=account.owner)
-    if free?
-      return_url
-    else
-      Spreedly.subscribe_url(account.id, @id, account.subdomain) + "?" +
-        Rack::Utils.build_query(:email => user.email,
-                                :first_name => user.name,
-                                :return_url => return_url)
-    end
+    Spreedly.subscribe_url(account.id, @id, account.subdomain) + "?" +
+      Rack::Utils.build_query(:email => user.email,
+                              :first_name => user.name,
+                              :return_url => return_url)
   end
   
   def self.all
-    @all ||= YAML.load_file(DB_FILE)[RAILS_ENV]
+    @all ||= [Plan.free] + YAML.load_file(DB_FILE)[RAILS_ENV].sort_by(&:price)
   end
   
   def self.free
-    @free ||= all.detect { |plan| plan.free? }
+    @free ||= Plan.new(:id => 0,
+                       :name => "Free",
+                       :feature_level => "free",
+                       :price => 0.0,
+                       :description => "Free plan")
   end
   
   def self.find(id)
     id = id.to_param.to_i
     all.detect { |plan| plan.id == id } || raise(ActiveRecord::RecordNotFound, "Can't find plan with id = #{id}")
   end
-
+  
   def self.find_by_name(name)
-    all.detect { |plan| plan.name == name } || raise(ActiveRecord::RecordNotFound, "Can't find plan with name = #{name}")
+    if name.blank?
+      free
+    else
+      all.detect { |plan| plan.name == name } || raise(ActiveRecord::RecordNotFound, "Can't find plan with name = #{name}")
+    end
   end
 end
