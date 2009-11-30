@@ -17,9 +17,8 @@ class Account < ActiveRecord::Base
   after_create :create_default_plugin_installations
   after_create :create_subscription
   
-  # TODO determine if account have SSL depending on plan
-  def ssl
-    true
+  def features
+    @features ||= Features[plan.feature_level]
   end
   
   def owner
