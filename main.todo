@@ -1,10 +1,6 @@
 Fixes:
 - UPLOAD
-- Raggi's Textile plugin borks w/ blockquote cause it's creating <p> tags.
-  We should add a special class to ours.
-- insert an image then paste some code.  Image disapears.
-- FIXED but waiting on deploy before answering. http://talker.tenderapp.com/discussions/problems/14-link-dup-ing-glitch
-- feedback: better handling of privates messages.  Callbacks and all. <-- not sure what to do exactly about this.
+- Raggi's Textile plugin borks w/ blockquote cause it's creating <p> tags (We should add a special class to ours)
 - Guest users are lost when they see a blank page.  Perhaps a message for first person (when no events exist and one for guest users).
 
 Documentation:
@@ -12,40 +8,27 @@ Documentation:
 
 Plugin Ideas:
 - fredbrunel: hide timestamps
-- feedback: highlighting of paragraphs with your name in them (I plan on doing this in a plugin)
 - feedback: click the name and you get a @username that appears in text box
 
 Feature Request:
+- feedback: better handling of privates messages.  Callbacks and all. <-- not sure what to do exactly about this.
 - feedback: iphone capable version (iphone apple touch image 404 too)
 - afk
 - afw (away from window)
-
-Exclusive must haves:
 - Import campfire logs
 - plugin to alert by keywords / username 
 
 After beta:
-✓ Add unique ID to message
-- Browse to log from message ID
-✓ Better 404 page when guest access is disabled or on wrong token
-- Review invitation process
-  - Change name in room
-  - Invite link go directly in room
-- Review signup process
+- Browse to log from event ID
 - Create landing page
-✓ cleaner REGEXP find and replace for dom text elements.
 - Billing
 - Restrict features per plan
-✓ Room permissions
-- Lock down rooms (potential problem: allow reconnect but not new connections.)
 - Send more info w/ feed notification (send in Hash w/ favicon, etc.)
 
 Talker Server:
 - Backup DB hourly using mysql hot backup
-✓ Renaming a user in presence server
-✓ Fetch events since ID on connections
+- Fetch events since ID on connections
 - Allow connecting to a room by name
-✓ Fix db writes ordering in logger
 - Support other types of channels (room, paste, etc)
 - Benchmark against ejabberd
 
