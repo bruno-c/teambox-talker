@@ -26,3 +26,9 @@ namespace :feeds do
     Feed::Worker.new.start
   end
 end
+
+namespace :protocol do
+  task :doc do
+    sh "bluecloth server/doc/protocol.md > public/protocol.html"
+  end
+end
