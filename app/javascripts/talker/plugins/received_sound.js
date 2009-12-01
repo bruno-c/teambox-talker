@@ -1,11 +1,11 @@
 Talker.ReceivedSound = function() {
-  var plugin = this;
+  var self = this;
   
-  plugin.command = 'togglesound';
-  plugin.usage = '/togglesound';
+  self.command = 'togglesound';
+  self.usage = '/togglesound';
   
-  plugin.onCommand = function(talkerEvent) {
-    if (talkerEvent.command == plugin.command) {
+  self.onCommand = function(talkerEvent) {
+    if (talkerEvent.command == self.command) {
       $.cookie('ReceivedSound', $.cookie('ReceivedSound') == 'false' ? 'true' : 'false');
       alert($.cookie('ReceivedSound') == 'true' ? "Audio alerts are now enabled." : "Audio alerts are now disabled.");
       $('#msgbox').val('');
@@ -13,19 +13,27 @@ Talker.ReceivedSound = function() {
     }
   }
   
-  plugin.onLoaded = function() {
+  self.onLoaded = function() {
     if ($.cookie('ReceivedSound') != 'true') {
       $.cookie('ReceivedSound', 'false');
     }
     
+    self.loaded = true;
+    
     $(document.body).append($('<audio/>').attr('src', '/sounds/borealis/message_received.wav')); // preloads for faster play on first message.
-      
-    plugin.onMessageReceived = function(talkerEvent) {
-      if (talkerEvent.user.id != Talker.currentUser.id && $.cookie('ReceivedSound') == 'true') {
+  }
+  
+  self.onBlur = function() {
+    self.onMessageReceived = function(talkerEvent) {
+      if (self.loaded && talkerEvent.user.id != Talker.currentUser.id && $.cookie('ReceivedSound') == 'true') {
         $(document.body).append(
           $('<audio/>').attr('src', '/sounds/borealis/message_received.wav').attr('autoplay', 'true').bind('ended', function(){ $(this).remove() })
         );
       }
     }
+  }
+  
+  self.onFocus = function() {
+    self.onMessageReceived = function(){};
   }
 }
