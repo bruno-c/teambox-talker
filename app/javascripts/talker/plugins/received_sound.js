@@ -14,8 +14,8 @@ Talker.ReceivedSound = function() {
   }
   
   self.onLoaded = function() {
-    if ($.cookie('ReceivedSound') != 'true') {
-      $.cookie('ReceivedSound', 'false');
+    if ($.cookie('ReceivedSound') != 'false') {
+      $.cookie('ReceivedSound', 'true');
     }
     
     self.loaded = true;
