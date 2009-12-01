@@ -14,4 +14,9 @@ class AttachmentTest < ActiveSupport::TestCase
     assert_equal "screen-shot-2009-11-25-at-1048", Attachment.new(:upload_file_name => "Screen shot 2009-11-25 at 10.48.27 AM").basename
     assert_equal "ee", Attachment.new(:upload_file_name => "éé").basename
   end
+  
+  def test_respects_storage_limit
+    assert_nil Attachment.create(:room => Room.first, :upload_file_size => 1.kilobyte).errors.on(:base)
+    assert_not_nil Attachment.create(:room => Room.first, :upload_file_size => 100.gigabytes).errors.on(:base)
+  end
 end

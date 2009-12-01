@@ -15,7 +15,7 @@ class Features
   end
   
   def self.[](level)
-    LEVELS[level] || raise(ArgumentError, "Unknow feature level: #{level.inspect}")
+    LEVELS[level.to_sym] || raise(ArgumentError, "Unknow feature level: #{level.inspect}")
   end
   
   

@@ -32,6 +32,15 @@
         </ul>
         
       <% end %>
+      
+      <h2>Usage</h2>
+      <p>
+        You've used <%= number_to_human_size @account.used_storage %> of your <%= number_to_human_size @account.features.max_storage %> file storage limit.
+      </p>
+      <p>
+        You're currently using <%= @account.connections.count %>
+        of your <%= pluralize @account.features.max_connections, "simultaneous connections" %> limit.
+      </p>
     
     <% end %>
   </div>

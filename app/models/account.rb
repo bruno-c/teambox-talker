@@ -6,6 +6,8 @@ class Account < ActiveRecord::Base
   has_many :plugin_installations
   has_many :installed_plugins, :through => :plugin_installations, :source => :plugin
   has_many :plugins
+  has_many :attachments, :through => :rooms
+  has_many :connections, :through => :rooms
   
   validates_presence_of :subdomain
   validates_uniqueness_of :subdomain
@@ -23,6 +25,10 @@ class Account < ActiveRecord::Base
   
   def owner
     users.first(:conditions => "admin = 1", :order => "id")
+  end
+  
+  def used_storage
+    attachments.sum(:upload_file_size)
   end
   
   def create_default_rooms
