@@ -28,6 +28,7 @@
       Talker.plugins.push(new Talker.RoomUpdater('<%= refresh_room_path(@room) %>')); // update room info
       Talker.plugins.push(new Talker.Timestamp());// << depends on order to be included properly.  I say it should remain mandatory for usability reasons.
       Talker.plugins.push(new Talker.HighlightMe());
+      Talker.plugins.push(new Talker.ReceivedSound());
       
       // Account plugins
       <%= install_plugins %>

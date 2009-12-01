@@ -39,7 +39,7 @@ After beta:
   - Invite link go directly in room
 - Review signup process
 - Create landing page
-- cleaner REGEXP find and replace for dom text elements.
+✓ cleaner REGEXP find and replace for dom text elements.
 - Billing
 - Restrict features per plan
 ✓ Room permissions

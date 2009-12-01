@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AdiumSetVersion</key>
+	<integer>1</integer>
+	<key>Info</key>
+	<string>Created by Christian Cosas
+http://beanbagcentral.com/ccosas/
+v3.0
+
+Harp soundset built around the perfect 5th. Created using the GarageBand Orchestra Jam Pack.
+
+________________
+http://www.adiumx.com
+</string>
+	<key>Sounds</key>
+	<dict>
+		<key>Connected</key>
+		<string>SignOn.m4a</string>
+		<key>Contact Signed Off</key>
+		<string>Off.m4a</string>
+		<key>Contact Signed On</key>
+		<string>On.m4a</string>
+		<key>Disconnected</key>
+		<string>SignOff.m4a</string>
+		<key>Error</key>
+		<string>Error.m4a</string>
+		<key>File Transfer Began</key>
+		<string>FileStart.m4a</string>
+		<key>File Transfer Complete</key>
+		<string>FileEnd.m4a</string>
+		<key>File Transfer Request</key>
+		<string>FileRequest.m4a</string>
+		<key>Message Received</key>
+		<string>Receive.m4a</string>
+		<key>Message Received (New)</key>
+		<string>New.m4a</string>
+		<key>Message Sent</key>
+		<string>Send.m4a</string>
+	</dict>
+</dict>
+</plist>
