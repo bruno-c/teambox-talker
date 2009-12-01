@@ -31,6 +31,14 @@ class Account < ActiveRecord::Base
     attachments.sum(:upload_file_size)
   end
   
+  def full?(distance=0)
+    connections.count + distance >= features.max_connections
+  end
+  
+  def storage_full?(distance=0)
+    used_storage + distance >= features.max_storage
+  end
+  
   def create_default_rooms
     rooms.create :name => "Lobby", :description => "Chat about the weather and the color of your socks."
   end

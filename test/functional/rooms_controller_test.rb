@@ -13,6 +13,15 @@ class RoomsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:rooms)
   end
   
+  def test_index_with_limits
+    Account.any_instance.stubs(:full?).returns(true)
+    Account.any_instance.stubs(:storage_full?).returns(true)
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:rooms)
+    assert_select ".limit_warning", 2
+  end
+  
   def test_show_denied
     login_as nil
     get :show, :id => @room

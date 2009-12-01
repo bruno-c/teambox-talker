@@ -4,9 +4,10 @@ class RoomsController < ApplicationController
   before_filter :login_required
   before_filter :registered_user_required, :except => :show
   before_filter :admin_required, :only => [:edit, :update, :destroy, :ouch]
-
+  
   before_filter :find_room, :only => [:show, :edit, :update, :destroy, :refresh]
   before_filter :room_permission_required, :only => [:show, :refresh]
+  before_filter :check_connections_limit, :only => :show
   
   def index
     @rooms = current_account.rooms.with_permission(current_user)
@@ -72,5 +73,17 @@ class RoomsController < ApplicationController
   private
     def find_room
       @room = current_account.rooms.find(params[:id])
+    end
+    
+    def check_connections_limit
+      if current_account.full?
+        if current_user.admin
+          flash[:error] = "You've reached your connection limit. Upgrade your plan to allow more users to chat."
+        else
+          flash[:error] = "The room is full. Contact your administrator to upgrade."
+        end
+        
+        redirect_to rooms_path
+      end
     end
 end
