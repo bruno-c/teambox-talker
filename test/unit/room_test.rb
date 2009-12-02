@@ -12,13 +12,13 @@ class RoomTest < ActiveSupport::TestCase
   def test_send_message
     @room.expects(:publish).with do |event|
       assert_equal 'message', event[:type]
-      assert_equal 'ohaie', event[:content]
+      assert_equal "ohaie\nthere", event[:content]
       assert_not_nil event[:time]
       assert_not_nil event[:id]
       assert_equal User.talker, event[:user]
       true
     end
-    @room.send_message("ohaie")
+    @room.send_message("ohaie\nthere")
   end
 
   def test_send_messages
