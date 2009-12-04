@@ -23,6 +23,11 @@ class Plugin < ActiveRecord::Base
     account.installed_plugins.include?(self)
   end
   
+  alias :author_without_default :author
+  def author
+    author_without_default || User.talker
+  end
+  
   def self.defaults
     shared.from_author(User.talker).find_all_by_name(DEFAULTS)
   end

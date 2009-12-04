@@ -37,12 +37,8 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    if @user.pending?
-      flash[:notice] = "User deleted!"
-      @user.destroy
-    else
-      flash[:error] = "Cannot delete a user that has already logged in."
-    end
+    flash[:notice] = "User deleted!"
+    @user.destroy
     
     redirect_to users_path
   end
@@ -54,7 +50,7 @@ class UsersController < ApplicationController
     
     def cant_edit_self
       if @user == current_user
-        flash[:error] = "You can't your own permissions."
+        flash[:error] = "You can't edit your own account."
         redirect_to users_path
       end
     end
