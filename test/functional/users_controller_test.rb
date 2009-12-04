@@ -11,9 +11,8 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  def test_destroy_pending_user
+  def test_destroy_user
     Connection.any_instance.expects(:force_close).once
-    users(:aaron).update_attribute :state, "pending"
     assert_difference "User.count", -1 do
       delete :destroy, :id => users(:aaron)
     end
@@ -21,10 +20,9 @@ class UsersControllerTest < ActionController::TestCase
     assert_nil flash[:error]
   end
 
-  def test_cant_destroy_active_user
-    users(:aaron).update_attribute :state, "active"
+  def test_cant_destroy_self
     assert_difference "User.count", 0 do
-      delete :destroy, :id => users(:aaron)
+      delete :destroy, :id => users(:quentin)
     end
     assert_redirected_to users_path
     assert_not_nil flash[:error]
