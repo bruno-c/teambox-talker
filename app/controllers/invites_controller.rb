@@ -27,6 +27,7 @@ class InvitesController < ApplicationController
   
   def create
     @invitees = params[:invitees].split(/[\n,]/).map(&:strip)
+    @room = current_account.rooms.find(params[:room_id])
     success_count = 0
     
     flash.delete(:error)
@@ -36,6 +37,7 @@ class InvitesController < ApplicationController
       user = current_account.users.build(:email => email)
       user.generate_name
       if user.save
+        user.room_access = [@room]
         send_invitation user
         success_count += 1
       else

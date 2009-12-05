@@ -593,7 +593,7 @@ a.button, button {
   overflow: hidden; }
   #people li.user {
     display: block;
-    width: 280px;
+    width: 360px;
     margin: 0 10px 10px 0;
     float: left; }
     #people li.user.pending div.header {
