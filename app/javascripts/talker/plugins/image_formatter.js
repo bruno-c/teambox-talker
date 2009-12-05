@@ -50,8 +50,8 @@ Talker.ImageFormatter = function() {
     var maxWidth = Talker.getMaxContentWidth();
     
     Talker.getLastRow().find("img[class='from_url']").each(function(){
-      $(this).css({'max-width': 'auto'});
-      $(this).css({'max-width': maxWidth + 'px'});
+      if (!$.browser.msie) $(this).css({maxWidth: 'auto'});
+      $(this).css({maxWidth: maxWidth + 'px'});
     });
   }
   
@@ -59,7 +59,7 @@ Talker.ImageFormatter = function() {
     var maxWidth = Talker.getMaxContentWidth();
     
     $("#log img[class='from_url']").each(function(){
-      $(this).css({'max-width': 'auto'});
+      if (!$.browser.msie) $(this).css({'max-width': 'auto'});
       $(this).css({'max-width': maxWidth + 'px'});
     });
   }
