@@ -1,0 +1,110 @@
+
+<html>
+  <head><title>server/doc/protocol.md</title></head>
+  <body>
+<h1>Talker Protocol</h1>
+
+<p>This protocol describes how a Talker client communicates with the server. While similar to XMPP, this protocol is focusing on multi-user chat, low bandwidth, simplicity, efficiency and allows updating previous messages.</p>
+
+<p>All events are in JSON format. They contain a hash ({...}) and end with a line break (\n). The hash will contain a type property that will define the type of event. See the following sections for a description of each type of event.</p>
+
+<h2>Authentication</h2>
+
+<p>Before sending and receiving events in a room, the client must connect to the room by sending the following message:</p>
+
+<pre><code>{"type":"connect","room":"unique room id","token":"user secret token"}
+</code></pre>
+
+<p>Attributes:</p>
+
+<ul>
+<li>"room" being the unique number of the room,</li>
+<li>"user" is a hash containing the profile information of the user connecting to the room (id and name attributes are required, but other attributes can be passed) and</li>
+<li>"token" the authentication token for that user.</li>
+</ul>
+
+
+<p>If the authentication is successful, the connection is left open and the server replies with:</p>
+
+<pre><code>{"type":"connected","user":{"id":"unique id","name":"user name"}}
+</code></pre>
+
+<p>The client must wait for this event before sending any message or else an error will be returned and connection will be closed.</p>
+
+<p>If the authentication failed, the connection is closed after the following event is sent by the server:</p>
+
+<pre><code>{"type":"error","message":"Authentication failed"}
+</code></pre>
+
+<h2>Sending messages</h2>
+
+<p>A client connected to a room can send a public message like this:</p>
+
+<pre><code>{"type":"message","content":"message to send"}
+</code></pre>
+
+<p>The server will broadcast the message to all online members of the room (including the sender) with this:</p>
+
+<pre><code>{"type":"message","content":"message to send","id":"event UUID",
+ "user":{"id":"unique id","name":"user name"},"time":1255447115}
+</code></pre>
+
+<p>"user" being the required information of the sender (id and name, not profile picture, etc).
+"time" is the epoch timestamp when the message was received by the server.
+"id" is a unique identifier of the event based on <a href="http://www.ietf.org/rfc/rfc4122.txt">RFC 4122</a></p>
+
+<p>To send a private message, add the "to" property:</p>
+
+<pre><code>{"type":"message","content":"message to send","to":"recipient unique id"}
+</code></pre>
+
+<p>The server will send the message to the user in the room matching the name in to:</p>
+
+<pre><code>{"type":"message","content":"message to send","id":"message UUID",
+ "user":{"id":"unique id","name":"user name",...},"private":true,"time":1255447115}
+</code></pre>
+
+<h2>Presence</h2>
+
+<p>When a client connects to a room, the following event will be sent to all online members of the room:</p>
+
+<pre><code>{"type":"join","user":{"id":"unique id","name":"user name",...},"time":1255447115,"id":"event UUID"}
+</code></pre>
+
+<p>The server will send the list of users in the room to new users:</p>
+
+<pre><code>{"type":"users","users":[{"id":"unique id","name":"user name",...}, ...]}
+</code></pre>
+
+<p>When a client connection is closed momentarily the following event is broadcasted in the room:</p>
+
+<pre><code>{"type":"idle","user":{"id":"unique id","name":"user name",...},"time":1255447115,"id":"event UUID"}
+</code></pre>
+
+<p>When the client returns from it's idle state, the following event is broadcasted in the room:</p>
+
+<pre><code>{"type":"back","user":{"id":"unique id","name":"user name",...},"time":1255447115,"id":"event UUID"}
+</code></pre>
+
+<p>When a client close connection to a room, the server sends the following event to all online members of the room:</p>
+
+<pre><code>{"type":"leave","user":"user unique id","time":1255447115,"id":"event UUID"}
+</code></pre>
+
+<h2>Pinging</h2>
+
+<p>In order to keep the connection open, a client must send pings to the server each 30 seconds or less.</p>
+
+<pre><code>{"type":"ping"}
+</code></pre>
+
+<h2>Closing</h2>
+
+<p>A client can leave a room by sending following event.</p>
+
+<pre><code>{"type":"close"}
+</code></pre>
+
+<p>The connected user will leave the room automatically if the connection is innactive for more than 30 seconds.</p>
+  </body>
+</html>

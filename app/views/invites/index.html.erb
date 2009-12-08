@@ -8,6 +8,10 @@
       <%= text_area_tag :invitees, params[:invitees], :class => "wide", :rows => 10 %>
     </p>
     <p>
+      <%= label_tag :room_id, "Invite to room" %>
+      <%= select_tag :room_id, options_for_select(current_account.rooms.map { |room| [room.name, room.id] }) %>
+    </p>
+    <p>
       <%= submit_button "Send Invites", :class => "icon send-email" %>
       or
       <%= cancel_button users_path %>

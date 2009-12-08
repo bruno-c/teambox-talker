@@ -22,7 +22,7 @@ Talker.MsgCommand = function() {
         private: true,
         time: parseInt(new Date().getTime() / 1000),
         type: "message",
-        user: Talker.currentUser,
+        user: Talker.currentUser
       });
       
       

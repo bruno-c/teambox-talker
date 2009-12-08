@@ -31,11 +31,12 @@ A client connected to a room can send a public message like this:
 
 The server will broadcast the message to all online members of the room (including the sender) with this:
 
-    {"type":"message","content":"message to send",
+    {"type":"message","content":"message to send","id":"event UUID",
      "user":{"id":"unique id","name":"user name"},"time":1255447115}
 
 "user" being the required information of the sender (id and name, not profile picture, etc).
 "time" is the epoch timestamp when the message was received by the server.
+"id" is a unique identifier of the event based on [RFC 4122](http://www.ietf.org/rfc/rfc4122.txt)
 
 To send a private message, add the "to" property:
 
@@ -43,13 +44,14 @@ To send a private message, add the "to" property:
 
 The server will send the message to the user in the room matching the name in to:
 
-    {"type":"message","content":"message to send","user":{"id":"unique id","name":"user name",...},"private":true,"time":1255447115}
+    {"type":"message","content":"message to send","id":"message UUID",
+     "user":{"id":"unique id","name":"user name",...},"private":true,"time":1255447115}
 
 
 ## Presence
 When a client connects to a room, the following event will be sent to all online members of the room:
 
-    {"type":"join","user":{"id":"unique id","name":"user name",...},"time":1255447115}
+    {"type":"join","user":{"id":"unique id","name":"user name",...},"time":1255447115,"id":"event UUID"}
 
 The server will send the list of users in the room to new users:
 
@@ -57,15 +59,15 @@ The server will send the list of users in the room to new users:
 
 When a client connection is closed momentarily the following event is broadcasted in the room:
 
-    {"type":"idle","user":{"id":"unique id","name":"user name",...},"time":1255447115}
+    {"type":"idle","user":{"id":"unique id","name":"user name",...},"time":1255447115,"id":"event UUID"}
 
 When the client returns from it's idle state, the following event is broadcasted in the room:
 
-    {"type":"back","user":{"id":"unique id","name":"user name",...},"time":1255447115}
+    {"type":"back","user":{"id":"unique id","name":"user name",...},"time":1255447115,"id":"event UUID"}
 
 When a client close connection to a room, the server sends the following event to all online members of the room:
 
-    {"type":"leave","user":"user unique id","time":1255447115}
+    {"type":"leave","user":"user unique id","time":1255447115,"id":"event UUID"}
 
 ## Pinging
 In order to keep the connection open, a client must send pings to the server each 30 seconds or less.
@@ -73,6 +75,8 @@ In order to keep the connection open, a client must send pings to the server eac
     {"type":"ping"}
 
 ## Closing
-When a client is leaving a room it must send the following event.
+A client can leave a room by sending following event.
 
     {"type":"close"}
+
+The connected user will leave the room automatically if the connection is innactive for more than 30 seconds.

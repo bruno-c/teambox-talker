@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AdiumSetVersion</key>
+	<integer>1</integer>
+	<key>Info</key>
+	<string>Created by Ivica Ico Bukvic. Ported to Adium by Christian Cosas.</string>
+	<key>Sounds</key>
+	<dict>
+		<key>Connected</key>
+		<string>Exit1_2.m4a</string>
+		<key>Contact Signed Off</key>
+		<string>Kopete_offline.m4a</string>
+		<key>Contact Signed On</key>
+		<string>Click1.m4a</string>
+		<key>Disconnected</key>
+		<string>Exit1_1.m4a</string>
+		<key>Error</key>
+		<string>Error1.m4a</string>
+		<key>File Transfer Began</key>
+		<string>Question.m4a</string>
+		<key>File Transfer Complete</key>
+		<string>Kopete_notify.m4a</string>
+		<key>File Transfer Request</key>
+		<string>Knock.m4a</string>
+		<key>Message Received</key>
+		<string>Kopete_status.m4a</string>
+		<key>Message Received (New)</key>
+		<string>Kopete_send.m4a</string>
+		<key>Message Sent</key>
+		<string>Popup.m4a</string>
+		<key>New Mail Received</key>
+		<string>Kmail.m4a</string>
+		<key>null1</key>
+		<string>K3b_success.m4a</string>
+		<key>null2</key>
+		<string>Maximize.m4a</string>
+		<key>null3</key>
+		<string>Minimize1.m4a</string>
+		<key>null4</key>
+		<string>Minimize4.m4a</string>
+		<key>null5</key>
+		<string>Question_background.m4a</string>
+		<key>null6</key>
+		<string>Restore_down.m4a</string>
+		<key>null7</key>
+		<string>Restore_up.m4a</string>
+		<key>null8</key>
+		<string>Shade_down.m4a</string>
+		<key>null9</key>
+		<string>Shade_up.m4a</string>
+	</dict>
+</dict>
+</plist>

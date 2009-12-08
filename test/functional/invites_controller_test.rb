@@ -41,7 +41,7 @@ class InvitesControllerTest < ActionController::TestCase
     login_as :quentin
     assert_difference 'User.count', 2 do
       assert_difference 'ActionMailer::Base.deliveries.size', 2 do
-        post :create, :invitees => "one@example.com\ntwo@example.com"
+        post :create, :invitees => "one@example.com\ntwo@example.com", :room_id => Room.first
         assert_nil flash[:error]
         assert_equal %w(one@example.com two@example.com), assigns(:invitees)
       end
@@ -53,7 +53,7 @@ class InvitesControllerTest < ActionController::TestCase
     login_as :quentin
     assert_difference 'User.count', 2 do
       assert_difference 'ActionMailer::Base.deliveries.size', 2 do
-        post :create, :invitees => "one@example.com, two@example.com"
+        post :create, :invitees => "one@example.com, two@example.com", :room_id => Room.first
         assert_nil flash[:error]
         assert_equal %w(one@example.com two@example.com), assigns(:invitees)
       end
@@ -65,7 +65,7 @@ class InvitesControllerTest < ActionController::TestCase
     login_as :quentin
     assert_difference 'User.count', 1 do
       assert_difference 'ActionMailer::Base.deliveries.size', 1 do
-        xhr :post, :create, :invitees => "one@example.com"
+        xhr :post, :create, :invitees => "one@example.com", :room_id => Room.first
         assert_nil flash[:error]
         assert_equal %w(one@example.com), assigns(:invitees)
       end
@@ -75,7 +75,7 @@ class InvitesControllerTest < ActionController::TestCase
   
   def test_create_with_invite_command_but_improper_email
     login_as :quentin
-    xhr :post, :create, :invitees => "asdfasdf"
+    xhr :post, :create, :invitees => "asdfasdf", :room_id => Room.first
     assert_template "error"
     assert_response :success
   end
@@ -84,7 +84,7 @@ class InvitesControllerTest < ActionController::TestCase
     login_as :quentin
     assert_difference 'User.count', 1 do
       assert_difference 'ActionMailer::Base.deliveries.size', 1 do
-        post :create, :invitees => "one@example.com\nblablabla"
+        post :create, :invitees => "one@example.com\nblablabla", :room_id => Room.first
         assert_not_nil flash[:error]
       end
     end
@@ -94,7 +94,7 @@ class InvitesControllerTest < ActionController::TestCase
   def test_resend
     login_as :quentin
     assert_difference 'ActionMailer::Base.deliveries.size', 1 do
-      post :resend, :id => users(:quentin)
+      post :resend, :id => users(:quentin), :room_id => Room.first
     end
     assert_redirected_to users_path
   end

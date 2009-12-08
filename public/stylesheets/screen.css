@@ -598,7 +598,7 @@ a.button, button {
   overflow: hidden; }
   #people li.user {
     display: block;
-    width: 280px;
+    width: 360px;
     margin: 0 10px 10px 0;
     float: left; }
     #people li.user.pending div.header {
@@ -825,6 +825,7 @@ a.button, button {
     margin: 20px 230px 0 0;
     padding: 0 70px 0 50px; }
     #message_form form.fade textarea {
+      z-index: 10;
       height: 50px;
       width: 100%;
       padding: 5px;

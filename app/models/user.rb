@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
 
   belongs_to :account
   has_many :connections,    :dependent => :destroy
-  has_many :plugins,        :foreign_key => "author_id", :dependent => :destroy
   has_many :permissions,    :dependent => :destroy
+  has_many :plugins,        :foreign_key => "author_id"
   
   before_create             :create_talker_token
   
