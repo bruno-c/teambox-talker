@@ -4,6 +4,12 @@
       <%= image_tag "/images/favicon.png", :height => "18", :width => "18", :alt => "Talker Fish Loves Thee" %>
     </a>
     <span class="links">
+      <%= link_to "Privacy policy", privacy_policy_path %>
+      &middot;
+      <%= link_to "Terms &amp; Conditions", terms_and_conditions_path %>
+      &middot;
+      <%= link_to "Customer Service Policy", service_policy_path %>
+      &middot;
       <%= mail_to "info@talkerapp.com", "Contact" %>
       &middot;
       <%= link_to "Blog", "http://talkerapp.tumblr.com" %>
