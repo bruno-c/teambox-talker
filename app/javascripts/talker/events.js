@@ -27,8 +27,6 @@ Talker.insertMessage = function(talkerEvent, content) {
   var lastInsertion = Talker.lastInsertionEvent;
   var blockquote;
   
-  console.info(lastInsertion);
-  
   if (lastInsertion && lastInsertion.user.name == talkerEvent.user.name && lastInsertion.type == 'message' && !talkerEvent.private) {
     blockquote = Talker.getLastRow().find('blockquote');
   } else {
