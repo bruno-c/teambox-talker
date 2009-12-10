@@ -56,5 +56,6 @@ Talker.Timestamp = function(reverse) {
       );
     
     element.appendTo('#log');
+    Talker.lastInsertionEvent = Talker.dummyInsertion;
   }
 }

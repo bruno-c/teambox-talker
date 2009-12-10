@@ -24,12 +24,13 @@ Talker.sendAction = function(message, options) {
 Talker.insertMessage = function(talkerEvent, content) {
   if (content) talkerEvent.content = content;
 
-  var lastRow = Talker.getLastRow();
-  var lastAuthor = Talker.getLastAuthor();
+  var lastInsertion = Talker.lastInsertionEvent;
   var blockquote;
-
-  if (lastAuthor == talkerEvent.user.name && lastRow.hasClass('message') && !lastRow.hasClass('private') && !talkerEvent.private){ // only append to existing blockquote group
-    blockquote = lastRow.find('blockquote');
+  
+  console.info(lastInsertion);
+  
+  if (lastInsertion && lastInsertion.user.name == talkerEvent.user.name && lastInsertion.type == 'message' && !talkerEvent.private) {
+    blockquote = Talker.getLastRow().find('blockquote');
   } else {
     $('<tr/>').attr('author', h(talkerEvent.user.name)).
                addClass('message').
@@ -61,8 +62,9 @@ Talker.insertMessage = function(talkerEvent, content) {
                
                appendTo('#log');
   }
-
+  
   blockquote.append(eventToLine(talkerEvent));
+  Talker.lastInsertionEvent = talkerEvent;
 
   Talker.trigger('MessageInsertion', talkerEvent);
 }
@@ -85,6 +87,8 @@ Talker.insertNotice = function(talkerEvent, content) {
                           append(eventToLine(talkerEvent))
              ).
              appendTo('#log');
+  
+  Talker.lastInsertionEvent = talkerEvent;
 
   Talker.trigger('NoticeInsertion', talkerEvent);
 }
