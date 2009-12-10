@@ -41,6 +41,20 @@ Talker.Plugin_#{plugin.id} = function(){ // #{plugin.name} by #{plugin.author.na
   def render_events_for_logs(events, json_options={})
     <<-EOS
 var talkerEvents = #{escape_json @events.to_json(json_options)};
+var talkerUsers  = [];
+
+for (var i = 0, len = talkerEvents.length; i < len; i++) {
+  var user = talkerEvents[i].user;
+  if (!_(talkerUsers).any(function(u){ return u.id == user.id })) {
+    $('<li/>')
+       .attr("id", "user_" + user.id)
+       .attr('user_id', user.id)
+       .attr('user_name', user.name)
+       .html('<img alt="' + user.name + '" src="' + avatarUrl(user) + '" /> ' + user.name)
+       .appendTo($('#people'));
+    talkerUsers.push(user); // reduce need for dom calls. speed++
+  }
+}
  
 // dom calls are what's hurting here but it will not hurt to optimize this part.
 var len = talkerEvents.length;
