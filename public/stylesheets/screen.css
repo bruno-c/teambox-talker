@@ -1197,6 +1197,8 @@ body#pastes_controller.show {
   background-color: white; }
   body#pastes_controller.show #paste {
     padding: 10px; }
+    body#pastes_controller.show #paste pre {
+      white-space: pre-wrap; }
 
 div.log_browser {
   margin-bottom: 14px; }
