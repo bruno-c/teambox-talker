@@ -11,6 +11,7 @@ class SiteController < ApplicationController
   end
   
   def features
+    render :layout => 'documentation'
   end
   
   def service_policy
