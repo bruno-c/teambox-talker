@@ -43,10 +43,14 @@
   <% if @events.empty? %>
     <p class="empty">That day was pretty quiet.</p>
   <% end %>
-  <table id="log">
+  <table>
+    <tbody id="log">
+    </tbody>
   </table>
 </div>
 <%= render :partial => "browser", :locals => { :position => "bottom" } %>
+
+<%= image_tag "log_loader.gif", :width => "190px", :alt => "loading events...", :title => "loading events...", :id => "loadingEvents", :style => "position: fixed; right: 40px; bottom: 20px; display: none; z-index: 99999;" %>
 
 <% content_for :sidebar do %>
   <div id="room" class="panel">
