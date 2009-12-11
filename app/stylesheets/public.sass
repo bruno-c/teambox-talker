@@ -261,17 +261,33 @@ html[xmlns] .clearfix
   #plans
     overflow: hidden
     .plan
-      width: 200px
+      +box_shadow(0, 0, 15, !dark_grey)
+      width: 175px
       float: right
-      h3
-        text-align: center
-        line-height: 16px
-        padding: 0
-        margin: 0
+      margin: 8px 12px 8px 20px
       p
         text-align: center
-  .free
-
+      p.header
+        font-size: 28px
+        font-weight: bold
+        text-align: center
+        padding: 10px 10px 0px 10px
+        margin: 0
+      p.signup
+        a
+          display: block
+          text-decoration: none
+          width: 70%
+          margin: auto
+          padding: 5px
+          font-size: 18px
+          font-weight: bold
+          background = !background_colour
+          color = !white
+          +rounded_corners("all", 3)
+        a:hover
+          +box_shadow(0, 0, 25, #880)
+          +text_shadow(0, 0, 12, !black)
 
 #footer
   a#logo

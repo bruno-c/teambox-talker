@@ -378,15 +378,38 @@ html[xmlns] .clearfix {
 #site_controller.pricing #plans {
   overflow: hidden; }
   #site_controller.pricing #plans .plan {
-    width: 200px;
-    float: right; }
-    #site_controller.pricing #plans .plan h3 {
-      text-align: center;
-      line-height: 16px;
-      padding: 0;
-      margin: 0; }
+    box-shadow: 0px 0px 15px #404040;
+    -webkit-box-shadow: 0px 0px 15px #404040;
+    -moz-box-shadow: 0px 0px 15px #404040;
+    width: 175px;
+    float: right;
+    margin: 8px 12px 8px 20px; }
     #site_controller.pricing #plans .plan p {
       text-align: center; }
+    #site_controller.pricing #plans .plan p.header {
+      font-size: 28px;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px 10px 0px 10px;
+      margin: 0; }
+    #site_controller.pricing #plans .plan p.signup a {
+      display: block;
+      text-decoration: none;
+      width: 70%;
+      margin: auto;
+      padding: 5px;
+      font-size: 18px;
+      font-weight: bold;
+      background: #0085c4;
+      color: white;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px; }
+    #site_controller.pricing #plans .plan p.signup a:hover {
+      box-shadow: 0px 0px 25px #888800;
+      -webkit-box-shadow: 0px 0px 25px #888800;
+      -moz-box-shadow: 0px 0px 25px #888800;
+      text-shadow: 0px 0px 12px black; }
 
 #footer a#logo {
   text-decoration: none;
