@@ -48,4 +48,14 @@ class AccountsController < ApplicationController
   def show
     @account = current_account
   end
+  
+  # Spreedly callback
+  def changed
+    @account_ids = params[:subscriber_ids].split(",")
+    @account_ids.each do |account_id|
+      Account.find_by_id(account_id).try(:update_subscription_info)
+    end
+    
+    head :ok
+  end
 end

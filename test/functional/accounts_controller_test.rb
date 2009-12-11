@@ -40,4 +40,12 @@ class AccountsControllerTest < ActionController::TestCase
     assert_response :success, @response.body
     assert_equal users(:quentin), assigns(:current_user)
   end
+  
+  def test_changed
+    ids = [accounts(:master)].map { |a| a.id.to_s }
+    Account.any_instance.expects(:update_subscription_info).times(ids.size)
+    post :changed, :subscriber_ids => ids.join(",")
+    assert_response :success, @response.body
+    assert_equal ids, assigns(:account_ids)
+  end
 end

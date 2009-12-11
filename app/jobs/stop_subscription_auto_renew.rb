@@ -3,12 +3,10 @@ class StopSubscriptionAutoRenew
     @account_id = account.id
   end
   
-  def account
-    @account ||= Account.find(@account_id)
-  end
-  
   def perform
-    account.subscriber.stop_auto_renew
-    account.update_subscription_info!
+    # This can be executed after account is delete so careful not to load
+    # account.
+    Spreedly::Subscriber.find(@account_id).stop_auto_renew
+    Account.find_by_id(@account_id).try :update_subscription_info!
   end
 end

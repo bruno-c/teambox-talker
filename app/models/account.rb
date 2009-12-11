@@ -1,11 +1,11 @@
 class Account < ActiveRecord::Base
-  has_many :users
-  has_many :rooms
+  has_many :users, :dependent => :destroy
+  has_many :rooms, :dependent => :destroy
   has_many :events, :through => :rooms
-  has_many :feeds
-  has_many :plugin_installations
+  has_many :feeds, :dependent => :destroy
+  has_many :plugin_installations, :dependent => :destroy
   has_many :installed_plugins, :through => :plugin_installations, :source => :plugin
-  has_many :plugins
+  has_many :plugins, :dependent => :destroy
   has_many :attachments, :through => :rooms
   has_many :connections, :through => :rooms
   
@@ -18,6 +18,7 @@ class Account < ActiveRecord::Base
   after_create :create_default_rooms
   after_create :create_default_plugin_installations
   after_create :create_subscription
+  after_destroy :cancel_subscription
   
   def features
     @features ||= Features[plan.feature_level]
@@ -59,11 +60,10 @@ class Account < ActiveRecord::Base
   end
   
   def change_plan(new_plan, return_url)
-    current_plan = plan
     update_attribute :subscription_info_changed, true
     
     if new_plan.free?
-      Delayed::Job.enqueue StopSubscriptionAutoRenew.new(self) if subscribed? && !current_plan.free?
+      cancel_subscription
       return return_url
     else
       return new_plan.subscribe_url(self, return_url)
@@ -90,6 +90,10 @@ class Account < ActiveRecord::Base
   
   def create_subscription
     Delayed::Job.enqueue CreateSpreedlySubscription.new(self) unless subscribed?
+  end
+  
+  def cancel_subscription
+    Delayed::Job.enqueue StopSubscriptionAutoRenew.new(self) if subscribed? && !plan.free?
   end
   
   def update_subscription_info(subscriber=nil)

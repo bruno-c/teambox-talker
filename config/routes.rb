@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :users, :member => { :suspend => :delete, :unsuspend => :post }
   map.resources :invites, :member => { :resend => :post }
-  map.resource :account
+  map.resource :account, :collection => { :changed => :post }
   map.resource :session
   map.resource :settings
   map.resources :plans
