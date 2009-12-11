@@ -12,7 +12,9 @@ Talker.ImageFormatter = function() {
     }
     
     if (image_match){
-      var fallback = $('<a/>').attr('href', image_match[0]).attr('target', '_blank').html(image_match[0]);
+      var fallbackId = 'img_url_' + event.id;
+      var imageUrl = image_match[0];
+      var fallback = '<a href="' + imageUrl + '" target="_blank" id="' + fallbackId + '">' + imageUrl + '</a>';
       Talker.insertMessage(event, fallback);
       
       var img = $('<img/>').load(function(){
@@ -23,7 +25,7 @@ Talker.ImageFormatter = function() {
         imageForHeight.src = image_match[0];
 
         window.setTimeout(function() { // give it time to figure out the height of the image.
-          fallback.replaceWith(
+          $('#' + fallbackId).replaceWith(
                 '<a href="' 
               + image_match[0]
               + '" target="_blank"><img src="' 

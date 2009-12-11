@@ -26,6 +26,6 @@
 
 <pre><code><%=h @paste.content %></code></pre>
 
-<div id="wrapLinesDiv">
+<div id="wrapLinesDiv" onselectionstart="function(){return false;}">
   <input type="checkbox" id="wrapLines" /> <label for="wrapLines">Wrap long lines</label>
 </div>

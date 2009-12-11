@@ -68,7 +68,7 @@ while (n--) {
   broadcaster(talkerEvents.pop());
 }
 
-$(document).everyTime(0, 'Jquery Time Delay Duff Device', function(){
+$(document).everyTime(25, 'Jquery Time Delay Duff Device', function(){
   broadcaster(talkerEvents.pop());
   broadcaster(talkerEvents.pop());
   broadcaster(talkerEvents.pop());
