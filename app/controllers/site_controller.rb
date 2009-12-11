@@ -1,17 +1,19 @@
 class SiteController < ApplicationController
+  before_filter :documentation, :only => [:frontend_api, :rest_api, :features, :pricing] 
+  
   def home
   end
 
   def frontend_api
-    render :layout => 'documentation'
   end
   
   def rest_api
-    render :layout => 'documentation'
   end
   
   def features
-    render :layout => 'documentation'
+  end
+  
+  def pricing
   end
   
   def service_policy
@@ -22,4 +24,9 @@ class SiteController < ApplicationController
 
   def terms_and_conditions
   end
+  
+  private
+    def documentation
+      render :layout => 'documentation'
+    end
 end

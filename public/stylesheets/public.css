@@ -308,72 +308,85 @@ html[xmlns] .clearfix {
       #site_controller.home #container #right img {
         -webkit-box-shadow: 0px 0px 12px #ff8405, 0px 20px 100px Black; }
 
-#site_controller.features h1 img, #site_controller.rest_api h1 img, #site_controller.frontend_api h1 img {
+#site_controller.features h1 img, #site_controller.rest_api h1 img, #site_controller.frontend_api h1 img, #site_controller.pricing h1 img {
   margin: 12px 20px -8px -7px;
   position: relative;
   left: -6px; }
-#site_controller.features #header, #site_controller.rest_api #header, #site_controller.frontend_api #header {
+#site_controller.features #header, #site_controller.rest_api #header, #site_controller.frontend_api #header, #site_controller.pricing #header {
   text-align: left;
   width: 890px;
   padding: 0;
   margin: auto; }
-#site_controller.features #content, #site_controller.rest_api #content, #site_controller.frontend_api #content {
+#site_controller.features #content, #site_controller.rest_api #content, #site_controller.frontend_api #content, #site_controller.pricing #content {
   background: white;
   text-align: left;
   width: 890px;
   overflow: hidden;
   padding: 0;
   margin: auto; }
-  #site_controller.features #content #navigation, #site_controller.rest_api #content #navigation, #site_controller.frontend_api #content #navigation {
+  #site_controller.features #content #navigation, #site_controller.rest_api #content #navigation, #site_controller.frontend_api #content #navigation, #site_controller.pricing #content #navigation {
     list-style: none;
     background: #2a2a2a;
     box-shadow: 0px 0px 15px #404040;
     -webkit-box-shadow: 0px 0px 15px #404040;
     -moz-box-shadow: 0px 0px 15px #404040; }
-    #site_controller.features #content #navigation li, #site_controller.rest_api #content #navigation li, #site_controller.frontend_api #content #navigation li {
+    #site_controller.features #content #navigation li, #site_controller.rest_api #content #navigation li, #site_controller.frontend_api #content #navigation li, #site_controller.pricing #content #navigation li {
       display: inline-block;
       padding: 5px 10px 5px 10px;
       color: #ff8405;
       font-weight: bold; }
-      #site_controller.features #content #navigation li a, #site_controller.rest_api #content #navigation li a, #site_controller.frontend_api #content #navigation li a {
+      #site_controller.features #content #navigation li a, #site_controller.rest_api #content #navigation li a, #site_controller.frontend_api #content #navigation li a, #site_controller.pricing #content #navigation li a {
         font-weight: bold;
         color: white;
         text-decoration: none; }
-      #site_controller.features #content #navigation li a:hover, #site_controller.rest_api #content #navigation li a:hover, #site_controller.frontend_api #content #navigation li a:hover {
+      #site_controller.features #content #navigation li a:hover, #site_controller.rest_api #content #navigation li a:hover, #site_controller.frontend_api #content #navigation li a:hover, #site_controller.pricing #content #navigation li a:hover {
         text-decoration: underline; }
-    #site_controller.features #content #navigation li.contextual, #site_controller.rest_api #content #navigation li.contextual, #site_controller.frontend_api #content #navigation li.contextual {
+    #site_controller.features #content #navigation li.contextual, #site_controller.rest_api #content #navigation li.contextual, #site_controller.frontend_api #content #navigation li.contextual, #site_controller.pricing #content #navigation li.contextual {
       font-size: 10px;
       margin-top: 4px;
       color: #a8a8a8; }
-    #site_controller.features #content #navigation li.dev, #site_controller.rest_api #content #navigation li.dev, #site_controller.frontend_api #content #navigation li.dev {
+    #site_controller.features #content #navigation li.dev, #site_controller.rest_api #content #navigation li.dev, #site_controller.frontend_api #content #navigation li.dev, #site_controller.pricing #content #navigation li.dev {
       float: right; }
-  #site_controller.features #content div.feature, #site_controller.rest_api #content div.feature, #site_controller.frontend_api #content div.feature {
+  #site_controller.features #content div.feature, #site_controller.rest_api #content div.feature, #site_controller.frontend_api #content div.feature, #site_controller.pricing #content div.feature {
     width: 230px;
     height: 120px;
     float: left;
     margin: 30px 30px 0px 30px; }
-    #site_controller.features #content div.feature h2, #site_controller.rest_api #content div.feature h2, #site_controller.frontend_api #content div.feature h2 {
+    #site_controller.features #content div.feature h2, #site_controller.rest_api #content div.feature h2, #site_controller.frontend_api #content div.feature h2, #site_controller.pricing #content div.feature h2 {
       margin: 0px; }
-  #site_controller.features #content div.main, #site_controller.rest_api #content div.main, #site_controller.frontend_api #content div.main {
+  #site_controller.features #content div.main, #site_controller.rest_api #content div.main, #site_controller.frontend_api #content div.main, #site_controller.pricing #content div.main {
     margin: 30px; }
-    #site_controller.features #content div.main ul, #site_controller.rest_api #content div.main ul, #site_controller.frontend_api #content div.main ul {
+    #site_controller.features #content div.main ul, #site_controller.rest_api #content div.main ul, #site_controller.frontend_api #content div.main ul, #site_controller.pricing #content div.main ul {
       margin-left: 45px; }
-    #site_controller.features #content div.main h3, #site_controller.rest_api #content div.main h3, #site_controller.frontend_api #content div.main h3 {
+    #site_controller.features #content div.main h3, #site_controller.rest_api #content div.main h3, #site_controller.frontend_api #content div.main h3, #site_controller.pricing #content div.main h3 {
       font-weight: bold;
       margin: 20px 0 0 -5px;
       padding: 5px; }
-    #site_controller.features #content div.main h4, #site_controller.rest_api #content div.main h4, #site_controller.frontend_api #content div.main h4 {
+    #site_controller.features #content div.main h4, #site_controller.rest_api #content div.main h4, #site_controller.frontend_api #content div.main h4, #site_controller.pricing #content div.main h4 {
       margin: 20px 0 0 0; }
-    #site_controller.features #content div.main h3 + p, #site_controller.rest_api #content div.main h3 + p, #site_controller.frontend_api #content div.main h3 + p {
+    #site_controller.features #content div.main h3 + p, #site_controller.rest_api #content div.main h3 + p, #site_controller.frontend_api #content div.main h3 + p, #site_controller.pricing #content div.main h3 + p {
       margin: 20px 0 0 5px; }
-    #site_controller.features #content div.main p, #site_controller.rest_api #content div.main p, #site_controller.frontend_api #content div.main p {
+    #site_controller.features #content div.main p, #site_controller.rest_api #content div.main p, #site_controller.frontend_api #content div.main p, #site_controller.pricing #content div.main p {
       margin: 10px 0px 10px 5px; }
-    #site_controller.features #content div.main pre, #site_controller.rest_api #content div.main pre, #site_controller.frontend_api #content div.main pre {
+    #site_controller.features #content div.main pre, #site_controller.rest_api #content div.main pre, #site_controller.frontend_api #content div.main pre, #site_controller.pricing #content div.main pre {
       margin: 10px 0px 10px 15px;
       padding: 10px;
       box-shadow: 0px 0px 15px #e8e8e8;
       -webkit-box-shadow: 0px 0px 15px #e8e8e8;
       -moz-box-shadow: 0px 0px 15px #e8e8e8; }
+
+#site_controller.pricing #plans {
+  overflow: hidden; }
+  #site_controller.pricing #plans .plan {
+    width: 200px;
+    float: right; }
+    #site_controller.pricing #plans .plan h3 {
+      text-align: center;
+      line-height: 16px;
+      padding: 0;
+      margin: 0; }
+    #site_controller.pricing #plans .plan p {
+      text-align: center; }
 
 #footer a#logo {
   text-decoration: none;
