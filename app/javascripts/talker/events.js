@@ -22,47 +22,33 @@ Talker.sendAction = function(message, options) {
 };
 
 Talker.insertMessage = function(talkerEvent, content) {
-  if (content) talkerEvent.content = content;
-
-  var lastRow = Talker.getLastRow();
-  var lastAuthor = Talker.getLastAuthor();
+  if (content) {
+    talkerEvent.content = content;
+  }
+  
+  var lastInsertion = Talker.lastInsertionEvent;
   var blockquote;
 
-  if (lastAuthor == talkerEvent.user.name && lastRow.hasClass('message') && !lastRow.hasClass('private') && !talkerEvent.private){ // only append to existing blockquote group
-    blockquote = lastRow.find('blockquote');
+  if (lastInsertion && lastInsertion.user.name == talkerEvent.user.name && lastInsertion.type == 'message' && !talkerEvent.private) {
+    blockquote = Talker.getLastRow().find('blockquote').append(eventToLine(talkerEvent));
   } else {
-    $('<tr/>').attr('author', h(talkerEvent.user.name)).
-               addClass('message').
-               addClass('event').
-               addClass('user_' + talkerEvent.user.id).
-               addClass(talkerEvent.user.id == Talker.currentUser.id ? 'me' : '').
-               addClass(talkerEvent.private ? 'private' : '').
-               
-               // Author
-               append(
-                 $('<td/>').addClass('author').
-                            append('\n' + h(talkerEvent.user.name) + '\n').
-                            append(
-                              $('<img/>').attr('src', avatarUrl(talkerEvent.user)).
-                                          attr('alt', h(talkerEvent.user.name)).
-                                          addClass('avatar')
-                            ).
-                            append(
-                              $('<b/>').addClass('blockquote_tail').
-                                        html('<!-- display fix --->')
-                            )
-               ).
-               
-               // Message content
-               append(
-                 $('<td/>').addClass('message').
-                            append(blockquote = $('<blockquote/>'))
-               ).
-               
-               appendTo('#log');
+    var escapedName = h(talkerEvent.user.name);
+    $('<tr author="' + escapedName + '" class="message event user_' + talkerEvent.user.id 
+        + (talkerEvent.user.id == Talker.currentUser.id ? ' me' : ' ')
+        + (talkerEvent.private ? ' private' : '')
+        + '">'
+        + '<td class="author">'
+        +   escapedName
+        +   '<img src="' + avatarUrl(talkerEvent.user) + '" alt="' + escapedName + '" class="avatar" />'
+        +   '<b class="blockquote_tail"><!-- display fix --></b>'
+        + '</td>'
+        + '<td class="message">'
+        +   '<blockquote>' + eventToLine(talkerEvent) + '</blockquote>'
+        + '</td>'
+      + '</tr>').appendTo('#log');
   }
 
-  blockquote.append(eventToLine(talkerEvent));
+  Talker.lastInsertionEvent = talkerEvent;
 
   Talker.trigger('MessageInsertion', talkerEvent);
 }
@@ -73,24 +59,16 @@ Talker.insertNotice = function(talkerEvent, content) {
   // We accept no HTML in notices
   talkerEvent.content = h(talkerEvent.content);
 
-  $('<tr/>').attr('author', h(talkerEvent.user.name)).
-             addClass('notice').
-             addClass('event').
-             addClass('user_' + talkerEvent.user.id).
-             append(
-               $('<td/>').addClass('author')
-             ).
-             append(
-               $('<td/>').addClass('message').
-                          append(eventToLine(talkerEvent))
-             ).
-             appendTo('#log');
+  $('<tr author="' + h(talkerEvent.user.name) + '" class="notice event user_' + talkerEvent.user.id + '">'
+    + '<td class="author"></td>'
+    + '<td class="message">' + eventToLine(talkerEvent) + '</td></tr>')
+    .appendTo('#log');
+  
+  Talker.lastInsertionEvent = talkerEvent;
 
   Talker.trigger('NoticeInsertion', talkerEvent);
 }
 
 function eventToLine(talkerEvent) {
-  return $('<p/>').attr('id', "event_" + talkerEvent.id).
-                   attr('time', talkerEvent.time).
-                   html(talkerEvent.content);
+  return '<p id="event_' + talkerEvent.id + '" time="' + talkerEvent.time + '">' + talkerEvent.content + '</p>';
 }

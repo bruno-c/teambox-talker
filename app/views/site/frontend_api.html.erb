@@ -73,7 +73,7 @@
   
   <p>This following example would update the document title with the amount of messages you sent since last refresh:</p>
   
-  <pre><code>plugin.onMessageSent(talkerEvent) {
+  <pre><code>plugin.onMessageSent = function(talkerEvent) {
   var title = parseInt(document.title);
   document.title = isNaN(title) ? 1 : title + 1; 
 }</code></pre>

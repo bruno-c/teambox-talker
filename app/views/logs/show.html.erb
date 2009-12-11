@@ -6,36 +6,33 @@
     Talker.currentUser = <%= current_user.to_json %>;
     Talker.room = <%= @room.to_json %>;
     
-    var contextEventElement = location.href.indexOf('#') != -1 ? '#' + location.href.split('#')[1] : false ;
-    
-    if (contextEventElement){
-      Talker.LogFindInterval = window.setInterval(function() {
-        if ($(contextEventElement).length){
-          $(contextEventElement).scrollToCenter({
-            complete: function() {
-              $(contextEventElement).addClass('highlight');
-            }
-          });
-          window.clearInterval(Talker.LogFindInterval);
-        }
-      }, 200);
-    }
-    
     $(function(){
       Talker.plugins.push(new Talker.Timestamp());
       Talker.plugins.push(new Talker.LogsJoinLeave());
       
-      Talker.plugins.push(new Talker.YoutubeFormatter());
+      // Talker.plugins.push(new Talker.YoutubeFormatter());
       Talker.plugins.push(new Talker.PasteFormatter());
-      Talker.plugins.push(new Talker.ImageFormatter());
-      
-      Talker.plugins.push(new Talker.LogsUserList($('#people')));
+      // Talker.plugins.push(new Talker.ImageFormatter());
       
       Talker.plugins.push(new Talker.MeCommand());
       Talker.plugins.push(new Talker.DefaultFormatter());
       
       <%= render_events_for_logs @events %>
-      
+
+      var contextEventElement = location.href.indexOf('#') != -1 ? '#' + location.href.split('#')[1] : false ;
+
+      if (contextEventElement){
+        Talker.LogFindInterval = window.setInterval(function() {
+          if ($(contextEventElement).length){
+            $(contextEventElement).scrollToCenter({
+              complete: function() {
+                $(contextEventElement).addClass('highlight');
+              }
+            });
+            window.clearInterval(Talker.LogFindInterval);
+          }
+        }, 200);
+      }
     });
   //]]>
   </script>
@@ -46,10 +43,14 @@
   <% if @events.empty? %>
     <p class="empty">That day was pretty quiet.</p>
   <% end %>
-  <table id="log">
+  <table>
+    <tbody id="log">
+    </tbody>
   </table>
 </div>
 <%= render :partial => "browser", :locals => { :position => "bottom" } %>
+
+<%= image_tag "log_loader.gif", :width => "190px", :alt => "loading events...", :title => "loading events...", :id => "loadingEvents", :style => "position: fixed; right: 40px; bottom: 20px; display: none; z-index: 99999;" %>
 
 <% content_for :sidebar do %>
   <div id="room" class="panel">

@@ -4,6 +4,9 @@ Talker = {};
 //= require "talker/client"
 //= require "talker/events"
 
+// speed++ insertions by removing/caching information that we'd reach by dom calls
+Talker.lastInsertionEvent = Talker.dummyInsertionEvent = {user: {name:null},type:null,private:false}; // start with a dummy
+
 Talker.getLastRow = function() {
   return $('#log tr:last');
 }

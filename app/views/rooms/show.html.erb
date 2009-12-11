@@ -8,6 +8,7 @@
   //<![CDATA[
     Talker.currentUser = <%= current_user.to_json %>;
     Talker.room = <%= @room.to_json %>;
+    Talker.log = $('#log')
 
     Orbited.settings.hostname = '<%= request.host %>';
     Orbited.settings.port = <%= Orbited.port %>;
@@ -131,7 +132,9 @@
 </div>
 
 <div id="chat_log">
-  <table id="log">
+  <table>
+    <tbody id="log">
+    </tbody>
   </table>
 </div>
 

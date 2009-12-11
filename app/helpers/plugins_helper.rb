@@ -40,47 +40,52 @@ Talker.Plugin_#{plugin.id} = function(){ // #{plugin.name} by #{plugin.author.na
   
   def render_events_for_logs(events, json_options={})
     <<-EOS
+// preloading events like this is not that costly
 var talkerEvents = #{escape_json @events.to_json(json_options)};
+var talkerUsers  = [];
+
+for (var i = 0, len = talkerEvents.length; i < len; i++) {
+  var user = talkerEvents[i].user;
+  if (!_(talkerUsers).any(function(u){ return u.id == user.id })) {
+    $('<li/>')
+       .attr("id", "user_" + user.id)
+       .attr('user_id', user.id)
+       .attr('user_name', user.name)
+       .html('<img alt="' + user.name + '" src="' + avatarUrl(user) + '" /> ' + user.name)
+       .appendTo($('#people'));
+    talkerUsers.push(user); // reduce need for dom calls. speed++
+  }
+}
  
 // dom calls are what's hurting here but it will not hurt to optimize this part.
 var len = talkerEvents.length;
 var talkerEvents = talkerEvents.reverse(); // so we can trick with n-- instead of forward loop.
-var broadcaster = function(event) {
-  if (event) Talker.Broadcaster.broadcastEvent(event);
+
+if (talkerEvents.length > 150) {
+  $('#loadingEvents').fadeIn('slow');
 }
 
-var n = len % 25;
-while (n--) {
-  broadcaster(talkerEvents.pop());
+function batchEvents(amount) {
+  if (talkerEvents.length) {
+    var n = Math.min(talkerEvents.length, amount);
+    while(n--){
+      Talker.Broadcaster.broadcastEvent(talkerEvents.pop());
+    }
+  } else {
+    $('#loadingEvents').fadeOut('slow');
+  }
 }
 
-$(document).everyTime(0, 'Jquery Time Delay Duff Device', function(){
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-  broadcaster(talkerEvents.pop());
-}, parseInt(len / 25));
+batchEvents(150);
+
+var reloader = window.setInterval(function(){
+  if (Math.abs($(window).height() - $(document).height() + $(window).scrollTop()) < 1000) {
+    batchEvents(35); // TURBO ACTIVATE!!!
+  } else {
+    batchEvents(5); // cannot read faster than this even if you are Tim Ferriss
+  }
+}, 150);
+
 
 EOS
   end
