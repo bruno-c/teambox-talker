@@ -70,5 +70,5 @@ Talker.insertNotice = function(talkerEvent, content) {
 }
 
 function eventToLine(talkerEvent) {
-  return '<p id="event_' + talkerEvent.id + '" time="talkerEvent.time">' + talkerEvent.content + '</p>';
+  return '<p id="event_' + talkerEvent.id + '" time="' + talkerEvent.time + '">' + talkerEvent.content + '</p>';
 }
