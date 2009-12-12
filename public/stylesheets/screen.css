@@ -830,13 +830,25 @@ a.button, button {
   #message_form form.fade {
     height: 80px;
     margin: 20px 230px 0 0;
-    padding: 0 70px 0 50px; }
+    padding: 0 70px 0 50px;
+    overflow: hidden; }
     #message_form form.fade textarea {
+      float: left;
       z-index: 10;
       height: 50px;
-      width: 100%;
+      width: 80%;
       padding: 5px;
       border: 1px solid silver; }
+    #message_form form.fade button {
+      float: left;
+      margin: 0 0 0 5px;
+      font-size: 12px;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      color: #404040;
+      font-weight: bold;
+      padding: 5px 15px; }
 
 #logs ul {
   margin-left: 20px; }
