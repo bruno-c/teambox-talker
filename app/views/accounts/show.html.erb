@@ -1,4 +1,4 @@
-<div class="sheet">
+<div class="sheet" id="account">
   <h2><%= @title = "Your Account" %></h2>
   
   <div class="content">
@@ -36,13 +36,19 @@
       <% end %>
       
       <h2>Usage</h2>
-      <p>
+      
+      <p class="side_description">
         You've used <%= number_to_human_size @account.used_storage %> of your <%= number_to_human_size @account.features.max_storage %> file storage limit.
       </p>
-      <p>
+      <strong>File storage</strong>
+      <%= meter_tag @account.used_storage.to_f / @account.features.max_storage.to_f %>
+      
+      <p class="side_description">
         You're currently using <%= @account.connections.count %>
         of your <%= pluralize @account.features.max_connections, "simultaneous connections" %> limit.
       </p>
+      <strong>Simultaneous user connections</strong>
+      <%= meter_tag @account.connections.count.to_f / @account.features.max_connections.to_f %>
     
     <% end %>
   </div>

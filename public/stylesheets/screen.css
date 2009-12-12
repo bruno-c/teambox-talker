@@ -1245,3 +1245,15 @@ div.log_browser {
 #permissions ul {
   list-style: none;
   margin-bottom: 20px; }
+
+#account p.side_description {
+  float: right;
+  font-size: 12px;
+  color: gray;
+  position: relative;
+  top: -2px; }
+#account div.meter {
+  border: solid 1px silver; }
+  #account div.meter span {
+    display: block;
+    background: #269ed6; }
