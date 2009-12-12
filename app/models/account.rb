@@ -27,7 +27,7 @@ class Account < ActiveRecord::Base
   end
   
   def create_default_rooms
-    rooms.create :name => "Lobby", :description => "Chat about the weather and the color of your socks."
+    rooms.create :name => "Main", :description => "Chat about the weather and the color of your socks."
   end
   
   def create_default_plugin_installations
