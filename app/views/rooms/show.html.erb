@@ -75,6 +75,15 @@
 <% end %>
 
 <% content_for :sidebar do %>
+
+  <div id="utilities">
+    <div class="wrapper">
+      <img alt="Gary" src="/avatar/403e57e2be130d2218f992b86dfa8260.jpg?s=16" class="avatar"/>
+      <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %> |
+      <%= link_to "Logout", logout_path, :title => "Logout" %>
+    </div>
+  </div>
+
   <div id="error" class="flash error" style="display:none"></div>
 
   <div id="room" class="panel">
@@ -100,12 +109,6 @@
       <% end %>
       <h4 class="name">Who&#39;s here?</h4>
       <ul class="people" id="people"></ul>
-    </div>
-    <div class="footer" id="user_actions">
-      <%= link_to "Upload", room_attachments_path(@room), :onclick => "return false", :title => "Upload a file", :id => "upload", :accesskey => "f" %>
-      <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
-      <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %>
-      <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
     <% if admin? %>
     <div class="footer" id="admin_actions">
