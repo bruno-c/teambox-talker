@@ -13,7 +13,7 @@
       <% else %>
         
         <!-- Change plan -->
-        <ul>
+        <ul id="plans">
         <% Plan.all.each do |plan| %>
           <li>
             <%= plan.name %>
@@ -35,7 +35,7 @@
         
       <% end %>
       
-      <h2>Usage</h2>
+      <h3>Usage</h3>
       
       <p class="side_description">
         You've used <%= number_to_human_size @account.used_storage %> of your <%= number_to_human_size @account.features.max_storage %> file storage limit.
