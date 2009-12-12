@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   before_filter :top_level_domain_required, :only => [:new, :create]
-  before_filter :admin_required, :only => [:show, :update]
+  before_filter :admin_required, :only => [:show, :update, :plan_changed]
   ssl_required :new, :create
   
   def new
@@ -47,10 +47,30 @@ class AccountsController < ApplicationController
   
   def show
     @account = current_account
+    
+    if params[:changed]
+      @account.update_subscription_info
+      flash[:notice] = "Your information has been updated. " +
+                       "It might take a few minutes for this change to take effect."
+      redirect_to account_path # To prevent refresh w/ param
+      return
+    end
+  end
+  
+  def plan_changed
+    @account = current_account
+    @plan = Plan.find(params[:plan])
+    
+    @account.update_subscription_info
+    
+    flash[:notice] = "You'll soon be rollin' on the #{@plan.name} plan, congrats! " +
+                     "It might take a few minutes for this change to take effect."
+    
+    redirect_to account_path
   end
   
   # Spreedly callback
-  def changed
+  def subscribers_changed
     @account_ids = params[:subscriber_ids].split(",")
     @account_ids.each do |account_id|
       Account.find_by_id(account_id).try(:update_subscription_info)

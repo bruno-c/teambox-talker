@@ -7,7 +7,9 @@
       
       <h3>Subscription Plan</h3>
       <% if @account.subscription_info_changed %>
-        <p>Your subscription is being updated, come back in a few ...</p>
+        <div class="info">
+          Your subscription is being updated, <%= link_to_function "refresh", "location.reload(true)" %> or come back in a few ...
+        </div>
       <% else %>
         
         <!-- Change plan -->
@@ -21,10 +23,10 @@
               <% if will_downgrade_to_free && !plan.free? %>
                 <small>This plan won't renew and you'll be downgraded to the Free plan once it expires.</small>
               <% end %>
-              <%= link_to "Update", @account.edit_subscriber_url(current_url), :title => "Update your subscription information" unless plan.free? %>
+              <%= link_to "Update", @account.edit_subscriber_url(account_url(:changed => true)), :title => "Update your subscription information" unless plan.free? %>
               
             <% elsif !(will_downgrade_to_free && plan.free?) %>
-              <%= link_to up_down_grade(plan), plan_path(plan, :return_url => current_url), :method => :put %>
+              <%= link_to up_down_grade(plan), plan_path(plan), :method => :put %>
               
             <% end %>
           </li>

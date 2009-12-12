@@ -18,6 +18,6 @@ class CreateSpreedlySubscription
   def perform
     subscriber = account.subscriber || create_subscriber
     
-    account.update_subscription_info(subscriber)
+    account.update_subscription_info!(subscriber)
   end
 end

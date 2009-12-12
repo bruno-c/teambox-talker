@@ -12,7 +12,7 @@ class PlansControllerTest < ActionController::TestCase
   
   def test_update
     login_as :quentin
-    put :update, :id => Plan.free, :return_url => "/"
-    assert_redirected_to "/"
+    put :update, :id => Plan.free
+    assert_redirected_to plan_changed_account_url(:plan => Plan.free.id)
   end
 end

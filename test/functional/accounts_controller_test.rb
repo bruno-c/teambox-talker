@@ -41,11 +41,36 @@ class AccountsControllerTest < ActionController::TestCase
     assert_equal users(:quentin), assigns(:current_user)
   end
   
-  def test_changed
+  def test_subscribers_changed
     ids = [accounts(:master)].map { |a| a.id.to_s }
     Account.any_instance.expects(:update_subscription_info).times(ids.size)
-    post :changed, :subscriber_ids => ids.join(",")
+    post :subscribers_changed, :subscriber_ids => ids.join(",")
     assert_response :success, @response.body
     assert_equal ids, assigns(:account_ids)
+  end
+  
+  def test_show
+    subdomain :master
+    login_as :quentin
+    get :show
+    assert_response :success, @response.body
+  end
+
+  def test_show_with_changed
+    subdomain :master
+    login_as :quentin
+    get :show, :changed => true
+    assert_redirected_to account_path
+    assert_not_nil flash[:notice]
+    assert assigns(:account).subscription_info_changed
+  end
+
+  def test_plan_changed
+    subdomain :master
+    login_as :quentin
+    get :plan_changed, :plan => Plan.free.id
+    assert_redirected_to account_path
+    assert_not_nil flash[:notice]
+    assert assigns(:account).subscription_info_changed
   end
 end

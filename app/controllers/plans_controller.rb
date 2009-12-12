@@ -8,9 +8,6 @@ class PlansController < ApplicationController
   def update
     @plan = Plan.find(params[:id])
     
-    flash[:notice] = "You'll soon be rollin' on the #{@plan.name} plan, congrats! " +
-                     "It might take a few minutes for this change to take effect."
-    
-    redirect_to current_account.change_plan(@plan, params[:return_url])
+    redirect_to current_account.change_plan(@plan, plan_changed_account_url(:plan => @plan.id))
   end
 end

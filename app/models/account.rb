@@ -60,8 +60,6 @@ class Account < ActiveRecord::Base
   end
   
   def change_plan(new_plan, return_url)
-    update_attribute :subscription_info_changed, true
-    
     if new_plan.free?
       cancel_subscription
       return return_url
@@ -96,24 +94,21 @@ class Account < ActiveRecord::Base
     Delayed::Job.enqueue StopSubscriptionAutoRenew.new(self) if subscribed? && !plan.free?
   end
   
-  def update_subscription_info(subscriber=nil)
-    if subscriber
-      self.plan = Plan.find_by_name(subscriber.subscription_plan_name)
-      self.active = plan.free? || subscriber.active
-      self.active_until = subscriber.active_until
-      self.grace_until = subscriber.grace_until
-      self.on_trial = subscriber.on_trial
-      self.recurring = subscriber.recurring
-      self.spreedly_token = subscriber.token
-      self.subscription_info_changed = false
-      save(false)
-    else
-      Delayed::Job.enqueue UpdateSpreedlySubscription.new(self)
-    end
+  def update_subscription_info
+    update_attribute :subscription_info_changed, true
+    Delayed::Job.enqueue UpdateSpreedlySubscription.new(self)
   end
   
-  def update_subscription_info!
-    subscriber_info = subscriber
-    update_subscription_info subscriber_info if subscriber_info 
+  # Blocking! Called from a job.
+  def update_subscription_info!(subscriber=self.subscriber)
+    self.plan = Plan.find_by_name(subscriber.subscription_plan_name)
+    self.active = plan.free? || subscriber.active
+    self.active_until = subscriber.active_until
+    self.grace_until = subscriber.grace_until
+    self.on_trial = subscriber.on_trial
+    self.recurring = subscriber.recurring
+    self.spreedly_token = subscriber.token
+    self.subscription_info_changed = false
+    save(false)
   end
 end
