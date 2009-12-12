@@ -2,3 +2,9 @@ main:
   name: Main
   description: Main room.
   account: master
+
+public:
+  name: Public
+  description: Public room.
+  account: master
+  public_token: abc123

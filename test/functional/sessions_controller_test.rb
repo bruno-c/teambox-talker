@@ -42,6 +42,22 @@ class SessionsControllerTest < ActionController::TestCase
     assert @response.cookies["auth_token"].blank?
   end
 
+  def test_should_logout
+    login_as :quentin
+    get :destroy
+    assert_redirected_to login_path
+  end
+
+  def test_should_logout_and_delete_guest
+    Connection.any_instance.expects(:force_close)
+    users(:quentin).update_attribute :guest, true
+    users(:quentin).update_attribute :room, rooms(:public)
+    login_as :quentin
+    get :destroy
+    assert_redirected_to public_room_path(rooms(:public).public_token)
+    assert ! User.exists?(users(:quentin).id)
+  end
+
   def test_should_login_with_cookie
     users(:quentin).remember_me
     @request.cookies["auth_token"] = users(:quentin).remember_token
