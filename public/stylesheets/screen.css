@@ -979,6 +979,32 @@ a#logo {
     float: right;
     margin-top: -10px;
     padding: 0 6px; }
+  #sidebar #utilities {
+    text-align: right;
+    margin: -40px 0 10px; }
+    #sidebar #utilities div.wrapper {
+      box-shadow: 1px 1px 2px #d2d2d2;
+      -webkit-box-shadow: 1px 1px 2px #d2d2d2;
+      -moz-box-shadow: 1px 1px 2px #d2d2d2;
+      background: #f8f8f8;
+      padding: 8px 10px 7px;
+      border-bottom-right-radius: 3px;
+      -moz-border-radius-bottomright: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+      -moz-border-radius-bottomleft: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+      color: silver;
+      font-size: 12px;
+      line-height: 16px;
+      display: inline-block;
+      border: 1px solid #d2d2d2;
+      border-top: none; }
+      #sidebar #utilities div.wrapper a {
+        font-weight: bold; }
+      #sidebar #utilities div.wrapper img.avatar {
+        float: left;
+        margin: 0 5px 0 0; }
   #sidebar #room {
     box-shadow: 0px 0px 8px #b1b1b1;
     -webkit-box-shadow: 0px 0px 8px #b1b1b1;

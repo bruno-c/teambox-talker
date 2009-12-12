@@ -843,7 +843,7 @@ a#logo
     img
       +opacity(100)
 
-// Room Sidebar
+// Sidebar
 #sidebar
   z-index: 100
   a#logo
@@ -851,6 +851,25 @@ a#logo
     float: right
     margin-top: -10px
     padding: 0 6px
+  #utilities
+    text-align: right
+    margin: -40px 0 10px
+    div.wrapper
+      +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
+      background = !light_grey * 0.1 + !white * 0.9
+      padding: 8px 10px 7px
+      +rounded_corners("bottom", 3)
+      color = !light_grey
+      +font_size("small")
+      line-height: 16px
+      display: inline-block
+      border = 1px solid !light_grey * 0.66 + !white * 0.33
+      border-top: none
+      a
+        font-weight: bold
+      img.avatar
+        float: left
+        margin: 0 5px 0 0
   #room
     +box_shadow(0, 0, 8, !light_grey * 0.66 + !white * 0.20)
     .description
