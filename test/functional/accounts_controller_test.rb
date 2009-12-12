@@ -2,13 +2,13 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class AccountsControllerTest < ActionController::TestCase
   def test_new
-    get :new, :plan_id => Plan.free.id
+    get :new, :plan => "free"
     assert_response :success
   end
   
   def test_new_invalid_plan
     assert_raise(ActiveRecord::RecordNotFound) do
-      get :new, :plan_id => 10
+      get :new, :plan => "wtf"
     end
   end
   

@@ -25,7 +25,7 @@ class Plan
   end
   
   def to_param
-    @id.to_s
+    @name.downcase
   end
   
   def <=>(other)
@@ -60,7 +60,7 @@ class Plan
     if name.blank?
       free
     else
-      all.detect { |plan| plan.name == name } || raise(ActiveRecord::RecordNotFound, "Can't find plan with name = #{name}")
+      all.detect { |plan| plan.name.downcase == name } || raise(ActiveRecord::RecordNotFound, "Can't find plan with name = #{name}")
     end
   end
 end

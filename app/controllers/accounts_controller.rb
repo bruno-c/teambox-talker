@@ -5,7 +5,7 @@ class AccountsController < ApplicationController
   
   def new
     delete_old_cookies
-    @plan = Plan.find(params[:plan_id])
+    @plan = Plan.find_by_name(params[:plan])
     @account = Account.new(:plan_id => @plan.id)
     @user = User.new
     render :layout => "dialog"
