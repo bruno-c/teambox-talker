@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.resources :pastes
   map.resources :feeds
-  map.resource :admin, :controller => "admin"
+  map.resource :admin, :controller => "admin", :member => { :jobs => :get }
   map.resources :plugins, :has_one => :installation
   
   map.connect "/avatar/:id.jpg", :controller => "avatars", :action => "show"

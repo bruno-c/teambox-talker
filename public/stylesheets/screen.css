@@ -1157,6 +1157,8 @@ div.info {
 #admin table {
   width: 100%;
   margin-bottom: 20px; }
+  #admin table tr.failed {
+    background-color: #fee5e5; }
   #admin table th, #admin table td {
     padding: 3px; }
   #admin table th {
