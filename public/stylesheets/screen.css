@@ -1257,7 +1257,17 @@ div.log_browser {
   position: relative;
   top: -2px; }
 #account div.meter {
-  border: solid 1px silver; }
+  border: solid 1px silver;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px; }
   #account div.meter span {
+    border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 5px;
     display: block;
+    overflow: hidden;
     background: #269ed6; }

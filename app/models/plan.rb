@@ -60,7 +60,8 @@ class Plan
     if name.blank?
       free
     else
-      all.detect { |plan| plan.name.downcase == name } || raise(ActiveRecord::RecordNotFound, "Can't find plan with name = #{name}")
+      normalized_name = name.to_param.downcase
+      all.detect { |plan| plan.name.downcase == normalized_name } || raise(ActiveRecord::RecordNotFound, "Can't find plan with name = #{normalized_name}")
     end
   end
 end

@@ -64,7 +64,7 @@ class AccountsController < ApplicationController
   
   def plan_changed
     @account = current_account
-    @plan = Plan.find(params[:plan])
+    @plan = Plan.find_by_name(params[:plan])
     
     @account.update_subscription_info
     

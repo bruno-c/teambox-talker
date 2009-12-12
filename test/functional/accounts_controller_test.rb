@@ -69,7 +69,7 @@ class AccountsControllerTest < ActionController::TestCase
   def test_plan_changed
     subdomain :master
     login_as :quentin
-    get :plan_changed, :plan => Plan.free.id
+    get :plan_changed, :plan => Plan.free
     assert_redirected_to account_path
     assert_not_nil flash[:notice]
     assert assigns(:account).subscription_info_changed
