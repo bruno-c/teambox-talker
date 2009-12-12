@@ -102,7 +102,6 @@
       <ul class="people" id="people"></ul>
     </div>
     <div class="footer" id="user_actions">
-      <%= link_to "Upload", room_attachments_path(@room), :onclick => "return false", :title => "Upload a file", :id => "upload", :accesskey => "f" %>
       <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
       <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %>
       <%= link_to "Logout", logout_path, :title => "Logout" %>
@@ -141,6 +140,9 @@
 <div id="message_form">
   <form id="msgForm" action="/rooms/1/messages" class="fade">
     <textarea rows="1" id="msgbox"></textarea>
-    <button class="neutral">Send</button>
+    <div class="options">
+      <%= link_to "Send", "", :title => "", :class => "button neutral" %>
+      <%= link_to "Upload", room_attachments_path(@room), :onclick => "return false", :title => "Upload a file", :class => "button neutral upload_link", :accesskey => "f" %>
+    </div>
   </form>
 </div>

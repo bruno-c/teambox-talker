@@ -817,26 +817,38 @@ a.button, button {
   background: url('../../images/bottom_fader.png'); }
   #message_form form.fade {
     height: 80px;
-    margin: 20px 230px 0 0;
-    padding: 0 70px 0 50px;
+    margin: 20px 280px 0 0;
+    padding: 0 90px 0 50px;
+    position: relative;
     overflow: hidden; }
     #message_form form.fade textarea {
       float: left;
       z-index: 10;
       height: 50px;
-      width: 80%;
+      width: 100%;
       padding: 5px;
       border: 1px solid silver; }
-    #message_form form.fade button {
-      float: left;
-      margin: 0 0 0 5px;
-      font-size: 12px;
-      border-radius: 5px;
-      -moz-border-radius: 5px;
-      -webkit-border-radius: 5px;
-      color: #404040;
-      font-weight: bold;
-      padding: 5px 15px; }
+    #message_form form.fade div.options {
+      position: absolute;
+      right: 0;
+      top: 0; }
+      #message_form form.fade div.options a.button {
+        display: block;
+        font-size: 12px;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        color: #404040;
+        font-weight: bold;
+        padding: 5px 15px;
+        line-height: 1;
+        margin: 0 0 5px;
+        text-align: center; }
+        #message_form form.fade div.options a.button.upload_link {
+          background: #d3ebf6;
+          border: 1px solid #b4dcee;
+          border-bottom-color: #92ceea;
+          border-right-color: #73afcb; }
 
 #logs ul {
   margin-left: 20px; }
