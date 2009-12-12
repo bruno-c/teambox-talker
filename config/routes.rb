@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.home '/home', :controller => 'site', :action => 'home' # this will become the new home page for launch
   map.features '/features', :controller => 'site', :action => 'features'
+  map.pricing '/pricing', :controller => "site", :action => "pricing"
   map.plugin_api '/api/plugin', :controller => 'site', :action => 'frontend_api'
   map.rest_api '/api/rest', :controller => 'site', :action => 'rest_api'
   map.privacy_policy "/privacy_policy", :controller => "site", :action => "privacy_policy"
