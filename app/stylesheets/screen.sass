@@ -548,6 +548,9 @@ a.button, button
             border-right = 5px "solid" !accent_colour * 0.15 + !white * 0.85
         &.message
           padding: 5px 0
+          .wrap_lines
+            -moz-user-select: none
+            -webkit-user-select: none
           blockquote
             +rounded_corners("all", 3)
             background = !accent_colour * 0.15 + !white * 0.85
@@ -573,6 +576,15 @@ a.button, button
                 background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center
                 padding: 0 0 0 19px
                 color = !light_grey
+              a.view_paste
+                +font_size("small")
+              span.wrap_lines
+                float: right
+                +font_size("small")
+                color = !grey
+                input[type=checkbox]
+                  top: -1px
+                  position: relative
             pre
               overflow: auto
               padding: 10px

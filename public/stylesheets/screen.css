@@ -680,6 +680,9 @@ a.button, button {
             border-right: 5px solid #ddeff8; }
         #chat_log table tr td.message {
           padding: 5px 0; }
+          #chat_log table tr td.message .wrap_lines {
+            -moz-user-select: none;
+            -webkit-user-select: none; }
           #chat_log table tr td.message blockquote {
             border-radius: 3px;
             -moz-border-radius: 3px;
@@ -707,6 +710,15 @@ a.button, button {
                 background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center;
                 padding: 0 0 0 19px;
                 color: silver; }
+              #chat_log table tr td.message blockquote p a.view_paste {
+                font-size: 12px; }
+              #chat_log table tr td.message blockquote p span.wrap_lines {
+                float: right;
+                font-size: 12px;
+                color: gray; }
+                #chat_log table tr td.message blockquote p span.wrap_lines input[type=checkbox] {
+                  top: -1px;
+                  position: relative; }
             #chat_log table tr td.message blockquote pre {
               overflow: auto;
               padding: 10px;
