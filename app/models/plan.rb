@@ -16,6 +16,10 @@ class Plan
     attributes.each_pair { |attr, value| send "#{attr}=", value }
   end
   
+  def features
+    @features ||= Features[feature_level]
+  end
+  
   def free?
     @feature_level == "free"
   end

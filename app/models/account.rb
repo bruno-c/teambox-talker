@@ -21,7 +21,7 @@ class Account < ActiveRecord::Base
   after_destroy :cancel_subscription
   
   def features
-    @features ||= Features[plan.feature_level]
+    plan.features
   end
   
   def owner

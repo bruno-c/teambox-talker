@@ -5,6 +5,7 @@
     <div class="plan">
       <h3><%= plan.name %></h3>
       <p><%= plan.description %></p>
+      <p><%= number_to_currency plan.price %></p>
       <%= link_to "Subscribe", signup_path(plan.id) %>
     </div>
   <% end %>

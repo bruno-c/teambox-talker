@@ -13,15 +13,20 @@ class AccountsController < ApplicationController
   
   def welcome
     @token = params[:token]
+    
     if logged_in?
       render :layout => "dialog"
+      
     elsif @user = User.authenticate_by_perishable_token(@token)
       self.current_user = @user
       remember_me!
+      current_account.update_subscription_info
       render :layout => "dialog"
+      
     else
       flash[:error] = "Bad authentication token"
       redirect_to signup_path
+      
     end
   end
   

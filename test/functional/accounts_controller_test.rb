@@ -39,6 +39,7 @@ class AccountsControllerTest < ActionController::TestCase
     get :welcome, :token => users(:quentin).perishable_token
     assert_response :success, @response.body
     assert_equal users(:quentin), assigns(:current_user)
+    assert assigns(:current_account).subscription_info_changed
   end
   
   def test_subscribers_changed
