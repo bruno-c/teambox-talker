@@ -388,7 +388,7 @@ a.button, button
   font: inherit
   +font_size("medium")
   +box_shadow(2, 2, 4, !light_grey * 0.5 + !white * 0.5)
-  &:hover
+  &:hover, &.hover
     background = !button_colour_on
   &.large
     +font_size("xlarge")
@@ -410,7 +410,7 @@ a.button, button
     +text_shadow(0, 0, 0, transparent)
     color = !black
     +opacity(80)
-    &:hover
+    &:hover, &.hover
       +opacity(100)
   &.add
     background-image: url('../../images/icons/plus-circle.png')
