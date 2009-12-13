@@ -844,6 +844,9 @@ a.button, button {
       position: absolute;
       right: 10px;
       top: 2px; }
+      #message_form form.fade div.options #upload_loader {
+        margin-top: 7px;
+        margin-left: 25px; }
       #message_form form.fade div.options a.button {
         border-radius: 0px;
         -moz-border-radius: 0px;
