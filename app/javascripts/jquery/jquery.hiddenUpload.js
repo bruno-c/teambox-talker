@@ -106,7 +106,7 @@
         var hoverDiv = $('<div/>')
           .css({
             'overflow': 'hidden', 
-            'opacity': '0',
+            'opacity': '1',
             'z-index': 2147483583
           })
           .attr('id', hoverDivId)
@@ -115,11 +115,12 @@
         anchor.hoverDiv = hoverDiv;
         anchor.input = $('<input type="file" name="' + options.name + '" />').css({
           'margin': '-5px 0 0 -175px',
-          'padding': 0,
-          'width': '220px',
-          'height': '30px',
+          'opacity': '0',
           'font-size': '280px',
-          'cursor': 'pointer'
+          'cursor': 'pointer',
+          'position': 'absolute',
+          'bottom': '-25px',
+          'right': '-25px'
         }).mouseover(function() {
           $(anchor).addClass(options.hoverClass);
         }).mouseout(function() {

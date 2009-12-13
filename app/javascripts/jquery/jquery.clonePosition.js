@@ -15,8 +15,8 @@
       left: (offsets.left + options.offsetLeft) + 'px'
     });
     
-    if (options.cloneWidth)  $(this).width($(element).width());
-    if (options.cloneHeight) $(this).height($(element).height());
+    if (options.cloneWidth)  $(this).width($(element).get(0).offsetWidth);
+    if (options.cloneHeight) $(this).height($(element).get(0).offsetHeight);
     
     return this;
   }

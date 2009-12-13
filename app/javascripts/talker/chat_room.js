@@ -9,6 +9,12 @@ function focusMsgBox() {
 };
 
 $(function() {
+  $('#send').click(function(e) {
+    if ($('#msgbox').val().length){
+      Talker.trigger("MessageSend", {type:"message", content: $("#msgbox").val()});
+    }
+    e.preventDefault();
+  });
   $('#msgbox')
     .keydown(function(e){
       switch (e.which){
