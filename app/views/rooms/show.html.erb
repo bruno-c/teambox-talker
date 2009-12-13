@@ -78,7 +78,7 @@
 
   <div id="utilities">
     <div class="wrapper">
-      <img alt="Gary" src="/avatar/403e57e2be130d2218f992b86dfa8260.jpg?s=16" class="avatar"/>
+      <%= image_tag avatar_url(current_user), :class => "avatar", :alt => h(current_user.name) %>
       <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %> |
       <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
