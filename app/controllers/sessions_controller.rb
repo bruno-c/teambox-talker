@@ -26,9 +26,16 @@ class SessionsController < ApplicationController
   end
   
   def destroy
+    @user = current_user
     logout_killing_session!
     flash[:notice] = "You have been logged out."
-    redirect_to login_path
+    
+    if @user.guest
+      @user.destroy
+      redirect_to public_room_path(@user.room.public_token)
+    else
+      redirect_to login_path
+    end
   end
 
   protected
