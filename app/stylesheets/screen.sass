@@ -715,7 +715,7 @@ a.button, button
   form.fade
     height: 80px
     margin: 20px 280px 0 0
-    padding: 0 90px 0 50px
+    padding: 2px 90px 0 50px
     position: relative
     overflow: hidden
     textarea
@@ -727,36 +727,30 @@ a.button, button
       border = 1px solid !light_grey
     div.options
       position: absolute
-      right: 0
-      top: 0
+      right: 10px
+      top: 2px
       a.button
+        +rounded_corners("all", 0)
         display: block
-        +font_size("small")
-        +rounded_corners("all", 5)
         color = !dark_grey
         font-weight: bold
-        padding: 5px 15px
         line-height: 1
-        margin: 0 0 5px
         text-align: center
-        &.upload_link
-          background = !accent_colour * 0.2 + !white * 0.8
-          border = 1px solid !accent_colour * 0.33 + !white * 0.66
-          border-bottom-color = !accent_colour * 0.5 + !white * 0.5
-          border-right-color = !accent_colour * 0.5 + !light_grey * 0.5
-    /     a.upload_link
-    /       line-height: 16px
-    /       padding: 5px 10px
-    /       display: block
-    /       +rounded_corners("all", 3)
-    /       +font_size("small")
-    /       padding-left: 31px
-    /       background: url('/images/icons/document--plus.png') no-repeat 10px center
-
-
-
-
-
+        vertical-align: middle
+        &#send
+          +rounded_corners("top_right", 7)
+          +font_size("medium")
+          padding: 11px 15px
+        &#upload
+          +rounded_corners("bottom_right", 7)
+          +font_size("tiny")
+          margin-top: 2px
+          padding: 5px 15px
+          background-color = !light_grey * 0.5 + !white * 0.5
+//          background = !accent_colour * 0.2 + !white * 0.8
+//          border = 1px solid !accent_colour * 0.33 + !white * 0.66
+//          border-bottom-color = !accent_colour * 0.5 + !white * 0.5
+//          border-right-color = !accent_colour * 0.5 + !light_grey * 0.5
 
 #logs
   ul

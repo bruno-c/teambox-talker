@@ -830,7 +830,7 @@ a.button, button {
   #message_form form.fade {
     height: 80px;
     margin: 20px 280px 0 0;
-    padding: 0 90px 0 50px;
+    padding: 2px 90px 0 50px;
     position: relative;
     overflow: hidden; }
     #message_form form.fade textarea {
@@ -842,25 +842,32 @@ a.button, button {
       border: 1px solid silver; }
     #message_form form.fade div.options {
       position: absolute;
-      right: 0;
-      top: 0; }
+      right: 10px;
+      top: 2px; }
       #message_form form.fade div.options a.button {
+        border-radius: 0px;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
         display: block;
-        font-size: 12px;
-        border-radius: 5px;
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
         color: #404040;
         font-weight: bold;
-        padding: 5px 15px;
         line-height: 1;
-        margin: 0 0 5px;
-        text-align: center; }
-        #message_form form.fade div.options a.button.upload_link {
-          background: #d3ebf6;
-          border: 1px solid #b4dcee;
-          border-bottom-color: #92ceea;
-          border-right-color: #73afcb; }
+        text-align: center;
+        vertical-align: middle; }
+        #message_form form.fade div.options a.button#send {
+          border-top-right-radius: 7px;
+          -moz-border-radius-topright: 7px;
+          -webkit-border-top-right-radius: 7px;
+          font-size: 14px;
+          padding: 11px 15px; }
+        #message_form form.fade div.options a.button#upload {
+          border-bottom-right-radius: 7px;
+          -moz-border-radius-bottomright: 7px;
+          -webkit-border-bottom-right-radius: 7px;
+          font-size: 10px;
+          margin-top: 2px;
+          padding: 5px 15px;
+          background-color: #dfdfdf; }
 
 #logs ul {
   margin-left: 20px; }
