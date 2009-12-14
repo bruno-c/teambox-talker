@@ -5,8 +5,6 @@ Talker.PasteFormatter = function() {
     if (event.paste){
       var wrapLines     = (!(/^[\t| ]+/mg).test(event.content));
       var whiteSpace    = 'white-space:' + (wrapLines ? 'pre-wrap' : 'pre') + ';';
-      // var checked       = (wrapLines ? 'checked="checked"' : '');
-      // var clickHandler  = 'onclick="$(\'#past_pre_' + event.paste.id + '\').css(\'white-space\', (this.checked ? \'pre-wrap\' : \'pre\'));"';
       var shownContent  = event.content;
       var moreLines     = false;
       var moreChars     = false;
@@ -24,12 +22,6 @@ Talker.PasteFormatter = function() {
       }
       
       var newContent = ''
-        // + '<span class="wrap_lines">'
-        // + '<label>'
-        //   + '<input type="checkbox" ' + checked + ' ' + clickHandler + ' />'
-        //     + ' Wrap long lines'
-        //   + '</label>'
-        // + '</span>'
         + "<a target='_blank' title='Paste #" + event.paste.id + "' href='" 
         + window.location.protocol + "//" + window.location.host + "/pastes/" + event.paste.id 
         + "' class='view_paste'>View paste</a> "
