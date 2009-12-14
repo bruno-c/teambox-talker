@@ -44,6 +44,7 @@
       Talker.plugins.push(new Talker.UsernameAutocompleter()); // will always be loaded...
       
       // formatters to provide basic functionalities.
+      Talker.plugins.push(new Talker.FeedFormatter());
       Talker.plugins.push(new Talker.YoutubeFormatter());
       Talker.plugins.push(new Talker.PasteFormatter());
       Talker.plugins.push(new Talker.ImageFormatter());

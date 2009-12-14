@@ -83,14 +83,17 @@ class Feed < ActiveRecord::Base
   
   def publish(entry)
     title = sanitize(entry.title)
-    url = entry.url
     content = sanitize(entry.content)
+    uri = URI.parse(entry.url)
     truncated_content = Paste.truncate(content)
     
-    room.send_message [
-      "#{entry.author}: #{title} #{url}",
-      (truncated_content unless title == content)
-    ].compact, :paste => false
+    room.send_message "#{entry.author}: #{title} #{entry.url}",
+                      :feed => { :author => entry.author,
+                                 :title => title,
+                                 :url => entry.url,
+                                 :published => entry.published,
+                                 :content => truncated_content,
+                                 :source => uri.host }
   end
   
   def sanitize(content)

@@ -65,7 +65,7 @@ module Sprockets
     
     protected
       def interpolate_constants!(result, constants)
-        result.gsub!(/<%=(.*?)%>/) do
+        result.gsub!(/<%\/\/=(.*?)%>/) do
           constant = $1.strip
           if value = constants[constant]
             value
