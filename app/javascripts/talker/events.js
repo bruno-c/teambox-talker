@@ -32,7 +32,7 @@ Talker.insertMessage = function(talkerEvent, content) {
   var lastInsertion = Talker.lastInsertionEvent;
   var blockquote;
 
-  if (lastInsertion && lastInsertion.user.name == talkerEvent.user.name && lastInsertion.type == 'message' && !talkerEvent.private) {
+  if (lastInsertion && !lastInsertion.action && lastInsertion.user.name == talkerEvent.user.name && lastInsertion.type == 'message' && !talkerEvent.private) {
     blockquote = Talker.getLastRow().find('blockquote').append(eventToLine(talkerEvent));
   } else {
     var escapedName = h(talkerEvent.user.name);
