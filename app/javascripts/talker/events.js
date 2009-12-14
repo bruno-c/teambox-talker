@@ -30,10 +30,16 @@ Talker.insertMessage = function(talkerEvent, content) {
   }
   
   var lastInsertion = Talker.lastInsertionEvent;
-  var blockquote;
+  var blockquote = Talker.getLastRow().find('blockquote');
 
-  if (lastInsertion && !lastInsertion.action && lastInsertion.user.name == talkerEvent.user.name && lastInsertion.type == 'message' && !talkerEvent.private) {
-    blockquote = Talker.getLastRow().find('blockquote').append(eventToLine(talkerEvent));
+  if (lastInsertion && lastInsertion.user.name == talkerEvent.user.name &&
+                       lastInsertion.type == 'message' &&
+                       !talkerEvent.private &&
+                       !lastInsertion.private &&
+                       blockquote[0]) {
+    
+    blockquote = blockquote.append(eventToLine(talkerEvent));
+    
   } else {
     var escapedName = h(talkerEvent.user.name);
     $('<tr author="' + escapedName + '" class="message event user_' + talkerEvent.user.id 
