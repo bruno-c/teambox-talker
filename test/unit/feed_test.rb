@@ -64,6 +64,14 @@ class FeedTest < ActiveSupport::TestCase
     feed.perform
   end
 
+  def test_empty_feed
+    feed = feeds(:thin)
+    Feedzirra::Feed.expects(:fetch_and_parse).with(feed.url, anything).
+                                              returns(Feedzirra::Feed.parse(File.read(self.class.fixture_path + "/feeds/empty.xml")))
+    feed.room.expects(:send_message).never
+    feed.perform
+  end
+
   def test_run_with_return_code
     feed = feeds(:thin)
     Feedzirra::Feed.expects(:fetch_and_parse).returns(304)
