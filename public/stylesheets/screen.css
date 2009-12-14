@@ -735,15 +735,18 @@ a.button, button {
       #chat_log table tr.feed td.message blockquote {
         position: relative;
         background: #e7e7e7;
-        padding: 10px;
+        padding: 1px 10px;
         overflow: visible;
         line-height: 1; }
+        #chat_log table tr.feed td.message blockquote div.line {
+          margin: 10px 0;
+          overflow: hidden; }
         #chat_log table tr.feed td.message blockquote a.favicon {
           float: left;
           position: relative;
-          top: -2px;
           margin: 0 5px 0 7px;
-          position: relative; }
+          position: relative;
+          top: -1px; }
           #chat_log table tr.feed td.message blockquote a.favicon img {
             height: 16px;
             width: 16px; }
@@ -778,7 +781,8 @@ a.button, button {
           border-radius: 3px;
           -moz-border-radius: 3px;
           -webkit-border-radius: 3px;
-          margin-bottom: 10px; }
+          margin-bottom: 10px;
+          white-space: pre-wrap; }
           #chat_log table tr.feed td.message blockquote pre.content:last-child {
             margin: 0; }
       #chat_log table tr.timestamp td {

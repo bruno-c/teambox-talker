@@ -91,7 +91,7 @@ class Feed < ActiveRecord::Base
                       :feed => { :author => entry.author,
                                  :title => title,
                                  :url => entry.url,
-                                 :published => entry.published,
+                                 :published => entry.published.to_i,
                                  :content => truncated_content,
                                  :source => uri.host }
   end

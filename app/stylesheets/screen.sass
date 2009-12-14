@@ -608,15 +608,18 @@ a.button, button
             blockquote
               position: relative
               background = !light_grey * 0.33 + !white * 0.66
-              padding: 10px
+              padding: 1px 10px
               overflow: visible
               line-height: 1
+              div.line
+                margin: 10px 0
+                overflow: hidden
               a.favicon
                 float: left
                 position: relative
-                top: -2px
                 margin: 0 5px 0 7px
                 position: relative
+                top: -1px
                 img
                   height: 16px
                   width: 16px
@@ -646,6 +649,7 @@ a.button, button
                 border: none
                 +rounded_corners("all", 3)
                 margin-bottom: 10px
+                white-space: pre-wrap
                 &:last-child
                   margin: 0
       &.timestamp

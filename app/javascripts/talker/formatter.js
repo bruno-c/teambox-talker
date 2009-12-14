@@ -24,5 +24,16 @@ var FormatHelper = {
     
     return (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':'
       + (minutes < 10 ? '0' + minutes : minutes)
+  },
+  
+  formatDate: function(timestamp) {
+    var d = new Date(timestamp * 1000);
+    d = new Date();
+    return dateFormat(d, "mediumDate") + " " + dateFormat(d, "shortTime");
   }
+}
+
+function truncate(str, size) {
+  size = size || 50;
+  return str.substring(0, size) + (str.length > size ? "..." : "");
 }
