@@ -771,6 +771,7 @@ a.button, button
     position: relative
     overflow: hidden
     textarea
+      +rounded_corners("left", 5)
       resize: none
       float: left
       z-index: 10
@@ -798,11 +799,11 @@ a.button, button
         text-align: center
         vertical-align: middle
         &#send
-          +rounded_corners("top_right", 7)
+          +rounded_corners("top_right", 5)
           +font_size("medium")
           padding: 11px 17px
         &#upload
-          +rounded_corners("bottom_right", 7)
+          +rounded_corners("bottom_right", 5)
           +font_size("tiny")
           margin-top: -1px
           padding: 7px 16px 6px
