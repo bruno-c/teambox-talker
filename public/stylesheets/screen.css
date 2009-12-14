@@ -902,7 +902,7 @@ a.button, button {
       overflow: auto; }
     #message_form form.fade div.options {
       position: absolute;
-      right: 10px;
+      right: 9px;
       top: 2px; }
       #message_form form.fade div.options #upload_loader {
         margin-top: 7px;
