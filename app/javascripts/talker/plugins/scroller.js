@@ -24,7 +24,7 @@ Talker.MainScroller = Class.extend({
       return !($(window).height() - $(document).height() + $(window).scrollTop());
     }
 
-    $(window).mousewheel(function(event, delta) {
+    $(document.body).mousewheel(function(event, delta) {
       if (delta > 0){
         self.defaultScrollAmount = 0;
       } else if (self.atBottom()) {

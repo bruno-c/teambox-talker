@@ -502,7 +502,7 @@ a.button, button {
   box-shadow: 2px 2px 4px #dfdfdf;
   -webkit-box-shadow: 2px 2px 4px #dfdfdf;
   -moz-box-shadow: 2px 2px 4px #dfdfdf; }
-  a.button:hover, button:hover {
+  a.button:hover, a.button.hover, button:hover, button.hover {
     background: #228dbf; }
   a.button.large, button.large {
     font-size: 18px;
@@ -536,7 +536,7 @@ a.button, button {
     filter: alpha(opacity=80);
     opacity: 0.8;
     -moz-opacity: 0.8; }
-    a.button.neutral:hover, a.button.submit:hover, button.neutral:hover, button.submit:hover {
+    a.button.neutral:hover, a.button.neutral.hover, a.button.submit:hover, a.button.submit.hover, button.neutral:hover, button.neutral.hover, button.submit:hover, button.submit.hover {
       filter: alpha(opacity=100);
       opacity: 1;
       -moz-opacity: 1; }
@@ -685,6 +685,9 @@ a.button, button {
             border-right: 5px solid #ddeff8; }
         #chat_log table tr td.message {
           padding: 5px 0; }
+          #chat_log table tr td.message .wrap_lines {
+            -moz-user-select: none;
+            -webkit-user-select: none; }
           #chat_log table tr td.message blockquote {
             border-radius: 3px;
             -moz-border-radius: 3px;
@@ -702,16 +705,25 @@ a.button, button {
               padding: 0 0 0 19px;
               line-height: 16px;
               white-space: nowrap; }
-            #chat_log table tr td.message blockquote p {
+            #chat_log table tr td.message blockquote div {
               margin: 2px 0;
               overflow: auto; }
-              #chat_log table tr td.message blockquote p span.more_lines {
+              #chat_log table tr td.message blockquote div span.more_lines {
                 font-size: 10px;
                 color: gray; }
-              #chat_log table tr td.message blockquote p.typing {
+              #chat_log table tr td.message blockquote div.typing {
                 background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center;
                 padding: 0 0 0 19px;
                 color: silver; }
+              #chat_log table tr td.message blockquote div a.view_paste {
+                font-size: 12px; }
+              #chat_log table tr td.message blockquote div span.wrap_lines {
+                float: right;
+                font-size: 12px;
+                color: gray; }
+                #chat_log table tr td.message blockquote div span.wrap_lines input[type=checkbox] {
+                  top: -1px;
+                  position: relative; }
             #chat_log table tr td.message blockquote pre {
               overflow: auto;
               padding: 10px;
@@ -723,6 +735,61 @@ a.button, button {
         border-right: 5px solid #faeede; }
       #chat_log table tr.me td.message blockquote {
         background: #faeede; }
+      #chat_log table tr.feed td.author {
+        visibility: hidden; }
+      #chat_log table tr.feed td.message blockquote {
+        position: relative;
+        background: #e7e7e7;
+        padding: 1px 10px;
+        overflow: visible;
+        line-height: 1; }
+        #chat_log table tr.feed td.message blockquote div.line {
+          margin: 10px 0;
+          overflow: hidden; }
+        #chat_log table tr.feed td.message blockquote a.favicon {
+          float: left;
+          position: relative;
+          margin: 0 5px 0 7px;
+          position: relative;
+          top: -1px; }
+          #chat_log table tr.feed td.message blockquote a.favicon img {
+            height: 16px;
+            width: 16px; }
+        #chat_log table tr.feed td.message blockquote a.title {
+          font-weight: bold; }
+        #chat_log table tr.feed td.message blockquote small {
+          font-size: 12px;
+          color: gray; }
+          #chat_log table tr.feed td.message blockquote small.timestamp {
+            float: right;
+            color: silver;
+            border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px; }
+          #chat_log table tr.feed td.message blockquote small.url {
+            filter: alpha(opacity=66);
+            opacity: 0.66;
+            -moz-opacity: 0.66; }
+        #chat_log table tr.feed td.message blockquote b.content_tail {
+          display: block;
+          height: 0;
+          width: 0;
+          border: 5px solid transparent;
+          border-bottom: 5px solid white;
+          border-top: none;
+          margin: 3px 0 0 10px; }
+        #chat_log table tr.feed td.message blockquote pre.content {
+          padding: 10px;
+          line-height: normal;
+          background: white;
+          border: none;
+          border-radius: 3px;
+          -moz-border-radius: 3px;
+          -webkit-border-radius: 3px;
+          margin-bottom: 10px;
+          white-space: pre-wrap; }
+          #chat_log table tr.feed td.message blockquote pre.content:last-child {
+            margin: 0; }
       #chat_log table tr.timestamp td {
         border-top: 1px dotted #bfbfbf;
         height: 0;
@@ -790,7 +857,7 @@ a.button, button {
             background-image: url('../../images/icons/clock.png');
             line-height: 20px;
             margin: 0 0 0 5px; }
-      #chat_log table tr.notice td.message p {
+      #chat_log table tr.notice td.message div.line {
         color: silver;
         font-size: 12px; }
       #chat_log table tr.private td.author b.blockquote_tail {
@@ -801,7 +868,7 @@ a.button, button {
         padding: 3px 8px; }
         #chat_log table tr.private td.message blockquote span.marker.private {
           background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center; }
-        #chat_log table tr.private td.message blockquote p {
+        #chat_log table tr.private td.message blockquote div.line {
           font-style: italic;
           color: gray; }
       #chat_log table tr.private.me td.author b.blockquote_tail {
@@ -822,14 +889,53 @@ a.button, button {
   background: url('../../images/bottom_fader.png'); }
   #message_form form.fade {
     height: 80px;
-    margin: 20px 230px 0 0;
-    padding: 0 70px 0 50px; }
+    margin: 20px 280px 0 0;
+    padding: 2px 90px 0 50px;
+    position: relative;
+    overflow: hidden; }
     #message_form form.fade textarea {
+      resize: none;
+      float: left;
       z-index: 10;
       height: 50px;
       width: 100%;
       padding: 5px;
       border: 1px solid silver; }
+    #message_form form.fade textarea:focus {
+      outline: none;
+      border: 1px solid #9f9f9f;
+      overflow: auto; }
+    #message_form form.fade div.options {
+      position: absolute;
+      right: 9px;
+      top: 2px; }
+      #message_form form.fade div.options #upload_loader {
+        margin-top: 7px;
+        margin-left: 25px; }
+      #message_form form.fade div.options a.button {
+        border-radius: 0px;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        display: block;
+        color: #404040;
+        font-weight: bold;
+        line-height: 1;
+        text-align: center;
+        vertical-align: middle; }
+        #message_form form.fade div.options a.button#send {
+          border-top-right-radius: 7px;
+          -moz-border-radius-topright: 7px;
+          -webkit-border-top-right-radius: 7px;
+          font-size: 14px;
+          padding: 11px 17px; }
+        #message_form form.fade div.options a.button#upload {
+          border-bottom-right-radius: 7px;
+          -moz-border-radius-bottomright: 7px;
+          -webkit-border-bottom-right-radius: 7px;
+          font-size: 10px;
+          margin-top: -1px;
+          padding: 7px 16px 6px;
+          background-color: #dfdfdf; }
 
 #logs ul {
   margin-left: 20px; }
@@ -972,6 +1078,32 @@ a#logo {
     float: right;
     margin-top: -10px;
     padding: 0 6px; }
+  #sidebar #utilities {
+    text-align: right;
+    margin: -40px 0 10px; }
+    #sidebar #utilities div.wrapper {
+      box-shadow: 1px 1px 2px #d2d2d2;
+      -webkit-box-shadow: 1px 1px 2px #d2d2d2;
+      -moz-box-shadow: 1px 1px 2px #d2d2d2;
+      background: #f8f8f8;
+      padding: 8px 10px 7px;
+      border-bottom-right-radius: 3px;
+      -moz-border-radius-bottomright: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+      -moz-border-radius-bottomleft: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+      color: silver;
+      font-size: 12px;
+      line-height: 16px;
+      display: inline-block;
+      border: 1px solid #d2d2d2;
+      border-top: none; }
+      #sidebar #utilities div.wrapper a {
+        font-weight: bold; }
+      #sidebar #utilities div.wrapper img.avatar {
+        float: left;
+        margin: 0 5px 0 0; }
   #sidebar #room {
     box-shadow: 0px 0px 8px #b1b1b1;
     -webkit-box-shadow: 0px 0px 8px #b1b1b1;

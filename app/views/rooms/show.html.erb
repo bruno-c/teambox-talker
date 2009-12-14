@@ -44,12 +44,14 @@
       Talker.plugins.push(new Talker.UsernameAutocompleter()); // will always be loaded...
       
       // formatters to provide basic functionalities.
+      Talker.plugins.push(new Talker.FeedFormatter());
       Talker.plugins.push(new Talker.YoutubeFormatter());
       Talker.plugins.push(new Talker.PasteFormatter());
       Talker.plugins.push(new Talker.ImageFormatter());
       
       Talker.plugins.push(new Talker.Sender($("#msgbox")));
       Talker.plugins.push(new Talker.HelpCommand());
+      Talker.plugins.push(new Talker.ClearCommand());
       Talker.plugins.push(new Talker.DefaultCommand($('msgbox')));
       Talker.plugins.push(new Talker.DefaultFormatter()); // this is mandatory and should be last.
       Talker.plugins.push(new Talker.LogSweeper($("#log")));
@@ -75,6 +77,15 @@
 <% end %>
 
 <% content_for :sidebar do %>
+
+  <div id="utilities">
+    <div class="wrapper">
+      <%= image_tag avatar_url(current_user), :class => "avatar", :alt => h(current_user.name) %>
+      <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %> |
+      <%= link_to "Logout", logout_path, :title => "Logout" %>
+    </div>
+  </div>
+
   <div id="error" class="flash error" style="display:none"></div>
 
   <div id="room" class="panel">
@@ -100,12 +111,6 @@
       <% end %>
       <h4 class="name">Who&#39;s here?</h4>
       <ul class="people" id="people"></ul>
-    </div>
-    <div class="footer" id="user_actions">
-      <%= link_to "Upload", room_attachments_path(@room), :onclick => "return false", :title => "Upload a file", :id => "upload", :accesskey => "f" %>
-      <%= image_tag "loader.gif", :id => "upload_loader", :style => "display:none" %>
-      <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %>
-      <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>
     <% if admin? %>
     <div class="footer" id="admin_actions">
@@ -141,5 +146,10 @@
 <div id="message_form">
   <form id="msgForm" action="/rooms/1/messages" class="fade">
     <textarea rows="1" id="msgbox"></textarea>
+    <div class="options">
+      <%= link_to "Send", "#", :title => "", :class => "button neutral", :id => "send" %>
+      <%= link_to "Upload", room_attachments_path(@room), :onclick => "return false", :title => "Upload a file", :class => "button neutral", :accesskey => "f", :id => "upload" %>
+      <img src="/images/loader.gif" width="16" height="11" id="upload_loader" alt="uploading file..." title="Uploading file." style="display:none"/>
+    </div>
   </form>
 </div>

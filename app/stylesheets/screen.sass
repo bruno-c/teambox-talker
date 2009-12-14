@@ -388,7 +388,7 @@ a.button, button
   font: inherit
   +font_size("medium")
   +box_shadow(2, 2, 4, !light_grey * 0.5 + !white * 0.5)
-  &:hover
+  &:hover, &.hover
     background = !button_colour_on
   &.large
     +font_size("xlarge")
@@ -410,7 +410,7 @@ a.button, button
     +text_shadow(0, 0, 0, transparent)
     color = !black
     +opacity(80)
-    &:hover
+    &:hover, &.hover
       +opacity(100)
   &.add
     background-image: url('../../images/icons/plus-circle.png')
@@ -553,6 +553,9 @@ a.button, button
             border-right = 5px "solid" !accent_colour * 0.15 + !white * 0.85
         &.message
           padding: 5px 0
+          .wrap_lines
+            -moz-user-select: none
+            -webkit-user-select: none
           blockquote
             +rounded_corners("all", 3)
             background = !accent_colour * 0.15 + !white * 0.85
@@ -568,7 +571,7 @@ a.button, button
               padding: 0 0 0 19px
               line-height: 16px
               white-space: nowrap
-            p
+            div
               margin: 2px 0
               overflow: auto
               span.more_lines
@@ -578,6 +581,15 @@ a.button, button
                 background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center
                 padding: 0 0 0 19px
                 color = !light_grey
+              a.view_paste
+                +font_size("small")
+              span.wrap_lines
+                float: right
+                +font_size("small")
+                color = !grey
+                input[type=checkbox]
+                  top: -1px
+                  position: relative
             pre
               overflow: auto
               padding: 10px
@@ -593,6 +605,58 @@ a.button, button
           &.message
             blockquote
               background = !alt_colour * 0.15 + !white * 0.85
+      &.feed
+        td
+          &.author
+            visibility: hidden
+          &.message
+            blockquote
+              position: relative
+              background = !light_grey * 0.33 + !white * 0.66
+              padding: 1px 10px
+              overflow: visible
+              line-height: 1
+              div.line
+                margin: 10px 0
+                overflow: hidden
+              a.favicon
+                float: left
+                position: relative
+                margin: 0 5px 0 7px
+                position: relative
+                top: -1px
+                img
+                  height: 16px
+                  width: 16px
+              a.title
+                font-weight: bold
+              small
+                +font_size("small")
+                color = !grey
+                &.timestamp
+                  float: right
+                  color = !light_grey
+                  +rounded_corners("all", 3)
+                &.url
+                  +opacity(66)
+              b.content_tail
+                display: block
+                height: 0
+                width: 0
+                border: 5px solid transparent
+                border-bottom = 5px solid !white
+                border-top: none
+                margin: 3px 0 0 10px
+              pre.content
+                padding: 10px
+                line-height: normal
+                background = !white
+                border: none
+                +rounded_corners("all", 3)
+                margin-bottom: 10px
+                white-space: pre-wrap
+                &:last-child
+                  margin: 0
       &.timestamp
         td
           border-top = 1px "dotted" !grey * 0.5 + !white * 0.5
@@ -667,7 +731,7 @@ a.button, button
       &.notice
         td
           &.message
-            p
+            div.line
               color = !light_grey
               +font_size("small")
       &.private
@@ -682,7 +746,7 @@ a.button, button
               padding: 3px 8px
               span.marker.private
                 background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center
-              p
+              div.line
                 font-style: italic
                 color = !grey
       &.private.me
@@ -707,14 +771,47 @@ a.button, button
   background: url('../../images/bottom_fader.png')
   form.fade
     height: 80px
-    margin: 20px 230px 0 0
-    padding: 0 70px 0 50px
+    margin: 20px 280px 0 0
+    padding: 2px 90px 0 50px
+    position: relative
+    overflow: hidden
     textarea
+      resize: none
+      float: left
       z-index: 10
       height: 50px
       width: 100%
       padding: 5px
       border = 1px solid !light_grey
+    textarea:focus
+      outline: none
+      border = 1px solid !dark_grey * 0.90 + !white * 0.40
+      overflow: auto
+    div.options
+      position: absolute
+      right: 9px
+      top: 2px
+      #upload_loader
+        margin-top: 7px
+        margin-left: 25px
+      a.button
+        +rounded_corners("all", 0)
+        display: block
+        color = !dark_grey
+        font-weight: bold
+        line-height: 1
+        text-align: center
+        vertical-align: middle
+        &#send
+          +rounded_corners("top_right", 7)
+          +font_size("medium")
+          padding: 11px 17px
+        &#upload
+          +rounded_corners("bottom_right", 7)
+          +font_size("tiny")
+          margin-top: -1px
+          padding: 7px 16px 6px
+          background-color = !light_grey * 0.5 + !white * 0.5
 
 #logs
   ul
@@ -836,7 +933,7 @@ a#logo
     img
       +opacity(100)
 
-// Room Sidebar
+// Sidebar
 #sidebar
   z-index: 100
   a#logo
@@ -844,6 +941,25 @@ a#logo
     float: right
     margin-top: -10px
     padding: 0 6px
+  #utilities
+    text-align: right
+    margin: -40px 0 10px
+    div.wrapper
+      +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
+      background = !light_grey * 0.1 + !white * 0.9
+      padding: 8px 10px 7px
+      +rounded_corners("bottom", 3)
+      color = !light_grey
+      +font_size("small")
+      line-height: 16px
+      display: inline-block
+      border = 1px solid !light_grey * 0.66 + !white * 0.33
+      border-top: none
+      a
+        font-weight: bold
+      img.avatar
+        float: left
+        margin: 0 5px 0 0
   #room
     +box_shadow(0, 0, 8, !light_grey * 0.66 + !white * 0.20)
     .description

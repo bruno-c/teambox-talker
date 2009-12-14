@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
+  <id>tag:github.com,2008:/feeds/macournoyer/commits/thin/master</id>
+  <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commits/master/"/>
+  <link type="application/atom+xml" rel="self" href="http://github.com/feeds/macournoyer/commits/thin/master"/>
+  <title>Recent Commits to thin:master</title>
+  <updated>2009-11-05T06:57:35-08:00</updated>
+</feed>

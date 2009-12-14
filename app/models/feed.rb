@@ -77,20 +77,23 @@ class Feed < ActiveRecord::Base
       self.last_modified_at = entry.published
     end
     
-    self.last_modified_at = feed.last_modified if feed.last_modified > last_modified_at
+    self.last_modified_at = feed.last_modified if (feed.last_modified && feed.last_modified > last_modified_at) || last_modified_at.nil?
     self.etag = feed.etag
   end
   
   def publish(entry)
     title = sanitize(entry.title)
-    url = entry.url
     content = sanitize(entry.content)
+    uri = URI.parse(entry.url)
     truncated_content = Paste.truncate(content)
     
-    room.send_message [
-      "#{entry.author}: #{title} #{url}",
-      (truncated_content unless title == content)
-    ].compact, :paste => false
+    room.send_message "#{entry.author}: #{title} #{entry.url}",
+                      :feed => { :author => entry.author,
+                                 :title => title,
+                                 :url => entry.url,
+                                 :published => entry.published.to_i,
+                                 :content => truncated_content,
+                                 :source => uri.host }
   end
   
   def sanitize(content)
