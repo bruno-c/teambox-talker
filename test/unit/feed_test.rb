@@ -54,7 +54,13 @@ class FeedTest < ActiveSupport::TestCase
     feed.update_attribute :last_modified_at, DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00") - 1.hour
     Feedzirra::Feed.expects(:fetch_and_parse).with(feed.url, anything).
                                               returns(Feedzirra::Feed.parse(File.read(self.class.fixture_path + "/feeds/thin.xml")))
-    feed.room.expects(:send_message).times(1)
+    feed.room.expects(:send_message).times(1).with("Rob Sterner: fixing referenced blog post's URL. http://github.com/macournoyer/thin/commit/ad96bc341c6790e6cadef9b62589591023078434",
+                                                   :feed => { :author => 'Rob Sterner',
+                                                              :source => 'github.com',
+                                                              :title => "fixing referenced blog post's URL.",
+                                                              :url => 'http://github.com/macournoyer/thin/commit/ad96bc341c6790e6cadef9b62589591023078434',
+                                                              :published => 1257433055,
+                                                              :content => "m example/thin.god\n\nfixing referenced blog post's URL." })
     feed.perform
   end
 
