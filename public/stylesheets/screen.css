@@ -852,7 +852,7 @@ a.button, button {
             background-image: url('../../images/icons/clock.png');
             line-height: 20px;
             margin: 0 0 0 5px; }
-      #chat_log table tr.notice td.message p {
+      #chat_log table tr.notice td.message div.line {
         color: silver;
         font-size: 12px; }
       #chat_log table tr.private td.author b.blockquote_tail {
@@ -863,7 +863,7 @@ a.button, button {
         padding: 3px 8px; }
         #chat_log table tr.private td.message blockquote span.marker.private {
           background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center; }
-        #chat_log table tr.private td.message blockquote p {
+        #chat_log table tr.private td.message blockquote div.line {
           font-style: italic;
           color: gray; }
       #chat_log table tr.private.me td.author b.blockquote_tail {
