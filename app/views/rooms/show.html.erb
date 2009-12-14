@@ -50,6 +50,7 @@
       
       Talker.plugins.push(new Talker.Sender($("#msgbox")));
       Talker.plugins.push(new Talker.HelpCommand());
+      Talker.plugins.push(new Talker.ClearCommand());
       Talker.plugins.push(new Talker.DefaultCommand($('msgbox')));
       Talker.plugins.push(new Talker.DefaultFormatter()); // this is mandatory and should be last.
       Talker.plugins.push(new Talker.LogSweeper($("#log")));
