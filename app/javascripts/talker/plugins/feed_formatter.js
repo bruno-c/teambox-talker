@@ -7,9 +7,8 @@ Talker.FeedFormatter = function() {
       <img src="//<%= source %>/favicon.ico" alt="<%= source %>" /> \
     </a> \
     <a href="<%= url %>" class="title"><%= author %>: <%= truncate(title) %></a> \
-      <b class="content_tail"><!----></b> \
-      <pre class="content"><%= content %></pre> \
-    ';
+    <b class="content_tail"><!----></b> \
+    <pre class="content"><%= content %></pre>';
   
   self.onMessageReceived = function(event) {
     if (event.feed) {
