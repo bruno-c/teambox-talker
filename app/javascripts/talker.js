@@ -16,7 +16,11 @@ Talker.getLastAuthor = function() {
 }
 
 Talker.getLastInsertion = function() {
-  return $('#log p:last');
+  return $('#log div[class=line]:last');
+}
+
+Talker.getLastPending = function() {
+  return $("#log div[pending='true'].line");
 }
 
 Talker.getMaxContentWidth = function() {
@@ -78,5 +82,5 @@ Talker.getRoomUsernames = function() {
 }
 
 Talker.isPaste = function(talkerEvent) {
-  return (typeof talkerEvent.content == "string" && talkerEvent.content.match(/\n/gim)) || talkerEvent.paste;
+  return (typeof talkerEvent.content == 'string' && talkerEvent.content.match(/\n/gim) || (talkerEvent.paste != null && talkerEvent.paste != false)) ? true : false;
 }

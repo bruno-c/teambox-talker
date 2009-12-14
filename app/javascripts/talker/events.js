@@ -1,10 +1,13 @@
+Talker.sentCount = 0;
+
 // Event management functions
 Talker.sendMessage = function(message) {
   var talkerEvent = {
     id: 'pending',
     type: 'message',
     user: Talker.currentUser,
-    time: parseInt(new Date().getTime() / 1000)
+    time: parseInt(new Date().getTime() / 1000),
+    paste: false
   };
   
   if (typeof message == 'string'){
@@ -70,5 +73,11 @@ Talker.insertNotice = function(talkerEvent, content) {
 }
 
 function eventToLine(talkerEvent) {
-  return '<p id="event_' + talkerEvent.id + '" time="' + talkerEvent.time + '">' + talkerEvent.content + '</p>';
+  if (talkerEvent.id == 'pending'){
+    return  '<div id="event_pending_' + (Talker.sentCount++) + '" class="line" pending="true" time="' + talkerEvent.time + '">' 
+          +   (Talker.isPaste(talkerEvent) ? '<img src="/images/loader.gif" height="11" width="16" alt="loading..." />' : talkerEvent.content)
+          + '</div>';
+  } else {
+    return '<div id="event_' + talkerEvent.id + '" class="line" time="' + talkerEvent.time + '">' + talkerEvent.content + '</div>';
+  }
 }
