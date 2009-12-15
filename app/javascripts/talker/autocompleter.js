@@ -37,7 +37,8 @@
 
           var pattern = value.substring(nameStart, nameEnd);
           var results = _.select((typeof finder == 'function' ? finder() : finder), function(name) { 
-            return name.match("^" + pattern);
+            var regexp = new RegExp("^" + pattern, "i");
+            return name.match(regexp);
           });
           var name = cycle(results, e.shiftKey);
           if (name) {
