@@ -10,7 +10,7 @@ Talker.ReceivedSound = function() {
         expires: (function(){ var d = new Date(); d.setTime(new Date().getTime() + 10 * 365 * 24 * 60 * 60 * 1000); return d })() // 10 years from now
       });
       alert($.cookie('ReceivedSound') == 'true' ? "Audio alerts are now enabled." : "Audio alerts are now disabled.");
-      $('#msgbox').val('');
+      Talker.getMessageBox().val('');
       return false;
     }
   }

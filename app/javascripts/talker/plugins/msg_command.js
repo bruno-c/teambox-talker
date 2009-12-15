@@ -14,7 +14,7 @@ Talker.MsgCommand = function() {
       var content = event.args.slice(1).join(" ");
       
       Talker.client.send({content: content, to: user.id});
-      $('#msgbox').val('');
+      Talker.getMessageBox().val('');
       Talker.trigger("MessageSent", event);
 
       Talker.insertMessage({
@@ -24,7 +24,6 @@ Talker.MsgCommand = function() {
         type: "message",
         user: Talker.currentUser
       });
-      
       
       return false;
     }

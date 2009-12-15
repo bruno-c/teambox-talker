@@ -10,7 +10,7 @@ Talker.InviteCommand = function(options) {
       
       $.post(options.invites_url, {invitees: userEmails, room_id: Talker.getRoom().id}, null, 'script');
       
-      $('#msgbox').val('');
+      Talker.getMessageBox().val('');
       return false;
     }
   }
