@@ -74,3 +74,19 @@
     font-size = !font_size_medium + 6px
   @if !size == "xxxlarge"
     font-size = !font_size_medium + 8px
+
+=fade(!bgcolor)
+  position: relative
+  display: block
+  overflow: hidden
+  line-height: 1em
+  height: 1em
+  b.fade
+    background = !bgcolor none repeat scroll 0% 0%
+    display: block
+    position: absolute
+    +box_shadow(-20, 0, 20, !bgcolor)
+    width: 3em
+    height: 2em
+    top: -8px
+    right: -30px

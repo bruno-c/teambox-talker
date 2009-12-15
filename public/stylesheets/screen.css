@@ -748,10 +748,26 @@ a.button, button {
           #chat_log table tr.feed td.message blockquote a.favicon img {
             height: 16px;
             width: 16px;
-            font-weight: bold;
-            color: silver; }
+            color: silver;
+            font-size: 13px; }
         #chat_log table tr.feed td.message blockquote a.title {
-          font-weight: bold; }
+          font-weight: bold;
+          position: relative;
+          display: block;
+          overflow: hidden;
+          line-height: 1em;
+          height: 1em; }
+          #chat_log table tr.feed td.message blockquote a.title b.fade {
+            background: #e7e7e7 none repeat scroll 0% 0%;
+            display: block;
+            position: absolute;
+            box-shadow: -20px 0px 20px #e7e7e7;
+            -webkit-box-shadow: -20px 0px 20px #e7e7e7;
+            -moz-box-shadow: -20px 0px 20px #e7e7e7;
+            width: 3em;
+            height: 2em;
+            top: -8px;
+            right: -30px; }
         #chat_log table tr.feed td.message blockquote small {
           font-size: 12px;
           color: gray; }

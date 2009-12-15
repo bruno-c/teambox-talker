@@ -621,10 +621,11 @@ a.button, button
                 img
                   height: 16px
                   width: 16px
-                  font-weight: bold
                   color = !light_grey
+                  font-size: 13px
               a.title
                 font-weight: bold
+                +fade(!light_grey * 0.33 + !white * 0.66)
               small
                 +font_size("small")
                 color = !grey
