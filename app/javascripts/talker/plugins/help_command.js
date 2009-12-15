@@ -17,7 +17,7 @@ Talker.HelpCommand = function() {
       });
       jQuery.facebox(help_div);
       
-      $('#msgbox').val('');
+      Talker.getMessageBox().val('');
       return false;
     }
   }
