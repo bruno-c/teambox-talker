@@ -1,6 +1,7 @@
 <div class="main">
   <h2>Talker REST API</h2>
   
+  <h3>Sending messages</h3>
   <p>You can send messages to a room using the REST API by sending a <code>POST</code> request to
     <code>https://youraccount.talkerapp.com/rooms/ROOM_ID/messages.json</code>.</p>
   
@@ -16,7 +17,28 @@
   <p>The Room ID is the last part of the URL of the room you want to send a message to:</p>
   <pre>https://myaccount.talkerapp.com/rooms/&lt;room_id&gt;</pre>
   
+  <h3>Rooms information</h3>
+  <p>To list rooms:</p>
+  
+  <pre>curl -H 'Accept: application/json' -H 'Content-Type: application/json' \
+     -H 'X-Talker-Token: YOUR_TALKER_TOKEN' \
+     https://youraccount.talkerapp.com/rooms.json</pre>
+  
+  <p>Sample response:</p>
+  <pre>[{"name": "Main", "id": 1}, {"name": "Lobby", "id": 3},
+ {"name": "Awesome Incredible Talk", "id": 12}, {"name": "LOLCATS", "id": 13}]</pre>
+  
+  <p>To get a list of connected users to a room:</p>
+  
+  <pre>curl -H 'Accept: application/json' -H 'Content-Type: application/json' \
+     -H 'X-Talker-Token: YOUR_TALKER_TOKEN' \
+     https://youraccount.talkerapp.com/rooms/ROOM_ID.json</pre>
+  
+   <p>Sample response:</p>
+   <pre>{"name": "Main", "users": [{"name": "ma", "id": 1}], "id": 1}</pre>
+  
   <h3>Talker Real-Time Ruby Client</h3>
   
-  <p>If you need full interaction with a room, you can use the Ruby client at: <%= link_to "http://github.com/macournoyer/talker.rb", "http://github.com/macournoyer/talker.rb" %></p>
+  <p>If you need full interaction with a room, you can use the Ruby client at: <%= link_to "http://github.com/macournoyer/talker.rb", "http://github.com/macournoyer/talker.rb" %> or
+    the node.js client <%= link_to "http://github.com/voodootikigod/talker.js", "http://github.com/voodootikigod/talker.js" %></p>
 </div>
