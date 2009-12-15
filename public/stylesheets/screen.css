@@ -744,12 +744,12 @@ a.button, button {
         #chat_log table tr.feed td.message blockquote a.favicon {
           float: left;
           position: relative;
-          margin: 0 5px 0 7px;
-          position: relative;
-          top: -1px; }
+          margin: 0 5px 0 7px; }
           #chat_log table tr.feed td.message blockquote a.favicon img {
             height: 16px;
-            width: 16px; }
+            width: 16px;
+            font-weight: bold;
+            color: silver; }
         #chat_log table tr.feed td.message blockquote a.title {
           font-weight: bold; }
         #chat_log table tr.feed td.message blockquote small {
