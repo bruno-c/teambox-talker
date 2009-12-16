@@ -9,12 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091214044630) do
+ActiveRecord::Schema.define(:version => 20091215194758) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "plan_id"
+    t.string   "spreedly_token"
+    t.boolean  "active",                    :default => true
+    t.boolean  "on_trial",                  :default => true
+    t.boolean  "recurring",                 :default => false
+    t.datetime "active_until"
+    t.datetime "grace_until"
+    t.boolean  "subscription_info_changed", :default => false
   end
 
   add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true
@@ -123,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20091214044630) do
     t.datetime "updated_at"
     t.string   "public_token"
     t.datetime "opened_at"
+    t.boolean  "private",      :default => false
   end
 
   create_table "users", :force => true do |t|
@@ -144,7 +153,6 @@ ActiveRecord::Schema.define(:version => 20091214044630) do
     t.boolean  "staff",                           :default => false
     t.boolean  "guest",                           :default => false
     t.integer  "room_id"
-    t.boolean  "restricted",                      :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

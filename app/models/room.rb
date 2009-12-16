@@ -7,19 +7,21 @@ class Room < ActiveRecord::Base
   has_many :guests, :class_name => "User", :dependent => :destroy
   has_many :attachments, :class_name => "::Attachment", # FIX class w/ Paperclip::Attachment
                          :dependent => :destroy
+  has_many :permissions
   belongs_to :account
   
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :account_id
   
   named_scope :with_permission, proc { |user|
-    if user.can_access_all_rooms?
+    if user.admin
       {}
     else
       # TODO maybe use a JOIN someday...
       { :conditions => { :id => user.permissions.map(&:room_id) } }
     end
   }
+  named_scope :public, :conditions => { :private => false }
   
   def create_public_token!
     self.public_token = ActiveSupport::SecureRandom.hex(3)
@@ -35,6 +37,10 @@ class Room < ActiveRecord::Base
   
   def guest_allowed?
     !!public_token
+  end
+  
+  def public
+    !self.private
   end
   
   def to_json(options = {})

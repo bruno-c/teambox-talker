@@ -340,6 +340,10 @@ body#rooms_controller.show #content {
     float: left; }
     #rooms li div.panel {
       margin: 0; }
+      #rooms li div.panel div.header div.actions {
+        float: right;
+        position: relative;
+        top: 5px; }
       #rooms li div.panel div.content {
         min-height: 80px; }
         #rooms li div.panel div.content p.description {

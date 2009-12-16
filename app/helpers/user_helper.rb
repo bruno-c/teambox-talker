@@ -9,10 +9,13 @@ module UserHelper
   end
   
   def access_description(user)
-    if user.admin || !user.restricted
+    if user.admin
       content_tag :em, "all rooms"
     else
-      user.permissions.map { |p| content_tag :em, h(p.room.name) }.to_sentence
+      (
+        [content_tag(:em, "all public rooms")] +
+        user.permissions.map { |p| link_to h(p.room.name), edit_room_path(p.room) }
+      ).to_sentence
     end
   end
 end
