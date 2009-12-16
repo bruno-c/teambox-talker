@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091215194758) do
+ActiveRecord::Schema.define(:version => 20091214044630) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -131,7 +131,6 @@ ActiveRecord::Schema.define(:version => 20091215194758) do
     t.datetime "updated_at"
     t.string   "public_token"
     t.datetime "opened_at"
-    t.boolean  "private",      :default => false
   end
 
   create_table "users", :force => true do |t|
@@ -153,6 +152,7 @@ ActiveRecord::Schema.define(:version => 20091215194758) do
     t.boolean  "staff",                           :default => false
     t.boolean  "guest",                           :default => false
     t.integer  "room_id"
+    t.boolean  "restricted",                      :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
