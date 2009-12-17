@@ -7,3 +7,16 @@
   <%= form.label :description %>
   <%= form.text_area :description, :rows => 4 %>
 </p>
+
+<p>
+  <%= form.label :access %>
+  <%= form.radio_button :access, "public" %>
+  <%= form.label :access_private, "Public", :class => "inline" %>
+  <small>Anyone can access this room.</small>
+</p>
+
+<p class="indent grouped">
+  <%= form.radio_button :access, "private" %>
+  <%= form.label :access_private, "Private", :class => "inline" %>
+  <small>Only users you specify can access this room.</small>
+</p>

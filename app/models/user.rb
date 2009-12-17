@@ -100,17 +100,6 @@ class User < ActiveRecord::Base
     room.public || permissions.find_by_room_id(room.id)
   end
   
-  def room_access=(allowed_rooms)
-    Permission.transaction do
-      permissions.clear
-      return if account.room_ids.sort == allowed_rooms.map(&:id).sort
-      
-      account.rooms.each do |room|
-        permissions.create :room => room if allowed_rooms.include?(room)
-      end
-    end
-  end
-  
   def to_json(options = {})
     super(options.merge(:only => [:name, :email, :id]))
   end

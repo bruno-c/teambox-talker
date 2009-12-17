@@ -40,6 +40,14 @@ class Room < ActiveRecord::Base
     !!public_token
   end
   
+  def access=(v)
+    self.private = (v == "private")
+  end
+  
+  def access
+    self.private ? "private" : "public"
+  end
+  
   def public
     !self.private
   end

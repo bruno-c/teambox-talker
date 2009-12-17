@@ -23,16 +23,18 @@
         <p>Can access <%= access_description user %>.</p>
       <% end %>
       <% if user.pending? %>
-        <p>Invitation sent ... didn't log in yet.</p>
+        <p>
+          Invitation sent ... didn't log in yet.
+          (<%= link_to "Re-send", resend_invite_path(user), :method => :post, :title => "Re-send invitation mail" %>)
+        </p>
       <% end %>
     </div>
     <div class="footer">
       <% if user != current_user %>
-        <%= link_to "Delete", user_path(user), :confirm => "Are your sure?", :method => :delete, :class => "button negative small icon delete" %>
         <% if user.pending? %>
-          <%= link_to "Send Invite", resend_invite_path(user), :method => :post, :class => "button neutral small icon send-email", :title => "Sending email invitation" %>
+          
         <% end %>
-        <%= link_to "Edit permissions", edit_user_path(user), :class => "button neutral small icon update" %>
+        <%= link_to "Edit", edit_user_path(user) %>
       <% end %>
     </div>
   </div>

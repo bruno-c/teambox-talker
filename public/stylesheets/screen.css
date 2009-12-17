@@ -414,7 +414,10 @@ form p {
   line-height: 28px;
   margin: 0 0 10px; }
   form p.submit {
+    margin-top: 16px;
     margin-bottom: 0; }
+  form p.grouped {
+    margin-top: -10px; }
 form div.complex_field {
   line-height: 28px;
   margin: 0 0 1.5em; }
