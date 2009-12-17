@@ -760,7 +760,8 @@ a.button, button {
           display: block;
           overflow: hidden;
           line-height: 1em;
-          height: 1em; }
+          height: 1em;
+          white-space: nowrap; }
           #chat_log table tr.feed td.message blockquote a.title b.fade {
             background: #e7e7e7 none repeat scroll 0% 0%;
             display: block;

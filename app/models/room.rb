@@ -21,6 +21,7 @@ class Room < ActiveRecord::Base
       { :conditions => { :id => user.permissions.map(&:room_id) } }
     end
   }
+  named_scope :private, :conditions => { :private => true }
   named_scope :public, :conditions => { :private => false }
   
   def create_public_token!
