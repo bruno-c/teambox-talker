@@ -19,3 +19,14 @@ function avatarUrl(user, size) {
   size = size || 18;
   return assetHost("/avatar/" + MD5(user.email || "") + ".jpg?s=" + size);
 }
+
+$(function() {
+  $("#room_access_private, #room_access_public").change(function() {
+    var privateAccess = $("#room_access_private")[0].checked;
+    if (privateAccess) {
+      $("#invitees").show();
+    } else {
+      $("#invitees").hide();
+    }
+  }).trigger("change"); 
+});

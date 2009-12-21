@@ -891,13 +891,16 @@ div.panel
       span.actions
         float: right
   .tag
-    +font_size("small")
-    :background-color = !alt_colour
-    :color = !white
-    :padding 2px 4px
-    :position relative
     :top 5px
-    +rounded_corners("all", 3)
+
+span.tag
+  +rounded_corners("all", 3)
+  +font_size("tiny")
+  :background-color = !alt_colour
+  :color = !white
+  :padding 1px 3px
+  :position relative
+
 
 #error_page
   h2
@@ -1230,7 +1233,9 @@ div.log_browser
     &.next
       float: right
 
-#permissions
+#invitees
   ul
     list-style: none
+    margin-left: 20px
     margin-bottom: 20px
+    margin-top: -10px

@@ -26,8 +26,10 @@ class User < ActiveRecord::Base
   # anything else you want your user to change should be added here.
   attr_accessible :email, :name, :password, :password_confirmation, :time_zone
   
+  named_scope :active, :conditions => { :state => "active" }
   named_scope :registered, :conditions => { :guest => false }
-  
+  named_scope :by_name, :order => :name
+    
   
   acts_as_state_machine :initial => :pending
   state :pending
@@ -97,7 +99,11 @@ class User < ActiveRecord::Base
   end
   
   def permission?(room)
-    room.public || permissions.find_by_room_id(room.id)
+    admin || room.public || permissions.find_by_room_id(room.id)
+  end
+  
+  def accessible_rooms
+    account.rooms.with_permission(self)
   end
   
   def to_json(options = {})

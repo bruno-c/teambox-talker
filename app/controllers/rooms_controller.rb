@@ -26,7 +26,7 @@ class RoomsController < ApplicationController
       @rooms = []
       @events = @room.events.recent.since(@room.opened_at).reverse
     else
-      @rooms = current_account.rooms.with_permission(current_user)
+      @rooms = current_user.accessible_rooms
       @events = @room.events.recent.reverse
     end
     

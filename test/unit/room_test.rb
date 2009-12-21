@@ -46,4 +46,27 @@ class RoomTest < ActiveSupport::TestCase
     end
     @room.send_message(["ohaie\nyou", "ohaie\nme"], :paste => false, :pass_that => "dude")
   end
+  
+  def test_add_permission
+    Permission.delete_all
+    assert_difference "Permission.count", 1 do
+      @room.private = true
+      @room.invitee_ids = [users(:aaron).id]
+      @room.save
+    end
+  end
+  
+  def test_remove_permission
+    @room.private = true
+    @room.invitee_ids = []
+    @room.save
+    assert_equal 0, @room.permissions.count
+  end
+
+  def test_public_room_delete_all_permissiosn
+    @room.private = false
+    @room.invitee_ids = [users(:aaron).id]
+    @room.save
+    assert_equal 0, @room.permissions.count
+  end
 end

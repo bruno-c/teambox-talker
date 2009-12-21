@@ -11,12 +11,27 @@
 <p>
   <%= form.label :access %>
   <%= form.radio_button :access, "public" %>
-  <%= form.label :access_private, "Public", :class => "inline" %>
+  <%= form.label :access_public, "Public", :class => "inline" %>:
   <small>Anyone can access this room.</small>
 </p>
 
 <p class="indent grouped">
   <%= form.radio_button :access, "private" %>
-  <%= form.label :access_private, "Private", :class => "inline" %>
+  <%= form.label :access_private, "Private", :class => "inline" %>:
   <small>Only users you specify can access this room.</small>
+  
 </p>
+
+<div class="indent grouped" id="invitees">
+  <ul>
+  <% current_account.users.active.registered.by_name.each do |user| %>
+    <li>
+      <%= check_box_tag "room[invitee_ids][]", user.id, user.permission?(@room), :id => "room_invitee_ids_#{user.id}", :disabled => user.admin %>
+      <%= form.label "invitee_ids_#{user.id}", h(user.name), :class => "inline" %>
+      <% if user.admin %>
+        <span class="tag">admin</span>
+      <% end %>
+    </li>
+  <% end %>
+  </ul>
+</div>

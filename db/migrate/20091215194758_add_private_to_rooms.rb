@@ -9,7 +9,7 @@ class AddPrivateToRooms < ActiveRecord::Migration
     Permission.find_each { |permission| permission.destroy unless permission.room && permission.user }
     
     # Make rooms, for which restricted users have no access, private.
-    User.find_each(:conditions => { :restricted => true }) do |user|
+    User.find_each(:conditions => { :restricted => true, :guest => false }) do |user|
       denied_room = user.account.rooms - user.permissions.map(&:room)
       denied_room.each do |room|
         unless room.private
@@ -19,7 +19,7 @@ class AddPrivateToRooms < ActiveRecord::Migration
     end
     
     # Create permission to private rooms for users that had access to all rooms
-    User.find_each(:conditions => { :admin => false, :restricted => false }) do |user|
+    User.find_each(:conditions => { :admin => false, :restricted => false, :guest => false }) do |user|
       user.account.rooms.private.each do |room|
         user.permissions.create :room => room
       end

@@ -1048,15 +1048,17 @@ div.panel {
     div.panel div.footer span.actions {
       float: right; }
   div.panel .tag {
-    font-size: 12px;
-    background-color: #e5952b;
-    color: white;
-    padding: 2px 4px;
-    position: relative;
-    top: 5px;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px; }
+    top: 5px; }
+
+span.tag {
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  font-size: 10px;
+  background-color: #e5952b;
+  color: white;
+  padding: 1px 3px;
+  position: relative; }
 
 #error_page h2 {
   text-align: center; }
@@ -1399,6 +1401,8 @@ div.log_browser {
     div.log_browser a.next {
       float: right; }
 
-#permissions ul {
+#invitees ul {
   list-style: none;
-  margin-bottom: 20px; }
+  margin-left: 20px;
+  margin-bottom: 20px;
+  margin-top: -10px; }

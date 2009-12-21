@@ -17,12 +17,17 @@ class Room < ActiveRecord::Base
     if user.admin
       {}
     else
-      # TODO maybe use a JOIN someday...
-      { :conditions => { :id => user.permissions.map(&:room_id) } }
+      { :conditions => ["public = 1 OR id IN (?)", user.permissions.map(&:room_id)] }
     end
   }
   named_scope :private, :conditions => { :private => true }
   named_scope :public, :conditions => { :private => false }
+  
+  attr_accessible :name, :description, :access, :invitees
+  
+  attr_writer :invitee_ids
+  after_save :update_permissions
+  
   
   def create_public_token!
     self.public_token = ActiveSupport::SecureRandom.hex(3)
@@ -88,4 +93,12 @@ class Room < ActiveRecord::Base
     # TODO load AMQP config from somewhere
     @amqp_connection ||= AMQP.connect
   end
+  
+  private
+    def update_permissions
+      if self.public || @invitee_ids.nil?
+        @invitee_ids = [] # force update even if none is selected
+      end
+      permissions.update_access @invitee_ids
+    end
 end
