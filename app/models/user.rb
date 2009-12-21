@@ -102,6 +102,10 @@ class User < ActiveRecord::Base
     admin || room.public || permissions.find_by_room_id(room.id)
   end
   
+  def permission_without_room_access?(room)
+    admin || permissions.find_by_room_id(room.id)
+  end
+  
   def accessible_rooms
     account.rooms.with_permission(self)
   end

@@ -15,14 +15,6 @@ ActiveRecord::Schema.define(:version => 20091215194758) do
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "plan_id"
-    t.string   "spreedly_token"
-    t.boolean  "active",                    :default => true
-    t.boolean  "on_trial",                  :default => true
-    t.boolean  "recurring",                 :default => false
-    t.datetime "active_until"
-    t.datetime "grace_until"
-    t.boolean  "subscription_info_changed", :default => false
   end
 
   add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true
@@ -95,8 +87,6 @@ ActiveRecord::Schema.define(:version => 20091215194758) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "pastes", ["permalink"], :name => "index_pastes_on_permalink", :unique => true
 
   create_table "permissions", :force => true do |t|
     t.integer  "user_id"

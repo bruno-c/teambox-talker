@@ -4,30 +4,34 @@ class AddPrivateToRooms < ActiveRecord::Migration
     
     Room.reset_column_information
     
-    # Remove orphan rooms
-    Room.find_each { |room| room.destroy unless room.account }
-    Permission.find_each { |permission| permission.destroy unless permission.room && permission.user }
-    
     # Make rooms, for which restricted users have no access, private.
+    say "Making restricted rooms private:"
     User.find_each(:conditions => { :restricted => true, :guest => false }) do |user|
       denied_room = user.account.rooms - user.permissions.map(&:room)
       denied_room.each do |room|
         unless room.private
+          say room.to_s, true
           room.update_attribute :private, true
         end
       end
     end
     
     # Create permission to private rooms for users that had access to all rooms
+    say "Adding permission:"
     User.find_each(:conditions => { :admin => false, :restricted => false, :guest => false }) do |user|
       user.account.rooms.private.each do |room|
+        say "#{user.name} to room #{room.to_s}", true
         user.permissions.create :room => room
       end
     end
     
     # So now, permission to public rooms are useless
+    say "Removing permission to public rooms:"
     Room.find_each(:conditions => { :private => false }) do |room|
-      room.permissions.each(&:destroy)
+      room.permissions.each do |permission|
+        say "#{permission.user.name} to public room #{permission.room.to_s}", true
+        permission.destroy
+      end
     end
     
     remove_column :users, :restricted

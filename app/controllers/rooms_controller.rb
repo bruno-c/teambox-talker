@@ -54,6 +54,8 @@ class RoomsController < ApplicationController
   end
   
   def update
+    params[:room][:invitee_ids] ||= [] # HACK nil if none checked
+    
     if @room.update_attributes(params[:room])
       flash[:notice] = "Nicely Done! Room updated."
       redirect_to rooms_path

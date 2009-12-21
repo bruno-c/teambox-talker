@@ -23,7 +23,7 @@ class Room < ActiveRecord::Base
   named_scope :private, :conditions => { :private => true }
   named_scope :public, :conditions => { :private => false }
   
-  attr_accessible :name, :description, :access, :invitees
+  attr_accessible :name, :description, :access, :invitee_ids
   
   attr_writer :invitee_ids
   after_save :update_permissions
@@ -89,6 +89,10 @@ class Room < ActiveRecord::Base
     topic.publish events.map(&:to_json).join("\n") + "\n", :key => "talker.room.#{id}", :persistent => true
   end
   
+  def to_s
+    "#{name.inspect}@#{account.subdomain}"
+  end
+  
   def self.amqp_connection
     # TODO load AMQP config from somewhere
     @amqp_connection ||= AMQP.connect
@@ -96,9 +100,12 @@ class Room < ActiveRecord::Base
   
   private
     def update_permissions
-      if self.public || @invitee_ids.nil?
+      return unless @invitee_ids
+      
+      if self.public
         @invitee_ids = [] # force update even if none is selected
       end
+      
       permissions.update_access @invitee_ids
     end
 end
