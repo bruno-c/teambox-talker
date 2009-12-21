@@ -408,7 +408,7 @@ a.button, button
   &.negative
     background = !colour_negative
     +emboss(!colour_negative * 0.75 + !black * 0.25)
-    +text_shadow(-1, -1, 0, !colour_negative * 0.75 + !black * 0.25)
+    +text_shadow(0, 0, 0, transparent)
     +opacity(80)
     &:hover
       +opacity(100)

@@ -524,7 +524,7 @@ a.button, button {
     border-left-color: #b59ca7;
     border-bottom-color: #6d3b50;
     border-right-color: #6d3b50;
-    text-shadow: -1px -1px 0px #6d3b50;
+    text-shadow: 0px 0px 0px transparent;
     filter: alpha(opacity=80);
     opacity: 0.8;
     -moz-opacity: 0.8; }
