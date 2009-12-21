@@ -10,7 +10,7 @@ String.prototype.retardedHash = function() {
 }
 
 function assetHost(path) {
-  var domain = location.host.match(/^\w+\.(.*)$/)[1];
+  var domain = "talkerapp.com";
   var id = path.retardedHash() % 4;
   return "//assets" + id + "." + domain + path;
 }
