@@ -26,9 +26,9 @@ development:
   price: 24.0
 - !ruby/object:Plan 
   description: 
-  feature_level: kickstart
+  feature_level: bootstrap
   id: 3316
-  name: Kickstart
+  name: Bootstrap
   plan_type: regular
   price: 8.0
 - !ruby/object:Plan 
@@ -55,9 +55,9 @@ test:
   price: 24.0
 - !ruby/object:Plan 
   description: 
-  feature_level: kickstart
+  feature_level: bootstrap
   id: 3316
-  name: Kickstart
+  name: Bootstrap
   plan_type: regular
   price: 8.0
 - !ruby/object:Plan 

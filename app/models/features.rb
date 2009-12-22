@@ -32,31 +32,31 @@ class Features
                   :private_rooms   => false,
                   :log_history     => 1.week
   
-  new :kickstart, :ssl             => true,
-                  :max_connections => 12,
+  new :bootstrap, :ssl             => true,
+                  :max_connections => 8,
                   :max_storage     => 1.gigabytes,
                   :feeds           => 5,
                   :private_rooms   => false,
                   :log_history     => 1.month
   
   new :startup,   :ssl             => true,
-                  :max_connections => 30,
+                  :max_connections => 12,
                   :max_storage     => 3.gigabytes,
                   :feeds           => 10,
                   :private_rooms   => true,
                   :log_history     => nil
   
   new :basic,     :ssl             => true,
-                  :max_connections => 60,
+                  :max_connections => 30,
                   :max_storage     => 10.gigabytes,
-                  :feeds           => 30,
+                  :feeds           => 20,
                   :private_rooms   => true,
                   :log_history     => nil
   
   new :premium,   :ssl             => true,
-                  :max_connections => 100,
+                  :max_connections => 60,
                   :max_storage     => 25.gigabytes,
-                  :feeds           => 100,
+                  :feeds           => 40,
                   :private_rooms   => true,
                   :log_history     => nil
 

@@ -1455,7 +1455,6 @@ div.log_browser {
       -moz-border-radius-bottomleft: 5px;
       -webkit-border-bottom-left-radius: 5px; }
     #account table#plans tfoot th strong {
-      font-size: 12px;
       color: #269ed6; }
     #account table#plans tfoot th .will_expire {
       font-size: 10px;
@@ -1463,11 +1462,14 @@ div.log_browser {
       #account table#plans tfoot th .will_expire strong {
         color: #924f6b; }
   #account table#plans tbody th, #account table#plans tbody td {
-    border-bottom: dotted 1px silver; }
+    border-bottom: dotted 1px silver;
+    padding: 6px; }
+  #account table#plans tbody th .description {
+    font-size: 10px;
+    color: gray; }
   #account table#plans tbody td {
-    padding: 6px;
     text-align: center;
-    font-size: 12px; }
+    font-size: 16px; }
     #account table#plans tbody td img {
       position: relative;
       top: 2px; }

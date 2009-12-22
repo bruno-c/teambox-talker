@@ -60,12 +60,24 @@
           </tr>
         </tfoot>
         <tbody>
-          <%= feature_line("Online Users") { |features| pluralize features.max_connections, "user" } %>
-          <%= feature_line("File Upload Space") { |features| number_to_human_size features.max_storage } %>
-          <%= feature_line("Feeds") { |features| pluralize features.feeds, "feed" } %>
-          <%= feature_line("Private Rooms") { |features| features.private_rooms ? image_tag("icons/tick.png") : image_tag("icons/cross.png") } %>
-          <%= feature_line("Log History") { |features| features.log_history ? features.log_history.inspect : "Unlimited" } %>
-          <%= feature_line("Enhanced security <small>(SSL)</small>") { |features| features.ssl ? image_tag("icons/tick.png") : image_tag("icons/cross.png") } %>
+          <%= feature_line("Online Users",
+                           "Number of users simultaneously connected to your account."
+                          ) { |features| pluralize features.max_connections, "user" } %>
+          <%= feature_line("File Upload Space",
+                           "Total size of files you can upload in across all rooms."
+                          ) { |features| number_to_human_size features.max_storage } %>
+          <%= feature_line("Feeds",
+                           "Number of feeds you can received notifications from."
+                          ) { |features| pluralize features.feeds, "feed" } %>
+          <%= feature_line("Private Rooms",
+                           "Private rooms can only be accessed by people you invite."
+                          ) { |features| features.private_rooms ? image_tag("icons/tick.png") : image_tag("icons/cross.png") } %>
+          <%= feature_line("Chat Log History",
+                           "Number of days we keep your chat history before deleting it."
+                          ) { |features| features.log_history ? features.log_history.inspect : "Unlimited" } %>
+          <%= feature_line("Enhanced security",
+                           "All data sent between Talker and your computer is encrypted."
+                          ) { |features| features.ssl ? image_tag("icons/tick.png") : image_tag("icons/cross.png") } %>
         </tbody>
       </table>
     <% end %>

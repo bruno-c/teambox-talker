@@ -1282,7 +1282,6 @@ div.log_browser
         &.current
           +rounded_corners("bottom", 5)
         strong
-          +font_size("small")
           color = !accent_colour
         .will_expire
           +font_size("tiny")
@@ -1292,10 +1291,14 @@ div.log_browser
     tbody
       th, td
         border-bottom = dotted 1px !light_grey
-      td
         padding: 6px
+      th
+        .description
+          +font_size("tiny")
+          color = !grey
+      td
         text-align: center
-        +font_size("small")
+        +font_size("large")
         img
           position: relative
           top: 2px

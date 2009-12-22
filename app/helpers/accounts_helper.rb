@@ -7,9 +7,10 @@ module AccountsHelper
       :class => "meter")
   end
   
-  def feature_line(description, &block)
+  def feature_line(title, description=nil, &block)
     content_tag(:tr,
-      content_tag(:th, description) +
+      content_tag(:th, title +
+                       content_tag(:div, description, :class => "description")) +
       Plan.all.map { |plan|
         content_tag(:td, block.call(plan.features), :class => ("current" if current_account.plan == plan))
       }.join
