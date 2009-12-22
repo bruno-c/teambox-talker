@@ -110,4 +110,10 @@ class UserTest < ActiveSupport::TestCase
   def test_create_talker_tokens
     assert_not_nil create_user.talker_token
   end
+  
+  def test_guest_have_permission_to_room
+    assert_difference "Permission.count", 1 do
+      create_user(:guest => true, :room => rooms(:main))
+    end
+  end
 end

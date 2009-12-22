@@ -29,7 +29,10 @@ class User < ActiveRecord::Base
   named_scope :active, :conditions => { :state => "active" }
   named_scope :registered, :conditions => { :guest => false }
   named_scope :by_name, :order => :name
-    
+  
+  # Ensure guests have access to the room
+  after_create { |u| u.permissions.create :room => u.room if u.guest }
+  
   
   acts_as_state_machine :initial => :pending
   state :pending
