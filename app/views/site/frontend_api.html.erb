@@ -27,6 +27,17 @@
   <ul>
     <li>Integrate with your favorite SSB (Site Specific Browser) and receive notifications for the Talker events you want.</li>
   </ul>
+  
+  <h4>Enrich the experience</h4>
+  
+  <p>You can write enhancements to the UI in Javascript.  We've included the following jQuery plugins on the chat room page.</p>
+  
+  <ul>
+    <li><a href="http://documentcloud.github.com/underscore/" target="_blank">Underscore</a></li>
+    <li><a href="http://github.com/garyharan/jquery-replace-utilities" target="_blank">jQuery Replace</a></li>
+    <li><a href="http://github.com/garyharan/jQuery-caret-utilities" target="_blank">jQuery Caret Utility</a></li>
+    <li>and many, many more... (just click view source and see for yourself).</li>
+  </ul>
 
   <h3>Anatomy of a plugin.</h3>
 
@@ -168,6 +179,12 @@
 
   <pre><code>Talker.insertNotice(talkerEvent, 'loves tango');</code></pre>
 
+  <h4>Talker.getMessageBox() => returns jQuery object</h4>
+
+  <p>Reference the message box as you would any textarea.  Following example shows you how to say hello in the textarea:</p>
+  
+  <pre><code>Talker.getMessageBox().val('hello');</code></pre>
+  
   <h4>Talker.getLastRow() => returns jQuery object</h4>
 
   <p>Useful if you want to update or style the previously inserted row.</p>
@@ -269,4 +286,37 @@ Talker.notify(talkerEvent);</code></pre>
   <p>Returns only the user names as an array.</p>
 
   <pre><code>['John', 'David']</code></pre>
+  
+  <h3>Advanced Concepts</h3>
+  
+  <p>If you've made it this far down this page it means you are really hardcore.  We like that.</p>
+  
+  <h4>Creating your own autocompleters</h4>
+  
+  <p>If you checkout the source code for the username and command autocompleters you'll notice that we've got something to make it easier to roll your own.  Here is an autocompleter that works with an underscore:</p>
+  
+  <pre><code>Talker.getMessageBox().autocompleter("_", ['parrot', 'plum', 'pear', 'plum', 'plantain']);</code></pre>
+
+  <p>If you want to use an array whose value depends on external factors and updates in real time simply return in in a function and we'll execute that function in the autocompleter code to get the most recent values.</p>
+  
+  <pre><code>Talker.getMessageBox().autocompleter("@", function(){
+  return Talker.getUsernames();
+});</code></pre>
+
+  <p>or if you are a JS ninja you can simply send the reference to that method:</p>
+  
+<pre><code>Talker.getMessageBox().autocompleter("@", Talker.getUsernames);</code></pre>
+  
+  <h4>Using jQuery Live</h4>
+  
+  <p>jQuery Live plugin allows you to create dynamic events on elements that might not be on the page at the time you create the handler.  In the following example we allow you to click on a user name in the right side bar to send a private message.</p>
+  
+  <pre><code>var msgBox = Talker.getMessageBox();
+
+$('#people li').live('click', function(){
+  msgBox.val('/msg @' + $(this).attr('user_name') + ' ' + msgBox.val() + ' ');
+}).live('mouseup', function(){
+  msgBox.setCaretPosition(msgBox.val().length);
+});</code></pre>
+  
 </div>

@@ -14,21 +14,10 @@
         <%= f.label :admin, "Administrator: can edit rooms, feeds, plugins and manage users.", :class => "inline" %>
       </p>
       
-      <h3>Room permissions</h3>
-      <p>
-        This user will only be able to access the following rooms:
-      </p>
-  
-      <ul id="room_access">
-      <% @rooms.each do |room| %>
-        <li><%= check_box_tag "room_access[]", room.id, @user.permission?(room), :id => dom_id(room) %> <%= label_tag dom_id(room), room.name, :class => "inline" %></li>
-      <% end %>
-      </ul>
-      
       <p class="actions">
         <%= buttons "Update", :cancel_to => users_path %>
       </p>
-
+      
       <fieldset id="suspend">
         <h3>Suspend access</h3>
         
@@ -46,9 +35,17 @@
           </p>
       
           <p>
-            <%= link_to "Suspend access", suspend_user_path(@user), :class => "button negative icon delete", :method => :delete %>
+            <%= link_to "Suspend access", suspend_user_path(@user), :class => "button neutral icon cancel", :method => :delete %>
           </p>
         <% end %>
+      </fieldset>
+      
+      <fieldset id="delete">
+        <h3>Delete user</h3>
+        
+        <p>To completely remove the user from the system you can delete his account.</p>
+        
+        <%= link_to "Delete this user", user_path(@user), :confirm => "Are your sure?", :method => :delete, :class => "button negative icon delete" %>
       </fieldset>
       
     <% end %>

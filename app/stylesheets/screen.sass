@@ -219,6 +219,11 @@ body#rooms_controller.show
     div.panel
       margin: 0
       div
+        &.header
+          div.actions
+            float: right
+            position: relative
+            top: 5px
         &.content
           min-height: 80px
           p
@@ -295,7 +300,10 @@ form
     line-height: 28px
     margin: 0 0 10px
     &.submit
+      margin-top: 16px
       margin-bottom: 0
+    &.grouped
+      margin-top: -10px
   div.complex_field
     line-height: 28px
     margin: 0 0 1.5em
@@ -400,7 +408,7 @@ a.button, button
   &.negative
     background = !colour_negative
     +emboss(!colour_negative * 0.75 + !black * 0.25)
-    +text_shadow(-1, -1, 0, !colour_negative * 0.75 + !black * 0.25)
+    +text_shadow(0, 0, 0, transparent)
     +opacity(80)
     &:hover
       +opacity(100)
@@ -623,13 +631,14 @@ a.button, button
                 float: left
                 position: relative
                 margin: 0 5px 0 7px
-                position: relative
-                top: -1px
                 img
                   height: 16px
                   width: 16px
+                  color = !light_grey
+                  font-size: 13px
               a.title
                 font-weight: bold
+                +fade(!light_grey * 0.33 + !white * 0.66)
               small
                 +font_size("small")
                 color = !grey
@@ -776,6 +785,7 @@ a.button, button
     position: relative
     overflow: hidden
     textarea
+      +rounded_corners("left", 5)
       resize: none
       float: left
       z-index: 10
@@ -803,11 +813,11 @@ a.button, button
         text-align: center
         vertical-align: middle
         &#send
-          +rounded_corners("top_right", 7)
+          +rounded_corners("top_right", 5)
           +font_size("medium")
           padding: 11px 17px
         &#upload
-          +rounded_corners("bottom_right", 7)
+          +rounded_corners("bottom_right", 5)
           +font_size("tiny")
           margin-top: -1px
           padding: 7px 16px 6px
@@ -886,13 +896,16 @@ div.panel
       span.actions
         float: right
   .tag
-    +font_size("small")
-    :background-color = !alt_colour
-    :color = !white
-    :padding 2px 4px
-    :position relative
     :top 5px
-    +rounded_corners("all", 3)
+
+span.tag
+  +rounded_corners("all", 3)
+  +font_size("tiny")
+  :background-color = !alt_colour
+  :color = !white
+  :padding 1px 3px
+  :position relative
+
 
 #error_page
   h2
@@ -1227,10 +1240,12 @@ div.log_browser
     &.next
       float: right
 
-#permissions
+#invitees
   ul
     list-style: none
+    margin-left: 20px
     margin-bottom: 20px
+    margin-top: -10px
 
 #account
   ul#plans

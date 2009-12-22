@@ -2,18 +2,11 @@ class Permission < ActiveRecord::Base
   belongs_to :room
   belongs_to :user
   
-  validates_uniqueness_of :room_id, :scope => :user_id
+  validates_uniqueness_of :user_id, :scope => :room_id
+  validate { |p| p.errors.add(:user, "can't be an admin") if p.user && p.user.admin }
   
-  after_create { |p| p.user.update_attribute :restricted, true }
-  after_destroy { |p| p.user.update_attribute :restricted, false if p.user.permissions.count.zero? }
-  
-  named_scope :for_room, proc { |room| { :conditions => { :room_id => room.id } } }
-  
-  def self.to?(room)
-    for_room(room).present?
-  end
-  
-  def self.allow?(user, room)
-    user.admin || !user.restricted || user.permissions.to?(room)
+  def self.update_access(user_ids)
+    destroy_all((["user_id NOT IN (?)", user_ids] unless user_ids.empty?))
+    user_ids.each { |user_id| create :user_id => user_id }
   end
 end

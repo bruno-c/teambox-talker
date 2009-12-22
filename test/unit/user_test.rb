@@ -111,13 +111,9 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil create_user.talker_token
   end
   
-  def test_room_access
-    room = create_room(:account => users(:quentin).account)
+  def test_guest_have_permission_to_room
     assert_difference "Permission.count", 1 do
-      users(:quentin).room_access = [room]
-    end
-    assert_difference "Permission.count", -1 do
-      users(:quentin).room_access = []
+      create_user(:guest => true, :room => rooms(:main))
     end
   end
 end

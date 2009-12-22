@@ -7,19 +7,27 @@ class Room < ActiveRecord::Base
   has_many :guests, :class_name => "User", :dependent => :destroy
   has_many :attachments, :class_name => "::Attachment", # FIX class w/ Paperclip::Attachment
                          :dependent => :destroy
+  has_many :permissions
   belongs_to :account
   
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :account_id
   
   named_scope :with_permission, proc { |user|
-    if user.can_access_all_rooms?
+    if user.admin
       {}
     else
-      # TODO maybe use a JOIN someday...
-      { :conditions => { :id => user.permissions.map(&:room_id) } }
+      { :conditions => ["public = 1 OR id IN (?)", user.permissions.map(&:room_id)] }
     end
   }
+  named_scope :private, :conditions => { :private => true }
+  named_scope :public, :conditions => { :private => false }
+  
+  attr_accessible :name, :description, :access, :invitee_ids
+  
+  attr_writer :invitee_ids
+  after_save :update_permissions
+  
   
   def create_public_token!
     self.public_token = ActiveSupport::SecureRandom.hex(3)
@@ -35,6 +43,18 @@ class Room < ActiveRecord::Base
   
   def guest_allowed?
     !!public_token
+  end
+  
+  def access=(v)
+    self.private = (v == "private")
+  end
+  
+  def access
+    self.private ? "private" : "public"
+  end
+  
+  def public
+    !self.private
   end
   
   def to_json(options = {})
@@ -69,8 +89,23 @@ class Room < ActiveRecord::Base
     topic.publish events.map(&:to_json).join("\n") + "\n", :key => "talker.room.#{id}", :persistent => true
   end
   
+  def to_s
+    "#{name.inspect}@#{account.subdomain}"
+  end
+  
   def self.amqp_connection
     # TODO load AMQP config from somewhere
     @amqp_connection ||= AMQP.connect
   end
+  
+  private
+    def update_permissions
+      return unless @invitee_ids
+      
+      if self.public
+        @invitee_ids = [] # force update even if none is selected
+      end
+      
+      permissions.update_access @invitee_ids
+    end
 end

@@ -37,7 +37,7 @@ class InvitesController < ApplicationController
       user = current_account.users.build(:email => email)
       user.generate_name
       if user.save
-        user.room_access = [@room]
+        user.permissions.create :room => @room
         send_invitation user
         success_count += 1
       else

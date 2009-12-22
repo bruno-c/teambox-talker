@@ -1,27 +1,30 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
 class PermissionTest < ActiveSupport::TestCase
+  def test_cant_add_admin
+    permission = rooms(:main).permissions.create(:user => users(:quentin))
+    assert_not_nil permission.errors.on(:user)
+  end
+  
   def test_admin_can_access_all_rooms
     assert users(:quentin).permission?(rooms(:main))
     assert users(:quentin).permission?(Room.new)
   end
   
-  def test_restricted_user_can_access_specified_rooms
+  def test_everyone_can_access_public
+    Permission.delete_all
+    rooms(:main).update_attribute :private, false
     assert users(:aaron).permission?(rooms(:main))
   end
   
-  def test_creating_permission_sets_user_to_restricted
+  def test_restricted_user_can_access_private_rooms
     Permission.delete_all
-    users(:aaron).update_attribute :restricted, false
-    
-    users(:aaron).permissions.create! :room => rooms(:main)
-    assert users(:aaron).reload.restricted
+    rooms(:main).update_attribute :private, true
+    assert ! users(:aaron).permission?(rooms(:main))
   end
-
-  def test_destroyinh_permission_unsets_user_from_restricted
-    users(:aaron).update_attribute :restricted, true
-    
-    users(:aaron).permissions.destroy_all
-    assert ! users(:aaron).reload.restricted
+  
+  def test_update_access
+    Permission.update_access [users(:quentin).id]
+    assert_equal 0, Permission.count
   end
 end

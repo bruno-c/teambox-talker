@@ -35,7 +35,7 @@ module Talker
           AND users.state = 'active'
           AND rooms.id = #{room_id}
           AND (users.admin = 1
-               OR users.restricted = 0
+               OR rooms.private = 0
                OR EXISTS (SELECT *
                           FROM permissions
                           WHERE user_id = users.id

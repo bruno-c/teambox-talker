@@ -13,6 +13,12 @@ class RoomsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:rooms)
   end
   
+  def test_index_json
+    get :index, :format => "json"
+    assert_response :success
+    assert_not_nil assigns(:rooms)
+  end
+  
   def test_index_with_limits
     Account.any_instance.stubs(:full?).returns(true)
     Account.any_instance.stubs(:storage_full?).returns(true)
@@ -30,6 +36,12 @@ class RoomsControllerTest < ActionController::TestCase
   
   def test_show
     get :show, :id => @room
+    assert_response :success
+    assert_equal assigns(:room), @room
+  end
+  
+  def test_show_json
+    get :show, :id => @room, :format => "json"
     assert_response :success
     assert_equal assigns(:room), @room
   end

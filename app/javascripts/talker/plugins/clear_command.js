@@ -10,7 +10,7 @@ Talker.ClearCommand = function() {
       while($('#log tr').length > 1) {
         $('#log tr:first').remove();
       }
-      $('#msgbox').val('');
+      Talker.getMessageBox().val('');
       return false;
     }
   }

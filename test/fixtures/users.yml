@@ -26,7 +26,6 @@ aaron:
   state:                     active
   admin:                     false
   time_zone:                 "Atlantic Time (Canada)"
-  restricted:                true
 
 talker:
   name:                      Talker

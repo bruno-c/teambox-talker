@@ -11,6 +11,10 @@ class RoomsController < ApplicationController
   
   def index
     @rooms = current_account.rooms.with_permission(current_user)
+    respond_to do |format|
+      format.html
+      format.json { render :json => @rooms }
+    end
   end
   
   def show
@@ -23,11 +27,14 @@ class RoomsController < ApplicationController
       @rooms = []
       @events = @room.events.recent.since(@room.opened_at).reverse
     else
-      @rooms = current_account.rooms.with_permission(current_user)
+      @rooms = current_user.accessible_rooms
       @events = @room.events.recent.reverse
     end
     
-    render :layout => "room"
+    respond_to do |format|
+      format.html { render :layout => "room" }
+      format.json { render :json => @room.to_json(:include => :users) }
+    end
   end
 
   def new
@@ -48,6 +55,8 @@ class RoomsController < ApplicationController
   end
   
   def update
+    params[:room][:invitee_ids] ||= [] # HACK nil if none checked
+    
     if @room.update_attributes(params[:room])
       flash[:notice] = "Nicely Done! Room updated."
       redirect_to rooms_path

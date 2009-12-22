@@ -7,6 +7,9 @@
   <% content_tag_for :li, room do %>
     <div class="panel">
       <div class="header">
+        <div class="actions">
+          <%= image_tag "icons/lock.png", :title => "This room is private, only allowed users can access it" if room.private %>
+        </div>
         <h3><%= link_to h(room.name), room, :accesskey => i+1 %></h3>
       </div>
       

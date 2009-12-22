@@ -26,7 +26,12 @@ class User < ActiveRecord::Base
   # anything else you want your user to change should be added here.
   attr_accessible :email, :name, :password, :password_confirmation, :time_zone
   
+  named_scope :active, :conditions => { :state => "active" }
   named_scope :registered, :conditions => { :guest => false }
+  named_scope :by_name, :order => :name
+  
+  # Ensure guests have access to the room
+  after_create { |u| u.permissions.create :room => u.room if u.guest }
   
   
   acts_as_state_machine :initial => :pending
@@ -96,23 +101,16 @@ class User < ActiveRecord::Base
     save(false)
   end
   
-  def can_access_all_rooms?
-    admin || !restricted
-  end
-  
   def permission?(room)
-    permissions.allow?(self, room)
+    admin || room.public || permissions.find_by_room_id(room.id)
   end
   
-  def room_access=(allowed_rooms)
-    Permission.transaction do
-      permissions.clear
-      return if account.room_ids.sort == allowed_rooms.map(&:id).sort
-      
-      account.rooms.each do |room|
-        permissions.create :room => room if allowed_rooms.include?(room)
-      end
-    end
+  def permission_without_room_access?(room)
+    admin || permissions.find_by_room_id(room.id)
+  end
+  
+  def accessible_rooms
+    account.rooms.with_permission(self)
   end
   
   def to_json(options = {})

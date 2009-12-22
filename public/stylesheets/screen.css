@@ -340,6 +340,10 @@ body#rooms_controller.show #content {
     float: left; }
     #rooms li div.panel {
       margin: 0; }
+      #rooms li div.panel div.header div.actions {
+        float: right;
+        position: relative;
+        top: 5px; }
       #rooms li div.panel div.content {
         min-height: 80px; }
         #rooms li div.panel div.content p.description {
@@ -410,7 +414,10 @@ form p {
   line-height: 28px;
   margin: 0 0 10px; }
   form p.submit {
+    margin-top: 16px;
     margin-bottom: 0; }
+  form p.grouped {
+    margin-top: -10px; }
 form div.complex_field {
   line-height: 28px;
   margin: 0 0 1.5em; }
@@ -517,7 +524,7 @@ a.button, button {
     border-left-color: #b59ca7;
     border-bottom-color: #6d3b50;
     border-right-color: #6d3b50;
-    text-shadow: -1px -1px 0px #6d3b50;
+    text-shadow: 0px 0px 0px transparent;
     filter: alpha(opacity=80);
     opacity: 0.8;
     -moz-opacity: 0.8; }
@@ -749,14 +756,31 @@ a.button, button {
         #chat_log table tr.feed td.message blockquote a.favicon {
           float: left;
           position: relative;
-          margin: 0 5px 0 7px;
-          position: relative;
-          top: -1px; }
+          margin: 0 5px 0 7px; }
           #chat_log table tr.feed td.message blockquote a.favicon img {
             height: 16px;
-            width: 16px; }
+            width: 16px;
+            color: silver;
+            font-size: 13px; }
         #chat_log table tr.feed td.message blockquote a.title {
-          font-weight: bold; }
+          font-weight: bold;
+          position: relative;
+          display: block;
+          overflow: hidden;
+          line-height: 1em;
+          height: 1em;
+          white-space: nowrap; }
+          #chat_log table tr.feed td.message blockquote a.title b.fade {
+            background: #e7e7e7 none repeat scroll 0% 0%;
+            display: block;
+            position: absolute;
+            box-shadow: -20px 0px 20px #e7e7e7;
+            -webkit-box-shadow: -20px 0px 20px #e7e7e7;
+            -moz-box-shadow: -20px 0px 20px #e7e7e7;
+            width: 3em;
+            height: 2em;
+            top: -8px;
+            right: -30px; }
         #chat_log table tr.feed td.message blockquote small {
           font-size: 12px;
           color: gray; }
@@ -894,6 +918,12 @@ a.button, button {
     position: relative;
     overflow: hidden; }
     #message_form form.fade textarea {
+      border-bottom-left-radius: 5px;
+      -moz-border-radius-bottomleft: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      border-top-left-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -webkit-border-top-left-radius: 5px;
       resize: none;
       float: left;
       z-index: 10;
@@ -923,15 +953,15 @@ a.button, button {
         text-align: center;
         vertical-align: middle; }
         #message_form form.fade div.options a.button#send {
-          border-top-right-radius: 7px;
-          -moz-border-radius-topright: 7px;
-          -webkit-border-top-right-radius: 7px;
+          border-top-right-radius: 5px;
+          -moz-border-radius-topright: 5px;
+          -webkit-border-top-right-radius: 5px;
           font-size: 14px;
           padding: 11px 17px; }
         #message_form form.fade div.options a.button#upload {
-          border-bottom-right-radius: 7px;
-          -moz-border-radius-bottomright: 7px;
-          -webkit-border-bottom-right-radius: 7px;
+          border-bottom-right-radius: 5px;
+          -moz-border-radius-bottomright: 5px;
+          -webkit-border-bottom-right-radius: 5px;
           font-size: 10px;
           margin-top: -1px;
           padding: 7px 16px 6px;
@@ -1023,15 +1053,17 @@ div.panel {
     div.panel div.footer span.actions {
       float: right; }
   div.panel .tag {
-    font-size: 12px;
-    background-color: #e5952b;
-    color: white;
-    padding: 2px 4px;
-    position: relative;
-    top: 5px;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px; }
+    top: 5px; }
+
+span.tag {
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  font-size: 10px;
+  background-color: #e5952b;
+  color: white;
+  padding: 1px 3px;
+  position: relative; }
 
 #error_page h2 {
   text-align: center; }
@@ -1376,8 +1408,11 @@ div.log_browser {
     div.log_browser a.next {
       float: right; }
 
-#permissions ul {
+#invitees ul {
   list-style: none;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  margin-top: -10px; }
   margin-bottom: 20px; }
 
 #account ul#plans {

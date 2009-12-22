@@ -2,7 +2,7 @@
   /** Add CLI-style autocomplete to an element.
       options:
         trigger: char that will trigger autocompletion.
-        finder: finction called when an autocomplete is done.
+        finder: function that returns an array of possibilities
         options.startOnly: true to trigger only at the start of the content.
   **/
   $.fn.autocompleter = function(trigger, finder, options) {
@@ -36,7 +36,10 @@
           if (nameEnd == -1) nameEnd = position;
 
           var pattern = value.substring(nameStart, nameEnd);
-          var results = finder(pattern);
+          var results = _.select((typeof finder == 'function' ? finder() : finder), function(name) { 
+            var regexp = new RegExp("^" + pattern, "i");
+            return name.match(regexp);
+          });
           var name = cycle(results, e.shiftKey);
           if (name) {
             var completion = name.substring(pattern.length);
