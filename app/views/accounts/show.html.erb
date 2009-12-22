@@ -64,7 +64,7 @@
                            "Number of users simultaneously connected to your account."
                           ) { |features| pluralize features.max_connections, "user" } %>
           <%= feature_line("File Upload Space",
-                           "Total size of files you can upload in across all rooms."
+                           "Total size of files you can upload across all rooms."
                           ) { |features| number_to_human_size features.max_storage } %>
           <%= feature_line("Feeds",
                            "Number of feeds you can received notifications from."

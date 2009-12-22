@@ -69,4 +69,16 @@ class RoomTest < ActiveSupport::TestCase
     @room.save
     assert_equal 0, @room.permissions.count
   end
+  
+  def test_cant_create_private_room_if_plan_is_limited
+    accounts(:master).plan = Plan.free
+    accounts(:master).save
+    assert_not_nil create_room(:private => true, :account => accounts(:master)).errors.on(:base)
+  end
+
+  def test_can_create_private_room_if_plan_permists
+    accounts(:master).plan = Plan.find_by_name("Startup")
+    accounts(:master).save
+    assert_nil create_room(:private => true, :account => accounts(:master)).errors.on(:base)
+  end
 end

@@ -10,8 +10,11 @@ class Room < ActiveRecord::Base
   has_many :permissions
   belongs_to :account
   
-  validates_presence_of :name
+  validates_presence_of   :name
   validates_uniqueness_of :name, :scope => :account_id
+  
+  validates_presence_of   :account_id
+  validate_on_create      :respect_private_rooms_limit
   
   named_scope :with_permission, proc { |user|
     if user.admin
@@ -107,5 +110,11 @@ class Room < ActiveRecord::Base
       end
       
       permissions.update_access @invitee_ids
+    end
+    
+    def respect_private_rooms_limit
+      if self.private && !account.features.private_rooms
+        errors.add :base, "Your current plan do not allow private rooms. Upgrade your plan to crete a private room."
+      end
     end
 end

@@ -8,7 +8,7 @@ module ModelFactory
   end
   
   def hash_for_room(attributes={})
-    { :name => 'Awesome' }.merge(attributes)
+    { :name => 'Awesome', :account => accounts(:master) }.merge(attributes)
   end
   
   def hash_for_paste(attributes={})

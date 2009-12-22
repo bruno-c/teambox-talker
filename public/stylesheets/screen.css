@@ -597,9 +597,6 @@ a.button, button {
 #sidebar .info {
   margin: 20px 0;
   border: solid 1px white; }
-  #sidebar .info.warning {
-    border: solid 2px #fe7f7f;
-    background-color: #fee5e5; }
 
 #people {
   overflow: hidden; }
@@ -1310,6 +1307,9 @@ div.info {
   -moz-box-shadow: 1px 1px 2px #d2d2d2; }
   div.info p {
     margin-bottom: 4px; }
+  div.info.warning {
+    border: solid 2px #fe7f7f;
+    background: #fee5e5 url('/images/icons/exclamation-red.png') no-repeat 10px 10px; }
 
 #guest_login .user_list {
   padding: 10px;

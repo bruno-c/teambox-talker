@@ -469,9 +469,6 @@ a.button, button
   .info
     margin: 20px 0
     border = solid 1px !white
-    &.warning
-      border = solid 2px !red * 0.5 + !white * 0.5
-      background-color = !red * 0.1 + !white * 0.9
 
 // People
 #people
@@ -1139,6 +1136,9 @@ div.info
   +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
   p
     margin-bottom: 4px
+  &.warning
+    border = solid 2px !red * 0.5 + !white * 0.5
+    background = !red * 0.1 + !white * 0.9 url("/images/icons/exclamation-red.png") "no-repeat" 10px 10px
 
 #guest_login
   .user_list

@@ -43,9 +43,11 @@
 </div>
 
 <% content_for :sidebar do %>
+  <% if admin? %>
   <div id="actions">
     <%= link_to "Add a room", new_room_path, :title => "Add a room", :class => "button add" %>
   </div>
+  <% end %>
   
   <%= render :partial => "limit", :locals => { :feature => "simultaneous connections",
                                               :full => current_account.full? } if current_account.full?(1) %>
