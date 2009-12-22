@@ -34,6 +34,11 @@ class AddPrivateToRooms < ActiveRecord::Migration
       end
     end
     
+    say "Adding permission to guests"
+    User.find_each(:conditions => { :guest => true }) do |user|
+      user.permissions.create :room => user.room
+    end
+    
     remove_column :users, :restricted
   end
 
