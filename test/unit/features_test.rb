@@ -12,6 +12,6 @@ class FeaturesTest < ActiveSupport::TestCase
 
   def test_basic
     assert Features[:basic].ssl
-    assert_equal 12, Features[:basic].max_connections
+    assert_not_equal 0, Features[:basic].max_connections
   end
 end

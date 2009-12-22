@@ -597,6 +597,8 @@ a.button, button {
 #sidebar .info {
   margin: 20px 0;
   border: solid 1px white; }
+  #sidebar .info.warning {
+    border: solid 2px #fe7f7f; }
 
 #people {
   overflow: hidden; }

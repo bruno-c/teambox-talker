@@ -8,9 +8,12 @@ class Feed < ActiveRecord::Base
   belongs_to :room
   belongs_to :account
   
-  validates_presence_of :url
+  validates_presence_of   :url
   validates_uniqueness_of :url, :scope => :room_id
-  validates_format_of :url, :with => /\A(https?:\/\/|www\.)[^\s<]*\z/i
+  validates_format_of     :url, :with => /\A(https?:\/\/|www\.)[^\s<]*\z/i
+  
+  validates_presence_of   :account_id
+  validate_on_create      :respect_limit
   
   attr_encrypted :password, :key => ENCRYPT_KEY
   
@@ -176,6 +179,12 @@ class Feed < ActiveRecord::Base
   end
   
   private
+    def respect_limit
+      if account.feeds_full?
+        errors.add :base, "You've reached your feeds limit. Upgrade your plan to raise that limit."
+      end
+    end
+    
     # Get the current time (GMT or local depending on DB)
     # Note: This does not ping the DB to get the time, so all your clients
     # must have syncronized clocks.

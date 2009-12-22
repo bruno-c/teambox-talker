@@ -29,9 +29,15 @@
 </div>
 
 <% content_for :sidebar do %>
+  <% unless current_account.feeds_full? %>
   <div id="actions">
     <%= link_to "Add a feed", new_feed_path, :title => "Add a feed", :class => "button add" %>
   </div>
+  <% end %>
+  
+  <%= render :partial => "shared/limit",
+             :locals => { :feature => "feeds",
+                          :full => current_account.feeds_full? } if current_account.feeds_full?(1) %>
   
   <div class="info">
     <p>You can send a notification to a room each time a feed is updated.</p>

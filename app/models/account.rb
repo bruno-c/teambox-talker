@@ -35,9 +35,13 @@ class Account < ActiveRecord::Base
   def full?(distance=0)
     connections.count + distance >= features.max_connections
   end
-  
+
   def storage_full?(distance=0)
     used_storage + distance >= features.max_storage
+  end
+  
+  def feeds_full?(distance=0)
+    feeds.count + distance >= features.feeds
   end
   
   def create_default_rooms

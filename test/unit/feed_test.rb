@@ -90,4 +90,16 @@ class FeedTest < ActiveSupport::TestCase
     assert_nil feed.last_modified_at
     assert_not_nil feed.last_error
   end
+  
+  def test_cant_create_if_limit_is_reached
+    accounts(:master).plan = Plan.free
+    accounts(:master).save
+    assert_not_nil create_feed(:account => accounts(:master)).errors.on(:base)
+  end
+
+  def test_can_create_private_room_if_plan_permists
+    accounts(:master).plan = Plan.find_by_name("Basic")
+    accounts(:master).save
+    assert_nil create_feed(:account => accounts(:master)).errors.on(:base)
+  end
 end
