@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
     logout_killing_session!
     flash[:notice] = "You have been logged out."
     
-    if @user.guest
+    if @user && @user.guest
       @user.destroy
       redirect_to public_room_path(@user.room.public_token)
     else
