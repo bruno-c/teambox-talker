@@ -6,6 +6,10 @@ class Features
     LEVELS[level] = self
   end
   
+  def [](name)
+    @features[name]
+  end
+  
   def method_missing(method, *args)
     if @features.key?(method)
       @features[method]
@@ -21,23 +25,39 @@ class Features
   
   # Edit feature level limits here
   
-  new :free,     :ssl => false,
-                 :max_connections => 4,
-                 :max_storage => 10.megabytes
+  new :free,      :ssl             => false,
+                  :max_connections => 4,
+                  :max_storage     => 10.megabytes,
+                  :feeds           => 1,
+                  :private_rooms   => false,
+                  :log_history     => 1.week
   
-  new :basic,    :ssl => true,
-                 :max_connections => 12,
-                 :max_storage => 1.gigabytes
+  new :kickstart, :ssl             => true,
+                  :max_connections => 12,
+                  :max_storage     => 1.gigabytes,
+                  :feeds           => 5,
+                  :private_rooms   => false,
+                  :log_history     => 1.month
   
-  new :plus,     :ssl => true,
-                 :max_connections => 25,
-                 :max_storage => 3.gigabytes
+  new :startup,   :ssl             => true,
+                  :max_connections => 30,
+                  :max_storage     => 3.gigabytes,
+                  :feeds           => 10,
+                  :private_rooms   => true,
+                  :log_history     => nil
   
-  new :premium,  :ssl => true,
-                 :max_connections => 60,
-                 :max_storage => 10.gigabytes
+  new :basic,     :ssl             => true,
+                  :max_connections => 60,
+                  :max_storage     => 10.gigabytes,
+                  :feeds           => 30,
+                  :private_rooms   => true,
+                  :log_history     => nil
   
-  new :max,      :ssl => true,
-                 :max_connections => 100,
-                 :max_storage => 25.gigabytes
+  new :premium,   :ssl             => true,
+                  :max_connections => 100,
+                  :max_storage     => 25.gigabytes,
+                  :feeds           => 100,
+                  :private_rooms   => true,
+                  :log_history     => nil
+
 end

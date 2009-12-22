@@ -6,6 +6,8 @@ namespace :plans do
     SPREEDLY_CONFIG.each_pair do |env, config|
       plans = all_plans[env] = []
       
+      Spreedly.configure config["site"], config["token"]
+      
       Spreedly::SubscriptionPlan.all.each do |plan|
         plans << Plan.new(plan) if plan.enabled
       end

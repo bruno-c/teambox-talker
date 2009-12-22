@@ -1413,28 +1413,82 @@ div.log_browser {
   margin-left: 20px;
   margin-bottom: 20px;
   margin-top: -10px; }
-  margin-bottom: 20px; }
 
-#account ul#plans {
-  margin: 20px; }
+#account div.next_billing {
+  background-color: #e8f4fa;
+  border-top: dotted 1px #92ceea;
+  border-bottom: dotted 1px #92ceea;
+  padding: 10px; }
+#account table#plans {
+  width: 100%;
+  margin: 20px 0; }
+  #account table#plans th.current, #account table#plans td.current {
+    background-color: #e8f4fa; }
+  #account table#plans thead th {
+    width: 120px;
+    text-align: center;
+    font-size: 18px;
+    border-bottom: solid 1px silver;
+    padding: 4px; }
+    #account table#plans thead th.current {
+      font-weight: bold;
+      border-top-left-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -webkit-border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      -moz-border-radius-topright: 5px;
+      -webkit-border-top-right-radius: 5px; }
+    #account table#plans thead th .price {
+      font-size: 12px; }
+      #account table#plans thead th .price small {
+        font-size: 10px;
+        color: gray; }
+  #account table#plans tfoot th {
+    vertical-align: top;
+    padding: 6px;
+    text-align: center; }
+    #account table#plans tfoot th.current {
+      border-bottom-right-radius: 5px;
+      -moz-border-radius-bottomright: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      -moz-border-radius-bottomleft: 5px;
+      -webkit-border-bottom-left-radius: 5px; }
+    #account table#plans tfoot th strong {
+      font-size: 12px;
+      color: #269ed6; }
+    #account table#plans tfoot th .will_expire {
+      font-size: 10px;
+      color: #924f6b; }
+      #account table#plans tfoot th .will_expire strong {
+        color: #924f6b; }
+  #account table#plans tbody th, #account table#plans tbody td {
+    border-bottom: dotted 1px silver; }
+  #account table#plans tbody td {
+    padding: 6px;
+    text-align: center;
+    font-size: 12px; }
+    #account table#plans tbody td img {
+      position: relative;
+      top: 2px; }
 #account p.side_description {
   float: right;
   font-size: 12px;
   color: gray;
   position: relative;
-  top: -2px; }
+  top: 2px; }
 #account div.meter {
+  margin-bottom: 6px;
   border: solid 1px silver;
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px; }
   #account div.meter span {
-    border-bottom-left-radius: 5px;
-    -moz-border-radius-bottomleft: 5px;
-    -webkit-border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -webkit-border-top-left-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     display: block;
     overflow: hidden;
     background: #269ed6; }
+    #account div.meter span.reached {
+      background: #924f6b; }

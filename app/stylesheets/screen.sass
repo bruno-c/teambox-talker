@@ -1248,19 +1248,71 @@ div.log_browser
     margin-top: -10px
 
 #account
-  ul#plans
-    margin: 20px
+  div.next_billing
+    background-color = !accent_colour * 0.1 + !white * 0.9
+    border-top = dotted 1px !accent_colour * 0.5 + !white * 0.5
+    border-bottom = dotted 1px !accent_colour * 0.5 + !white * 0.5
+    padding: 10px
+  table#plans
+    width: 100%
+    margin: 20px 0
+    th, td
+      &.current
+        background-color = !accent_colour * 0.1 + !white * 0.9
+    thead
+      th
+        width: 120px
+        text-align: center
+        +font_size("xlarge")
+        border-bottom = solid 1px !light_grey
+        padding: 4px
+        &.current
+          font-weight: bold
+          +rounded_corners("top", 5)
+        .price
+          +font_size("small")
+          small
+            +font_size("tiny")
+            color = !grey
+    tfoot
+      th
+        vertical-align: top
+        padding: 6px
+        text-align: center
+        &.current
+          +rounded_corners("bottom", 5)
+        strong
+          +font_size("small")
+          color = !accent_colour
+        .will_expire
+          +font_size("tiny")
+          color = !colour_negative
+          strong
+            color = !colour_negative
+    tbody
+      th, td
+        border-bottom = dotted 1px !light_grey
+      td
+        padding: 6px
+        text-align: center
+        +font_size("small")
+        img
+          position: relative
+          top: 2px
   p.side_description
     float: right
     +font_size("small")
     color = !grey
     position: relative
-    top: -2px
+    top: 2px
   div.meter
+    margin-bottom: 6px
     border = solid 1px !light_grey
     +rounded_corners("all", 5)
     span
-      +rounded_corners("left", 5)
+      +rounded_corners("all", 5)
       display: block
       overflow: hidden
       background = !accent_colour
+      &.reached
+        background = !colour_negative

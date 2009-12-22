@@ -2,54 +2,94 @@
   <h2><%= @title = "Your Account" %></h2>
   
   <div class="content">
-    <% form_for @account, :html => { :class => "lw80" } do |f| %>
-      <%= f.error_messages %>
+    <h3>Subscription Plan</h3>
+    <% if @account.subscription_info_changed %>
+      <div class="info">
+        Your subscription is being updated, <%= link_to_function "refresh", "location.reload(true)" %> or come back in a few ...
+      </div>
+    <% else %>
       
-      <h3>Subscription Plan</h3>
-      <% if @account.subscription_info_changed %>
-        <div class="info">
-          Your subscription is being updated, <%= link_to_function "refresh", "location.reload(true)" %> or come back in a few ...
-        </div>
-      <% else %>
-        
-        <!-- Change plan -->
-        <ul id="plans">
-        <% Plan.all.each do |plan| %>
-          <li>
-            <%= plan.name %>
-            
-            <% if plan == @account.plan %>
-              <strong>Current</strong>
-              <% if will_downgrade_to_free && !plan.free? %>
-                <small>This plan won't renew and you'll be downgraded to the Free plan once it expires.</small>
-              <% end %>
-              <%= link_to "Update", @account.edit_subscriber_url(account_url(:changed => true)), :title => "Update your subscription information" unless plan.free? %>
-              
-            <% elsif !(will_downgrade_to_free && plan.free?) %>
-              <%= link_to up_down_grade(plan), plan_path(plan), :method => :put %>
-              
-            <% end %>
-          </li>
+      <% unless @account.plan.free? %>
+      <div class="next_billing">
+        <% if @account.recurring %>
+          On <%= human_date @account.active_until - 1.day %> we will bill you <%= number_to_currency @account.plan.price %>.
+        <% else %>
+          Your subscription won't renew and you'll be downgraded to the Free plan on <%= human_date @account.active_until %>.
         <% end %>
-        </ul>
-        
+        <%= link_to "Update your subscription information", @account.edit_subscriber_url(account_url(:changed => true)) %>
+      </div>
       <% end %>
       
-      <h3>Usage</h3>
-      
-      <p class="side_description">
-        You've used <%= number_to_human_size @account.used_storage %> of your <%= number_to_human_size @account.features.max_storage %> file storage limit.
-      </p>
-      <strong>File storage</strong>
-      <%= meter_tag @account.used_storage.to_f / @account.features.max_storage.to_f %>
-      
-      <p class="side_description">
-        You're currently using <%= @account.connections.count %>
-        of your <%= pluralize @account.features.max_connections, "simultaneous connections" %> limit.
-      </p>
-      <strong>Simultaneous user connections</strong>
-      <%= meter_tag @account.connections.count.to_f / @account.features.max_connections.to_f %>
-    
+      <!-- Change plan matrix -->
+      <table id="plans">
+        <thead>
+          <tr>
+            <td></td>
+            <% Plan.all.each do |plan| %>
+            <th class="<%= 'current' if plan == @account.plan %>">
+              <%=h plan.name %>
+              <div class="price"><%= number_to_currency plan.price %><small>/month</small></div>
+            </th>
+            <% end %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td></td>
+            <% Plan.all.each do |plan| %>
+            <th class="<%= 'current' if plan == @account.plan %>">
+              <% if plan == @account.plan %>
+                <strong>Current</strong>
+                <% unless plan.free? || @account.recurring %>
+                  <div class="will_expire">
+                    <strong>Won't renew!</strong>
+                    You'll be downgraded to the Free plan on <%= human_date @account.active_until %>
+                  </div>
+                <% end %>
+
+              <% elsif !(!@account.recurring && plan.free?) %>
+                <% if plan > @account.plan %>
+                  <%= link_to "Upgrade", plan_path(plan), :method => :put, :class => "button" %>
+                <% else %>
+                  <%= link_to "Downgrade", plan_path(plan), :method => :put, :class => "button negative" %>
+                <% end %>
+
+              <% end %>
+            </th>
+            <% end %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <%= feature_line("Online Users") { |features| pluralize features.max_connections, "user" } %>
+          <%= feature_line("File Upload Space") { |features| number_to_human_size features.max_storage } %>
+          <%= feature_line("Feeds") { |features| pluralize features.feeds, "feed" } %>
+          <%= feature_line("Private Rooms") { |features| features.private_rooms ? image_tag("icons/tick.png") : image_tag("icons/cross.png") } %>
+          <%= feature_line("Log History") { |features| features.log_history ? features.log_history.inspect : "Unlimited" } %>
+          <%= feature_line("Enhanced security <small>(SSL)</small>") { |features| features.ssl ? image_tag("icons/tick.png") : image_tag("icons/cross.png") } %>
+        </tbody>
+      </table>
     <% end %>
+    
+    <h3>Usage</h3>
+    
+    <p class="side_description">
+      You've used <%= number_to_human_size @account.used_storage %> of your <%= number_to_human_size @account.features.max_storage %> file upload space limit.
+    </p>
+    <strong>File Upload Space</strong>
+    <%= meter_tag @account.used_storage.to_f / @account.features.max_storage.to_f %>
+    
+    <p class="side_description">
+      You're currently using <%= @account.connections.count %>
+      of your <%= pluralize @account.features.max_connections, "online users" %> limit.
+    </p>
+    <strong>Online Users</strong>
+    <%= meter_tag @account.connections.count.to_f / @account.features.max_connections.to_f %>
+  
+    <p class="side_description">
+      You're currently using <%= @account.feeds.count %>
+      of your <%= pluralize @account.features.feeds, "feed" %> limit.
+    </p>
+    <strong>Feeds</strong>
+    <%= meter_tag @account.feeds.count.to_f / @account.features.feeds.to_f %>
   </div>
 </div>
