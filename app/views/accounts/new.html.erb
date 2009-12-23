@@ -48,6 +48,7 @@
       <% end %>
     </fieldset>
     
+    
     <p class="submit indent">
       <% if @account.plan.free? %>
         <%= ok_button "Create my account" %>
@@ -55,5 +56,11 @@
         <%= next_button "Enter your billing information" %>
       <% end %>
     </p>
+
+    <label class="description">
+      By clicking
+      <strong><% if @account.plan.free? %>Create my account<% else %>Enter your billing information<% end %></strong>
+      you agree to the <%= link_to "Terms &amp; Conditions", terms_and_conditions_path %>, <%= link_to "Customer Service", service_policy_path %>, and <%= link_to "Privacy", privacy_policy_path %> policies.
+    </label>
   <% end %>
 </div>
