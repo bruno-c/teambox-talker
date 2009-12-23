@@ -13,6 +13,13 @@ class RoomsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:rooms)
   end
   
+  def test_index_as_nonadmin
+    login_as :aaron
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:rooms)
+  end
+  
   def test_index_json
     get :index, :format => "json"
     assert_response :success
