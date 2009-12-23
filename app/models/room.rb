@@ -17,7 +17,7 @@ class Room < ActiveRecord::Base
     if user.admin
       {}
     else
-      { :conditions => ["public = 1 OR id IN (?)", user.permissions.map(&:room_id)] }
+      { :conditions => ["private = 0 OR id IN (?)", user.permissions.map(&:room_id)] }
     end
   }
   named_scope :private, :conditions => { :private => true }
