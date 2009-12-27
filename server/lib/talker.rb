@@ -7,12 +7,13 @@ $TALKER_DEBUG = false
 # Lazy load optional classes
 module Talker
   module Channel
+    autoload :Connection, "talker/channel/connection"
+    autoload :Paster, "talker/channel/paster"
     autoload :Room, "talker/channel/room"
     autoload :Server, "talker/channel/server"
   end
 
   autoload :Client, "talker/client"
-  autoload :Connection, "talker/connection"
   autoload :EventChannel, "talker/event_channel"
   
   module Logger
@@ -23,7 +24,6 @@ module Talker
   autoload :Mailer, "talker/mailer"
   autoload :MysqlAdapter, "talker/mysql_adapter"
   autoload :Notifier, "talker/notifier"
-  autoload :Paster, "talker/paster"
 
   module Presence
     autoload :Room, "talker/presence/room"
