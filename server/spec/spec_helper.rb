@@ -11,11 +11,11 @@ $TALKER_DEBUG = true
 
 # Disable logger
 require "logger"
-Talker::Server::Server.logger = ::Logger.new(nil)
-Talker::Server::Server.logger.level = ::Logger::ERROR
+Talker::Server.logger = ::Logger.new(nil)
+Talker::Server.logger.level = ::Logger::ERROR
 # # For deep debugging
-# Talker::Server::Server.logger = ::Logger.new(STDOUT)
-# Talker::Server::Server.logger.level = ::Logger::DEBUG
+# Talker::Server.logger = ::Logger.new(STDOUT)
+# Talker::Server.logger.level = ::Logger::DEBUG
 
 # Installing em-spec from http://github.com/macournoyer/em-spec
 require 'em/spec'
@@ -25,5 +25,5 @@ EM.spec_backend = EM::Spec::Rspec
 require File.dirname(__FILE__) + "/fixtures"
 Dir[File.dirname(__FILE__) + "/mocks/*.rb"].each { |f| require f }
 
-require "talker/mailer"
-Talker::Server::Server.mailer = NullMailer.new
+require "talker/server/mailer"
+Talker::Server.mailer = NullMailer.new

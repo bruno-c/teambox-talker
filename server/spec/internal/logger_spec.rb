@@ -2,8 +2,8 @@ require File.dirname(__FILE__) + "/spec_helper"
 
 EM.describe Talker::Server::Logger do
   before(:all) do
-    @old_adapter = Talker::Server::Server.storage
-    Talker::Server::Server.storage = Talker::Server::MysqlAdapter.new :database => "talker_test",
+    @old_adapter = Talker::Server.storage
+    Talker::Server.storage = Talker::Server::MysqlAdapter.new :database => "talker_test",
                                          :user => "root",
                                          :connections => 1
   end
@@ -22,7 +22,7 @@ EM.describe Talker::Server::Logger do
   end
   
   after(:all) do
-    Talker::Server::Server.storage = @old_adapter
+    Talker::Server.storage = @old_adapter
   end
   
   it "should insert message" do
@@ -94,8 +94,8 @@ EM.describe Talker::Server::Logger do
   
   def expect_event
     EM.next_tick do
-      # Talker::Server::Server.storage.db.select("SELECT * FROM events") { |results| p results }
-      Talker::Server::Server.storage.db.select("SELECT * FROM events ORDER BY id desc LIMIT 1") do |results|
+      # Talker::Server.storage.db.select("SELECT * FROM events") { |results| p results }
+      Talker::Server.storage.db.select("SELECT * FROM events ORDER BY id desc LIMIT 1") do |results|
         result = results.first || fail("No event created: ID = #{id}")
         yield result
       end

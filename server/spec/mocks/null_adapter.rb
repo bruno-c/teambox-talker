@@ -19,4 +19,4 @@ class NullAdapter
   end
 end
 
-Talker::Server::Server.storage = NullAdapter.new
+Talker::Server.storage = NullAdapter.new

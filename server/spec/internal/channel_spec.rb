@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/spec_helper"
 
 EM.describe Talker::Server::Channel do
   before do
-    @channel = Talker::Server::Channel.new(1)
+    @channel = Talker::Server::Channel.new("room.1")
     @queue = MQ.queue("test").bind(@channel.exchange, :key => "#")
     @queue.subscribe { |m| }
   end

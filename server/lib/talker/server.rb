@@ -9,34 +9,34 @@ module Talker
   module Server
     class Error < RuntimeError; end
     
-    autoload :Channel, "talker/channel"
+    autoload :Channel, "talker/server/channel"
     
     module Channels
-      autoload :Connection, "talker/channels/connection"
-      autoload :Paster, "talker/channels/paster"
-      autoload :Room, "talker/channels/room"
-      autoload :Server, "talker/channels/server"
+      autoload :Connection, "talker/server/channels/connection"
+      autoload :Paster, "talker/server/channels/paster"
+      autoload :Room, "talker/server/channels/room"
+      autoload :Server, "talker/server/channels/server"
     end
     
     module Logger
-      autoload :Room, "talker/logger/room"
-      autoload :Server, "talker/logger/server"
+      autoload :Room, "talker/server/logger/room"
+      autoload :Server, "talker/server/logger/server"
     end
     
-    autoload :Mailer, "talker/mailer"
-    autoload :MysqlAdapter, "talker/mysql_adapter"
-    autoload :Notifier, "talker/notifier"
+    autoload :Mailer, "talker/server/mailer"
+    autoload :MysqlAdapter, "talker/server/mysql_adapter"
+    autoload :Notifier, "talker/server/notifier"
     
     module Presence
-      autoload :Room, "talker/presence/room"
-      autoload :Server, "talker/presence/server"
-      autoload :Session, "talker/presence/session"
-      autoload :Sweeper, "talker/presence/sweeper"
+      autoload :Room, "talker/server/presence/room"
+      autoload :Server, "talker/server/presence/server"
+      autoload :Session, "talker/server/presence/session"
+      autoload :Sweeper, "talker/server/presence/sweeper"
     end
     
-    autoload :Queues, "talker/queues"
-    autoload :Runner, "talker/runner"
-    autoload :User, "talker/user"
+    autoload :Queues, "talker/server/queues"
+    autoload :Runner, "talker/server/runner"
+    autoload :User, "talker/server/user"
     
     class << self
       attr_accessor :logger
