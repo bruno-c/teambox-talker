@@ -6,7 +6,7 @@ module Helpers
   TEST_PORT = 61900
   
   def start_server(options={})
-    @server = Talker::Channel::Server.new({ :port => TEST_PORT, :timeout => 1 }.merge(options))
+    @server = Talker::Channels::Server.new({ :port => TEST_PORT, :timeout => 1 }.merge(options))
     @server.start
     
     @presence = Talker::Presence::Server.new

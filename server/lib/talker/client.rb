@@ -8,8 +8,8 @@ module Talker
     attr_accessor :room, :user, :token, :users, :debug
     
     def self.connect(options={})
-      host = options[:host] || Talker::Channel::Server::DEFAULT_HOST
-      port = options[:port] || Talker::Channel::Server::DEFAULT_PORT
+      host = options[:host] || Talker::Channels::Server::DEFAULT_HOST
+      port = options[:port] || Talker::Channels::Server::DEFAULT_PORT
       room = options[:room]
       token = options[:token]
       
