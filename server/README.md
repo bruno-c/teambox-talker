@@ -1,22 +1,13 @@
 # Talker
 
 ## Installation
+Install RabbitMQ using Brew (or other) with:
 
-The Talker Server needs RabbitMQ.
-
-Install using MacPorts with:
-
-    sudo port install rabbitmq-server
-
-Test it:
-
-    rabbitmq-server
+    brew install rabbitmq
 
 Install these gems:
 
-    sudo gem install mysqlplus
-    sudo gem install brianmario-yajl-ruby -s http://gems.github.com
-    sudo gem install igrigorik-em-http-request -s http://gems.github.com
+    sudo gem install mysqlplus yajl-ruby
 
 ## Running
 
@@ -24,19 +15,17 @@ Start RabbitMQ:
 
     rabbitmq-server
 
-Start the Talker server:
+Start the Talker channel, presence and logger servers:
 
-    bin/talker
-
-Test it with the CLI client:
-
-    bin/talker-client test.test yourname 0000
+    bin/talker channel
+    bin/talker presence
+    bin/talker logger
 
 ## Running tests
 
 Install these gems:
 
-    sudo gem install tmm1-em-spec -s http://gems.github.com
+    git clone http://github.com/macournoyer/em-spec && cd em-spec && rake gem && sudo gem install em-spec-*.gem
     sudo gem install danielsdeleo-moqueue -s http://gems.github.com
     
 Run it!
