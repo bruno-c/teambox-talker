@@ -6,10 +6,10 @@ module Helpers
   TEST_PORT = 61900
   
   def start_server(options={})
-    @server = Talker::Channels::Server.new({ :port => TEST_PORT, :timeout => 1 }.merge(options))
+    @server = Talker::Server::Channels::Server.new({ :port => TEST_PORT, :timeout => 1 }.merge(options))
     @server.start
     
-    @presence = Talker::Presence::Server.new
+    @presence = Talker::Server::Presence::Server.new
     @presence.start
     
     @server
@@ -20,7 +20,7 @@ module Helpers
   end
   
   def connect(options={}, &block)
-    Talker::Client.connect({ :room => 1, :token => 1, :port => TEST_PORT }.merge(options), &block)
+    Talker::Server::Client.connect({ :room => 1, :token => 1, :port => TEST_PORT }.merge(options), &block)
   end
 end
 

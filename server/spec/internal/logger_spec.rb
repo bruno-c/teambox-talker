@@ -1,20 +1,20 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
-EM.describe Talker::Logger do
+EM.describe Talker::Server::Logger do
   before(:all) do
-    @old_adapter = Talker::Server.storage
-    Talker::Server.storage = Talker::MysqlAdapter.new :database => "talker_test",
+    @old_adapter = Talker::Server::Server.storage
+    Talker::Server::Server.storage = Talker::Server::MysqlAdapter.new :database => "talker_test",
                                          :user => "root",
                                          :connections => 1
   end
   
   before do
     execute_sql_file "delete_all"
-    @logger = Talker::Logger::Server.new
+    @logger = Talker::Server::Logger::Server.new
     @logger.start
     
-    Talker::Queues.create
-    @exchange = Talker::Queues.topic
+    Talker::Server::Queues.create
+    @exchange = Talker::Server::Queues.topic
   end
   
   after do
@@ -22,7 +22,7 @@ EM.describe Talker::Logger do
   end
   
   after(:all) do
-    Talker::Server.storage = @old_adapter
+    Talker::Server::Server.storage = @old_adapter
   end
   
   it "should insert message" do
@@ -94,8 +94,8 @@ EM.describe Talker::Logger do
   
   def expect_event
     EM.next_tick do
-      # Talker::Server.storage.db.select("SELECT * FROM events") { |results| p results }
-      Talker::Server.storage.db.select("SELECT * FROM events ORDER BY id desc LIMIT 1") do |results|
+      # Talker::Server::Server.storage.db.select("SELECT * FROM events") { |results| p results }
+      Talker::Server::Server.storage.db.select("SELECT * FROM events ORDER BY id desc LIMIT 1") do |results|
         result = results.first || fail("No event created: ID = #{id}")
         yield result
       end

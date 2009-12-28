@@ -7,7 +7,7 @@ Install RabbitMQ using Brew (or other) with:
 
 Install these gems:
 
-    sudo gem install mysqlplus yajl-ruby
+    sudo gem install mysqlplus yajl-ruby talker
 
 ## Running
 

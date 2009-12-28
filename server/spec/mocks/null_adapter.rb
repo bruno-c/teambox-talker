@@ -1,6 +1,6 @@
 class NullAdapter
   def authenticate(room_id, token)
-    yield Talker::User.new("id" => token, "name" => "user#{token}", "email" => "user#{token}@example.com"), room_id
+    yield Talker::Server::User.new("id" => token, "name" => "user#{token}", "email" => "user#{token}@example.com"), room_id
   end
   
   def store_connection(room_id, user_id, state)
@@ -19,4 +19,4 @@ class NullAdapter
   end
 end
 
-Talker::Server.storage = NullAdapter.new
+Talker::Server::Server.storage = NullAdapter.new

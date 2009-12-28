@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
-EM.describe Talker::MysqlAdapter do
+EM.describe Talker::Server::MysqlAdapter do
   before do
     execute_sql_file "delete_all"
     execute_sql_file "insert_all"
-    @adapter = Talker::MysqlAdapter.new :database => "talker_test",
+    @adapter = Talker::Server::MysqlAdapter.new :database => "talker_test",
                                         :user => "root",
                                         :connections => 1
   end

@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 
-EM.describe Talker::Channels::Room do
+EM.describe Talker::Server::Channels::Room do
   before do
-    @room = Talker::Channels::Room.new(1)
-    @user = Talker::User.new("id" => 2)
+    @room = Talker::Server::Channels::Room.new(1)
+    @user = Talker::Server::User.new("id" => 2)
     @queue = @room.subscribe("sid", @user) { |m| }
   end
   

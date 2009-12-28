@@ -3,15 +3,19 @@ require 'spec'
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require "talker/server"
 
+# Path to my local client copy, gem install talker to make it work
+$:.unshift "/Users/ma/projects/talker.rb/lib"
+require "talker/client"
+
 $TALKER_DEBUG = true
 
 # Disable logger
 require "logger"
-Talker::Server.logger = ::Logger.new(nil)
-Talker::Server.logger.level = ::Logger::ERROR
+Talker::Server::Server.logger = ::Logger.new(nil)
+Talker::Server::Server.logger.level = ::Logger::ERROR
 # # For deep debugging
-# Talker::Server.logger = ::Logger.new(STDOUT)
-# Talker::Server.logger.level = ::Logger::DEBUG
+# Talker::Server::Server.logger = ::Logger.new(STDOUT)
+# Talker::Server::Server.logger.level = ::Logger::DEBUG
 
 # Installing em-spec from http://github.com/macournoyer/em-spec
 require 'em/spec'
@@ -22,4 +26,4 @@ require File.dirname(__FILE__) + "/fixtures"
 Dir[File.dirname(__FILE__) + "/mocks/*.rb"].each { |f| require f }
 
 require "talker/mailer"
-Talker::Server.mailer = NullMailer.new
+Talker::Server::Server.mailer = NullMailer.new

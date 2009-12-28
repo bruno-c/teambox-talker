@@ -39,6 +39,6 @@ end
 Spec::Runner.configure do |config|
   config.before do
     Moqueue::MockBroker.instance.reset!
-    Talker::Queues.reset!
+    Talker::Server::Queues.reset!
   end
 end
