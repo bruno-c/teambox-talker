@@ -7,7 +7,8 @@ class ReceiveEventMatcher
   
   def matches?(queue)
     @queue = queue
-    Yajl::Parser.parse(queue.received_messages.join) == @expected_msg
+    received_message = Yajl::Parser.parse(queue.received_messages.join)
+    received_message == @expected_msg
   end
   
   def failure_message_for_should

@@ -3,20 +3,41 @@ require File.dirname(__FILE__) + "/spec_helper"
 EM.describe Talker::Server::Channel do
   before do
     @channel = Talker::Server::Channel.new("room.1")
-    @queue = MQ.queue("test").bind(@channel.exchange, :key => "#")
-    @queue.subscribe { |m| }
+    @user = Talker::Server::User.new("id" => 2)
+    @queue = @channel.subscribe(@user) { |m| }
   end
 
-  it "should publish final event as persistent" do
+  it "should publish event as persistent" do
     @channel.publish "type" => "message", "message" => "ohaie"
-    @queue.should have_received_exact_routing_key("talker.room.1")
+    @queue.should have_received_exact_routing_key("talker.channels.room.1")
     @queue.received_headers.last.persistent.should be_true
     done
   end
 
-  it "should publish private event" do
+  it "should publish private with proper routing key" do
     @channel.publish({"type" => "message", "message" => "ohaie"}, 2)
-    @queue.should have_received_exact_routing_key("talker.room.1.2")
+    @queue.should have_received_exact_routing_key("talker.channels.room.1.2")
+    done
+  end
+  
+  it "should receive public events" do
+    event = { "type" => "message" }
+    @channel.publish event
+    @queue.should receive_event(event)
+    done
+  end
+
+  it "should receive private events" do
+    event = { "type" => "message" }
+    @channel.publish event, 2
+    @queue.should receive_event(event)
+    done
+  end
+
+  it "should not receive other users private events" do
+    event = { "type" => "message" }
+    @channel.publish event, 3
+    @queue.should_not receive_event(event)
     done
   end
 end

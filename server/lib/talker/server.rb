@@ -1,4 +1,4 @@
-Dir[File.dirname(__FILE__) + "/../vendor/*/lib"].each do |lib|
+Dir[File.dirname(__FILE__) + "/../../vendor/*/lib"].each do |lib|
   $:.unshift lib
 end
 

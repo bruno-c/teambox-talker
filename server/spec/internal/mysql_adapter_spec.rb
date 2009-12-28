@@ -5,8 +5,8 @@ EM.describe Talker::Server::MysqlAdapter do
     execute_sql_file "delete_all"
     execute_sql_file "insert_all"
     @adapter = Talker::Server::MysqlAdapter.new :database => "talker_test",
-                                        :user => "root",
-                                        :connections => 1
+                                                :user => "root",
+                                                :connections => 1
   end
   
   it "should authenticate valid token" do

@@ -6,6 +6,7 @@ module Talker::Server
   class InvalidChannelName < Error; end
   
   class Channel
+    ROUTING_KEY_PREFIX = "talker.channels".freeze
     EVENT_DELIMITER = "\n".freeze
     UUID_GENERATOR = UUID.new
     NAME_REGEXP = /^\w+\.\w+$/
@@ -22,7 +23,7 @@ module Talker::Server
     def publish(event, user_id=nil)
       key = routing_key(user_id)
       
-      event[:id] = generate_uuid
+      event["id"] = generate_uuid
       
       Talker::Server.logger.debug{"#{key}>>> #{event.inspect}"}
       
@@ -39,16 +40,16 @@ module Talker::Server
     end
     
     def routing_key(user_id=nil)
-      key = "talker.channels.#{@name}"
+      key = "#{ROUTING_KEY_PREFIX}.#{@name}"
       key += ".#{user_id}" if user_id
       key
     end
     
     def subscribe(user, &callback)
-      queue = Queues.session(@name, user.id, generate_uuid)
+      queue = Queues.session(generate_uuid)
       
-      queue.bind(exchange, :key => routing_key).           # bind to public final messages
-            bind(exchange, :key => routing_key(user.id))   # bind to private final messages
+      queue.bind(@exchange, :key => routing_key).           # bind to public final messages
+            bind(@exchange, :key => routing_key(user.id))   # bind to private final messages
       
       queue.subscribe(&callback)
       
