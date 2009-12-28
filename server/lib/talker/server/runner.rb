@@ -1,4 +1,4 @@
-module Talker
+module Talker::Server
   class Runner
     attr_reader :options
     
@@ -73,7 +73,7 @@ module Talker
     end
     
     def start_mysql
-      Talker.storage = MysqlAdapter.new(options[:database])
+      Talker::Server.storage = MysqlAdapter.new(options[:database])
     end
     
     def start_amqp
@@ -97,7 +97,7 @@ module Talker
     
     def install_signals(server)
       trap('INT') do
-        Talker.logger.info "INT signal received, soft stopping ..."
+        Talker::Server.logger.info "INT signal received, soft stopping ..."
         log "Closing server connections ..."
         server.stop do
           stop_amqp
@@ -124,20 +124,20 @@ module Talker
     def config_logger
       require "logger"
       if options[:logger]
-        Talker.logger = ::Logger.new(options[:logger])
+        Talker::Server.logger = ::Logger.new(options[:logger])
       else
-        Talker.logger = ::Logger.new(STDOUT)
+        Talker::Server.logger = ::Logger.new(STDOUT)
       end
       if options[:debug]
-        Talker.logger.level = ::Logger::DEBUG
+        Talker::Server.logger.level = ::Logger::DEBUG
       else
-        Talker.logger.level = ::Logger::INFO
+        Talker::Server.logger.level = ::Logger::INFO
       end
-      Talker.logger.debug "Debug mode ACTIVATED!"
+      Talker::Server.logger.debug "Debug mode ACTIVATED!"
     end
     
     def config_mailer
-      Talker.mailer = Talker::Mailer.new
+      Talker::Server.mailer = Talker::Mailer.new
     end
     
     def build_channel_server
@@ -153,7 +153,7 @@ module Talker
     end
     
     def log(msg)
-      Talker.logger.info msg
+      Talker::Server.logger.info msg
     end
   end
 end

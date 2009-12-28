@@ -1,7 +1,7 @@
 require "em/mysql"
 require "yajl"
 
-module Talker
+module Talker::Server
   class MysqlAdapter
     def initialize(options={})
       settings = EventedMysql.settings
@@ -9,13 +9,13 @@ module Talker
       # default options
       settings.update :encoding => "utf8",
                       :connections => 4,
-                      :on_error => proc { |e| Talker::Notifier.error "Unexpected MySQL Error", e }
+                      :on_error => proc { |e| Notifier.error "Unexpected MySQL Error", e }
       
       settings.update options
       
       @encoder = Yajl::Encoder.new
       
-      Talker.logger.info "#{EventedMysql.connection_pool.size} connections to MySQL #{settings[:database]}@#{settings[:host]}"
+      Talker::Server.logger.info "#{EventedMysql.connection_pool.size} connections to MySQL #{settings[:database]}@#{settings[:host]}"
     end
     
     def db
@@ -35,7 +35,7 @@ module Talker
         LIMIT 1
       SQL
       
-      Talker.logger.debug{"Querying for authentication:\n#{sql}"}
+      Talker::Server.logger.debug{"Querying for authentication:\n#{sql}"}
       
       EventedMysql.select(sql) do |results|
         if result = results[0]
@@ -44,7 +44,7 @@ module Talker
           user.admin = (result["admin"] == "1")
           callback.call user
         else
-          Talker.logger.warn "Authentication failed with token #{token}"
+          Talker::Server.logger.warn "Authentication failed with token #{token}"
           callback.call nil
         end
       end
@@ -67,14 +67,14 @@ module Talker
         LIMIT 1
       SQL
       
-      Talker.logger.debug{"Querying for room authorization:\n#{sql}"}
+      Talker::Server.logger.debug{"Querying for room authorization:\n#{sql}"}
       
       EventedMysql.select(sql) do |results|
         if result = results[0]
           room_id = result["id"].to_i
           callback.call room_id
         else
-          Talker.logger.warn "Authorization failed for #{user.name} in room #{room}"
+          Talker::Server.logger.warn "Authorization failed for #{user.name} in room #{room}"
           callback.call nil
         end
       end
@@ -136,7 +136,7 @@ module Talker
       sql = "INSERT INTO pastes (content, permalink, created_at, updated_at) " +
             "VALUES ('#{quote(content)}', '#{quote(permalink)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
       
-      Talker.logger.debug sql
+      Talker::Server.logger.debug sql
       db.insert sql, &callback
     end
     
@@ -154,7 +154,7 @@ module Talker
       sql = "INSERT INTO events (uuid, room_id, type, content, payload, created_at, updated_at) " +
             "VALUES ('#{quote(id)}', #{room_id}, '#{quote(type)}', '#{quote(content)}', '#{quote(payload)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
       
-      Talker.logger.debug sql
+      Talker::Server.logger.debug sql
       db.insert sql, callback, errback_for(event)
     end
     
@@ -176,7 +176,7 @@ module Talker
         LIMIT 50
       SQL
       
-      Talker.logger.debug sql
+      Talker::Server.logger.debug sql
       db.select sql do |results|
         results.reverse.each do |result|
           yield result["payload"]
@@ -192,7 +192,7 @@ module Talker
       end
       
       def errback_for(object, action = :inserting)
-        proc { |e| Talker::Notifier.error "Error #{action}: #{object.inspect}", e }
+        proc { |e| Notifier.error "Error #{action}: #{object.inspect}", e }
       end
   end
 end

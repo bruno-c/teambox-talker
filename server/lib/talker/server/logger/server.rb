@@ -2,7 +2,7 @@ require "em/mysql"
 require "mq"
 require "yajl"
 
-module Talker
+module Talker::Server
   module Logger
     class Server
       attr_accessor :rooms, :queue
@@ -13,7 +13,7 @@ module Talker
       end
     
       def start
-        Talker.logger.info "Subscribing to #{@queue.name}"
+        Talker::Server.logger.info "Subscribing to #{@queue.name}"
         @queue.subscribe(:ack => true) do |headers, message|
           
           if room_id = headers.routing_key[/\.(\d+)$/, 1]
@@ -25,7 +25,7 @@ module Talker
             room.parse message
           
           else
-            Talker.logger.warn{"Ignoring message from " + headers.routing_key + " no matching room found"}
+            Talker::Server.logger.warn{"Ignoring message from " + headers.routing_key + " no matching room found"}
           end
           
         end

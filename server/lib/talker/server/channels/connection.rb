@@ -1,7 +1,7 @@
 require "eventmachine"
 require "yajl"
 
-module Talker
+module Talker::Server
   module Channels
     class ProtocolError < Error; end
     
@@ -84,7 +84,7 @@ module Talker
         
         # If requested, send recent events
         if last_event_id
-          Talker.storage.load_events(@channel, last_event_id) do |encoded_event|
+          Talker::Server.storage.load_events(@channel, last_event_id) do |encoded_event|
             send_data encoded_event + "\n"
           end
         end
@@ -123,7 +123,7 @@ module Talker
       def on_close
         return unless logged_in?
         
-        Talker.logger.debug{"Closing connection with #{to_s}"}
+        Talker::Server.logger.debug{"Closing connection with #{to_s}"}
         
         @channel.publish_presence "leave", @user
         close_connection_after_writing
@@ -133,7 +133,7 @@ module Talker
       ## Helper methods
       
       def error(message)
-        Talker.logger.debug{"#{to_s}>>>error: #{message}"}
+        Talker::Server.logger.debug{"#{to_s}>>>error: #{message}"}
         
         send_event :type => "error", :message => message
         close_connection_after_writing
@@ -155,7 +155,7 @@ module Talker
       end
       
       def unbind
-        Talker.logger.debug{"Connection lost with #{to_s}"}
+        Talker::Server.logger.debug{"Connection lost with #{to_s}"}
       
         @subscription.delete if @subscription
         @server.connection_closed(self)
@@ -165,7 +165,7 @@ module Talker
       private
         def handle_error(exception, message)
           raise exception if $TALKER_DEBUG
-          Talker::Notifier.error message, e
+          Notifier.error message, e
           error message
         end
         

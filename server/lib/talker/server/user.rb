@@ -1,4 +1,4 @@
-module Talker
+module Talker::Server
   class User
     attr_accessor :info, :account_id, :admin
     

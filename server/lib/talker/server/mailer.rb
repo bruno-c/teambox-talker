@@ -1,7 +1,7 @@
 require "eventmachine"
 require "socket"
 
-module Talker
+module Talker::Server
   class Mailer
     DEFAULT_OPTIONS = {
       :domain => "talkerapp.com",
@@ -37,10 +37,10 @@ module Talker
         :body => build_header + "\n\n" + body
       ))
       email.errback do |e|
-        Talker.logger.error "Failed to deliver email: #{e}"
+        Talker::Server.logger.error "Failed to deliver email: #{e}"
       end
       email.callback do
-        Talker.logger.error "Send mail '#{subject}' to #{@options[:to].join(', ')}"
+        Talker::Server.logger.error "Send mail '#{subject}' to #{@options[:to].join(', ')}"
       end
     end
     

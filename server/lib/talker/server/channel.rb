@@ -2,7 +2,7 @@ require "mq"
 require "yajl"
 require "uuid"
 
-module Talker
+module Talker::Server
   class InvalidChannelName < Error; end
   
   class Channel
@@ -24,7 +24,7 @@ module Talker
       
       event[:id] = generate_uuid
       
-      Talker.logger.debug{"#{key}>>> #{event.inspect}"}
+      Talker::Server.logger.debug{"#{key}>>> #{event.inspect}"}
       
       publish_as_json @exchange, event, :key => key, :persistent => true
     end

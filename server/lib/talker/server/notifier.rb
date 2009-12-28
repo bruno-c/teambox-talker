@@ -1,14 +1,14 @@
 require "talker/mailer"
 
-module Talker
+module Talker::Server
   module Notifier
     def self.error(message, exception=nil)
       if exception
-        Talker.logger.error("[ERROR] #{message}: #{exception}\n" + exception.backtrace.join("\n"))
-        Talker.mailer.deliver_exception(exception, message)
+        Talker::Server.logger.error("[ERROR] #{message}: #{exception}\n" + exception.backtrace.join("\n"))
+        Talker::Server.mailer.deliver_exception(exception, message)
       else
-        Talker.logger.error("[ERROR] #{message}")
-        Talker.mailer.deliver_error(message)
+        Talker::Server.logger.error("[ERROR] #{message}")
+        Talker::Server.mailer.deliver_error(message)
       end
     end
   end

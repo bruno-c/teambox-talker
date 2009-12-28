@@ -1,6 +1,6 @@
 require "openssl"
 
-module Talker
+module Talker::Server
   module Channels
     class Paster
       MAX_LENGTH = 500 * 1024 # 500 KB
@@ -31,7 +31,7 @@ module Talker
         permalink = generate_permalink
       
         # Insert in DB
-        Talker.storage.insert_paste(permalink, content)
+        Talker::Server.storage.insert_paste(permalink, content)
       
         paste_info = {
           "id" => permalink,

@@ -1,4 +1,4 @@
-module Talker
+module Talker::Server
   module Presence
     class Room < Channel
       def initialize(name)

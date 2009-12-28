@@ -1,7 +1,7 @@
 require "mq"
 require "yajl"
 
-module Talker
+module Talker::Server
   module Presence
     class Server
       DEFAULT_TIMEOUT = 30.0 # sec
@@ -21,7 +21,7 @@ module Talker
       end
       
       def start
-        Talker.logger.info "Watching presence on queue #{@queue.name}"
+        Talker::Server.logger.info "Watching presence on queue #{@queue.name}"
         load
         
         @queue.subscribe do |message|
@@ -36,16 +36,16 @@ module Talker
       end
     
       def load
-        Talker.storage.load_connections do |room_id, user, state|
+        Talker::Server.storage.load_connections do |room_id, user, state|
           room = @rooms[room_id]
           session = @rooms[room_id].new_session(user, state)
           
-          Talker.logger.debug{"loaded connection: room##{room.name} => #{user.name} (#{session.state})"}
+          Talker::Server.logger.debug{"loaded connection: room##{room.name} => #{user.name} (#{session.state})"}
         end
       end
 
       def presence_received(message)
-        Talker.logger.debug{"<<< " + message.inspect}
+        Talker::Server.logger.debug{"<<< " + message.inspect}
         
         type = message["type"]
         room = @rooms[message["room"].to_i]
@@ -60,7 +60,7 @@ module Talker
         when "ping"
           room.ping user, time
         else
-          Talker::Notifier.error "Wrong type of presence in message #{message.inspect}"
+          Notifier.error "Wrong type of presence in message #{message.inspect}"
         end
       end
       

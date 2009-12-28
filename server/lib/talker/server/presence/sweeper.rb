@@ -1,4 +1,4 @@
-module Talker
+module Talker::Server
   module Presence
     class Sweeper
       def initialize(server, timeout)
@@ -8,7 +8,7 @@ module Talker
       
       def start
         interval = @timeout * 0.75
-        Talker.logger.info "Starting sweeper with #{interval}s interval and timeout of #{@timeout}s"
+        Talker::Server.logger.info "Starting sweeper with #{interval}s interval and timeout of #{@timeout}s"
         @timer = EM::PeriodicTimer.new(interval) { run }
       end
       
@@ -17,7 +17,7 @@ module Talker
       end
       
       def run
-        Talker.logger.debug "Running sweeper"
+        Talker::Server.logger.debug "Running sweeper"
         
         now = Time.now.utc.to_i
         
@@ -28,7 +28,7 @@ module Talker
             # The second time we force the user to leave.
             if now - session.updated_at >= @timeout
               if session.idle?
-                Talker.logger.debug "Expiring session #{session}"
+                Talker::Server.logger.debug "Expiring session #{session}"
                 room.leave session.user
               else
                 room.idle session.user

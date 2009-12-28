@@ -1,6 +1,6 @@
 require "eventmachine"
 
-module Talker
+module Talker::Server
   module Channels
     class Server
       DEFAULT_HOST = "0.0.0.0"
@@ -21,7 +21,7 @@ module Talker
       end
       
       def start
-        Talker.logger.info "Listening on #{@host}:#{@port}"
+        Talker::Server.logger.info "Listening on #{@host}:#{@port}"
         
         @signature = EM.start_server(@host, @port, Connection) do |connection|
           connection.server = self
@@ -47,7 +47,7 @@ module Talker
           if @connections.empty?
             callback.call
           else
-            Talker.logger.info "Waiting for #{@connections.size} connections to finish ..."
+            Talker::Server.logger.info "Waiting for #{@connections.size} connections to finish ..."
             @on_stop = callback
           end
         end
@@ -67,14 +67,14 @@ module Talker
       end
       
       def authenticate(channel_type, channel_id, token)
-        Talker.storage.authenticate(token) do |user|
+        Talker::Server.storage.authenticate(token) do |user|
           # User authentication failed
           yield nil, nil unless user
           
           # Channel authorization
           case channel_type
           when "room"
-            Talker.storage.authorize_room(user, channel_id) { |room_id| yield channel("room", room_id), user }
+            Talker::Server.storage.authorize_room(user, channel_id) { |room_id| yield channel("room", room_id), user }
           else
             yield channel(channel_type, channel_id), user
           end

@@ -1,4 +1,4 @@
-module Talker
+module Talker::Server
   module Presence
     class Session
       attr_reader :user, :room, :updated_at, :state
@@ -52,15 +52,15 @@ module Talker
       
       private
         def store
-          Talker.storage.store_connection(@room.name, @user.id, @state.to_s)
+          Talker::Server.storage.store_connection(@room.name, @user.id, @state.to_s)
         end
         
         def update_storage
-          Talker.storage.update_connection(@room.name, @user.id, @state.to_s)
+          Talker::Server.storage.update_connection(@room.name, @user.id, @state.to_s)
         end
         
         def delete
-          Talker.storage.delete_connection(@room.name, @user.id)
+          Talker::Server.storage.delete_connection(@room.name, @user.id)
         end
     end
   end

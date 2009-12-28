@@ -1,4 +1,4 @@
-module Talker
+module Talker::Server
   module Logger
     class Room
       attr_reader :name
@@ -17,7 +17,7 @@ module Talker
       def parse(data)
         @parser << data
       rescue Yajl::ParseError => e
-        Talker.logger.warn "Ignoring invalid JSON (room##{@name}): " + e.message
+        Talker::Server.logger.warn "Ignoring invalid JSON (room##{@name}): " + e.message
         reset
       end
       
@@ -29,13 +29,13 @@ module Talker
         type = event["type"]
         
         unless event.key?("user") || event.key?("user")
-          Talker::Notifier.error "No user key in event: #{event.inspect}"
+          Notifier.error "No user key in event: #{event.inspect}"
           return
         end
         
-        Talker.logger.debug{"room##{@name}> " + event.inspect}
+        Talker::Server.logger.debug{"room##{@name}> " + event.inspect}
         
-        Talker.storage.insert_event @name, event, @callback
+        Talker::Server.storage.insert_event @name, event, @callback
       end
     end
   end

@@ -1,6 +1,6 @@
 require "mq"
 
-module Talker
+module Talker::Server
   module Queues
     def self.topic
       @topic ||= MQ.topic("talker.chat", :durable => true)

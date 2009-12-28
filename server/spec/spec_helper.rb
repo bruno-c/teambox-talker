@@ -1,17 +1,17 @@
 require 'rubygems'
 require 'spec'
 $:.unshift File.dirname(__FILE__) + "/../lib"
-require "talker"
+require "talker/server"
 
 $TALKER_DEBUG = true
 
 # Disable logger
 require "logger"
-Talker.logger = ::Logger.new(nil)
-Talker.logger.level = ::Logger::ERROR
+Talker::Server.logger = ::Logger.new(nil)
+Talker::Server.logger.level = ::Logger::ERROR
 # # For deep debugging
-# Talker.logger = ::Logger.new(STDOUT)
-# Talker.logger.level = ::Logger::DEBUG
+# Talker::Server.logger = ::Logger.new(STDOUT)
+# Talker::Server.logger.level = ::Logger::DEBUG
 
 # Installing em-spec from http://github.com/macournoyer/em-spec
 require 'em/spec'
@@ -22,4 +22,4 @@ require File.dirname(__FILE__) + "/fixtures"
 Dir[File.dirname(__FILE__) + "/mocks/*.rb"].each { |f| require f }
 
 require "talker/mailer"
-Talker.mailer = NullMailer.new
+Talker::Server.mailer = NullMailer.new
