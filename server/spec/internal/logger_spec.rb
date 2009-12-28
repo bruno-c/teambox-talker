@@ -4,8 +4,8 @@ EM.describe Talker::Server::Logger do
   before(:all) do
     @old_adapter = Talker::Server.storage
     Talker::Server.storage = Talker::Server::MysqlAdapter.new :database => "talker_test",
-                                         :user => "root",
-                                         :connections => 1
+                                                              :user => "root",
+                                                              :connections => 1
   end
   
   before do
@@ -29,7 +29,7 @@ EM.describe Talker::Server::Logger do
     message = { "type" => "message", "user" => {"id" => 1},
                 "time" => 5, "content" => "ohaie" }
     
-    @exchange.publish encode(message), :key => "talker.room.1"
+    @exchange.publish encode(message), :key => "talker.channels.room.1"
     
     expect_event do |event|
       event["room_id"].should == "1"
@@ -45,7 +45,7 @@ EM.describe Talker::Server::Logger do
   it "should insert join" do
     message = { "type" => "join", "user" => {"id" => 1}, "time" => 5 }
     
-    @exchange.publish encode(message), :key => "talker.room.1"
+    @exchange.publish encode(message), :key => "talker.channels.room.1"
     
     expect_event do |event|
       event["room_id"].should == "1"
@@ -61,7 +61,7 @@ EM.describe Talker::Server::Logger do
   it "should insert leave" do
     message = { "type" => "leave", "user" => {"id" => 1}, "time" => 5 }
     
-    @exchange.publish encode(message), :key => "talker.room.1"
+    @exchange.publish encode(message), :key => "talker.channels.room.1"
     
     expect_event do |event|
       event["room_id"].should == "1"
@@ -79,7 +79,7 @@ EM.describe Talker::Server::Logger do
                 "time" => 5, "content" => "ohaie...", 
                 "paste" => {"id" => "abc123", "lines" => 5, "preview_lines" => 3} }
     
-    @exchange.publish encode(message), :key => "talker.room.1"
+    @exchange.publish encode(message), :key => "talker.channels.room.1"
     
     expect_event do |event|
       event["room_id"].should == "1"
@@ -96,7 +96,7 @@ EM.describe Talker::Server::Logger do
     EM.next_tick do
       # Talker::Server.storage.db.select("SELECT * FROM events") { |results| p results }
       Talker::Server.storage.db.select("SELECT * FROM events ORDER BY id desc LIMIT 1") do |results|
-        result = results.first || fail("No event created: ID = #{id}")
+        result = results.first || fail("No event created")
         yield result
       end
     end
