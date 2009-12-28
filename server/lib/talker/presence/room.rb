@@ -1,6 +1,6 @@
 module Talker
   module Presence
-    class Room < EventChannel
+    class Room < Channel
       def initialize(name)
         super(name)
         @sessions = {}

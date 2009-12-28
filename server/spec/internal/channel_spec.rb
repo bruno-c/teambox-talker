@@ -1,8 +1,8 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
-EM.describe Talker::EventChannel do
+EM.describe Talker::Channel do
   before do
-    @channel = Talker::EventChannel.new(1)
+    @channel = Talker::Channel.new(1)
     @queue = MQ.queue("test").bind(@channel.exchange, :key => "#")
     @queue.subscribe { |m| }
   end
