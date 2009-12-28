@@ -14,13 +14,13 @@ module Talker
       @logger ||= MQ.queue("talker.log", :durable => true)
     end
     
-    def self.session(room_id, user_id, sid)
-      MQ.queue("talker.session.#{room_id}.#{user_id}.#{sid}", :exclusive => true)
+    def self.session(channel, user_id, sid)
+      MQ.queue("talker.session.#{channel}.#{user_id}.#{sid}", :exclusive => true)
     end
     
     def self.create
       presence # Implicitly binded to direct exchange of the same name
-      logger.bind(topic, :key => "talker.room.*")
+      logger.bind(topic, :key => "talker.channels.room.*")
     end
     
     def self.reset!

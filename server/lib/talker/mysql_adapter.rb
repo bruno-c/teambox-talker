@@ -24,8 +24,8 @@ module Talker
     
     
     ## Authentication
-    def authenticate(room, token, &callback)
-      room = room.to_s
+    def authenticate(channel, token, &callback)
+      room = room.to_s # TODO update to channel
       token = token.to_s
       
       sql = <<-SQL
@@ -140,8 +140,8 @@ module Talker
     
     # Load events that happened since a give event (by ID)
     # yields raw JSON encoded event, NOT objects.
-    def load_events(room_id, last_event_id, &callback)
-      room_id = room_id.to_i
+    def load_events(channel, last_event_id, &callback)
+      room_id = room_id.to_i # TODO update to channel
       last_event_id = last_event_id.to_s
       
       find_event_sql = "(SELECT created_at FROM events WHERE uuid = '#{quote(last_event_id)}')"

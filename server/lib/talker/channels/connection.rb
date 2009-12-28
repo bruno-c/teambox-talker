@@ -8,157 +8,171 @@ module Talker
     class Connection < EM::Connection
       # TODO freeze constant strings
       
-      attr_accessor :server, :room, :user
+      attr_accessor :server, :channel, :user
       
       # Called after connection is fully initialized and establied from EM.
       def post_init
         @parser = Yajl::Parser.new
-        @parser.on_parse_complete = method(:message_parsed)
+        @parser.on_parse_complete = method(:event_parsed)
         @encoder = Yajl::Encoder.new
       
-        @room = @user = @subscription = nil
+        @channel = @user = @subscription = nil
       end
       
-      # Called when a JSON object in a message is fully parsed
-      def message_parsed(message)
-        Talker.logger.debug{to_s + "<<< " + message.inspect}
+      # Called when a event is fully parsed
+      def event_parsed(event)
+        Talker.logger.debug{to_s + "<<< " + event.inspect}
       
-        case message["type"]
+        case event["type"]
         when "connect"
-          authenticate message
+          on_connect event
         when "message"
-          broadcast_message message
+          on_message event
         when "close"
-          close
+          on_close
         when "ping"
-          @room.publish_presence "ping", @user if @user && @room
+          on_ping
         else
-          error "Unknown message type: " + message["type"].inspect
+          error "Unknown event type: " + event["type"].inspect
         end
       rescue ProtocolError => e
         error e.message
       rescue Exception => e
-        raise if $TALKER_DEBUG
-        Talker::Notifier.error "Error in Connection#message_parsed", e
-        error "Error processing command"
+        handle_error e, "Error processing command"
       end
       
       
-      ## Message types
+      ## Event callbacks
       
-      def authenticate(event)
-        room = event["room"]
+      def on_connect(event)
+        channel_info = event["channel"]
         token = event["token"]
         last_event_id = event["last_event_id"]
-      
-        if room.nil? || token.nil?
+        
+        # For backward compat w/ "room":"ID"
+        if room = event["room"]
+          channel_info = { "type" => "room", "id" => room.to_s }
+        end
+        
+        if channel_info.nil? || !channel.is_a?(Hash) || token.nil?
           raise ProtocolError, "Authentication failed"
         end
-
-        Talker.storage.authenticate(room, token) do |user, room_id|
         
-          if user
-            begin
-              @room = @server.rooms[room_id]
-              @user = user
-              @user.token = token
-            
-              # Listen to message in the room
-              @subscription = @room.subscribe(@user) { |message| send_data message }
-            
-              # Tell the user he's connected
-              send_event :type => "connected", :user => @user.info
-            
-              # Broadcast presence
-              @room.publish_presence "join", @user
-            
-              # If requested, send recent events
-              if last_event_id
-                Talker.storage.load_events(room_id, last_event_id) do |encoded_event|
-                  send_data encoded_event + "\n"
-                end
-              end
-            
-            rescue Exception => e
-              raise if $TALKER_DEBUG
-              Talker::Notifier.error "Error while authenticating", e
-              error "Error while authenticating"
-            end
-        
+        @server.authenticate(channel_info, token) do |channel, user|
+          if channel && user
+            on_connected(channel, user)
           else
             error "Authentication failed"
           end
-        
         end
       end
-    
-      def broadcast_message(obj)
-        room_required!
       
+      def on_connected(channel, user)
+        @channel = channel
+        @user = user
+        
+        # Pipe channel events throught open EM connection
+        @subscription = @channel.subscribe(@user) { |message| send_data message }
+        
+        # Tell the user he's connected
+        send_event :type => "connected", :user => @user.info
+        
+        # Broadcast presence
+        @channel.publish_presence "join", @user
+        
+        # If requested, send recent events
+        if last_event_id
+          Talker.storage.load_events(@channel, last_event_id) do |encoded_event|
+            send_data encoded_event + "\n"
+          end
+        end
+        
+      rescue Exception => e
+        handle_error e, "Error while authenticating"
+      end
+      
+      def on_message(obj)
+        login_required!
+        
         to = obj.delete("to")
         obj["user"] = @user.info
         obj["time"] = Time.now.utc.to_i
         content = obj["content"] = obj["content"].to_s
-      
+        
         Paster.truncate(content, obj.delete("paste")) do |truncated_content, paste|
           obj["content"] = truncated_content
           obj["paste"] = paste if paste
-        
+          
           if to
             obj["private"] = true
-            @room.publish obj, to.to_i
+            @channel.publish obj, to.to_i
           else
-            @room.publish obj
+            @channel.publish obj
           end
         end
       end
-    
-      def close
-        Talker.logger.debug{"Closing connection with #{to_s}"}
       
-        @room.publish_presence("leave", @user) if @user
+      def on_ping
+        @channel.publish_presence "ping", @user if logged_in?
+      end
+      
+      def on_close
+        Talker.logger.debug{"Closing connection with #{to_s}"}
+        
+        @channel.publish_presence("leave", @user) if logged_in?
         close_connection_after_writing
       end
-    
-    
+      
+      
       ## Helper methods
-    
+      
       def error(message)
-        Talker.logger.debug {"#{to_s}>>>error: #{message}"}
+        Talker.logger.debug{"#{to_s}>>>error: #{message}"}
+        
         send_event :type => "error", :message => message
-        close
+        close_connection_after_writing
       end
-    
+      
       def to_s
         return @subscription.name if @subscription
         "<?>"
       end
-    
-    
+      
+      
       ## EventMachine callbacks
-    
+      
       def receive_data(data)
         # continue passing chunks
         @parser << data
       rescue Yajl::ParseError => e
         error "Invalid JSON"
       end
-    
+      
       def unbind
         Talker.logger.debug{"Connection lost with #{to_s}"}
       
         @subscription.delete if @subscription
         @server.connection_closed(self)
       end
-    
-    
-      private
-        def room_required!
-          raise ProtocolError, "Not connected to a room" unless @room
-        end
       
+      
+      private
+        def handle_error(exception, message)
+          raise exception if $TALKER_DEBUG
+          Talker::Notifier.error message, e
+          error message
+        end
+        
+        def logged_in?
+          @channel && @user
+        end
+        
+        def login_required!
+          raise ProtocolError, "Not connected to a channel" unless logged_in?
+        end
+        
         def send_event(event)
-          send_data @encoder.encode(event) + "\n" 
+          send_data @encoder.encode(event) + "\n"
         end
     end
   end

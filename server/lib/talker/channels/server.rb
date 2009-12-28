@@ -7,7 +7,7 @@ module Talker
       DEFAULT_TIMEOUT = 30.0 # sec
       DEFAULT_PORT = 8500
       
-      attr_reader :host, :port, :rooms
+      attr_reader :host, :port, :channels
       
       def initialize(options={})
         @host = options[:host] || DEFAULT_HOST
@@ -17,7 +17,7 @@ module Talker
         @signature = nil
         @connections = {}
         @on_stop = nil
-        @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
+        @channels = Hash.new { |channels, name| channels[name] = Channel.new(name) }
       end
       
       def start
@@ -54,14 +54,19 @@ module Talker
       end
       
       def connection_closed(connection)
+        # TODO sweep empty channels
         @connections.delete(connection.signature)
         @on_stop.call if @on_stop && @connections.empty?
       end
-    
+      
+      def authenticate(channel, token)
+        
+      end
+      
       def to_s
         "channel-server:#{@port}"
       end
-    
+      
       def self.start(*args)
         s = new(*args)
         s.start
