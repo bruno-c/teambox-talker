@@ -28,6 +28,12 @@ module Helpers
   def receive_event(expected_msg)
     ReceiveEventMatcher.new(expected_msg)
   end
+  
+  def users(id, account_id=1)
+    user = Talker::Server::User.new("id" => id)
+    user.account_id = account_id
+    user
+  end
 end
 
 Spec::Runner.configure do |config|

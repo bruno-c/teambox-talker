@@ -5,7 +5,7 @@ module Talker::Server
     def initialize(info)
       @info = info || raise(ArgumentError, "User info required")
       @admin = false
-      @account_id = nil
+      @account_id = 0
     end
     
     def id

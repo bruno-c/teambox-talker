@@ -6,7 +6,27 @@ EM.describe Talker::Server::Channel do
     @user = Talker::Server::User.new("id" => 2)
     @queue = @channel.subscribe(@user) { |m| }
   end
-
+  
+  it "should have a type" do
+    Talker::Server::Channel.new("room.1").type.should == "room"
+    Talker::Server::Channel.new("paste.asbc133").type.should == "paste"
+    done
+  end
+  
+  it "should have an id" do
+    Talker::Server::Channel.new("room.1").id.should == "1"
+    Talker::Server::Channel.new("paste.asbc133").id.should == "asbc133"
+    done
+  end
+  
+  it "should raise on invalid name" do
+    proc { Talker::Server::Channel.new("room.") }.should raise_error(Talker::Server::InvalidChannelName)
+    proc { Talker::Server::Channel.new("room.#") }.should raise_error(Talker::Server::InvalidChannelName)
+    proc { Talker::Server::Channel.new("room.*") }.should raise_error(Talker::Server::InvalidChannelName)
+    proc { Talker::Server::Channel.new("1") }.should raise_error(Talker::Server::InvalidChannelName)
+    done
+  end
+  
   it "should publish event as persistent" do
     @channel.publish "type" => "message", "message" => "ohaie"
     @queue.should have_received_exact_routing_key("talker.channels.room.1")

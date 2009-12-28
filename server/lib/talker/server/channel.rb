@@ -9,13 +9,15 @@ module Talker::Server
     ROUTING_KEY_PREFIX = "talker.channels".freeze
     EVENT_DELIMITER = "\n".freeze
     UUID_GENERATOR = UUID.new
-    NAME_REGEXP = /^\w+\.\w+$/
+    NAME_REGEXP = /^(\w+)\.(\w+)$/
     
-    attr_reader :name, :exchange
+    attr_reader :name, :type, :id, :exchange
     
     def initialize(name)
-      raise InvalidChannelName, "#{name} is an invalid channel name" unless name[NAME_REGEXP]
       @name = name
+      _, @type, @id = @name.match(NAME_REGEXP).to_a
+      raise InvalidChannelName, "#{@name} is an invalid channel name" unless @type && @id
+      
       @encoder = Yajl::Encoder.new
       @exchange = Queues.topic
     end

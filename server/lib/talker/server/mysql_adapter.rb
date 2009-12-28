@@ -55,14 +55,14 @@ module Talker::Server
       
       sql = <<-SQL
         SELECT id
-        FROM rooms
-        WHERE rooms.account_id = #{user.account_id}
-          AND (rooms.id = #{room.to_i} OR rooms.name = '#{quote(room)}')
-          AND (rooms.private = 0
+        FROM rooms as r
+        WHERE account_id = #{user.account_id}
+          AND (id = #{room.to_i} OR name = '#{quote(room)}')
+          AND (private = 0
                OR EXISTS (SELECT *
                           FROM permissions
                           WHERE user_id = #{user.id}
-                            AND room_id = rooms.id)
+                            AND room_id = r.id)
               )
         LIMIT 1
       SQL
@@ -160,8 +160,8 @@ module Talker::Server
     
     # Load events that happened since a give event (by ID)
     # yields raw JSON encoded event, NOT objects.
-    def load_events(channel, last_event_id, &callback)
-      room_id = room_id.to_i # TODO update to channel
+    def load_room_events(room_id, last_event_id, &callback)
+      room_id = room_id.to_i
       last_event_id = last_event_id.to_s
       
       find_event_sql = "(SELECT created_at FROM events WHERE uuid = '#{quote(last_event_id)}')"

@@ -83,8 +83,8 @@ module Talker::Server
         @channel.publish_presence "join", @user
         
         # If requested, send recent events
-        if last_event_id
-          Talker::Server.storage.load_events(@channel, last_event_id) do |encoded_event|
+        if last_event_id && @channel.type == "room"
+          Talker::Server.storage.load_room_events(@channel.id, last_event_id) do |encoded_event|
             send_data encoded_event + "\n"
           end
         end

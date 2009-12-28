@@ -1,4 +1,4 @@
-require "talker/mailer"
+require "talker/server/mailer"
 
 module Talker::Server
   module Notifier
