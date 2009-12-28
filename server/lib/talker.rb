@@ -6,15 +6,16 @@ $TALKER_DEBUG = false
 
 # Lazy load optional classes
 module Talker
-  module Channel
-    autoload :Connection, "talker/channel/connection"
-    autoload :Paster, "talker/channel/paster"
-    autoload :Room, "talker/channel/room"
-    autoload :Server, "talker/channel/server"
+  autoload :Channel, "talker/channel"
+  
+  module Channels
+    autoload :Connection, "talker/channels/connection"
+    autoload :Paster, "talker/channels/paster"
+    autoload :Room, "talker/channels/room"
+    autoload :Server, "talker/channels/server"
   end
-
+  
   autoload :Client, "talker/client"
-  autoload :EventChannel, "talker/event_channel"
   
   module Logger
     autoload :Room, "talker/logger/room"

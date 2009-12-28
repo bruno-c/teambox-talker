@@ -1,7 +1,7 @@
 require "eventmachine"
 
 module Talker
-  module Channel
+  module Channels
     class Server
       DEFAULT_HOST = "0.0.0.0"
       DEFAULT_TIMEOUT = 30.0 # sec

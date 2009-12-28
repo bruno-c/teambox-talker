@@ -3,7 +3,7 @@ require "yajl"
 require "uuid"
 
 module Talker
-  class EventChannel
+  class Channel
     EVENT_DELIMITER = "\n".freeze
     UUID_GENERATOR = UUID.new
     

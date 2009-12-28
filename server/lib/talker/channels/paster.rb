@@ -1,7 +1,7 @@
 require "openssl"
 
 module Talker
-  module Channel
+  module Channels
     class Paster
       MAX_LENGTH = 500 * 1024 # 500 KB
       PREVIEW_LINES = 15

@@ -1,6 +1,6 @@
 module Talker
-  module Channel
-    class Room < EventChannel
+  module Channels
+    class Room < Channel
       def initialize(name)
         super
       end

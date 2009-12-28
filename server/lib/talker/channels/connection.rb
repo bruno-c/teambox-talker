@@ -2,7 +2,7 @@ require "eventmachine"
 require "yajl"
 
 module Talker
-  module Channel
+  module Channels
     class ProtocolError < RuntimeError; end
     
     class Connection < EM::Connection

@@ -4,8 +4,8 @@ module Talker
     
     def initialize
       @options = {
-        :host => Talker::Channel::Server::DEFAULT_HOST,
-        :port => Talker::Channel::Server::DEFAULT_PORT,
+        :host => Talker::Channels::Server::DEFAULT_HOST,
+        :port => Talker::Channels::Server::DEFAULT_PORT,
         :amqp => {
           :host => "localhost",
           :port => 5672
@@ -141,7 +141,7 @@ module Talker
     end
     
     def build_channel_server
-      Talker::Channel::Server.new(:host => options[:host], :port => options[:port])
+      Talker::Channels::Server.new(:host => options[:host], :port => options[:port])
     end
 
     def build_presence_server
