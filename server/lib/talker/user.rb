@@ -1,9 +1,11 @@
 module Talker
   class User
-    attr_accessor :info, :token
+    attr_accessor :info, :account_id, :admin
     
     def initialize(info)
       @info = info || raise(ArgumentError, "User info required")
+      @admin = false
+      @account_id = nil
     end
     
     def id

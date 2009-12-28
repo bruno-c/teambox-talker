@@ -3,7 +3,7 @@ require "yajl"
 require "uuid"
 
 module Talker
-  class InvalidChannelName < RuntimeError; end
+  class InvalidChannelName < Error; end
   
   class Channel
     EVENT_DELIMITER = "\n".freeze

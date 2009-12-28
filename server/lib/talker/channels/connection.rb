@@ -3,7 +3,7 @@ require "yajl"
 
 module Talker
   module Channels
-    class ProtocolError < RuntimeError; end
+    class ProtocolError < Error; end
     
     class Connection < EM::Connection
       # TODO freeze constant strings
@@ -15,14 +15,12 @@ module Talker
         @parser = Yajl::Parser.new
         @parser.on_parse_complete = method(:event_parsed)
         @encoder = Yajl::Encoder.new
-      
+        
         @channel = @user = @subscription = nil
       end
       
       # Called when a event is fully parsed
       def event_parsed(event)
-        Talker.logger.debug{to_s + "<<< " + event.inspect}
-      
         case event["type"]
         when "connect"
           on_connect event
@@ -35,7 +33,7 @@ module Talker
         else
           error "Unknown event type: " + event["type"].inspect
         end
-      rescue ProtocolError => e
+      rescue Error => e
         error e.message
       rescue Exception => e
         handle_error e, "Error processing command"
@@ -45,20 +43,24 @@ module Talker
       ## Event callbacks
       
       def on_connect(event)
-        channel_info = event["channel"]
+        channel_info = event["channel"] || {}
+        channel_type = channel_info["type"]
+        channel_id = channel_info["id"]
+        
         token = event["token"]
         last_event_id = event["last_event_id"]
         
         # For backward compat w/ "room":"ID"
         if room = event["room"]
-          channel_info = { "type" => "room", "id" => room.to_s }
+          channel_type = "room"
+          channel_id = room.to_s
         end
         
-        if channel_info.nil? || !channel.is_a?(Hash) || token.nil?
+        if channel_type.nil? || channel_id.nil? || token.nil?
           raise ProtocolError, "Authentication failed"
         end
         
-        @server.authenticate(channel_info, token) do |channel, user|
+        @server.authenticate(channel_type, channel_id, token) do |channel, user|
           if channel && user
             on_connected(channel, user)
           else
@@ -113,13 +115,17 @@ module Talker
       end
       
       def on_ping
-        @channel.publish_presence "ping", @user if logged_in?
+        return unless logged_in?
+        
+        @channel.publish_presence "ping", @user
       end
       
       def on_close
+        return unless logged_in?
+        
         Talker.logger.debug{"Closing connection with #{to_s}"}
         
-        @channel.publish_presence("leave", @user) if logged_in?
+        @channel.publish_presence "leave", @user
         close_connection_after_writing
       end
       

@@ -10,7 +10,7 @@ module Talker
       settings.update :encoding => "utf8",
                       :connections => 4,
                       :on_error => proc { |e| Talker::Notifier.error "Unexpected MySQL Error", e }
-                     
+      
       settings.update options
       
       @encoder = Yajl::Encoder.new
@@ -24,24 +24,14 @@ module Talker
     
     
     ## Authentication
-    def authenticate(channel, token, &callback)
-      room = room.to_s # TODO update to channel
+    def authenticate(token, &callback)
       token = token.to_s
       
       sql = <<-SQL
-        SELECT users.id AS id, users.name AS name, users.email AS email, rooms.id AS room_id
+        SELECT id, name, email, account_id, admin
         FROM users
-        INNER JOIN rooms ON rooms.account_id = users.account_id
         WHERE users.talker_token = '#{quote(token)}'
           AND users.state = 'active'
-          AND (rooms.id = #{room.to_i} OR rooms.name = '#{quote(room)}')
-          AND (users.admin = 1
-               OR rooms.private = 0
-               OR EXISTS (SELECT *
-                          FROM permissions
-                          WHERE user_id = users.id
-                            AND room_id = rooms.id)
-              )
         LIMIT 1
       SQL
       
@@ -50,12 +40,42 @@ module Talker
       EventedMysql.select(sql) do |results|
         if result = results[0]
           user = User.new("id" => result["id"].to_i, "name" => result["name"], "email" => result["email"])
-          room_id = result["room_id"].to_i
-          Talker.logger.debug{"Authentication succeded for user ##{user.name} in room ##{room}"}
-          callback.call(user, room_id)
+          user.account_id = result["account_id"].to_i
+          user.admin = (result["admin"] == "1")
+          callback.call user
         else
-          Talker.logger.warn "Authentication failed in room ##{room} with token #{token}"
-          callback.call(nil, nil)
+          Talker.logger.warn "Authentication failed with token #{token}"
+          callback.call nil
+        end
+      end
+    end
+    
+    def authorize_room(user, room, &callback)
+      yield true if user.admin
+      
+      sql = <<-SQL
+        SELECT id
+        FROM rooms
+        WHERE rooms.account_id = #{user.account_id}
+          AND (rooms.id = #{room.to_i} OR rooms.name = '#{quote(room)}')
+          AND (rooms.private = 0
+               OR EXISTS (SELECT *
+                          FROM permissions
+                          WHERE user_id = #{user.id}
+                            AND room_id = rooms.id)
+              )
+        LIMIT 1
+      SQL
+      
+      Talker.logger.debug{"Querying for room authorization:\n#{sql}"}
+      
+      EventedMysql.select(sql) do |results|
+        if result = results[0]
+          room_id = result["id"].to_i
+          callback.call room_id
+        else
+          Talker.logger.warn "Authorization failed for #{user.name} in room #{room}"
+          callback.call nil
         end
       end
     end

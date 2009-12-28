@@ -17,7 +17,7 @@ module Talker
         @signature = nil
         @connections = {}
         @on_stop = nil
-        @channels = Hash.new { |channels, name| channels[name] = Channel.new(name) }
+        @channels = {}
       end
       
       def start
@@ -59,8 +59,26 @@ module Talker
         @on_stop.call if @on_stop && @connections.empty?
       end
       
-      def authenticate(channel, token)
-        
+      def channel(type, id)
+        name = "#{type}.#{id}"
+        @channels[name] || Channel.new(name)
+      rescue InvalidChannelName
+        nil
+      end
+      
+      def authenticate(channel_type, channel_id, token)
+        Talker.storage.authenticate(token) do |user|
+          # User authentication failed
+          yield nil, nil unless user
+          
+          # Channel authorization
+          case channel_type
+          when "room"
+            Talker.storage.authorize_room(user, channel_id) { |room_id| yield channel("room", room_id), user }
+          else
+            yield channel(channel_type, channel_id), user
+          end
+        end
       end
       
       def to_s

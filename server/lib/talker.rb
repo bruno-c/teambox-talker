@@ -6,6 +6,8 @@ $TALKER_DEBUG = false
 
 # Lazy load optional classes
 module Talker
+  class Error < RuntimeError; end
+  
   autoload :Channel, "talker/channel"
   
   module Channels
@@ -14,8 +16,6 @@ module Talker
     autoload :Room, "talker/channels/room"
     autoload :Server, "talker/channels/server"
   end
-  
-  autoload :Client, "talker/client"
   
   module Logger
     autoload :Room, "talker/logger/room"

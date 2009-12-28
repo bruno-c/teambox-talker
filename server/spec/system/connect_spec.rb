@@ -1,9 +1,17 @@
 require File.dirname(__FILE__) + "/spec_helper"
 
-EM.describe "A user that connects to a room" do
+EM.describe "A user that connects to a channel" do
   it "should be connected" do
     connect do |client|
       client.on_connected do
+        done
+      end
+    end
+  end
+
+  it "should not connect to invalid channel name" do
+    connect :channel => { :type => "room", :id => "#*" } do |client|
+      client.on_error do
         done
       end
     end
