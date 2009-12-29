@@ -11,12 +11,16 @@ module Talker::Server
     UUID_GENERATOR = UUID.new
     NAME_REGEXP = /^(\w+)\.(\w+)$/
     
+    # Supported channel types
+    TYPES = %w( room paste )
+    
     attr_reader :name, :type, :id, :exchange
     
     def initialize(name)
       @name = name
-      _, @type, @id = @name.match(NAME_REGEXP).to_a
-      raise InvalidChannelName, "#{@name} is an invalid channel name" unless @type && @id
+      _, @type, @id = @name.to_s.match(NAME_REGEXP).to_a
+      raise InvalidChannelName, "Invalid channel name: #{@name}" unless @type && @id
+      raise InvalidChannelName, "Invalid channel type: #{@type}" unless TYPES.include?(@type)
       
       @encoder = Yajl::Encoder.new
       @exchange = Queues.topic

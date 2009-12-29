@@ -8,11 +8,18 @@ All events are in JSON format. They contain a hash (`{...}`) and end with a line
 ## Authentication
 Before sending and receiving events in a channel, the client must connect to the channel by sending the following message:
 
-    {"type":"connect","channel":{"type":"room","id":"Main"},"token":"user secret token"}
+To connect to a room:
+
+    {"type":"connect","room":"Main","token":"user secret token"}
+
+To connect to a paste:
+
+    {"type":"connect","paste":"paste ID","token":"user secret token"}
 
 Attributes:
 
-* `channel` being the type and unique identifier of the channel to connect to,
+* `room` the name or numeric unique identifier of the room channel to connect to,
+* `paste` the unique identifier of the paste channel to connect to,
 * `token` the authentication token for that user.
 
 If the authentication is successful, the connection is left open and the server replies with:

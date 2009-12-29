@@ -20,7 +20,7 @@ module Helpers
   end
   
   def connect(options={}, &block)
-    Talker::Server::Client.connect({ :room => 1, :token => 1, :port => TEST_PORT }.merge(options), &block)
+    Talker::Client.connect({ :room => 1, :token => 1, :port => TEST_PORT, :host => "0.0.0.0" }.merge(options), &block)
   end
 end
 

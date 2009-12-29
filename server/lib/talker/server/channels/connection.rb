@@ -43,20 +43,14 @@ module Talker::Server
       ## Event callbacks
       
       def on_connect(event)
-        channel_info = event["channel"] || {}
-        channel_type = channel_info["type"]
-        channel_id = channel_info["id"]
-        
         token = event["token"]
         last_event_id = event["last_event_id"]
         
-        # For backward compat w/ "room":"ID"
-        if room = event["room"]
-          channel_type = "room"
-          channel_id = room.to_s
-        end
+        # Detech which type of channel we're connecting to
+        channel_type = Channel::TYPES.detect { |type| event[type] }
+        channel_id = event[channel_type].to_s
         
-        if channel_type.nil? || channel_id.nil? || token.nil?
+        if channel_type.nil? || token.nil?
           raise ProtocolError, "Authentication failed"
         end
         
