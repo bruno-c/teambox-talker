@@ -1,7 +1,7 @@
 one:
-  room: main
+  channel: main (Room)
   user: quentin
 
 two:
-  room: main
+  channel: main (Room)
   user: aaron

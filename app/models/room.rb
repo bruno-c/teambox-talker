@@ -2,7 +2,7 @@ class Room < ActiveRecord::Base
   UUID_GENERATOR = UUID.new
   
   has_many :events, :dependent => :destroy
-  has_many :connections, :dependent => :destroy
+  has_many :connections, :as => :channel, :dependent => :destroy
   has_many :users, :through => :connections
   has_many :guests, :class_name => "User", :dependent => :destroy
   has_many :attachments, :class_name => "::Attachment", # FIX class w/ Paperclip::Attachment
@@ -86,7 +86,7 @@ class Room < ActiveRecord::Base
   end
   
   def publish(*events)
-    topic.publish events.map(&:to_json).join("\n") + "\n", :key => "talker.room.#{id}", :persistent => true
+    topic.publish events.map(&:to_json).join("\n") + "\n", :key => "talker.channels.room.#{id}", :persistent => true
   end
   
   def to_s
