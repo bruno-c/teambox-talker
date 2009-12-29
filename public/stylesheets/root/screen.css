@@ -245,12 +245,14 @@ hr {
           border-color: #115f8f; }
 
 #home #splash {
-  background: transparent url(/images/root/splash-home.jpg) no-repeat scroll 50% 0;
   height: 880px; }
 
 #splash {
-  background: transparent url(/images/root/splash-blank.jpg) no-repeat scroll 50% 0;
+  background: transparent url(/images/root/back.jpg) no-repeat scroll 50% 0;
   height: 550px; }
+
+#pricing #splash {
+  padding-bottom: 50px; }
 
 #tagline h1 {
   position: absolute;
@@ -265,13 +267,18 @@ hr {
 
 #video {
   position: absolute;
-  margin: 305px 0 0 360px; }
+  margin: 165px 0px 0px 18px; }
+  #video #screenie {
+    width: 937px;
+    height: 286px; }
   #video .buttons a {
     font-size: 17px;
     text-transform: uppercase;
     padding: 13px 24px 14px;
     font-weight: normal;
-    color: #aa3015; }
+    color: #aa3015;
+    position: absolute;
+    margin: -174px 0px 0px 314px; }
   #video a:hover {
     color: #13181f;
     text-decoration: none; }
@@ -375,7 +382,7 @@ hr {
       font-style: italic; }
 
 #plans {
-  padding-top: 90px; }
+  padding-top: 200px; }
   #plans h2 {
     color: #081C45; }
   #plans h3 {

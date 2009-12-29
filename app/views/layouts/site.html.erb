@@ -16,20 +16,32 @@
   <%= yield :head %>
 </head>
 
-<body id="home">
+<body id="<%= current_view %>">
 
 <div id="header">
   <div class="container">
     <div id="menu">
       <ul>
-        <li><a href="/signup">Pricing &amp; Signup</a></li>
-        <li><a href="/home">Home</a></li>
+        <li><%= link_to "Pricing &amp; Signup", pricing_path %></li>
+        <li><%= link_to "Home", root_path %></li>
       </ul>
     </div>
   </div>
 </div>
   
 <%= yield %>
+
+<div id="footer">
+  <div class="container">
+    <div class="credits">
+      <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore."</p>
+    </div>
+    <div class="clear"></div>
+    <div id="copyright">
+      <p>&copy; 2009 Saut&eacute; Apps <span>|</span> <a href="/contact">Contact</a> <span>|</span> <a href="/about">About</a> <span>|</span> <a href="/help">Help</a> <span>|</span> <a href="http://twitter.com/talkerapp">Twitter</a> </p>
+    </div>
+  </div>
+</div>
 
 </body>
 
