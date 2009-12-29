@@ -267,7 +267,7 @@ hr {
 
 #video {
   position: absolute;
-  margin: 165px 0px 0px 18px; }
+  margin: 165px 0px 0px 12px; }
   #video #screenie {
     width: 937px;
     height: 286px; }
@@ -278,14 +278,14 @@ hr {
     font-weight: normal;
     color: #aa3015;
     position: absolute;
-    margin: -174px 0px 0px 314px; }
+    margin: -174px 0px 0px 355px; }
   #video a:hover {
     color: #13181f;
     text-decoration: none; }
 
 #page {
   position: absolute;
-  margin: 450px 0px 0px 0px;
+  margin: 450px 0px 0px -6px;
   width: 920px;
   padding: 20px 20px 25px;
   border: 6px solid #d9e7ee;
@@ -321,9 +321,10 @@ hr {
 #divider {
   color: #ae4b0f;
   font-family: Georgia;
-  padding: 8px 18px 15px;
+  padding: 8px 37px 15px;
   margin: 0px auto;
-  font-size: 19px; }
+  font-size: 19px;
+  margin-top: 10px; }
   #divider .buttons a {
     font-family: Georgia;
     font-weight: normal;
@@ -334,8 +335,8 @@ hr {
     float: left;
     color: #ae4b0f;
     font-family: Georgia;
-    font-size: 16px;
-    padding: 8px 18px;
+    font-size: 15px;
+    padding: 9px 22px;
     background: #fcefce;
     border-top: 1px solid #fabd1a;
     border-bottom: 1px solid #fabd1a; }
@@ -355,9 +356,10 @@ hr {
     #ads .spot p {
       color: #074371; }
   #ads .left {
-    margin-right: 10px; }
+    margin-right: 10px;
+    margin-left: 7px; }
   #ads .right {
-    margin-left: 10px; }
+    margin-left: 13px; }
 
 #quotes {
   position: absolute;
