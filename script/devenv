@@ -7,7 +7,7 @@ thin start -d
 echo "  thin started as a daemon (stop with 'thin stop')"
 script/tab script/orbited
 echo "  orbited started in a tab"
-sleep 6
+sleep 15
 script/tab script/talker channel
 echo "  talker channel server started in a tab"
 script/tab script/talker presence
