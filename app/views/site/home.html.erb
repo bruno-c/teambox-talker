@@ -5,9 +5,9 @@
     </div>
     <div id="video">
       <%= image_tag "root/screenie.png", :id => "screenie" %>
-      <div class="buttons">
+      <!-- <div class="buttons">
         <a href="#">Watch Video Tour</a>
-      </div>
+      </div> -->
     </div>
     <div id="page">
       <div id="benefits">
@@ -33,7 +33,8 @@
       </div>
       <div id="divider">
         <div class="buttons">
-          <a href="#">Try a live demo</a> <a href="/tour">View pricing and signup for a free trial</a>  
+          <a href="#" class="try">Try a live demo</a>
+          <%= link_to "View pricing and signup for a free trial", pricing_path, :class => "pricing" %>
         </div>
         <div class="arrow">
           it takes less than 60 seconds to create an account!
