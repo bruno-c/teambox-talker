@@ -1,31 +1,56 @@
-<div id="header">
-  <div id="header_center">
-    <a href="#" class="pricing">Plans &amp; Pricing</a>
-    <a href="#">Tour</a>
-    <a href="#">Blog</a>
-    <a href="#">Tabernapps</a>
+<div id="splash">
+  <div class="container">
+    <div id="tagline">
+      <h1>The fastest way to chat with your team.</h1>
+    </div>
+    <div id="video">
+      <%= image_tag "root/screenie.png", :id => "screenie" %>
+      <!-- <div class="buttons">
+        <a href="#">Watch Video Tour</a>
+      </div> -->
+    </div>
+    <div id="page">
+      <div id="benefits">
+        <ul>
+          <li id="one">
+            <h3>No IM Client</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+          </li>
+          <li id="two">
+            <h3>The water cooler</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+          </li>
+          <li id="three">
+            <h3>Work remotely</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+          </li>
+          <li id="four">
+            <h3>Make your team</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+          </li>
+        </ul>
+        <div class="clear"></div>
+      </div>
+      <div id="divider">
+        <div class="buttons">
+          <a href="#" class="try">Try a live demo</a>
+          <%= link_to "View pricing and signup for a free trial", pricing_path, :class => "pricing" %>
+        </div>
+        <div class="arrow">
+          it takes less than 60 seconds to create an account!
+        </div>
+      </div>
+    </div>
+    <div id="ads">
+      <div class="spot left">
+        <h3>Powerful Plugins</h3>
+        <p>Display and interact the way you want with our Front End API. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+      </div>
+      <div class="spot right">
+        <h3>Amazing API</h3>
+        <p>Send a message to the log in a single line of code! Our REST API makes it easy for you. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laud.</p>
+      </div>
+    </div>
+    <div class="clear"></div>
   </div>
-</div>
-
-<div id="container">
-  
-  <div id="right">
-    <%= image_tag "/images/screenie.png", :width => "475" %>
-  </div>
-  
-  <div id="left">
-    <h1><%= image_tag "/images/logo.png", :width => 55 %> talker</h1>
-
-    <h2>The fastest &amp; most extensible group chat.</h2>
-
-    <h3>Talker is an easy to use faster-than-email extensible and versatile collaboration tool.</h3>
-
-    <p>Share files, text, images and videos with ease.  Save logs automatically.  View feeds as soon as they are updated.</p>
-
-    <a href="/plans" class="plans">
-      <strong>See Plans &amp; Pricing</strong>
-      Free for 30 days, sign up in 30 seconds.
-    </a>
-  </div>
-  
 </div>

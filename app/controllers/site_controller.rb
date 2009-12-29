@@ -1,5 +1,5 @@
 class SiteController < ApplicationController
-  before_filter :documentation, :only => [:frontend_api, :rest_api, :features, :pricing] 
+  before_filter :documentation, :only => [:frontend_api, :rest_api, :features] 
   
   def home
   end

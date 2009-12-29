@@ -46,19 +46,19 @@ module Talker
     ## Message types
     
     def authenticate(event)
-      room = event["room"].to_i
-      token = event["token"].to_s
+      room = event["room"]
+      token = event["token"]
       last_event_id = event["last_event_id"]
       
       if room.nil? || token.nil?
         raise ProtocolError, "Authentication failed"
       end
 
-      Talker.storage.authenticate(room, token) do |user|
+      Talker.storage.authenticate(room, token) do |user, room_id|
         
         if user
           begin
-            @room = @server.rooms[room]
+            @room = @server.rooms[room_id]
             @user = user
             @user.token = token
             
@@ -73,7 +73,7 @@ module Talker
             
             # If requested, send recent events
             if last_event_id
-              Talker.storage.load_events(room, last_event_id) do |encoded_event|
+              Talker.storage.load_events(room_id, last_event_id) do |encoded_event|
                 send_data encoded_event + "\n"
               end
             end

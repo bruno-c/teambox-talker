@@ -9,6 +9,14 @@ class RoomTest < ActiveSupport::TestCase
     create_room!
   end
   
+  def test_admin_has_access_to_all_rooms
+    assert_equal Room.count, Room.with_permission(users(:quentin)).count
+  end
+  
+  def test_user_has_not_access_to_all_rooms
+    assert_not_equal Room.count, Room.with_permission(users(:aaron)).count
+  end
+  
   def test_send_message
     @room.expects(:publish).with do |event|
       assert_equal 'message', event[:type]

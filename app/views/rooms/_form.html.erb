@@ -30,7 +30,7 @@
 
 <div class="indent grouped" id="invitees">
   <ul>
-  <% current_account.users.active.registered.by_name.each do |user| %>
+  <% current_account.users.registered.by_name.each do |user| %>
     <li>
       <%= check_box_tag "room[invitee_ids][]", user.id, user.permission_without_room_access?(@room), :id => "room_invitee_ids_#{user.id}", :disabled => user.admin %>
       <%= form.label "invitee_ids_#{user.id}", h(user.name), :class => "inline" %>
