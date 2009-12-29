@@ -345,6 +345,11 @@ hr {
   position: absolute;
   margin: 741px 0px 10px 0px;
   background: transparent; }
+  #ads h3 a {
+    color: inherit;
+    border-color: #3b93ca; }
+    #ads h3 a:hover {
+      color: #3b93ca; }
   #ads .spot {
     float: left;
     width: 420px;

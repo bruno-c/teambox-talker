@@ -33,7 +33,7 @@
       </div>
       <div id="divider">
         <div class="buttons">
-          <a href="#" class="try">Try a live demo</a>
+          <%= link_to "Try a live demo", "https://talker.talkerapp.com/r/dece54" %>
           <%= link_to "View pricing and signup for a free trial", pricing_path, :class => "pricing" %>
         </div>
         <div class="arrow">
@@ -43,12 +43,12 @@
     </div>
     <div id="ads">
       <div class="spot left">
-        <h3>Powerful Plugins</h3>
-        <p>Display and interact the way you want with our Front End API. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+        <h3><%= link_to "Powerful Plugins", plugin_api_path %></h3>
+        <p>Display and interact the way you want with our simple Front End API. You can format messages, create links to other web pages, embed special types of media or create powerful slash commands.</p>
       </div>
       <div class="spot right">
-        <h3>Amazing API</h3>
-        <p>Send a message to the log in a single line of code! Our REST API makes it easy for you. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laud.</p>
+        <h3><%= link_to "Amazing API", rest_api_path %></h3>
+        <p>Send a message to the chat log in a single line of code! Our REST API makes it easy for you! Your build server, live monitoring tools and chat log can speak the same language.</p>
       </div>
     </div>
     <div class="clear"></div>
