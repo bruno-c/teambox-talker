@@ -58,6 +58,7 @@ class Feed < ActiveRecord::Base
     options[:if_modified_since] = last_modified_at if last_modified_at
     options[:if_none_match] = etag if etag
     options[:http_authentication] = [user_name, password] if user_name.present?
+    options[:timeout] = 60
     
     feed = Feedzirra::Feed.fetch_and_parse(url, options)
     
