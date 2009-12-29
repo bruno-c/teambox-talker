@@ -1,16 +1,16 @@
 module Talker::Server
   module Presence
     class Session
-      attr_reader :user, :room, :updated_at, :state
+      attr_reader :user, :updated_at, :state
       
-      def initialize(user, room, state=nil)
+      def initialize(user, channel, state=nil)
         @user = user
-        @room = room
+        @channel = channel
         @updated_at = Time.now.utc.to_i
         @state = state.to_sym if state
       end
       
-      def update(user)
+      def user=(user)
         @user.info = user.info
       end
       
@@ -18,49 +18,67 @@ module Talker::Server
         @updated_at = time
       end
       
-      def join!
-        @state = :online
-        store
+      def ping(time)
+        touch time
+        back time if idle?
       end
       
-      def back!
-        @state = :online
-        update_storage
+      def join(time)
+        touch time
+        save_state :online
+        publish "join", time
+      end
+      
+      def back(time)
+        touch time
+        return unless idle?
+        save_state :online
+        publish "back", time
       end
       
       def online?
         @state == :online
       end
       
-      def idle!
-        @state = :idle
-        update_storage
+      def idle(time)
+        touch time
+        save_state :idle
+        publish "idle", time
       end
       
       def idle?
         @state == :idle
       end
       
-      def leave!
+      def leave(time)
         @state = nil
         delete
+        publish "leave", time
       end
       
       def to_s
-        "#{@room.name}.#{@user.id} (#{@state})"
+        "#{@channel.name}.#{@user.id} (#{@state})"
       end
       
       private
-        def store
-          Talker::Server.storage.store_connection(@room.name, @user.id, @state.to_s)
+        def publish(type, time)
+          @channel.publish :type => type, :user => @user.info, :time => time
         end
         
-        def update_storage
-          Talker::Server.storage.update_connection(@room.name, @user.id, @state.to_s)
+        def save_state(state)
+          new_record = @state.nil?
+          
+          if new_record
+            Talker::Server.storage.store_connection(@channel.type, @channel.id, @user.id, @state.to_s)
+          else
+            Talker::Server.storage.update_connection(@channel.type, @channel.id, @user.id, @state.to_s)
+          end
+          
+          @state = state
         end
         
         def delete
-          Talker::Server.storage.delete_connection(@room.name, @user.id)
+          Talker::Server.storage.delete_connection(@channel.type, @channel.id, @user.id)
         end
     end
   end

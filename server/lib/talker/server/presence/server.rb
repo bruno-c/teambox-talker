@@ -7,7 +7,7 @@ module Talker::Server
       DEFAULT_TIMEOUT = 30.0 # sec
       
       def initialize(options={})
-        @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
+        @secretaries = Hash.new { |secretaries, name| secretaries[name] = Secretary.new(name) }
         @queue = Queues.presence
         @sweeper = Sweeper.new(self, options[:timeout] || DEFAULT_TIMEOUT)
         @sweeper.start
@@ -16,8 +16,8 @@ module Talker::Server
         @parser.on_parse_complete = method(:presence_received)
       end
       
-      def rooms
-        @rooms.values
+      def secretaries
+        @secretaries.values
       end
       
       def start
@@ -36,29 +36,27 @@ module Talker::Server
       end
     
       def load
-        Talker::Server.storage.load_connections do |room_id, user, state|
-          room = @rooms[room_id]
-          session = @rooms[room_id].new_session(user, state)
+        Talker::Server.storage.load_connections do |channel_type, channel_id, user, state|
+          channel = "#{channel_type}.#{channel_id}"
+          session = @secretaries[channel].new_session(user, state)
           
-          Talker::Server.logger.debug{"loaded connection: room##{room.name} => #{user.name} (#{session.state})"}
+          Talker::Server.logger.debug{"loaded connection: #{channel} => #{user.name} (#{session.state})"}
         end
       end
 
-      def presence_received(message)
-        Talker::Server.logger.debug{"<<< " + message.inspect}
-        
-        type = message["type"]
-        room = @rooms[message["room"].to_i]
-        user = User.new(message["user"])
-        time = message["time"]
+      def presence_received(event)
+        type = event["type"]
+        secretary = @secretaries[event["channel"]]
+        user = User.new(event["user"])
+        time = event["time"]
         
         case type
         when "join"
-          room.join user, time
+          secretary.join user, time
         when "leave"
-          room.leave user, time
+          secretary.leave user, time
         when "ping"
-          room.ping user, time
+          secretary.ping user, time
         else
           Notifier.error "Wrong type of presence in message #{message.inspect}"
         end

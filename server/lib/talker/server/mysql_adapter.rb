@@ -83,37 +83,40 @@ module Talker::Server
     
     ## Connections
     
-    def store_connection(room_id, user_id, state)
+    def store_connection(channel_type, channel_id, user_id, state)
       sql = <<-SQL
-        INSERT INTO connections (room_id, user_id, state, created_at, updated_at)
-        VALUES (#{room_id.to_i}, #{user_id.to_i}, '#{state}', NOW(), NOW())
+        INSERT INTO connections (channel_type, channel_id, user_id, state, created_at, updated_at)
+        VALUES ('#{quote(channel_type.to_s.capitalize)}', '#{quote(channel_id)}', #{user_id.to_i}, '#{quote(state)}', NOW(), NOW())
       SQL
       db.insert sql
     end
 
-    def update_connection(room_id, user_id, state)
+    def update_connection(channel_type, channel_id, user_id, state)
       sql = <<-SQL
         UPDATE connections
         SET state = '#{state}', updated_at = NOW()
-        WHERE room_id = #{room_id} AND user_id = #{user_id}
+        WHERE channel_type = '#{quote(channel_type.to_s.capitalize)}'
+          AND channel_id = '#{quote(channel_id)}'
+          AND user_id = #{user_id.to_i}
       SQL
       db.update sql
     end
 
-    def delete_connection(room_id, user_id)
+    def delete_connection(channel_type, channel_id, user_id)
       sql = <<-SQL
         DELETE FROM connections
-        WHERE room_id = #{room_id.to_i}
-        AND user_id = #{user_id.to_i}
+        WHERE channel_type = '#{quote(channel_type.to_s.capitalize)}'
+          AND channel_id = '#{quote(channel_id)}'
+          AND user_id = #{user_id.to_i}
       SQL
       db.raw sql
     end
     
-    # yields [room_id, user_info_hash, state] for each connection
+    # yields [channel_type, channel_id, user_info_hash, state] for each connection
     def load_connections(&callback)
       sql = <<-SQL
-        SELECT connections.room_id AS room_id, users.id AS user_id,
-               users.name AS name, users.email AS email,
+        SELECT connections.channel_type AS channel_type, connections.channel_id AS channel_id,
+               users.id AS user_id, users.name AS name, users.email AS email,
                connections.state as state
         FROM connections
         INNER JOIN users ON users.id = connections.user_id
@@ -121,7 +124,7 @@ module Talker::Server
       db.select(sql) do |results|
         results.each do |result|
           user = User.new("id" => result["user_id"].to_i, "name" => result["name"].to_s, "email" => result["email"].to_s)
-          callback.call(result["room_id"].to_i, user, result["state"])
+          callback.call result["channel_type"].downcase, result["channel_id"], user, result["state"]
         end
       end
     end
