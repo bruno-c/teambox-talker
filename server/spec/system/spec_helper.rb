@@ -9,7 +9,7 @@ module Helpers
     @server = Talker::Server::Channels::Server.new({ :port => TEST_PORT, :timeout => 1 }.merge(options))
     @server.start
     
-    @presence = Talker::Server::Presence::Server.new
+    @presence = Talker::Server::Presence::Monitor.new
     @presence.start
     
     @server

@@ -145,7 +145,7 @@ module Talker::Server
     end
 
     def build_presence_server
-      Talker::Presence::Server.new
+      Talker::Presence::Monitor.new
     end
     
     def build_logger

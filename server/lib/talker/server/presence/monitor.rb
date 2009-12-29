@@ -3,7 +3,7 @@ require "yajl"
 
 module Talker::Server
   module Presence
-    class Server
+    class Monitor
       DEFAULT_TIMEOUT = 30.0 # sec
       
       def initialize(options={})

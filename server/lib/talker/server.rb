@@ -28,8 +28,8 @@ module Talker
     autoload :Notifier, "talker/server/notifier"
     
     module Presence
-      autoload :Room, "talker/server/presence/room"
-      autoload :Server, "talker/server/presence/server"
+      autoload :Monitor, "talker/server/presence/monitor"
+      autoload :Secretary, "talker/server/presence/secretary"
       autoload :Session, "talker/server/presence/session"
       autoload :Sweeper, "talker/server/presence/sweeper"
     end
