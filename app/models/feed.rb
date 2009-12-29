@@ -22,6 +22,10 @@ class Feed < ActiveRecord::Base
   cattr_accessor :stop
   self.stop = false
   
+  def url=(url)
+    self[:url] = url.gsub(/^feed:https/, 'https').gsub(/^feed:\/\//, 'http://')
+  end
+  
   def failed?
     failed_at
   end
