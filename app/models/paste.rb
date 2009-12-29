@@ -3,13 +3,9 @@ class Paste < ActiveRecord::Base
   
   validates_presence_of :content
   
-  before_create { |p| p.permalink = ActiveSupport::SecureRandom.hex(10) }
+  before_create { |p| p.id = ActiveSupport::SecureRandom.hex(10) }
   
   attr_accessible :content, :syntax
-  
-  def to_param
-    permalink
-  end
   
   def lines
     @lines ||= content.count("\n")
@@ -20,7 +16,7 @@ class Paste < ActiveRecord::Base
   end
   
   def to_json(*a)
-    { :id => permalink, :lines => lines, :preview_lines => PREVIEW_LINES }.to_json(*a)
+    { :id => id, :lines => lines, :preview_lines => PREVIEW_LINES }.to_json(*a)
   end
   
   def self.truncate(content)

@@ -136,8 +136,8 @@ module Talker::Server
       content = content.to_s
       time = Time.now.utc.to_i
       
-      sql = "INSERT INTO pastes (content, permalink, created_at, updated_at) " +
-            "VALUES ('#{quote(content)}', '#{quote(permalink)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
+      sql = "INSERT INTO pastes (id, content, created_at, updated_at) " +
+            "VALUES ('#{quote(permalink)}', '#{quote(content)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
       
       Talker::Server.logger.debug sql
       db.insert sql, &callback

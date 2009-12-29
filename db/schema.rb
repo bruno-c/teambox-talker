@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091215194758) do
+ActiveRecord::Schema.define(:version => 20091229041011) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -31,11 +31,12 @@ ActiveRecord::Schema.define(:version => 20091215194758) do
   end
 
   create_table "connections", :force => true do |t|
-    t.integer  "room_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",      :limit => 15
+    t.string   "state",        :limit => 15
+    t.string   "channel_type", :limit => 15
+    t.string   "channel_id"
   end
 
   create_table "delayed_jobs", :force => true do |t|
