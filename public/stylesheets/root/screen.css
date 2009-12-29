@@ -252,13 +252,13 @@ hr {
   height: 550px; }
 
 #pricing #splash {
-  padding-bottom: 50px; }
+  padding-bottom: 100px; }
 
 #tagline h1 {
   position: absolute;
   text-align: center;
   width: 800px;
-  margin: 112px 0 0 80px;
+  margin: 112px 0 0 78px;
   color: #094f7a;
   font-size: 1.5em;
   font-weight: normal;
@@ -323,8 +323,7 @@ hr {
   font-family: Georgia;
   padding: 8px 37px 15px;
   margin: 0px auto;
-  font-size: 19px;
-  margin-top: 10px; }
+  font-size: 19px; }
   #divider .buttons a {
     font-family: Georgia;
     font-weight: normal;
@@ -392,11 +391,12 @@ hr {
   #plans p {
     font-family: Helvetica;
     font-size: 16.5px;
-    color: #1574AE; }
+    color: #1574AE;
+    margin: 10px 0; }
     #plans p span {
       font-weight: bold;
       color: #094975; }
-  #plans #one, #plans #two, #plans #three, #plans #four {
+  #plans .plan {
     text-align: center;
     display: inline;
     float: left;

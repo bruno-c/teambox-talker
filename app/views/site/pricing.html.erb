@@ -1,54 +1,35 @@
 <div id="splash">
   <div class="container">
     <div id="tagline">
-      <h1>The fastest way to chat with your team.</h1>
+      <h1>Fast, intuitive and extensible group chat</h1>
     </div>
     <div id="plans">
-      <div id="one">
+      <% Plan.payings.each do |plan| %>
+      <div class="plan">
         <div class="box">
-          <h2>Max</h2>
-          <h3>$99/month</h3>
-          <p><span>120</span> chatters<br />
-          <span>25GB</span> upload storage</p>
-          <div class="buttons"><a href="#">Sign Up</a></div>
+          <h2><%= plan.name %></h2>
+          <h3><%= number_to_currency plan.price, :precision => 0 %>/month</h3>
+          <p>
+            <span><%= plan.features.max_connections %></span> chatters<br />
+            <span><%= number_to_human_size plan.features.max_storage %></span> upload space<br />
+            <span><%= plan.features.feeds %></span> feeds<br />
+          </p>
+          <p>
+            <%= plan.features.log_history ? plan.features.log_history.inspect : "Unlimited" %> chat log<br />
+            <% if plan.features.private_rooms %>
+              Private rooms
+            <% end %><br />
+          </p>
+          <div class="buttons"><%= link_to "Sign Up", signup_path(plan) %></div>
           <div class="clear"></div>
         </div>
       </div>
-      <div id="two">
-        <div class="box">
-          <h2>Premium</h2>
-          <h3>$49/month</h3>
-          <p><span>60</span> chatters<br />
-          <span>10GB</span> upload storage</p>
-          <div class="buttons"><a href="#">Sign Up</a></div>
-          <div class="clear"></div>
-        </div>
-      </div>
-      <div id="three">
-        <div class="box">
-          <h2>Plus</h2>
-          <h3>$24/month</h3>
-          <p><span>25</span> chatters<br />
-          <span>3GB</span> upload storage</p>
-          <div class="buttons"><a href="#">Sign Up</a></div>
-          <div class="clear"></div>
-        </div>
-      </div>
-      <div id="four">
-        <div class="box">
-          <h2>Basic</h2>
-          <h3>$12/month</h3>
-          <p><span>12</span> chatters<br />
-          <span>1GB</span> upload storage</p>
-          <div class="buttons"><a href="#">Sign Up</a></div>
-          <div class="clear"></div>
-        </div>
-      </div>
+      <% end %>
       <div class="clear"></div>
       <div id="all">
         <div class="box">
           <p id="extras">All paying plans come with easy breezy <span>Feeds</span>, powerful <span>Plugins</span> and enhanced <span>Security</span>.</p> 
-          <p id="free">We also offer a limited <a href="#">Free Account</a> for up to 4 users with 10MB of upload and larger free accounts for charities and open source projects.</p>
+          <p id="free">We also offer a limited <%= link_to "Free Account", signup_path("free") %></a> for up to <%= Plan.free.features.max_connections %> chatters with <%= number_to_human_size Plan.free.features.max_storage %> and larger free accounts for charities and open source projects.</p>
         </div>
       </div>
     </div>

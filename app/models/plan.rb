@@ -39,8 +39,12 @@ class Plan
                               :return_url => return_url)
   end
   
+  def self.payings
+    @payings ||= YAML.load_file(DB_FILE)[RAILS_ENV].sort_by(&:price)
+  end
+  
   def self.all
-    @all ||= [Plan.free] + YAML.load_file(DB_FILE)[RAILS_ENV].sort_by(&:price)
+    @all ||= [Plan.free] + payings
   end
   
   def self.free
