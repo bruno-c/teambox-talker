@@ -290,8 +290,9 @@ hr {
   padding: 20px 20px 25px;
   border: 6px solid #d9e7ee;
   background: #fff;
-  -moz-box-shadow: 0px 1px 4px #2d86b2;
-  -webkit-box-shadow: 0px 1px 4px #2d86b2; }
+  box-shadow: 0px 1px 4px #2d86b2;
+  -webkit-box-shadow: 0px 1px 4px #2d86b2;
+  -moz-box-shadow: 0px 1px 4px #2d86b2; }
 
 #benefits {
   padding: 0px 20px 3px;
@@ -443,6 +444,46 @@ hr {
       color: #094975;
       font-size: 13px;
       margin: 0px; }
+
+#about #splash {
+  height: 870px; }
+#about .content {
+  position: absolute;
+  margin: 200px 0 0 19px; }
+  #about .content h3 {
+    margin-bottom: 13px; }
+  #about .content p {
+    margin-bottom: 9px;
+    color: #333; }
+#about #product {
+  padding: 20px 20px 25px;
+  border: 6px solid #d9e7ee;
+  background: #fff;
+  box-shadow: 0px 1px 4px #2d86b2;
+  -webkit-box-shadow: 0px 1px 4px #2d86b2;
+  -moz-box-shadow: 0px 1px 4px #2d86b2;
+  width: 872px;
+  margin-bottom: 20px;
+  padding-bottom: 12px; }
+#about #team .box {
+  padding: 20px 20px 25px;
+  border: 6px solid #d9e7ee;
+  background: #fff;
+  box-shadow: 0px 1px 4px #2d86b2;
+  -webkit-box-shadow: 0px 1px 4px #2d86b2;
+  -moz-box-shadow: 0px 1px 4px #2d86b2;
+  float: left;
+  width: 313px;
+  height: 265px;
+  padding-bottom: 12px;
+  padding-left: 107px; }
+  #about #team .box img.avatar {
+    border: solid 1px #ccc;
+    padding: 1px;
+    margin-left: -90px;
+    float: left; }
+  #about #team .box.right {
+    margin-left: 20px; }
 
 #footer {
   min-height: 200px;

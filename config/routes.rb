@@ -7,8 +7,8 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup/:plan', :controller => 'accounts', :action => 'new'
   map.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
   
-  map.home '/home', :controller => 'site', :action => 'home' # this will become the new home page for launch
   map.pricing '/pricing', :controller => "site", :action => "pricing"
+  map.about '/about', :controller => "site", :action => "about"
   map.privacy_policy "/privacy_policy", :controller => "site", :action => "privacy_policy"
   map.terms_and_conditions "/terms_and_conditions", :controller => "site", :action => "terms_and_conditions"
   map.service_policy "/service_policy", :controller => "site", :action => "service_policy"

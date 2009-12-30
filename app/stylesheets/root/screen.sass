@@ -1,4 +1,11 @@
 @import root/reset.sass
+@import styling.sass
+
+=box
+  padding: 20px 20px 25px
+  border: 6px solid #d9e7ee
+  background: #fff
+  +box_shadow(0, 1, 4, #2d86b2)
 
 h1
   font-family: Helvetica, Arial, sans-serif
@@ -297,9 +304,7 @@ hr
   padding: 20px 20px 25px
   border: 6px solid #d9e7ee
   background: #fff
-  -moz-box-shadow: 0px 1px 4px #2d86b2
-  -webkit-box-shadow: 0px 1px 4px #2d86b2
-
+  +box_shadow(0, 1, 4, #2d86b2)
 
 #benefits
   padding: 0px 20px 3px
@@ -486,6 +491,43 @@ hr
         font-size: 13px
         margin: 0px
 
+#about
+  #splash
+    height: 870px
+
+  .content
+    position: absolute
+    margin: 200px 0 0 19px
+    
+    h3
+      margin-bottom: 13px
+    p
+      margin-bottom: 9px
+      color: #333
+
+  #product
+    +box
+    width: 872px
+    margin-bottom: 20px
+    padding-bottom: 12px
+  
+  #team
+    .box
+      +box
+      float: left
+      width: 313px
+      height: 265px
+      padding-bottom: 12px
+      padding-left: 107px
+      
+      img.avatar
+        border: solid 1px #ccc
+        padding: 1px
+        margin-left: -90px
+        float: left
+      
+      &.right
+        margin-left: 20px
 
 #footer
   min-height: 200px
