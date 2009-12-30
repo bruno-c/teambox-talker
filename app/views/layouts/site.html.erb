@@ -28,17 +28,21 @@
     </div>
   </div>
 </div>
-  
-<%= yield %>
+
+<div id="splash">
+  <div class="container">
+    <%= yield %>
+  </div>
+</div>
 
 <div id="footer">
   <div class="container">
     <div class="credits">
-      <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore."</p>
+      <!-- <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore."</p> -->
     </div>
     <div class="clear"></div>
     <div id="copyright">
-      <p>&copy; 2009 Saut&eacute; Apps <span>|</span> <a href="/contact">Contact</a> <span>|</span> <a href="/about">About</a> <span>|</span> <a href="/help">Help</a> <span>|</span> <a href="http://twitter.com/talkerapp">Twitter</a> </p>
+      <p>&copy; 2009 Saut&eacute; Apps <span>|</span> <a href="/contact">Contact</a> <span>|</span> <a href="/about">About</a> <span>|</span> <%= link_to "Support", "http://talker.tenderapp.com" %> <span>|</span> <a href="http://twitter.com/talkerapp">Twitter</a> </p>
     </div>
   </div>
 </div>
