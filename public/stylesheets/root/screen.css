@@ -251,9 +251,6 @@ hr {
   background: transparent url(/images/root/back.jpg) no-repeat scroll 50% 0;
   height: 550px; }
 
-#pricing #splash {
-  padding-bottom: 100px; }
-
 #tagline h1 {
   position: absolute;
   text-align: center;
@@ -324,6 +321,7 @@ hr {
   font-family: Georgia;
   padding: 8px 37px 15px;
   margin: 0px auto;
+  margin-top: -10px;
   font-size: 19px; }
   #divider .buttons a {
     font-family: Georgia;
@@ -341,10 +339,20 @@ hr {
     border-top: 1px solid #fabd1a;
     border-bottom: 1px solid #fabd1a; }
 
+#pricing #splash {
+  padding-bottom: 250px; }
+
+#home #ads {
+  margin: 741px 0 0 10px; }
+
+#plans #ads {
+  margin: 0; }
+  #plans #ads .right {
+    margin-left: 72px; }
+
 #ads {
   padding: 20px 50px 20px;
   position: absolute;
-  margin: 741px 0px 10px 0px;
   background: transparent; }
   #ads h3 a {
     color: inherit;
@@ -353,7 +361,7 @@ hr {
       color: #3b93ca; }
   #ads .spot {
     float: left;
-    width: 420px;
+    width: 392px;
     height: 120px;
     margin: 0px 0px 20px;
     display: block;
@@ -361,10 +369,9 @@ hr {
     #ads .spot p {
       color: #074371; }
   #ads .left {
-    margin-right: 10px;
-    margin-left: 7px; }
+    margin-right: 10px; }
   #ads .right {
-    margin-left: 13px; }
+    margin-left: 40px; }
 
 #quotes {
   position: absolute;
@@ -390,16 +397,12 @@ hr {
 
 #plans {
   padding-top: 200px; }
-  #plans h2 {
-    color: #081C45; }
-  #plans h3 {
-    color: #d95717; }
-  #plans p {
+  #plans .plan p, #plans #all p {
     font-family: Helvetica;
     font-size: 16.5px;
     color: #1574AE;
     margin: 10px 0; }
-    #plans p span {
+    #plans .plan p span, #plans #all p span {
       font-weight: bold;
       color: #094975; }
   #plans .plan {
@@ -408,6 +411,10 @@ hr {
     float: left;
     width: 220px;
     margin: 0px 10px; }
+    #plans .plan h2 {
+      color: #081C45; }
+    #plans .plan h3 {
+      color: #d95717; }
   #plans .box {
     height: 210;
     margin: 0px;
