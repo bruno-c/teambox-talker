@@ -15,4 +15,12 @@ module UrlHelper
     link_to [options.delete(:prefix), human_date(date), options.delete(:postfix)].compact.join(" "),
             room_log_path(room, date.year, date.month, date.day), options
   end
+  
+  def plugin_api_path
+    "https://talker.tenderapp.com/faqs/api/frontend-plugin-api"
+  end
+
+  def rest_api_path
+    "https://talker.tenderapp.com/faqs/api/rest-api"
+  end
 end
