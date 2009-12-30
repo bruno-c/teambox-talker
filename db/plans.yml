@@ -4,11 +4,32 @@
 production: 
 - !ruby/object:Plan 
   description: 
-  feature_level: kickstart
+  feature_level: bootstrap
   id: 3318
-  name: Kickstart
+  name: Bootstrap
   plan_type: regular
   price: 8.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: Startup
+  id: 3401
+  name: Startup
+  plan_type: regular
+  price: 12.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: basic
+  id: 3403
+  name: Basic
+  plan_type: regular
+  price: 24.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: premium
+  id: 3404
+  name: Premium
+  plan_type: regular
+  price: 49.0
 development: 
 - !ruby/object:Plan 
   description: 
