@@ -91,6 +91,15 @@ class FeedTest < ActiveSupport::TestCase
     assert_not_nil feed.last_error
   end
   
+  def test_feed_url
+    # feed:https://github.com/feeds/macournoyer/commits/talker/master
+    feed = Feed.create(:url => "feed:https://github.com/feeds/macournoyer/commits/talker/master")
+    assert feed.valid?
+    
+    feed = Feed.create(:url => "feed://search.twitter.com/search.atom?q=Avatar")
+    assert feed.valid?
+  end
+  
   def test_cant_create_if_limit_is_reached
     accounts(:master).plan = Plan.free
     accounts(:master).save

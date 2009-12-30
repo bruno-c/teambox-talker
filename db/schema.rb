@@ -96,6 +96,8 @@ ActiveRecord::Schema.define(:version => 20091215194758) do
     t.datetime "updated_at"
   end
 
+  add_index "pastes", ["permalink"], :name => "index_pastes_on_permalink", :unique => true
+
   create_table "permissions", :force => true do |t|
     t.integer  "user_id"
     t.integer  "room_id"

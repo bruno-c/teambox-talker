@@ -289,15 +289,21 @@ html[xmlns] .clearfix {
             background-position: 2px center; }
   #nav p.utilities {
     float: right;
-    color: silver;
+    color: gray;
     line-height: 40px; }
     #nav p.utilities a {
-      color: white; }
+      color: white;
+      margin: 2px;
+      font-weight: bold;
+      text-decoration: none; }
       #nav p.utilities a.avatar img {
         height: 18px;
         width: 18px;
         position: relative;
-        top: 3px; }
+        top: 4px;
+        left: 4px; }
+    #nav p.utilities a:hover {
+      text-decoration: underline; }
 
 #content {
   padding: 40px 0 0; }
