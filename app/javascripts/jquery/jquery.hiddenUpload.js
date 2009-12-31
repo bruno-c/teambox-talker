@@ -19,7 +19,7 @@
     var iframe = $('<iframe src="javascript:false;" />')
       .attr('name', id)
       .attr('id', id)
-      // .css('display', 'none')
+      .css('display', 'none')
       .appendTo(document.body);
 
     iframe.load(function() {
@@ -57,6 +57,11 @@
       .attr('action', options.action)
       .attr('target', id)
       .attr('id', 'form_' + id)
+      .css({
+        'position': 'absolute',
+        'left': '-14480px',
+        'top': '-14480px'
+      })
       .append(anchor.input)
       .appendTo(document.body);
   }
@@ -94,40 +99,32 @@
     
     var anchor = this;
     
-    var hoverDivId = $(this).attr('id') + '_upload_iframe';
-      
     // make a div hover above item with file upload in it
     $(this).mouseover(function() {
+      var hoverDivId = $(this).attr('id') + '_upload_iframe';
       if (!$('#' + hoverDivId).length){ 
         var hoverDiv = $('<div/>')
           .css({
             'overflow': 'hidden', 
-            'opacity': '0',
-            'border': '1px solid black',
+            'opacity': '1',
             'z-index': 2147483583
           })
           .attr('id', hoverDivId)
           .appendTo($(document.body));
         
         anchor.hoverDiv = hoverDiv;
-        anchor.input = $(
-          '<input type="file" name="' + options.name + '" />'
-        ).css({
-          'opacity': '1',
-          'border': '1px dashed red',
-          'font-size': '50px',
+        anchor.input = $('<input type="file" name="' + options.name + '" />').css({
+          'margin': '-5px 0 0 -175px',
+          'opacity': '0',
+          'font-size': '280px',
           'cursor': 'pointer',
-          'float': 'right',
-          'position': 'relative',
-          'bottom': '24px',
-          'right': '0px',
-          'background': 'red'
+          'position': 'absolute',
+          'bottom': '-25px',
+          'right': '-25px'
         }).mouseover(function() {
           $(anchor).addClass(options.hoverClass);
-          $('#' + hoverDivId).show();
         }).mouseout(function() {
           $(anchor).removeClass(options.hoverClass);
-          $('#' + hoverDivId).hide();
         }).change(function() {
           if (options.onSubmit() !== false){
             fireUpload(anchor, options);
@@ -136,7 +133,7 @@
         
         hoverDiv.html(anchor.input);
       }
-      $('#' + hoverDivId).clonePosition(this).show();
+      $('#' + hoverDivId).clonePosition(this);
     });
     
     return this;
