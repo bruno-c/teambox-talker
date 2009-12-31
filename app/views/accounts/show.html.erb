@@ -85,21 +85,21 @@
     <h3>Usage</h3>
     
     <p class="side_description">
-      You've used <%= number_to_human_size @account.used_storage %> of your <%= number_to_human_size @account.features.max_storage %> file upload space limit.
+      You've used <strong><%= number_to_human_size @account.used_storage %></strong> of your <strong><%= number_to_human_size @account.features.max_storage %></strong> file upload space limit.
     </p>
     <strong>File Upload Space</strong>
     <%= meter_tag @account.used_storage.to_f / @account.features.max_storage.to_f %>
     
     <p class="side_description">
-      You're currently using <%= @account.connections.count %>
-      of your <%= pluralize @account.features.max_connections, "online users" %> limit.
+      You're currently using <strong><%= @account.connections.users_count %></strong>
+      of your <strong><%= pluralize @account.features.max_connections, "online users" %></strong> limit.
     </p>
     <strong>Online Users</strong>
-    <%= meter_tag @account.connections.count.to_f / @account.features.max_connections.to_f %>
+    <%= meter_tag @account.connections.users_count.to_f / @account.features.max_connections.to_f %>
   
     <p class="side_description">
-      You're currently using <%= @account.feeds.count %>
-      of your <%= pluralize @account.features.feeds, "feed" %> limit.
+      You're currently using <strong><%= @account.feeds.count %></strong>
+      of your <strong><%= pluralize @account.features.feeds, "feed" %></strong> limit.
     </p>
     <strong>Feeds</strong>
     <%= meter_tag @account.feeds.count.to_f / @account.features.feeds.to_f %>

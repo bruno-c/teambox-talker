@@ -13,4 +13,8 @@ class Connection < ActiveRecord::Base
   def publish(event)
     room.topic.publish event.to_json + "\n", :key => "talker.room.#{room.id}.#{user.id}", :persistent => true
   end
+  
+  def self.users_count
+    count :user_id, :distinct => :user_id
+  end
 end

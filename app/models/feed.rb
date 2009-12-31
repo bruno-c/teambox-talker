@@ -185,7 +185,7 @@ class Feed < ActiveRecord::Base
   
   private
     def respect_limit
-      if account.feeds_full?
+      if account.nil? || account.feeds_full?
         errors.add :base, "You've reached your feeds limit. Upgrade your plan to raise that limit."
       end
     end

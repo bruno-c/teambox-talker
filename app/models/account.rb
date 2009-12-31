@@ -33,7 +33,7 @@ class Account < ActiveRecord::Base
   end
   
   def full?(distance=0)
-    connections.count + distance >= features.max_connections
+    connections.users_count + distance >= features.max_connections
   end
 
   def storage_full?(distance=0)

@@ -92,12 +92,8 @@ class FeedTest < ActiveSupport::TestCase
   end
   
   def test_feed_url
-    # feed:https://github.com/feeds/macournoyer/commits/talker/master
-    feed = Feed.create(:url => "feed:https://github.com/feeds/macournoyer/commits/talker/master")
-    assert feed.valid?
-    
-    feed = Feed.create(:url => "feed://search.twitter.com/search.atom?q=Avatar")
-    assert feed.valid?
+    assert_equal "https://github.com/feeds/macournoyer/commits/talker/master", Feed.create(:url => "feed:https://github.com/feeds/macournoyer/commits/talker/master").url
+    assert_equal "http://search.twitter.com/search.atom?q=Avatar", Feed.create(:url => "feed://search.twitter.com/search.atom?q=Avatar").url
   end
   
   def test_cant_create_if_limit_is_reached

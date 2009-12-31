@@ -1244,13 +1244,6 @@ a#logo {
       width: 100%;
       border: 0;
       background: #f8f8f8; }
-  #sidebar #beta_message {
-    margin-top: 40px;
-    clear: both;
-    height: 300px;
-    overflow: auto; }
-    #sidebar #beta_message p {
-      font-size: 10px; }
 
 #footer {
   margin: 30px 0 10px 0;
