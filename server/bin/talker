@@ -2,9 +2,9 @@
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require "optparse"
 require "rubygems"
-require "talker"
+require "talker/server"
 
-runner = Talker::Runner.new
+runner = Talker::Server::Runner.new
 
 OptionParser.new do |opts|
   opts.banner = "Usage: #{$PROGRAM_NAME} [options]"

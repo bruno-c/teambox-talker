@@ -15,8 +15,12 @@ module Talker::Server
         @sessions[user.id]
       end
       
+      def sessions
+        @sessions.values
+      end
+      
       def users
-        @sessions.map { |session| session.user }
+        sessions.map { |session| session.user }
       end
       
       def join(user, time=Time.now.to_i)
@@ -26,12 +30,13 @@ module Talker::Server
           
         # New user in room if not present
         else
-          new_session(user).join(time)
+          session = new_session(user)
+          session.join(time)
           
         end
 
         # Send list of online users to new user
-        @channel.publish_to user.id, :type => "users", :users => users.map { |u| u.info }
+        session.publish_to :type => "users", :users => users.map { |u| u.info }
       end
       
       def idle(user, time=Time.now.to_i)
@@ -52,7 +57,7 @@ module Talker::Server
           session.leave(time)
           
           # Make sure all open connection w/ this user are closed
-          publish_to user.id, :type => "error", :message => "Connection closed"
+          session.publish_to :type => "error", :message => "Connection closed"
         end
       end
     end

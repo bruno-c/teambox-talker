@@ -1,8 +1,8 @@
 module Talker::Server
   module Presence
     class Sweeper
-      def initialize(server, timeout)
-        @server = server
+      def initialize(monitor, timeout)
+        @monitor = monitor
         @timeout = timeout
       end
       
@@ -19,19 +19,19 @@ module Talker::Server
       def run
         Talker::Server.logger.debug "Running sweeper"
         
-        now = Time.now.utc.to_i
+        now = Time.now.to_i
         
-        @server.rooms.each do |room|
-          room.sessions.each do |session|
+        @monitor.secretaries.each do |secretary|
+          secretary.sessions.each do |session|
             
             # The first time a session times out we mark it as idle.
             # The second time we force the user to leave.
             if now - session.updated_at >= @timeout
               if session.idle?
                 Talker::Server.logger.debug "Expiring session #{session}"
-                room.leave session.user
+                secretary.leave session.user
               else
-                room.idle session.user
+                secretary.idle session.user
               end
             end
             

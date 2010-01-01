@@ -24,7 +24,7 @@ module Talker::Server
     
     
     ## Authentication
-    def authenticate(token, &callback)
+    def authenticate(token)
       token = token.to_s
       
       sql = <<-SQL
@@ -42,23 +42,22 @@ module Talker::Server
           user = User.new("id" => result["id"].to_i, "name" => result["name"], "email" => result["email"])
           user.account_id = result["account_id"].to_i
           user.admin = (result["admin"] == "1")
-          callback.call user
+          yield user
         else
           Talker::Server.logger.warn "Authentication failed with token #{token}"
-          callback.call nil
+          yield nil
         end
       end
     end
     
-    def authorize_room(user, room, &callback)
-      yield true if user.admin
-      
+    def authorize_room(user, room)
       sql = <<-SQL
         SELECT id
         FROM rooms as r
         WHERE account_id = #{user.account_id}
           AND (id = #{room.to_i} OR name = '#{quote(room)}')
-          AND (private = 0
+          AND (1 = #{user.admin ? 1 : 0}
+               OR private = 0
                OR EXISTS (SELECT *
                           FROM permissions
                           WHERE user_id = #{user.id}
@@ -71,11 +70,10 @@ module Talker::Server
       
       EventedMysql.select(sql) do |results|
         if result = results[0]
-          room_id = result["id"].to_i
-          callback.call room_id
+          yield result["id"].to_i
         else
           Talker::Server.logger.warn "Authorization failed for #{user.name} in room #{room}"
-          callback.call nil
+          yield nil
         end
       end
     end
@@ -88,6 +86,7 @@ module Talker::Server
         INSERT INTO connections (channel_type, channel_id, user_id, state, created_at, updated_at)
         VALUES ('#{quote(channel_type.to_s.capitalize)}', '#{quote(channel_id)}', #{user_id.to_i}, '#{quote(state)}', NOW(), NOW())
       SQL
+      Talker::Server.logger.debug sql
       db.insert sql
     end
 
@@ -99,6 +98,7 @@ module Talker::Server
           AND channel_id = '#{quote(channel_id)}'
           AND user_id = #{user_id.to_i}
       SQL
+      Talker::Server.logger.debug sql
       db.update sql
     end
 
@@ -109,6 +109,7 @@ module Talker::Server
           AND channel_id = '#{quote(channel_id)}'
           AND user_id = #{user_id.to_i}
       SQL
+      Talker::Server.logger.debug sql
       db.raw sql
     end
     

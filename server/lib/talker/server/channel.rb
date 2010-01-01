@@ -42,6 +42,8 @@ module Talker::Server
     end
     
     def publish_as_json(exchange, event, options={})
+      Talker::Server.logger.debug{"#{exchange.name}(#{options.inspect})>>> #{event.inspect}"}
+      
       exchange.publish @encoder.encode(event) + EVENT_DELIMITER, options
     end
     

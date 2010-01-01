@@ -45,6 +45,8 @@ module Talker::Server
       end
 
       def presence_received(event)
+        Talker::Server.logger.debug "<<< #{event.inspect}"
+        
         type = event["type"]
         secretary = @secretaries[event["channel"]]
         user = User.new(event["user"])

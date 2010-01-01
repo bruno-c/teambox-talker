@@ -21,6 +21,8 @@ module Talker::Server
       
       # Called when a event is fully parsed
       def event_parsed(event)
+        Talker::Server.logger.debug{"#{to_s}<<< #{event.inspect}"}
+        
         case event["type"]
         when "connect"
           on_connect event
@@ -44,7 +46,6 @@ module Talker::Server
       
       def on_connect(event)
         token = event["token"]
-        last_event_id = event["last_event_id"]
         
         # Detech which type of channel we're connecting to
         channel_type = Channel::TYPES.detect { |type| event[type] }
@@ -56,16 +57,17 @@ module Talker::Server
         
         @server.authenticate(channel_type, channel_id, token) do |channel, user|
           if channel && user
-            on_connected(channel, user)
+            on_connected(channel, user, event)
           else
             error "Authentication failed"
           end
         end
       end
       
-      def on_connected(channel, user)
+      def on_connected(channel, user, event)
         @channel = channel
         @user = user
+        last_event_id = event["last_event_id"]
         
         # Pipe channel events throught open EM connection
         @subscription = @channel.subscribe(@user) { |message| send_data message }
@@ -134,7 +136,7 @@ module Talker::Server
       end
       
       def to_s
-        return @subscription.name if @subscription
+        return "#{@user.name}@#{@channel.name}" if logged_in?
         "<?>"
       end
       
@@ -159,7 +161,7 @@ module Talker::Server
       private
         def handle_error(exception, message)
           raise exception if $TALKER_DEBUG
-          Notifier.error message, e
+          Notifier.error message, exception
           error message
         end
         

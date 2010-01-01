@@ -69,7 +69,10 @@ module Talker::Server
       def authenticate(channel_type, channel_id, token)
         Talker::Server.storage.authenticate(token) do |user|
           # User authentication failed
-          yield nil, nil unless user
+          unless user
+            yield nil, nil
+            return
+          end
           
           # Channel authorization
           case channel_type
