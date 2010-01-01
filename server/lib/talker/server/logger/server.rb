@@ -16,7 +16,7 @@ module Talker::Server
         Talker::Server.logger.info "Subscribing to #{@queue.name}"
         @queue.subscribe(:ack => true) do |headers, message|
           
-          if room_id = headers.routing_key[/\.(\d+)$/, 1]
+          if room_id = headers.routing_key[/room\.(\d+)$/, 1]
             room = @rooms[room_id.to_i]
             room.callback do
               headers.ack
@@ -25,7 +25,7 @@ module Talker::Server
             room.parse message
           
           else
-            Talker::Server.logger.warn{"Ignoring message from " + headers.routing_key + " no matching room found"}
+            Talker::Server.logger.warn{"Ignoring message from " + headers.routing_key + " no matching channel found"}
           end
           
         end
