@@ -4,7 +4,7 @@ class PastesController < ApplicationController
   layout "blank"
   
   def show
-    @paste = Paste.find_by_permalink!(params[:id])
+    @paste = Paste.find(params[:id])
     
     respond_to do |format|
       format.html

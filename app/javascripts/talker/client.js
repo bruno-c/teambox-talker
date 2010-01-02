@@ -74,6 +74,7 @@ Talker.Client = function(options) {
         self.sendData({
           type: "connect", 
           room: options.room, 
+          paste: options.paste, 
           token: options.token,
           last_event_id: options.lastEventId
         });
