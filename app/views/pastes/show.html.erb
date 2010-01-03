@@ -44,9 +44,12 @@
         editor.setProperty("userauthor", Talker.currentUser.id.toString());
         editor.setProperty("wraps", true);
         editor.setUserChangeNotificationCallback(function() {
-          var cs = editor.prepareUserChangeset(); // get diff
+          // Compute local diff
+          var cs = editor.prepareUserChangeset();
+          // Send to server
           Talker.client.send({type: 'message', user: Talker.currentUser, content: cs.changeset});
-          editor.applyPreparedChangesetToBase(); // reset diff
+          // Reset local copy
+          editor.applyPreparedChangesetToBase();
         });
         editor.resize();
         $(window).bind("resize", editor.resize);
@@ -55,6 +58,9 @@
       
       var receiver = {};
       receiver.onMessageReceived = function(event) {
+        // Do not apply local diff
+        if (event.user.id == Talker.currentUser.id) return false;
+        
         editor.applyChangesToBase(event.content, event.user.id.toString(),
                                   {numToAttrib:{"0":{"0":"author","1":event.user.id}},nextNum:1});
       };
