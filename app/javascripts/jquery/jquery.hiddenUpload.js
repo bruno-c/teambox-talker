@@ -114,9 +114,9 @@
         
         anchor.hoverDiv = hoverDiv;
         anchor.input = $('<input type="file" name="' + options.name + '" />').css({
-          'margin': '-5px 0 0 -175px',
+          'margin': '-5px 0 0 -5px',
           'opacity': '0',
-          'font-size': '280px',
+          'font-size': '40px',
           'cursor': 'pointer',
           'position': 'absolute',
           'bottom': '-25px',
