@@ -6,6 +6,8 @@ module Talker
       @options = {
         :host => Talker::Channel::Server::DEFAULT_HOST,
         :port => Talker::Channel::Server::DEFAULT_PORT,
+        :private_key_file => nil,
+        :cert_chain_file => nil,
         :amqp => {
           :host => "localhost",
           :port => 5672
@@ -141,7 +143,9 @@ module Talker
     end
     
     def build_channel_server
-      Talker::Channel::Server.new(:host => options[:host], :port => options[:port])
+      Talker::Channel::Server.new(:host => options[:host], :port => options[:port],
+                                  :private_key_file => options[:private_key_file],
+                                  :cert_chain_file => options[:cert_chain_file])
     end
 
     def build_presence_server

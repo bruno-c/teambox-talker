@@ -7,17 +7,23 @@ module Talker
       DEFAULT_TIMEOUT = 30.0 # sec
       DEFAULT_PORT = 8500
       
-      attr_reader :host, :port, :rooms
+      attr_reader :host, :port, :rooms, :private_key_file, :cert_chain_file
       
       def initialize(options={})
         @host = options[:host] || DEFAULT_HOST
         @port = options[:port] || DEFAULT_PORT
         @timeout = options[:timeout] || DEFAULT_TIMEOUT
+        @private_key_file = options[:private_key_file]
+        @cert_chain_file = options[:cert_chain_file]
         
         @signature = nil
         @connections = {}
         @on_stop = nil
         @rooms = Hash.new { |rooms, name| rooms[name] = Room.new(name) }
+      end
+      
+      def ssl?
+        @private_key_file && @cert_chain_file
       end
       
       def start
