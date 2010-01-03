@@ -8,12 +8,14 @@ module Talker
     attr_accessor :room, :user, :token, :users, :debug
     
     def self.connect(options={})
+      ssl = options[:ssl] != false
       host = options[:host] || Talker::Channel::Server::DEFAULT_HOST
       port = options[:port] || Talker::Channel::Server::DEFAULT_PORT
       room = options[:room]
       token = options[:token]
       
       EM.connect host, port, self do |c|
+        c.start_tls if ssl
         c.room = room
         c.token = token
         yield c if block_given?

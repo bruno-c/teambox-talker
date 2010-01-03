@@ -11,11 +11,6 @@ module Talker
     
     # Called after connection is fully initialized and establied from EM.
     def post_init
-      if @server.ssl?
-        start_tls :private_key_file => @server.private_key_file,
-                  :cert_chain_file => @server.cert_chain_file
-      end
-      
       @parser = Yajl::Parser.new
       @parser.on_parse_complete = method(:message_parsed)
       @encoder = Yajl::Encoder.new

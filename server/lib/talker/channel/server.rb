@@ -31,7 +31,14 @@ module Talker
         
         @signature = EM.start_server(@host, @port, Connection) do |connection|
           connection.server = self
+          
+          if ssl?
+            connection.start_tls :private_key_file => @private_key_file,
+                                 :cert_chain_file => @cert_chain_file
+          end
+          
           connection.comm_inactivity_timeout = @timeout
+          
           @connections[connection.signature] = connection
         end
       end
