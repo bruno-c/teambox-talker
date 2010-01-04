@@ -4,10 +4,10 @@ class Connection < ActiveRecord::Base
   
   validates_uniqueness_of :user_id, :scope => :room_id
   
-  after_destroy :force_close
+  after_destroy :close
   
-  def force_close
-    publish :type => "error", :message => "Connection closed"
+  def close(message="Connection closed")
+    publish :type => "error", :message => message
   end
   
   def publish(event)
