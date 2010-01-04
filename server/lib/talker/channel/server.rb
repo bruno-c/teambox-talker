@@ -28,6 +28,7 @@ module Talker
       
       def start
         Talker.logger.info "Listening on #{@host}:#{@port}"
+        Talker.logger.info "SSL tunnel activated" if ssl?
         
         @signature = EM.start_server(@host, @port, Connection) do |connection|
           connection.server = self

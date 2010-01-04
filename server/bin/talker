@@ -14,8 +14,8 @@ OptionParser.new do |opts|
   opts.on("-p", "--port NUM", "Server port")              { |x| runner[:port] = x.to_i }
   
   opts.separator "SSL"
-  opts.on("--private-key-file", "PEM private key file")   { |x| runner[:private_key_file] = x }
-  opts.on("--cert-chain-file", "X509 certificates chain") { |x| runner[:cert_chain_file] = x }
+  opts.on("--private-key FILE", "PEM private key file")   { |x| runner[:private_key_file] = x }
+  opts.on("--cert-chain FILE", "X509 certificates chain") { |x| runner[:cert_chain_file] = x }
   
   opts.separator "AMQP"
   opts.on("--amqp-host HOST", "AMQP Server host")         { |x| runner[:amqp][:host] = x }
