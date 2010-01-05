@@ -28,11 +28,12 @@ class User < ActiveRecord::Base
   
   named_scope :active, :conditions => { :state => "active" }
   named_scope :registered, :conditions => { :guest => false }
+  named_scope :guests, :conditions => { :guest => true }
   named_scope :by_name, :order => :name
   
   # Ensure guests have access to the room
   after_create { |u| u.permissions.create :room => u.room if u.guest }
-  
+  before_validation :remove_guest_with_same_name
   
   acts_as_state_machine :initial => :pending
   state :pending
@@ -139,5 +140,14 @@ class User < ActiveRecord::Base
   private
     def password_required?
       (crypted_password.blank? && password) || password.present?
+    end
+    
+    # We delete previous guest w/ same name if not currently connected.
+    # This allows guest user names to be reused.
+    def remove_guest_with_same_name
+      return unless guest
+      if existing_guest = account.users.guests.find_by_name(name)
+        existing_guest.destroy if existing_guest.connections.empty?
+      end
     end
 end
