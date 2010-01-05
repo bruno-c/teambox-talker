@@ -105,7 +105,7 @@ class Account < ActiveRecord::Base
   
   # Blocking! Called from a job.
   def update_subscription_info!(subscriber=self.subscriber)
-    self.plan = Plan.find_by_name(subscriber.subscription_plan_name)
+    self.plan = Plan.find_by_name(subscriber.feature_level) # Plan name is nil if lifetime_subscription
     self.active = plan.free? || subscriber.active
     self.active_until = subscriber.active_until
     self.grace_until = subscriber.grace_until
