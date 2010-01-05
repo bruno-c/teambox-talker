@@ -9,5 +9,5 @@ test:
 production:
   port: 80
   talker_host: localhost
-  talker_port: 8500
+  talker_port: 8600
   
