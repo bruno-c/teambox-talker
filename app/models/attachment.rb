@@ -24,7 +24,7 @@ class Attachment < ActiveRecord::Base
   end
   
   def url(style = upload.default_style)
-    AWS::S3::S3Object.url_for(upload.path(style), upload.bucket_name, :use_ssl => room.account.ssl)
+    AWS::S3::S3Object.url_for(upload.path(style), upload.bucket_name, :use_ssl => room.account.features.ssl)
   end
   
   def to_param

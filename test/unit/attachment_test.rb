@@ -19,4 +19,8 @@ class AttachmentTest < ActiveSupport::TestCase
     assert_nil Attachment.create(:room => Room.first, :upload_file_size => 1.kilobyte).errors.on(:base)
     assert_not_nil Attachment.create(:room => Room.first, :upload_file_size => 100.gigabytes).errors.on(:base)
   end
+  
+  def test_url
+    assert_match "https://s3.amazonaws.com/talker_test/attachments", attachments(:lolcat).url
+  end
 end
