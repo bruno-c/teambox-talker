@@ -114,13 +114,13 @@
         
         anchor.hoverDiv = hoverDiv;
         anchor.input = $('<input type="file" name="' + options.name + '" />').css({
-          'margin': '-5px 0 0 -175px',
+          'margin': '0 0 0 0',
           'opacity': '0',
-          'font-size': '280px',
+          'font-size': '25px',
           'cursor': 'pointer',
           'position': 'absolute',
-          'bottom': '-25px',
-          'right': '-25px'
+          'bottom': '0px',
+          'right': '0px'
         }).mouseover(function() {
           $(anchor).addClass(options.hoverClass);
         }).mouseout(function() {
