@@ -111,7 +111,7 @@ class RoomsControllerTest < ActionController::TestCase
   end
   
   def test_destroy
-    Connection.any_instance.expects(:force_close).at_least(1)
+    Connection.any_instance.expects(:close).at_least(1)
     assert_difference "Room.count", -1 do
       delete :destroy, :id => @room
     end

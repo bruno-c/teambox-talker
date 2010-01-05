@@ -12,7 +12,7 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_destroy_user
-    Connection.any_instance.expects(:force_close).once
+    Connection.any_instance.expects(:close).once
     assert_difference "User.count", -1 do
       delete :destroy, :id => users(:aaron)
     end
