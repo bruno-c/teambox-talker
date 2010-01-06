@@ -1057,6 +1057,8 @@ div.panel {
       margin-left: 4px; }
     div.panel div.footer span.actions {
       float: right; }
+      div.panel div.footer span.actions a.delete {
+        color: #a83f55; }
   div.panel .tag {
     top: 5px; }
 

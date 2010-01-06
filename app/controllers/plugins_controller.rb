@@ -44,6 +44,8 @@ class PluginsController < ApplicationController
   def destroy
     @plugin = current_account.plugins.find(params[:id])
     @plugin.destroy
+    
+    flash[:notice] = "Bye bye #{@plugin.name}!"
 
     redirect_to(plugins_url)
   end

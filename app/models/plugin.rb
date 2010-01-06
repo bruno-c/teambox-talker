@@ -11,6 +11,8 @@ class Plugin < ActiveRecord::Base
   belongs_to :author, :class_name => "User"
   belongs_to :account # not nil if created by a user
   
+  has_many :plugin_installations, :dependent => :destroy
+  
   named_scope :shared, :conditions => { :shared => true }
   named_scope :from_author, proc { |author| { :conditions => { :author_id => author.id } } }
   
