@@ -1,10 +1,12 @@
-WORKERS = "worker-talker-notifier"
+WORKERS = %w( worker-talker-notifier worker-talker-jobs )
 
 namespace :worker do
   [:start, :stop, :restart].each do |command|
     desc "#{command} the workers"
     task command do
-      sudo "god #{command} #{WORKERS}"
+      WORKERS.each do |worker|
+        sudo "god #{command} #{worker}"
+      end
     end
   end
   
