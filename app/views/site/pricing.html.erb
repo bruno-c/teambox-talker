@@ -27,7 +27,7 @@
   <div id="all">
     <div class="box">
       <p id="extras">All paying plans come with <span>One month free trial</span>, powerful <span>Plugins</span> and enhanced <span>Security</span>.</p> 
-      <p id="free">We also offer a limited <%= link_to "Free Account", signup_path("free") %></a> for up to <%= Plan.free.features.max_connections %> chatters with <%= number_to_human_size Plan.free.features.max_storage %> and larger free accounts for charities and open source projects.</p>
+      <p id="free">We also offer a limited <%= link_to "Free Account", signup_path("free"), :class => "free" %> for up to <%= Plan.free.features.max_connections %> chatters with <%= number_to_human_size Plan.free.features.max_storage %> and larger free accounts for charities and open source projects.</p>
     </div>
   </div>
   
