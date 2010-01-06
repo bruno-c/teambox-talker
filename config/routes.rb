@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.pricing '/pricing', :controller => "site", :action => "pricing"
   map.about '/about', :controller => "site", :action => "about"
+  map.tour '/tour', :controller => "site", :action => "tour"
   map.privacy_policy "/privacy_policy", :controller => "site", :action => "privacy_policy"
   map.terms_and_conditions "/terms_and_conditions", :controller => "site", :action => "terms_and_conditions"
   map.service_policy "/service_policy", :controller => "site", :action => "service_policy"

@@ -221,7 +221,7 @@ hr {
   #menu ul {
     float: right;
     padding: 0;
-    margin: 5px 30px 0 0px; }
+    margin: 5px 12px 0 0px; }
     #menu ul li {
       list-style-type: none;
       background-image: none;
@@ -248,7 +248,7 @@ hr {
   height: 913px; }
 
 #splash {
-  background: transparent url(/images/root/back.jpg) no-repeat scroll 50% 0;
+  background: #1DA7E3 url(/images/root/back.jpg) no-repeat scroll 50% 0;
   height: 550px; }
 
 #tagline h1 {
@@ -491,6 +491,29 @@ hr {
     float: left; }
   #about #team .box.right {
     margin-left: 20px; }
+
+#tour #splash {
+  height: 900px; }
+#tour .wrap {
+  position: absolute;
+  margin: 200px 0 0 41px;
+  width: 872px;
+  text-align: center; }
+#tour .content {
+  margin: 0 auto;
+  width: 872px; }
+#tour .screnshot {
+  margin-bottom: 30px; }
+#tour h3 {
+  margin-bottom: 20px;
+  font-size: 30px; }
+#tour img {
+  margin: 0 auto;
+  width: 800px; }
+#tour p {
+  margin: 0 auto;
+  width: 800px;
+  margin-top: 10px; }
 
 #footer {
   min-height: 200px;
