@@ -185,6 +185,11 @@ hr {
   color: #efefef;
   height: 1px; }
 
+span.and {
+  font-family: "Warnock Pro", "Goudy Old Style","Palatino","Book Antiqua", serif;
+  font-style: italic;
+  font-weight: normal; }
+
 .clear {
   clear: both;
   font-size: 0;
@@ -493,27 +498,41 @@ hr {
     margin-left: 20px; }
 
 #tour #splash {
-  height: 900px; }
-#tour .wrap {
-  position: absolute;
-  margin: 200px 0 0 41px;
-  width: 872px;
-  text-align: center; }
+  height: 1150px; }
+#tour .buttons a {
+  margin: 0 auto;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin: 10px 243px; }
 #tour .content {
-  margin: 0 auto;
+  position: absolute;
+  margin: 188px 0 0 41px;
   width: 872px; }
-#tour .screnshot {
-  margin-bottom: 30px; }
-#tour h3 {
-  margin-bottom: 20px;
-  font-size: 30px; }
-#tour img {
-  margin: 0 auto;
-  width: 800px; }
-#tour p {
-  margin: 0 auto;
-  width: 800px;
-  margin-top: 10px; }
+#tour .feature {
+  padding: 18px 0;
+  float: left;
+  clear: both; }
+  #tour .feature h3 {
+    margin-bottom: 15px;
+    margin-top: 16px; }
+  #tour .feature img {
+    height: 250px;
+    width: 500px;
+    box-shadow: 0px 1px 4px #2d86b2;
+    -webkit-box-shadow: 0px 1px 4px #2d86b2;
+    -moz-box-shadow: 0px 1px 4px #2d86b2;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    float: left;
+    margin-right: 40px; }
+  #tour .feature .pitch {
+    padding: 0 20px; }
+  #tour .feature.right img {
+    float: right;
+    margin-right: 0;
+    margin-left: 40px; }
 
 #footer {
   min-height: 200px;

@@ -1,13 +1,33 @@
-<% @title = @tagline = "A Quick Tour of Talker" %>
+<% @title = @tagline = "A Quick <span class='and'>&amp;</span> Joyful Tour of Talker" %>
 
-<div class="wrap">
-  <div class="content">
+<div class="content">
 
-    <div class="screnshot">
-      <h3>Everything Happens in The Chat</h3>
-      <%= image_tag "press/room.png" %>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <div class="feature left">
+    <%= image_tag "tour/chat.png" %>
+    <div class="pitch">
+      <h3>Real-Time Teamwork</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu.</p>
     </div>
-
   </div>
+
+  <div class="feature right">
+    <%= image_tag "tour/feed.png" %>
+    <div class="pitch">
+      <h3>In Room Feed Notifications</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+    </div>
+  </div>
+
+  <div class="feature left">
+    <%= image_tag "tour/plugin.png" %>
+    <div class="pitch">
+      <h3>Powerfull Javascript Plugins</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    </div>
+  </div>
+  
+  <div class="buttons">
+    <%= link_to "Signup Now For a Free Trial", pricing_path %>
+  </div>
+  
 </div>
