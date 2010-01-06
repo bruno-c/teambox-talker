@@ -500,9 +500,11 @@ span.and {
 #tour #splash {
   height: 1150px; }
 #tour .buttons a {
+  box-shadow: 0px 1px 4px #2d86b2;
+  -webkit-box-shadow: 0px 1px 4px #2d86b2;
+  -moz-box-shadow: 0px 1px 4px #2d86b2;
   margin: 0 auto;
   font-size: 24px;
-  font-weight: bold;
   padding: 10px 20px;
   margin: 10px 243px; }
 #tour .content {
