@@ -584,6 +584,10 @@ a.button:hover {
   border: 1px solid #999999;
   color: #000000; }
 
+a.free {
+  font-weight: bold;
+  background: #FFC; }
+
 button.button:hover {
   border: 1px solid #999999;
   color: #000000; }
