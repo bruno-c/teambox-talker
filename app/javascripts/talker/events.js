@@ -46,8 +46,8 @@ Talker.insertMessage = function(talkerEvent, content) {
         + (talkerEvent.user.id == Talker.currentUser.id ? ' me' : ' ')
         + (talkerEvent.private ? ' private' : '')
         + '">'
-        + '<td class="author">'
-        +   escapedName
+        + '<td class="author" title="' + escapedName + '">'
+        +   truncate(escapedName, 8)
         +   ' <img src="' + avatarUrl(talkerEvent.user) + '" alt="' + escapedName + '" class="avatar" />'
         +   '<b class="blockquote_tail"><!-- display fix --></b>'
         + '</td>'

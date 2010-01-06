@@ -686,7 +686,7 @@ a.button, button {
           vertical-align: top;
           white-space: nowrap;
           text-align: right;
-          width: 1%; }
+          width: 125px; }
           #chat_log table tr td.author b.blockquote_tail {
             margin: 0 0 0 5px;
             display: inline-block;
