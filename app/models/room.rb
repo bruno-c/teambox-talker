@@ -7,7 +7,8 @@ class Room < ActiveRecord::Base
   has_many :guests, :class_name => "User", :dependent => :destroy
   has_many :attachments, :class_name => "::Attachment", # FIX class w/ Paperclip::Attachment
                          :dependent => :destroy
-  has_many :permissions
+  has_many :feeds, :dependent => :destroy
+  has_many :permissions, :dependent => :destroy
   belongs_to :account
   
   validates_presence_of   :name

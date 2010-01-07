@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091215194758) do
+ActiveRecord::Schema.define(:version => 20100107155203) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -95,8 +95,6 @@ ActiveRecord::Schema.define(:version => 20091215194758) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "pastes", ["permalink"], :name => "index_pastes_on_permalink", :unique => true
 
   create_table "permissions", :force => true do |t|
     t.integer  "user_id"
