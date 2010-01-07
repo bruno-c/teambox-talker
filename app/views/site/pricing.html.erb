@@ -3,7 +3,7 @@
 
 <div id="plans">
   <% Plan.payings.each do |plan| %>
-  <div class="plan">
+  <div class="plan <%= plan.name.downcase %>">
     <div class="box">
       <h2><%= plan.name %></h2>
       <h3><%= number_to_currency plan.price, :precision => 0 %>/month</h3>

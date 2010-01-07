@@ -415,7 +415,8 @@ span.and {
     display: inline;
     float: left;
     width: 220px;
-    margin: 0px 10px; }
+    margin: 0px 10px;
+    background: white; }
     #plans .plan h2 {
       color: #081C45; }
     #plans .plan h3 {
@@ -428,6 +429,8 @@ span.and {
     background: #fff;
     -moz-box-shadow: 0px 1px 4px #2d86b2;
     -webkit-box-shadow: 0px 1px 4px #2d86b2; }
+  #plans .startup .box {
+    border: 6px solid #5d9dc9; }
   #plans .buttons {
     text-align: center;
     margin: 0px auto; }
