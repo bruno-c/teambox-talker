@@ -6,7 +6,11 @@ class LogsController < ApplicationController
   
   def index
     if @room
-      @events = @room.events.date_grouped.paginate(:page => params[:page])
+      @events = @room.events.recent.date_grouped
+      if params[:since]
+        @since = Time.zone.at(params[:since].to_i)
+        @events = @events.since(@since)
+      end
       @dates = @events.map(&:created_at).compact
       render :room_index
     else

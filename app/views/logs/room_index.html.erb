@@ -11,5 +11,5 @@
     </div>
   <% end %>
   
-  <%= will_paginate @events %>
+  <%= link_to "&laquo; Older", room_logs_path(:since => @dates.last.to_i) %>
 </div>
