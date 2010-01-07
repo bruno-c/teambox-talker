@@ -95,16 +95,4 @@ class FeedTest < ActiveSupport::TestCase
     assert_equal "https://github.com/feeds/macournoyer/commits/talker/master", Feed.create(:url => "feed:https://github.com/feeds/macournoyer/commits/talker/master").url
     assert_equal "http://search.twitter.com/search.atom?q=Avatar", Feed.create(:url => "feed://search.twitter.com/search.atom?q=Avatar").url
   end
-  
-  def test_cant_create_if_limit_is_reached
-    accounts(:master).plan = Plan.free
-    accounts(:master).save
-    assert_not_nil create_feed(:account => accounts(:master)).errors.on(:base)
-  end
-
-  def test_can_create_private_room_if_plan_permists
-    accounts(:master).plan = Plan.find_by_name("Basic")
-    accounts(:master).save
-    assert_nil create_feed(:account => accounts(:master)).errors.on(:base)
-  end
 end

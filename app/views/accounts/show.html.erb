@@ -66,9 +66,6 @@
           <%= feature_line("File Upload Space",
                            "Total size of files you can upload across all rooms."
                           ) { |features| number_to_human_size features.max_storage } %>
-          <%= feature_line("Feeds",
-                           "Number of feeds you can received notifications from."
-                          ) { |features| pluralize features.feeds, "feed" } %>
           <%= feature_line("Private Rooms",
                            "Private rooms can only be accessed by people you invite."
                           ) { |features| features.private_rooms ? image_tag("icons/tick.png") : image_tag("icons/cross.png") } %>
@@ -96,12 +93,5 @@
     </p>
     <strong>Online Users</strong>
     <%= meter_tag @account.connections.users_count.to_f / @account.features.max_connections.to_f %>
-  
-    <p class="side_description">
-      You're currently using <strong><%= @account.feeds.count %></strong>
-      of your <strong><%= pluralize @account.features.feeds, "feed" %></strong> limit.
-    </p>
-    <strong>Feeds</strong>
-    <%= meter_tag @account.feeds.count.to_f / @account.features.feeds.to_f %>
   </div>
 </div>
