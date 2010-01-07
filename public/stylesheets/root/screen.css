@@ -453,6 +453,8 @@ span.and {
       margin-bottom: 20px; }
       #plans #all div.free a.badge {
         position: absolute;
+        float: right;
+        display: block;
         margin: -125px 0px 0px 863px;
         border: 0; }
         #plans #all div.free a.badge img {
