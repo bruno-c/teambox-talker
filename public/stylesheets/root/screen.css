@@ -345,7 +345,7 @@ span.and {
     border-bottom: 1px solid #fabd1a; }
 
 #pricing #splash {
-  padding-bottom: 250px; }
+  padding-bottom: 300px; }
 
 #home #ads {
   margin: 741px 0 0 10px; }
@@ -449,10 +449,18 @@ span.and {
     width: 940px; }
     #plans #all .box {
       text-align: center; }
-    #plans #all p#extras {
+    #plans #all div.free {
+      margin-bottom: 20px; }
+      #plans #all div.free a.badge {
+        position: absolute;
+        margin: -125px 0px 0px 863px;
+        border: 0; }
+        #plans #all div.free a.badge img {
+          height: 180px; }
+    #plans #all p.extras {
       font-size: 20px;
       margin: 0px 0px 0px; }
-    #plans #all p#free {
+    #plans #all p.details {
       color: #094975;
       font-size: 13px;
       margin: 0px; }
@@ -627,10 +635,6 @@ a.button img, button.button img {
 a.button:hover {
   border: 1px solid #999999;
   color: #000000; }
-
-a.free {
-  font-weight: bold;
-  background: #FFC; }
 
 button.button:hover {
   border: 1px solid #999999;

@@ -10,7 +10,6 @@
       <p>
         <span><%= plan.features.max_connections %></span> chatters<br />
         <span><%= number_to_human_size plan.features.max_storage %></span> upload space<br />
-        <span><%= plan.features.feeds %></span> feeds<br />
       </p>
       <p>
         <%= plan.features.log_history ? plan.features.log_history.inspect : "Unlimited" %> chat log<br />
@@ -27,15 +26,19 @@
   
   <div id="all">
     <div class="box">
-      <p id="extras">All paying plans come with <span>One month free trial</span>, powerful <span>Plugins</span> and enhanced <span>Security</span>.</p> 
-      <p id="free">We also offer a limited <%= link_to "Free Account", signup_path("free"), :class => "free" %> for up to <%= Plan.free.features.max_connections %> chatters with <%= number_to_human_size Plan.free.features.max_storage %> and larger free accounts for charities and open source projects.</p>
+      <div class="free">
+        <%= link_to image_tag("root/free.png"), signup_path(Plan.free), :class => "badge" %>
+        <p class="extras">Not convinced yet? Try our <%= link_to "Free Plan", signup_path("free"), :class => "free_plan" %> for an <span>Unlimited time</span> and <span>No credit card required</span></p>
+        <p class="details">The Free plan allows up to <span><%= Plan.free.features.max_connections %> chatters</span> and <span><%= number_to_human_size Plan.free.features.max_storage %></span>. You can upgrade to a paying plan at any time and still get a one         month free trial.</p>
+      </div>
+      <p class="extras">All paying plans come with <span>One month free trial</span>, powerful <span>Plugins</span> and enhanced <span>Security</span>.</p> 
     </div>
   </div>
   
   <div id="ads">
     <div class="spot left">
       <h3>Cancel Anytime</h3>
-      <p>You can upgrade, downgrade or cancel you plan at any time. When switching plan, we credit you the appropriate amount. Cancelling will automatically stop your automatic renewal.</p>
+      <p>You can upgrade, downgrade or cancel your plan at any time. When switching plan, we credit you the appropriate amount. Cancelling will automatically stop your renewal.</p>
     </div>
     <div class="spot right">
       <h3>One Month Free Trial</h3>

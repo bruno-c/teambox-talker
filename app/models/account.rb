@@ -40,10 +40,6 @@ class Account < ActiveRecord::Base
     used_storage + distance >= features.max_storage
   end
   
-  def feeds_full?(distance=0)
-    feeds.count + distance >= features.feeds
-  end
-  
   def create_default_rooms
     rooms.create :name => "Main", :description => "Chat about the weather and the color of your socks."
   end
