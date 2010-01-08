@@ -5,12 +5,12 @@ class Event < ActiveRecord::Base
   set_inheritance_column nil
   
   named_scope :recent, :limit => 50, :order => "events.created_at desc, events.uuid desc"
-  named_scope :created_on, proc { |date| { :conditions => ["created_at BETWEEN ? AND ?", date.beginning_of_day.utc, date.utc.end_of_day.utc] } }
+  named_scope :created_on, proc { |date| { :conditions => ["created_at BETWEEN ? AND ?", date.beginning_of_day.utc, date.end_of_day.utc] } }
   
   named_scope :date_grouped, proc {
                               { :order => "events.created_at desc, events.uuid desc",
                                 # Convert the created_at datetime to the user's time zone inside mysql
-                                :group => "DATE(CONVERT_TZ(events.created_at, '+0:00', '#{Time.zone.utc_offset / 1.hour}:00'))" }
+                                :group => "DATE(CONVERT_TZ(events.created_at, '+0:00', '#{'+' if Time.zone.utc_offset >= 0}#{Time.zone.utc_offset / 1.hour}:00'))" }
                              }
   
   named_scope :since, proc { |date| { :conditions => ["events.created_at >= ?", date] } }
