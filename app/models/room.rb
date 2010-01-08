@@ -97,6 +97,10 @@ class Room < ActiveRecord::Base
     "#{name.inspect}@#{account.subdomain}"
   end
   
+  def connected?(user)
+    connections.find_by_user_id(user.id).present?
+  end
+  
   def self.amqp_connection
     # TODO load AMQP config from somewhere
     @amqp_connection ||= AMQP.connect

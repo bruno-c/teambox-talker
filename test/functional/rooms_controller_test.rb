@@ -54,10 +54,19 @@ class RoomsControllerTest < ActionController::TestCase
   end
   
   def test_show_full
+    @room.connections.clear
     Account.any_instance.stubs(:full?).returns(true)
     get :show, :id => @room
     assert_response :redirect
     assert_not_nil flash[:error]
+  end
+  
+  def test_show_full_but_already_connected
+    @room.connections.create :user => users(:quentin)
+    Account.any_instance.stubs(:full?).returns(true)
+    get :show, :id => @room
+    assert_response :success
+    assert_nil flash[:error]
   end
   
   def test_show_without_permission

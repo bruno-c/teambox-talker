@@ -11,6 +11,7 @@ class Connection < ActiveRecord::Base
   end
   
   def publish(event)
+    return unless EM.reactor_running?
     room.topic.publish event.to_json + "\n", :key => "talker.room.#{room.id}.#{user.id}", :persistent => true
   end
   

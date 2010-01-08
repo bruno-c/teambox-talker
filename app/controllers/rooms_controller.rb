@@ -85,7 +85,7 @@ class RoomsController < ApplicationController
     end
     
     def check_connections_limit
-      if current_account.full?
+      if current_account.full? && !@room.connected?(current_user)
         if current_user.admin
           flash[:error] = "You've reached your connection limit. Upgrade your plan to allow more users to chat."
         else
