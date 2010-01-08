@@ -19,6 +19,22 @@ module DateHelper
     date.strftime("#{prefix}%B %e#{sufix}")
   end
   
+  def human_day(date)
+    return "" if date.blank?
+    
+    today = Time.zone.today
+    date = date.to_date
+    
+    format = case today - date
+    when  1 then "Yesterday"
+    when  0 then "Today"
+    when -1 then "Tomorrow"
+    else "%A"
+    end
+    
+    date.strftime(format)
+  end
+  
   def month_name(date)
     date.strftime("%B")
   end

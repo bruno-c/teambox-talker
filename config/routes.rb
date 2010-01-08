@@ -40,9 +40,10 @@ ActionController::Routing::Routes.draw do |map|
   
   map.search "/search", :controller => "logs", :action => "search"
   
-  map.room_logs "/rooms/:room_id/logs/:year/:month", :controller => "logs", :action => "index", :year => nil, :month => nil
-  map.room_log "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "show"
-  map.today_log "/rooms/:room_id/logs/today", :controller => "logs", :action => "today"
+  map.room_logs "/rooms/:room_id/logs", :controller => "logs", :action => "index"
+  map.room_month_logs "/rooms/:room_id/logs/:year/:month", :controller => "logs", :action => "index"
+  map.room_log "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "show", :conditions => { :method => :get }
+  map.connect "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "destroy", :conditions => { :method => :delete }
   map.search_room "/rooms/:room_id/search", :controller => "logs", :action => "search"
   
   map.root :controller => "site", :action => "home"

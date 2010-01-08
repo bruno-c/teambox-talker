@@ -974,8 +974,28 @@ a.button, button {
 
 #logs {
   min-height: 400px; }
-  #logs ul {
-    margin-left: 20px; }
+  #logs table {
+    width: 100%; }
+    #logs table td {
+      padding: 4px;
+      vertical-align: top;
+      border-bottom: dotted 1px silver; }
+      #logs table td.day {
+        text-align: right;
+        font-size: 12px;
+        padding: 5px; }
+      #logs table td.date, #logs table td.actions {
+        white-space: nowrap; }
+      #logs table td.details {
+        width: 80%;
+        padding: 5px 20px;
+        font-size: 12px; }
+        #logs table td.details label {
+          color: gray;
+          font-size: 10px; }
+  #logs a.delete {
+    color: #a83f55;
+    font-size: 12px; }
 
 #log_tabs {
   float: right;
@@ -993,12 +1013,13 @@ a.button, button {
       font-size: 16px;
       font-weight: bold;
       margin-top: 10px;
-      margin-bottom: 4px; }
+      margin-bottom: 4px;
+      margin-right: 10px; }
     #log_tabs li.month {
       margin: 2px 0;
       border: solid 1px silver;
       border-left: none;
-      background: #ebebeb;
+      background: #f2f2f2;
       border-top-right-radius: 3px;
       -moz-border-radius-topright: 3px;
       -webkit-border-top-right-radius: 3px;

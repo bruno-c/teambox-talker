@@ -831,8 +831,28 @@ a.button, button
 
 #logs
   min-height: 400px
-  ul
-    margin-left: 20px
+  table
+    width: 100%
+    td
+      padding: 4px
+      vertical-align: top
+      border-bottom = dotted 1px !light_grey
+      &.day
+        text-align: right
+        +font_size("small")
+        padding: 5px
+      &.date, &.actions
+        white-space: nowrap
+      &.details
+        width: 80%
+        padding: 5px 20px
+        +font_size("small")
+        label
+          color = !grey
+          +font_size("tiny")
+  a.delete
+    color = !red * 0.6 + !accent_colour * 0.4
+    +font_size("small")
 
 #log_tabs
   float: right
@@ -853,11 +873,12 @@ a.button, button
       margin:
         top: 10px
         bottom: 4px
+        right: 10px
     &.month
       margin: 2px 0
       border = solid 1px !light_grey
       border-left: none
-      background = !light_grey * 0.3 + !white * 0.7
+      background = !light_grey * 0.2 + !white * 0.8
       +rounded_corners("right", 3)
     &.current
       background = !white

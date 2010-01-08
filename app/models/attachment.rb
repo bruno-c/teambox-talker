@@ -11,6 +11,9 @@ class Attachment < ActiveRecord::Base
   validates_attachment_size :upload, :less_than => 10.megabyte
   validates_attachment_presence :upload
   
+  named_scope :created_on, proc { |date| { :conditions => ["attachments.created_at BETWEEN ? AND ?",
+                                                           date.beginning_of_day.utc, date.end_of_day.utc] } }
+  
   validate :respect_storage_limit
   
   delegate :account, :to => :room
