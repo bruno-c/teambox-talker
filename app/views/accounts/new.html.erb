@@ -15,7 +15,7 @@
       <p>
         <%= f.label :subdomain, "Address" %>
         <%= f.label :subdomain, "http://", :class => "inline" %>
-        <%= f.text_field :subdomain, :size => 15 %>
+        <%= f.text_field :subdomain, :size => 15, :placeholder => "organization"  %>
         <%= f.label :subdomain, ".talkerapp.com", :class => "inline" %>
         <label class="description">You might enter your organization name here. Use only letters, numbers and <code>-</code>.</label>
       </p>
