@@ -54,5 +54,11 @@ class Features
                   :max_storage     => 25.gigabytes,
                   :private_rooms   => true,
                   :log_history     => nil
+  
+  new :big,       :ssl             => true,
+                  :max_connections => 100,
+                  :max_storage     => 40.gigabytes,
+                  :private_rooms   => true,
+                  :log_history     => nil
 
 end

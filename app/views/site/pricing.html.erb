@@ -2,7 +2,7 @@
 <% @tagline = "Pick The Right Plan For Your Team" %>
 
 <div id="plans">
-  <% Plan.payings.each do |plan| %>
+  <% Plan.payings.reject{ |plan| plan.name == 'Big'}.each do |plan| %>
   <div class="plan <%= plan.name.downcase %>">
     <div class="box">
       <h2><%= plan.name %></h2>

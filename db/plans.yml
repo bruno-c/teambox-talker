@@ -30,6 +30,13 @@ production:
   name: Premium
   plan_type: regular
   price: 49.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: big
+  id: 3593
+  name: Big
+  plan_type: regular
+  price: 99.0
 development: 
 - !ruby/object:Plan 
   description: 
@@ -59,6 +66,13 @@ development:
   name: Premium
   plan_type: regular
   price: 49.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: big
+  id: 3592
+  name: Big
+  plan_type: regular
+  price: 99.0
 test: 
 - !ruby/object:Plan 
   description: 
@@ -88,3 +102,10 @@ test:
   name: Premium
   plan_type: regular
   price: 49.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: big
+  id: 3592
+  name: Big
+  plan_type: regular
+  price: 99.0
