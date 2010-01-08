@@ -38,10 +38,9 @@ ActionController::Routing::Routes.draw do |map|
   map.reset_password "/passwords/reset/:token", :controller => "passwords", :action => "show", :token => nil, :conditions => { :method => :get }
   map.resource :password
   
-  map.logs "/logs", :controller => "logs", :action => "index"
   map.search "/search", :controller => "logs", :action => "search"
   
-  map.room_logs "/rooms/:room_id/logs", :controller => "logs", :action => "index"
+  map.room_logs "/rooms/:room_id/logs/:year/:month", :controller => "logs", :action => "index", :year => nil, :month => nil
   map.room_log "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "show"
   map.today_log "/rooms/:room_id/logs/today", :controller => "logs", :action => "today"
   map.search_room "/rooms/:room_id/search", :controller => "logs", :action => "search"

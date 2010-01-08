@@ -15,6 +15,8 @@ class Event < ActiveRecord::Base
                              }
   
   named_scope :since, proc { |date| { :conditions => ["events.created_at >= ?", date] } }
+  named_scope :in_month, proc { |date| { :conditions => ["events.created_at BETWEEN ? AND ?",
+                                                         date.beginning_of_month, date.end_of_month] } }
   
   define_index do
     # fields

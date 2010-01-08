@@ -5,18 +5,14 @@ class LogsController < ApplicationController
   before_filter :room_permission_required
   
   def index
-    if @room
-      @events = @room.events.recent.date_grouped
-      if params[:since]
-        @since = Time.zone.at(params[:since].to_i)
-        @events = @events.since(@since)
-      end
-      @dates = @events.map(&:created_at).compact
-      render :room_index
+    if params[:month]
+      @date = Time.zone.local(params[:year].to_i, params[:month].to_i, 1)
     else
-      @rooms = current_account.rooms.with_permission(current_user)
-      render :index
+      @date = Time.zone.now
     end
+    
+    @events = @room.events.recent.date_grouped.in_month(@date)
+    @dates = @events.map(&:created_at).compact
   end
   
   def show

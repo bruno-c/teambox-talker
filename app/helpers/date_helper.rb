@@ -18,4 +18,22 @@ module DateHelper
     
     date.strftime("#{prefix}%B %e#{sufix}")
   end
+  
+  def month_name(date)
+    date.strftime("%B")
+  end
+  
+  def same_month?(date1, date2=Date.today)
+    date1.year == date2.year && date1.month == date2.month
+  end
+  
+  def months_until(until_date)
+    date = Date.today
+    dates = [date]
+    while date > until_date.to_date
+      date = date.months_ago(1)
+      dates << date
+    end
+    dates
+  end
 end

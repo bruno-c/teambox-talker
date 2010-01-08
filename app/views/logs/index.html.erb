@@ -1,9 +1,28 @@
-<div class="sheet" id="logs">
-  <h2><%=h @title = "Chat Logs" %></h2>
+<div id="log_tabs">
+  <ul class="years">
+    <% months_until(@room.events.minimum(:created_at)).group_by(&:year).each do |year, months| %>
+      <li class="year"><%= year %></li>
+      <ul class="months">
+      <% months.each do |date| %>
+        <li class="month <%= 'current' if same_month?(@date, date) %>">
+          <%= link_to month_name(date), room_logs_path(@room, year, date.month) %>
+        </li>
+      <% end %>
+      </ul>
+    <% end %>
+  </ul>
+</div>
 
-  <div class="log-entry">
-  <% @rooms.each do |room| %>
-    <h3><%= link_to h(room.name), room_logs_path(room) %></h3>
+<h2><%=h @title = "Chat Logs for #{@room.name}" %></h2>
+<div class="sheet" id="logs">
+  
+  <% if @dates.empty? %>
+    <p>No logs</p>
   <% end %>
-  </div>
+  
+  <% @dates.each do |date| %>
+    <div class="log-entry">
+      <h4><%= link_to human_date(date), room_log_path(@room, date.year, date.month, date.day) %></h4>
+    </div>
+  <% end %>
 </div>

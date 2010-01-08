@@ -972,8 +972,43 @@ a.button, button {
           padding: 7px 16px 6px;
           background-color: #dfdfdf; }
 
-#logs ul {
-  margin-left: 20px; }
+#logs {
+  min-height: 400px; }
+  #logs ul {
+    margin-left: 20px; }
+
+#log_tabs {
+  float: right;
+  margin-top: 45px;
+  margin-right: -87px; }
+  #log_tabs ul {
+    list-style: none; }
+  #log_tabs li {
+    text-align: right; }
+    #log_tabs li a {
+      padding: 4px 10px;
+      text-decoration: none;
+      display: block; }
+    #log_tabs li.year {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 4px; }
+    #log_tabs li.month {
+      margin: 2px 0;
+      border: solid 1px silver;
+      border-left: none;
+      background: #ebebeb;
+      border-top-right-radius: 3px;
+      -moz-border-radius-topright: 3px;
+      -webkit-border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      -moz-border-radius-bottomright: 3px;
+      -webkit-border-bottom-right-radius: 3px; }
+    #log_tabs li.current {
+      background: white; }
+      #log_tabs li.current a {
+        color: black; }
 
 div.panel {
   margin: 0 0 10px;

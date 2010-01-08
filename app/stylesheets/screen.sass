@@ -830,8 +830,39 @@ a.button, button
           background-color = !light_grey * 0.5 + !white * 0.5
 
 #logs
+  min-height: 400px
   ul
     margin-left: 20px
+
+#log_tabs
+  float: right
+  margin:
+    top: 45px
+    right: -87px
+  ul
+    list-style: none
+  li
+    text-align: right
+    a
+      padding: 4px 10px
+      text-decoration: none
+      display: block
+    &.year
+      +font_size("large")
+      font-weight: bold
+      margin:
+        top: 10px
+        bottom: 4px
+    &.month
+      margin: 2px 0
+      border = solid 1px !light_grey
+      border-left: none
+      background = !light_grey * 0.3 + !white * 0.7
+      +rounded_corners("right", 3)
+    &.current
+      background = !white
+      a
+        color = !black
 
 // Panel
 div.panel
