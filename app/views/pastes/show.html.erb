@@ -26,8 +26,10 @@
       //   // on remote
       //   editor.applyChangesToBase(cs.changeset, null, cs.apool); // apply diff
       
-      var editor = new Ace2Editor();
-      var text = "<%= escape_javascript @paste.content %>"; // initial text
+      window.editor = new Ace2Editor();
+      // var text = "<%= escape_javascript @paste.content %>"; // initial text
+      // var text = "ohae\nhi\n"; // initial text
+      var text = "ohaie\nhi there\n"; // initial text
       
       editor.resize = function() {
         $("#editorcontainer").get(0).style.height = "100%";
@@ -36,9 +38,12 @@
       };
       
       editor.init("editorcontainer", text, function() {
-        editor.setBaseText(text + "\n");
         editor.setAuthorInfo("1", {bgcolor: "#ccf"});
         editor.setAuthorInfo("2", {bgcolor: "#fcc"});
+        // editor.setBaseText(text + "\n");
+        editor.setBaseAttributedText({text: text + "\n", attribs: "+3*0+1|1+2+2*0+6|2+2|22"},
+                                     {numToAttrib:{"0":{"0":"author","1":"1"},
+                                                   "1":{"0":"author","1":"2"}}, nextNum:2});
         editor.setEditable(true);
         editor.setProperty("showsauthorcolors", true);
         editor.setProperty("userauthor", Talker.currentUser.id.toString());
