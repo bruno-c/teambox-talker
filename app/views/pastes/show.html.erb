@@ -47,14 +47,17 @@
           // Compute local diff
           var cs = editor.prepareUserChangeset();
           // Send to server
-          Talker.client.send({type: 'message', user: Talker.currentUser, content: cs.changeset});
-          // Reset local copy
-          editor.applyPreparedChangesetToBase();
+          Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: cs.changeset}, function() {
+            // Reset local copy when sent
+            console.info(cs.changeset);
+            editor.applyPreparedChangesetToBase();
+          });
         });
         editor.resize();
         $(window).bind("resize", editor.resize);
         setTimeout(function() {editor.focus();}, 0);
       });
+      
       
       var receiver = {};
       receiver.onMessageReceived = function(event) {
