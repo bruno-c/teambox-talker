@@ -20,10 +20,10 @@ EM.describe Talker::Server::Channel do
   end
   
   it "should raise on invalid name" do
-    proc { Talker::Server::Channel.new("room.") }.should raise_error(Talker::Server::InvalidChannelName)
-    proc { Talker::Server::Channel.new("room.#") }.should raise_error(Talker::Server::InvalidChannelName)
-    proc { Talker::Server::Channel.new("room.*") }.should raise_error(Talker::Server::InvalidChannelName)
-    proc { Talker::Server::Channel.new("1") }.should raise_error(Talker::Server::InvalidChannelName)
+    proc { Talker::Server::Channel.new("room.") }.should raise_error(Talker::Server::InvalidChannel)
+    proc { Talker::Server::Channel.new("room.#") }.should raise_error(Talker::Server::InvalidChannel)
+    proc { Talker::Server::Channel.new("room.*") }.should raise_error(Talker::Server::InvalidChannel)
+    proc { Talker::Server::Channel.new("1") }.should raise_error(Talker::Server::InvalidChannel)
     done
   end
   

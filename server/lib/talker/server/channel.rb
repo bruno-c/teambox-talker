@@ -3,7 +3,7 @@ require "yajl"
 require "uuid"
 
 module Talker::Server
-  class InvalidChannelName < Error; end
+  class InvalidChannel < Error; end
   
   class Channel
     ROUTING_KEY_PREFIX = "talker.channels".freeze
@@ -19,8 +19,8 @@ module Talker::Server
     def initialize(name)
       @name = name
       _, @type, @id = @name.to_s.match(NAME_REGEXP).to_a
-      raise InvalidChannelName, "Invalid channel name: #{@name}" unless @type && @id
-      raise InvalidChannelName, "Invalid channel type: #{@type}" unless TYPES.include?(@type)
+      raise InvalidChannel, "Invalid channel name: #{@name}" unless @type && @id
+      raise InvalidChannel, "Invalid channel type: #{@type}" unless TYPES.include?(@type)
       
       @encoder = Yajl::Encoder.new
       @exchange = Queues.topic

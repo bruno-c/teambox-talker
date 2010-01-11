@@ -62,7 +62,7 @@ module Talker::Server
       def channel(type, id)
         name = "#{type}.#{id}"
         @channels[name] || Channel.new(name)
-      rescue InvalidChannelName
+      rescue InvalidChannel
         nil
       end
       

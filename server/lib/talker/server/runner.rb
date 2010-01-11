@@ -149,7 +149,7 @@ module Talker::Server
     end
     
     def build_logger
-      Talker::Server::Logger::Server.new
+      Talker::Server::Logger.new
     end
     
     def log(msg)

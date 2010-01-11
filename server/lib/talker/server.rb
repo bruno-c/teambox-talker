@@ -18,11 +18,7 @@ module Talker
       autoload :Server, "talker/server/channels/server"
     end
     
-    module Logger
-      autoload :Room, "talker/server/logger/room"
-      autoload :Server, "talker/server/logger/server"
-    end
-    
+    autoload :Logger, "talker/server/logger"
     autoload :Mailer, "talker/server/mailer"
     autoload :MysqlAdapter, "talker/server/mysql_adapter"
     autoload :Notifier, "talker/server/notifier"

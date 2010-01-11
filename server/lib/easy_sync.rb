@@ -251,17 +251,19 @@ module EasySync
   end
 end
 
-# Applying changeset to a text
-text = "ohae\nhi\n"
-cs1 = "Z:8>6|1=5=2*0+6$ there"
-cs2 = "Z:e>1=3*0+1$i"
-puts text
-puts attribs = EasySync::Changeset.create_attributions(text)
+if __FILE__ == $PROGRAM_NAME
+  # Applying changeset to a text
+  text = "ohae\nhi\n"
+  cs1 = "Z:8>6|1=5=2*0+6$ there"
+  cs2 = "Z:e>1=3*0+1$i"
+  puts text
+  puts attribs = EasySync::Changeset.create_attributions(text)
 
-c1 = EasySync::Changeset.unpack(cs1)
-puts text = c1.apply_to_text(text)
-puts attribs = c1.apply_to_attributions(attribs, nil)
+  c1 = EasySync::Changeset.unpack(cs1)
+  puts text = c1.apply_to_text(text)
+  puts attribs = c1.apply_to_attributions(attribs, nil)
 
-c2 = EasySync::Changeset.unpack(cs2)
-puts text = c2.apply_to_text(text)
-puts attribs = c2.apply_to_attributions(attribs, nil)
+  c2 = EasySync::Changeset.unpack(cs2)
+  puts text = c2.apply_to_text(text)
+  puts attribs = c2.apply_to_attributions(attribs, nil)
+end
