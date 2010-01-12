@@ -9,12 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091229041011) do
+ActiveRecord::Schema.define(:version => 20100111191226) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "plan_id"
+    t.string   "spreedly_token"
+    t.boolean  "active",                    :default => true
+    t.boolean  "on_trial",                  :default => true
+    t.boolean  "recurring",                 :default => false
+    t.datetime "active_until"
+    t.datetime "grace_until"
+    t.boolean  "subscription_info_changed", :default => false
   end
 
   add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true
@@ -29,6 +37,9 @@ ActiveRecord::Schema.define(:version => 20091229041011) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "attachments", ["created_at"], :name => "index_attachments_on_created_at"
+  add_index "attachments", ["room_id"], :name => "index_attachments_on_room_id"
 
   create_table "connections", :force => true do |t|
     t.integer  "user_id"
@@ -62,6 +73,8 @@ ActiveRecord::Schema.define(:version => 20091229041011) do
     t.text     "payload"
   end
 
+  add_index "events", ["created_at"], :name => "index_events_on_created_at"
+  add_index "events", ["room_id"], :name => "index_events_on_room_id"
   add_index "events", ["uuid"], :name => "index_events_on_uuid", :unique => true
 
   create_table "feeds", :force => true do |t|
@@ -83,9 +96,10 @@ ActiveRecord::Schema.define(:version => 20091229041011) do
 
   create_table "pastes", :force => true do |t|
     t.text     "content"
-    t.string   "syntax"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "attributions"
+    t.integer  "room_id"
   end
 
   create_table "permissions", :force => true do |t|

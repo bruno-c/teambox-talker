@@ -154,6 +154,23 @@ module Talker::Server
       db.insert sql, &callback
     end
     
+    def load_paste(permalink)
+      sql = "SELECT content, attributions " +
+            "FROM pastes " +
+            "WHERE id = '#{quote(permalink)}' " +
+            "LIMIT 1"
+      
+      Talker::Server.logger.debug sql
+      
+      db.select sql do |results|
+        if result = results.first
+          yield result["content"], result["attributions"]
+        else
+          yield nil, nil
+        end
+      end
+    end
+    
     
     ## Events
     

@@ -21,6 +21,7 @@ module Talker::Server
     def self.create
       presence # Implicitly binded to direct exchange of the same name
       logger.bind(topic, :key => "#{Channel::ROUTING_KEY_PREFIX}.room.*")
+      logger.bind(topic, :key => "#{Channel::ROUTING_KEY_PREFIX}.paste.*")
     end
     
     def self.reset!

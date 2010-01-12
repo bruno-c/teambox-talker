@@ -27,7 +27,8 @@ module Talker::Server
           received(type, id, event) { headers.ack }
         
         else
-          Talker::Server.logger.warn "Ignoring message from " + headers.routing_key + " no matching channel found"
+          Talker::Server.logger.warn "Ignoring message from " + headers.routing_key
+          headers.ack
         end
         
       end
@@ -51,7 +52,7 @@ module Talker::Server
       end
       
       unless event.key?("user") || event.key?("user")
-        Notifier.error "No user key in event: #{event.inspect}"
+        Notifier.error "No user key in event: #{event.inspect}, event will be left in queue"
         return
       end
       
@@ -61,8 +62,13 @@ module Talker::Server
       when "room"
         Talker::Server.storage.insert_event id, event, &callback
       when "paste"
-        Talker::Server.storage.update_paste id, event, &callback
-        # TODO
+        if type != "message"
+          callback.call
+          return
+        end
+        Paste.find(id) do |paste|
+          paste.apply(event["content"], &callback)
+        end
       else 
         Talker::Server.logger.warn "Not logging to channel #{channel}##{id}"
       end

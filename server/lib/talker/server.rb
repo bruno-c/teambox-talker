@@ -13,7 +13,6 @@ module Talker
     
     module Channels
       autoload :Connection, "talker/server/channels/connection"
-      autoload :Paster, "talker/server/channels/paster"
       autoload :Room, "talker/server/channels/room"
       autoload :Server, "talker/server/channels/server"
     end
@@ -22,6 +21,7 @@ module Talker
     autoload :Mailer, "talker/server/mailer"
     autoload :MysqlAdapter, "talker/server/mysql_adapter"
     autoload :Notifier, "talker/server/notifier"
+    autoload :Paste, "talker/server/paste"
     
     module Presence
       autoload :Monitor, "talker/server/presence/monitor"

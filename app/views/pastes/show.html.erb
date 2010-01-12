@@ -20,16 +20,8 @@
     $(function() {
       document.domain = document.domain;
       
-      // Usage:
-      //   var cs = editor.prepareUserChangeset(); // get diff
-      //   editor.applyPreparedChangesetToBase();  // reset local copy
-      //   // on remote
-      //   editor.applyChangesToBase(cs.changeset, null, cs.apool); // apply diff
-      
       window.editor = new Ace2Editor();
-      // var text = "<%= escape_javascript @paste.content %>"; // initial text
-      // var text = "ohae\nhi\n"; // initial text
-      var text = "ohaie\nhi there\n"; // initial text
+      var text = "<%= escape_javascript @paste.content %>"; // initial text
       
       editor.resize = function() {
         $("#editorcontainer").get(0).style.height = "100%";
@@ -40,9 +32,9 @@
       editor.init("editorcontainer", text, function() {
         editor.setAuthorInfo("1", {bgcolor: "#ccf"});
         editor.setAuthorInfo("2", {bgcolor: "#fcc"});
-        // editor.setBaseText(text + "\n");
-        // var diff = "+3*0+1|1+2+2*1+6|2+2|22";
-        var attribs = createAttributions("+3*1+1|1+2+2*2+6|2+2|22");
+        var attribs = createAttributions("<%= escape_javascript @paste.attributions %>");
+        console.info("<%= escape_javascript @paste.attributions %>")
+        console.info(attribs);
         editor.setBaseAttributedText({text: text + "\n", attribs: attribs.changeset },
                                      { numToAttrib: attribs.pool });
         editor.setEditable(true); 
@@ -53,6 +45,8 @@
           // Compute local diff
           var cs = editor.prepareUserChangeset();
           var diff = rewriteAttributions(cs.changeset, 0, Talker.currentUser.id);
+          console.info(cs);
+          console.info(diff);
           // Send to server
           Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: diff}, function() {
             // Reset local copy when sent
@@ -69,25 +63,31 @@
         // Do not apply local diff
         if (event.user.id == Talker.currentUser.id) return false;
         
-        editor.applyChangesToBase(event.content, event.user.id.toString(),
-                                  { numToAttrib: [["author", event.user.id]] });
+        var attribs = createAttributions(event.content);
+        editor.applyChangesToBase(attribs.changeset, event.user.id.toString(),
+                                  { numToAttrib: attribs.pool });
       };
       
       // Rewrite an attribution in a changeset
-      var rewriteAttributions = function(cs, attrib, userId) {
-        return cs.replace("*" + attrib, "*" + userId);
+      var rewriteAttributions = function(cs, attrib, userId, first) {
+        var re = new RegExp("\\*" + attrib, first ? "" : "g");
+        return cs.replace(re, "*" + userId);
       }
       // Create an attribution pool from a changeset, extracting user ids from
       // the changeset and replacing w/ indexes in the attribution pool.
       window.createAttributions = function(cs) {
         var pool = [];
+        var authors = {};
         var matches = null;
         var re = /\*(\d+)[^\d]/g;
         while (matches = re.exec(cs)) {
           var id = matches[1];
-          var num = pool.length;
-          pool.push(["author", id]);
-          cs = rewriteAttributions(cs, id, num);
+          var num = authors[id];
+          if (num == null) {
+            authors[id] = num = pool.length;
+            pool.push(["author", id]);
+          }
+          cs = rewriteAttributions(cs, id, num, true);
         }
         return { changeset: cs, pool: pool };
       }

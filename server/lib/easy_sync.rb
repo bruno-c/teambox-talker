@@ -115,7 +115,7 @@ module EasySync
     end
     
     def apply_to_text(text)
-    	raise InvalidChangeset, "mismatched apply: #{text.size} / #{@size}" unless text.size == @size
+      raise InvalidChangeset, "mismatched apply: #{text.size} / #{@size}" unless text.size == @size
       bank_iter = StringIO.new(@char_bank)
       text_iter = StringIO.new(text)
       buf = []
@@ -132,7 +132,7 @@ module EasySync
       buf.join
     end
     
-    def apply_to_attributions(attribs, pool)
+    def apply_to_attributions(attribs, pool=nil)
       att_iter = ops_iterator(attribs)
       cs_iter = ops_iterator(@ops)
       assem = MergingOpAssembler.new
@@ -209,6 +209,7 @@ module EasySync
     end
     
     def self.unpack(cs)
+      raise InvalidChangeset, "No changeset" if cs.nil? || cs.empty?
       matches = cs.match(HEADER_REGEX)
       raise InvalidChangeset, "Not a changeset: #{cs}" unless matches
       old_len = matches[1].to_i(RADIX)
@@ -262,8 +263,11 @@ if __FILE__ == $PROGRAM_NAME
   c1 = EasySync::Changeset.unpack(cs1)
   puts text = c1.apply_to_text(text)
   puts attribs = c1.apply_to_attributions(attribs, nil)
-
+  
   c2 = EasySync::Changeset.unpack(cs2)
   puts text = c2.apply_to_text(text)
   puts attribs = c2.apply_to_attributions(attribs, nil)
+  
+  # c = EasySync::Changeset.unpack("Z:1n>1|3=1e=8*1+1$!")
+  # puts c.apply_to_attributions("*1+k|1+1*1+1+3*1|1+4*1+b*2+9*1|1+1*1+6*2+1*1+1|1+1|11")
 end
