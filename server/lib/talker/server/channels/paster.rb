@@ -6,18 +6,18 @@ module Talker::Server
       MAX_LENGTH = 500 * 1024 # 500 KB
       PREVIEW_LINES = 15
     
-      def self.truncate(content, force=false)
+      def self.truncate(channel, content, force=false)
         content = content[0, MAX_LENGTH] if content.size > MAX_LENGTH
-      
-        if pastable?(content) || force
-          truncated_content, paste_info = paste(content)
+        
+        if pastable?(channel, content) || force
+          truncated_content, paste_info = paste(channel.id, content)
           yield truncated_content, paste_info
         else
           yield content, nil
         end
       end
     
-      def self.paste(content)
+      def self.paste(room_id, content)
         lines = content.split("\n")
       
         if lines.size > PREVIEW_LINES
@@ -31,7 +31,7 @@ module Talker::Server
         permalink = generate_permalink
       
         # Insert in DB
-        Talker::Server.storage.insert_paste(permalink, content)
+        Talker::Server.storage.insert_paste(room_id, permalink, content)
       
         paste_info = {
           "id" => permalink,
@@ -42,8 +42,8 @@ module Talker::Server
         [truncated_content, paste_info]
       end
     
-      def self.pastable?(content)
-        content.include?("\n")
+      def self.pastable?(channel, content)
+        channel.type == "room" && content.include?("\n")
       end
     
       def self.generate_permalink

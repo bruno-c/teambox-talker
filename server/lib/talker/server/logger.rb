@@ -4,6 +4,8 @@ require "yajl"
 
 module Talker::Server
   class Logger
+    IGNORED_EVENT_TYPES = %w( idle back ).freeze
+    
     attr_accessor :rooms, :queue
     
     def initialize
@@ -39,6 +41,11 @@ module Talker::Server
     def received(channel, id, event, &callback)
       type = event["type"]
       
+      if IGNORED_EVENT_TYPES.include?(type)
+        callback.call
+        return
+      end
+      
       unless event.key?("user") || event.key?("user")
         Notifier.error "No user key in event: #{event.inspect}"
         return
@@ -50,6 +57,7 @@ module Talker::Server
       when "room"
         Talker::Server.storage.insert_event id, event, callback
       when "paste"
+        Talker::Server.storage.update_paste id, event, callback
         # TODO
       else 
         Talker::Server.logger.warn "Not logging to channel #{channel}##{id}"

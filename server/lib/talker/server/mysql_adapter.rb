@@ -133,12 +133,22 @@ module Talker::Server
     
     ## Pastes
     
-    def insert_paste(permalink, content, &callback)
+    def insert_paste(room_id, permalink, content, attributions, &callback)
       content = content.to_s
-      time = Time.now.utc.to_i
+      time = Time.now.to_i
       
-      sql = "INSERT INTO pastes (id, content, created_at, updated_at) " +
-            "VALUES ('#{quote(permalink)}', '#{quote(content)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
+      sql = "INSERT INTO pastes (id, room_id, content, attributions, created_at, updated_at) " +
+            "VALUES ('#{quote(permalink)}', #{room_id.to_i}, '#{quote(content)}', '#{quote(attributions)}', FROM_UNIXTIME(#{time}), FROM_UNIXTIME(#{time}))"
+      
+      Talker::Server.logger.debug sql
+      db.insert sql, &callback
+    end
+    
+    def update_paste(permalink, content, attributions, &callback)
+      time = Time.now.to_i
+      
+      sql = "UPDATE pastes SET content = '#{quote(content)}', attributions = '#{quote(attributions)}', updated_at = FROM_UNIXTIME(#{time})" +
+            "WHERE id = '#{quote(permalink)}'"
       
       Talker::Server.logger.debug sql
       db.insert sql, &callback

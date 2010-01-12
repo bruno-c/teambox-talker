@@ -41,20 +41,21 @@
         editor.setAuthorInfo("1", {bgcolor: "#ccf"});
         editor.setAuthorInfo("2", {bgcolor: "#fcc"});
         // editor.setBaseText(text + "\n");
-        editor.setBaseAttributedText({text: text + "\n", attribs: "+3*0+1|1+2+2*0+6|2+2|22"},
-                                     {numToAttrib:{"0":{"0":"author","1":"1"},
-                                                   "1":{"0":"author","1":"2"}}, nextNum:2});
-        editor.setEditable(true);
+        // var diff = "+3*0+1|1+2+2*1+6|2+2|22";
+        var attribs = createAttributions("+3*1+1|1+2+2*2+6|2+2|22");
+        editor.setBaseAttributedText({text: text + "\n", attribs: attribs.changeset },
+                                     { numToAttrib: attribs.pool });
+        editor.setEditable(true); 
         editor.setProperty("showsauthorcolors", true);
         editor.setProperty("userauthor", Talker.currentUser.id.toString());
         editor.setProperty("wraps", true);
         editor.setUserChangeNotificationCallback(function() {
           // Compute local diff
           var cs = editor.prepareUserChangeset();
+          var diff = rewriteAttributions(cs.changeset, 0, Talker.currentUser.id);
           // Send to server
-          Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: cs.changeset}, function() {
+          Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: diff}, function() {
             // Reset local copy when sent
-            console.info(cs.changeset);
             editor.applyPreparedChangesetToBase();
           });
         });
@@ -63,15 +64,33 @@
         setTimeout(function() {editor.focus();}, 0);
       });
       
-      
       var receiver = {};
       receiver.onMessageReceived = function(event) {
         // Do not apply local diff
         if (event.user.id == Talker.currentUser.id) return false;
         
         editor.applyChangesToBase(event.content, event.user.id.toString(),
-                                  {numToAttrib:{"0":{"0":"author","1":event.user.id}},nextNum:1});
+                                  { numToAttrib: [["author", event.user.id]] });
       };
+      
+      // Rewrite an attribution in a changeset
+      var rewriteAttributions = function(cs, attrib, userId) {
+        return cs.replace("*" + attrib, "*" + userId);
+      }
+      // Create an attribution pool from a changeset, extracting user ids from
+      // the changeset and replacing w/ indexes in the attribution pool.
+      window.createAttributions = function(cs) {
+        var pool = [];
+        var matches = null;
+        var re = /\*(\d+)[^\d]/g;
+        while (matches = re.exec(cs)) {
+          var id = matches[1];
+          var num = pool.length;
+          pool.push(["author", id]);
+          cs = rewriteAttributions(cs, id, num);
+        }
+        return { changeset: cs, pool: pool };
+      }
       
       // Talker.plugins.push(new Talker.ErrorHandler($("#error")));
       Talker.plugins.push(new Talker.Users());
@@ -84,6 +103,8 @@
         token: <%= current_user.talker_token.to_json %>,
         callbacks: Talker.Broadcaster
       }).connect();
+      
+      Talker.trigger("Loaded");
       
       $(window).bind('beforeunload', function() { Talker.client.reset() });
     });
