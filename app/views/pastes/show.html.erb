@@ -41,6 +41,7 @@
         editor.setProperty("showsauthorcolors", true);
         editor.setProperty("userauthor", Talker.currentUser.id.toString());
         editor.setProperty("wraps", true);
+        
         editor.setUserChangeNotificationCallback(function() {
           // Compute local diff
           var cs = editor.prepareUserChangeset();
