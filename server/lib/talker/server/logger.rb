@@ -10,16 +10,20 @@ module Talker::Server
     
     def initialize
       @queue = Queues.logger
-      @parser = Yajl::Parser.new
     end
     
     def start
       Talker::Server.logger.info "Subscribing to #{@queue.name}"
+      
       @queue.subscribe(:ack => true) do |headers, message|
-        _, type, id = headers.routing_key.match(/(\w+)\.(\w+)$/)
+        message.chomp!
+        
+        Talker::Server.logger.debug "#{headers.routing_key}<<<#{message.inspect}"
+        
+        type, id = Channel.name_from_routing_key(headers.routing_key)
         
         if type && id
-          event = @parser.parse(message)
+          event = Yajl::Parser.parse(message)
           received(type, id, event) { headers.ack }
         
         else
@@ -55,9 +59,9 @@ module Talker::Server
       
       case channel
       when "room"
-        Talker::Server.storage.insert_event id, event, callback
+        Talker::Server.storage.insert_event id, event, &callback
       when "paste"
-        Talker::Server.storage.update_paste id, event, callback
+        Talker::Server.storage.update_paste id, event, &callback
         # TODO
       else 
         Talker::Server.logger.warn "Not logging to channel #{channel}##{id}"

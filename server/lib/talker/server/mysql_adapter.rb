@@ -157,7 +157,7 @@ module Talker::Server
     
     ## Events
     
-    def insert_event(room, event, callback)
+    def insert_event(room, event, &callback)
       id = event["id"].to_s
       room_id = room.to_i
       type = event["type"].to_s

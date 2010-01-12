@@ -7,6 +7,7 @@ module Talker::Server
   
   class Channel
     ROUTING_KEY_PREFIX = "talker.channels".freeze
+    ROUTING_NAME_REGEXP = /^talker\.channels\.(\w+)\.(\w+)$/
     EVENT_DELIMITER = "\n".freeze
     UUID_GENERATOR = UUID.new
     NAME_REGEXP = /^(\w+)\.(\w+)$/
@@ -67,6 +68,10 @@ module Talker::Server
     def publish_presence(type, user)
       publish_as_json Queues.presence, :type => type, :channel => @name,
                                        :user => user.info, :time => Time.now.utc.to_i
+    end
+    
+    def self.name_from_routing_key(key)
+      key.match(ROUTING_NAME_REGEXP).to_a[1..-1]
     end
     
     private
