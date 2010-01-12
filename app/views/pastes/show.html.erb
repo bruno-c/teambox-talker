@@ -33,8 +33,6 @@
         editor.setAuthorInfo("1", {bgcolor: "#ccf"});
         editor.setAuthorInfo("2", {bgcolor: "#fcc"});
         var attribs = createAttributions("<%= escape_javascript @paste.attributions %>");
-        console.info("<%= escape_javascript @paste.attributions %>")
-        console.info(attribs);
         editor.setBaseAttributedText({text: text + "\n", attribs: attribs.changeset },
                                      { numToAttrib: attribs.pool });
         editor.setEditable(true); 
@@ -46,8 +44,6 @@
           // Compute local diff
           var cs = editor.prepareUserChangeset();
           var diff = rewriteAttributions(cs.changeset, 0, Talker.currentUser.id);
-          console.info(cs);
-          console.info(diff);
           // Send to server
           Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: diff}, function() {
             // Reset local copy when sent
