@@ -236,7 +236,7 @@ module EasySync
           result << Op.new(m[2], # opcode
                            m[3].to_i(RADIX), # chars
                            (m[1] || "0").to_i(RADIX), # lines
-                           m[0]) # attribs
+                           m[0].empty? ? nil : m[0]) # attribs
         end
         result
       end
@@ -246,28 +246,56 @@ module EasySync
       end
       
       def compose_attributes(att1, att2, mutation, pool)
-        # TODO, doesn't seem to be required
-        att1
+        # Sometimes attribute (key,value) pairs are treated as attribute presence
+        # information, while other times they are treated as operations that
+        # mutate a set of attributes, and this affects whether an empty value
+        # is a deletion or a change.
+        # Examples, of the form (att1Items, att2Items, resultIsMutation) -> result
+        # ([], [(bold, )], true) -> [(bold, )]
+        # ([], [(bold, )], false) -> []
+        # ([], [(bold, true)], true) -> [(bold, true)]
+        # ([], [(bold, true)], false) -> [(bold, true)]
+        # ([(bold, true)], [(bold, )], true) -> [(bold, )]
+        # ([(bold, true)], [(bold, )], false) -> []
+
+        # pool can be null if att2 has no attributes.
+        
+        if att1 && mutation
+          # In the case of a mutation (i.e. composing two changesets),
+          # an att2 composed with an empy att1 is just att2.  If att1
+          # is part of an attribution string, then att2 may remove
+          # attributes that are already gone, so don't do this optimization.
+          return att2
+        end
+        
+        return att1 if !att2
+        
+        raise InvalidChangeset, "Mergin of attributes not (yet) supported: #{att1} + #{att2}"
       end
   end
 end
 
 if __FILE__ == $PROGRAM_NAME
-  # Applying changeset to a text
-  text = "ohae\nhi\n"
-  cs1 = "Z:8>6|1=5=2*0+6$ there"
-  cs2 = "Z:e>1=3*0+1$i"
-  puts text
-  puts attribs = EasySync::Changeset.create_attributions(text)
-
-  c1 = EasySync::Changeset.unpack(cs1)
-  puts text = c1.apply_to_text(text)
-  puts attribs = c1.apply_to_attributions(attribs, nil)
+  # # Applying changeset to a text
+  # text = "ohae\nhi\n"
+  # cs1 = "Z:8>6|1=5=2*0+6$ there"
+  # cs2 = "Z:e>1=3*0+1$i"
+  # puts text
+  # puts attribs = EasySync::Changeset.create_attributions(text)
+  # 
+  # c1 = EasySync::Changeset.unpack(cs1)
+  # puts text = c1.apply_to_text(text)
+  # puts attribs = c1.apply_to_attributions(attribs, nil)
+  # 
+  # c2 = EasySync::Changeset.unpack(cs2)
+  # puts text = c2.apply_to_text(text)
+  # puts attribs = c2.apply_to_attributions(attribs, nil)
   
-  c2 = EasySync::Changeset.unpack(cs2)
-  puts text = c2.apply_to_text(text)
-  puts attribs = c2.apply_to_attributions(attribs, nil)
-  
-  # c = EasySync::Changeset.unpack("Z:1n>1|3=1e=8*1+1$!")
-  # puts c.apply_to_attributions("*1+k|1+1*1+1+3*1|1+4*1+b*2+9*1|1+1*1+6*2+1*1+1|1+1|11")
+  t = "a\nb\n"
+  c = EasySync::Changeset.unpack("Z:4<2|1-2-1*1+1$x")
+  p c.apply_to_text(t)
+  a = EasySync::Changeset.create_attributions(t)
+  p a
+  p c.apply_to_attributions(a)
+  p EasySync::Changeset.create_attributions(c.apply_to_text(t))
 end

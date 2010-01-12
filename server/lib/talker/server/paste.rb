@@ -48,7 +48,12 @@ module Talker::Server
       changeset = EasySync::Changeset.unpack(diff)
       # Content must end w/ linebreak for easysync to work
       @content = changeset.apply_to_text(@content + "\n").chomp!
-      @attributions = changeset.apply_to_attributions(@attributions)
+      if @content.size == 0
+        # Reset attributions
+        @attributions = EasySync::Changeset.create_attributions(@content)
+      else
+        @attributions = changeset.apply_to_attributions(@attributions)
+      end
       
       Talker::Server.storage.update_paste(@permalink, @content, @attributions, &callback)
     rescue EasySync::InvalidChangeset => e
