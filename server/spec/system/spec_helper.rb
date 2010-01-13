@@ -8,7 +8,7 @@ module Helpers
   CERT_PATH = File.expand_path(File.dirname(__FILE__) + "/../../../chef/certs")
   
   def start_server(options={})
-    @server = Talker::Channels::Server.new({
+    @server = Talker::Server::Channels::Server.new({
       :port => TEST_PORT,
       :timeout => 1,
       :private_key_file => CERT_PATH + "/talkerapp.key",

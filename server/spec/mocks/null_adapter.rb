@@ -20,15 +20,12 @@ class NullAdapter
   end
   
   def insert_paste(room_id, permalink, content, attributions, &callback)
-    callback.call
   end
   
   def update_paste(permalink, content, attributions, &callback)
-    callback.call
   end
   
   def load_paste(permalink)
-    callback.call nil
   end
 end
 
