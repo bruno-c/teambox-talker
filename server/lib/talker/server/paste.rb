@@ -22,6 +22,7 @@ module Talker::Server
     end
     
     def pastable?
+      raise ArgumentError, "channel required" unless @channel
       @channel.type == "room" && @content.include?("\n")
     end
     
@@ -73,7 +74,7 @@ module Talker::Server
       end
     end
     
-    def self.truncate(channel, content, force)
+    def self.truncate(content, channel, force=false)
       paste = new(content, channel)
       
       if paste.create(force)

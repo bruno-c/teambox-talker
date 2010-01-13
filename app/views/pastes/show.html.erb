@@ -43,7 +43,6 @@
         editor.setUserChangeNotificationCallback(function() {
           // Compute local diff
           var cs = editor.prepareUserChangeset();
-          console.info(cs.changeset);
           var diff = rewriteAttributions(cs.changeset, 0, Talker.currentUser.id);
           // Send to server
           Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: diff}, function() {

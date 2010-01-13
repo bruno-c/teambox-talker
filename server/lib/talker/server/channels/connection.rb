@@ -97,7 +97,7 @@ module Talker::Server
         obj["time"] = Time.now.utc.to_i
         content = obj["content"] = obj["content"].to_s
         
-        Paste.truncate(@channel, content, obj.delete("paste")) do |truncated_content, paste|
+        Paste.truncate(content, @channel, obj.delete("paste")) do |truncated_content, paste|
           obj["content"] = truncated_content
           obj["paste"] = paste if paste
           

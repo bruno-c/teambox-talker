@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 
-EM.describe Talker::Server::Channels::Paster do
+EM.describe Talker::Server::Paste do
   CODE = <<-EOS
 class Awesome
   def name
@@ -21,19 +21,24 @@ class Awesome
 end
 EOS
   
+  before do
+    @channel = Talker::Server::Channel.new("room.1")
+  end
+  
   after do
     done
   end
   
   it "should detect pastable code" do
-    Talker::Server::Channels::Paster.pastable?(CODE).should be_true
-    Talker::Server::Channels::Paster.pastable?("oh\naie").should be_true
-    Talker::Server::Channels::Paster.pastable?("ohaie").should be_false
-    Talker::Server::Channels::Paster.pastable?("").should be_false
+    Talker::Server::Paste.new(CODE, @channel).should be_pastable
+    Talker::Server::Paste.new("oh\naie", @channel).should be_pastable
+    Talker::Server::Paste.new("ohaie", @channel).should_not be_pastable
+    Talker::Server::Paste.new("", @channel).should_not be_pastable
+    Talker::Server::Paste.new("oh\naie", Talker::Server::Channel.new("paste.1")).should_not be_pastable
   end
   
   it "should truncate to 15 lines" do
-    Talker::Server::Channels::Paster.truncate(CODE) do |content, paste|
+    Talker::Server::Paste.truncate(CODE, @channel) do |content, paste|
       paste["lines"].should == 17
       paste["preview_lines"].should == 15
       content.should == <<-EOS.chomp
@@ -58,7 +63,7 @@ EOS
   end
 
   it "should not truncate if less than 15 lines" do
-    Talker::Server::Channels::Paster.truncate("oh\naie") do |content, paste|
+    Talker::Server::Paste.truncate("oh\naie", @channel) do |content, paste|
       content.should == "oh\naie"
       paste["lines"].should == 2
       paste["preview_lines"].should == 2
