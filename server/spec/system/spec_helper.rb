@@ -10,7 +10,7 @@ module Helpers
     return if @server && @server.running?
     @server = Talker::Server::Channels::Server.new({
       :port => $TEST_PORT,
-      :timeout => 1,
+      :timeout => 3,
       :private_key_file => CERT_PATH + "/talkerapp.key",
       :cert_chain_file => CERT_PATH + "/talkerapp.crt"
     }.merge(options))
@@ -19,6 +19,9 @@ module Helpers
     
     @presence = Talker::Server::Presence::Monitor.new
     @presence.start
+    
+    @timed_out = false
+    @timer = EM::Timer.new(2) { puts "Timed out!"; fail "Timed out!" }
     
     @server
   rescue
@@ -47,8 +50,9 @@ module Helpers
   end
   
   def done
-    fail "Expected `success` to be called before `done`" unless @success
     stop_server
+    @timer.cancel if @timer
+    fail "Expected `success` to be called before `done`" unless @success
     super
   end
 end
@@ -58,5 +62,7 @@ Spec::Runner.configure do |config|
   
   config.before do
     @success = false
+    @server = nil
+    @timer = nil
   end
 end

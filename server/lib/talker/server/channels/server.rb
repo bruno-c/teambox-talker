@@ -45,7 +45,7 @@ module Talker::Server
       end
       
       def running?
-        !!@signature
+        !!@signature && EM.reactor_running?
       end
       
       def stop(&callback)

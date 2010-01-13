@@ -12,7 +12,7 @@ EM.describe "Private messages" do
     end
     
     connect :token => 2 do |client|
-      client.on_message do |user, message|
+      client.on_private_message do |user, message|
         user["id"].should == 3
         client.close
         success
