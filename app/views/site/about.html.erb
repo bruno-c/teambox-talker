@@ -1,0 +1,28 @@
+<% @title = @tagline = "About Talker, Us, Life and Everything" %>
+
+<div class="content">
+  <div id="product">
+    <h3>Why Another Group Chat Application ?</h3>
+    <p>We think the chat room is the most important tool for team collaboration. It's a place where everyone gathers, shares ideas, a few laughs and gets things done together. Our idea is that, any improvement made to this tool will skyrocket the productivity of the teams using it.</p>
+    <p>Since we don't have all the answers, we think this kind of application needs to be extensible, without sacrificing ease of use.  We think we've made Talker the most extensible and customizable group chat ever created! You can already do plenty of great things with the powerful <%= link_to "plugins", plugin_api_path %> and <%= link_to "API", rest_api_path %>.  We have plans for plenty of great ways to improve group collaboration!</p>
+    <p>Don't let all your tools bog you down. Talker gathers information from all the applications you're using and notifies you in your chat room when something happens.  Your team can now react in real time to an important customer issue or someone's tweet about your product.</p>
+  </div>
+
+  <div id="team">
+    <div class="box left">
+      <%= image_tag "http://a1.twimg.com/profile_images/202914288/avatar2_bigger.png", :class => "avatar" %>
+      <h3>Marc-André Cournoyer</h3>
+      <p>Marc-André is a father, snowboarder &amp; coder from Montréal, QC.</p>
+      <p>Before founding Talker he created several projects including <%= link_to "tinyrb", "http://code.macournoyer.com/tinyrb/" %>, <%= link_to "Thin", "http://code.macournoyer.com/thin/" %>, <%= link_to "Create Your Own Programming Language", "http://createyourproglang.com" %>, <%= link_to "Refactor My Code", "http://refactormycode.com/" %> &amp; <%= link_to "other stuff", "http://github.com/macournoyer" %>, mostly in Ruby.</p>
+      <p>You can find him online, <%= link_to "blogging", "http://macournoyer.com/blog" %> or <%= link_to "tweeting", "http://twitter.com/macournoyer" %> and offline snowboarding and massacring songs on the guitar.</p>
+    </div>
+
+    <div class="box right">
+      <%= image_tag "http://a3.twimg.com/profile_images/271248159/n594340287_2436994_7432-1_bigger.jpg", :class => "avatar" %>
+      <h3>Gary Haran</h3>
+      <p>A father, volleyball player, amateur molecular cook based in Montréal, QC.</p>
+      <p>Coming from a modest family Gary paid for the family's first internet connection by building web sites at minimum wage.  He wrote Javascript that talked to servers before the term AJAX was coined.  He gets boggled to think that the code to do that is still in production somewhere in Europe to this day.</p>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>

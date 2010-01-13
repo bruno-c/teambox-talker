@@ -4,8 +4,16 @@ module FormHelper
     content_tag :button, title, { :type => "submit", :name => "commit", :value => title }.update(options)
   end
   
+  def button_with_icon(title, icon, options={})
+    submit_button title, options.merge(:class => "icon #{icon} #{options[:class]}")
+  end
+
   def ok_button(title="Ok", options={})
-    submit_button title, options.merge(:class => "icon ok #{options[:class]}")
+    button_with_icon title, "ok", options
+  end
+
+  def next_button(title="Next", options={})
+    button_with_icon title, "next", options
   end
 
   def cancel_button(url=:back, options={})

@@ -2,22 +2,22 @@ class LogsController < ApplicationController
   before_filter :registered_user_required
   before_filter :account_required
   before_filter :find_room
+  before_filter :find_date, :only => [:show, :destroy]
   before_filter :room_permission_required
   
   def index
-    if @room
-      @events = @room.events.date_grouped.paginate(:page => params[:page])
-      @dates = @events.map(&:created_at).compact
-      render :room_index
+    if params[:month]
+      @date = Time.zone.local(params[:year].to_i, params[:month].to_i, 1)
     else
-      @rooms = current_account.rooms.with_permission(current_user)
-      render :index
+      @date = Time.zone.now
     end
+    
+    @events = @room.events.date_grouped.in_month(@date)
+    @dates = @events.map(&:created_at).compact
   end
   
   def show
-    @date = Time.zone.local(params[:year].to_i, params[:month].to_i, params[:day].to_i).to_datetime
-    @events = @room.events.on_date(@date)
+    @events = @room.events.created_on(@date)
   end
   
   def search
@@ -37,13 +37,19 @@ class LogsController < ApplicationController
     @events = Event.search @query, :order => :created_at, :sort_mode => :desc, :with => with
   end
   
-  def today
-    @date = Time.now.to_date
-    @events = @room.events.on_date(@date)
-    render :show
+  def destroy
+    @room.events.created_on(@date).delete_all
+    @room.attachments.created_on(@date).destroy_all
+    
+    flash[:notice] = "I hope you printed this log, because it is now gone forever."
+    redirect_to room_month_logs_path(@room, @date.year, @date.month)
   end
   
   private
+    def find_date
+      @date = Time.zone.local(params[:year].to_i, params[:month].to_i, params[:day].to_i).to_datetime
+    end
+    
     def find_room
       @room = current_account.rooms.find(params[:room_id]) if params[:room_id]
     end

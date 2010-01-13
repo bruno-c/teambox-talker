@@ -60,11 +60,12 @@ Talker.UserList = function(element) {
     var oldName = userElement.attr('user_name');
     if (user.name != oldName) {
       userElement.attr('user_name', user.name).
+                  attr('title', user.name).
                   html(
                     $("<img/>").attr("alt", h(user.name)).
                                 attr("src", avatarUrl(user))
                   ).
-                  append("\n" + h(user.name));
+                  append("\n" + truncate(h(user.name), 8));
     }
     return userElement;
   };

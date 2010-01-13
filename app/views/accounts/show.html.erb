@@ -1,0 +1,97 @@
+<div class="sheet" id="account">
+  <h2><%= @title = "Your Account" %></h2>
+  
+  <div class="content">
+    <h3>Subscription Plan</h3>
+    <% if @account.subscription_info_changed %>
+      <div class="info">
+        Your subscription is being updated, <%= link_to_function "refresh", "location.reload(true)" %> or come back in a few ...
+      </div>
+    <% else %>
+      
+      <% unless @account.plan.free? %>
+      <div class="next_billing">
+        <% if @account.recurring %>
+          On <%= human_date @account.active_until - 1.day %> we will bill you <%= number_to_currency @account.plan.price %>.
+        <% else %>
+          Your subscription won't renew and you'll be downgraded to the Free plan on <%= human_date @account.active_until %>.
+        <% end %>
+        <%= link_to "Update your subscription information", @account.edit_subscriber_url(account_url(:changed => true)) %>
+      </div>
+      <% end %>
+      
+      <!-- Change plan matrix -->
+      <table id="plans">
+        <thead>
+          <tr>
+            <td></td>
+            <% Plan.all.each do |plan| %>
+            <th class="<%= 'current' if plan == @account.plan %>">
+              <%=h plan.name %>
+              <div class="price"><%= number_to_currency plan.price %><small>/month</small></div>
+            </th>
+            <% end %>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td></td>
+            <% Plan.all.each do |plan| %>
+            <th class="<%= 'current' if plan == @account.plan %>">
+              <% if plan == @account.plan %>
+                <strong>Current</strong>
+                <% unless plan.free? || @account.recurring %>
+                  <div class="will_expire">
+                    <strong>Won't renew!</strong>
+                    You'll be downgraded to the Free plan on <%= human_date @account.active_until %>
+                  </div>
+                <% end %>
+
+              <% elsif !(!@account.recurring && plan.free?) %>
+                <% if plan > @account.plan %>
+                  <%= link_to "Upgrade", plan_path(plan), :method => :put, :class => "button" %>
+                <% else %>
+                  <%= link_to "Downgrade", plan_path(plan), :method => :put, :class => "button negative" %>
+                <% end %>
+
+              <% end %>
+            </th>
+            <% end %>
+          </tr>
+        </tfoot>
+        <tbody>
+          <%= feature_line("Online Users",
+                           "Number of users simultaneously connected to your account."
+                          ) { |features| pluralize features.max_connections, "user" } %>
+          <%= feature_line("File Upload Space",
+                           "Total size of files you can upload across all rooms."
+                          ) { |features| number_to_human_size features.max_storage } %>
+          <%= feature_line("Private Rooms",
+                           "Private rooms can only be accessed by people you invite."
+                          ) { |features| features.private_rooms ? image_tag("icons/tick.png") : image_tag("icons/cross.png") } %>
+          <%= feature_line("Chat Log History",
+                           "Number of days we keep your chat history before deleting it."
+                          ) { |features| features.log_history ? features.log_history.inspect : "Unlimited" } %>
+          <%= feature_line("Enhanced security",
+                           "All data sent between Talker and your computer is encrypted."
+                          ) { |features| features.ssl ? image_tag("icons/tick.png") : image_tag("icons/cross.png") } %>
+        </tbody>
+      </table>
+    <% end %>
+    
+    <h3>Usage</h3>
+    
+    <p class="side_description">
+      You've used <strong><%= number_to_human_size @account.used_storage %></strong> of your <strong><%= number_to_human_size @account.features.max_storage %></strong> file upload space limit.
+    </p>
+    <strong>File Upload Space</strong>
+    <%= meter_tag @account.used_storage.to_f / @account.features.max_storage.to_f %>
+    
+    <p class="side_description">
+      You're currently using <strong><%= @account.connections.users_count %></strong>
+      of your <strong><%= pluralize @account.features.max_connections, "online users" %></strong> limit.
+    </p>
+    <strong>Online Users</strong>
+    <%= meter_tag @account.connections.users_count.to_f / @account.features.max_connections.to_f %>
+  </div>
+</div>

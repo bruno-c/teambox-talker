@@ -1,0 +1,8 @@
+<div class="info limit_warning warning">
+  <p>You've <% unless full %>almost<% end %> reached your <%= feature %> limit.</p>
+  <% if admin? %>
+    <p><%= link_to "Upgrade your plan", account_path %> to raise that limit.</p>
+  <% else %>
+    <p>Contact the administrator to upgrade your account.</p>
+  <% end %>
+</div>

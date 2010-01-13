@@ -7,11 +7,15 @@ class Room < ActiveRecord::Base
   has_many :guests, :class_name => "User", :dependent => :destroy
   has_many :attachments, :class_name => "::Attachment", # FIX class w/ Paperclip::Attachment
                          :dependent => :destroy
-  has_many :permissions
+  has_many :feeds, :dependent => :destroy
+  has_many :permissions, :dependent => :destroy
   belongs_to :account
   
-  validates_presence_of :name
+  validates_presence_of   :name
   validates_uniqueness_of :name, :scope => :account_id
+  
+  validates_presence_of   :account_id
+  validate_on_create      :respect_limit
   
   named_scope :with_permission, proc { |user|
     if user.admin
@@ -93,6 +97,10 @@ class Room < ActiveRecord::Base
     "#{name.inspect}@#{account.subdomain}"
   end
   
+  def connected?(user)
+    connections.find_by_user_id(user.id).present?
+  end
+  
   def self.amqp_connection
     # TODO load AMQP config from somewhere
     @amqp_connection ||= AMQP.connect
@@ -107,5 +115,11 @@ class Room < ActiveRecord::Base
       end
       
       permissions.update_access @invitee_ids
+    end
+    
+    def respect_limit
+      if self.private && !account.features.private_rooms
+        errors.add :base, "Your current plan do not allow private rooms. Upgrade your plan to crete a private room."
+      end
     end
 end

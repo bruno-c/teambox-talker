@@ -166,16 +166,23 @@ html[xmlns] .clearfix
             background-position: 2px center
   p.utilities
     float: right
-    color = !light_grey
+    color = !grey
     line-height: 40px
     a
       color = !white
+      margin: 2px
+      font-weight: bold
+      text-decoration: none
       &.avatar
         img
           height: 18px
           width: 18px
           position: relative
-          top: 3px
+          top: 4px
+          left: 4px
+    a:hover
+      text-decoration: underline
+      
 
 // Layout
 #content
@@ -448,6 +455,8 @@ a.button, button
     background-image: url(/images/icons/cross-circle.png)
   &.ok
     background-image: url(/images/icons/tick.png)
+  &.next
+    background-image: url(/images/icons/arrow.png)
 
 // Sidebar Action Buttons
 #sidebar
@@ -467,6 +476,8 @@ a.button, button
   .info
     margin: 20px 0
     border = solid 1px !white
+    &.warning
+      border = solid 2px !red * 0.5 + !white * 0.5
 
 // People
 #people
@@ -819,8 +830,60 @@ a.button, button
           background-color = !light_grey * 0.5 + !white * 0.5
 
 #logs
+  min-height: 400px
+  table
+    width: 100%
+    td
+      padding: 4px
+      vertical-align: top
+      border-bottom = dotted 1px !light_grey
+      &.day
+        text-align: right
+        +font_size("small")
+        padding: 5px
+      &.date, &.actions
+        white-space: nowrap
+      &.details
+        width: 80%
+        padding: 5px 20px
+        +font_size("small")
+        label
+          color = !grey
+          +font_size("tiny")
+  a.delete
+    color = !red * 0.6 + !accent_colour * 0.4
+    +font_size("small")
+
+#log_tabs
+  float: right
+  margin:
+    top: 45px
+    right: -87px
   ul
-    margin-left: 20px
+    list-style: none
+  li
+    text-align: right
+    a
+      padding: 4px 10px
+      text-decoration: none
+      display: block
+    &.year
+      +font_size("large")
+      font-weight: bold
+      margin:
+        top: 10px
+        bottom: 4px
+        right: 10px
+    &.month
+      margin: 2px 0
+      border = solid 1px !light_grey
+      border-left: none
+      background = !light_grey * 0.2 + !white * 0.8
+      +rounded_corners("right", 3)
+    &.current
+      background = !white
+      a
+        color = !black
 
 // Panel
 div.panel
@@ -890,6 +953,8 @@ div.panel
         margin-left: 4px
       span.actions
         float: right
+        a.delete
+          color = !red * 0.6 + !accent_colour * 0.4
   .tag
     :top 5px
 
@@ -1067,13 +1132,6 @@ a#logo
           width: 100%
           border: 0
           background = !light_grey * 0.1 + !white * 0.9
-  #beta_message
-    margin-top: 40px
-    clear: both
-    height: 300px
-    overflow: auto
-    p
-      +font_size("tiny")
        
 #footer
   margin: 30px 0 10px 0
@@ -1134,6 +1192,9 @@ div.info
   +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
   p
     margin-bottom: 4px
+  &.warning
+    border = solid 2px !red * 0.5 + !white * 0.5
+    background = !red * 0.1 + !white * 0.9 url("/images/icons/exclamation-red.png") "no-repeat" 10px 10px
 
 #guest_login
   .user_list
@@ -1147,6 +1208,8 @@ div.info
   table
     width: 100%
     margin-bottom: 20px
+    tr.failed
+      background-color= !red * 0.1 + !white * 0.9
     th, td
       padding: 3px
     th
@@ -1215,3 +1278,76 @@ div.log_browser
     margin-left: 20px
     margin-bottom: 20px
     margin-top: -10px
+
+#account
+  div.next_billing
+    background-color = !accent_colour * 0.1 + !white * 0.9
+    border-top = dotted 1px !accent_colour * 0.5 + !white * 0.5
+    border-bottom = dotted 1px !accent_colour * 0.5 + !white * 0.5
+    padding: 10px
+  table#plans
+    width: 100%
+    margin: 20px 0
+    th, td
+      &.current
+        background-color = !accent_colour * 0.1 + !white * 0.9
+    thead
+      th
+        width: 100px
+        text-align: center
+        +font_size("xlarge")
+        border-bottom = solid 1px !light_grey
+        padding: 4px
+        &.current
+          font-weight: bold
+          +rounded_corners("top", 5)
+        .price
+          +font_size("small")
+          small
+            +font_size("tiny")
+            color = !grey
+    tfoot
+      th
+        vertical-align: top
+        padding: 6px
+        text-align: center
+        &.current
+          +rounded_corners("bottom", 5)
+        strong
+          color = !accent_colour
+        .will_expire
+          +font_size("tiny")
+          color = !colour_negative
+          strong
+            color = !colour_negative
+    tbody
+      th, td
+        border-bottom = dotted 1px !light_grey
+        padding: 6px
+      th
+        .description
+          +font_size("tiny")
+          color = !grey
+      td
+        text-align: center
+        +font_size("large")
+        img
+          position: relative
+          top: 2px
+  p.side_description
+    float: right
+    +font_size("small")
+    color = !grey
+    position: relative
+    top: 2px
+  div.meter
+    margin-bottom: 6px
+    border = solid 1px !light_grey
+    +rounded_corners("all", 5)
+    span
+      +rounded_corners("all", 5)
+      display: block
+      overflow: hidden
+      background = !accent_colour
+      &.reached
+        background = !colour_negative

@@ -4,11 +4,11 @@ module ModelFactory
   end
   
   def hash_for_account(attributes={})
-    { :subdomain => 'superawesome', :invitation_code => Account::INVITATION_CODES.first }.merge(attributes)
+    { :subdomain => 'superawesome', :plan_id => Plan.free.id }.merge(attributes)
   end
   
   def hash_for_room(attributes={})
-    { :name => 'Awesome' }.merge(attributes)
+    { :name => 'Awesome', :account => accounts(:master) }.merge(attributes)
   end
   
   def hash_for_paste(attributes={})

@@ -26,6 +26,15 @@ class RoomsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:rooms)
   end
   
+  def test_index_with_limits
+    Account.any_instance.stubs(:full?).returns(true)
+    Account.any_instance.stubs(:storage_full?).returns(true)
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:rooms)
+    assert_select ".limit_warning", 2
+  end
+  
   def test_show_denied
     login_as nil
     get :show, :id => @room
@@ -42,6 +51,22 @@ class RoomsControllerTest < ActionController::TestCase
     get :show, :id => @room, :format => "json"
     assert_response :success
     assert_equal assigns(:room), @room
+  end
+  
+  def test_show_full
+    @room.connections.clear
+    Account.any_instance.stubs(:full?).returns(true)
+    get :show, :id => @room
+    assert_response :redirect
+    assert_not_nil flash[:error]
+  end
+  
+  def test_show_full_but_already_connected
+    @room.connections.create :user => users(:quentin)
+    Account.any_instance.stubs(:full?).returns(true)
+    get :show, :id => @room
+    assert_response :success
+    assert_nil flash[:error]
   end
   
   def test_show_without_permission
@@ -95,7 +120,7 @@ class RoomsControllerTest < ActionController::TestCase
   end
   
   def test_destroy
-    Connection.any_instance.expects(:force_close).at_least(1)
+    Connection.any_instance.expects(:close).at_least(1)
     assert_difference "Room.count", -1 do
       delete :destroy, :id => @room
     end

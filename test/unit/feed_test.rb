@@ -90,4 +90,9 @@ class FeedTest < ActiveSupport::TestCase
     assert_nil feed.last_modified_at
     assert_not_nil feed.last_error
   end
+  
+  def test_feed_url
+    assert_equal "https://github.com/feeds/macournoyer/commits/talker/master", Feed.create(:url => "feed:https://github.com/feeds/macournoyer/commits/talker/master").url
+    assert_equal "http://search.twitter.com/search.atom?q=Avatar", Feed.create(:url => "feed://search.twitter.com/search.atom?q=Avatar").url
+  end
 end

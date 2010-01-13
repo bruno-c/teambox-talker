@@ -87,7 +87,7 @@
   </div>
 
   <div id="error" class="flash error" style="display:none"></div>
-
+  
   <div id="room" class="panel">
     <div class="header">
       <h3 class="name" id="room_name">
@@ -127,9 +127,13 @@
   <a id="logo" href="http://talkerapp.com" target="_blank">
     Talker <%= image_tag "/images/favicon.png", :height => "18", :width => "18", :alt => "Talker Fish Loves Thee" %> Group Chat
   </a>
-  <div id="beta_message">
-    <p>This is beta software.  Send us <%= link_to "feedback and bug reports", "http://talker.tenderapp.com/", :popup => true %> to help make things better and check out our <%= link_to "features and documentation", features_path, :popup => true %>.</p>
-  </div>
+  
+  <%= render :partial => "shared/limit",
+             :locals => { :feature => "online users",
+                          :full => current_account.full? } if current_account.full?(1) %>
+  <%= render :partial => "shared/limit",
+             :locals => { :feature => "file upload space",
+                          :full => current_account.storage_full? } if current_account.storage_full?(1.megabyte) %>
 <% end %>
 
 <div id="top_mask">

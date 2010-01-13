@@ -9,24 +9,50 @@
     <link rel="fluid-icon" href="<%= root_url + 'images/favicon.png' %>" title="Talker" />
   <![endif]>
   
-  <title><%= strip_tags @title || "Home" %> &#171; TalkerApp</title>
-  <%= stylesheet_link_tag "public.css", :media => "screen, projection" %>
-  <%= stylesheet_link_tag "print.css", :media => "print" %>
-  <!--[if IE]><%= stylesheet_link_tag "ie.css", :media => "screen, projection" %><![endif]-->
+  <title><%= strip_tags @title || "Home" %></title>
+  <%= stylesheet_link_tag "root/screen", :media => "screen, projection" %>
+  <!--[if IE7]><%= stylesheet_link_tag "root/ie_7", :media => "screen, projection" %><![endif]-->
+  <!--[if IE8]><%= stylesheet_link_tag "root/ie_8", :media => "screen, projection" %><![endif]-->
   <%= yield :head %>
 </head>
 
-<body id="<%= @controller.controller_name %>_controller" class="<%= current_view %>">
+<body id="<%= current_view %>">
 
-  <div id="content">
+<div id="header">
+  <div class="container">
+    <div id="menu">
+      <ul>
+        <li><%= link_to "Pricing <span class='and'>&amp;</span> Signup", pricing_path %></li>
+        <li><%= link_to "Tour", tour_path %></li>
+        <li><%= link_to "Home", root_path %></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="splash">
+  <div class="container">
+    <div id="tagline">
+      <h1><%= @tagline || "Fast, intuitive and extensible group chat" %></h1>
+    </div>
+    
     <%= yield %>
   </div>
-  
-  <div id="footer">
-    <a id="logo" href="http://talkerapp.com" target="_blank">
-      Talker <%= image_tag "/images/favicon.png", :height => "28", :width => "28", :alt => "Talker Fish Loves Thee" %> Group Chat &copy; by Sauté Applications inc.
-    </a>
+</div>
+
+<div id="footer">
+  <div class="container">
+    <div class="credits">
+      <!-- <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore."</p> -->
+    </div>
+    <div class="clear"></div>
+    <div id="copyright">
+      <p>&copy; 2009 Saut&eacute; Apps <span>|</span> </span> <a href="/about">About</a> <span>|</span> <%= link_to "Help &amp; Support", "http://talker.tenderapp.com" %> <span>|</span> <a href="http://twitter.com/talkerapp">Twitter</a> </p>
+    </div>
   </div>
+</div>
+
+<%= render "layouts/stats" %>
 
 </body>
 </html>

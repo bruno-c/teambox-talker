@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
     
     def ssl_required?
       if Rails.env.production?
-        current_account? && current_account.ssl || super
+        current_account? && current_account.features.ssl || super
       else
         false
       end

@@ -37,6 +37,12 @@ class GuestsControllerTest < ActionController::TestCase
     assert_template :not_found
   end
   
+  def test_new_full
+    Account.any_instance.stubs(:full?).returns(true)
+    get :new, :token => @room.create_public_token!
+    assert_template :full
+  end
+  
   def test_logged_in_new_redirects_to_room
     login_as :guest
     get :new, :token => @room.create_public_token!

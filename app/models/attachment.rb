@@ -11,6 +11,13 @@ class Attachment < ActiveRecord::Base
   validates_attachment_size :upload, :less_than => 10.megabyte
   validates_attachment_presence :upload
   
+  named_scope :created_on, proc { |date| { :conditions => ["attachments.created_at BETWEEN ? AND ?",
+                                                           date.beginning_of_day.utc, date.end_of_day.utc] } }
+  
+  validate :respect_storage_limit
+  
+  delegate :account, :to => :room
+  
   def ext
     File.extname(upload.original_filename).gsub(/^\.+/, "") if upload.original_filename
   end
@@ -20,7 +27,7 @@ class Attachment < ActiveRecord::Base
   end
   
   def url(style = upload.default_style)
-    AWS::S3::S3Object.url_for(upload.path(style), upload.bucket_name, :use_ssl => room.account.ssl)
+    AWS::S3::S3Object.url_for(upload.path(style), upload.bucket_name, :use_ssl => room.account.features.ssl)
   end
   
   def to_param
@@ -28,6 +35,12 @@ class Attachment < ActiveRecord::Base
   end
   
   private
+    def respect_storage_limit
+      if account.used_storage + upload_file_size > account.features.max_storage
+        errors.add :base, "You've reached your storage limit. Upgrade your plan if you want to upload more files."
+      end
+    end
+    
     def escape(string)
       # Taken from PermalinkFu
       result = ActiveSupport::Inflector.transliterate(string).to_s

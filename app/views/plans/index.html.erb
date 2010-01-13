@@ -1,0 +1,12 @@
+<div class="main">
+  <h2>Choose a Plan</h2>
+  
+  <% Plan.all.each do |plan| %>
+    <div class="plan">
+      <h3><%= plan.name %></h3>
+      <p><%= plan.description %></p>
+      <p><%= number_to_currency plan.price %></p>
+      <%= link_to "Subscribe", signup_path(plan) %>
+    </div>
+  <% end %>
+</div>

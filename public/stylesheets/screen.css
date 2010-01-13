@@ -289,15 +289,21 @@ html[xmlns] .clearfix {
             background-position: 2px center; }
   #nav p.utilities {
     float: right;
-    color: silver;
+    color: gray;
     line-height: 40px; }
     #nav p.utilities a {
-      color: white; }
+      color: white;
+      margin: 2px;
+      font-weight: bold;
+      text-decoration: none; }
       #nav p.utilities a.avatar img {
         height: 18px;
         width: 18px;
         position: relative;
-        top: 3px; }
+        top: 4px;
+        left: 4px; }
+    #nav p.utilities a:hover {
+      text-decoration: underline; }
 
 #content {
   padding: 40px 0 0; }
@@ -575,6 +581,8 @@ a.button, button {
     background-image: url(/images/icons/cross-circle.png); }
   a.button.ok, button.ok {
     background-image: url(/images/icons/tick.png); }
+  a.button.next, button.next {
+    background-image: url(/images/icons/arrow.png); }
 
 #sidebar #actions a.button {
   font-size: 18px;
@@ -595,6 +603,8 @@ a.button, button {
 #sidebar .info {
   margin: 20px 0;
   border: solid 1px white; }
+  #sidebar .info.warning {
+    border: solid 2px #fe7f7f; }
 
 #people {
   overflow: hidden; }
@@ -962,8 +972,64 @@ a.button, button {
           padding: 7px 16px 6px;
           background-color: #dfdfdf; }
 
-#logs ul {
-  margin-left: 20px; }
+#logs {
+  min-height: 400px; }
+  #logs table {
+    width: 100%; }
+    #logs table td {
+      padding: 4px;
+      vertical-align: top;
+      border-bottom: dotted 1px silver; }
+      #logs table td.day {
+        text-align: right;
+        font-size: 12px;
+        padding: 5px; }
+      #logs table td.date, #logs table td.actions {
+        white-space: nowrap; }
+      #logs table td.details {
+        width: 80%;
+        padding: 5px 20px;
+        font-size: 12px; }
+        #logs table td.details label {
+          color: gray;
+          font-size: 10px; }
+  #logs a.delete {
+    color: #a83f55;
+    font-size: 12px; }
+
+#log_tabs {
+  float: right;
+  margin-top: 45px;
+  margin-right: -87px; }
+  #log_tabs ul {
+    list-style: none; }
+  #log_tabs li {
+    text-align: right; }
+    #log_tabs li a {
+      padding: 4px 10px;
+      text-decoration: none;
+      display: block; }
+    #log_tabs li.year {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 4px;
+      margin-right: 10px; }
+    #log_tabs li.month {
+      margin: 2px 0;
+      border: solid 1px silver;
+      border-left: none;
+      background: #f2f2f2;
+      border-top-right-radius: 3px;
+      -moz-border-radius-topright: 3px;
+      -webkit-border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      -moz-border-radius-bottomright: 3px;
+      -webkit-border-bottom-right-radius: 3px; }
+    #log_tabs li.current {
+      background: white; }
+      #log_tabs li.current a {
+        color: black; }
 
 div.panel {
   margin: 0 0 10px;
@@ -1047,6 +1113,8 @@ div.panel {
       margin-left: 4px; }
     div.panel div.footer span.actions {
       float: right; }
+      div.panel div.footer span.actions a.delete {
+        color: #a83f55; }
   div.panel .tag {
     top: 5px; }
 
@@ -1234,13 +1302,6 @@ a#logo {
       width: 100%;
       border: 0;
       background: #f8f8f8; }
-  #sidebar #beta_message {
-    margin-top: 40px;
-    clear: both;
-    height: 300px;
-    overflow: auto; }
-    #sidebar #beta_message p {
-      font-size: 10px; }
 
 #footer {
   margin: 30px 0 10px 0;
@@ -1305,6 +1366,9 @@ div.info {
   -moz-box-shadow: 1px 1px 2px #d2d2d2; }
   div.info p {
     margin-bottom: 4px; }
+  div.info.warning {
+    border: solid 2px #fe7f7f;
+    background: #fee5e5 url('/images/icons/exclamation-red.png') no-repeat 10px 10px; }
 
 #guest_login .user_list {
   padding: 10px;
@@ -1316,6 +1380,8 @@ div.info {
 #admin table {
   width: 100%;
   margin-bottom: 20px; }
+  #admin table tr.failed {
+    background-color: #fee5e5; }
   #admin table th, #admin table td {
     padding: 3px; }
   #admin table th {
@@ -1382,3 +1448,84 @@ div.log_browser {
   margin-left: 20px;
   margin-bottom: 20px;
   margin-top: -10px; }
+
+#account div.next_billing {
+  background-color: #e8f4fa;
+  border-top: dotted 1px #92ceea;
+  border-bottom: dotted 1px #92ceea;
+  padding: 10px; }
+#account table#plans {
+  width: 100%;
+  margin: 20px 0; }
+  #account table#plans th.current, #account table#plans td.current {
+    background-color: #e8f4fa; }
+  #account table#plans thead th {
+    width: 100px;
+    text-align: center;
+    font-size: 18px;
+    border-bottom: solid 1px silver;
+    padding: 4px; }
+    #account table#plans thead th.current {
+      font-weight: bold;
+      border-top-left-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -webkit-border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      -moz-border-radius-topright: 5px;
+      -webkit-border-top-right-radius: 5px; }
+    #account table#plans thead th .price {
+      font-size: 12px; }
+      #account table#plans thead th .price small {
+        font-size: 10px;
+        color: gray; }
+  #account table#plans tfoot th {
+    vertical-align: top;
+    padding: 6px;
+    text-align: center; }
+    #account table#plans tfoot th.current {
+      border-bottom-right-radius: 5px;
+      -moz-border-radius-bottomright: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      -moz-border-radius-bottomleft: 5px;
+      -webkit-border-bottom-left-radius: 5px; }
+    #account table#plans tfoot th strong {
+      color: #269ed6; }
+    #account table#plans tfoot th .will_expire {
+      font-size: 10px;
+      color: #924f6b; }
+      #account table#plans tfoot th .will_expire strong {
+        color: #924f6b; }
+  #account table#plans tbody th, #account table#plans tbody td {
+    border-bottom: dotted 1px silver;
+    padding: 6px; }
+  #account table#plans tbody th .description {
+    font-size: 10px;
+    color: gray; }
+  #account table#plans tbody td {
+    text-align: center;
+    font-size: 16px; }
+    #account table#plans tbody td img {
+      position: relative;
+      top: 2px; }
+#account p.side_description {
+  float: right;
+  font-size: 12px;
+  color: gray;
+  position: relative;
+  top: 2px; }
+#account div.meter {
+  margin-bottom: 6px;
+  border: solid 1px silver;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px; }
+  #account div.meter span {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    display: block;
+    overflow: hidden;
+    background: #269ed6; }
+    #account div.meter span.reached {
+      background: #924f6b; }

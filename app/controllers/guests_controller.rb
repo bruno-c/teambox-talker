@@ -19,6 +19,8 @@ class GuestsController < ApplicationController
     @token = params[:token]
     @room = current_account.rooms.find_by_public_token(@token)
     
+    render :full and return if current_account.full?
+    
     if @room
       if logged_in?
         redirect_to @room

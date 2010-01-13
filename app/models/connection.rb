@@ -4,10 +4,10 @@ class Connection < ActiveRecord::Base
   
   validates_uniqueness_of :user_id, :scope => :channel
   
-  after_destroy :force_close
+  after_destroy :close
   
-  def force_close
-    publish :type => "error", :message => "Connection closed"
+  def close(message="Connection closed")
+    publish :type => "error", :message => message
   end
   
   def name
@@ -15,6 +15,11 @@ class Connection < ActiveRecord::Base
   end
   
   def publish(event)
+    return unless EM.reactor_running?
     room.topic.publish event.to_json + "\n", :key => "talker.channels.#{name}.#{user.id}", :persistent => true
+  end
+  
+  def self.users_count
+    count :user_id, :distinct => :user_id
   end
 end

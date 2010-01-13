@@ -49,7 +49,7 @@ class SessionsControllerTest < ActionController::TestCase
   end
 
   def test_should_logout_and_delete_guest
-    Connection.any_instance.expects(:force_close)
+    Connection.any_instance.expects(:close)
     users(:quentin).update_attribute :guest, true
     users(:quentin).update_attribute :room, rooms(:public)
     login_as :quentin

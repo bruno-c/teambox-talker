@@ -8,9 +8,11 @@ class Feed < ActiveRecord::Base
   belongs_to :room
   belongs_to :account
   
-  validates_presence_of :url
+  validates_presence_of   :url
   validates_uniqueness_of :url, :scope => :room_id
-  validates_format_of :url, :with => /\A(https?:\/\/|www\.)[^\s<]*\z/i
+  validates_format_of     :url, :with => /\A(https?:\/\/|www\.)[^\s<]*\z/i
+  
+  validates_presence_of   :account_id
   
   attr_encrypted :password, :key => ENCRYPT_KEY
   
@@ -21,6 +23,10 @@ class Feed < ActiveRecord::Base
   
   cattr_accessor :stop
   self.stop = false
+  
+  def url=(url)
+    self[:url] = url.gsub(/^feed:https/, 'https').gsub(/^feed:\/\//, 'http://')
+  end
   
   def failed?
     failed_at
@@ -54,6 +60,7 @@ class Feed < ActiveRecord::Base
     options[:if_modified_since] = last_modified_at if last_modified_at
     options[:if_none_match] = etag if etag
     options[:http_authentication] = [user_name, password] if user_name.present?
+    options[:timeout] = 60
     
     feed = Feedzirra::Feed.fetch_and_parse(url, options)
     

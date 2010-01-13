@@ -1,0 +1,111 @@
+# This file is generated automatically.
+# Run `rake update_plans` to update this file
+--- 
+production: 
+- !ruby/object:Plan 
+  description: 
+  feature_level: bootstrap
+  id: 3318
+  name: Bootstrap
+  plan_type: regular
+  price: 8.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: startup
+  id: 3401
+  name: Startup
+  plan_type: regular
+  price: 12.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: basic
+  id: 3403
+  name: Basic
+  plan_type: regular
+  price: 24.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: premium
+  id: 3404
+  name: Premium
+  plan_type: regular
+  price: 49.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: big
+  id: 3593
+  name: Big
+  plan_type: regular
+  price: 99.0
+development: 
+- !ruby/object:Plan 
+  description: 
+  feature_level: startup
+  id: 3016
+  name: Startup
+  plan_type: regular
+  price: 12.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: basic
+  id: 3045
+  name: Basic
+  plan_type: regular
+  price: 24.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: bootstrap
+  id: 3316
+  name: Bootstrap
+  plan_type: regular
+  price: 8.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: premium
+  id: 3317
+  name: Premium
+  plan_type: regular
+  price: 49.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: big
+  id: 3592
+  name: Big
+  plan_type: regular
+  price: 99.0
+test: 
+- !ruby/object:Plan 
+  description: 
+  feature_level: startup
+  id: 3016
+  name: Startup
+  plan_type: regular
+  price: 12.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: basic
+  id: 3045
+  name: Basic
+  plan_type: regular
+  price: 24.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: bootstrap
+  id: 3316
+  name: Bootstrap
+  plan_type: regular
+  price: 8.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: premium
+  id: 3317
+  name: Premium
+  plan_type: regular
+  price: 49.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: big
+  id: 3592
+  name: Big
+  plan_type: regular
+  price: 99.0

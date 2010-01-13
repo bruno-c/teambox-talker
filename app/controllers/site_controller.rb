@@ -1,32 +1,10 @@
 class SiteController < ApplicationController
-  before_filter :documentation, :only => [:frontend_api, :rest_api, :features, :pricing] 
+  caches_page :home, :pricing, :about, :tour, :privacy_policy, :service_policy, :terms_and_conditions
   
-  def home
-  end
-
-  def frontend_api
-  end
-  
-  def rest_api
-  end
-  
-  def features
-  end
-  
-  def pricing
-  end
-  
-  def service_policy
-  end
-
-  def privacy_policy
-  end
-
-  def terms_and_conditions
-  end
+  before_filter :dialog_layout, :only => [:privacy_policy, :service_policy, :terms_and_conditions]
   
   private
-    def documentation
-      render :layout => 'documentation'
+    def dialog_layout
+      render :layout => "dialog"
     end
 end

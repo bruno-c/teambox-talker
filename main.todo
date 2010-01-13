@@ -26,6 +26,7 @@ After beta:
 - Send more info w/ feed notification (send in Hash w/ favicon, etc.)
 
 Talker Server:
+- Limit # of connections in server
 - Backup DB hourly using mysql hot backup
 - Fetch events since ID on connections
 - Allow connecting to a room by name

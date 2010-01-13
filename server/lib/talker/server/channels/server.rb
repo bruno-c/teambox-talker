@@ -7,12 +7,14 @@ module Talker::Server
       DEFAULT_TIMEOUT = 30.0 # sec
       DEFAULT_PORT = 8500
       
-      attr_reader :host, :port, :channels
+      attr_reader :host, :port, :channels, :private_key_file, :cert_chain_file
       
       def initialize(options={})
         @host = options[:host] || DEFAULT_HOST
         @port = options[:port] || DEFAULT_PORT
         @timeout = options[:timeout] || DEFAULT_TIMEOUT
+        @private_key_file = options[:private_key_file]
+        @cert_chain_file = options[:cert_chain_file]
         
         @signature = nil
         @connections = {}
@@ -20,12 +22,24 @@ module Talker::Server
         @channels = {}
       end
       
+      def ssl?
+        @private_key_file && @cert_chain_file
+      end
+      
       def start
-        Talker::Server.logger.info "Listening on #{@host}:#{@port}"
+        Talker.logger.info "Listening on #{@host}:#{@port}"
+        Talker.logger.info "SSL tunnel activated" if ssl?
         
         @signature = EM.start_server(@host, @port, Connection) do |connection|
           connection.server = self
+          
+          if ssl?
+            connection.start_tls :private_key_file => @private_key_file,
+                                 :cert_chain_file => @cert_chain_file
+          end
+          
           connection.comm_inactivity_timeout = @timeout
+          
           @connections[connection.signature] = connection
         end
       end

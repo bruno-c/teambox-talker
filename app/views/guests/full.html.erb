@@ -1,0 +1,15 @@
+<% @title = "Room Full" %>
+
+<div class="sheet">
+  <h2>This Room is Full</h2>
+  
+  <div class="content">
+    <p>You can't join <%=h possessive(current_account.subdomain.titleize) %>
+      group chat because too much people are chatting right now.</p>
+    
+    <ul>
+      <li>Try again later.</li>
+      <li>Ask the person who sent you this link to upgrade their account.</li>
+    </ul>
+  </div>
+</div>

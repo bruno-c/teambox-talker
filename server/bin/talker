@@ -13,6 +13,10 @@ OptionParser.new do |opts|
   opts.on("--host HOST", "Server host")                   { |x| runner[:host] = x }
   opts.on("-p", "--port NUM", "Server port")              { |x| runner[:port] = x.to_i }
   
+  opts.separator "SSL"
+  opts.on("--private-key FILE", "PEM private key file")   { |x| runner[:private_key_file] = x }
+  opts.on("--cert-chain FILE", "X509 certificates chain") { |x| runner[:cert_chain_file] = x }
+  
   opts.separator "AMQP"
   opts.on("--amqp-host HOST", "AMQP Server host")         { |x| runner[:amqp][:host] = x }
   opts.on("--amqp-port NUM", "AMQP Server port")          { |x| runner[:amqp][:port] = x.to_i }
@@ -30,10 +34,6 @@ OptionParser.new do |opts|
   opts.on("--db-user NAME", "Database username")          { |x| runner[:database][:user] = x }
   opts.on("--db-password VALUE", "Database password")     { |x| runner[:database][:password] = x }
   opts.on("--db-host NAME", "Database host")              { |x| runner[:database][:host] = x }
-  
-  opts.separator "Pasting"
-  opts.on("--paste-url URL", "URL to post paste to",
-                 "(default: #{runner[:paste_url]})")      { |x| runner[:paste_url] = x }
   
   opts.separator "Other"
   opts.on_tail("-h", "--help", "Show this message")       { puts opts; exit }

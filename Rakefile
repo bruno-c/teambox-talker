@@ -32,3 +32,13 @@ namespace :protocol do
     sh "bluecloth server/doc/protocol.md > public/protocol.html"
   end
 end
+
+task :close_connections => :environment do
+  abort "Specify a MSG" unless ENV["MSG"]
+  EM.run do
+    Connection.find_each do |connection|
+      connection.close ENV["MSG"]
+    end
+    EM.add_timer(5) { EM.stop } # HACK
+  end
+end

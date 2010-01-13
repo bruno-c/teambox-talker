@@ -69,15 +69,15 @@ EOS
     end
   end
   
-  it "should not be truncated long message" do
+  it "should not truncate long message" do
     connect do |client|
       client.on_connected do
-        client.send_message("X" * (1024 ** 2))
+        client.send_message("X" * (1024 * 100))
       end
 
       client.on_message do |user, message, attributes|
         attributes["paste"].should be_nil
-        attributes["content"].size.should == (1024 * 500)
+        attributes["content"].size.should == (1024 * 100)
         client.close
       end
     

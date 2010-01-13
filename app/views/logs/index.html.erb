@@ -1,9 +1,42 @@
-<div class="sheet" id="logs">
-  <h2><%=h @title = "Chat Logs" %></h2>
+<div id="log_tabs">
+  <ul class="years">
+    <% months_until(@room.events.minimum(:created_at)).group_by(&:year).each do |year, months| %>
+      <li class="year"><%= year %></li>
+      <ul class="months">
+      <% months.each do |date| %>
+        <li class="month <%= 'current' if same_month?(@date, date) %>">
+          <%= link_to month_name(date), room_month_logs_path(@room, year, date.month) %>
+        </li>
+      <% end %>
+      </ul>
+    <% end %>
+  </ul>
+</div>
 
-  <div class="log-entry">
-  <% @rooms.each do |room| %>
-    <h3><%= link_to h(room.name), room_logs_path(room) %></h3>
+<h2><%=h @title = "Chat Logs for #{@room.name}" %></h2>
+<div class="sheet" id="logs">
+  
+  <% if @dates.empty? %>
+    <p>No logs</p>
   <% end %>
-  </div>
+  
+  <table>
+  <% @dates.each do |date| %>
+    <tr>
+      <td class="day"><%= human_day(date) %></td>
+      <td class="date"><%= link_to date.strftime("%B %e"), room_log_path(@room, date.year, date.month, date.day) %></td>
+      <td class="details">
+        <% unless (attachments = @room.attachments.created_on(date)).empty? %>
+          <label>Attachments:</label>
+          <%= attachments.map do |attachment|
+            link_to h(attachment.upload_file_name), room_attachment_url(@room, attachment, :format => attachment.ext), :target => "_blank"
+          end.join(", ") %>
+        <% end %>
+      </td>
+      <td class="actions"><%= link_to "Delete Log", room_log_path(@room, date.year, date.month, date.day),
+                                      :confirm => "Are you sure? All messages and attachments will be deleted.",
+                                      :method => :delete, :class => "delete" %></td>
+    </tr>
+  <% end %>
+  </table>
 </div>

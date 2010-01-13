@@ -1,0 +1,36 @@
+<div id="admin" class="sheet">
+  <h2><%= @title = "Staff Admin Panel" %></h2>
+  
+  <%= render :partial => "nav" %>
+  <h3>Jobs</h3>
+  <table id="jobs">
+    <tr>
+      <th>Id</th>
+      <th>Description</th>
+      <th>Age</th>
+      <th>Next run</th>
+      <th>Locked</th>
+      <th>Attempts</th>
+      <th>Error</th>
+    </tr>
+  <% @jobs.each do |job| %>
+    <tr class="job <%= "failed" if job.last_error %>">
+      <td><strong><%= job.id %></strong></td>
+      <td><small><%=h job.payload_object.inspect[/#<(.*)>/, 1] %></small></td>
+      <td><%= time_ago_in_words job.created_at %></td>
+      <td><%= time_ago_in_words job.run_at %></td>
+      <td>
+        <% if job.locked_at %>
+          <span title="<%=h job.locked_by %> <%= time_ago_in_words job.locked_at %> ago">Yes</span>
+        <% else %>
+          No
+        <% end %>
+      </td>
+      <td><%= job.attempts %></td>
+      <td>
+        <%= link_to_function "...", "$.facebox('<pre>#{escape_javascript job.last_error}</pre>')" if job.last_error %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+</div>

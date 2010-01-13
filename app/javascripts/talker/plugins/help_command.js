@@ -9,7 +9,7 @@ Talker.HelpCommand = function() {
       var help_div = $('<div/>').addClass('small');
       
       $(help_div).append($('<h3/>').html("Help"));
-      $(help_div).append($('<p/>').html('If you need a hand with anything send us an <a href="help@talkerapp.com">email</a>.'));
+      $(help_div).append($('<p/>').html('If you need a hand with anything send us an <a href="mailto:help@talkerapp.com">email</a>.'));
       $(help_div).append($('<br/>'))
       $(help_div).append($('<h4/>').html("Available commands:"));
       _.each(Talker.getCommandsAndUsage(), function(cmd_usage) {

@@ -12,22 +12,29 @@ $(function() {
   });
   
   // File Upload
-  $("a#upload").ajaxUpload({
-    closeConnection: "/close_connection",
-    onComplete: function(response) {
-      $("#upload").show();
-      $("#upload_loader").hide();
-      if (response.error) {
-        alert("Error uploading file: " + response.error);
-      } else {
-        Talker.sendMessage(response.url);
+  if ($('#upload')[0]){
+    new AjaxUpload('#upload', {
+      action: $('a#upload').attr('href'),
+      name: 'upload',
+      responseType: 'json',
+      onComplete: function(file, response) {
+        $("#upload").show();
+        $("#upload_loader").hide();
+        if (response.error) {
+          alert("Error uploading file: " + response.error);
+        } else {
+          Talker.sendMessage(response.url);
+        }
+      },
+      onSubmit: function() {
+        if ($.browser.safari){
+          $.get("/close_connection", {async: false});
+        }
+        $("#upload").hide();
+        $("#upload_loader").show();
       }
-    },
-    onSubmit: function() {
-      $("#upload").hide();
-      $("#upload_loader").show();
-    }
-  });
+    });
+  }
   
   $("div#guest_access a").
     live("click", function() {

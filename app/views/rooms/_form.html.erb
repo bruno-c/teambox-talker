@@ -16,11 +16,17 @@
 </p>
 
 <p class="indent grouped">
-  <%= form.radio_button :access, "private" %>
+  <%= form.radio_button :access, "private", :disabled => !current_account.features.private_rooms %>
   <%= form.label :access_private, "Private", :class => "inline" %>:
   <small>Only users you specify can access this room.</small>
-  
 </p>
+
+<% unless current_account.features.private_rooms %>
+<div class="info warning indent">
+  Your current plan do not allow private rooms.
+  <%= link_to "Upgrade your plan", account_path %> to create a private room.
+</div>
+<% end %>
 
 <div class="indent grouped" id="invitees">
   <ul>

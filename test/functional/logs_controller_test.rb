@@ -9,18 +9,18 @@ class LogsControllerTest < ActionController::TestCase
   end
   
   def test_index
-    get :index
-    assert_response :success, @response.body
-    assert_template :index
-  end
-
-  def test_index_in_room
     get :index, :room_id => @room
     assert_response :success, @response.body
-    assert_template :room_index
+    assert_equal Date.today, assigns(:date).to_date
   end
 
-  def test_index_in_room_requires_permission
+  def test_index_for_month
+    get :index, :room_id => @room, :year => 2010, :month => 1
+    assert_response :success, @response.body
+    assert_equal Date.new(2010, 1, 1), assigns(:date).to_date
+  end
+
+  def test_index_requires_permission
     User.any_instance.expects(:permission?).returns(false)
     get :index, :room_id => @room
     assert_access_denied
@@ -54,10 +54,19 @@ class LogsControllerTest < ActionController::TestCase
     assert_template :search
   end
   
-  def test_today
-    get :today, :room_id => @room
-    assert_response :success, @response.body
-    assert_equal Time.now.to_date, assigns(:date)
-    assert_template :show
+  def test_destroy
+    date = Time.now.months_ago(1).beginning_of_day
+    event = @room.events.create :uuid => "abc123", :content => "test", :created_at => date.utc
+    attachment = @room.attachments.create :upload => File.new(RAILS_ROOT + "/test/fixtures/accounts.yml"), :created_at => date
+    
+    assert_difference "Attachment.count", -1 do
+      assert_difference "Event.count", -1 do
+        delete :destroy, :room_id => @room, :year => date.year, :month => date.month, :day => date.day
+      end
+    end
+    assert_redirected_to room_month_logs_path(@room, date.year, date.month)
+    
+    assert ! Event.exists?(event.id)
+    assert ! Attachment.exists?(attachment.id)
   end
 end

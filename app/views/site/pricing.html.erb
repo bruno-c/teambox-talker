@@ -1,55 +1,49 @@
-<div class="main">
-  <h2>Talker Pricing</h2>
-  
-  <p class="warning">
-    We aren't charging yet but once we do we expect pricing to look like the following plans.  We'll also offer a limited Free accounts for up to 4 users with 10MB of upload and larger free accounts for charities and open source projects. 
-  </p>
+<% @title = "Talker Pricing" %>
+<% @tagline = "Pick The Right Plan For Your Team" %>
 
+<div id="plans">
+  <% Plan.payings.reject{ |plan| plan.name == 'Big'}.each do |plan| %>
+  <div class="plan <%= plan.name.downcase %>">
+    <div class="box">
+      <h2><%= plan.name %></h2>
+      <h3><%= number_to_currency plan.price, :precision => 0 %>/month</h3>
+      <p>
+        <span><%= plan.features.max_connections %></span> chatters<br />
+        <span><%= number_to_human_size plan.features.max_storage %></span> upload space<br />
+      </p>
+      <p>
+        <%= plan.features.log_history ? plan.features.log_history.inspect : "Unlimited" %> chat log<br />
+        <% if plan.features.private_rooms %>
+          Private rooms
+        <% end %><br />
+      </p>
+      <div class="buttons"><%= link_to "Sign Up", signup_path(plan) %></div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <% end %>
+  <div class="clear"></div>
   
-  <div id="plans">
-    <div class="plan">
-      <p class="header">Basic</p>
-      <p class="price">$12/month</p>
-      <p class="chatters"><b>12</b> chatters</p>
-      <p class="upload"><b>1GB</b> upload storage</p>
-      <p class="feeds">Easy breezy feeds</p>
-      <p class="plugins">Powerful plugins</p>
-      <p class="security"><b>Enhanced</b> Security</p>
-      <p class="signup"><%= link_to "Sign Up", signup_path, :protocol => 'https' %></p>
+  <div id="all">
+    <div class="box">
+      <div class="free">
+        <%= link_to image_tag("root/free.png"), signup_path(Plan.free), :class => "badge" %>
+        <p class="extras">Not convinced yet? Try our <%= link_to "Free Plan", signup_path("free"), :class => "free_plan" %> for an <span>Unlimited time</span> and <span>No credit card required</span></p>
+        <p class="details">The Free plan allows up to <span><%= Plan.free.features.max_connections %> chatters</span> and <span><%= number_to_human_size Plan.free.features.max_storage %></span>. You can upgrade to a paying plan at any time and still get a one         month free trial.</p>
+      </div>
+      <p class="extras">All paying plans come with <span>One month free trial</span>, powerful <span>Plugins</span> and enhanced <span>Security</span>.</p> 
     </div>
-    
-    <div class="plan">
-      <p class="header">Plus</p>
-      <p class="price">$24/month</p>
-      <p class="chatters"><b>25</b> chatters</p>
-      <p class="upload"><b>3GB</b> upload storage</p>
-      <p class="feeds">Easy breezy feeds</p>
-      <p class="plugins">Powerful plugins</p>
-      <p class="security"><b>Enhanced</b> Security</p>
-      <p class="signup"><%= link_to "Sign Up", signup_path, :protocol => 'https' %></p>
-    </div>
-    
-    <div class="plan">
-      <p class="header">Premium</p>
-      <p class="price">$49/month</p>
-      <p class="chatters"><b>60</b> chatters</p>
-      <p class="upload"><b>10GB</b> upload storage</p>
-      <p class="feeds">Easy breezy feeds</p>
-      <p class="plugins">Powerful plugins</p>
-      <p class="security"><b>Enhanced</b> Security</p>
-      <p class="signup"><%= link_to "Sign Up", signup_path, :protocol => 'https' %></p>
-    </div>
-    
-    <div class="plan">
-      <p class="header">Max</p>
-      <p class="price">$99/month</p>
-      <p class="chatters"><b>120</b> chatters</p>
-      <p class="upload"><b>25GB</b> upload storage</p>
-      <p class="feeds">Easy breezy feeds</p>
-      <p class="plugins">Powerful plugins</p>
-      <p class="security"><b>Enhanced</b> Security</p>
-      <p class="signup"><%= link_to "Sign Up", signup_path, :protocol => 'https' %></p>
-    </div>    
   </div>
   
+  <div id="ads">
+    <div class="spot left">
+      <h3>Cancel Anytime</h3>
+      <p>You can upgrade, downgrade or cancel your plan at any time. When switching plan, we credit you the appropriate amount. Cancelling will automatically stop your renewal.</p>
+    </div>
+    <div class="spot right">
+      <h3>One Month Free Trial</h3>
+      <p>You can try any of the paying plans for one month, without any restrictions. If you're not happy with it, simply cancel your subscription and we wont charge you a dime.</p>
+    </div>
+  </div>
+  <div class="clear"></div>
 </div>

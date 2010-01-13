@@ -116,4 +116,19 @@ class UserTest < ActiveSupport::TestCase
       create_user(:guest => true, :room => rooms(:main))
     end
   end
+  
+  def test_delete_unconnected_guest_user_with_same_name
+    user = create_user(:name => "bob", :guest => true, :room => rooms(:main))
+    
+    assert create_user(:name => "bob", :guest => true, :room => rooms(:main)).valid?
+    assert ! User.exists?(user.id)
+  end
+
+  def test_do_not_delete_connected_guest_user_with_same_name
+    user = create_user(:name => "bob", :guest => true, :room => rooms(:main))
+    user.connections.create :room => rooms(:main)
+    
+    assert_not_nil create_user(:name => "bob", :guest => true, :room => rooms(:main)).errors.on(:name)
+    assert User.exists?(user.id)
+  end
 end
