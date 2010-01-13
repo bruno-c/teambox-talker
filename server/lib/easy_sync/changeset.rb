@@ -5,6 +5,8 @@ module EasySync
     HEADER_REGEX = /Z:([0-9a-z]+)([><])([0-9a-z]+)|/
     OPS_REGEX = /((?:\*[0-9a-z]+)*)(?:\|([0-9a-z]+))?([-+=])([0-9a-z]+)|\?|/
     
+    attr_reader :size, :total_size, :ops, :char_bank
+    
     def initialize(size, total_size, ops, char_bank)
       @size = size
       @total_size = total_size

@@ -3,10 +3,11 @@ require "generator"
 
 module EasySync
   RADIX = 36
+  
+  autoload :Op, "easy_sync/op"
+  autoload :OpAssembler, "easy_sync/op_assembler"
+  autoload :MergingOpAssembler, "easy_sync/merging_op_assembler"
+  autoload :SmartOpAssembler, "easy_sync/smart_op_assembler"
+  autoload :Changeset, "easy_sync/changeset"
 end
 
-require "easy_sync/op"
-require "easy_sync/op_assembler"
-require "easy_sync/merging_op_assembler"
-require "easy_sync/smart_op_assembler"
-require "easy_sync/changeset"
