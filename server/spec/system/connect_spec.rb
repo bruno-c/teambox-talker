@@ -4,14 +4,16 @@ EM.describe "A user that connects to a channel" do
   it "should be connected" do
     connect do |client|
       client.on_connected do
+        success
         done
       end
     end
   end
 
   it "should not connect to invalid channel name" do
-    connect :channel => { :type => "room", :id => "#*" } do |client|
+    connect :room => "#*" do |client|
       client.on_error do
+        success
         done
       end
     end
@@ -20,8 +22,9 @@ EM.describe "A user that connects to a channel" do
   it "should receive user info" do
     connect do |client|
       client.on_connected do |user|
-        user.id.should == 1
-        user.name.should == "user1"
+        user["id"].should == 1
+        user["name"].should == "user1"
+        success
         done
       end
     end
@@ -40,6 +43,7 @@ EM.describe "A user that connects to a channel" do
       end
       
       client.on_connected do
+        success
         done
       end
     end

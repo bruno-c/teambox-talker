@@ -20,21 +20,26 @@ class Awesome
   end
 end
 EOS
-  
+
   it "should be received w/ paste id" do
     connect do |client|
       client.on_connected do
         client.send_message("hi\nthere")
       end
 
-      client.on_message do |user, message, attributes|
-        attributes["paste"]["id"].should_not be_nil
-        attributes["paste"]["lines"].should == 2
-        attributes["paste"]["preview_lines"].should == 2
-        client.close
+      client.on_event do |event|
+        if event["type"] == "message"
+          event["paste"]["id"].should_not be_nil
+          event["paste"]["lines"].should == 2
+          event["paste"]["preview_lines"].should == 2
+          client.close
+          success
+        end
       end
       
-      client.on_close { done }
+      client.on_close do
+        done
+      end
     end
   end
   
@@ -44,10 +49,13 @@ EOS
         client.send_message(CODE)
       end
 
-      client.on_message do |user, message, attributes|
-        attributes["paste"].should_not be_nil
-        attributes["content"][-3,3].should == "..."
-        client.close
+      client.on_event do |event|
+        if event["type"] == "message"
+          event["paste"].should_not be_nil
+          event["content"][-3,3].should == "..."
+          client.close
+          success
+        end
       end
       
       client.on_close { done }
@@ -60,9 +68,12 @@ EOS
         client.send_message("hi", :paste => true)
       end
 
-      client.on_message do |user, message, attributes|
-        attributes["paste"].should_not be_nil
-        client.close
+      client.on_event do |event|
+        if event["type"] == "message"
+          event["paste"].should_not be_nil
+          client.close
+          success
+        end
       end
       
       client.on_close { done }
@@ -75,10 +86,13 @@ EOS
         client.send_message("X" * (1024 * 100))
       end
 
-      client.on_message do |user, message, attributes|
-        attributes["paste"].should be_nil
-        attributes["content"].size.should == (1024 * 100)
-        client.close
+      client.on_event do |event|
+        if event["type"] == "message"
+          event["paste"].should be_nil
+          event["content"].size.should == (1024 * 100)
+          client.close
+          success
+        end
       end
     
       client.on_close { done }

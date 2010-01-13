@@ -2,30 +2,28 @@ require File.dirname(__FILE__) + "/spec_helper"
 
 EM.describe "Messages" do
   it "should be received by sender" do
-    message_received = false
-    
     connect do |client|
       client.on_connected do
         client.send_message("hi")
       end
 
-      client.on_message do |user, message, attributes|
+      client.on_message do |user, message|
         message.should == "hi"
-        attributes.should have_key("time")
-        message_received = true
-        done
+        client.close
+        success
       end
       
-      client.on_close { fail "Connection closed" unless message_received }
+      client.on_close { done }
     end
   end
 
   it "should be received by other clients" do
     connect :token => 1 do |client|
       client.on_message do |user, message|
-        user.id.should == 2
+        user["id"].should == 2
         message.should == "hi"
         client.close
+        success
       end
       
       client.on_close { done }
@@ -45,8 +43,10 @@ EM.describe "Messages" do
       end
       client.on_message do |user, message|
         message.should == "1"
-        done
+        client.close
+        success
       end
+      client.on_close { done }
     end
   end
 end

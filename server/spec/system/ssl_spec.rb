@@ -2,8 +2,9 @@ require File.dirname(__FILE__) + "/spec_helper"
 
 EM.describe "Server with SSL" do
   it "should be accepted SSL connections" do
-    connect do |client|
+    connect :ssl => true do |client|
       client.on_connected do
+        success
         done
       end
     end
@@ -14,7 +15,10 @@ EM.describe "Server with SSL" do
       client.on_connected do
         fail "SSL server accepted non-SSL connection"
       end
+      client.on_close do
+        success
+        done
+      end
     end
-    done
   end
 end

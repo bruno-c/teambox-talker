@@ -54,7 +54,7 @@ module Talker::Server
           EM.stop_server @signature
           @signature = nil
           
-          @connections.values.each { |c| c.close_connection }
+          @connections.values.each { |c| c.close_connection_after_writing }
         end
         
         if callback
@@ -64,6 +64,16 @@ module Talker::Server
             Talker::Server.logger.info "Waiting for #{@connections.size} connections to finish ..."
             @on_stop = callback
           end
+        end
+      end
+      
+      def stop!
+        if running?
+          # Stop accepting connections
+          EM.stop_server @signature
+          @signature = nil
+          
+          @connections.values.each { |c| c.close_connection }
         end
       end
       

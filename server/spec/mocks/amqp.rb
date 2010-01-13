@@ -20,6 +20,11 @@ module Moqueue
     end
   end
   
+  class MockExchange
+    def name
+      @topic || @fanout || @direct
+    end
+  end
 end
 
 overload_amqp

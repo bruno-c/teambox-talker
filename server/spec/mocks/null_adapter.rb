@@ -7,13 +7,13 @@ class NullAdapter
     yield room
   end
   
-  def store_connection(room_id, user_id, state)
+  def store_connection(type, id, user_id, state)
   end
   
-  def update_connection(room_id, user_id, state)
+  def update_connection(type, id, user_id, state)
   end
 
-  def delete_connection(room_id, user_id)
+  def delete_connection(type, id, user_id)
   end
   
   def load_connections(&callback)
