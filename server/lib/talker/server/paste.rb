@@ -3,8 +3,6 @@ require "easy_sync"
 
 module Talker::Server
   class Paste
-    class NotFound < RuntimeError; end
-    
     MAX_LENGTH = 500 * 1024 # 500 KB
     PREVIEW_LINES = 15
     
@@ -33,7 +31,7 @@ module Talker::Server
       
       if pastable? || force
         truncate!
-        @attributions = EasySync::Changeset.create_attributions(@content)
+        reset_attributions
         
         # Create in DB
         Talker::Server.storage.insert_paste(@channel.id, @permalink, @content, @attributions)
@@ -43,6 +41,10 @@ module Talker::Server
       end
     end
     
+    def reset_attributions
+      @attributions = EasySync::Changeset.create_attributions(@content)
+    end
+    
     def apply(diff, &callback)
       raise ArgumentError, "existing paste required" unless @permalink && @attributions
       
@@ -50,15 +52,14 @@ module Talker::Server
       # Content must end w/ linebreak for easysync to work
       @content = changeset.apply_to_text(@content + "\n").chomp!
       if @content.size == 0
-        # Reset attributions
-        @attributions = EasySync::Changeset.create_attributions(@content)
+        reset_attributions
       else
         @attributions = changeset.apply_to_attributions(@attributions)
       end
       
       Talker::Server.storage.update_paste(@permalink, @content, @attributions, &callback)
     rescue EasySync::InvalidChangeset => e
-      Talker::Server.logger.warn "Ignoring invalid changeset (#{e}): #{diff.inspect}"
+      Talker::Server.logger.error "Invalid changeset on paste ##{@permalink} (#{e}): #{diff.inspect}"
     end
     
     def info
@@ -69,8 +70,11 @@ module Talker::Server
     
     def self.find(permalink)
       Talker::Server.storage.load_paste(permalink) do |content, attributions|
-        raise NotFound, "Paste #{permalink} not found" unless content
-        yield new(content, nil, permalink, attributions)
+        if content
+          yield new(content, nil, permalink, attributions)
+        else
+          yield nil
+        end
       end
     end
     

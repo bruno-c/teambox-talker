@@ -116,7 +116,7 @@ module EasySync
     def self.unpack(cs)
       raise InvalidChangeset, "No changeset" if cs.nil? || cs.empty?
       matches = cs.match(HEADER_REGEX)
-      raise InvalidChangeset, "Not a changeset: #{cs}" unless matches
+      raise InvalidChangeset, "Not a changeset: #{cs}" unless matches && matches[1] && matches[2] && matches[3]
       old_len = matches[1].to_i(RADIX)
       change_sign = (matches[2] == '>') ? 1 : -1
       change_mag = matches[3].to_i(RADIX)

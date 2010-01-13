@@ -68,7 +68,21 @@ EM.describe Talker::Server::MysqlAdapter do
   end
   
   it "should insert paste" do
-    @adapter.insert_paste("abc123", "ohaie") do
+    @adapter.insert_paste(1, "abc123", "ohaie", "|1+2") do
+      done
+    end
+  end
+  
+  it "should update paste" do
+    @adapter.update_paste("abc123", "ohaie", "|1+2") do
+      done
+    end
+  end
+  
+  it "should find paste" do
+    @adapter.load_paste("1") do |content, attributions|
+      content.should == "hi"
+      attributions.should_not be_empty
       done
     end
   end

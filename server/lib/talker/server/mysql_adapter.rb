@@ -154,6 +154,7 @@ module Talker::Server
       db.insert sql, &callback
     end
     
+    # yields [content, attributions]
     def load_paste(permalink)
       sql = "SELECT content, attributions " +
             "FROM pastes " +

@@ -69,4 +69,11 @@ EOS
       paste["preview_lines"].should == 2
     end
   end
+  
+  it "should ignore invalid changeset" do
+    paste = Talker::Server::Paste.new("hi", nil, "1", nil)
+    paste.reset_attributions
+    paste.apply("Z:$")
+    paste.content.should == "hi"
+  end
 end

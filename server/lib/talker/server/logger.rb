@@ -43,7 +43,7 @@ module Talker::Server
       "logger"
     end
     
-    def received(channel, id, event, &callback)
+    def received(channel_type, id, event, &callback)
       type = event["type"]
       
       if IGNORED_EVENT_TYPES.include?(type)
@@ -51,28 +51,38 @@ module Talker::Server
         return
       end
       
-      unless event.key?("user") || event.key?("user")
-        Notifier.error "No user key in event: #{event.inspect}, event will be left in queue"
+      unless type && event.key?("user")
+        Notifier.error "Required attributes missing in event: #{event.inspect}, event will be left in queue"
         return
       end
       
-      Talker::Server.logger.debug{"#{channel}##{id}> " + event.inspect}
+      Talker::Server.logger.debug{"#{channel_type}##{id}> " + event.inspect}
       
-      case channel
+      case channel_type
       when "room"
         Talker::Server.storage.insert_event id, event, &callback
+        
       when "paste"
+        # Do not log anything but messages in pastes
         if type != "message"
           callback.call
           return
         end
+        
         Paste.find(id) do |paste|
-          paste.apply(event["content"], &callback)
+          if paste
+            Notifier.catch_exception("Applying #{event.inspect} to paste ##{id}") do
+              paste.apply(event["content"], &callback)
+            end
+          else
+            # Ignoring updates on unexisting pastes
+            callback.call
+          end
         end
+        
       else 
-        Talker::Server.logger.warn "Not logging to channel #{channel}##{id}"
+        Talker::Server.logger.warn "Not logging to channel #{channel_type}##{id}"
       end
-      
     end
   end
 end

@@ -10,7 +10,8 @@ EM.describe Talker::Server::Logger do
   
   before do
     execute_sql_file "delete_all"
-    @logger = Talker::Server::Logger::Server.new
+    execute_sql_file "insert_all"
+    @logger = Talker::Server::Logger.new
     @logger.start
     
     Talker::Server::Queues.create
@@ -74,6 +75,17 @@ EM.describe Talker::Server::Logger do
     end
   end
   
+  it "should ignore idle" do
+    message = { "type" => "idle", "user" => {"id" => 1}, "time" => 5 }
+    
+    @exchange.publish encode(message), :key => "talker.channels.room.1"
+    
+    expect_event do |event|
+      event["type"].should_not == "idle"
+      done
+    end
+  end
+  
   it "should insert paste" do
     message = { "type" => "message", "user" => {"id" => 1},
                 "time" => 5, "content" => "ohaie...", 
@@ -92,13 +104,46 @@ EM.describe Talker::Server::Logger do
     end
   end
   
-  def expect_event
-    EM.next_tick do
-      # Talker::Server.storage.db.select("SELECT * FROM events") { |results| p results }
-      Talker::Server.storage.db.select("SELECT * FROM events ORDER BY id desc LIMIT 1") do |results|
-        result = results.first || fail("No event created")
-        yield result
-      end
+  it "should update paste" do
+    message = { "type" => "message", "user" => {"id" => 1},
+                "time" => 5, "content" => "Z:3>1=2*0+1$!" }
+    
+    @exchange.publish encode(message), :key => "talker.channels.paste.1"
+    
+    expect_result("SELECT * FROM pastes WHERE id = 1 AND content = 'hi!' LIMIT 1") do |paste|
+      paste["content"].should == "hi!"
+      done
     end
   end
+  
+  it "should ignore unknown paste" do
+    message = { "type" => "message", "user" => {"id" => 1},
+                "time" => 5, "content" => "Z:3>1=2*0+1$!" }
+    
+    @exchange.publish encode(message), :key => "talker.channels.paste.2"
+    
+    expect_result("SELECT * FROM pastes WHERE content = 'hi!' LIMIT 1") do |paste|
+      paste.should be_nil
+      done
+    end
+  end
+  
+  private
+    def expect_result(sql, tries=3, &callback)
+      EM.next_tick do
+        # Talker::Server.storage.db.select(sql) { |results| p results }
+        Talker::Server.storage.db.select(sql) do |results|
+          result = results.first
+          if result || tries == 0
+            callback.call result
+          else
+            expect_result(sql, tries - 1, &callback)
+          end
+        end
+      end
+    end
+    
+    def expect_event(&callback)
+      expect_result("SELECT * FROM events ORDER BY id desc LIMIT 1", &callback)
+    end
 end

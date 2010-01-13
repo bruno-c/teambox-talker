@@ -11,3 +11,5 @@ INSERT INTO permissions (room_id, user_id) VALUES (2, 4);
 
 INSERT INTO events (uuid, room_id, type, created_at, payload) VALUES ('1', 1, 'message', NOW() - 3, '{"id":"1","type":"message"}');
 INSERT INTO events (uuid, room_id, type, created_at, payload) VALUES ('2', 1, 'message', NOW() - 2, '{"id":"2","type":"message"}');
+
+INSERT INTO pastes (id, room_id, content, attributions, created_at, updated_at) VALUES ('1', 1, 'hi', '|1+3', NOW(), NOW())
