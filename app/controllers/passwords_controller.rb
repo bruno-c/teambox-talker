@@ -9,6 +9,7 @@ class PasswordsController < ApplicationController
     
     if @token
       if @user = current_account.users.authenticate_by_perishable_token(@token)
+        @user.activate!
         self.current_user = @user
       else
         flash.now[:error] = "Uho... Invalid token! Did you paste the link and forgot some characters?"

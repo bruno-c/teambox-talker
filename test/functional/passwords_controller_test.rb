@@ -18,6 +18,12 @@ class PasswordsControllerTest < ActionController::TestCase
     assert_template :show
   end
   
+  def test_show_activates_user
+    users(:quentin).update_attribute :state, "pending"
+    get :show, :token => users(:quentin).perishable_token
+    assert users(:quentin).reload.active?
+  end
+  
   def test_show_invalid_token
     get :show, :token => "noop"
     assert_response :success, @response.body
