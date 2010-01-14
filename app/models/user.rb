@@ -145,8 +145,7 @@ class User < ActiveRecord::Base
     # We delete previous guest w/ same name if not currently connected.
     # This allows guest user names to be reused.
     def remove_guest_with_same_name
-      return unless guest
-      if existing_guest = account.users.guests.find_by_name(name)
+      if account && existing_guest = account.users.guests.find_by_name(name)
         existing_guest.destroy if existing_guest.connections.empty?
       end
     end

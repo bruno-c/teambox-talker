@@ -120,7 +120,7 @@ class UserTest < ActiveSupport::TestCase
   def test_delete_unconnected_guest_user_with_same_name
     user = create_user(:name => "bob", :guest => true, :room => rooms(:main))
     
-    assert create_user(:name => "bob", :guest => true, :room => rooms(:main)).valid?
+    assert create_user(:name => "bob", :room => rooms(:main)).valid?
     assert ! User.exists?(user.id)
   end
 
@@ -128,7 +128,7 @@ class UserTest < ActiveSupport::TestCase
     user = create_user(:name => "bob", :guest => true, :room => rooms(:main))
     user.connections.create :room => rooms(:main)
     
-    assert_not_nil create_user(:name => "bob", :guest => true, :room => rooms(:main)).errors.on(:name)
+    assert_not_nil create_user(:name => "bob", :room => rooms(:main)).errors.on(:name)
     assert User.exists?(user.id)
   end
 end
