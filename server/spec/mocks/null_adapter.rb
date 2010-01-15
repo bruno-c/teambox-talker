@@ -19,7 +19,7 @@ class NullAdapter
   def load_connections(&callback)
   end
   
-  def insert_paste(room_id, permalink, content, attributions, &callback)
+  def insert_paste(room_id, permalink, content, &callback)
   end
   
   def update_paste(permalink, content, attributions, &callback)

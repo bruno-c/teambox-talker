@@ -32,9 +32,13 @@
       editor.init("editorcontainer", text, function() {
         editor.setAuthorInfo("1", {bgcolor: "#ccf"});
         editor.setAuthorInfo("2", {bgcolor: "#fcc"});
-        var attribs = createAttributions("<%= escape_javascript @paste.attributions %>");
-        editor.setBaseAttributedText({text: text + "\n", attribs: attribs.changeset },
-                                     { numToAttrib: attribs.pool });
+        <% if @paste.attributions.present? %>
+          var attribs = createAttributions("<%= escape_javascript @paste.attributions %>");
+          editor.setBaseAttributedText({text: text + "\n", attribs: attribs.changeset },
+                                       { numToAttrib: attribs.pool });
+        <% else %>
+          editor.setBaseText(text + "\n");
+        <% end %>
         editor.setEditable(true); 
         editor.setProperty("showsauthorcolors", true);
         editor.setProperty("userauthor", Talker.currentUser.id.toString());

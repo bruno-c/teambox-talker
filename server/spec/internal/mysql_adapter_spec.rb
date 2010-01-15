@@ -68,7 +68,7 @@ EM.describe Talker::Server::MysqlAdapter do
   end
   
   it "should insert paste" do
-    @adapter.insert_paste(1, "abc123", "ohaie", "|1+2") do
+    @adapter.insert_paste(1, "abc123", "ohaie") do
       done
     end
   end

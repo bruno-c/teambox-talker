@@ -143,9 +143,9 @@ module Talker::Server
     end
     
     def build_channel_server
-      Talker::Channels::Server.new(:host => options[:host], :port => options[:port],
-                                   :private_key_file => options[:private_key_file],
-                                   :cert_chain_file => options[:cert_chain_file])
+      Talker::Server::Channels::Server.new(:host => options[:host], :port => options[:port],
+                                           :private_key_file => options[:private_key_file],
+                                           :cert_chain_file => options[:cert_chain_file])
     end
 
     def build_presence_server

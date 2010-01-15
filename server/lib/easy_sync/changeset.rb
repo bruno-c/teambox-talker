@@ -1,6 +1,4 @@
 module EasySync
-  class InvalidChangeset < RuntimeError; end
-  
   class Changeset
     HEADER_REGEX = /Z:([0-9a-z]+)([><])([0-9a-z]+)|/
     OPS_REGEX = /((?:\*[0-9a-z]+)*)(?:\|([0-9a-z]+))?([-+=])([0-9a-z]+)|\?|/

@@ -31,10 +31,9 @@ module Talker::Server
       
       if pastable? || force
         truncate!
-        reset_attributions
         
         # Create in DB
-        Talker::Server.storage.insert_paste(@channel.id, @permalink, @content, @attributions)
+        Talker::Server.storage.insert_paste(@channel.id, @permalink, @content)
         true
       else
         false
@@ -46,11 +45,15 @@ module Talker::Server
     end
     
     def apply(diff, &callback)
-      raise ArgumentError, "existing paste required" unless @permalink && @attributions
+      raise ArgumentError, "existing paste required" unless @permalink
       
       changeset = EasySync::Changeset.unpack(diff)
+      
+      reset_attributions if @attributions.nil? || @attributions.empty?
+      
       # Content must end w/ linebreak for easysync to work
       @content = changeset.apply_to_text(@content + "\n").chomp!
+      
       if @content.size == 0
         reset_attributions
       else
