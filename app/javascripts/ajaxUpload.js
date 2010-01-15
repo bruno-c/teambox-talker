@@ -152,15 +152,19 @@
      * @param {Element} to
      */    
     function copyLayout(from, to){
-	    var box = getBox(from);
-        
-        addStyles(to, {
-	        position: 'absolute',                    
-	        left : box.left + 'px',
-	        top : box.top + 'px',
-	        width : from.offsetWidth + 'px',
-	        height : from.offsetHeight + 'px'
-	    });        
+      var left = 0;
+      
+      var element = from, valueL = 0;
+      do {
+        valueL += element.offsetLeft || 0;
+        element = element.offsetParent;
+      } while (element);
+      
+      to.style.position = 'fixed';
+      to.style.bottom = '16px';
+      to.style.left   = valueL + 'px';
+      to.style.height = from.offsetHeight + 'px';
+      to.style.width  = from.offsetWidth + "px";
     }
 
     /**
@@ -424,9 +428,10 @@
             });   
                         
 	        div.appendChild(input);
-            document.body.appendChild(div);
+          document.body.appendChild(div);
+          // document.getElementById('message_form').appendChild(div);
               
-            this._input = input;
+          this._input = input;
         },
         _clearInput : function(){
             if (!this._input){
@@ -504,6 +509,7 @@
             
             iframe.style.display = 'none';
             document.body.appendChild(iframe);
+            // document.getElementById('message_form').appendChild(iframe);
             
             return iframe;
         },
@@ -526,6 +532,7 @@
             form.setAttribute('target', iframe.name);                                   
             form.style.display = 'none';
             document.body.appendChild(form);
+            // document.getElementById('message_form').appendChild(form);
             
             // Create hidden input element for each data key
             for (var prop in settings.data) {
