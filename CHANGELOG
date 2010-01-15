@@ -1,3 +1,2 @@
 == 1.0.1
  * Fixed some UI issues which could cause the chat log to appear higher than expected
- * Sped up some slow database actions.
