@@ -6,22 +6,8 @@ class PastesController < ApplicationController
   def show
     @paste = Paste.find(params[:id])
     
-    respond_to do |format|
-      format.html
-      format.json { render :json => @paste }
-    end
-  end
-  
-  def create
-    @paste = Paste.new
-    @paste.content = params[:content]
-    
-    respond_to do |format|
-      if @paste.save
-        format.json { render :json => @paste, :status => :created, :location => @paste }
-      else
-        format.json { render :json => { :errors => @paste.errors }, :status => :unprocessable_entity }
-      end
+    if @paste.room && !current_user.permission?(@paste.room)
+      raise ActiveRecord::RecordNotFound, "paste #{params[:id]} not found"
     end
   end
 end

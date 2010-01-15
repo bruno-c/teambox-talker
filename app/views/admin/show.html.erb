@@ -6,7 +6,7 @@
   <table id="connections">
     <tr>
       <th>Account</th>
-      <th>Room</th>
+      <th>Channel</th>
       <th>User</th>
       <th>Created</th>
       <th>Updated</th>
@@ -14,8 +14,8 @@
     </tr>
   <% @connections.each do |connection| %>
     <tr class="connection">
-      <td><%=h connection.room.account.subdomain %></td>
-      <td><%=h connection.room.name %></td>
+      <td><%=h connection.account.subdomain %></td>
+      <td><%=h connection.title %></td>
       <td><%= mail_to connection.user.email, h(connection.user.name) %></td>
       <td><%= time_ago_in_words connection.created_at %> ago</td>
       <td><%= time_ago_in_words connection.updated_at %> ago</td>

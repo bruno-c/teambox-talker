@@ -6,6 +6,24 @@ class Connection < ActiveRecord::Base
   
   after_destroy :close
   
+  def account
+    case channel
+    when Room
+      channel.account
+    when Paste
+      channel.room.try(:account)
+    end
+  end
+  
+  def title
+    case channel
+    when Room
+      "Room #{channel.name}"
+    when Paste
+      "Paste #{channel.id}"
+    end
+  end
+  
   def close(message="Connection closed")
     publish :type => "error", :message => message
   end

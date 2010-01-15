@@ -2,6 +2,7 @@ class Paste < ActiveRecord::Base
   PREVIEW_LINES = 15 # Same as in Talker::Paster (server/lib/talker/paster.rb)
   
   has_many :connections, :as => :channel, :dependent => :destroy
+  belongs_to :room
   
   validates_presence_of :content
   
