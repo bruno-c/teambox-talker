@@ -20,7 +20,7 @@
     $(function() {
       document.domain = document.domain;
       
-      window.editor = new Ace2Editor();
+      var editor = new Ace2Editor();
       var text = "<%= escape_javascript @paste.content %>"; // initial text
       
       editor.resize = function() {
@@ -33,7 +33,7 @@
         editor.setAuthorInfo("1", {bgcolor: "#ccf"});
         editor.setAuthorInfo("2", {bgcolor: "#fcc"});
         <% if @paste.attributions.present? %>
-          var attribs = createAttributions("<%= escape_javascript @paste.attributions %>");
+          var attribs = Talker.Paste.createAttributions("<%= escape_javascript @paste.attributions %>");
           editor.setBaseAttributedText({text: text + "\n", attribs: attribs.changeset },
                                        { numToAttrib: attribs.pool });
         <% else %>
@@ -47,7 +47,7 @@
         editor.setUserChangeNotificationCallback(function() {
           // Compute local diff
           var cs = editor.prepareUserChangeset();
-          var diff = rewriteAttributions(cs.changeset, 0, Talker.currentUser.id);
+          var diff = Talker.Paste.rewriteAttributions(cs.changeset, 0, Talker.currentUser.id);
           // Send to server
           Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: diff}, function() {
             // Reset local copy when sent
@@ -59,43 +59,9 @@
         setTimeout(function() {editor.focus();}, 0);
       });
       
-      var receiver = {};
-      receiver.onMessageReceived = function(event) {
-        // Do not apply local diff
-        if (event.user.id == Talker.currentUser.id) return false;
-        
-        var attribs = createAttributions(event.content);
-        editor.applyChangesToBase(attribs.changeset, event.user.id.toString(),
-                                  { numToAttrib: attribs.pool });
-      };
-      
-      // Rewrite an attribution in a changeset
-      var rewriteAttributions = function(cs, attrib, userId, first) {
-        var re = new RegExp("\\*" + attrib, first ? "" : "g");
-        return cs.replace(re, "*" + userId);
-      }
-      // Create an attribution pool from a changeset, extracting user ids from
-      // the changeset and replacing w/ indexes in the attribution pool.
-      window.createAttributions = function(cs) {
-        var pool = [];
-        var authors = {};
-        var matches = null;
-        var re = /\*(\d+)[^\d]/g;
-        while (matches = re.exec(cs)) {
-          var id = matches[1];
-          var num = authors[id];
-          if (num == null) {
-            authors[id] = num = pool.length;
-            pool.push(["author", id]);
-          }
-          cs = rewriteAttributions(cs, id, num, true);
-        }
-        return { changeset: cs, pool: pool };
-      }
-      
       // Talker.plugins.push(new Talker.ErrorHandler($("#error")));
       Talker.plugins.push(new Talker.Users());
-      Talker.plugins.push(receiver);
+      Talker.plugins.push(new Talker.Paste.Updater(editor));
       
       Talker.client = new Talker.Client({
         host: '<%= Orbited.talker_host %>', 
