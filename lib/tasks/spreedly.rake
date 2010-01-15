@@ -19,6 +19,16 @@ namespace :plans do
       YAML.dump(all_plans, file)
     end
   end
+  
+  task :rename_for_dev => :environment do
+    raise "Only run this in development envrionement" unless Rails.env.development?
+    plans = YAML.load_file(Plan::DB_FILE)
+    dev_plans = plans["development"]
+    plans["production"].each do |prod_plan|
+      dev_plan = dev_plans.find { |p| p.feature_level == prod_plan.feature_level }
+      Account.update_all "plan_id = #{dev_plan.id}", "plan_id = #{prod_plan.id}"
+    end
+  end
 end
 
 namespace :subscriptions do
