@@ -24,7 +24,7 @@ Talker.PasteFormatter = function() {
       var newContent = ''
         + "<a target='_blank' title='Paste #" + event.paste.id + "' href='" 
         + window.location.protocol + "//" + window.location.host + "/pastes/" + event.paste.id 
-        + "' class='view_paste'>View paste</a> "
+        + "' class='view_paste'>View / Edit paste</a> "
         + (moreLines || moreChars || '')
         + '<div><pre style="width: ' + Talker.getMaxContentWidth() + 'px; ' + whiteSpace + '" id="past_pre_' + event.paste.id + '">'
         + shownContent.replace(/</g, '&lt;').replace(/>/g, '&gt;')

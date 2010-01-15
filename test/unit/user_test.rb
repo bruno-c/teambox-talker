@@ -126,7 +126,7 @@ class UserTest < ActiveSupport::TestCase
 
   def test_do_not_delete_connected_guest_user_with_same_name
     user = create_user(:name => "bob", :guest => true, :room => rooms(:main))
-    user.connections.create :room => rooms(:main)
+    user.connections.create :channel => rooms(:main)
     
     assert_not_nil create_user(:name => "bob", :room => rooms(:main)).errors.on(:name)
     assert User.exists?(user.id)

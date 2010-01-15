@@ -2,7 +2,7 @@ class Connection < ActiveRecord::Base
   belongs_to :channel, :polymorphic => true
   belongs_to :user
   
-  validates_uniqueness_of :user_id, :scope => :channel
+  validates_uniqueness_of :user_id, :scope => [:channel_type, :channel_id]
   
   after_destroy :close
   
