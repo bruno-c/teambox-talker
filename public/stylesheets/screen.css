@@ -723,10 +723,6 @@ a.button, button {
               #chat_log table tr td.message blockquote div span.more_lines {
                 font-size: 10px;
                 color: gray; }
-              #chat_log table tr td.message blockquote div.typing {
-                background: url('../../images/is_typing_on_DFEFF8.gif') no-repeat left center;
-                padding: 0 0 0 19px;
-                color: silver; }
               #chat_log table tr td.message blockquote div a.view_paste {
                 font-size: 12px; }
               #chat_log table tr td.message blockquote div span.wrap_lines {
