@@ -40,7 +40,14 @@ Talker.Paste.Updater = function(editor) {
     self.addColor(event.user.id.toString(), event.color);
     
     var attribs = Talker.Paste.createAttributions(event.content);
-    editor.applyChangesToBase(attribs.changeset, event.user.id.toString(),
-                              { numToAttrib: attribs.pool });
+    
+    try {
+      editor.applyChangesToBase(attribs.changeset, event.user.id.toString(),
+                                { numToAttrib: attribs.pool });
+    } catch (e) {
+      editor.setEditable(false);
+      Talker.client.close();
+      alert("Looks like your paste is out of sync with the server. Please refresh to edit this paste again.");
+    }
   };
 };

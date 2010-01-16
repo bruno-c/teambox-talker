@@ -18,7 +18,7 @@
     $(function() {
       document.domain = document.domain;
       
-      window.editor = new Ace2Editor();
+      var editor = new Ace2Editor();
       var pasteUpdater = new Talker.Paste.Updater(editor);
       var text = "<%= escape_javascript @paste.content %>"; // initial text
       
@@ -29,32 +29,42 @@
       };
       
       editor.init("editorcontainer", text, function() {
-        <% current_account.users.each do |user| -%>
-        pasteUpdater.addColor("<%= user.id %>", "<%= user.color %>");
-        <%- end -%>
-        <% if @paste.attributions.present? %>
-        var attribs = Talker.Paste.createAttributions("<%= escape_javascript @paste.attributions %>");
-        editor.setBaseAttributedText({text: text + "\n", attribs: attribs.changeset },
-                                     { numToAttrib: attribs.pool });
-        <% else %>
-        editor.setBaseText(text + "\n");
-        <% end %>
+        try {
+          <% current_account.users.each do |user| -%>
+          pasteUpdater.addColor("<%= user.id %>", "<%= user.color %>");
+          <%- end -%>
+          <% if @paste.attributions.present? %>
+          var attribs = Talker.Paste.createAttributions("<%= escape_javascript @paste.attributions %>");
+          editor.setBaseAttributedText({text: text + "\n", attribs: attribs.changeset },
+                                       { numToAttrib: attribs.pool });
+          <% else %>
+          editor.setBaseText(text + "\n");
+          <% end %>
         
-        editor.setEditable(true); 
-        editor.setProperty("showsauthorcolors", true);
-        editor.setProperty("userauthor", Talker.currentUser.id.toString());
-        editor.setProperty("wraps", true);
+          editor.setEditable(true); 
+          editor.setProperty("showsauthorcolors", true);
+          editor.setProperty("userauthor", Talker.currentUser.id.toString());
         
-        editor.setUserChangeNotificationCallback(function() {
-          // Compute local diff
-          var cs = editor.prepareUserChangeset();
-          var diff = Talker.Paste.rewriteAttributions(cs.changeset, 0, Talker.currentUser.id);
-          // Send to server
-          Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: diff, color: '<%= current_user.color %>'}, function() {
-            // Reset local copy when sent
-            editor.applyPreparedChangesetToBase();
+          editor.setUserChangeNotificationCallback(function() {
+            // Compute local diff
+            var cs = editor.prepareUserChangeset();
+            var diff = Talker.Paste.rewriteAttributions(cs.changeset, 0, Talker.currentUser.id);
+            // Send to server
+            Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: diff, color: '<%= current_user.color %>'}, function() {
+              // Reset local copy when sent
+              editor.applyPreparedChangesetToBase();
+            });
           });
-        });
+          connect();
+        } catch (e) {
+          console.error(e);
+          $("#error").show().html(
+            $("<p/>").html("Error loading paste. You wont be able to edit or see changes.")
+          );
+          $("#infobox").hide();
+        }
+        
+        editor.setProperty("wraps", true);
         editor.resize();
         $(window).bind("resize", editor.resize);
         setTimeout(function() {editor.focus();}, 0);
@@ -66,17 +76,19 @@
       Talker.plugins.push(new Talker.Users());
       Talker.plugins.push(pasteUpdater);
       
-      Talker.client = new Talker.Client({
-        host: '<%= Orbited.talker_host %>', 
-        port: <%= Orbited.talker_port %>, 
-        paste: Talker.paste.id,
-        token: <%= current_user.talker_token.to_json %>,
-        callbacks: Talker.Broadcaster
-      }).connect();
+      function connect() {
+        Talker.client = new Talker.Client({
+          host: '<%= Orbited.talker_host %>', 
+          port: <%= Orbited.talker_port %>, 
+          paste: Talker.paste.id,
+          token: <%= current_user.talker_token.to_json %>,
+          callbacks: Talker.Broadcaster
+        }).connect();
       
-      Talker.trigger("Loaded");
+        Talker.trigger("Loaded");
       
-      $(window).bind('beforeunload', function() { Talker.client.reset() });
+        $(window).bind('beforeunload', function() { Talker.client.reset() });
+      }
     });
   </script>
 <% end %>
