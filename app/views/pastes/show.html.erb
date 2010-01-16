@@ -51,7 +51,7 @@
           var cs = editor.prepareUserChangeset();
           var diff = Talker.Paste.rewriteAttributions(cs.changeset, 0, Talker.currentUser.id);
           // Send to server
-          Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: diff}, function() {
+          Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: diff, color: '<%= current_user.color %>'}, function() {
             // Reset local copy when sent
             editor.applyPreparedChangesetToBase();
           });
@@ -62,6 +62,7 @@
       });
       
       // Talker.plugins.push(new Talker.ErrorHandler($("#error")));
+      // Talker.plugins.push(new Talker.UserList($("#people")));
       Talker.plugins.push(new Talker.Users());
       Talker.plugins.push(new Talker.Paste.Updater(editor));
       
@@ -80,4 +81,6 @@
   </script>
 <% end %>
 
-<div id="editorcontainer"><!-- --></div>
+<div id="paste">
+  <div id="editorcontainer"><!-- --></div>
+</div>

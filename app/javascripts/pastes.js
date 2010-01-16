@@ -31,6 +31,8 @@ Talker.Paste.Updater = function(editor) {
     // Do not apply local diff
     if (event.user.id == Talker.currentUser.id) return false;
     
+    editor.setAuthorInfo(event.user.id, {bgcolor: event.color});
+    
     var attribs = createAttributions(event.content);
     editor.applyChangesToBase(attribs.changeset, event.user.id.toString(),
                               { numToAttrib: attribs.pool });
