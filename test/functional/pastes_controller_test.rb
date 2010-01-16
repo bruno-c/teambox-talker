@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + "/../test_helper"
 class PastesControllerTest < ActionController::TestCase
   def setup
     login_as :quentin
+    subdomain :master
   end
   
   def test_show_witout_room

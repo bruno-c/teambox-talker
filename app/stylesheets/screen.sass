@@ -1355,3 +1355,40 @@ div.log_browser
     top: 3px
     padding: 1px 4px
     cursor: pointer
+
+#paste
+  #editorcontainer
+    +box_shadow(0, 0, 16, !grey * 0.66 + !white * 0.3)
+    height: 1000px // changed programmatically
+    margin: 0 240px 0 0
+    iframe
+      width: 100%
+      height: 100%
+      border: 0
+      padding: 0
+      margin: 0
+  #infobox
+    margin: -15px -10px 0px 17px
+    +box_shadow(0, 0, 8, !light_grey * 0.66 + !white * 0.20)
+    div
+      &.content
+        ul.people
+          margin: 0 0 -5px
+          overflow: hidden
+          li
+            display: block
+            float: left
+            margin: 0 5px 5px 0
+            padding: 2px 5px
+            background = !light_grey * 0.15 + !white * 0.85
+            +rounded_corners("all", 3)
+            +font_size("small")
+            img
+              height: 18px
+              width: 18px
+              position: relative
+              top: 3px
+      &.footer
+        label
+          +font_size("tiny")
+          color= !grey

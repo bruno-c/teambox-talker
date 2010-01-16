@@ -24,21 +24,23 @@ Talker.Paste.createAttributions = function(cs) {
   return { changeset: cs, pool: pool };
 }
 
+Talker.userColors = {};
 Talker.Paste.Updater = function(editor) {
   var self = this;
+  
+  self.addColor = function(userId, color) {
+    Talker.userColors[userId] = color;
+    editor.setAuthorInfo(userId.toString(), {bgcolor: color});
+  };
   
   self.onMessageReceived = function(event) {
     // Do not apply local diff
     if (event.user.id == Talker.currentUser.id) return false;
     
-    editor.setAuthorInfo(event.user.id, {bgcolor: event.color});
+    self.addColor(event.user.id.toString(), event.color);
     
-    var attribs = createAttributions(event.content);
+    var attribs = Talker.Paste.createAttributions(event.content);
     editor.applyChangesToBase(attribs.changeset, event.user.id.toString(),
                               { numToAttrib: attribs.pool });
-  };
-  
-  self.onJoin = function(event) {
-    
   };
 };

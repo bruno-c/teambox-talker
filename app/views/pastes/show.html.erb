@@ -4,8 +4,6 @@
   <style>
     html { overflow: hidden } /* for Win IE 6 */
     body { margin:0; padding:0; border:0; overflow: hidden; }
-    #editorcontainer { height: 1000px; /* changed programmatically */ }
-    #editorcontainer iframe { width: 100%; height: 100%; border:0; padding:0; margin:0; }
   </style>
   <script type="text/javascript" charset="utf-8">
     Talker.currentUser = <%= current_user.to_json %>;
@@ -20,7 +18,8 @@
     $(function() {
       document.domain = document.domain;
       
-      var editor = new Ace2Editor();
+      window.editor = new Ace2Editor();
+      var pasteUpdater = new Talker.Paste.Updater(editor);
       var text = "<%= escape_javascript @paste.content %>"; // initial text
       
       editor.resize = function() {
@@ -31,7 +30,7 @@
       
       editor.init("editorcontainer", text, function() {
         <% current_account.users.each do |user| -%>
-        editor.setAuthorInfo("<%= user.id %>", {bgcolor: "<%= user.color %>"});
+        pasteUpdater.addColor("<%= user.id %>", "<%= user.color %>");
         <%- end -%>
         <% if @paste.attributions.present? %>
         var attribs = Talker.Paste.createAttributions("<%= escape_javascript @paste.attributions %>");
@@ -61,10 +60,11 @@
         setTimeout(function() {editor.focus();}, 0);
       });
       
-      // Talker.plugins.push(new Talker.ErrorHandler($("#error")));
-      // Talker.plugins.push(new Talker.UserList($("#people")));
+      Talker.plugins.push(new Talker.ErrorHandler($("#error")));
+      Talker.plugins.push(new Talker.UserList($("#people")));
+      Talker.plugins.push(new Talker.UserColors($("#people")));
       Talker.plugins.push(new Talker.Users());
-      Talker.plugins.push(new Talker.Paste.Updater(editor));
+      Talker.plugins.push(pasteUpdater);
       
       Talker.client = new Talker.Client({
         host: '<%= Orbited.talker_host %>', 
@@ -82,5 +82,21 @@
 <% end %>
 
 <div id="paste">
+  <div id="sidebar">
+    <div id="error" class="flash error" style="display:none"></div>
+    
+    <div id="infobox" class="panel">
+      <div class="header">
+        <h3 class="name">Paste</h3>
+      </div>
+      <div class="content">
+        <h4 class="name">Who&#39;s here?</h4>
+        <ul class="people" id="people"></ul>
+      </div>
+      <div class="footer">
+        <%= link_to "&laquo; Back to room", room_path(@paste.room) if @paste.room %>
+      </div>
+    </div>
+  </div>
   <div id="editorcontainer"><!-- --></div>
 </div>
