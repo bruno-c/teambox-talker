@@ -70,10 +70,9 @@ EOS
     end
   end
   
-  it "should ignore invalid changeset" do
+  it "should raise error on invalid changeset" do
     paste = Talker::Server::Paste.new("hi", nil, "1", nil)
     paste.reset_attributions
-    paste.apply("Z:$")
-    paste.content.should == "hi"
+    proc { paste.apply("Z:$") }.should raise_error(EasySync::InvalidChangeset)
   end
 end
