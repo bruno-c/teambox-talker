@@ -62,7 +62,8 @@ module Talker::Server
       
       Talker::Server.storage.update_paste(@permalink, @content, @attributions, &callback)
     rescue EasySync::InvalidChangeset => e
-      Talker::Server.logger.error "Invalid changeset on paste ##{@permalink} (#{e}): #{diff.inspect}"
+      Talker::Server.logger.error "Ignoring invalid changeset on paste ##{@permalink} (#{e}): #{diff.inspect}"
+      callback.call
     end
     
     def info
