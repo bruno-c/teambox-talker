@@ -30,8 +30,9 @@
       };
       
       editor.init("editorcontainer", text, function() {
-        editor.setAuthorInfo("1", {bgcolor: "#ccf"});
-        editor.setAuthorInfo("2", {bgcolor: "#fcc"});
+        <% current_account.users.each do |user| %>
+        editor.setAuthorInfo("<%= user.id %>", {bgcolor: "<%= user.color %>"});
+        <% end %>
         <% if @paste.attributions.present? %>
           var attribs = Talker.Paste.createAttributions("<%= escape_javascript @paste.attributions %>");
           editor.setBaseAttributedText({text: text + "\n", attribs: attribs.changeset },

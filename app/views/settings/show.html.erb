@@ -1,4 +1,18 @@
-<div class="sheet">
+<% content_for :head do %>
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    $("#user_color_sample, #user_color_picker").ColorPicker({
+      color: '<%= @user.color %>',
+      onChange: function(hsb, hex, rgb) {
+        $('#user_color_sample').css('backgroundColor', '#' + hex);
+        $('#user_color').val('#' + hex);
+      }
+    });
+  });
+</script>
+<% end %>
+
+<div class="sheet" id="settings">
 
   <h2><%= @title = "My Settings" %></h2>
 
@@ -22,6 +36,14 @@
         <%= image_tag avatar_url(@user) %>
         Get an avatar on <%= link_to "Gravatar", "http://en.gravatar.com/site/signup", :title => "Signup to get your own gravatar" %>
       </p>
+      <p>
+        <%= f.label :color %>
+        <%= f.hidden_field :color %>
+        <input id="user_color_sample" type="text" style="background-color:<%= @user.color %>;" value="Some fancy sample text" />
+        <%= image_tag "icons/color.png", :id => "user_color_picker", :title => "Click to select a color" %>
+        <label class="description">This color will be used in pastes to highlight the text you edited. Use a light color for better results.</label>
+      </p>
+      
       <p class="indent submit">
         <%= ok_button "Update" %>
       </p>

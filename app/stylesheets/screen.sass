@@ -2,6 +2,7 @@
 @import colors.sass
 @import styling.sass
 @import facebox.sass
+@import colorpicker.sass
 
 // General
 body
@@ -1347,3 +1348,10 @@ div.log_browser
       background = !accent_colour
       &.reached
         background = !colour_negative
+
+#settings
+  #user_color_picker
+    position: relative
+    top: 3px
+    padding: 1px 4px
+    cursor: pointer

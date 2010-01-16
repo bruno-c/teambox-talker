@@ -24,9 +24,11 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email,    :allow_nil => true, :scope => :account_id
   validates_format_of       :email,    :allow_nil => true, :with => Authentication.email_regex, :message => Authentication.bad_email_message
   
+  validates_format_of       :color,    :with => /\A\#[a-f0-9]{6}\z/i, :allow_blank => true
+  
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :email, :name, :password, :password_confirmation, :time_zone
+  attr_accessible :email, :name, :password, :password_confirmation, :time_zone, :color
   
   named_scope :active, :conditions => { :state => "active" }
   named_scope :registered, :conditions => { :guest => false }
@@ -34,6 +36,7 @@ class User < ActiveRecord::Base
   named_scope :by_name, :order => :name
   
   # Ensure guests have access to the room
+  before_save :assign_color
   after_create { |u| u.permissions.create :room => u.room if u.guest }
   before_validation :remove_guest_with_same_name
   
@@ -118,6 +121,18 @@ class User < ActiveRecord::Base
   
   def to_json(options = {})
     super(options.merge(:only => [:name, :email, :id]))
+  end
+  
+  def assign_color
+    return if color.present?
+    if account
+      used_colors = account.users.all(:select => "color").map(&:color)
+      available_colors = COLOR_PALETTE - used_colors
+      available_colors = COLOR_PALETTE if available_colors.empty?
+    else
+      available_colors = COLOR_PALETTE
+    end
+    self.color = available_colors.choice
   end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.

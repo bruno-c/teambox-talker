@@ -131,4 +131,14 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil create_user(:name => "bob", :room => rooms(:main)).errors.on(:name)
     assert User.exists?(user.id)
   end
+  
+  def test_color_validation
+    assert_not_nil User.create(:color => "alert('hi')").errors.on(:color)
+    assert_not_nil User.create(:color => "boom").errors.on(:color)
+    assert_not_nil User.create(:color => "red").errors.on(:color)
+    assert_nil User.create(:color => "#ccaabb").errors.on(:color)
+    assert_nil User.create(:color => "#CCAABB").errors.on(:color)
+    assert_nil User.create(:color => "#123456").errors.on(:color)
+    assert_nil User.create.errors.on(:color)
+  end
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100111191226) do
+ActiveRecord::Schema.define(:version => 20100115220204) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20100111191226) do
     t.boolean  "staff",                           :default => false
     t.boolean  "guest",                           :default => false
     t.integer  "room_id"
+    t.string   "color",            :limit => 7
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
