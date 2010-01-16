@@ -69,20 +69,43 @@ module Talker::Server
           return
         end
         
-        Paste.find(id) do |paste|
-          if paste
-            Notifier.catch_exception("Applying #{event.inspect} to paste ##{id}") do
-              paste.apply(event["content"], &callback)
-            end
-          else
-            # Ignoring updates on unexisting pastes
-            callback.call
-          end
-        end
+        apply_paste id, event, &callback
         
       else 
         Talker::Server.logger.warn "Not logging to channel #{channel_type}##{id}"
       end
+    end
+    
+    def apply_paste(id, event, &callback)
+      diff = event["content"].to_s
+      user = event["user"]
+      
+      # Load the paste
+      Paste.find(id) do |paste|
+        if paste
+          Notifier.catch_exception("Applying #{diff} to paste ##{id}") do
+            
+            # Apply the diff
+            begin
+              paste.apply(diff, &callback)
+            rescue EasySync::InvalidChangeset => e
+              # Failed to apply the changeset
+              send_error "paste.#{id}", user["id"], "Invalid changeset, your paste is out of date."
+              Talker::Server.logger.error "Invalid changeset on paste ##{id} (#{e}): #{diff.inspect}"
+              callback.call
+            end
+            
+          end
+          
+        else # Ignoring updates on unexisting pastes
+          callback.call
+          
+        end
+      end
+    end
+    
+    def send_error(channel, user_id, message)
+      Channel.new(channel).publish_to user_id, :type => "error", :message => message
     end
   end
 end

@@ -3,6 +3,8 @@ require "easy_sync"
 
 module Talker::Server
   class Paste
+    class InvalidState < RuntimeError; end
+    
     MAX_LENGTH = 500 * 1024 # 500 KB
     PREVIEW_LINES = 15
     
@@ -61,9 +63,6 @@ module Talker::Server
       end
       
       Talker::Server.storage.update_paste(@permalink, @content, @attributions, &callback)
-    rescue EasySync::InvalidChangeset => e
-      Talker::Server.logger.error "Ignoring invalid changeset on paste ##{@permalink} (#{e}): #{diff.inspect}"
-      callback.call
     end
     
     def info

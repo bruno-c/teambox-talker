@@ -116,6 +116,22 @@ EM.describe Talker::Server::Logger do
     end
   end
   
+  it "should send user error on invalid changeset" do
+    message = { "type" => "message", "user" => {"id" => 1},
+                "time" => 5, "content" => "BOGUS!" }
+    
+    queue = MQ.queue("test").bind(@exchange, :key => "talker.channels.paste.1.1")
+    queue.subscribe { |m| }
+    
+    @exchange.publish encode(message), :key => "talker.channels.paste.1"
+    
+    EM.add_timer(0.1) do
+      event = decode(queue.received_messages.last.to_s)
+      event["type"].should == "error"
+      done
+    end
+  end
+  
   it "should ignore unknown paste" do
     message = { "type" => "message", "user" => {"id" => 1},
                 "time" => 5, "content" => "Z:3>1=2*0+1$!" }

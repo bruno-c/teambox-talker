@@ -7,7 +7,7 @@ class ReceiveEventMatcher
   
   def matches?(queue)
     @queue = queue
-    received_message = Yajl::Parser.parse(queue.received_messages.join)
+    received_message = Yajl::Parser.parse(queue.received_messages.last.to_s)
     received_message == @expected_msg
   end
   
@@ -23,6 +23,10 @@ end
 module Helpers
   def encode(json)
     Yajl::Encoder.encode(json) + "\n"
+  end
+
+  def decode(json)
+    Yajl::Parser.parse(json)
   end
 
   def receive_event(expected_msg)
