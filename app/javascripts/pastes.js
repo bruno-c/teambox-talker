@@ -11,7 +11,6 @@ Talker.Paste.createAttributions = function(cs) {
   var pool = [];
   var authors = {};
   var parts = cs.split("*");
-  var out = "";
   for (var i=0; i < parts.length; i++) {
     var id = parts[i].match(/^\d+/);
     if (id) { // this part is an attribution
