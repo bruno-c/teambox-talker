@@ -85,12 +85,8 @@ class Room < ActiveRecord::Base
     messages.is_a?(Array) ? events : events.first
   end
   
-  def topic
-    MQ.new(self.class.amqp_connection).topic("talker.chat", :durable => true)
-  end
-  
   def publish(*events)
-    topic.publish events.map(&:to_json).join("\n") + "\n", :key => "talker.channels.room.#{id}", :persistent => true
+    Connection.publish events.map(&:to_json).join("\n"), "room", id
   end
   
   def to_s
@@ -99,11 +95,6 @@ class Room < ActiveRecord::Base
   
   def connected?(user)
     connections.find_by_user_id(user.id).present?
-  end
-  
-  def self.amqp_connection
-    # TODO load AMQP config from somewhere
-    @amqp_connection ||= AMQP.connect
   end
   
   private

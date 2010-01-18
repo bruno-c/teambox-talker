@@ -33,11 +33,25 @@ class Connection < ActiveRecord::Base
   end
   
   def publish(event)
-    return unless EM.reactor_running?
-    room.topic.publish event.to_json + "\n", :key => "talker.channels.#{name}.#{user.id}", :persistent => true
+    self.class.publish event.to_json, channel_type, channel_id, user.id
   end
   
   def self.users_count
     count :user_id, :distinct => :user_id
+  end
+  
+  def self.topic
+    MQ.new(amqp_connection).topic("talker.chat", :durable => true)
+  end
+  
+  def self.publish(json, channel_type, channel_id, user_id=nil)
+    return unless EM.reactor_running?
+    channel = [channel_type.downcase, channel_id, user_id].compact.join(".")
+    topic.publish json + "\n", :key => "talker.channels.#{channel}", :persistent => true
+  end
+  
+  def self.amqp_connection
+    # TODO load AMQP config from somewhere
+    @amqp_connection ||= AMQP.connect
   end
 end
