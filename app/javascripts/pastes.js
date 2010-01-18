@@ -1,8 +1,8 @@
 Talker.Paste = {};
 
 // Rewrite an attribution in a changeset
-Talker.Paste.rewriteAttributions = function(cs, attrib, userId, first) {
-  var re = new RegExp("\\*" + attrib, first ? "" : "g");
+Talker.Paste.rewriteAttributions = function(cs, attrib, userId) {
+  var re = new RegExp("\\*" + attrib, "g");
   return cs.replace(re, "*" + userId);
 }
 // Create an attribution pool from a changeset, extracting user ids from
@@ -10,18 +10,20 @@ Talker.Paste.rewriteAttributions = function(cs, attrib, userId, first) {
 Talker.Paste.createAttributions = function(cs) {
   var pool = [];
   var authors = {};
-  var matches = null;
-  var re = /\*(\d+)[^\d]/g;
-  while (matches = re.exec(cs)) {
-    var id = matches[1];
-    var num = authors[id];
-    if (num == null) {
-      authors[id] = num = pool.length;
-      pool.push(["author", id]);
+  var parts = cs.split("*");
+  var out = "";
+  for (var i=0; i < parts.length; i++) {
+    var id = parts[i].match(/^\d+/);
+    if (id) { // this part is an attribution
+      var num = authors[id];
+      if (num == null) { // add the author to the pool
+        authors[id] = num = pool.length;
+        pool.push(["author", id]);
+      }
+      parts[i] = parts[i].replace(/^\d+/, num);
     }
-    cs = Talker.Paste.rewriteAttributions(cs, id, num, true);
-  }
-  return { changeset: cs, pool: pool };
+  };
+  return { changeset: parts.join("*"), pool: pool };
 }
 
 Talker.userColors = {};
@@ -40,7 +42,6 @@ Talker.Paste.Updater = function(editor) {
     self.addColor(event.user.id.toString(), event.color);
     
     var attribs = Talker.Paste.createAttributions(event.content);
-    
     try {
       editor.applyChangesToBase(attribs.changeset, event.user.id.toString(),
                                 { numToAttrib: attribs.pool });
