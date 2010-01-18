@@ -126,13 +126,13 @@ Talker.Client = function(options) {
   };
   
   var queueTimeout = null;
-  self.queueSend = function(message, callback) {
+  self.queueSend = function(message, callback, timeout) {
     if (queueTimeout) {
       clearTimeout(queueTimeout);
     }
     queueTimeout = setTimeout(function() {
       self.send(message);
       callback();
-    }, 1000);
+    }, timeout || 1000);
   }
 }

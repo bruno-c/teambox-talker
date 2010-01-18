@@ -18,7 +18,7 @@
     $(function() {
       document.domain = document.domain;
       
-      var editor = new Ace2Editor();
+      var editor = window.editor = new Ace2Editor();
       var pasteUpdater = new Talker.Paste.Updater(editor);
       var text = "<%= escape_javascript @paste.content %>"; // initial text
       
@@ -54,7 +54,7 @@
             Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: diff, color: '<%= current_user.color %>'}, function() {
               // Reset local copy when sent
               editor.applyPreparedChangesetToBase();
-            });
+            }, 100);
           });
           connect();
         } catch (e) {
