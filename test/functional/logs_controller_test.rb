@@ -14,6 +14,12 @@ class LogsControllerTest < ActionController::TestCase
     assert_equal Date.today, assigns(:date).to_date
   end
 
+  def test_index_for_empty_room
+    @room.events.clear
+    get :index, :room_id => @room
+    assert_response :success, @response.body
+  end
+
   def test_index_for_month
     get :index, :room_id => @room, :year => 2010, :month => 1
     assert_response :success, @response.body

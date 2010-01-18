@@ -1146,11 +1146,12 @@ a.button, button {
 #log_tabs {
   float: right;
   margin-top: 45px;
-  margin-right: -87px; }
+  margin-right: -110px; }
   #log_tabs ul {
     list-style: none; }
   #log_tabs li {
-    text-align: right; }
+    text-align: right;
+    width: 100px; }
     #log_tabs li a {
       padding: 4px 10px;
       text-decoration: none;
