@@ -29,6 +29,7 @@
       };
       
       editor.init("editorcontainer", text, function() {
+        <% if current_account.beta_tester %>
         try {
           <% current_account.users.each do |user| -%>
           pasteUpdater.addColor("<%= user.id %>", "<%= user.color %>");
@@ -63,6 +64,9 @@
           );
           $("#infobox").hide();
         }
+        <% else %>
+        editor.setEditable(false);
+        <% end %>
         
         editor.setProperty("wraps", true);
         editor.resize();
@@ -70,6 +74,7 @@
         setTimeout(function() {editor.focus();}, 0);
       });
       
+      <% if current_account.beta_tester %>
       Talker.plugins.push(new Talker.ErrorHandler($("#error")));
       Talker.plugins.push(new Talker.UserList($("#people")));
       Talker.plugins.push(new Talker.UserColors($("#people")));
@@ -89,6 +94,7 @@
       
         $(window).bind('beforeunload', function() { Talker.client.reset() });
       }
+      <% end %>
     });
   </script>
 <% end %>
@@ -97,6 +103,7 @@
   <div id="sidebar">
     <div id="error" class="flash error" style="display:none"></div>
     
+    <% if current_account.beta_tester %>
     <div id="infobox" class="panel">
       <div class="header">
         <h3 class="name">Paste</h3>
@@ -109,6 +116,7 @@
         <%= link_to "&laquo; Back to room", room_path(@paste.room) if @paste.room %>
       </div>
     </div>
+    <% end %>
   </div>
   <div id="editorcontainer"><!-- --></div>
 </div>
