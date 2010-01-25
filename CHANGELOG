@@ -1,2 +1,5 @@
-== 1.0.1
+== HEAD
+ * Fix indexing issue causing search update to be delayed for 24h
+
+== Jan 20
  * Fixed some UI issues which could cause the chat log to appear higher than expected
