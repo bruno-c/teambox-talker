@@ -4,7 +4,7 @@ Talker.FeedFormatter = function() {
   var template = '\
     <small class="timestamp"><%= FormatHelper.formatDate(published) %></small> \
     <a href="http://<%= source %>/" class="favicon"> \
-      <img src="http://<%= source %>/favicon.ico" /> \
+      <img src="//<%= source %>/favicon.ico" /> \
     </a> \
     <a href="<%= url %>" class="title"> \
       <%= author %>: <%= title %> \
