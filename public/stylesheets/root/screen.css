@@ -339,7 +339,7 @@ span.and {
     color: #ae4b0f;
     font-family: Georgia;
     font-size: 15px;
-    padding: 9px 21px;
+    padding: 11px 40px;
     background: #fcefce;
     border-top: 1px solid #fabd1a;
     border-bottom: 1px solid #fabd1a; }
@@ -509,6 +509,10 @@ span.and {
     float: left; }
   #about #team .box.right {
     margin-left: 20px; }
+
+#home .buttons a {
+  font-size: 20px;
+  font-weight: bold; }
 
 #tour #splash {
   height: 1150px; }
