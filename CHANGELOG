@@ -1,4 +1,7 @@
 == HEAD
+ * 
+
+== Jan 26
  * Fix indexing issue causing search update to be delayed for 24h
 
 == Jan 20
