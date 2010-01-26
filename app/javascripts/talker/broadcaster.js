@@ -1,7 +1,7 @@
 Talker.Broadcaster = {
   callbacks: ["Load", "MessageReceived",
               "Join", "Leave", "Back", "Idle",
-              "Users", "Open", "Connected",
+              "Users", "Open", "Connected", "Token",
               "Close", "Error"],
   plugins: [],
   

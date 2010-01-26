@@ -47,14 +47,7 @@
           editor.setProperty("userauthor", Talker.currentUser.id.toString());
         
           editor.setUserChangeNotificationCallback(function() {
-            // Compute local diff
-            var cs = editor.prepareUserChangeset();
-            var diff = Talker.Paste.rewriteAttributions(cs.changeset, 0, Talker.currentUser.id);
-            // Send to server
-            Talker.client.queueSend({type: 'message', user: Talker.currentUser, content: diff, color: '<%= current_user.color %>'}, function() {
-              // Reset local copy when sent
-              editor.applyPreparedChangesetToBase();
-            }, 100);
+            Talker.client.acquireToken();
           });
           connect();
         } catch (e) {

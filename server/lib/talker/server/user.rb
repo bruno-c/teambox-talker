@@ -1,5 +1,7 @@
 module Talker::Server
   class User
+    include Comparable
+    
     attr_accessor :info, :account_id, :admin
     
     def initialize(info)
@@ -14,6 +16,10 @@ module Talker::Server
     
     def name
       @info["name"]
+    end
+    
+    def <=>(other)
+      id <=> other.id
     end
   end
 end

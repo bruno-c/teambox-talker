@@ -50,4 +50,16 @@ Talker.Paste.Updater = function(editor) {
       alert("Looks like your paste is out of sync with the server. Please refresh to edit this paste again.");
     }
   };
+  
+  self.onToken = function(event) {
+    var cs = editor.prepareUserChangeset();
+    if (cs && cs.changeset) {
+      console.info(cs);
+      var diff = Talker.Paste.rewriteAttributions(cs.changeset, 0, Talker.currentUser.id);
+      // Send to server
+      Talker.client.send({type: 'message', content: diff, color: Talker.currentUser.color});
+      // Reset local copy when sent
+      editor.applyPreparedChangesetToBase();
+    }
+  };
 };

@@ -17,6 +17,7 @@ module Talker::Server
         @encoder = Yajl::Encoder.new
         
         @channel = @user = @subscription = nil
+        @token_holder = false
       end
       
       # Called when a event is fully parsed
@@ -32,6 +33,8 @@ module Talker::Server
           on_close
         when "ping"
           on_ping
+        when "token"
+          on_token
         else
           error "Unknown event type: " + event["type"].inspect
         end
@@ -97,6 +100,11 @@ module Talker::Server
         obj["time"] = Time.now.utc.to_i
         content = obj["content"] = obj["content"].to_s
         
+        if @token_holder
+          @token_holder = false
+          @channel.publish_presence "release_token", @user
+        end
+        
         Paste.truncate(content, @channel, obj.delete("paste")) do |truncated_content, paste|
           obj["content"] = truncated_content
           obj["paste"] = paste if paste
@@ -114,6 +122,13 @@ module Talker::Server
         return unless logged_in?
         
         @channel.publish_presence "ping", @user
+      end
+      
+      def on_token
+        return unless logged_in?
+        
+        @token_holder = true
+        @channel.publish_presence "acquire_token", @user
       end
       
       def on_close

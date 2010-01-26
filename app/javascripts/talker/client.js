@@ -43,6 +43,14 @@ Talker.Client = function(options) {
       case 'connected':
         callbacks.onConnected(line);
         break;
+      case 'token':
+        if (line.acquired) {
+          callbacks.onToken(line);
+        } else {
+          setTimeout(self.acquireToken, 200);
+        }
+        
+        break;
       default:
         console.warn("Unknown message type (client error): " + line.type);
     } 
@@ -63,6 +71,10 @@ Talker.Client = function(options) {
   
   self.sendData = function(message) {
     protocol.send(JSON.encode(message));
+  };
+  
+  self.acquireToken = function() {
+    self.sendData({type: "token"});
   };
   
   self.connect = function() {

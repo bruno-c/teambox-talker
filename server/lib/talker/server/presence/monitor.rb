@@ -59,6 +59,10 @@ module Talker::Server
           secretary.leave user, time
         when "ping"
           secretary.ping user, time
+        when "acquire_token"
+          secretary.acquire_token user, time
+        when "release_token"
+          secretary.release_token user, time
         else
           Notifier.error "Wrong type of presence in message #{message.inspect}"
         end
