@@ -47,7 +47,7 @@
           editor.setProperty("userauthor", Talker.currentUser.id.toString());
         
           editor.setUserChangeNotificationCallback(function() {
-            Talker.client.acquireToken();
+            delay(Talker.client.acquireToken, 500);
           });
           connect();
         } catch (e) {
