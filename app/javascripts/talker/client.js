@@ -8,6 +8,7 @@ Talker.Client = function(options) {
   var pingInterval = 10000;
   var reconnectInterval = 2000;
   var reconnect = true;
+  var requestingToken = false;
 
   // LineProtocol implementation.
   function onLineReceived(line) {
@@ -44,6 +45,7 @@ Talker.Client = function(options) {
         callbacks.onConnected(line);
         break;
       case 'token':
+        requestingToken = false;
         if (line.acquired) {
           callbacks.onToken(line);
         } else {
@@ -74,6 +76,8 @@ Talker.Client = function(options) {
   };
   
   self.acquireToken = function() {
+    if (requestingToken) return;
+    requestingToken = true;
     self.sendData({type: "token"});
   };
   
