@@ -2,7 +2,8 @@ require "stringio"
 require "generator"
 
 # For unicode support
-require "activesupport"
+require "active_support/core_ext"
+require "active_support/multibyte"
 $KCODE = 'UTF8'
 
 # EtherPad EasySync algorihtm ported from http://code.google.com/p/etherpad/
