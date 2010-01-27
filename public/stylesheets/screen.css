@@ -1721,3 +1721,33 @@ div.log_browser {
   #paste #infobox div.footer label {
     font-size: 10px;
     color: gray; }
+
+#curtain, #loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+
+#curtain {
+  background-color: #000;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+  -moz-opacity: 0.5;
+  z-index: 1000; }
+
+#loading {
+  text-align: center;
+  z-index: 1001;
+  width: 250px;
+  height: 45px;
+  margin: 60px auto;
+  padding: 20px; }
+  #loading p {
+    color: #fff;
+    font-weight: bold; }
+
+/* color: #000
+ * background-color: #fff
+ * +rounded_corners("all", 3)
+ * border = solid 1px !grey */
