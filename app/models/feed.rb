@@ -84,7 +84,7 @@ class Feed < ActiveRecord::Base
       self.last_modified_at = entry.published
     end
     
-    self.last_modified_at = feed.last_modified if (feed.last_modified && feed.last_modified > last_modified_at) || last_modified_at.nil?
+    self.last_modified_at = feed.last_modified if last_modified_at.nil? || (feed.last_modified && feed.last_modified > last_modified_at)
     self.etag = feed.etag
   end
   
