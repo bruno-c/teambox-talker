@@ -83,12 +83,10 @@ THE SOFTWARE.
   if (!window.dockBadge){
     if (window.platform && window.platform.icon && window.platform.icon().badgeText){
       window.dockBadge = function(text) {
-        console.info('prism');
         window.platform.icon().badgeText = text;
       }
     } else if (window.fluid){
       window.dockBadge = function(text) {
-        console.info('fluid');
         window.fluid.dockBadge = text + '';
       }
     } else {

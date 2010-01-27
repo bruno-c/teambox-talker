@@ -69,6 +69,7 @@
       
       <% if current_account.beta_tester %>
       Talker.plugins.push(new Talker.ErrorHandler($("#error")));
+      Talker.plugins.push(new Talker.Loading());
       Talker.plugins.push(new Talker.UserList($("#people")));
       Talker.plugins.push(new Talker.UserColors($("#people")));
       Talker.plugins.push(new Talker.Users());
@@ -91,6 +92,8 @@
     });
   </script>
 <% end %>
+
+<%= render "shared/loading" %>
 
 <div id="paste">
   <div id="sidebar">
