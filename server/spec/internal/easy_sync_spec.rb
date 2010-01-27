@@ -60,4 +60,15 @@ EM.describe EasySync do
     EasySync::Changeset.create_attributions("\n").should == "|2+2"
     EasySync::Changeset.create_attributions("ohaie\nthere\n").should == "|3+d"
   end
+  
+  it "should apply diff with multibyte strings" do
+    text = "\303\251\n\n"
+    text = EasySync::Changeset.unpack("Z:3>1=1*1+1$\303\251").apply_to_text(text)
+    text.should == "\303\251\303\251\n\n"
+  end
+
+  it "should create attributions for multibyte strings" do
+    attributions = EasySync::Changeset.create_attributions("\303\251\303\251")
+    attributions.should == "|1+3"
+  end
 end

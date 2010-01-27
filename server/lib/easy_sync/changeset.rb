@@ -17,9 +17,10 @@ module EasySync
     end
     
     def apply_to_text(text)
+      text = text.mb_chars
       raise InvalidChangeset, "mismatched apply: #{text.size} / #{@size}" unless text.size == @size
-      bank_iter = StringIO.new(@char_bank)
-      text_iter = StringIO.new(text)
+      bank_iter = StringIterator.new(@char_bank)
+      text_iter = StringIterator.new(text)
       buf = []
       extract_ops(@ops).each do |op|
         case op.opcode
@@ -119,7 +120,8 @@ module EasySync
       change_sign = (matches[2] == '>') ? 1 : -1
       change_mag = matches[3].to_i(RADIX)
       new_len = old_len + change_sign * change_mag
-      ops_start = matches[0].size
+      ops_start = matches[0].mb_chars.size
+      cs = cs.mb_chars
       ops_end = cs.index("$")
       ops_end = cs.size if ops_end < 0
       new old_len, new_len, cs[ops_start..ops_end], cs[(ops_end+1)..-1]
@@ -130,6 +132,7 @@ module EasySync
       # like in the original implementation here. It seems to work fine.
       # In case things go wrong, we'll have to implement the original way.
       asm = MergingOpAssembler.new
+      text = text.mb_chars
       asm.append("+", text.size+1, text.count("\n")+1, "")
       asm.to_s
     end
@@ -176,7 +179,8 @@ module EasySync
         
         return att1 if !att2
         
-        raise InvalidChangeset, "Mergin of attributes not (yet) supported: #{att1} + #{att2}"
+        # We don't need attributes mergin. So I didn't implement...
+        raise InvalidChangeset, "Merging of attributes not (yet) supported: #{att1} + #{att2}"
       end
   end
 end

@@ -1,6 +1,11 @@
 require "stringio"
 require "generator"
 
+# For unicode support
+require "activesupport"
+$KCODE = 'UTF8'
+
+# EtherPad EasySync algorihtm ported from http://code.google.com/p/etherpad/
 module EasySync
   RADIX = 36
   
@@ -11,5 +16,5 @@ module EasySync
   autoload :MergingOpAssembler, "easy_sync/merging_op_assembler"
   autoload :SmartOpAssembler, "easy_sync/smart_op_assembler"
   autoload :Changeset, "easy_sync/changeset"
+  autoload :StringIterator, "easy_sync/string_iterator"
 end
-
