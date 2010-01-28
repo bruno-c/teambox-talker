@@ -93,7 +93,7 @@
   </script>
 <% end %>
 
-<%= render "shared/loading" %>
+<%= render "shared/loading" if current_account.beta_tester %>
 
 <div id="paste">
   <div id="sidebar">
