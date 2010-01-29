@@ -151,7 +151,7 @@ module EasySync
       end
     
       def ops_iterator(ops)
-        Generator.new(extract_ops(ops))
+        ArrayIterator.new(extract_ops(ops))
       end
       
       def compose_attributes(att1, att2, mutation, pool)

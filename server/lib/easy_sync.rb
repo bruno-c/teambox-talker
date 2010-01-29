@@ -1,5 +1,4 @@
 require "stringio"
-require "generator"
 
 # For unicode support
 require "active_support/core_ext"
@@ -12,6 +11,7 @@ module EasySync
   
   class InvalidChangeset < RuntimeError; end
   
+  autoload :ArrayIterator, "easy_sync/array_iterator"
   autoload :Op, "easy_sync/op"
   autoload :OpAssembler, "easy_sync/op_assembler"
   autoload :MergingOpAssembler, "easy_sync/merging_op_assembler"
