@@ -9,6 +9,7 @@ module Talker
   module Server
     class Error < RuntimeError; end
     
+    autoload :Cache, "talker/server/cache"
     autoload :Channel, "talker/server/channel"
     
     module Channels

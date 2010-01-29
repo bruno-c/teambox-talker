@@ -5,6 +5,12 @@ module Talker::Server
   class Paste
     class InvalidState < RuntimeError; end
     
+    # TODO cache only working when one logger is up.
+    # need to move cache to memcache or setup some kind of revision number.
+    CACHE = Cache.new(
+      10 * (1024 ** 2) # Max cache size = 10 MB
+    )
+    
     MAX_LENGTH = 500 * 1024 # 500 KB
     PREVIEW_LINES = 15
     
@@ -71,12 +77,29 @@ module Talker::Server
         "preview_lines" => @preview_lines }
     end
     
+    def size
+      @content.size
+    end
+    
     def self.find(permalink)
+      # Cached! Yupidoo!
+      if paste = CACHE[permalink]
+        yield paste
+        return
+      end
+      
+      # Cache miss, load from db ...
       Talker::Server.storage.load_paste(permalink) do |content, attributions|
         if content
-          yield new(content, nil, permalink, attributions)
+          # Paste found
+          paste = new(content, nil, permalink, attributions)
+          CACHE[permalink] = paste
+          yield paste
+          
         else
+          # Paste NOT found
           yield nil
+          
         end
       end
     end
