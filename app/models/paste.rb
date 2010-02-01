@@ -1,5 +1,6 @@
 class Paste < ActiveRecord::Base
   PREVIEW_LINES = 15 # Same as in Talker::Paster (server/lib/talker/paster.rb)
+  MAX_CONNECTIONS = 6
   
   has_many :connections, :as => :channel, :dependent => :destroy
   belongs_to :room
@@ -16,6 +17,10 @@ class Paste < ActiveRecord::Base
   
   def truncated
     Paste.truncate(content)
+  end
+  
+  def full?
+    connections.count >= MAX_CONNECTIONS
   end
   
   def to_json(*a)

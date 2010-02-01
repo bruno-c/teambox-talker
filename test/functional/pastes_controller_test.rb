@@ -38,7 +38,7 @@ class PastesControllerTest < ActionController::TestCase
   end
 
   def test_cant_connect
-    @controller.stubs(:full?).returns(true)
+    Account.any_instance.stubs(:full?).returns(true)
     get :show, :id => pastes(:poem)
     assert_response :success, @response.body
     assert ! assigns(:can_connect)

@@ -53,8 +53,8 @@ class ApplicationController < ActionController::Base
       end
     end
     
-    def full?
-      current_account.full? && current_account.connections.user(current_user).blank?
+    def connected?(channel=current_account)
+      channel.connections.user(current_user).present?
     end
-    helper_method :full?
+    helper_method :connected?
 end
