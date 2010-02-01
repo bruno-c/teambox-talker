@@ -34,12 +34,18 @@ Talker.Paste.Updater = function(editor) {
     editor.setAuthorInfo(userId.toString(), {bgcolor: color});
   };
   
-  self.onMessageReceived = function(event) {
-    // Do not apply local diff
-    if (event.user.id == Talker.currentUser.id) return false;
-    
-    self.addColor(event.user.id.toString(), event.color);
-    
+  self.onInitialContent = function(event) {
+    if (event.attributions) {
+      var attribs = Talker.Paste.createAttributions(event.attributions);
+      editor.setBaseAttributedText({text: event.content + "\n", attribs: attribs.changeset },
+                                   { numToAttrib: attribs.pool });
+    } else {
+      editor.setBaseText(event.content + "\n");
+    }
+    return false;
+  };
+  
+  self.onDiffReceived = function(event) {
     var attribs = Talker.Paste.createAttributions(event.content);
     try {
       editor.applyChangesToBase(attribs.changeset, event.user.id.toString(),
@@ -49,6 +55,19 @@ Talker.Paste.Updater = function(editor) {
       Talker.client.close();
       alert("Looks like your paste is out of sync with the server. Please refresh to edit this paste again.");
     }
+  };
+  
+  self.onMessageReceived = function(event) {
+    // Setting initial text
+    if (event.initial) {
+      return self.onInitialContent(event);
+    }
+    
+    // Do not apply local diff
+    if (event.user.id == Talker.currentUser.id) return false;
+    
+    self.addColor(event.user.id.toString(), event.color);
+    self.onDiffReceived(event);
   };
   
   self.onToken = function(event) {

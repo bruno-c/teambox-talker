@@ -86,6 +86,10 @@ module Talker::Server
           Talker::Server.storage.load_room_events(@channel.id, last_event_id) do |encoded_event|
             send_data encoded_event + "\n"
           end
+        elsif @channel.type == "paste"
+          Paste.find(@channel.id) do |paste|
+            send_event :type => "message", :user => @user.info, :content => paste.content, :attributions => paste.attributions, :initial => true
+          end
         end
         
       rescue Exception => e

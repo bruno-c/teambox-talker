@@ -10,6 +10,7 @@ module Talker::Server
     
     def initialize
       @queue = Queues.logger
+      Paste.cache = true
     end
     
     def start

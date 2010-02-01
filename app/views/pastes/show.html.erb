@@ -34,13 +34,6 @@
           <% current_account.users.each do |user| -%>
           pasteUpdater.addColor("<%= user.id %>", "<%= user.color %>");
           <%- end -%>
-          <% if @paste.attributions.present? %>
-          var attribs = Talker.Paste.createAttributions("<%= escape_javascript @paste.attributions %>");
-          editor.setBaseAttributedText({text: text + "\n", attribs: attribs.changeset },
-                                       { numToAttrib: attribs.pool });
-          <% else %>
-          editor.setBaseText(text + "\n");
-          <% end %>
         
           editor.setEditable(true); 
           editor.setProperty("showsauthorcolors", true);

@@ -14,7 +14,7 @@ module Talker::Server
     MAX_LENGTH = 500 * 1024 # 500 KB
     PREVIEW_LINES = 15
     
-    attr_reader :content, :permalink, :preview_lines, :lines, :truncated_content
+    attr_reader :content, :attributions, :permalink, :preview_lines, :lines, :truncated_content
     
     def initialize(content, channel=nil, permalink=nil, attributions=nil)
       @content = content
@@ -83,7 +83,7 @@ module Talker::Server
     
     def self.find(permalink)
       # Cached! Yupidoo!
-      if paste = CACHE[permalink]
+      if @@cache && paste = CACHE[permalink]
         yield paste
         return
       end
@@ -93,7 +93,7 @@ module Talker::Server
         if content
           # Paste found
           paste = new(content, nil, permalink, attributions)
-          CACHE[permalink] = paste
+          CACHE[permalink] = paste if @@cache
           yield paste
           
         else
@@ -113,6 +113,11 @@ module Talker::Server
         yield paste.content, nil
       end
     end
+    
+    def self.cache=(v)
+      @@cache = v
+    end
+    self.cache = false
     
     private
       def truncate!
