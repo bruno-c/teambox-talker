@@ -81,7 +81,13 @@ THE SOFTWARE.
   
   // addition by Gary Haran (c) Talkerapp.com
   if (!window.dockBadge){
-    if (window.platform && window.platform.icon && window.platform.icon().badgeText){
+    var prism = false;
+    try {
+      window.platform.icon().badgeText;
+      prism = true;
+    } catch(e) {}
+    
+    if (prism){
       window.dockBadge = function(text) {
         window.platform.icon().badgeText = text;
       }
