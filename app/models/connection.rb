@@ -4,6 +4,8 @@ class Connection < ActiveRecord::Base
   
   validates_uniqueness_of :user_id, :scope => [:channel_type, :channel_id]
   
+  named_scope :user, proc { |user| { :conditions => { :user_id => user.id } } }
+  
   after_destroy :close
   
   def account

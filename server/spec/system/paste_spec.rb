@@ -21,6 +21,22 @@ class Awesome
 end
 EOS
 
+  it "should send initial content on connect" do
+    connect :room => nil, :paste => "1" do |client|
+      client.on_event do |event|
+        if event["type"] == "message"
+          event["initial"].should be_true
+          client.close
+          success
+        end
+      end
+      
+      client.on_close do
+        done
+      end
+    end
+  end
+
   it "should be received w/ paste id" do
     connect do |client|
       client.on_connected do

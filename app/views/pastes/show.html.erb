@@ -29,7 +29,7 @@
       };
       
       editor.init("editorcontainer", text, function() {
-        <% if current_account.beta_tester %>
+        <% if @can_connect %>
         try {
           <% current_account.users.each do |user| -%>
           pasteUpdater.addColor("<%= user.id %>", "<%= user.color %>");
@@ -51,6 +51,7 @@
           $("#infobox").hide();
         }
         <% else %>
+        editor.setBaseText(test + "\n");
         editor.setEditable(false);
         <% end %>
         
@@ -60,7 +61,7 @@
         setTimeout(function() {editor.focus();}, 0);
       });
       
-      <% if current_account.beta_tester %>
+      <% if @can_connect %>
       Talker.plugins.push(new Talker.ErrorHandler($("#error")));
       Talker.plugins.push(new Talker.Loading());
       Talker.plugins.push(new Talker.UserList($("#people")));
@@ -86,13 +87,19 @@
   </script>
 <% end %>
 
-<%= render "shared/loading" if current_account.beta_tester %>
+<%= render "shared/loading" if @can_connect %>
 
 <div id="paste">
   <div id="sidebar">
+    <% if full? %>
+      <div id="full_error" class="flash error">
+        <p>You've reached the maximum number of users on this paste.</p>
+        <p>You wont be able to edit this paste or see live updates.</p>
+      </div>
+    <% end %>
     <div id="error" class="flash error" style="display:none"></div>
     
-    <% if current_account.beta_tester %>
+    <% if @can_connect %>
     <div id="infobox" class="panel">
       <div class="header">
         <h3 class="name">Paste</h3>

@@ -52,4 +52,9 @@ class ApplicationController < ActionController::Base
         false
       end
     end
+    
+    def full?
+      current_account.full? && current_account.connections.user(current_user).blank?
+    end
+    helper_method :full?
 end

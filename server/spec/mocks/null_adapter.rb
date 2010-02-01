@@ -26,6 +26,7 @@ class NullAdapter
   end
   
   def load_paste(permalink)
+    yield "test", ""
   end
 end
 

@@ -93,10 +93,6 @@ class Room < ActiveRecord::Base
     "#{name.inspect}@#{account.subdomain}"
   end
   
-  def connected?(user)
-    connections.find_by_user_id(user.id).present?
-  end
-  
   private
     def update_permissions
       return unless @invitee_ids
