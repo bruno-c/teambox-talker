@@ -13,6 +13,12 @@
   <%= stylesheet_link_tag "root/screen", :media => "screen, projection" %>
   <!--[if IE7]><%= stylesheet_link_tag "root/ie_7", :media => "screen, projection" %><![endif]-->
   <!--[if IE8]><%= stylesheet_link_tag "root/ie_8", :media => "screen, projection" %><![endif]-->
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" %>
+  <script type="text/javascript" charset="utf-8">
+    if (!$.cookie("referrer")) {
+      $.cookie("referrer", document.referrer);
+    }
+  </script>
   <%= yield :head %>
 </head>
 

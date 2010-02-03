@@ -19,5 +19,5 @@ $(function() {
               "<p>It's possible (and probable) that you'll experience various issues using Talker with this browser.</p>"+
               "<p>Please report any problem to our <a href='http://talker.tenderapp.com/'>support site</a>.</p>");
   }
-  
+
 });

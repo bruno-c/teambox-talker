@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include AccountSupport
   
+  before_filter :store_referer
+  
   helper :all # include all helpers, all the time
 
   # Scrub sensitive parameters from your log
@@ -57,4 +59,11 @@ class ApplicationController < ActionController::Base
       channel.connections.user(current_user).present?
     end
     helper_method :connected?
+    
+    def store_referer
+      if current_account? && current_account.referrer.blank? && cookies[:referrer].present?
+        logger.info "Setting referrer for #{current_account.subdomain} to #{cookies[:referrer]}"
+        current_account.update_attribute :referrer, cookies[:referrer]
+      end
+    end
 end

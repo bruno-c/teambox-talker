@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100118041243) do
+ActiveRecord::Schema.define(:version => 20100203020518) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20100118041243) do
     t.datetime "grace_until"
     t.boolean  "subscription_info_changed", :default => false
     t.boolean  "beta_tester",               :default => false
+    t.string   "referrer"
   end
 
   add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true
