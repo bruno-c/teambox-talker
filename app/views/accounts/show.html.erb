@@ -44,6 +44,7 @@
                   <div class="will_expire">
                     <strong>Won't renew!</strong>
                     You'll be downgraded to the Free plan on <%= human_date @account.active_until %>
+                    <%= link_to "Renew", plan_path(plan), :method => :put, :class => "button" %>
                   </div>
                 <% end %>
 
