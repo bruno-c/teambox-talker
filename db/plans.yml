@@ -54,6 +54,13 @@ development:
   price: 24.0
 - !ruby/object:Plan 
   description: 
+  feature_level: bootstrap
+  id: 3316
+  name: Bootstrap
+  plan_type: regular
+  price: 8.0
+- !ruby/object:Plan 
+  description: 
   feature_level: premium
   id: 3317
   name: Premium
@@ -81,6 +88,13 @@ test:
   name: Basic
   plan_type: regular
   price: 24.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: bootstrap
+  id: 3316
+  name: Bootstrap
+  plan_type: regular
+  price: 8.0
 - !ruby/object:Plan 
   description: 
   feature_level: premium

@@ -4,7 +4,7 @@
 <%= image_tag "root/promo.png", :class => "promo" %>
 
 <div id="plans">
-  <% Plan.payings[0,4].each do |plan| %>
+  <% Plan.payings.reject { |p| p.name == "Bootstrap" }[0,4].each do |plan| %>
   <div class="plan <%= plan.name.downcase %>">
     <div class="box">
       <h2><%= plan.name %></h2>
