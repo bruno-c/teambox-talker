@@ -12,7 +12,7 @@
       <% unless @account.plan.free? %>
       <div class="next_billing">
         <% if @account.recurring %>
-          On <%= human_date @account.active_until - 1.day %> we will bill you <%= number_to_currency @account.plan.price %>.
+          Your next charge is on <%= human_date @account.active_until - 1.day %>.
         <% else %>
           Your subscription won't renew and you'll be downgraded to the Free plan on <%= human_date @account.active_until %>.
         <% end %>
