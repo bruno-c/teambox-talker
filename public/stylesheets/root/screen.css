@@ -560,7 +560,7 @@ span.and {
   padding: 0px;
   text-align: center; }
   #footer .container {
-    height: 257px; }
+    height: 100%; }
   #footer p {
     font-size: 15px;
     color: #4d7c9c; }
@@ -568,15 +568,40 @@ span.and {
       color: #0f283a;
       margin: 0px 5px; }
   #footer .credits {
-    text-align: center;
-    width: 430px;
-    margin: 50px auto 0px;
+    text-align: left;
+    margin: 20px auto 30px;
     padding: 0px 20px; }
-  #footer #copyright p {
-    font-family: Helvetica;
-    margin-top: 10px;
-    font-size: 14.5px;
-    color: #1b4164; }
+    #footer .credits .tweet img {
+      float: left;
+      margin-right: 10px;
+      position: relative;
+      top: 4px; }
+    #footer .credits .tweet p span {
+      color: inherit; }
+    #footer .credits #companies p {
+      float: left;
+      width: 180px;
+      height: 140px;
+      margin-bottom: 10px;
+      margin-right: 16px; }
+      #footer .credits #companies p img {
+        width: 180px; }
+    #footer .credits h3 {
+      color: #7d9fb6;
+      font-size: 22px;
+      margin: 10px 0 24px 0; }
+    #footer .credits .column {
+      float: left;
+      width: 400px;
+      margin-left: 40px; }
+      #footer .credits .column .right {
+        margin-left: 10px; }
+  #footer #copyright {
+    margin: 20px 0; }
+    #footer #copyright p {
+      font-family: Helvetica;
+      font-size: 14.5px;
+      color: #1b4164; }
   #footer a {
     color: #7d9fb6;
     display: inline;

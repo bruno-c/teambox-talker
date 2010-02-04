@@ -13,7 +13,7 @@
   <%= stylesheet_link_tag "root/screen", :media => "screen, projection" %>
   <!--[if IE7]><%= stylesheet_link_tag "root/ie_7", :media => "screen, projection" %><![endif]-->
   <!--[if IE8]><%= stylesheet_link_tag "root/ie_8", :media => "screen, projection" %><![endif]-->
-  <%= javascript_include_tag "jquery", "jquery.cookie" %>
+  <%= javascript_include_tag "jquery", "jquery.cookie", "site" %>
   <script type="text/javascript" charset="utf-8">
     if (!$.cookie("referrer")) $.cookie("referrer", document.referrer, { domain: '.<%= request.host %>', });
   </script>
@@ -47,11 +47,34 @@
 <div id="footer">
   <div class="container">
     <div class="credits">
-      <!-- <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore."</p> -->
+      <div class="column left">
+        <h3>What people are saying about Talker</h3>
+        <div id="tweets"></div>
+      </div>
+      <div class="column right" id="companies">
+        <h3>Who&rsquo;s using Talker</h3>
+        <p><%= image_tag "http://www.wego.com/hotels/images/wego/home/wg_logo.png" %></p>
+        <p><%= image_tag "http://www.nulayer.com/images/nulayer_logo.png" %></p>
+        <p><%= image_tag "http://spatialnetworks.com/common/images/logo.gif" %></p>
+        <p><%= image_tag "http://liquidmedia.ca/logo.jpg" %></p>
+        <p><%= image_tag "http://www.webdweller.com/images/logo_home_3.png" %></p>
+      </div>
     </div>
     <div class="clear"></div>
     <div id="copyright">
-      <p>&copy; 2009 Saut&eacute; Apps <span>|</span> <a href="/about">About</a> <span>|</span> <%= link_to "Help &amp; Support", "http://talker.tenderapp.com" %> <span>|</span> <a href="http://twitter.com/talkerapp">Twitter</a> </p>
+      <p>
+        &copy; 2010 Saut&eacute; Apps
+        <span>|</span>
+        <a href="/about">About</a>
+        <span>|</span>
+        <a href="http://talkerapp.tumblr.com">Blog</a>
+        <span>|</span>
+        <a href="http://twitter.com/talkerapp">Twitter</a>
+        <span>|</span>
+        <%= link_to "Help &amp; Support", "http://talker.tenderapp.com" %>
+        <span>|</span>
+        <a href="mailto:info@talkerapp.com">Contact</a>
+      </p>
     </div>
   </div>
 </div>
