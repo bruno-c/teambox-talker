@@ -1,12 +1,17 @@
 <% @title = "Talker Pricing" %>
 <% @tagline = "Pick The Right Plan For Your Team" %>
 
+<%= image_tag "root/promo.png", :class => "promo" %>
+
 <div id="plans">
-  <% Plan.payings.reject{ |plan| plan.name == 'Big'}.each do |plan| %>
+  <% Plan.payings[0,4].each do |plan| %>
   <div class="plan <%= plan.name.downcase %>">
     <div class="box">
       <h2><%= plan.name %></h2>
-      <h3><%= number_to_currency plan.price, :precision => 0 %>/month</h3>
+      <h3>
+        <%= number_to_currency plan.price, :precision => 0 %>/month
+        <div class="old_price"><%= number_to_currency plan.price * 2.0, :precision => 0 %><span class="month">/month</span></div>
+      </h3>
       <p>
         <span><%= plan.features.max_connections %></span> chatters<br />
         <span><%= number_to_human_size plan.features.max_storage %></span> upload space<br />
@@ -27,7 +32,7 @@
   <div id="all">
     <div class="box">
       <div class="free">
-        <%= link_to image_tag("root/free.png"), signup_path(Plan.free), :class => "badge" %>
+        <%# link_to image_tag("root/free.png"), signup_path(Plan.free), :class => "badge" %>
         <p class="extras">Not convinced yet? Try our <%= link_to "Free Plan", signup_path("free"), :class => "free_plan" %> for an <span>Unlimited time</span> and <span>No credit card required</span></p>
         <p class="details">The Free plan allows up to <span><%= Plan.free.features.max_connections %> chatters</span> and <span><%= number_to_human_size Plan.free.features.max_storage %></span>. You can upgrade to a paying plan at any time and still get a one         month free trial.</p>
       </div>

@@ -44,7 +44,7 @@ development:
   id: 3016
   name: Startup
   plan_type: regular
-  price: 12.0
+  price: 6.0
 - !ruby/object:Plan 
   description: 
   feature_level: basic
@@ -52,13 +52,6 @@ development:
   name: Basic
   plan_type: regular
   price: 24.0
-- !ruby/object:Plan 
-  description: 
-  feature_level: bootstrap
-  id: 3316
-  name: Bootstrap
-  plan_type: regular
-  price: 8.0
 - !ruby/object:Plan 
   description: 
   feature_level: premium
@@ -80,7 +73,7 @@ test:
   id: 3016
   name: Startup
   plan_type: regular
-  price: 12.0
+  price: 6.0
 - !ruby/object:Plan 
   description: 
   feature_level: basic
@@ -88,13 +81,6 @@ test:
   name: Basic
   plan_type: regular
   price: 24.0
-- !ruby/object:Plan 
-  description: 
-  feature_level: bootstrap
-  id: 3316
-  name: Bootstrap
-  plan_type: regular
-  price: 8.0
 - !ruby/object:Plan 
   description: 
   feature_level: premium
