@@ -21,4 +21,9 @@ class AdminControllerTest < ActionController::TestCase
     get :jobs
     assert_response :success, @response.body
   end
+
+  def test_accounts
+    get :accounts
+    assert_response :success, @response.body
+  end
 end

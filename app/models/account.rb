@@ -20,6 +20,9 @@ class Account < ActiveRecord::Base
   after_create :create_subscription
   after_destroy :cancel_subscription
   
+  named_scope :paying, :conditions => ["plan_id <> ? AND recurring = 1", Plan.free.id]
+  named_scope :not_on_trial, :conditions => "on_trial = 0"
+  
   def features
     plan.features
   end

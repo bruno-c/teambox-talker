@@ -13,11 +13,9 @@
   <%= stylesheet_link_tag "root/screen", :media => "screen, projection" %>
   <!--[if IE7]><%= stylesheet_link_tag "root/ie_7", :media => "screen, projection" %><![endif]-->
   <!--[if IE8]><%= stylesheet_link_tag "root/ie_8", :media => "screen, projection" %><![endif]-->
-  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" %>
+  <%= javascript_include_tag "jquery", "jquery.cookie" %>
   <script type="text/javascript" charset="utf-8">
-    if (!$.cookie("referrer")) {
-      $.cookie("referrer", document.referrer);
-    }
+    if (!$.cookie("referrer")) $.cookie("referrer", document.referrer, { domain: '.<%= request.host %>', });
   </script>
   <%= yield :head %>
 </head>
@@ -53,7 +51,7 @@
     </div>
     <div class="clear"></div>
     <div id="copyright">
-      <p>&copy; 2009 Saut&eacute; Apps <span>|</span> </span> <a href="/about">About</a> <span>|</span> <%= link_to "Help &amp; Support", "http://talker.tenderapp.com" %> <span>|</span> <a href="http://twitter.com/talkerapp">Twitter</a> </p>
+      <p>&copy; 2009 Saut&eacute; Apps <span>|</span> <a href="/about">About</a> <span>|</span> <%= link_to "Help &amp; Support", "http://talker.tenderapp.com" %> <span>|</span> <a href="http://twitter.com/talkerapp">Twitter</a> </p>
     </div>
   </div>
 </div>

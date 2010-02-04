@@ -1537,6 +1537,8 @@ div.info {
     color: white; }
   #admin table td {
     border-bottom: 1px dotted gray; }
+#admin span.warn {
+  color: #924f6b; }
 
 table tr.odd {
   background: #f3f9fc; }

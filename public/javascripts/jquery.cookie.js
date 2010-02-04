@@ -1,0 +1,1 @@
+../../app/javascripts/jquery/jquery.cookie.js

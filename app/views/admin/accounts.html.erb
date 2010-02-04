@@ -1,0 +1,49 @@
+<div id="admin" class="sheet">
+  <h2><%= @title = "Staff Admin Panel" %></h2>
+  
+  
+  <%= render :partial => "nav" %>
+  <h3>Accounts</h3>
+
+  <%= will_paginate @accounts %>
+  <table id="accounts">
+    <tr>
+      <th>Subdomain</th>
+      <th>Owner</th>
+      <th>Referrer</th>
+      <th>Created</th>
+      <th>Users</th>
+      <th>Storage</th>
+      <th>Plan</th>
+      <th>Trial</th>
+    </tr>
+  <% @accounts.each do |account| %>
+    <tr class="connection">
+      <td><%=h account.subdomain %></td>
+      <td><%= mail_to account.owner.email, h(account.owner.name) %></td>
+      <td><%= link_to truncate(account.referrer), account.referrer if account.referrer.present? %></td>
+      <td><%= time_ago_in_words account.created_at %> ago</td>
+      <td><%= pluralize account.users.registered.count, "user" %></td>
+      <td><%= number_to_human_size account.used_storage %></td>
+      <td><%= account.plan.name %></td>
+      <td>
+        <% if !account.plan.free? && !account.recurring %>
+          <span class="warn">Not recurring</span>
+        <% end %>
+        <% if account.on_trial && account.grace_until %>
+          Ends in <%= time_ago_in_words account.grace_until %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+  
+  <%= will_paginate @accounts %>
+</div>
+
+<% content_for :sidebar do %>
+  <h2>Stats</h2>
+  <p><strong><%= Account.paying.count %></strong> paying customers</p>
+  <p><strong><%= number_to_currency Account.not_on_trial.paying.map { |a| a.plan.price }.sum %></strong> monthly revenue</p>
+  <p><strong><%= number_to_currency Account.paying.map { |a| a.plan.price }.sum %></strong> projected monthly revenue (after all trial ends)</p>
+<% end %>
