@@ -10,6 +10,6 @@ class AdminController < ApplicationController
   end
   
   def accounts
-    @accounts = Account.paginate(:order => "created_at desc", :per_page => 100, :page => params[:page])
+    @accounts = Account.paginate(:order => "created_at desc", :page => params[:page])
   end
 end
