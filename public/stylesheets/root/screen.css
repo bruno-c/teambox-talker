@@ -578,14 +578,10 @@ span.and {
       top: 4px; }
     #footer .credits .tweet p span {
       color: inherit; }
-    #footer .credits #companies p {
-      float: left;
-      width: 180px;
-      height: 140px;
-      margin-bottom: 10px;
-      margin-right: 16px; }
-      #footer .credits #companies p img {
-        width: 180px; }
+    #footer .credits #companies a {
+      border: 0; }
+      #footer .credits #companies a img {
+        border: 0; }
     #footer .credits h3 {
       color: #7d9fb6;
       font-size: 22px;
