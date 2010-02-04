@@ -46,17 +46,7 @@
 
 <div id="footer">
   <div class="container">
-    <div class="credits">
-      <div class="column left">
-        <h3>What people are saying about Talker</h3>
-        <div id="tweets"></div>
-      </div>
-      <div class="column right" id="companies">
-        <h3>Who&rsquo;s using Talker</h3>
-        <p><%= link_to image_tag("/images/root/companies/nulayer.png"), "http://nulayer.com" %></p>
-        <p><%= link_to image_tag("/images/root/companies/liquidmedia.png"), "http://liquidmedia.ca" %></p>
-      </div>
-    </div>
+    <%= yield :footer %>
     <div class="clear"></div>
     <div id="copyright">
       <p>
