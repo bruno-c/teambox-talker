@@ -56,10 +56,17 @@
       <h3>What people are saying about Talker</h3>
       <div id="tweets"></div>
     </div>
-    <div class="column right" id="companies">
+    <div class="column right">
       <h3>Who&rsquo;s using Talker</h3>
-      <p><%= link_to image_tag("/images/root/companies/nulayer.png"), "http://nulayer.com" %></p>
-      <p><%= link_to image_tag("/images/root/companies/liquidmedia.png"), "http://liquidmedia.ca" %></p>
+      <div id="companies">
+        <%= link_to image_tag("/images/root/companies/nulayer.png", :size => "125x40"), "http://nulayer.com" %>
+        <%= link_to image_tag("/images/root/companies/liquidmedia.png", :size => "79x63"), "http://liquidmedia.ca" %>
+        <%= link_to image_tag("/images/root/companies/wego.png", :size => "117x43"), "http://wego.com" %>
+      </div>
+      <h4>In only three months, more than 1500 people have sent over 300,000 messages using Talker.</h4>
+      
+      <h3>Latest News about Talker</h3>
+      <div id="news"></div>
     </div>
   </div>
 <% end %>

@@ -9,4 +9,13 @@ $(function() {
       element.appendTo("#tweets");
     });
   });
+  
+  $.getJSON('http://www.rss2json.com/rss2json?url=http://talkerapp.tumblr.com/rss&callback=?', function(data){
+    $.each(data.entries, function(i, entry){
+      var element = $('<p><a/></p>');
+      element.find("a").attr('href', entry.link).text(entry.title);
+      element.appendTo("#news");
+      if (i == 4) return false;
+    });
+  });
 });

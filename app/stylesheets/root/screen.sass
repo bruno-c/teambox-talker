@@ -625,6 +625,7 @@ span.and
     text-align: left
     margin: 20px auto 30px
     padding: 0px 20px
+    
     .tweet
       img
         float: left
@@ -633,13 +634,29 @@ span.and
         top: 4px
       p span
         color: inherit
+    
     #companies
+      background-color: #fff
+      +rounded_corners("all", 5)
+      padding: 10px
+      text-align: center
       a
         border: 0
+        img
+          margin: 0 auto
+          +rounded_corners("all", 5)
+      
     h3
       color: #7d9fb6
       font-size: 22px
       margin: 10px 0 24px 0
+    
+    h4
+      color: #4d7c9c
+      font-size: 20px
+      font-weight: normal
+      margin: 24px 0
+    
     .column
       float: left
       width: 400px

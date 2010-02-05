@@ -578,14 +578,29 @@ span.and {
       top: 4px; }
     #footer .credits .tweet p span {
       color: inherit; }
-    #footer .credits #companies a {
-      border: 0; }
-      #footer .credits #companies a img {
+    #footer .credits #companies {
+      background-color: #fff;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      padding: 10px;
+      text-align: center; }
+      #footer .credits #companies a {
         border: 0; }
+        #footer .credits #companies a img {
+          margin: 0 auto;
+          border-radius: 5px;
+          -moz-border-radius: 5px;
+          -webkit-border-radius: 5px; }
     #footer .credits h3 {
       color: #7d9fb6;
       font-size: 22px;
       margin: 10px 0 24px 0; }
+    #footer .credits h4 {
+      color: #4d7c9c;
+      font-size: 20px;
+      font-weight: normal;
+      margin: 24px 0; }
     #footer .credits .column {
       float: left;
       width: 400px;
