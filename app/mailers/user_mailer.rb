@@ -4,6 +4,7 @@ class UserMailer < ActionMailer::Base
   def invitation(inviter, url, email)
     recipients  email
     from        FROM
+    reply_to    "#{inviter.name} <#{inviter.email}>"
     subject     "#{inviter.name} invites you to chat"
     body        :inviter => inviter, :url => url
   end

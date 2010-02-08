@@ -1,0 +1,35 @@
+<div class="sheet">
+  <h2><%=h @title = "Choose a Password" %></h2>
+  
+  <div class="info">
+    Before you start chatting, you need to choose a password so you can login again later. You can also change your user name or email if you want to.
+  </div>
+
+  <% form_for :user, :url => set_password_invites_path, :html => { :method => :put, :class => "lw120" } do |f| %>
+    <%= hidden_field_tag :room_id, @room.try(:id) %>
+    
+    <%= f.error_messages %>
+    
+    <p>
+      <%= f.label :name, "User name" %>
+      <%= f.text_field :name, :size => 20 %>
+      <label class="description">This is your user name when you chat. Avoid non-printing characters, <code>\</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&amp;</code> and spaces</label>
+    </p>
+    <p>
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+    </p>
+    
+    <p>
+      <%= f.label :password %>
+      <%= f.password_field :password, :size => 20 %>
+    </p>
+    <p>
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation, :size => 20 %>
+    </p>
+    <p class="indent submit">
+      <%= ok_button "Update" %>
+    </p>
+  <% end %>
+</div>
