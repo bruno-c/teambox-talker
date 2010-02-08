@@ -1,33 +1,26 @@
 <% @title = @tagline = "A Quick <span class='and'>&amp;</span> Joyful Tour of Talker" %>
 
 <div class="content">
-
-  <div class="feature left">
-    <%= image_tag "tour/chat.png" %>
-    <div class="pitch">
-      <h3>Real-Time Teamwork</h3>
-      <p>IM is great for one on one conversations but fails miserably when dealing with groups.  Getting feedback by email is also horrible.  Half the people don't answer, the other half forgets to hit reply all.  When a team needs to <strong>get things done together</strong> there is no better solution than a <strong>collaboration tool</strong> built specifically to improve <strong>group workflow</strong>.</p>
-    </div>
-  </div>
-
-  <div class="feature right">
-    <%= image_tag "tour/feed.png" %>
-    <div class="pitch">
-      <h3>In Room Feed Notifications</h3>
-      <p>The web has changed drastically since the advent of <strong>RSS</strong> and <strong>Atom</strong> feeds.  Almost every web site can talk to your chosen chat room with very little effort!  Get <strong>Twitter searches</strong> for special keywords, import <strong>commit messages from GitHub</strong> or get alerted of new tickets opened on your <strong>ticket tracking system</strong>. </p>
-    </div>
-  </div>
-
-  <div class="feature left">
-    <%= image_tag "tour/plugin.png" %>
-    <div class="pitch">
-      <h3>Powerful Javascript Plugins</h3>
-      <p>With the plugins you can change anything to the chat room from behavior to colors.  You can <strong>link to your favorite ticket tracking system</strong>, display <strong>private messages</strong> on the side, have your <strong>name highlighted</strong>, <strong>embed flash content</strong> and more!  You can do virtually <strong>anything</strong> you want!</p>
-    </div>
-  </div>
   
-  <div class="buttons">
-    <%= link_to "Signup Now For a Free Trial", pricing_path %>
+  <% case @step
+     when nil %>
+    <h3>Fix Issues in Real-Time</h3>
+    <h4>Next: <%= link_to "Get Feedback in Real-Time", tour_path("feedback") %></h4>
+  
+    <%= image_tag "tour/issue.png", :class => "issue" %>
+
+  <% when "feedback" %>
+    <h3>Get Feedback in Real-Time</h3>
+    <h4>Next: <%= link_to "Fix Issues in Real-Time", tour_path %></h4>
+  
+    <%= image_tag "tour/feedback.png", :class => "feedback" %>
+  
+  <% end %>
+  
+  <div id="signup">
+    <div class="buttons">
+      <%= link_to "View Pricing <span class='and'>&</span> Signup For Free", pricing_path, :class => "pricing" %>
+    </div>
   </div>
   
 </div>

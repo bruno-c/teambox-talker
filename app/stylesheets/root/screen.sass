@@ -354,7 +354,7 @@ span.and
     color: #ae4b0f
     font-family: Georgia
     font-size: 15px
-    padding: 11px 40px
+    padding: 11px 31px
     background: #fcefce
     border-top: 1px solid #fabd1a
     border-bottom: 1px solid #fabd1a
@@ -573,44 +573,28 @@ img.promo
 
 #tour
   #splash
-    height: 1150px
-  
-  .buttons
-    a
-      +box_shadow(0, 1, 4, #2d86b2)
-      margin: 0 auto
-      font-size: 24px
-      padding: 10px 20px
-      margin: 10px 243px
+    height: 970px
   
   .content
     position: absolute
     margin: 188px 0 0 41px
     width: 872px
-  .feature
-    padding: 18px 0
-    float: left
-    clear: both
-    h3
-      margin:
-        bottom: 15px
-        top: 10px
-    img
-      height: 250px
-      width: 500px
-      +box_shadow(0, 1, 4, #2d86b2)
-      +rounded_corners("all", 3)
-      float: left
-      margin-right: 40px
-    .pitch
-      padding: 0 20px
     
-    &.right
-      img
-        float: right
-        margin:
-          right: 0
-          left: 40px
+    h3, h4
+      text-align: center
+    
+    h4
+      color: #666
+    
+    img
+      position: absolute
+      margin: 30px 0 0 -74px
+    
+    #signup
+      position: absolute
+      margin: 670px 0px 0px 268px
+      a
+        font-size: 20px
 
 #footer
   min-height: 200px
@@ -620,7 +604,7 @@ img.promo
   text-align: center
 
   .container
-    height: 257px
+    height: 100%
 
   p
     font-size: 15px
@@ -631,16 +615,54 @@ img.promo
       margin: 0px 5px
 
   .credits
-    text-align: center
-    width: 430px
-    margin: 50px auto 0px
+    text-align: left
+    margin: 20px auto 30px
     padding: 0px 20px
+    
+    .tweet
+      img
+        float: left
+        margin-right: 10px
+        position: relative
+        top: 4px
+      p span
+        color: inherit
+    
+    #companies
+      background-color: #fff
+      +rounded_corners("all", 5)
+      padding: 10px
+      text-align: center
+      a
+        border: 0
+        img
+          margin: 0 auto
+          +rounded_corners("all", 5)
+      
+    h3
+      color: #7d9fb6
+      font-size: 22px
+      margin: 10px 0 24px 0
+    
+    h4
+      color: #4d7c9c
+      font-size: 20px
+      font-weight: normal
+      margin: 24px 0
+    
+    .column
+      float: left
+      width: 400px
+      margin-left: 40px
+      .right
+        margin-left: 10px
 
-  #copyright p
-    font-family: Helvetica
-    margin-top: 10px
-    font-size: 14.5px
-    color: #1b4164
+  #copyright
+    margin: 20px 0
+    p
+      font-family: Helvetica
+      font-size: 14.5px
+      color: #1b4164
 
   a
     color: #7d9fb6

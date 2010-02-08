@@ -14,7 +14,7 @@
     </tr>
   <% @connections.each do |connection| %>
     <tr class="connection">
-      <td><%=h connection.account.subdomain %></td>
+      <td><%=h connection.account.try(:subdomain) %></td>
       <td><%=h connection.title %></td>
       <td><%= mail_to connection.user.email, h(connection.user.name) %></td>
       <td><%= time_ago_in_words connection.created_at %> ago</td>
