@@ -1,5 +1,6 @@
 class InvitesController < ApplicationController
-  before_filter :admin_required, :except => :show
+  before_filter :admin_required, :except => [:show, :set_password]
+  before_filter :login_required, :only => :set_password
   
   def index
   end
@@ -10,18 +11,29 @@ class InvitesController < ApplicationController
     if @user = current_account.users.authenticate_by_perishable_token(@token)
       self.current_user = @user
       remember_me!
+      @room = current_account.rooms.find_by_id(params[:room])
 
       if @user.pending?
-        flash[:notice] = "You're now logged in! Please change your password."
         @user.activate!
-        redirect_to settings_path
+        render :layout => "dialog"
       else
-        redirect_to rooms_path
+        redirect_to_room_or_default @room, rooms_path
       end
       
     else
       flash[:error] = "Invalid token. Make sure you pasted the link correctly."
       access_denied
+    end
+  end
+  
+  def set_password
+    @user = current_user
+    @room = current_account.rooms.find_by_id(params[:room_id])
+    
+    if @user.update_attributes(params[:user])
+      redirect_to_room_or_default @room, rooms_path
+    else
+      render :show, :layout => "dialog"
     end
   end
   
@@ -36,13 +48,15 @@ class InvitesController < ApplicationController
       email.strip!
       user = current_account.users.build(:email => email)
       user.generate_name
-      if user.save
-        user.permissions.create :room => @room unless @room.public
-        send_invitation user
-        success_count += 1
-      else
-        flash.now[:error] ||= "<h3>Some errors occured while sending invitations:</h3>"
-        flash.now[:error] += "<p><strong>" + email + "</strong>: " + user.errors.full_messages.to_sentence + "</p>"
+      User.transaction do
+        if user.save
+          user.permissions.create :room => @room unless @room.public
+          send_invitation user, @room
+          success_count += 1
+        else
+          flash.now[:error] ||= "<h3>Some errors occured while sending invitations:</h3>"
+          flash.now[:error] += "<p><strong>" + email + "</strong>: " + user.errors.full_messages.to_sentence + "</p>"
+        end
       end
     end
 
@@ -69,8 +83,21 @@ class InvitesController < ApplicationController
   end
   
   private
-    def send_invitation(user)
+    def send_invitation(user, room=nil)
       user.create_perishable_token!
-      UserMailer.deliver_invitation(current_user, invite_url(user.perishable_token), user.email)
+      if room
+        url = invite_url(:id => user.perishable_token, :room => room.id)
+      else
+        url = invite_url(user.perishable_token)
+      end
+      UserMailer.deliver_invitation(current_user, url, user.email)
+    end
+    
+    def redirect_to_room_or_default(room, default)
+      if room
+        redirect_to room
+      else
+        redirect_to default
+      end
     end
 end
