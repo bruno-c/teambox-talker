@@ -15,28 +15,28 @@ production:
   id: 3401
   name: Startup
   plan_type: regular
-  price: 12.0
+  price: 6.0
 - !ruby/object:Plan 
   description: 
   feature_level: basic
   id: 3403
   name: Basic
   plan_type: regular
-  price: 24.0
+  price: 12.0
 - !ruby/object:Plan 
   description: 
   feature_level: premium
   id: 3404
   name: Premium
   plan_type: regular
-  price: 49.0
+  price: 24.0
 - !ruby/object:Plan 
   description: 
   feature_level: big
   id: 3593
   name: Big
   plan_type: regular
-  price: 99.0
+  price: 49.0
 development: 
 - !ruby/object:Plan 
   description: 
