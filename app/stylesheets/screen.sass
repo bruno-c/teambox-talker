@@ -1231,9 +1231,10 @@ table#feeds
     padding: 0 6px
     color = !light_grey
   td
+    vertical-align: text-top
     border-bottom = 1px dotted !light_grey
     padding: 0 6px
-    span.error
+    .error
       +font_size("small")
       color = !red * 0.5
       a
@@ -1243,7 +1244,9 @@ table#feeds
       top: 3px
       &.to
         margin: 0 6px
+      
   td.actions
+    white-space: nowrap
     padding: 6px
     text-align: right
     a

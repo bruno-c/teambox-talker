@@ -1551,12 +1551,13 @@ table#feeds {
     padding: 0 6px;
     color: silver; }
   table#feeds td {
+    vertical-align: text-top;
     border-bottom: 1px dotted silver;
     padding: 0 6px; }
-    table#feeds td span.error {
+    table#feeds td .error {
       font-size: 12px;
       color: #7f0000; }
-      table#feeds td span.error a {
+      table#feeds td .error a {
         color: inherit; }
     table#feeds td img {
       position: relative;
@@ -1564,6 +1565,7 @@ table#feeds {
       table#feeds td img.to {
         margin: 0 6px; }
   table#feeds td.actions {
+    white-space: nowrap;
     padding: 6px;
     text-align: right; }
     table#feeds td.actions a {

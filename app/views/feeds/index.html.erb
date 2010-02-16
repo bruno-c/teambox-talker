@@ -3,6 +3,7 @@
   
   <table id="feeds">
     <tr>
+      <th></th>
       <th>Feed URL</th>
       <th></th>
       <th>Send to Room</th>
@@ -10,11 +11,11 @@
     </tr>
   <% @feeds.each do |feed| %>
     <tr class=<%= cycle :even, :odd %>>
+      <td><%= image_tag "icons/feed.png", :class => "icon" %></td>
       <td>
-        <%= image_tag "icons/feed.png" %>
-        <%= link_to truncate(h(feed.url), :length => 50), feed.url, :title => h(feed.url) %>
+        <%= link_to h(feed.url).gsub("/", "/&shy;"), feed.url, :title => h(feed.url) %>
         <% if feed.failed? %>
-          <span class="error">Error: <%=h feed.last_error %> (<%= link_to "?", "http://en.wikipedia.org/wiki/List_of_HTTP_status_codes" %>)</span>
+          <div class="error">Error: <%=h feed.last_error %> (<%= link_to "?", "http://en.wikipedia.org/wiki/List_of_HTTP_status_codes" %>)</div>
         <% end %>
       </td>
       <td><%= image_tag "icons/arrow.png", :class => "to", :title => "Send to room" %></td>
