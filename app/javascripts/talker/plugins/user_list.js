@@ -26,6 +26,7 @@ Talker.UserList = function(element) {
     };
 
     self.onUsers = function(event) { // this only ever occurs from talker directly so no worries about logs impeding.
+      $("#people").html("");
       $(event.users).each(function(){
         add(this);
       });
