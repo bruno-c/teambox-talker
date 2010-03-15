@@ -65,6 +65,12 @@ class SessionsControllerTest < ActionController::TestCase
     assert @controller.send(:logged_in?)
   end
 
+  def test_should_login_with_basic_auth
+    authorize_as :quentin
+    get :new
+    assert @controller.send(:logged_in?)
+  end
+
   def test_should_fail_cookie_login
     users(:quentin).remember_me
     @request.cookies["auth_token"] = 'invalid_auth_token'
