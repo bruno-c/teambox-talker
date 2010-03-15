@@ -86,7 +86,11 @@ class SessionsControllerTest < ActionController::TestCase
   end
 
   def test_updates_time_zone_from_cookie
-    @request.cookies["tzoffset"] = "300"
+    if Time.now.dst?
+      @request.cookies["tzoffset"] = "240"
+    else
+      @request.cookies["tzoffset"] = "300"
+    end
     login_as :quentin
     get :new
     assert_equal "Eastern Time (US & Canada)", users(:quentin).reload.time_zone
