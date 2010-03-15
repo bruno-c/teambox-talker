@@ -120,7 +120,7 @@ class User < ActiveRecord::Base
   end
   
   def to_json(options = {})
-    super(options.merge(:only => [:name, :email, :id, :color]))
+    super(options.reverse_merge(:only => [:id, :name, :email, :color]))
   end
   
   def assign_color

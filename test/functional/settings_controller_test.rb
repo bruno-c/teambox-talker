@@ -11,6 +11,11 @@ class SettingsControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  def test_show_as_json
+    get :show, :format => "json"
+    assert_response :success
+  end
+  
   def test_update
     put :update, :user => hash_for_user
     assert_redirected_to settings_path
