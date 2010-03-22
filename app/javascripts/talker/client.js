@@ -9,6 +9,7 @@ Talker.Client = function(options) {
   var reconnectInterval = 2000;
   var reconnect = true;
   var requestingToken = false;
+  var lastEventId = options.lastEventId;
 
   // LineProtocol implementation.
   function onLineReceived(line) {
@@ -18,6 +19,8 @@ Talker.Client = function(options) {
       // Ignoring invalid JSON
       return;
     }
+    
+    self.lastEventId = line.id;
     
     switch(line.type){
       case 'message':
@@ -92,7 +95,7 @@ Talker.Client = function(options) {
           room: options.room, 
           paste: options.paste, 
           token: options.token,
-          last_event_id: options.lastEventId
+          last_event_id: self.lastEventId
         });
         callbacks.onOpen();
         self.resetPing();
