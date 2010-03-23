@@ -1,3 +1,3 @@
 function h(string) {
-  return string ? string.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;') : '';
+  return string ? string.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : '';
 }

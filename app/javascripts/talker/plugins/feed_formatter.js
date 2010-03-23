@@ -3,15 +3,15 @@ Talker.FeedFormatter = function() {
 
   var template = '\
     <small class="timestamp"><%= FormatHelper.formatDate(published) %></small> \
-    <a href="http://<%= source %>/" class="favicon"> \
-      <img src="//<%= source %>/favicon.ico" /> \
+    <a href="http://<%= h(source) %>/" class="favicon"> \
+      <img src="//<%= h(source) %>/favicon.ico" /> \
     </a> \
-    <a href="<%= url %>" class="title"> \
-      <%= author %>: <%= title %> \
+    <a href="<%= h(url) %>" class="title"> \
+      <%= h(author) %>: <%= h(title) %> \
       <b class="fade"><!----></b> \
     </a> \
     <b class="content_tail"><!----></b> \
-    <pre class="content"><%= content %></pre>';
+    <pre class="content"><%= h(content) %></pre>';
   
   self.onMessageReceived = function(event) {
     if (event.feed) {
