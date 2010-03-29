@@ -67,7 +67,7 @@
 	
 	$.jPlayer.defaults = {
 		cssPrefix: "jqjp",
-		swfPath: "js",
+		swfPath: "flash",
 		volume: 80,
 		oggSupport: false,
 		nativeSupport: true,
