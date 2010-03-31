@@ -201,9 +201,11 @@ module Talker::Server
         SELECT payload
         FROM events
         WHERE room_id = #{room_id}
-          AND created_at > #{find_event_sql}
-           OR (created_at = #{find_event_sql}
-               AND uuid > '#{quote(last_event_id)}')
+          AND (
+              created_at > #{find_event_sql}
+              OR (created_at = #{find_event_sql}
+                  AND uuid > '#{quote(last_event_id)}')
+              )
         ORDER BY created_at desc, uuid desc
         LIMIT 50
       SQL
