@@ -1,7 +1,7 @@
 // Pass timezone offset from the browser to backend using a magic cookie
 $.cookie("tzoffset", (new Date()).getTimezoneOffset());
 
-String.prototype.retardedHash = function() {
+String.prototype.assetHash = function() {
   var start = 0;
   for (var i = 0; i < this.length; i++){
     start += this.charCodeAt(i);
@@ -11,7 +11,7 @@ String.prototype.retardedHash = function() {
 
 function assetHost(path) {
   var domain = "talkerapp.com";
-  var id = path.retardedHash() % 4;
+  var id = path.assetHash() % 4;
   return "//assets" + id + "." + domain + path;
 }
 
