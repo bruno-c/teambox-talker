@@ -1,0 +1,7 @@
+eventmachine -v 0.12.10
+nokogiri -v 1.4.0
+uuid -v 2.0.2
+yajl-ruby -v 0.6.3
+mysqlplus -v 0.1.1
+amqp -v 0.6.4
+feedzirra -v 0.0.19
