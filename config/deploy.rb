@@ -1,5 +1,5 @@
 set :application, "talker"
-set :repository,  "git@github.com:micho/talker.git"
+set :repository,  "git@github.com:macournoyer/talker.git"
 
 set :deploy_to, "/mnt/apps/#{application}"
 set :deploy_via, :remote_cache
@@ -12,7 +12,7 @@ set :scm, :git
 
 set :volume_id, "vol-2589074c"
 
-server = "ec2-174-129-84-220.compute-1.amazonaws.com"
+server = "ec2-75-101-197-187.compute-1.amazonaws.com"
 role :app, server
 role :web, server
 role :db,  server, :primary => true
