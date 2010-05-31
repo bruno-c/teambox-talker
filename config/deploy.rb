@@ -12,7 +12,7 @@ set :scm, :git
 
 set :volume_id, "vol-2589074c"
 
-server = "ec2-75-101-197-187.compute-1.amazonaws.com"
+server = "184.73.165.131"
 role :app, server
 role :web, server
 role :db,  server, :primary => true
