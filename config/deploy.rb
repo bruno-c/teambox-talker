@@ -1,5 +1,5 @@
 set :application, "talker"
-set :repository,  "git@github.com:macournoyer/talker.git"
+set :repository,  "git@github.com:micho/talker.git"
 
 set :deploy_to, "/mnt/apps/#{application}"
 set :deploy_via, :remote_cache
