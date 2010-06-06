@@ -991,7 +991,7 @@ div.dialog
         li
           background-position-y: center
 
-a#logo
+a#logo, a.logo
   text-decoration: none
   color = !light_grey
   +font_size("tiny")
@@ -1007,11 +1007,13 @@ a#logo
 // Sidebar
 #sidebar
   z-index: 100
-  a#logo
+  a#logo, a.logo
     display: block
     float: right
     margin-top: -10px
     padding: 0 6px
+  a#logoteambox
+    margin-top: 0px
   #utilities
     text-align: right
     margin: -40px 0 10px
