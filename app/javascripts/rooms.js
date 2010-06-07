@@ -1,4 +1,11 @@
 $(function() {
+  // Hide sidebar
+  $('#sidebar .toggle_sidebar').click(function(e) {
+    $('#sidebar #room, #sidebar #utilities, #sidebar .logo').toggle();
+    $('#main, #message_form, #sidebar .toggle_sidebar').toggleClass('expanded');
+    Talker.trigger("Resize");
+  });
+
   // Room name dropdown
   $('#rooms_controller.show #room_name').click(function(e) {
     $('#rooms').toggle();

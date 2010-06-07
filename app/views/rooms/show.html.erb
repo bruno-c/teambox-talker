@@ -89,8 +89,13 @@
     </div>
   </div>
 
+  <span class="toggle_sidebar">
+    <em>Hide the sidebar</em>
+    <b class="hide">&rarr;</b>
+    <b class="show">&larr;</b>
+  </span>
+
   <div id="error" class="flash error" style="display:none"></div>
-  
   <div id="room" class="panel">
     <div class="header">
       <h3 class="name" id="room_name">
@@ -127,7 +132,7 @@
     </div>
     <% end %>
   </div>
-  <a id="logo" href="http://talkerapp.com" target="_blank">
+  <a id="logo" class="logo" href="http://talkerapp.com" target="_blank">
     Talker <%= image_tag "/images/favicon.png", :height => "18", :width => "18", :alt => "Talker Fish Loves Thee" %> Group Chat
   </a>
   <a class="logo" id="logoteambox" href="http://www.teambox.com" target="_blank">

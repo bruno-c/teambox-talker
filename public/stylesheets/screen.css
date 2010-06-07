@@ -461,6 +461,8 @@ html[xmlns] .clearfix {
 #main {
   margin: 0 240px 0 0;
   padding: 40px; }
+  #main.expanded {
+    margin: 0 40px 0 0; }
   #main div.sheet {
     background: white;
     padding: 40px;
@@ -1062,6 +1064,8 @@ a.button, button {
   width: 100%;
   margin: 0px 230px 0 0;
   background: url('../../images/bottom_fader.png'); }
+  #message_form.expanded form.fade {
+    margin: 20px 80px 0 0; }
   #message_form form.fade {
     height: 80px;
     margin: 20px 280px 0 0;
@@ -1315,6 +1319,40 @@ a#logo, a.logo {
 
 #sidebar {
   z-index: 100; }
+  #sidebar span.toggle_sidebar {
+    display: block;
+    width: 100%;
+    padding: 5px 0; }
+    #sidebar span.toggle_sidebar em {
+      float: right;
+      display: inline;
+      margin-right: 55px;
+      line-height: 1em;
+      color: #404040;
+      line-height: 20px; }
+    #sidebar span.toggle_sidebar b {
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      position: relative;
+      text-align: center;
+      left: 155px;
+      display: block;
+      height: 20px;
+      width: 40px;
+      background: #404040;
+      color: white;
+      cursor: pointer; }
+      #sidebar span.toggle_sidebar b.show {
+        display: none; }
+    #sidebar span.toggle_sidebar.expanded em {
+      display: none; }
+    #sidebar span.toggle_sidebar.expanded b {
+      top: -40px; }
+      #sidebar span.toggle_sidebar.expanded b.hide {
+        display: none; }
+      #sidebar span.toggle_sidebar.expanded b.show {
+        display: inline-block; }
   #sidebar a#logo, #sidebar a.logo {
     display: block;
     float: right;

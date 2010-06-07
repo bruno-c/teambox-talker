@@ -191,6 +191,8 @@ html[xmlns] .clearfix
 #main
   margin: 0 240px 0 0
   padding: 40px
+  &.expanded
+    margin: 0 40px 0 0
   div.sheet
     background = !white
     padding: 40px
@@ -781,6 +783,8 @@ a.button, button
   width: 100%
   margin: 0px 230px 0 0
   background: url('../../images/bottom_fader.png')
+  &.expanded form.fade
+    margin: 20px 80px 0 0
   form.fade
     height: 80px
     margin: 20px 280px 0 0
@@ -1007,6 +1011,39 @@ a#logo, a.logo
 // Sidebar
 #sidebar
   z-index: 100
+  span.toggle_sidebar
+    display: block
+    width: 100%
+    padding: 5px 0
+    em
+      float: right
+      display: inline
+      margin-right: 55px
+      line-height: 1em
+      color = !dark_grey
+      line-height: 20px
+    b
+      +rounded_corners("all", 3)
+      position: relative
+      text-align: center
+      left: 155px
+      display: block
+      height: 20px
+      width: 40px
+      background = !dark_grey
+      color = !white
+      cursor: pointer
+      &.show
+        display: none
+    &.expanded
+      em
+        display: none
+      b
+        top: -40px
+        &.hide
+          display: none
+        &.show
+          display: inline-block
   a#logo, a.logo
     display: block
     float: right
