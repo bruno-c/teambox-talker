@@ -785,6 +785,21 @@ a.button, button
   background: url('../../images/bottom_fader.png')
   &.expanded form.fade
     margin: 20px 80px 0 0
+  .form_help
+    float: right
+    display: inline-block
+    width: 20px
+    height: 20px
+    +rounded_corners("all", 5)
+    background = !light_grey
+    color = !white
+    text-align: center
+    margin-right: 260px
+    margin-left: -300px
+    margin-top: 30px
+    cursor: pointer
+  &.expanded .form_help
+    margin-right: 60px
   form.fade
     height: 80px
     margin: 20px 280px 0 0

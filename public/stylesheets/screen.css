@@ -1066,6 +1066,23 @@ a.button, button {
   background: url('../../images/bottom_fader.png'); }
   #message_form.expanded form.fade {
     margin: 20px 80px 0 0; }
+  #message_form .form_help {
+    float: right;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background: silver;
+    color: white;
+    text-align: center;
+    margin-right: 260px;
+    margin-left: -300px;
+    margin-top: 30px;
+    cursor: pointer; }
+  #message_form.expanded .form_help {
+    margin-right: 60px; }
   #message_form form.fade {
     height: 80px;
     margin: 20px 280px 0 0;

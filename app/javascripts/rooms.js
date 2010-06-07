@@ -5,6 +5,18 @@ $(function() {
     $('#main, #message_form, #sidebar .toggle_sidebar').toggleClass('expanded');
     Talker.trigger("Resize");
   });
+  $('#message_form .form_help').click(function(e) {
+    // This may need some refactoring, duplication with app/javascripts/talker/plugins/help_command.js
+    var help_div = $('<div/>').addClass('small');
+    $(help_div).append($('<h3/>').html("Help"));
+    $(help_div).append($('<p/>').html('If you need a hand with anything send us an <a href="mailto:help@talkerapp.com">email</a>.'));
+    $(help_div).append($('<br/>'))
+    $(help_div).append($('<h4/>').html("Available commands:"));
+    _.each(Talker.getCommandsAndUsage(), function(cmd_usage) {
+      $(help_div).append($('<blockquote/>').css({'padding': '3px', 'font-size': 'small', 'font-family': 'monospace'}).html(cmd_usage[1]));
+    });
+    jQuery.facebox(help_div);
+  });
 
   // Room name dropdown
   $('#rooms_controller.show #room_name').click(function(e) {
