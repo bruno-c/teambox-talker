@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   config.gem "chriseppstein-compass", :lib => "compass", :source => "http://gems.github.com/"
   config.gem "sprockets"
   config.gem "tmm1-amqp", :lib => "amqp", :source => "http://gems.github.com"
-  config.gem "feedzirra"
+  config.gem "feedzirra", :version => '0.0.19'
   config.gem "nokogiri"
   config.gem "shuber-attr_encrypted", :lib => "attr_encrypted", :source => "http://gems.github.com"
   config.gem "aws-s3", :lib => "aws/s3"

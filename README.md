@@ -10,6 +10,16 @@ Install Twisted and Orbited by following instructions on http://orbited.org/wiki
 
     wget http://peak.telecommunity.com/dist/ez_setup.py
     python ez_setup.py setuptools
+
+Well well, before we could skip this step, but now some dependencies are not hosted where they should be anymore, so you'll have to install them manually:
+
+    wget http://pypi.python.org/packages/source/d/demjson/demjson-1.4.tar.gz
+    tar zxvf demjson-1.4.tar.gz
+    cd demjson-1.4
+    python setup.py install
+
+And now, finally, do the rest with one command:
+
     easy_install orbited
 
 Install **RabbitMQ** using MacPorts or homebrew with:
@@ -22,7 +32,7 @@ Install **RabbitMQ** using MacPorts or homebrew with:
 
 The gem rubyosa seems to break in Snow Leopard, you can use this fork: http://github.com/jboyett/rubyosa
 
-    git clone git://github.com/jboyett/rubyosa.git
+    git clone git://github.com/jrom/rubyosa.git
     cd rubyosa
     ruby extconf.rb
     make
