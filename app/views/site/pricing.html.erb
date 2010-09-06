@@ -1,8 +1,6 @@
 <% @title = "Talker Pricing" %>
 <% @tagline = "Pick The Right Plan For Your Team" %>
 
-<%= image_tag "root/promo.png", :class => "promo" %>
-
 <div id="plans">
   <% Plan.payings.reject { |p| p.name == "Bootstrap" }[0,4].each do |plan| %>
   <div class="plan <%= plan.name.downcase %>">
@@ -10,7 +8,6 @@
       <h2><%= plan.name %></h2>
       <h3>
         <%= number_to_currency plan.price, :precision => 0 %>/month
-        <div class="old_price"><%= number_to_currency plan.price * 2.0, :precision => 0 %><span class="month">/month</span></div>
       </h3>
       <p>
         <span><%= plan.features.max_connections %></span> chatters<br />

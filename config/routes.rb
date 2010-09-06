@@ -14,8 +14,6 @@ ActionController::Routing::Routes.draw do |map|
   map.terms_and_conditions "/terms_and_conditions", :controller => "site", :action => "terms_and_conditions"
   map.service_policy "/service_policy", :controller => "site", :action => "service_policy"
   
-  map.connect "/ouch", :controller => "rooms", :action => "ouch"
-  
   map.public_room "/r/:token", :controller => "guests", :action => "new"
   
   map.resources :users, :member => { :suspend => :delete, :unsuspend => :post }

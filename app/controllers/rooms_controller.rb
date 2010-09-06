@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
   
   before_filter :login_required
   before_filter :registered_user_required, :except => :show
-  before_filter :admin_required, :only => [:new, :create, :edit, :update, :destroy, :ouch]
+  before_filter :admin_required, :only => [:new, :create, :edit, :update, :destroy]
   
   before_filter :find_room, :only => [:show, :edit, :update, :destroy, :refresh]
   before_filter :room_permission_required, :only => [:show, :refresh]
@@ -73,10 +73,6 @@ class RoomsController < ApplicationController
   
   def refresh
     respond_to :js
-  end
-  
-  def ouch
-    raise "This is just a test"
   end
   
   private
