@@ -425,10 +425,6 @@ img.promo {
       color: #081C45; }
     #plans .plan h3 {
       color: #d95717; }
-    #plans .plan .old_price {
-      color: #6a8aa0;
-      text-decoration: line-through;
-      font-size: 16px; }
   #plans .box {
     height: 210;
     margin: 0px;
