@@ -44,5 +44,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "destroy", :conditions => { :method => :delete }
   map.search_room "/rooms/:room_id/search", :controller => "logs", :action => "search"
   
+  map.client_room "/rooms/:id/client", :controller => "client", :action => "client"
+  map.iframe_client "/client/:account/:id/iframe", :controller => "client", :action => "iframe"
+  
   map.root :controller => "site", :action => "home"
 end

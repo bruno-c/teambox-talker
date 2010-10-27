@@ -37,6 +37,31 @@ class RoomsController < ApplicationController
     end
   end
 
+  # Blank page that connects to the room. Made for IFRAMEs to get Talker's event stream
+  def client
+    @domain = params[:origin] + "." + params[:ext]
+    @domain = "teambox.standoutjobs-development.com"
+
+    find_room
+    room_permission_required
+    check_connections_limit
+    
+    if current_user.guest
+      # User is a guest, make sure we disable everything he shouldn't have access to
+      if current_user.room != @room
+        access_denied
+        return
+      end
+      @rooms = []
+      @events = @room.events.recent.since(@room.opened_at).reverse
+    else
+      @rooms = current_user.accessible_rooms
+      @events = @room.events.recent.reverse
+    end
+    
+    render :layout => false
+  end
+  
   def new
     @room = current_account.rooms.build
   end

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <%= sprockets_include_tag %>
+</head>
+
+<body>
+
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+  Talker.currentUser = <%= @user.to_json %>;
+  Talker.room = <%= @room.to_json %>;
+  Talker.log = $('#log')
+
+  Orbited.settings.hostname = '<%= request.host %>';
+  Orbited.settings.port = <%= Orbited.port %>;
+  Orbited.settings.protocol = '<%= request.ssl? ? "https" : "http" %>'
+  Orbited.settings.streaming = true;
+  TCPSocket = Orbited.TCPSocket;
+  
+  // Placeholder for parent.window.talkerCallback. Inside this page, it default to a logger.
+  // For an iframe, it'll call whatever talkerCallback method the parent window defines.
+  talkerCallback = function(data) {
+    console.log(data)
+  }
+  
+  $(function() {
+    <% if @domain %>
+      document.domain = "<%= @domain %>";
+    <% else %>
+      document.domain = document.domain
+    <% end %>
+
+    Talker.client = new Talker.Client({
+      host: '<%= Orbited.talker_host %>',
+      port: <%= Orbited.talker_port %>,
+      room: Talker.room.id,
+      <% unless @events.empty? %>lastEventId: '<%= @events.last.uuid %>',<% end %>
+      token: <%= @user.talker_token.to_json %>,
+      callbacks: Talker.Broadcaster,
+      parentCallback: parent.window.talkerCallback
+    }).connect();
+
+    <%# "$.each(#{escape_json @events.to_json}, function(){ Talker.Broadcaster.broadcastEvent(this); });" %>
+  });
+//]]>
+</script>
+
+</body>
+</html>
