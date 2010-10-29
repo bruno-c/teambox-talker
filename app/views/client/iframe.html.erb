@@ -21,6 +21,10 @@
   
   // Placeholder for parent.window.talkerCallback. Inside this page, it default to a logger.
   // For an iframe, it'll call whatever talkerCallback method the parent window defines.
+  processLastEvents = function(data) {
+    console.log(data)
+  }
+
   talkerCallback = function(data) {
     console.log(data)
   }
@@ -42,7 +46,7 @@
       parentCallback: parent.window.talkerCallback
     }).connect();
 
-    <%# "$.each(#{escape_json @events.to_json}, function(){ Talker.Broadcaster.broadcastEvent(this); });" %>
+    parent.window.processLastEvents && parent.window.processLastEvents(<%= escape_json @events.to_json %>);
   });
 //]]>
 </script>
