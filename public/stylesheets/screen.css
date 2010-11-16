@@ -1066,6 +1066,28 @@ a.button, button {
   background: url('../../images/bottom_fader.png'); }
   #message_form.expanded form.fade {
     margin: 20px 80px 0 0; }
+  #message_form #toggle_sound {
+    float: right;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: white;
+    text-align: center;
+    margin-right: 260px;
+    margin-left: -300px;
+    margin-top: 55px;
+    cursor: pointer; }
+    #message_form #toggle_sound .sound_img {
+      display: block;
+      height: 20px;
+      width: 20px; }
+    #message_form #toggle_sound.active .sound_img {
+      background: url(../images/icons/volume.png) center no-repeat; }
+    #message_form #toggle_sound.inactive .sound_img {
+      background: url(../images/icons/volume-control-mute.png) center no-repeat; }
   #message_form .form_help {
     float: right;
     display: inline-block;
