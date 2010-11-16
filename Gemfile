@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "rails", "2.3.2"
+gem "rails", "2.3.10"
 gem "haml"
 
 gem "compass"
@@ -16,6 +16,7 @@ gem "uuid", :require => false
 gem "yajl-ruby", :require => 'yajl'
 gem "spreedly", :require => false
 gem 'uuid'
+gem 'paperclip'
 
 group :development do
   gem "thin", :require => false
