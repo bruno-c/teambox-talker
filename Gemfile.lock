@@ -22,8 +22,8 @@ GEM
       xml-simple
     brianmario-yajl-ruby (0.6.3)
     builder (2.1.2)
-    chriseppstein-compass (0.8.17)
-      haml (>= 2.2.0)
+    compass (0.10.6)
+      haml (>= 3.0.4)
     curb (0.7.8)
     daemons (1.1.0)
     eigenclass (1.1.1)
@@ -85,7 +85,7 @@ DEPENDENCIES
   attr_encrypted
   aws-s3
   brianmario-yajl-ruby
-  chriseppstein-compass
+  compass
   em-http-request
   eventmachine
   feedzirra (= 0.0.19)

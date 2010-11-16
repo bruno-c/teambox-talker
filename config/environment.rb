@@ -7,9 +7,6 @@ Rails::Initializer.run do |config|
   config.load_paths += %W( #{RAILS_ROOT}/app/mailers
                            #{RAILS_ROOT}/app/jobs )
 
-  config.gem "haml"
-  config.gem "chriseppstein-compass", :lib => "compass", :source => "http://gems.github.com/"
-  config.gem "sprockets"
   config.gem "tmm1-amqp", :lib => "amqp", :source => "http://gems.github.com"
   config.gem "feedzirra", :version => '0.0.19'
   config.gem "nokogiri"
