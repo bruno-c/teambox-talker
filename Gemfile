@@ -2,10 +2,10 @@ source 'http://rubygems.org'
 source 'http://gems.github.com'
 
 gem "rails", "2.3.2"
-gem "haml", :require => false
+gem "haml"
 
-gem "chriseppstein-compass", :require => false
-gem "sprockets", :require => false
+gem "compass"
+gem "sprockets"
 gem "eventmachine"
 gem "mysqlplus", :require => false
 gem "em-http-request"
