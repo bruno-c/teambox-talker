@@ -1,6 +1,5 @@
 GEM
   remote: http://rubygems.org/
-  remote: http://gems.github.com/
   specs:
     actionmailer (2.3.2)
       actionpack (= 2.3.2)
@@ -20,7 +19,6 @@ GEM
       builder
       mime-types
       xml-simple
-    brianmario-yajl-ruby (0.6.3)
     builder (2.1.2)
     compass (0.10.6)
       haml (>= 3.0.4)
@@ -77,6 +75,7 @@ GEM
     uuid (2.3.1)
       macaddr (~> 1.0)
     xml-simple (1.0.12)
+    yajl-ruby (0.7.8)
 
 PLATFORMS
   ruby
@@ -84,7 +83,6 @@ PLATFORMS
 DEPENDENCIES
   attr_encrypted
   aws-s3
-  brianmario-yajl-ruby
   compass
   em-http-request
   eventmachine
@@ -101,3 +99,4 @@ DEPENDENCIES
   thin
   tmm1-amqp
   uuid
+  yajl-ruby
