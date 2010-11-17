@@ -42,7 +42,7 @@ class Feed < ActiveRecord::Base
       perform
       self.failed_at = self.last_error = nil
       return true  # did work
-    rescue Exception => error
+    rescue StandardError => error
       self.failed_at = self.class.db_time_now
       self.last_error = error.message
       logger.error "[Feed] ##{id} failed with #{error.class.name}: #{error.message}"
@@ -61,7 +61,7 @@ class Feed < ActiveRecord::Base
     options[:if_none_match] = etag if etag
     options[:http_authentication] = [user_name, password] if user_name.present?
     options[:timeout] = 60
-    
+
     feed = Feedzirra::Feed.fetch_and_parse(url, options)
     
     if feed == 304 # not modified
@@ -71,21 +71,25 @@ class Feed < ActiveRecord::Base
     elsif feed.is_a?(Fixnum)
       raise BadResponse, "Got #{feed} response from server"
     end
-    
+
+
     entries = feed.entries
     
     # If we already fetch, do not publish duplicates
     if last_modified_at
       entries = entries.select { |e| e.published > last_modified_at }
     end
-    
+   
+
     entries.first(MAX_MESSAGES).reverse.each do |entry|
       publish entry
       self.last_modified_at = entry.published
     end
     
+
     self.last_modified_at = feed.last_modified if last_modified_at.nil? || (feed.last_modified && feed.last_modified > last_modified_at)
     self.etag = feed.etag
+
   end
   
   def publish(entry)
@@ -150,7 +154,6 @@ class Feed < ActiveRecord::Base
       end
       break if stop # leave if we're exiting
     end
-
     return [success, failure]
   end
   

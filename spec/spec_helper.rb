@@ -58,6 +58,7 @@ Spec::Runner.configure do |config|
   # == Notes
   #
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
+  config.extend VCR::RSpec::Macros
 
   config.before(:all) do
     User.talker || Factory(:talker_user)
@@ -65,6 +66,8 @@ Spec::Runner.configure do |config|
   config.after(:all) do
     User.talker && User.talker.destroy
   end
+
+
 end
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
