@@ -1,13 +1,13 @@
 require 'test_helper'
 
-class InstallationsControllerTest < ActionController::TestCase
-  def setup
+describe "InstallationsController", ActionController::TestCase do
+  before do
     @account = accounts(:master)
     subdomain :master
     login_as :quentin
   end
 
-  test "should create plugin_installation" do
+  it "should create plugin_installation" do
     assert_difference('PluginInstallation.count') do
       xhr :post, :create, :installation => { :account_id => Account.first.id, :plugin_id => Plugin.first.id }, :plugin_id => Plugin.first.id 
     end
@@ -15,7 +15,7 @@ class InstallationsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should destroy plugin installation" do
+  it "should destroy plugin installation" do
     assert_difference('PluginInstallation.count', -1) do
       xhr :delete, :destroy, :plugin_id => plugin_installations(:one).id
     end

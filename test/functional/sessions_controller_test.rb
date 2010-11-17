@@ -1,97 +1,97 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class SessionsControllerTest < ActionController::TestCase
-  def setup
+describe "SessionsController", ActionController::TestCase do
+  before do
     subdomain :master
   end
   
-  def test_should_login_and_redirect
+  it "should login and redirect" do
     post :create, :email => 'quentin@example.com', :password => 'monkey'
-    assert_not_nil session[:user_id]
+    session[:user_id].should.not == nil
     assert_response :redirect
   end
 
-  def test_should_fail_login_and_not_redirect
+  it "should fail login and not redirect" do
     post :create, :email => 'quentin@example.com', :password => 'bad password'
-    assert_nil session[:user_id]
+    session[:user_id].should == nil
     assert_response :success
   end
 
-  def test_should_login_by_name
+  it "should login by name" do
     post :create, :email => 'quentin', :password => 'monkey'
-    assert_not_nil session[:user_id]
+    session[:user_id].should.not == nil
     assert_response :redirect
   end
 
-  def test_should_logout
+  it "should logout" do
     login_as :quentin
     get :destroy
-    assert_nil session[:user_id]
+    session[:user_id].should == nil
     assert_response :redirect
   end
 
-  def test_should_remember_me
+  it "should remember me" do
     @request.cookies["auth_token"] = nil
     post :create, :email => 'quentin@example.com', :password => 'monkey'
-    assert_not_nil @response.cookies["auth_token"]
+    @response.cookies["auth_token"].should.not == nil
   end
 
-  def test_should_delete_token_on_logout
+  it "should delete token on logout" do
     login_as :quentin
     get :destroy
-    assert @response.cookies["auth_token"].blank?
+    @response.cookies["auth_token"].blank?.should.not == nil
   end
 
-  def test_should_logout
+  it "should logout" do
     login_as :quentin
     get :destroy
     assert_redirected_to login_path
   end
 
-  def test_should_logout_and_delete_guest
+  it "should logout and delete guest" do
     Connection.any_instance.expects(:close)
     users(:quentin).update_attribute :guest, true
     users(:quentin).update_attribute :room, rooms(:public)
     login_as :quentin
     get :destroy
     assert_redirected_to public_room_path(rooms(:public).public_token)
-    assert ! User.exists?(users(:quentin).id)
+     User.exists?(users(:quentin).id).should.not == true
   end
 
-  def test_should_login_with_cookie
+  it "should login with cookie" do
     users(:quentin).remember_me
     @request.cookies["auth_token"] = users(:quentin).remember_token
     get :new
-    assert @controller.send(:logged_in?)
+    @controller.send(:logged_in?).should.not == nil
   end
 
-  def test_should_login_with_basic_auth
+  it "should login with basic auth" do
     authorize_as :quentin
     get :new
-    assert @controller.send(:logged_in?)
+    @controller.send(:logged_in?).should.not == nil
   end
 
-  def test_should_fail_cookie_login
+  it "should fail cookie login" do
     users(:quentin).remember_me
     @request.cookies["auth_token"] = 'invalid_auth_token'
     get :new
-    assert !@controller.send(:logged_in?)
+    @controller.send(:logged_in?).should.not == true
   end
   
-  def test_should_login_from_talker_token
+  it "should login from talker token" do
     @request.env["HTTP_X_TALKER_TOKEN"] = users(:quentin).talker_token
     get :new
-    assert @controller.send(:logged_in?)
+    @controller.send(:logged_in?).should.not == nil
   end
   
-  def test_sets_time_zone_from_cookie
+  it "sets time zone from cookie" do
     @request.cookies["tzoffset"] = "240"
     login_as :quentin
     get :new
-    assert_equal "Eastern Time (US & Canada)", users(:quentin).reload.time_zone
+    users(:quentin).reload.time_zone.should == "Eastern Time (US & Canada)"
   end
 
-  def test_updates_time_zone_from_cookie
+  it "updates time zone from cookie" do
     if Time.now.dst?
       @request.cookies["tzoffset"] = "240"
     else
@@ -99,6 +99,6 @@ class SessionsControllerTest < ActionController::TestCase
     end
     login_as :quentin
     get :new
-    assert_equal "Eastern Time (US & Canada)", users(:quentin).reload.time_zone
+    users(:quentin).reload.time_zone.should == "Eastern Time (US & Canada)"
   end
 end

@@ -1,0 +1,15 @@
+main:
+  name: Main
+  description: Main room.
+  account: master
+
+private:
+  name: Private
+  account: master
+  private: true
+
+public:
+  name: Public
+  description: Public room.
+  account: master
+  public_token: abc123
