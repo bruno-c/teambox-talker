@@ -1,0 +1,13 @@
+event1:
+  room: main
+  payload: <%= {"time" => 1258314754,"type" => "leave","user" => {"name" => "ma","id" => 1,"email" => "macournoyer@gmail.com"}}.to_json.inspect %>
+  type: join
+  content: ""
+  uuid: 1
+
+event2:
+  room: main
+  payload: <%= {"time" => 1258314754,"type" => "message","content" => "ohaie","user" => {"name" => "ma","id" => 1,"email" => "macournoyer@gmail.com"}}.to_json.inspect %>
+  type: message
+  content: "ohaie"
+  uuid: 2

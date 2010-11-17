@@ -1,43 +1,43 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class InvitesControllerTest < ActionController::TestCase
-  def setup
+describe "InvitesController", ActionController::TestCase do
+  before do
     subdomain :master
   end
   
-  def test_index
+  it "index" do
     login_as :quentin
     get :index
     assert_response :success
   end
   
-  def test_show_with_invalid_token
+  it "show with invalid token" do
     get :show, :id => "uho!"
-    assert_not_nil flash[:error]
+    flash[:error].should.not == nil
     assert_redirected_to login_path
   end
   
-  def test_show_pending_user
+  it "show pending user" do
     users(:quentin).update_attribute :state, "pending"
     users(:quentin).create_perishable_token!
     
     get :show, :id => users(:quentin).perishable_token
-    assert_nil flash[:error]
+    flash[:error].should == nil
     assert_template :show
     assert_response :success, @response.body
   end
 
-  def test_show_active_user
+  it "show active user" do
     users(:quentin).update_attribute :state, "active"
     users(:quentin).create_perishable_token!
     
     get :show, :id => users(:quentin).perishable_token
-    assert_nil flash[:error]
-    assert_nil flash[:notice]
+    flash[:error].should == nil
+    flash[:notice].should == nil
     assert_redirected_to rooms_path
   end
   
-  def test_show_active_user_to_room
+  it "show active user to room" do
     users(:quentin).update_attribute :state, "active"
     users(:quentin).create_perishable_token!
     
@@ -45,73 +45,73 @@ class InvitesControllerTest < ActionController::TestCase
     assert_redirected_to Room.first
   end
   
-  def test_set_password
+  it "set password" do
     login_as :quentin
     put :set_password, :user => hash_for_user
     assert_redirected_to rooms_path
   end
   
-  def test_set_password_to_room
+  it "set password to room" do
     login_as :quentin
     put :set_password, :user => hash_for_user, :room_id => Room.first.id
     assert_redirected_to Room.first
   end
   
-  def test_create
+  it "create" do
     login_as :quentin
     assert_difference 'User.count', 2 do
       assert_difference 'ActionMailer::Base.deliveries.size', 2 do
         post :create, :invitees => "one@example.com\ntwo@example.com", :room_id => Room.first
-        assert_nil flash[:error]
-        assert_equal %w(one@example.com two@example.com), assigns(:invitees)
+        flash[:error].should == nil
+        assigns(:invitees).should == %w(one@example.com two@example.com)
       end
     end
     assert_redirected_to users_path
   end
   
-  def test_create_with_coma
+  it "create with coma" do
     login_as :quentin
     assert_difference 'User.count', 2 do
       assert_difference 'ActionMailer::Base.deliveries.size', 2 do
         post :create, :invitees => "one@example.com, two@example.com", :room_id => Room.first
-        assert_nil flash[:error]
-        assert_equal %w(one@example.com two@example.com), assigns(:invitees)
+        flash[:error].should == nil
+        assigns(:invitees).should == %w(one@example.com two@example.com)
       end
     end
     assert_redirected_to users_path
   end
   
-  def test_create_with_invite_command
+  it "create with invite command" do
     login_as :quentin
     assert_difference 'User.count', 1 do
       assert_difference 'ActionMailer::Base.deliveries.size', 1 do
         xhr :post, :create, :invitees => "one@example.com", :room_id => Room.first
-        assert_nil flash[:error]
-        assert_equal %w(one@example.com), assigns(:invitees)
+        flash[:error].should == nil
+        assigns(:invitees).should == %w(one@example.com)
       end
     end
     assert_response :success
   end
   
-  def test_create_with_invite_command_but_improper_email
+  it "create with invite command but improper email" do
     login_as :quentin
     xhr :post, :create, :invitees => "asdfasdf", :room_id => Room.first
     assert_template "error"
     assert_response :success
   end
   
-  def test_create_with_invalid_email
+  it "create with invalid email" do
     login_as :quentin
     assert_difference 'User.count', 1 do
       assert_difference 'ActionMailer::Base.deliveries.size', 1 do
         post :create, :invitees => "one@example.com\nblablabla", :room_id => Room.first
-        assert_not_nil flash[:error]
+        flash[:error].should.not == nil
       end
     end
     assert_redirected_to users_path
   end
   
-  def test_resend
+  it "resend" do
     login_as :quentin
     assert_difference 'ActionMailer::Base.deliveries.size', 1 do
       post :resend, :id => users(:quentin), :room_id => Room.first

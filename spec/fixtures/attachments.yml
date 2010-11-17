@@ -1,0 +1,6 @@
+lolcat:
+  room: main
+  user: quentin
+  upload_file_name: lolcat.jpg
+  upload_content_type: image/jpeg
+  upload_file_size: 1024
