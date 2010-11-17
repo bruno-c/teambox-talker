@@ -16,13 +16,16 @@ require 'spec/test/unit'
 # in ./support/ and its subdirectories.
 Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
 
+require 'database_cleaner'
+DatabaseCleaner.strategy = :truncation
+
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record
   # in your config/boot.rb
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
-  config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+  config.fixture_path = RAILS_ROOT + '/spec/non/'
 
   # == Fixtures
   #
@@ -55,6 +58,13 @@ Spec::Runner.configure do |config|
   # == Notes
   #
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
+
+  config.before(:all) do
+    User.talker || Factory(:talker_user)
+  end
+  config.after(:all) do
+    User.talker && User.talker.destroy
+  end
 end
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
@@ -62,8 +72,8 @@ end
 end
 
 Spork.each_run do
-  # This code will be run each time you run your specs.
-  
+  # then, whenever you need to clean the DB
+  DatabaseCleaner.clean # This code will be run each time you run your specs.
 end
 
 # --- Instructions ---
