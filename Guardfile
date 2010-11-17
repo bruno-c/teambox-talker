@@ -20,4 +20,5 @@ guard 'spork' do
   watch('^config/environments/.*\.rb$')
   watch('^config/initializers/.*\.rb$')
   watch('^spec/spec_helper.rb')
+  watch('^spec/factories/.*\.rb')
 end
