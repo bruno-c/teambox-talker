@@ -1,0 +1,18 @@
+embed_assets: on
+compressor_options: 
+  java: no_java
+
+javascripts:
+  application: 
+    - public/javascripts/jquery.js
+    - app/javascripts/talker.js
+    - app/javascripts/application.js
+    - app/javascripts/talker/orbited.js
+    - app/javascripts/**/*.js
+  site:
+    - public/javascripts/jquery.js
+    - public/javascripts/jquery.cookie.js
+    - public/javascripts/site.js
+
+
+
