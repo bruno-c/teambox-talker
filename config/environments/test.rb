@@ -31,3 +31,5 @@ config.action_mailer.delivery_method = :test
 config.gem "factory_girl"
 config.gem "faker"
 config.gem "database_cleaner"
+config.gem "vcr"
+config.gem "fakeweb"
