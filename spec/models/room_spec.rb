@@ -1,28 +1,32 @@
-require File.dirname(__FILE__) + "/../test_helper"
+require File.dirname(__FILE__) + "/../spec_helper"
 
-describe "Room", ActiveSupport::TestCase do
+describe Room do
   before do
-    @room = rooms(:main)
+    Room.delete_all
+    @room = Factory(:room)
   end
-  
-  it "creation" do
-    create_room!
+
+  after do
+    Room.delete_all
   end
   
   it "admin has access to all rooms" do
-    Room.with_permission(users(:quentin)).count.should == Room.count
+    Room.with_permission(Factory(:admin_user)).count.should == Room.count
   end
   
   it "user has not access to all rooms" do
-    assert_not_equal Room.count, Room.with_permission(users(:aaron)).count
+    Factory(:room, :private => true, :account => Factory(:account, :plan => Plan.all[1]))
+    user = Factory(:user, :account => Factory(:account, :plan => Plan.free))
+
+    Room.with_permission(user).count.should_not == Room.count
   end
   
   it "send message" do
     @room.expects(:publish).with do |event|
       event[:type].should == 'message'
       event[:content].should == "ohaie\nthere"
-      event[:time].should.not == nil
-      event[:id].should.not == nil
+      event[:time].should_not be_nil
+      event[:id].should_not be_nil
       event[:user].should == User.talker
       true
     end
@@ -35,8 +39,8 @@ describe "Room", ActiveSupport::TestCase do
       events[1][:content].should == 'there'
       events.all? do |event|
         event[:type].should == 'message'
-        event[:time].should.not == nil
-        event[:id].should.not == nil
+        event[:time].should_not be_nil
+        event[:id].should_not be_nil
         event[:user].should == User.talker
         true
       end
@@ -57,11 +61,11 @@ describe "Room", ActiveSupport::TestCase do
   
   it "add permission" do
     Permission.delete_all
-    assert_difference "Permission.count", 1 do
+    expect {
       @room.private = true
-      @room.invitee_ids = [users(:aaron).id]
+      @room.invitee_ids = [Factory(:user).id]
       @room.save
-    end
+    }.to change(Permission, :count).by(1)
   end
   
   it "remove permission" do
@@ -73,20 +77,24 @@ describe "Room", ActiveSupport::TestCase do
 
   it "public room delete all permissiosn" do
     @room.private = false
-    @room.invitee_ids = [users(:aaron).id]
+    @room.invitee_ids = [Factory(:user).id]
     @room.save
     @room.permissions.count.should == 0
   end
   
   it "cant create private room if plan is limited" do
-    accounts(:master).plan = Plan.free
-    accounts(:master).save
-    create_room(:private => true, :account => accounts(:master)).errors.on(:base).should.not == nil
+    account = Factory(:account)
+    account.plan = Plan.free
+    account.save
+    room = Factory.build(:room, :private => true, :account => account)
+    room.should_not be_valid 
   end
 
   it "can create private room if plan permists" do
-    accounts(:master).plan = Plan.find_by_name("Startup")
-    accounts(:master).save
-    create_room(:private => true, :account => accounts(:master)).errors.on(:base).should == nil
+    account = Factory(:account)
+    account.plan = Plan.find_by_name("Startup")
+    account.save
+    room = Factory.build(:room, :private => true, :account => account)
+    room.should be_valid 
   end
 end

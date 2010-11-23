@@ -2,13 +2,11 @@ require File.dirname(__FILE__) + "/../spec_helper"
 
 describe Feed do
 
-  before(:each) do
-    
-  end
- 
   it "find available" do
-    Feed.find_available(5).include?(feeds(:thin)).should.not == nil
-    Feed.find_available(5).include?(feeds(:tinyrb)).should.not == true
+    feed = Factory(:feed, :run_at => 1.minute.ago)
+    unavailable_feed = Factory(:feed, :run_at => 10.minutes.since)
+    Feed.find_available(5).should include(feed)
+    Feed.find_available(5).should_not include(unavailable_feed)
   end
   
   it "work" do
@@ -41,7 +39,7 @@ describe Feed do
     pending "wtf does this?"
     feed = feeds(:thin)
     feed.expects(:perform).raises(ArgumentError)
-     feed.run_with_lock.should.not == true
+    feed.run_with_lock.should.not == true
     feed.failed_at.should.not == nil
     feed.last_error.should.not == nil
     feed.locked_at.should == nil

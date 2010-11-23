@@ -13,3 +13,10 @@ Factory.define :talker_user, :class => User do |f|
     Factory(:plugin, :name => Plugin::DEFAULTS.first, :author => user)
   end
 end
+
+Factory.define :admin_user, :class => User do |f|
+  f.sequence(:name) {|n| "Admin#{n}"}
+  f.sequence(:email) {|n| "admin#{n}@talkerapp.com"}
+  f.staff true
+  f.admin true
+end
