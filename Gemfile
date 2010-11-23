@@ -4,7 +4,6 @@ gem "rails", "2.3.2"
 gem "haml"
 
 gem "compass"
-gem "sprockets"
 gem "eventmachine"
 gem "mysqlplus", :require => false
 gem "em-http-request"
