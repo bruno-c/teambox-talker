@@ -1,27 +1,27 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class SettingsControllerTest < ActionController::TestCase
-  def setup
+describe "SettingsController", ActionController::TestCase do
+  before do
     subdomain :master
     login_as :quentin
   end
   
-  def test_show
+  it "show" do
     get :show
     assert_response :success
   end
   
-  def test_show_as_json
+  it "show as json" do
     get :show, :format => "json"
     assert_response :success
   end
   
-  def test_update
+  it "update" do
     put :update, :user => hash_for_user
     assert_redirected_to settings_path
   end
   
-  def test_invalid_update
+  it "invalid update" do
     User.any_instance.stubs(:valid?).returns(false)
     put :update, :user => hash_for_user
     assert_response :success

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
+  <id>tag:github.com,2008:/feeds/macournoyer/commits/thin/master</id>
+  <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commits/master/"/>
+  <link type="application/atom+xml" rel="self" href="http://github.com/feeds/macournoyer/commits/thin/master"/>
+  <title>Recent Commits to thin:master</title>
+  <updated>2009-11-05T06:57:35-08:00</updated>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/ad96bc341c6790e6cadef9b62589591023078434</id>
+    <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commit/ad96bc341c6790e6cadef9b62589591023078434"/>
+    <title>fixing referenced blog post's URL.</title>
+    <updated>2009-11-05T06:57:35-08:00</updated>
+    <content type="html">&lt;pre&gt;m example/thin.god
+
+fixing referenced blog post's URL.&lt;/pre&gt;</content>
+    <author>
+      <name>Rob Sterner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/a527bb1e8ee6ce4c88b47714e585c612008242b8</id>
+    <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commit/a527bb1e8ee6ce4c88b47714e585c612008242b8"/>
+    <title>Fix constant lookup issue in Rails adapter</title>
+    <updated>2009-11-04T18:53:34-08:00</updated>
+    <content type="html">&lt;pre&gt;m lib/rack/adapter/rails.rb
+
+Fix constant lookup issue in Rails adapter&lt;/pre&gt;</content>
+    <author>
+      <name>macournoyer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/db140762ee873bef112adf58c062e9d6a4cb3722</id>
+    <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commit/db140762ee873bef112adf58c062e9d6a4cb3722"/>
+    <title>Some renaming and minor refactors in rolling restart. Add some specs.</title>
+    <updated>2009-11-04T18:26:41-08:00</updated>
+    <content type="html">&lt;pre&gt;m lib/thin/controllers/cluster.rb
+m lib/thin/runner.rb
+m spec/controllers/cluster_spec.rb
+
+Some renaming and minor refactors in rolling restart. Add some specs.&lt;/pre&gt;</content>
+    <author>
+      <name>macournoyer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/327ef1eb2978b793a8f46cb04ab3f3fb07f0baf3</id>
+    <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commit/327ef1eb2978b793a8f46cb04ab3f3fb07f0baf3"/>
+    <title>Add changelog for rolling restart support [sikachu]</title>
+    <updated>2009-11-04T18:14:12-08:00</updated>
+    <content type="html">&lt;pre&gt;m CHANGELOG
+
+Add changelog for rolling restart support [sikachu]&lt;/pre&gt;</content>
+    <author>
+      <name>macournoyer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/c8e948a9f9131ac76d93d62af057b576d810f6fd</id>
+    <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commit/c8e948a9f9131ac76d93d62af057b576d810f6fd"/>
+    <title>Add STDOUT.flush to make sure user got waiting message</title>
+    <updated>2009-11-04T18:06:04-08:00</updated>
+    <content type="html">&lt;pre&gt;m lib/thin/controllers/cluster.rb
+
+Add STDOUT.flush to make sure user got waiting message&lt;/pre&gt;</content>
+    <author>
+      <name>Prem Sichanugrist</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/4fba06301a16e0d9000b416516b15191dddf826a</id>
+    <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commit/4fba06301a16e0d9000b416516b15191dddf826a"/>
+    <title>Fix bug on forgot to set default maximum wait time</title>
+    <updated>2009-11-04T18:06:04-08:00</updated>
+    <content type="html">&lt;pre&gt;m lib/thin/runner.rb
+
+Fix bug on forgot to set default maximum wait time&lt;/pre&gt;</content>
+    <author>
+      <name>Prem Sichanugrist</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/01c86999e69241710c7466ef1cb078ca523f6c31</id>
+    <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commit/01c86999e69241710c7466ef1cb078ca523f6c31"/>
+    <title>Add a 'wait_until_server_started' method to wait for a cluster to by fully restarted before stop another cluster. This to make sure that there'll be at least one cluster running to serve the content. Also add support for parameter name --onebyone and --wait [seconds]. This also can be configured in config file using onebyone: true and wait: 30.</title>
+    <updated>2009-11-04T18:06:04-08:00</updated>
+    <content type="html">&lt;pre&gt;m lib/thin/controllers/cluster.rb
+m lib/thin/runner.rb
+
+Add a 'wait_until_server_started' method to wait for a cluster to by fully restarted before stop another cluster. This to make sure that there'll be at least one cluster running to serve the content. Also add support for parameter name --onebyone and --wait [seconds]. This also can be configured in config file using onebyone: true and wait: 30.&lt;/pre&gt;</content>
+    <author>
+      <name>Prem Sichanugrist</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/3ef09de01e2ef1889a8c588c15c4e7719834ed01</id>
+    <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commit/3ef09de01e2ef1889a8c588c15c4e7719834ed01"/>
+    <title>Add a new configuration named 'restart_one_by_one' to stop and start server one at a time during restart. Set this variable in configuration file to true to make sure that the sever will be restarted one by one</title>
+    <updated>2009-11-04T18:06:04-08:00</updated>
+    <content type="html">&lt;pre&gt;m lib/thin/controllers/cluster.rb
+
+Add a new configuration named 'restart_one_by_one' to stop and start server one at a time during restart. Set this variable in configuration file to true to make sure that the sever will be restarted one by one&lt;/pre&gt;</content>
+    <author>
+      <name>Prem Sichanugrist</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/69f0ddd1bb1f1d1113deba74e6bafe46d65377f4</id>
+    <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commit/69f0ddd1bb1f1d1113deba74e6bafe46d65377f4"/>
+    <title>Rspec now works in 1.9, remove check</title>
+    <updated>2009-10-29T06:28:22-07:00</updated>
+    <content type="html">&lt;pre&gt;m tasks/spec.rake
+
+Rspec now works in 1.9, remove check&lt;/pre&gt;</content>
+    <author>
+      <name>macournoyer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/e8968954a73a0fa3db268561500cba6154fb106a</id>
+    <link type="text/html" rel="alternate" href="http://github.com/macournoyer/thin/commit/e8968954a73a0fa3db268561500cba6154fb106a"/>
+    <title>Add spec for last fix and actually fix it for real this time. TDD fail...</title>
+    <updated>2009-10-29T06:23:22-07:00</updated>
+    <content type="html">&lt;pre&gt;m lib/thin/request.rb
+m spec/request/processing_spec.rb
+m spec/spec_helper.rb
+
+Add spec for last fix and actually fix it for real this time. TDD fail...&lt;/pre&gt;</content>
+    <author>
+      <name>macournoyer</name>
+    </author>
+  </entry>
+</feed>

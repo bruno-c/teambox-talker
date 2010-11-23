@@ -1,30 +1,30 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class UsersControllerTest < ActionController::TestCase
-  def setup
+describe "UsersController", ActionController::TestCase do
+  before do
     subdomain :master
     login_as :quentin
   end
   
-  def test_index
+  it "index" do
     get :index
     assert_response :success
   end
   
-  def test_destroy_user
+  it "destroy user" do
     Connection.any_instance.expects(:close).once
     assert_difference "User.count", -1 do
       delete :destroy, :id => users(:aaron)
     end
     assert_redirected_to users_path
-    assert_nil flash[:error]
+    flash[:error].should == nil
   end
 
-  def test_cant_destroy_self
+  it "cant destroy self" do
     assert_difference "User.count", 0 do
       delete :destroy, :id => users(:quentin)
     end
     assert_redirected_to users_path
-    assert_not_nil flash[:error]
+    flash[:error].should.not == nil
   end
 end

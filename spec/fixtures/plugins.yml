@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: Dock Badge
+  description: Nothing at all.
+  source: MyPlugin = function(){}
+  author: quentin
+  account: master
+  shared: true
+
+two:
+  name: New Message Notifications
+  description: Nothing at all.
+  source: MyPlugin2 = function(){}
+  author: talker
+  account: master
+  shared: true
