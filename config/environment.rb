@@ -7,6 +7,5 @@ Rails::Initializer.run do |config|
   config.load_paths += %W( #{RAILS_ROOT}/app/mailers
                            #{RAILS_ROOT}/app/jobs )
 
-  config.gem 'sprockets'
   config.time_zone = 'UTC'
 end
