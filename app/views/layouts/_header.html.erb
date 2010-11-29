@@ -10,10 +10,10 @@
   <![endif]>
   
   <title><%= strip_tags @title || "Home" %> &#171; TalkerApp</title>
-  <%= stylesheet_link_tag "screen.css", :media => "screen, projection" %>
-  <%= stylesheet_link_tag "print.css", :media => "print" %>
-  <!--[if IE]><%= stylesheet_link_tag "ie.css", :media => "screen, projection" %><![endif]-->
-  <%= include_javascripts :application %>
+  <%= include_stylesheets :screen, :media => "screen, projection" %>
+  <%= include_stylesheets :print, :media => "print" %>
+  <!--[if IE]><%= include_stylesheets :ie, :media => "screen, projection" %><![endif]-->
+  <%= sprockets_include_tag %>
   <%= yield :head %>
   <noscript>
     <meta http-equiv="refresh" content="0;URL=noscript.html" />

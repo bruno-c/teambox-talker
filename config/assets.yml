@@ -1,6 +1,22 @@
 embed_assets: on
+package_assets: on
+
 compressor_options: 
   java: no_java
+
+stylesheets:
+  ie:
+    - public/stylesheets/ie.css
+  print:
+    - public/stylesheets/print.css 
+  screen:
+    - public/stylesheets/screen.css 
+  site:
+    - public/stylesheets/root/screen.css
+  site_ie7:
+    - public/stylesheets/root/ie_7.css
+  site_ie8:
+    - public/stylesheets/root/ie_8.css
 
 javascripts:
   application: 
@@ -13,6 +29,3 @@ javascripts:
     - public/javascripts/jquery.js
     - public/javascripts/jquery.cookie.js
     - public/javascripts/site.js
-
-
-
