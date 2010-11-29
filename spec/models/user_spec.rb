@@ -74,19 +74,21 @@ describe User do
                                  :password_confirmation => 'monkey')
     admin.activate!
     admin.update_attributes(:password => '', :password_confirmation => '')
-    User.authenticate('quentin@example.com', 'monkey')
+    User.authenticate(admin.email, 'monkey').should == admin
   end
 
   it "should_not rehash password" do
     admin = Factory(:admin_user, :password => 'monkey',
                                  :password_confirmation => 'monkey')
+    admin.activate!
     admin.update_attributes(:email => 'quentin2@example.com')
-    assert_equal admin, User.authenticate('quentin2@example.com', 'monkey')
+    User.authenticate('quentin2@example.com', 'monkey').should == admin
   end
 
   it "should authenticate user by email" do
     admin = Factory(:admin_user, :password => 'monkey',
                                  :password_confirmation => 'monkey')
+    admin.activate!
     admin.account = Factory(:account)
     User.authenticate(admin.email, 'monkey').should == admin
   end
@@ -94,8 +96,9 @@ describe User do
   it "should authenticate user by name" do
     admin = Factory(:admin_user, :password => 'monkey',
                                  :password_confirmation => 'monkey')
+    admin.activate!
     admin.account = Factory(:account)
-    User.authenticate(admin.email, 'monkey').should == admin
+    User.authenticate(admin.name, 'monkey').should == admin
   end
 
   it "should_not authenticate suspended user" do
