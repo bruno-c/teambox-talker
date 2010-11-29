@@ -1,77 +1,77 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-describe "AccountsController", ActionController::TestCase do
-  it "new" do
+class AccountsControllerTest < ActionController::TestCase
+  def test_new
     get :new, :plan => "free"
     assert_response :success
   end
   
-  it "new invalid plan" do
+  def test_new_invalid_plan
     assert_raise(ActiveRecord::RecordNotFound) do
       get :new, :plan => "wtf"
     end
   end
   
-  it "valid create" do
+  def test_valid_create
     post :create, :account => hash_for_account, :user => hash_for_user
     assert_redirected_to welcome_url(:host => assigns(:account).subdomain + ".test.host",
                                      :token => assigns(:user).perishable_token), @response.body
-     assigns(:account).new_record?.should.not == true
-     assigns(:user).new_record?.should.not == true
-    assigns(:account).should == assigns(:user).account
-    assigns(:user).admin, "1st user must be admin".should.not == nil
-    assigns(:user).active?, "1st user must be active".should.not == nil
-    assigns(:account).owner.should == assigns(:user)
+    assert ! assigns(:account).new_record?
+    assert ! assigns(:user).new_record?
+    assert_equal assigns(:user).account, assigns(:account)
+    assert assigns(:user).admin, "1st user must be admin"
+    assert assigns(:user).active?, "1st user must be active"
+    assert_equal assigns(:user), assigns(:account).owner
   end
 
-  it "invalid create" do
+  def test_invalid_create
     User.any_instance.stubs(:valid?).returns(false)
     post :create, :account => hash_for_account, :user => hash_for_user
     assert_response :success
     assert_template "new"
-    assigns(:account).new_record?.should.not == nil
-    assigns(:user).new_record?.should.not == nil
+    assert assigns(:account).new_record?
+    assert assigns(:user).new_record?
   end
   
-  it "welcome" do
+  def test_welcome
     subdomain :master
     users(:quentin).create_perishable_token!
     get :welcome, :token => users(:quentin).perishable_token
     assert_response :success, @response.body
-    assigns(:current_user).should == users(:quentin)
-    assigns(:current_account).subscription_info_changed.should.not == nil
+    assert_equal users(:quentin), assigns(:current_user)
+    assert assigns(:current_account).subscription_info_changed
   end
   
-  it "subscribers changed" do
+  def test_subscribers_changed
     ids = [accounts(:master)].map { |a| a.id.to_s }
     Account.any_instance.expects(:update_subscription_info).times(ids.size)
     post :subscribers_changed, :subscriber_ids => ids.join(",")
     assert_response :success, @response.body
-    assigns(:account_ids).should == ids
+    assert_equal ids, assigns(:account_ids)
   end
   
-  it "show" do
+  def test_show
     subdomain :master
     login_as :quentin
     get :show
     assert_response :success, @response.body
   end
 
-  it "show with changed" do
+  def test_show_with_changed
     subdomain :master
     login_as :quentin
     get :show, :changed => true
     assert_redirected_to account_path
-    flash[:notice].should.not == nil
-    assigns(:account).subscription_info_changed.should.not == nil
+    assert_not_nil flash[:notice]
+    assert assigns(:account).subscription_info_changed
   end
 
-  it "plan changed" do
+  def test_plan_changed
     subdomain :master
     login_as :quentin
     get :plan_changed, :plan => Plan.free
     assert_redirected_to account_path
-    flash[:notice].should.not == nil
-    assigns(:account).subscription_info_changed.should.not == nil
+    assert_not_nil flash[:notice]
+    assert assigns(:account).subscription_info_changed
   end
 end

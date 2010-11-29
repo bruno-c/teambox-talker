@@ -1,24 +1,24 @@
 require 'test_helper'
 
-describe "PluginsController", ActionController::TestCase do
-  before do
+class PluginsControllerTest < ActionController::TestCase
+  def setup
     @account = accounts(:master)
     subdomain :master
     login_as :quentin
   end
   
-  it "should get index" do
+  test "should get index" do
     get :index
     assert_response :success
-    assigns(:plugins).should.not == nil
+    assert_not_nil assigns(:plugins)
   end
 
-  it "should get new" do
+  test "should get new" do
     get :new
     assert_response :success
   end
 
-  it "should create plugin" do
+  test "should create plugin" do
     assert_difference('Plugin.count') do
       post :create, :plugin => {
         :name => 'Talker.SomethingCommand',
@@ -30,17 +30,17 @@ describe "PluginsController", ActionController::TestCase do
     assert_redirected_to plugins_path
   end
 
-  it "should get edit" do
+  test "should get edit" do
     get :edit, :id => plugins(:one).to_param
     assert_response :success
   end
 
-  it "should update plugin" do
+  test "should update plugin" do
     put :update, :id => plugins(:one).to_param, :plugin => { }
     assert_redirected_to plugins_path
   end
 
-  it "should destroy plugin" do
+  test "should destroy plugin" do
     assert_difference('Plugin.count', -1) do
       delete :destroy, :id => plugins(:one).to_param
     end
