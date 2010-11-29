@@ -21,7 +21,7 @@ describe Room do
     Room.with_permission(user).count.should_not == Room.count
   end
   
-  it "send message" do
+  it "send one message" do
     @room.expects(:publish).with do |event|
       event[:type].should == 'message'
       event[:content].should == "ohaie\nthere"
@@ -33,7 +33,7 @@ describe Room do
     @room.send_message("ohaie\nthere")
   end
 
-  it "send messages" do
+  it "sends many messages" do
     @room.expects(:publish).with do |*events|
       events[0][:content].should == 'ohaie'
       events[1][:content].should == 'there'

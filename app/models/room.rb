@@ -67,7 +67,7 @@ class Room < ActiveRecord::Base
   
   def send_message(messages, options={})
     can_paste = options.delete(:paste) != false
-    
+
     events = [messages].flatten.map do |message|
       event = { :id => UUID_GENERATOR.generate(:compact), :type => "message", :content => message, :user => User.talker, :time => Time.now.to_i }.merge(options)
       
