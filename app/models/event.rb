@@ -63,7 +63,7 @@ class Event < ActiveRecord::Base
       Array(options[:include]).each { |attr| object[attr] = send(attr) }
       object.to_json
     else
-      payload
+      payload_object
     end
   end
 end

@@ -29,4 +29,12 @@ end
 group :test do
   gem "nokogiri"
   gem "mocha", :require => false
+  gem "database_cleaner"
+  gem "vcr"
+  gem "fakeweb"
+  gem "factory_girl"
+  gem "faker"
+  gem "rspec", "<2.0.0"
+  gem "rspec-rails", "<2.0.0"
+  gem "spork"
 end

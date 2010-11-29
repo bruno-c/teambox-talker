@@ -9,3 +9,4 @@ db/sphinx
 .rvmrc
 .bundle
 .sass-cache
+public/assets/**/*.gz
