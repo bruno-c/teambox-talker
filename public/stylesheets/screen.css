@@ -63,7 +63,7 @@ a img {
   box-shadow: 0px 0px 27px gray;
   -webkit-box-shadow: 0px 0px 27px gray;
   -moz-box-shadow: 0px 0px 27px gray;
-  border: 1px solid #AAA; }
+  border: 1px solid #aaaaaa; }
   #facebox .popup {
     position: relative; }
   #facebox table {
@@ -73,7 +73,7 @@ a img {
     padding: 0; }
   #facebox .body {
     padding: 10px;
-    background: #fff;
+    background: white;
     width: 370px; }
   #facebox .loading, #facebox .image {
     text-align: center; }
@@ -81,7 +81,7 @@ a img {
     border: 0;
     margin: 0; }
   #facebox .footer {
-    border-top: 1px solid #DDDDDD;
+    border-top: 1px solid #dddddd;
     padding-top: 5px;
     margin-top: 10px;
     text-align: right; }
@@ -97,7 +97,7 @@ a img {
   z-index: -100; }
 
 .facebox_overlayBG {
-  background-color: #000;
+  background-color: black;
   z-index: 999; }
 
 * html #facebox_overlay {
@@ -119,7 +119,7 @@ a img {
   left: 14px;
   top: 13px;
   position: absolute;
-  background: #f00;
+  background: red;
   overflow: hidden;
   cursor: crosshair; }
   .colorpicker_color div {
@@ -161,7 +161,7 @@ a img {
   height: 30px;
   left: 213px;
   top: 13px;
-  background: #f00; }
+  background: red; }
 
 .colorpicker_current_color {
   position: absolute;
@@ -169,7 +169,7 @@ a img {
   height: 30px;
   left: 283px;
   top: 13px;
-  background: #f00; }
+  background: red; }
 
 .colorpicker input {
   background-color: transparent;
@@ -261,7 +261,7 @@ body {
   font-size: 14px;
   color: black;
   background: #e5e5e5; }
-  body:.blank {
+  body.blank {
     background-color: white; }
 
 html {
@@ -357,7 +357,7 @@ pre {
   font-family: monospace; }
 
 .highlight {
-  background: #EFEF00;
+  background: #efef00;
   color: black;
   font-weight: bold;
   margin: 4px;
@@ -434,7 +434,7 @@ html[xmlns] .clearfix {
             -moz-border-radius: 2px;
             -webkit-border-radius: 2px;
             border: none;
-            background-image: url('../../images/icons/magnifier.png');
+            background-image: url("../../images/icons/magnifier.png");
             background-repeat: no-repeat;
             background-position: 2px center; }
   #nav p.utilities {
@@ -516,50 +516,50 @@ body#rooms_controller.show #content {
 
 #plugins {
   overflow: hidden; }
-  #plugins>div {
+  #plugins > div {
     margin: 0 0 20px; }
-    #plugins>div li {
+    #plugins > div li {
       display: block;
       margin: 0 10px 10px 0; }
-      #plugins>div li div.panel {
+      #plugins > div li div.panel {
         margin: 0; }
-        #plugins>div li div.panel div.header h3 {
+        #plugins > div li div.panel div.header h3 {
           font-size: 14px;
           font-weight: bold; }
-        #plugins>div li div.panel div.header span.author {
+        #plugins > div li div.panel div.header span.author {
           float: right;
           font-size: 12px;
           color: silver; }
-          #plugins>div li div.panel div.header span.author img {
+          #plugins > div li div.panel div.header span.author img {
             position: relative;
             top: 3px; }
-        #plugins>div li div.panel div.content p.description {
+        #plugins > div li div.panel div.content p.description {
           font-size: 12px; }
-        #plugins>div li div.panel div.content p.people label {
+        #plugins > div li div.panel div.content p.people label {
           color: gray; }
-        #plugins>div li div.panel div.content p.people img {
+        #plugins > div li div.panel div.content p.people img {
           height: 18px;
           width: 18px;
           position: relative;
           top: 3px; }
-      #plugins>div li.enabled {
+      #plugins > div li.enabled {
         filter: alpha(opacity=100);
         opacity: 1;
         -moz-opacity: 1; }
-        #plugins>div li.enabled div.panel div.header {
+        #plugins > div li.enabled div.panel div.header {
           background: #1c76a0; }
-          #plugins>div li.enabled div.panel div.header span.author {
+          #plugins > div li.enabled div.panel div.header span.author {
             color: white; }
-      #plugins>div li.disabled {
+      #plugins > div li.disabled {
         filter: alpha(opacity=50);
         opacity: 0.5;
         -moz-opacity: 0.5; }
-      #plugins>div li:hover {
+      #plugins > div li:hover {
         filter: alpha(opacity=100);
         opacity: 1;
         -moz-opacity: 1; }
 
-#plugins_controller.show #plugins>div li {
+#plugins_controller.show #plugins > div li {
   filter: alpha(opacity=100);
   opacity: 1;
   -moz-opacity: 1; }
@@ -706,17 +706,17 @@ a.button, button {
       opacity: 1;
       -moz-opacity: 1; }
   a.button.add, button.add {
-    background-image: url('../../images/icons/plus-circle.png');
+    background-image: url("../../images/icons/plus-circle.png");
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
   a.button.remove, button.remove {
-    background-image: url('../../images/icons/minus-circle.png');
+    background-image: url("../../images/icons/minus-circle.png");
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
   a.button.update, button.update {
-    background-image: url('../../images/icons/document--pencil.png');
+    background-image: url("../../images/icons/document--pencil.png");
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
@@ -818,7 +818,7 @@ a.button, button {
         font-size: 14px; }
         #chat_log table tr td a.log {
           float: right;
-          background: url('../../images/icons/calendar--arrow.png') no-repeat 3px center;
+          background: url("../../images/icons/calendar--arrow.png") no-repeat 3px center;
           background-color: #606060;
           padding: 0 5px 0 21px;
           height: 20px;
@@ -1031,7 +1031,7 @@ a.button, button {
             top: 5px; }
           #chat_log table tr.timestamp td.time div span.marker i {
             height: 20px;
-            background-image: url('../../images/icons/clock.png');
+            background-image: url("../../images/icons/clock.png");
             line-height: 20px;
             margin: 0 0 0 5px; }
       #chat_log table tr.notice td.message div.line {
@@ -1044,7 +1044,7 @@ a.button, button {
         border: 2px dotted #d3ebf6;
         padding: 3px 8px; }
         #chat_log table tr.private td.message blockquote span.marker.private {
-          background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center; }
+          background: url("../../images/icons/spectacles-sunglass.png") no-repeat left center; }
         #chat_log table tr.private td.message blockquote div.line {
           font-style: italic;
           color: gray; }
@@ -1063,7 +1063,7 @@ a.button, button {
   overflow: hidden;
   width: 100%;
   margin: 0px 230px 0 0;
-  background: url('../../images/bottom_fader.png'); }
+  background: url("../../images/bottom_fader.png"); }
   #message_form.expanded form.fade {
     margin: 20px 80px 0 0; }
   #message_form #toggle_sound {
@@ -1549,9 +1549,9 @@ div.flash {
   -webkit-border-radius: 3px;
   line-height: normal; }
   div.flash.error {
-    background: #f1c8cc url('/images/icons/exclamation-red.png') no-repeat 10px 10px; }
+    background: #f1c8cc url("/images/icons/exclamation-red.png") no-repeat 10px 10px; }
   div.flash.notice {
-    background: #c1c8fc url('/images/icons/information.png') no-repeat 10px 10px; }
+    background: #c1c8fc url("/images/icons/information.png") no-repeat 10px 10px; }
 
 #errorExplanation {
   color: black;
@@ -1561,7 +1561,7 @@ div.flash {
   -webkit-border-radius: 3px;
   margin: 0 0 20px;
   color: black;
-  background: #f1c8cc url('/images/icons/exclamation-red.png') no-repeat 10px 10px; }
+  background: #f1c8cc url("/images/icons/exclamation-red.png") no-repeat 10px 10px; }
   #errorExplanation h2 {
     font-size: 14px;
     margin: 0; }
@@ -1573,7 +1573,7 @@ div.flash {
     margin-left: 19px; }
     #errorExplanation ul li {
       font-size: 12px;
-      background: url('../../images/icons/exclamation-small-red.png') no-repeat left center;
+      background: url("../../images/icons/exclamation-small-red.png") no-repeat left center;
       padding-left: 21px;
       list-style: none; }
 
@@ -1586,7 +1586,7 @@ div.info {
   -webkit-border-radius: 3px;
   font-size: 12px;
   line-height: normal;
-  background: #d3ebf6 url('/images/icons/information.png') no-repeat 10px 10px;
+  background: #d3ebf6 url(/images/icons/information.png) no-repeat 10px 10px;
   box-shadow: 1px 1px 2px #d2d2d2;
   -webkit-box-shadow: 1px 1px 2px #d2d2d2;
   -moz-box-shadow: 1px 1px 2px #d2d2d2; }
@@ -1594,7 +1594,7 @@ div.info {
     margin-bottom: 4px; }
   div.info.warning {
     border: solid 2px #fe7f7f;
-    background: #fee5e5 url('/images/icons/exclamation-red.png') no-repeat 10px 10px; }
+    background: #fee5e5 url("/images/icons/exclamation-red.png") no-repeat 10px 10px; }
 
 #guest_login .user_list {
   padding: 10px;
@@ -1770,7 +1770,7 @@ div.log_browser {
   box-shadow: 0px 0px 16px #a0a0a0;
   -webkit-box-shadow: 0px 0px 16px #a0a0a0;
   -moz-box-shadow: 0px 0px 16px #a0a0a0;
-  height: 1000px // changed programmatically;
+  height: 1000px;
   margin: 0 240px 0 0; }
   #paste #editorcontainer iframe {
     width: 100%;
@@ -1813,7 +1813,7 @@ div.log_browser {
   bottom: 0; }
 
 #curtain {
-  background-color: #000;
+  background-color: black;
   filter: alpha(opacity=50);
   opacity: 0.5;
   -moz-opacity: 0.5;
@@ -1826,7 +1826,7 @@ div.log_browser {
   height: 45px;
   margin: 60px auto;
   padding: 10px;
-  background-color: #fff;
+  background-color: white;
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px; }

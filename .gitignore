@@ -7,3 +7,4 @@ config/database.yml
 config/*.sphinx.conf
 db/sphinx
 .rvmrc
+.bundle
