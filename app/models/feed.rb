@@ -54,55 +54,57 @@ class Feed < ActiveRecord::Base
     self.run_at = self.class.db_time_now + INTERVAL
     save(false)
   end
-  
-  def perform
-    options = { :user_agent => "Talker http://talkerapp.com" }
-    options[:if_modified_since] = last_modified_at if last_modified_at
-    options[:if_none_match] = etag if etag
-    options[:http_authentication] = [user_name, password] if user_name.present?
-    options[:timeout] = 60
+ 
+  def open_feed(url, options)
+    FeedNormalizer::FeedNormalizer.parse open(url, options)
+  end
 
-    feed = Feedzirra::Feed.fetch_and_parse(url, options)
-    
-    if feed == 304 # not modified
+  def perform
+
+    #options = { :user_agent => "Talker http://talkerapp.com" }
+    #options[:if_none_match] = etag if etag
+
+    open_uri_options = {}
+    open_uri_options[:open_uri_options] = [user_name, password] if user_name.present?
+
+    feed = open_feed(url, open_uri_options)
+  
+    if last_modified_at && feed.last_updated && feed.last_updated <= last_modified_at # not modified
       return
-    elsif feed.nil?
+    elsif feed.nil? 
       raise BadResponse, "Invalid feed or error from server"
     elsif feed.is_a?(Fixnum)
       raise BadResponse, "Got #{feed} response from server"
     end
 
-
     entries = feed.entries
-    
+
     # If we already fetch, do not publish duplicates
     if last_modified_at
-      entries = entries.select { |e| e.published > last_modified_at }
+      entries = entries.select { |e| e.last_updated > last_modified_at }
     end
-   
 
     entries.first(MAX_MESSAGES).reverse.each do |entry|
       publish entry
-      self.last_modified_at = entry.published
+      self.last_modified_at = entry.last_updated
     end
-    
 
-    self.last_modified_at = feed.last_modified if last_modified_at.nil? || (feed.last_modified && feed.last_modified > last_modified_at)
-    self.etag = feed.etag
+    self.last_modified_at = feed.last_updated if last_modified_at.nil? || (feed.last_updated && feed.last_updated > last_modified_at)
+    #self.etag = feed.etag
 
   end
   
   def publish(entry)
-    title = sanitize(entry.title)
+    title = sanitize(entry.title.strip)
     content = sanitize(entry.content)
     uri = URI.parse(entry.url)
     truncated_content = Paste.truncate(content)
-    
-    room.send_message "#{entry.author}: #{title} #{entry.url}",
-                      :feed => { :author => entry.author,
-                                 :title => title,
+   
+    room.send_message "#{title.strip}",
+                      :feed => { :author => entry.author.strip,
+                                 :title => title.strip,
                                  :url => entry.url,
-                                 :published => entry.published.to_i,
+                                 :published => entry.last_updated.to_i,
                                  :content => truncated_content,
                                  :source => uri.host }
   end
