@@ -1,19 +1,19 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class AttachmentsControllerTest < ActionController::TestCase
-  def setup
+describe "AttachmentsController", ActionController::TestCase do
+  before do
     subdomain :master
     login_as :quentin
     @room = Room.first
   end
   
-  def test_show
+  it "show" do
     Attachment.any_instance.expects(:url).returns("/")
     get :show, :room_id => @room, :id => attachments(:lolcat)
     assert_redirected_to "/"
   end
   
-  def test_create
+  it "create" do
     Attachment.any_instance.expects(:save).returns(true)
     Attachment.any_instance.expects(:id).returns(1)
     Attachment.any_instance.expects(:basename).returns("ohaie")
@@ -24,7 +24,7 @@ class AttachmentsControllerTest < ActionController::TestCase
     assert_match %r{/rooms/\d+/attachments/1-ohaie.jpg}, @response.body
   end
 
-  def test_create_fail
+  it "create fail" do
     Attachment.any_instance.expects(:save).returns(false)
     
     post :create, :room_id => @room, :upload => nil
