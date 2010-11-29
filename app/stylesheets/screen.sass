@@ -162,7 +162,7 @@ html[xmlns] .clearfix
             padding: 4px 2px 0 21px
             +rounded_corners("all", 2)
             border: none
-            background-image: url('../../images/icons/magnifier.png')
+            background-image: url('../../images/embed/icons/magnifier.png')
             background-repeat: no-repeat
             background-position: 2px center
   p.utilities
@@ -431,17 +431,17 @@ a.button, button
     &:hover, &.hover
       +opacity(100)
   &.add
-    background-image: url('../../images/icons/plus-circle.png')
+    background-image: url('../../images/embed/icons/plus-circle.png')
     background-position: 10px center
     background-repeat: no-repeat
     padding-left: 31px
   &.remove
-    background-image: url('../../images/icons/minus-circle.png')
+    background-image: url('../../images/embed/icons/minus-circle.png')
     background-position: 10px center
     background-repeat: no-repeat
     padding-left: 31px
   &.update
-    background-image: url('../../images/icons/document--pencil.png')
+    background-image: url('../../images/embed/icons/document--pencil.png')
     background-position: 10px center
     background-repeat: no-repeat
     padding-left: 31px
@@ -450,16 +450,16 @@ a.button, button
     background-repeat: no-repeat
     padding-left: 31px
   &.send-email
-    background-image: url(/images/icons/mail--arrow.png)
+    background-image: url(/images/embed/icons/mail--arrow.png)
   &.delete
-    background-image: url(/images/icons/cross-circle.png)
+    background-image: url(/images/embed/icons/cross-circle.png)
   &.cancel
     background-color = !colour_negative * 0.3 + !white * 0.7
-    background-image: url(/images/icons/cross-circle.png)
+    background-image: url(/images/embed/icons/cross-circle.png)
   &.ok
-    background-image: url(/images/icons/tick.png)
+    background-image: url(/images/embed/icons/tick.png)
   &.next
-    background-image: url(/images/icons/arrow.png)
+    background-image: url(/images/embed/icons/arrow.png)
 
 // Sidebar Action Buttons
 #sidebar
@@ -541,7 +541,7 @@ a.button, button
         +font_size("medium")
         a.log
           float: right
-          background: url('../../images/icons/calendar--arrow.png') no-repeat 3px center
+          background: url('../../images/embed/icons/calendar--arrow.png') no-repeat 3px center
           background-color = !grey * 0.5 + !dark_grey * 0.5
           padding: 0 5px 0 21px
           height: 20px
@@ -739,7 +739,7 @@ a.button, button
                   top: 5px
                 i
                   height: 20px
-                  background-image: url('../../images/icons/clock.png')
+                  background-image: url('../../images/embed/icons/clock.png')
                   line-height: 20px
                   margin: 0 0 0 5px
       &.notice
@@ -759,7 +759,7 @@ a.button, button
               border = 2px "dotted" !accent_colour * 0.2 + !white * 0.8
               padding: 3px 8px
               span.marker.private
-                background: url('../../images/icons/spectacles-sunglass.png') no-repeat left center
+                background: url('../../images/embed/icons/spectacles-sunglass.png') no-repeat left center
               div.line
                 font-style: italic
                 color = !grey
@@ -803,10 +803,10 @@ a.button, button
       width: 20px
     &.active
       .sound_img
-        background: url(../images/icons/volume.png) center no-repeat
+        background: url(../images/embed/icons/volume.png) center no-repeat
     &.inactive
       .sound_img
-        background: url(../images/icons/volume-control-mute.png) center no-repeat
+        background: url(../images/embed/icons/volume-control-mute.png) center no-repeat
   .form_help
     float: right
     display: inline-block
@@ -1023,7 +1023,7 @@ div.dialog
     ul
       margin: 6px 20px
       li
-        background: url("/images/icons/arrow-000-small.png") no-repeat left 4px
+        background: url("/images/embed/icons/arrow-000-small.png") no-repeat left 4px
         padding: 1px
         padding-left: 21px
         list-style: none
@@ -1228,9 +1228,9 @@ div.flash
   +rounded_corners("all", 3)
   line-height: normal
   &.error
-    background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/icons/exclamation-red.png") "no-repeat" 10px 10px
+    background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/embed/icons/exclamation-red.png") "no-repeat" 10px 10px
   &.notice
-    background = (!accent_colour * 0.25 + !blue * 0.75) * 0.25 + !white * 0.75 url("/images/icons/information.png") "no-repeat" 10px 10px
+    background = (!accent_colour * 0.25 + !blue * 0.75) * 0.25 + !white * 0.75 url("/images/embed/icons/information.png") "no-repeat" 10px 10px
 
 // Error Explananation
 #errorExplanation
@@ -1239,7 +1239,7 @@ div.flash
   +rounded_corners("all", 3)
   margin: 0 0 20px
   color = !black
-  background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/icons/exclamation-red.png") "no-repeat" 10px 10px
+  background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/embed/icons/exclamation-red.png") "no-repeat" 10px 10px
   h2
     +font_size("medium")
     margin: 0
@@ -1251,7 +1251,7 @@ div.flash
     margin-left: 19px
     li
       +font_size("small")
-      background: url('../../images/icons/exclamation-small-red.png') no-repeat left center
+      background: url('../../images/embed/icons/exclamation-small-red.png') no-repeat left center
       padding-left: 21px
       list-style: none
 
@@ -1262,13 +1262,13 @@ div.info
   +rounded_corners("all", 3)
   +font_size("small")
   line-height: normal
-  background = !accent_colour * 0.2 + !white * 0.8 url(/images/icons/information.png) "no-repeat" 10px 10px
+  background = !accent_colour * 0.2 + !white * 0.8 url(/images/embed/icons/information.png) "no-repeat" 10px 10px
   +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
   p
     margin-bottom: 4px
   &.warning
     border = solid 2px !red * 0.5 + !white * 0.5
-    background = !red * 0.1 + !white * 0.9 url("/images/icons/exclamation-red.png") "no-repeat" 10px 10px
+    background = !red * 0.1 + !white * 0.9 url("/images/embed/icons/exclamation-red.png") "no-repeat" 10px 10px
 
 #guest_login
   .user_list

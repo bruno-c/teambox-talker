@@ -434,7 +434,7 @@ html[xmlns] .clearfix {
             -moz-border-radius: 2px;
             -webkit-border-radius: 2px;
             border: none;
-            background-image: url("../../images/icons/magnifier.png");
+            background-image: url("../../images/embed/icons/magnifier.png");
             background-repeat: no-repeat;
             background-position: 2px center; }
   #nav p.utilities {
@@ -706,17 +706,17 @@ a.button, button {
       opacity: 1;
       -moz-opacity: 1; }
   a.button.add, button.add {
-    background-image: url("../../images/icons/plus-circle.png");
+    background-image: url("../../images/embed/icons/plus-circle.png");
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
   a.button.remove, button.remove {
-    background-image: url("../../images/icons/minus-circle.png");
+    background-image: url("../../images/embed/icons/minus-circle.png");
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
   a.button.update, button.update {
-    background-image: url("../../images/icons/document--pencil.png");
+    background-image: url("../../images/embed/icons/document--pencil.png");
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
@@ -725,16 +725,16 @@ a.button, button {
     background-repeat: no-repeat;
     padding-left: 31px; }
   a.button.send-email, button.send-email {
-    background-image: url(/images/icons/mail--arrow.png); }
+    background-image: url(/images/embed/icons/mail--arrow.png); }
   a.button.delete, button.delete {
-    background-image: url(/images/icons/cross-circle.png); }
+    background-image: url(/images/embed/icons/cross-circle.png); }
   a.button.cancel, button.cancel {
     background-color: #ddc9d2;
-    background-image: url(/images/icons/cross-circle.png); }
+    background-image: url(/images/embed/icons/cross-circle.png); }
   a.button.ok, button.ok {
-    background-image: url(/images/icons/tick.png); }
+    background-image: url(/images/embed/icons/tick.png); }
   a.button.next, button.next {
-    background-image: url(/images/icons/arrow.png); }
+    background-image: url(/images/embed/icons/arrow.png); }
 
 #sidebar #actions a.button {
   font-size: 18px;
@@ -818,7 +818,7 @@ a.button, button {
         font-size: 14px; }
         #chat_log table tr td a.log {
           float: right;
-          background: url("../../images/icons/calendar--arrow.png") no-repeat 3px center;
+          background: url("../../images/embed/icons/calendar--arrow.png") no-repeat 3px center;
           background-color: #606060;
           padding: 0 5px 0 21px;
           height: 20px;
@@ -1031,7 +1031,7 @@ a.button, button {
             top: 5px; }
           #chat_log table tr.timestamp td.time div span.marker i {
             height: 20px;
-            background-image: url("../../images/icons/clock.png");
+            background-image: url("../../images/embed/icons/clock.png");
             line-height: 20px;
             margin: 0 0 0 5px; }
       #chat_log table tr.notice td.message div.line {
@@ -1044,7 +1044,7 @@ a.button, button {
         border: 2px dotted #d3ebf6;
         padding: 3px 8px; }
         #chat_log table tr.private td.message blockquote span.marker.private {
-          background: url("../../images/icons/spectacles-sunglass.png") no-repeat left center; }
+          background: url("../../images/embed/icons/spectacles-sunglass.png") no-repeat left center; }
         #chat_log table tr.private td.message blockquote div.line {
           font-style: italic;
           color: gray; }
@@ -1085,9 +1085,9 @@ a.button, button {
       height: 20px;
       width: 20px; }
     #message_form #toggle_sound.active .sound_img {
-      background: url(../images/icons/volume.png) center no-repeat; }
+      background: url(../images/embed/icons/volume.png) center no-repeat; }
     #message_form #toggle_sound.inactive .sound_img {
-      background: url(../images/icons/volume-control-mute.png) center no-repeat; }
+      background: url(../images/embed/icons/volume-control-mute.png) center no-repeat; }
   #message_form .form_help {
     float: right;
     display: inline-block;
@@ -1330,7 +1330,7 @@ div.dialog div.content .footer {
 div.dialog div.content ul {
   margin: 6px 20px; }
   div.dialog div.content ul li {
-    background: url("/images/icons/arrow-000-small.png") no-repeat left 4px;
+    background: url("/images/embed/icons/arrow-000-small.png") no-repeat left 4px;
     padding: 1px;
     padding-left: 21px;
     list-style: none; }
@@ -1549,9 +1549,9 @@ div.flash {
   -webkit-border-radius: 3px;
   line-height: normal; }
   div.flash.error {
-    background: #f1c8cc url("/images/icons/exclamation-red.png") no-repeat 10px 10px; }
+    background: #f1c8cc url("/images/embed/icons/exclamation-red.png") no-repeat 10px 10px; }
   div.flash.notice {
-    background: #c1c8fc url("/images/icons/information.png") no-repeat 10px 10px; }
+    background: #c1c8fc url("/images/embed/icons/information.png") no-repeat 10px 10px; }
 
 #errorExplanation {
   color: black;
@@ -1561,7 +1561,7 @@ div.flash {
   -webkit-border-radius: 3px;
   margin: 0 0 20px;
   color: black;
-  background: #f1c8cc url("/images/icons/exclamation-red.png") no-repeat 10px 10px; }
+  background: #f1c8cc url("/images/embed/icons/exclamation-red.png") no-repeat 10px 10px; }
   #errorExplanation h2 {
     font-size: 14px;
     margin: 0; }
@@ -1573,7 +1573,7 @@ div.flash {
     margin-left: 19px; }
     #errorExplanation ul li {
       font-size: 12px;
-      background: url("../../images/icons/exclamation-small-red.png") no-repeat left center;
+      background: url("../../images/embed/icons/exclamation-small-red.png") no-repeat left center;
       padding-left: 21px;
       list-style: none; }
 
@@ -1586,7 +1586,7 @@ div.info {
   -webkit-border-radius: 3px;
   font-size: 12px;
   line-height: normal;
-  background: #d3ebf6 url(/images/icons/information.png) no-repeat 10px 10px;
+  background: #d3ebf6 url(/images/embed/icons/information.png) no-repeat 10px 10px;
   box-shadow: 1px 1px 2px #d2d2d2;
   -webkit-box-shadow: 1px 1px 2px #d2d2d2;
   -moz-box-shadow: 1px 1px 2px #d2d2d2; }
@@ -1594,7 +1594,7 @@ div.info {
     margin-bottom: 4px; }
   div.info.warning {
     border: solid 2px #fe7f7f;
-    background: #fee5e5 url("/images/icons/exclamation-red.png") no-repeat 10px 10px; }
+    background: #fee5e5 url("/images/embed/icons/exclamation-red.png") no-repeat 10px 10px; }
 
 #guest_login .user_list {
   padding: 10px;

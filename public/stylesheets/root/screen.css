@@ -15,7 +15,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 body {
   line-height: 1em;
   color: black;
-  background: #fff; }
+  background: white; }
 
 ol, ul {
   list-style: none; }
@@ -45,7 +45,7 @@ img a {
 h1 {
   font-family: Helvetica, Arial, sans-serif;
   text-align: center;
-  color: #13181F;
+  color: #13181f;
   font-style: normal;
   font-weight: bold;
   font-size: 1.8em;
@@ -84,7 +84,7 @@ h5, h6 {
   color: #333333;
   font-style: normal;
   font-weight: bold;
-  font-size: .8em;
+  font-size: 0.8em;
   line-height: 1em;
   margin-bottom: 0.5em; }
 
@@ -93,7 +93,7 @@ h2 img, h3 img, h4 img, h5 img, h6 img {
 
 p {
   color: #185b89;
-  font-family: Georgia,serif;
+  font-family: Georgia, serif;
   font-size: 15.5px;
   line-height: 1.375em;
   margin: 0px 0px 1.3em; }
@@ -115,7 +115,7 @@ a {
 
 blockquote {
   margin: 1.5em;
-  color: #666;
+  color: #666666;
   font-style: italic; }
 
 strong {
@@ -136,23 +136,23 @@ sup, sub {
   line-height: 0; }
 
 abbr, acronym {
-  border-bottom: 1px dotted #666; }
+  border-bottom: 1px dotted #666666; }
 
 address {
   margin: 0 0 1.5em;
   font-style: italic; }
 
 del {
-  color: #666; }
+  color: #666666; }
 
 pre {
   margin: 1.5em 0;
   white-space: pre;
-  font: 1em 'andale mono', 'lucida console', monospace;
+  font: 1em "andale mono", "lucida console", monospace;
   line-height: 1.5; }
 
 code, tt {
-  font: 1em 'andale mono', 'lucida console', monospace;
+  font: 1em "andale mono", "lucida console", monospace;
   line-height: 1.5; }
 
 li ul, li ol {
@@ -167,7 +167,7 @@ ul {
     font-family: Georgia, serif;
     font-size: 14px;
     line-height: 1.35em;
-    color: #191F28; }
+    color: #191f28; }
 
 ol {
   margin: 0 1.5em 1.5em 1.5em;
@@ -186,7 +186,7 @@ hr {
   height: 1px; }
 
 span.and {
-  font-family: Baskerville, Palatino, 'Book Antiqua', serif;
+  font-family: Baskerville, Palatino, "Book Antiqua", serif;
   font-style: italic;
   font-weight: normal; }
 
@@ -253,7 +253,7 @@ span.and {
   height: 913px; }
 
 #splash {
-  background: #1DA7E3 url(/images/root/back.jpg) no-repeat scroll 50% 0;
+  background: #1da7e3 url(/images/root/embed/back.jpg) no-repeat scroll 50% 0;
   height: 550px; }
 
 #tagline h1 {
@@ -291,7 +291,7 @@ span.and {
   width: 920px;
   padding: 20px 20px 25px;
   border: 6px solid #d9e7ee;
-  background: #fff;
+  background: white;
   box-shadow: 0px 1px 4px #2d86b2;
   -webkit-box-shadow: 0px 1px 4px #2d86b2;
   -moz-box-shadow: 0px 1px 4px #2d86b2; }
@@ -386,7 +386,7 @@ span.and {
   display: block;
   height: 167px;
   width: 467px;
-  background: transparent url(/images/root/quote.png) no-repeat top center; }
+  background: transparent url(/images/root/embed/quote.png) no-repeat top center; }
   .testimonial p {
     color: #232323;
     padding: 25px 35px;
@@ -394,9 +394,9 @@ span.and {
   .testimonial .quote {
     position: absolute;
     left: 287px;
-    color: #296C8F; }
+    color: #296c8f; }
     .testimonial .quote span {
-      color: #8FA20A;
+      color: #8fa20a;
       font-family: Georgia, serif;
       font-style: italic; }
 
@@ -409,7 +409,7 @@ img.promo {
   #plans .plan p, #plans #all p {
     font-family: Helvetica;
     font-size: 16.5px;
-    color: #1574AE;
+    color: #1574ae;
     margin: 10px 0; }
     #plans .plan p span, #plans #all p span {
       font-weight: bold;
@@ -422,7 +422,7 @@ img.promo {
     margin: 0px 10px;
     background: white; }
     #plans .plan h2 {
-      color: #081C45; }
+      color: #081c45; }
     #plans .plan h3 {
       color: #d95717; }
   #plans .box {
@@ -430,16 +430,19 @@ img.promo {
     margin: 0px;
     padding: 20px 20px;
     border: 6px solid #d9e7ee;
-    background: #fff;
+    background: white;
     -moz-box-shadow: 0px 1px 4px #2d86b2;
     -webkit-box-shadow: 0px 1px 4px #2d86b2; }
+  #plans .bootstrap .box, #plans .basic .box, #plans .premium .box {
+    /* background: #FAFAFA */ }
   #plans .startup .box {
+    /* background: #FFFFF */
     border: 6px solid #5d9dc9; }
   #plans .buttons {
     text-align: center;
     margin: 0px auto; }
     #plans .buttons a {
-      color: #1574AE;
+      color: #1574ae;
       float: none;
       font-size: 14px;
       font-family: Arial;
@@ -483,11 +486,11 @@ img.promo {
     margin-bottom: 13px; }
   #about .content p {
     margin-bottom: 9px;
-    color: #333; }
+    color: #333333; }
 #about #product {
   padding: 20px 20px 25px;
   border: 6px solid #d9e7ee;
-  background: #fff;
+  background: white;
   box-shadow: 0px 1px 4px #2d86b2;
   -webkit-box-shadow: 0px 1px 4px #2d86b2;
   -moz-box-shadow: 0px 1px 4px #2d86b2;
@@ -497,7 +500,7 @@ img.promo {
 #about #team .box {
   padding: 20px 20px 25px;
   border: 6px solid #d9e7ee;
-  background: #fff;
+  background: white;
   box-shadow: 0px 1px 4px #2d86b2;
   -webkit-box-shadow: 0px 1px 4px #2d86b2;
   -moz-box-shadow: 0px 1px 4px #2d86b2;
@@ -507,7 +510,7 @@ img.promo {
   padding-bottom: 12px;
   padding-left: 107px; }
   #about #team .box img.avatar {
-    border: solid 1px #ccc;
+    border: solid 1px #cccccc;
     padding: 1px;
     margin-left: -90px;
     float: left; }
@@ -527,7 +530,7 @@ img.promo {
   #tour .content h3, #tour .content h4 {
     text-align: center; }
   #tour .content h4 {
-    color: #666; }
+    color: #666666; }
   #tour .content img {
     position: absolute;
     margin: 30px 0 0 -74px; }
@@ -563,7 +566,7 @@ img.promo {
     #footer .credits .tweet p span {
       color: inherit; }
     #footer .credits #companies {
-      background-color: #fff;
+      background-color: white;
       border-radius: 5px;
       -moz-border-radius: 5px;
       -webkit-border-radius: 5px;
@@ -618,7 +621,7 @@ img.promo {
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   -webkit-border-radius: 10px;
-  background: #EAEAEA url(/images/root/buttongradient.png) repeat-x scroll left top;
+  background: #eaeaea url(/images/root/embed/buttongradient.png) repeat-x scroll left top;
   border-color: #bdbdbd #9b9a9a #9b9a9a #bdbdbd;
   border-style: solid;
   border-width: 1px;
@@ -627,7 +630,7 @@ img.promo {
   display: block;
   float: left;
   font-weight: bold;
-  font-family: "Georgia",serif;
+  font-family: "Georgia", serif;
   font-size: 90%;
   line-height: 130%;
   margin: 0 0.7em 0 0;
@@ -659,30 +662,30 @@ a.button img, button.button img {
 
 .buttons button:hover, .buttons a:hover {
   border: 1px solid #999999;
-  color: #000000; }
+  color: black; }
 
 a.button:hover {
   border: 1px solid #999999;
-  color: #000000; }
+  color: black; }
 
 button.button:hover {
   border: 1px solid #999999;
-  color: #000000; }
+  color: black; }
 button.active {
   -moz-background-clip: border;
   -moz-background-inline-policy: continuous;
   -moz-background-origin: padding;
   -moz-box-shadow: none;
-  background: #FFFFFF url(/images/root/buttongradient.png) repeat-x scroll left top;
-  border-color: #CCCCCC; }
+  background: white url(/images/root/embed/buttongradient.png) repeat-x scroll left top;
+  border-color: #cccccc; }
 
 .buttons a:active, a.button:active {
   -moz-background-clip: border;
   -moz-background-inline-policy: continuous;
   -moz-background-origin: padding;
   -moz-box-shadow: none;
-  background: #FFFFFF url(/images/root/buttongradient.png) repeat-x scroll left top;
-  border-color: #CCCCCC; }
+  background: white url(/images/root/embed/buttongradient.png) repeat-x scroll left top;
+  border-color: #cccccc; }
 
 * html .buttons button[type] {
   margin-bottom: 1px;
@@ -703,7 +706,7 @@ label {
 fieldset {
   padding: 1.4em;
   margin: 0 0 1.5em 0;
-  border: 1px solid #ccc; }
+  border: 1px solid #cccccc; }
 
 legend {
   font-weight: bold;
@@ -725,4 +728,4 @@ input {
     font-weight: normal; }
   input[type=checkbox], input[type=radio], input.checkbox, input.radio {
     position: relative;
-    top: .25em; }
+    top: 0.25em; }
