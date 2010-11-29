@@ -4466,6 +4466,29 @@ Talker.isPaste = function(talkerEvent) {
   return (typeof talkerEvent.content == 'string' && talkerEvent.content.match(/\n/gim) || (talkerEvent.paste != null && talkerEvent.paste != false)) ? true : false;
 }
 
+//= require "jquery"
+//= require "underscore"
+//= require "talker"
+
+$(function() {
+  
+  $("div.flash").click(function() {
+    $(this).remove();
+    return false;
+  });
+  
+  if ($("#invitees")[0]) {
+    window.setTimeout(function(){ $('#invitees').focus(); }, 10);
+  }
+  
+  if ($.cookie("browser_warn") != 1 && ($.browser.msie && $.browser.version[0] < 7) || $.browser.opera) {
+    $.cookie("browser_warn", 1);
+    $.facebox("<h3>Talker is not supported in this browser.</h3>"+
+              "<p>It's possible (and probable) that you'll experience various issues using Talker with this browser.</p>"+
+              "<p>Please report any problem to our <a href='http://talker.tenderapp.com/'>support site</a>.</p>");
+  }
+
+});
 
 // NOTE: to log/debug with Orbited, there are two methods:
 //        Use firebug
@@ -7903,29 +7926,6 @@ jQuery.fn.submitWithAjax = function(callback) {
         }
     };
 })();
-//= require "jquery"
-//= require "underscore"
-//= require "talker"
-
-$(function() {
-  
-  $("div.flash").click(function() {
-    $(this).remove();
-    return false;
-  });
-  
-  if ($("#invitees")[0]) {
-    window.setTimeout(function(){ $('#invitees').focus(); }, 10);
-  }
-  
-  if ($.cookie("browser_warn") != 1 && ($.browser.msie && $.browser.version[0] < 7) || $.browser.opera) {
-    $.cookie("browser_warn", 1);
-    $.facebox("<h3>Talker is not supported in this browser.</h3>"+
-              "<p>It's possible (and probable) that you'll experience various issues using Talker with this browser.</p>"+
-              "<p>Please report any problem to our <a href='http://talker.tenderapp.com/'>support site</a>.</p>");
-  }
-
-});
 /*
  * Date Format 1.2.3
  * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
