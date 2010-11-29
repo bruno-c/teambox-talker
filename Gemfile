@@ -4,8 +4,6 @@ gem "rails", "2.3.2"
 gem "haml"
 
 gem "compass"
-gem "sprockets", :require => false
-gem "sprockets-rails"
 gem "eventmachine"
 gem "mysqlplus", :require => false
 gem "em-http-request"
@@ -21,6 +19,8 @@ gem 'paperclip'
 gem 'will_paginate'
 gem 'delayed_job'
 gem 'acts_as_state_machine'
+gem 'jammit'
+gem 'yui-compressor'
 
 group :development do
   gem "thin", :require => false

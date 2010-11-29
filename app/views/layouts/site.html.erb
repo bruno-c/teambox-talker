@@ -10,10 +10,10 @@
   <![endif]>
   
   <title><%= strip_tags @title || "Home" %></title>
-  <%= stylesheet_link_tag "root/screen", :media => "screen, projection" %>
-  <!--[if IE7]><%= stylesheet_link_tag "root/ie_7", :media => "screen, projection" %><![endif]-->
-  <!--[if IE8]><%= stylesheet_link_tag "root/ie_8", :media => "screen, projection" %><![endif]-->
-  <%= include_javascripts :site %>
+  <%= include_stylesheets :site, :media => "screen, projection" %>
+  <!--[if IE7]><%= include_stylesheets :site_ie7, :media => "screen, projection" %><![endif]-->
+  <!--[if IE8]><%= include_stylesheets :site_ie8, :media => "screen, projection" %><![endif]-->
+  <%= javascript_include_tag "jquery", "jquery.cookie", "site" %>
   <script type="text/javascript" charset="utf-8">
     if (!$.cookie("referrer")) $.cookie("referrer", document.referrer, { domain: '.<%= request.host %>', });
   </script>
