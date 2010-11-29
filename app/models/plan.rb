@@ -33,10 +33,12 @@ class Plan
   end
   
   def subscribe_url(account, return_url, user=account.owner)
-    Spreedly.subscribe_url(account.id, @id, account.subdomain) + "?" +
-      Rack::Utils.build_query(:email => user.email,
+    Spreedly.subscribe_url(account.id, @id, 
+                              :screen_name => account.subdomain,
+                              :email => user.email,
                               :first_name => user.name,
-                              :return_url => return_url)
+                              :return_url => return_url
+                          )
   end
   
   def self.payings

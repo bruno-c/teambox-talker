@@ -2,13 +2,13 @@
 echo "Starting all services ..."
 echo "Don't you touch anything until you see 5 new tabs in your console."
 gnome-terminal \
-  --tab -e "script/rabbitmq" -t 'RabbitMQ' \
-  --tab -e "thin start" -t 'Thin' \
-  --tab -e "script/orbited" -t "Orbited" &
+  --tab -e "bundle exec script/rabbitmq" -t 'RabbitMQ' \
+  --tab -e "bundle exec thin start" -t 'Thin' \
+  --tab -e "bundle exec script/orbited" -t "Orbited" &
  
 sleep 5
 
 gnome-terminal \
-  --tab -e "script/talker channel" -t "Talker Channel"\
-  --tab -e "script/talker presence" -t "Talker Presence" \
-  --tab -e "script/talker logger" -t "Talker Logger"
+  --tab -e "bundle exec script/talker channel" -t "Talker Channel"\
+  --tab -e "bundle exec script/talker presence" -t "Talker Presence" \
+  --tab -e "bundle exec script/talker logger" -t "Talker Logger"
