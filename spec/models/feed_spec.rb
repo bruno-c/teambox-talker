@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 
 describe Feed do
+  use_vcr_cassette "feeds", :record => :new_episodes
 
   describe "class methods" do
     describe "#find_available" do
@@ -65,39 +66,30 @@ describe Feed do
     describe "#perform" do
       it "publishes as many messages as there are in the feed" do
         feed = Factory(:feed)
-        Feedzirra::Feed.should_receive(:fetch_and_parse).with(feed.url, anything).
-                                                  and_return(Feedzirra::Feed.parse(File.read("spec/fixtures/feeds/thin.xml")))
         feed.room.should_receive(:send_message).exactly(3).times
         feed.perform
         
-        feed.last_modified_at.should == DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00")
+        feed.last_modified_at.should == DateTime.parse("Sun, 25 Apr 2010 14:36:41 UTC +00:00")
         feed.etag.should be_nil
       end
+
       it "only publishes new entries" do
         feed = Factory(:feed)
-        feed.update_attribute :last_modified_at, DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00") - 1.hour
-        Feedzirra::Feed.should_receive(:fetch_and_parse).with(feed.url, anything).
-                                                  and_return(Feedzirra::Feed.parse(File.read("spec/fixtures/feeds/thin.xml")))
-        feed.room.should_receive(:send_message).once.with("Rob Sterner: fixing referenced blog post's URL. http://github.com/macournoyer/thin/commit/ad96bc341c6790e6cadef9b62589591023078434",
-                                                       :feed => { :author => 'Rob Sterner',
-                                                                  :source => 'github.com',
-                                                                  :title => "fixing referenced blog post's URL.",
-                                                                  :url => 'http://github.com/macournoyer/thin/commit/ad96bc341c6790e6cadef9b62589591023078434',
-                                                                  :published => 1257433055,
-                                                                  :content => "m example/thin.god\n\nfixing referenced blog post's URL." })
+        feed.update_attribute :last_modified_at, DateTime.parse("Sun, 25 Apr 2010 14:36:41 UTC +00:00") - 1.hour
+        feed.room.should_receive(:send_message).once.with("Why Mark Suster is wrong about not hiring job hoppers", anything)
         feed.perform
       end
+
       it "does not publish empty feeds" do
         feed = Factory(:feed)
-        Feedzirra::Feed.should_receive(:fetch_and_parse).with(feed.url, anything).
-                                                  and_return(Feedzirra::Feed.parse(File.read("spec/fixtures/feeds/empty.xml")))
+        feed.should_receive(:open_feed).and_return(FeedNormalizer::FeedNormalizer.parse(open("spec/fixtures/feeds/empty.xml")))
         feed.room.should_not_receive(:send_message)
         feed.perform
       end
       context "when the feed parser returns an error code, such as 304" do
         it "does not publish anything" do
           feed = Factory(:feed)
-          Feedzirra::Feed.should_receive(:fetch_and_parse).and_return(304)
+          FeedNormalizer::FeedNormalizer.should_receive(:parse).and_return(304)
           feed.room.should_not_receive(:send_message)
           feed.run_with_lock
           
@@ -107,7 +99,7 @@ describe Feed do
       context "when the feed parser returns nil" do
         it "does not publish anything" do
           feed = Factory(:feed)
-          Feedzirra::Feed.should_receive(:fetch_and_parse).and_return nil
+          FeedNormalizer::FeedNormalizer.should_receive(:parse).and_return nil
           feed.room.should_not_receive(:send_message)
           feed.run_with_lock
           

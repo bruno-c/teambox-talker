@@ -8,8 +8,8 @@ describe Plan do
     url = Plan.all[1].subscribe_url(account, "/")
     url.should match("https://spreedly.com/")
     url.should match("/master?")
-    url.should match("return_url=%2F")
+    url.should match("return_url=/")
     url.should match("first_name=quentin")
-    url.should match("email=quentin%40example.com")
+    url.should match("email=quentin@example.com")
   end
 end
