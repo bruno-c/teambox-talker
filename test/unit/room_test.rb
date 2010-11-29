@@ -1,61 +1,61 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class RoomTest < ActiveSupport::TestCase
-  def setup
+describe "Room", ActiveSupport::TestCase do
+  before do
     @room = rooms(:main)
   end
   
-  def test_creation
+  it "creation" do
     create_room!
   end
   
-  def test_admin_has_access_to_all_rooms
-    assert_equal Room.count, Room.with_permission(users(:quentin)).count
+  it "admin has access to all rooms" do
+    Room.with_permission(users(:quentin)).count.should == Room.count
   end
   
-  def test_user_has_not_access_to_all_rooms
+  it "user has not access to all rooms" do
     assert_not_equal Room.count, Room.with_permission(users(:aaron)).count
   end
   
-  def test_send_message
+  it "send message" do
     @room.expects(:publish).with do |event|
-      assert_equal 'message', event[:type]
-      assert_equal "ohaie\nthere", event[:content]
-      assert_not_nil event[:time]
-      assert_not_nil event[:id]
-      assert_equal User.talker, event[:user]
+      event[:type].should == 'message'
+      event[:content].should == "ohaie\nthere"
+      event[:time].should.not == nil
+      event[:id].should.not == nil
+      event[:user].should == User.talker
       true
     end
     @room.send_message("ohaie\nthere")
   end
 
-  def test_send_messages
+  it "send messages" do
     @room.expects(:publish).with do |*events|
-      assert_equal 'ohaie', events[0][:content]
-      assert_equal 'there', events[1][:content]
+      events[0][:content].should == 'ohaie'
+      events[1][:content].should == 'there'
       events.all? do |event|
-        assert_equal 'message', event[:type]
-        assert_not_nil event[:time]
-        assert_not_nil event[:id]
-        assert_equal User.talker, event[:user]
+        event[:type].should == 'message'
+        event[:time].should.not == nil
+        event[:id].should.not == nil
+        event[:user].should == User.talker
         true
       end
     end
     @room.send_message(["ohaie", "there"])
   end
 
-  def test_send_pasteless_messages
+  it "send pasteless messages" do
     @room.expects(:publish).with do |*events|
       events.all? do |event|
-        assert_nil event[:paste]
-        assert_equal "dude", event[:pass_that]
+        event[:paste].should == nil
+        event[:pass_that].should == "dude"
         true
       end
     end
     @room.send_message(["ohaie\nyou", "ohaie\nme"], :paste => false, :pass_that => "dude")
   end
   
-  def test_add_permission
+  it "add permission" do
     Permission.delete_all
     assert_difference "Permission.count", 1 do
       @room.private = true
@@ -64,29 +64,29 @@ class RoomTest < ActiveSupport::TestCase
     end
   end
   
-  def test_remove_permission
+  it "remove permission" do
     @room.private = true
     @room.invitee_ids = []
     @room.save
-    assert_equal 0, @room.permissions.count
+    @room.permissions.count.should == 0
   end
 
-  def test_public_room_delete_all_permissiosn
+  it "public room delete all permissiosn" do
     @room.private = false
     @room.invitee_ids = [users(:aaron).id]
     @room.save
-    assert_equal 0, @room.permissions.count
+    @room.permissions.count.should == 0
   end
   
-  def test_cant_create_private_room_if_plan_is_limited
+  it "cant create private room if plan is limited" do
     accounts(:master).plan = Plan.free
     accounts(:master).save
-    assert_not_nil create_room(:private => true, :account => accounts(:master)).errors.on(:base)
+    create_room(:private => true, :account => accounts(:master)).errors.on(:base).should.not == nil
   end
 
-  def test_can_create_private_room_if_plan_permists
+  it "can create private room if plan permists" do
     accounts(:master).plan = Plan.find_by_name("Startup")
     accounts(:master).save
-    assert_nil create_room(:private => true, :account => accounts(:master)).errors.on(:base)
+    create_room(:private => true, :account => accounts(:master)).errors.on(:base).should == nil
   end
 end

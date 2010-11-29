@@ -1,44 +1,44 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class FeedTest < ActiveSupport::TestCase
-  def test_find_available
-    assert Feed.find_available(5).include?(feeds(:thin))
-    assert ! Feed.find_available(5).include?(feeds(:tinyrb))
+describe "Feed", ActiveSupport::TestCase do
+  it "find available" do
+    Feed.find_available(5).include?(feeds(:thin)).should.not == nil
+     Feed.find_available(5).include?(feeds(:tinyrb)).should.not == true
   end
   
-  def test_work
+  it "work" do
     Feed.any_instance.expects(:perform).once
     success, failure = Feed.work
-    assert_equal 1, success
-    assert_equal 0, failure
+    success.should == 1
+    failure.should == 0
   end
 
-  def test_work_fail
+  it "work fail" do
     Feed.any_instance.expects(:perform).once.raises(ArgumentError)
     success, failure = Feed.work
-    assert_equal 0, success
-    assert_equal 1, failure
+    success.should == 0
+    failure.should == 1
   end
   
-  def test_run_with_lock
+  it "run with lock" do
     feed = feeds(:thin)
     feed.expects(:perform)
-    assert feed.run_with_lock
-    assert_nil feed.failed_at
-    assert_nil feed.last_error
-    assert_nil feed.locked_at
+    feed.run_with_lock.should.not == nil
+    feed.failed_at.should == nil
+    feed.last_error.should == nil
+    feed.locked_at.should == nil
   end
   
-  def test_run_with_lock_with_error
+  it "run with lock with error" do
     feed = feeds(:thin)
     feed.expects(:perform).raises(ArgumentError)
-    assert ! feed.run_with_lock
-    assert_not_nil feed.failed_at
-    assert_not_nil feed.last_error
-    assert_nil feed.locked_at
+     feed.run_with_lock.should.not == true
+    feed.failed_at.should.not == nil
+    feed.last_error.should.not == nil
+    feed.locked_at.should == nil
   end
   
-  def test_perform_3_fetches
+  it "perform 3 fetches" do
     feed = feeds(:thin)
     Feedzirra::Feed.expects(:fetch_and_parse).with(feed.url, anything).
                                               returns(Feedzirra::Feed.parse(File.read(self.class.fixture_path + "/feeds/thin.xml")))
@@ -46,10 +46,10 @@ class FeedTest < ActiveSupport::TestCase
     feed.perform
     
     assert_equal DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00"), feed.last_modified_at
-    assert_equal nil, feed.etag
+    feed.etag.should == nil
   end
   
-  def test_only_publish_new_entries
+  it "only publish new entries" do
     feed = feeds(:thin)
     feed.update_attribute :last_modified_at, DateTime.parse("Thu, 05 Nov 2009 14:57:35 UTC +00:00") - 1.hour
     Feedzirra::Feed.expects(:fetch_and_parse).with(feed.url, anything).
@@ -64,7 +64,7 @@ class FeedTest < ActiveSupport::TestCase
     feed.perform
   end
 
-  def test_empty_feed
+  it "empty feed" do
     feed = feeds(:thin)
     Feedzirra::Feed.expects(:fetch_and_parse).with(feed.url, anything).
                                               returns(Feedzirra::Feed.parse(File.read(self.class.fixture_path + "/feeds/empty.xml")))
@@ -72,27 +72,27 @@ class FeedTest < ActiveSupport::TestCase
     feed.perform
   end
 
-  def test_run_with_return_code
+  it "run with return code" do
     feed = feeds(:thin)
     Feedzirra::Feed.expects(:fetch_and_parse).returns(304)
     feed.room.expects(:send_message).never
     feed.run_with_lock
     
-    assert_nil feed.last_modified_at
+    feed.last_modified_at.should == nil
   end
 
-  def test_run_with_nil_response
+  it "run with nil response" do
     feed = feeds(:thin)
     Feedzirra::Feed.expects(:fetch_and_parse).returns(nil)
     feed.room.expects(:send_message).never
     feed.run_with_lock
     
-    assert_nil feed.last_modified_at
-    assert_not_nil feed.last_error
+    feed.last_modified_at.should == nil
+    feed.last_error.should.not == nil
   end
   
-  def test_feed_url
-    assert_equal "https://github.com/feeds/macournoyer/commits/talker/master", Feed.create(:url => "feed:https://github.com/feeds/macournoyer/commits/talker/master").url
-    assert_equal "http://search.twitter.com/search.atom?q=Avatar", Feed.create(:url => "feed://search.twitter.com/search.atom?q=Avatar").url
+  it "feed url" do
+    Feed.create(:url => "feed:https://github.com/feeds/macournoyer/commits/talker/master").url.should == "https://github.com/feeds/macournoyer/commits/talker/master"
+    Feed.create(:url => "feed://search.twitter.com/search.atom?q=Avatar").url.should == "http://search.twitter.com/search.atom?q=Avatar"
   end
 end

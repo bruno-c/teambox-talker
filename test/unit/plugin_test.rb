@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class PluginTest < ActiveSupport::TestCase
-  def test_creation
+describe "Plugin", ActiveSupport::TestCase do
+  it "creation" do
     create_plugin!
   end
   
-  test "plugin installation" do
-    assert true
+  it "plugin installation" do
+    true.should.not == nil
   end
 end

@@ -1,0 +1,4 @@
+master:
+  subdomain: master
+  plan_id: <%= Plan.find_by_name("Basic").id %>
+  beta_tester: true

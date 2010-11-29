@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + "/../../test_helper"
 
 class DateHelperTest < ActionView::TestCase
-  def test_human_date
+  it "human date" do
     today = Time.zone.now 
     day_before_yesterday, yesterday, tomorrow, day_after_tomorrow = today - 2.days, today - 1.day, today + 1.day, today + 2.days 
      

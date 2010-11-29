@@ -1,17 +1,17 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class FeaturesTest < ActiveSupport::TestCase
-  def test_invalid_level
+describe "Features", ActiveSupport::TestCase do
+  it "invalid level" do
     assert_raise(ArgumentError) { Features["wa?"] }
   end
   
-  def test_free
-    assert ! Features[:free].ssl
-    assert_equal 4, Features[:free].max_connections
+  it "free" do
+     Features[:free].ssl.should.not == true
+    Features[:free].max_connections.should == 4
   end
 
-  def test_basic
-    assert Features[:basic].ssl
+  it "basic" do
+    Features[:basic].ssl.should.not == nil
     assert_not_equal 0, Features[:basic].max_connections
   end
 end

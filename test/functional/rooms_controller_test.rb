@@ -1,125 +1,125 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class RoomsControllerTest < ActionController::TestCase
-  def setup
+describe "RoomsController", ActionController::TestCase do
+  before do
     @room = rooms(:main)
     subdomain :master
     login_as :quentin
   end
   
-  def test_index
+  it "index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:rooms)
+    assigns(:rooms).should.not == nil
   end
   
-  def test_index_as_nonadmin
+  it "index as nonadmin" do
     login_as :aaron
     get :index
     assert_response :success
-    assert_not_nil assigns(:rooms)
+    assigns(:rooms).should.not == nil
   end
   
-  def test_index_json
+  it "index json" do
     get :index, :format => "json"
     assert_response :success
-    assert_not_nil assigns(:rooms)
+    assigns(:rooms).should.not == nil
   end
   
-  def test_index_with_limits
+  it "index with limits" do
     Account.any_instance.stubs(:full?).returns(true)
     Account.any_instance.stubs(:storage_full?).returns(true)
     get :index
     assert_response :success
-    assert_not_nil assigns(:rooms)
+    assigns(:rooms).should.not == nil
     assert_select ".limit_warning", 2
   end
   
-  def test_show_denied
+  it "show denied" do
     login_as nil
     get :show, :id => @room
     assert_access_denied
   end
   
-  def test_show
+  it "show" do
     get :show, :id => @room
     assert_response :success
-    assert_equal assigns(:room), @room
+    @room.should == assigns(:room)
   end
   
-  def test_show_json
+  it "show json" do
     get :show, :id => @room, :format => "json"
     assert_response :success
-    assert_equal assigns(:room), @room
+    @room.should == assigns(:room)
   end
   
-  def test_show_full
+  it "show full" do
     @room.connections.clear
     Account.any_instance.stubs(:full?).returns(true)
     get :show, :id => @room
     assert_response :redirect
-    assert_not_nil flash[:error]
+    flash[:error].should.not == nil
   end
   
-  def test_show_full_but_already_connected
+  it "show full but already connected" do
     @room.connections.create :user => users(:quentin)
     Account.any_instance.stubs(:full?).returns(true)
     get :show, :id => @room
     assert_response :success
-    assert_nil flash[:error]
+    flash[:error].should == nil
   end
   
-  def test_show_without_permission
+  it "show without permission" do
     User.any_instance.expects(:permission?).returns(false)
     get :show, :id => @room
     assert_access_denied
   end
   
-  def test_show_for_guest
+  it "show for guest" do
     login_as :guest
     get :show, :id => @room
     assert_response :success, @response.body
-    assert_equal assigns(:room), @room
-    assert_equal [], assigns(:events)
-    assert_equal [], assigns(:rooms)
+    @room.should == assigns(:room)
+    assigns(:events).should == []
+    assigns(:rooms).should == []
   end
   
-  def test_show_for_wrong_room_guest
+  it "show for wrong room guest" do
     users(:guest).update_attribute :room_id, nil
     login_as :guest
     get :show, :id => @room
     assert_access_denied
   end
   
-  def test_new
+  it "new" do
     get :new
     assert_response :success
-    assert assigns(:room).new_record?
+    assigns(:room).new_record?.should.not == nil
   end
   
-  def test_valid_create
+  it "valid create" do
     post :create, :room => hash_for_room
     assert_redirected_to room_path(assigns(:room))
   end
   
-  def test_invalid_create
+  it "invalid create" do
     Room.any_instance.stubs(:valid?).returns(false)
     post :create, :room => hash_for_room
     assert_response :success
     assert_template "new"
   end
   
-  def test_edit
+  it "edit" do
     get :edit, :id => @room
     assert_response :success, @response.body
   end
   
-  def test_update
+  it "update" do
     put :update, :id => @room, :room => hash_for_room
     assert_redirected_to rooms_path
   end
   
-  def test_destroy
+  it "destroy" do
     Connection.any_instance.expects(:close).at_least(1)
     assert_difference "Room.count", -1 do
       delete :destroy, :id => @room
@@ -127,7 +127,7 @@ class RoomsControllerTest < ActionController::TestCase
     assert_redirected_to rooms_path
   end
   
-  def test_refresh
+  it "refresh" do
     get :refresh, :id => @room
     assert_response :success, @response.body
   end

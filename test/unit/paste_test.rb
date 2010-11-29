@@ -1,23 +1,23 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class PasteTest < ActiveSupport::TestCase
-  def test_permalink_is_set
+describe "Paste", ActiveSupport::TestCase do
+  it "permalink is set" do
     paste = create_paste
-    assert_not_nil paste.id
+    paste.id.should.not == nil
   end
   
-  def test_truncate
-    assert_equal "ohaie", Paste.truncate("ohaie")
-    assert_equal "o\n" * 15 + "...", Paste.truncate("o\n" * 20)
-    assert_equal "", Paste.truncate(nil)
+  it "truncate" do
+    Paste.truncate("ohaie").should == "ohaie"
+    Paste.truncate("o\n" * 20).should == "o\n" * 15 + "..."
+    Paste.truncate(nil).should == ""
   end
   
-  def test_filter
+  it "filter" do
     paste = nil
     content = Paste.filter("ohaie\nthere") do |p|
       paste = p
     end
-    assert_equal "ohaie\nthere", content
-    assert_not_nil paste
+    content.should == "ohaie\nthere"
+    paste.should.not == nil
   end
 end

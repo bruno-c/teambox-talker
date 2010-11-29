@@ -1,144 +1,144 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class UserTest < ActiveSupport::TestCase
-  def test_should_create_user
+describe "User", ActiveSupport::TestCase do
+  it "should create user" do
     user = create_user
-    assert user.valid?, user.errors.full_messages.to_sentence
-    assert user.pending?
+    user.valid?, user.errors.full_messages.to_sentence.should.not == nil
+    user.pending?.should.not == nil
   end
   
-  def test_name_validation
-    assert_nil create_user(:name => "ma").errors.on(:name)
-    assert_nil create_user(:name => "ma@ossum").errors.on(:name)
-    assert_nil create_user(:name => "ma.n_i-ce").errors.on(:name)
-    assert_nil create_user(:name => "Marc-André").errors.on(:name)
-    assert_not_nil create_user(:name => "").errors.on(:name)
-    assert_not_nil create_user(:name => "ma dude").errors.on(:name)
+  it "name validation" do
+    create_user(:name => "ma").errors.on(:name).should == nil
+    create_user(:name => "ma@ossum").errors.on(:name).should == nil
+    create_user(:name => "ma.n_i-ce").errors.on(:name).should == nil
+    create_user(:name => "Marc-André").errors.on(:name).should == nil
+    create_user(:name => "").errors.on(:name).should.not == nil
+    create_user(:name => "ma dude").errors.on(:name).should.not == nil
   end
   
-  def test_generate_name
+  it "generate name" do
     user = build_user(:email => "ma@gmail.com")
     user.generate_name
     user.save!
-    assert_equal "ma", user.name
+    user.name.should == "ma"
     
     user = build_user(:email => "ma@hotmail.com")
     user.generate_name
     user.save!
-    assert_equal "ma_1", user.name
+    user.name.should == "ma_1"
     
     user = build_user(:email => "ma@yahoo.com")
     user.generate_name
     user.save!
-    assert_equal "ma_2", user.name
+    user.name.should == "ma_2"
   end
   
-  def test_generate_name_without_email
+  it "generate name without email" do
     user = build_user(:email => nil)
     user.guest = true
     user.generate_name
     user.save!
-    assert_equal "user", user.name
+    user.name.should == "user"
     
     user = build_user(:email => nil)
     user.guest = true
     user.generate_name
     user.save!
-    assert_equal "user_1", user.name
+    user.name.should == "user_1"
   end
 
-  def test_activating_should_set_timestamp
+  it "activating should set timestamp" do
     user = create_user
     user.activate!
-    assert user.active?
-    assert_not_nil user.activated_at
+    user.active?.should.not == nil
+    user.activated_at.should.not == nil
   end
 
-  def test_should_reset_password
+  it "should reset password" do
     users(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
     assert_equal users(:quentin), User.authenticate('quentin@example.com', 'new password')
   end
 
-  def test_should_not_update_to_blank_password
+  it "should not update to blank password" do
     users(:quentin).update_attributes(:password => '', :password_confirmation => '')
     assert_equal users(:quentin), User.authenticate('quentin@example.com', 'monkey')
   end
 
-  def test_should_not_rehash_password
+  it "should not rehash password" do
     users(:quentin).update_attributes(:email => 'quentin2@example.com')
     assert_equal users(:quentin), User.authenticate('quentin2@example.com', 'monkey')
   end
 
-  def test_should_authenticate_user_by_email
+  it "should authenticate user by email" do
     assert_equal users(:quentin), User.authenticate('quentin@example.com', 'monkey')
   end
 
-  def test_should_authenticate_user_by_name
+  it "should authenticate user by name" do
     assert_equal users(:quentin), User.authenticate('quentin', 'monkey')
   end
 
-  def test_should_not_authenticate_suspended_user
+  it "should not authenticate suspended user" do
     users(:quentin).suspend!
-    assert_nil User.authenticate('quentin@example.com', 'monkey')
+    User.authenticate('quentin@example.com', 'monkey').should == nil
   end
 
-  def test_should_authenticate_by_perishable_token
+  it "should authenticate by perishable token" do
     users(:quentin).create_perishable_token!
-    assert_equal users(:quentin), User.authenticate_by_perishable_token(users(:quentin).perishable_token)
+    User.authenticate_by_perishable_token(users(:quentin).perishable_token).should == users(:quentin)
   end
 
-  def test_should_fail_authenticate_by_nil_perishable_token
-    assert_not_nil users(:quentin), User.authenticate_by_perishable_token(nil)
+  it "should fail authenticate by nil perishable token" do
+    users(:quentin), User.authenticate_by_perishable_token(nil).should.not == nil
   end
 
-  def test_should_fail_authenticate_by_bad_perishable_token
-    assert_not_nil users(:quentin), User.authenticate_by_perishable_token("ohaie")
+  it "should fail authenticate by bad perishable token" do
+    users(:quentin), User.authenticate_by_perishable_token("ohaie").should.not == nil
   end
 
-  def test_should_set_remember_token
+  it "should set remember token" do
     users(:quentin).remember_me
-    assert_not_nil users(:quentin).remember_token
+    users(:quentin).remember_token.should.not == nil
   end
 
-  def test_should_unset_remember_token
+  it "should unset remember token" do
     users(:quentin).remember_me
-    assert_not_nil users(:quentin).remember_token
+    users(:quentin).remember_token.should.not == nil
     users(:quentin).forget_me
-    assert_nil users(:quentin).remember_token
+    users(:quentin).remember_token.should == nil
   end
 
-  def test_create_talker_tokens
-    assert_not_nil create_user.talker_token
+  it "create talker tokens" do
+    create_user.talker_token.should.not == nil
   end
   
-  def test_guest_have_permission_to_room
+  it "guest have permission to room" do
     assert_difference "Permission.count", 1 do
       create_user(:guest => true, :room => rooms(:main))
     end
   end
   
-  def test_delete_unconnected_guest_user_with_same_name
+  it "delete unconnected guest user with same name" do
     user = create_user(:name => "bob", :guest => true, :room => rooms(:main))
     
-    assert create_user(:name => "bob", :room => rooms(:main)).valid?
-    assert ! User.exists?(user.id)
+    create_user(:name.should => "bob", :room => rooms(:main)).valid?
+     User.exists?(user.id).should.not == true
   end
 
-  def test_do_not_delete_connected_guest_user_with_same_name
+  it "do not delete connected guest user with same name" do
     user = create_user(:name => "bob", :guest => true, :room => rooms(:main))
     user.connections.create :channel => rooms(:main)
     
-    assert_not_nil create_user(:name => "bob", :room => rooms(:main)).errors.on(:name)
-    assert User.exists?(user.id)
+    create_user(:name => "bob", :room => rooms(:main)).errors.on(:name).should.not == nil
+    User.exists?(user.id).should.not == nil
   end
   
-  def test_color_validation
-    assert_not_nil User.create(:color => "alert('hi')").errors.on(:color)
-    assert_not_nil User.create(:color => "boom").errors.on(:color)
-    assert_not_nil User.create(:color => "red").errors.on(:color)
-    assert_nil User.create(:color => "#ccaabb").errors.on(:color)
-    assert_nil User.create(:color => "#CCAABB").errors.on(:color)
-    assert_nil User.create(:color => "#123456").errors.on(:color)
-    assert_nil User.create.errors.on(:color)
+  it "color validation" do
+    User.create(:color => "alert('hi')").errors.on(:color).should.not == nil
+    User.create(:color => "boom").errors.on(:color).should.not == nil
+    User.create(:color => "red").errors.on(:color).should.not == nil
+    User.create(:color => "#ccaabb").errors.on(:color).should == nil
+    User.create(:color => "#CCAABB").errors.on(:color).should == nil
+    User.create(:color => "#123456").errors.on(:color).should == nil
+    User.create.errors.on(:color).should == nil
   end
 end
