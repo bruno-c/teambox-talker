@@ -1,28 +1,28 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-describe "AdminController", ActionController::TestCase do
-  before do
+class AdminControllerTest < ActionController::TestCase
+  def setup
     users(:quentin).update_attribute :staff, true
     login_as :quentin
   end
   
-  it "staff required" do
+  def test_staff_required
     users(:quentin).update_attribute :staff, false
     get :show
     assert_access_denied
   end
 
-  it "show" do
+  def test_show
     get :show
     assert_response :success, @response.body
   end
   
-  it "jobs" do
+  def test_jobs
     get :jobs
     assert_response :success, @response.body
   end
 
-  it "accounts" do
+  def test_accounts
     get :accounts
     assert_response :success, @response.body
   end

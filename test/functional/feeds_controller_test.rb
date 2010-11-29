@@ -1,45 +1,45 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-describe "FeedsController", ActionController::TestCase do
-  before do
+class FeedsControllerTest < ActionController::TestCase
+  def setup
     subdomain :master
     login_as :quentin
   end
   
-  it "index" do
+  def test_index
     get :index
     assert_response :success, @response.body
   end
   
-  it "edit" do
+  def test_edit
     get :edit, :id => feeds(:thin)
     assert_response :success, @response.body
   end
   
-  it "update" do
+  def test_update
     put :update, :id => feeds(:thin), :feed => hash_for_feed
     assert_redirected_to feeds_path
   end
 
-  it "update fail" do
+  def test_update_fail
     Feed.any_instance.stubs(:valid?).returns(false)
     put :update, :id => feeds(:thin), :feed => hash_for_feed
     assert_response :success, @response.body
   end
   
-  it "new" do
+  def test_new
     get :new
     assert_response :success, @response.body
   end
   
-  it "create" do
+  def test_create
     assert_difference "Feed.count", 1 do
       post :create, :feed => hash_for_feed
       assert_redirected_to feeds_path
     end
   end
   
-  it "create fail" do
+  def test_create_fail
     Feed.any_instance.stubs(:valid?).returns(false)
     post :create, :feed => hash_for_feed
     assert_response :success, @response.body

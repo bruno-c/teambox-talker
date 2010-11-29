@@ -1,18 +1,18 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-describe "PastesController", ActionController::TestCase do
-  before do
+class PastesControllerTest < ActionController::TestCase
+  def setup
     login_as :quentin
     subdomain :master
   end
   
-  it "show witout room" do
+  def test_show_witout_room
     pastes(:poem).update_attribute :room_id, nil
     get :show, :id => pastes(:poem)
     assert_response :success, @response.body
   end
 
-  it "show with room" do
+  def test_show_with_room
     User.any_instance.expects(:permission?).
                       with(pastes(:poem).room).
                       returns(true)
@@ -21,7 +21,7 @@ describe "PastesController", ActionController::TestCase do
     assert_response :success, @response.body
   end
 
-  it "show with room without permission" do
+  def test_show_with_room_without_permission
     User.any_instance.expects(:permission?).
                       with(pastes(:poem).room).
                       returns(false)
@@ -31,16 +31,16 @@ describe "PastesController", ActionController::TestCase do
     end
   end
   
-  it "can connect" do
+  def test_can_connect
     get :show, :id => pastes(:poem)
     assert_response :success, @response.body
-    assigns(:can_connect).should.not == nil
+    assert assigns(:can_connect)
   end
 
-  it "cant connect" do
+  def test_cant_connect
     Account.any_instance.stubs(:full?).returns(true)
     get :show, :id => pastes(:poem)
     assert_response :success, @response.body
-     assigns(:can_connect).should.not == true
+    assert ! assigns(:can_connect)
   end
 end
