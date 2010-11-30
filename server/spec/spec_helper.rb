@@ -4,7 +4,6 @@ $:.unshift File.dirname(__FILE__) + "/../lib"
 require "talker/server"
 
 # Path to my local client copy, gem install talker to make it work
-$:.unshift "/Users/ma/projects/talker.rb/lib"
 require "talker/client"
 
 $TALKER_DEBUG = true

@@ -9,6 +9,6 @@ gnome-terminal \
 sleep 5
 
 gnome-terminal \
-  --tab -e "bundle exec script/talker channel" -t "Talker Channel"\
-  --tab -e "bundle exec script/talker presence" -t "Talker Presence" \
-  --tab -e "bundle exec script/talker logger" -t "Talker Logger"
+  --tab -e "bundle exec script/talker channel -d" -t "Talker Channel"\
+  --tab -e "bundle exec script/talker presence -d" -t "Talker Presence" \
+  --tab -e "bundle exec script/talker logger -d" -t "Talker Logger"

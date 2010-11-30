@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/macournoyer/em-spec.git
+  revision: 50f00cae29579e5cbcd856e8995bf44435f16a3f
+  specs:
+    em-spec (0.1.3)
+      bacon (>= 1.1.0)
+      eventmachine (>= 0.12.6)
+      rspec (>= 1.1.12)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -14,6 +23,8 @@ GEM
     acts_as_state_machine (2.2.0)
       activerecord (>= 2.1)
     addressable (2.2.2)
+    amqp (0.6.7)
+      eventmachine (>= 0.12.4)
     attr_encrypted (1.1.2)
       eigenclass (>= 1.1.1)
       encryptor (>= 1.1.0)
@@ -22,6 +33,7 @@ GEM
       builder
       mime-types
       xml-simple
+    bacon (1.1.0)
     builder (3.0.0)
     closure-compiler (0.3.3)
     compass (0.10.6)
@@ -53,6 +65,8 @@ GEM
     mime-types (1.16)
     mocha (0.9.10)
       rake
+    moqueue (0.1.4)
+      amqp
     mysqlplus (0.1.2)
     nokogiri (1.4.4)
     paperclip (2.3.6)
@@ -75,12 +89,13 @@ GEM
     spork (0.8.4)
     spreedly (1.3.4)
       mechanize
+    talker (0.0.4)
+      eventmachine
+      yajl-ruby
     thin (1.2.7)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
-    tmm1-amqp (0.6.4)
-      eventmachine (>= 0.12.4)
     uuid (2.3.1)
       macaddr (~> 1.0)
     vcr (1.3.3)
@@ -94,12 +109,14 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_state_machine
+  amqp
   attr_encrypted
   aws-s3
   compass
   database_cleaner
   delayed_job
   em-http-request
+  em-spec!
   eventmachine
   factory_girl
   faker
@@ -108,6 +125,7 @@ DEPENDENCIES
   haml
   jammit
   mocha
+  moqueue
   mysqlplus
   nokogiri
   paperclip
@@ -116,8 +134,8 @@ DEPENDENCIES
   rspec-rails (< 2.0.0)
   spork
   spreedly
+  talker
   thin
-  tmm1-amqp
   uuid
   vcr
   will_paginate

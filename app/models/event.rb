@@ -17,8 +17,6 @@ class Event < ActiveRecord::Base
   named_scope :in_month, proc { |date| { :conditions => ["events.created_at BETWEEN ? AND ?",
                                                          date.beginning_of_month.utc, date.end_of_month.utc] } }
 
-  serialize :payload, Hash
-
   define_index do
     # fields
     indexes :content
@@ -44,17 +42,20 @@ class Event < ActiveRecord::Base
   def message?
     type == "message"
   end
- 
+
   def payload_object
-    payload
-  rescue ActiveRecord::SerializationTypeMismatch
+    object = Yajl::Parser.parse(payload)
+    if object.is_a?(Hash)
+      return object
+    else
+      return nil
+    end
+  rescue Yajl::ParseError
     nil
   end
-
-  def payload_object=(value)
-    self.payload=(value)
-  rescue ActiveRecord::SerializationTypeMismatch
-    nil
+  
+  def payload_object=(object)
+    self.payload = Yajl::Encoder.encode(object)
   end
   
   def to_json(options={})

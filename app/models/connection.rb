@@ -1,3 +1,5 @@
+require 'mq'
+
 class Connection < ActiveRecord::Base
   belongs_to :channel, :polymorphic => true
   belongs_to :user
