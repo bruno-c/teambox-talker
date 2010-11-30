@@ -1,3 +1,4 @@
+# encoding: utf-8
 require File.dirname(__FILE__) + "/../spec_helper"
 
 describe Attachment do
@@ -42,7 +43,7 @@ describe Attachment do
         Factory.build(:attachment, :upload_file_name => "Screen shot 2009-11-25 at 10.48.27 AM").basename.should == "screen-shot-2009-11-25-at-1048"
       end
       it "sanitizes odd characters" do
-        Factory.build(:attachment, :upload_file_name => "éé").basename.should == "ee"
+        Factory.build(:attachment, :upload_file_name => "éé").basename.should == ""
       end
     end
   end

@@ -4,8 +4,7 @@ module DateHelper
     
     today = Time.zone.today
     date = date.to_date
-    
-    prefix = case today - date
+    prefix = case (today - date).to_i
       when  1 then "Yesterday, "
       when  0 then "Today, "
       when -1 then "Tomorrow, "
@@ -25,7 +24,7 @@ module DateHelper
     today = Time.zone.today
     date = date.to_date
     
-    format = case today - date
+    format = case (today - date).to_i
     when  1 then "Yesterday"
     when  0 then "Today"
     when -1 then "Tomorrow"
