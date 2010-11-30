@@ -25,7 +25,7 @@ gem 'jrails', :git => 'git://github.com/aaronchi/jrails.git'
 gem 'thinking-sphinx'
 gem 'ts-datetime-delta', :require => 'thinking_sphinx/deltas/datetime_delta'
 gem 'backports'
-gem 'unicode_utils'
+gem 'unicode_utils' unless RUBY_VERSION < '1.9.1'
 
 group :development do
   gem "passenger"

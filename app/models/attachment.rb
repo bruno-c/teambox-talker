@@ -62,12 +62,17 @@ class Attachment < ActiveRecord::Base
 
     def escape(string)
       # Taken from PermalinkFu
-      result = UnicodeUtils.nfkd(string)
+      if RUBY_VERSION > '1.8.7' 
+        result = UnicodeUtils.nfkd(string) 
+      else
+        result = ActiveSupport::Inflector.transliterate(string).to_s
+      end
+
       result.gsub!(/[^\x00-\x7F]+/, '') # Remove anything non-ASCII entirely (e.g. diacritics).
       result.gsub!(/[^\w_ \-]+/i,   '') # Remove unwanted chars.
       result.gsub!(/[ \-]+/i,      '-') # No more than one of the separator in a row.
       result.gsub!(/^\-|\-$/i,      '') # Remove leading/trailing separator.
       result.downcase!
-      result.to_s
+      result
     end
 end
