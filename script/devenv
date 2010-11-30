@@ -3,7 +3,7 @@ echo "Starting all services ..."
 echo "Don't you touch anything until you see 5 new tabs in your console."
 script/tab bundle exec script/rabbitmq
 echo "  rabbitmq started in a tab"
-bundle exec thin start -d
+bundle exec passenger start -d
 echo "  thin started as a daemon (stop with 'thin stop')"
 bundle exec script/tab script/orbited
 echo "  orbited started in a tab"

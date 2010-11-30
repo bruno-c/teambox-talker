@@ -4,7 +4,7 @@ describe DateHelper do
   include DateHelper
 
   it "humanizes date" do
-    today = Time.zone.now 
+    today = Time.now 
     day_before_yesterday, yesterday, tomorrow, day_after_tomorrow = today - 2.days, today - 1.day, today + 1.day, today + 2.days 
     
     human_date(today).should match("Today")

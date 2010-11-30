@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Attachment < ActiveRecord::Base
   belongs_to :room
   belongs_to :user
@@ -41,9 +42,32 @@ class Attachment < ActiveRecord::Base
       end
     end
     
+    def transliterate(str)
+      # Based on permalink_fu by Rick Olsen
+      # Escape str by transliterating to UTF-8 with Iconv
+      s = Iconv.iconv('ascii//ignore//translit', 'utf-8', str).to_s
+      # Downcase string
+      s.downcase!
+      # Remove apostrophes so isn't changes to isnt
+      s.gsub!(/'/, '')
+      # Replace any non-letter or non-number character with a space
+      s.gsub!(/[^A-Za-z0-9]+/, ' ')
+      # Remove spaces from beginning and end of string
+      s.strip!
+      # Replace groups of spaces with single hyphen
+      s.gsub!(/\ +/, '-')
+
+      return s
+    end
+
     def escape(string)
       # Taken from PermalinkFu
-      result = ActiveSupport::Inflector.transliterate(string).to_s
+      if RUBY_VERSION > '1.8.7' 
+        result = UnicodeUtils.nfkd(string) 
+      else
+        result = ActiveSupport::Inflector.transliterate(string).to_s
+      end
+
       result.gsub!(/[^\x00-\x7F]+/, '') # Remove anything non-ASCII entirely (e.g. diacritics).
       result.gsub!(/[^\w_ \-]+/i,   '') # Remove unwanted chars.
       result.gsub!(/[ \-]+/i,      '-') # No more than one of the separator in a row.

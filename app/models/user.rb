@@ -132,7 +132,7 @@ class User < ActiveRecord::Base
     else
       available_colors = COLOR_PALETTE
     end
-    self.color = available_colors.choice
+    self.color = available_colors.sample
   end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.

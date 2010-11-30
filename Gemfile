@@ -21,9 +21,14 @@ gem 'acts_as_state_machine'
 gem 'jammit'
 gem 'yui-compressor'
 gem 'feed-normalizer'
+gem 'jrails', :git => 'git://github.com/aaronchi/jrails.git'
+gem 'thinking-sphinx'
+gem 'ts-datetime-delta', :require => 'thinking_sphinx/deltas/datetime_delta'
+gem 'backports'
+gem 'unicode_utils' unless RUBY_VERSION < '1.9.1'
 
 group :development do
-  gem "thin", :require => false
+  gem "passenger"
 end
 
 group :test do
@@ -40,4 +45,5 @@ group :test do
   gem "talker"
   gem "em-spec", :git => 'git://github.com/macournoyer/em-spec.git'
   gem "moqueue"
+  gem 'test-unit', '1.2.3'
 end

@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/aaronchi/jrails.git
+  revision: 712ccd1245d2871c7018a1c095f27db243209c46
+  specs:
+    jrails (0.6.0)
+
+GIT
   remote: git://github.com/macournoyer/em-spec.git
   revision: 50f00cae29579e5cbcd856e8995bf44435f16a3f
   specs:
@@ -23,6 +29,8 @@ GEM
     acts_as_state_machine (2.2.0)
       activerecord (>= 2.1)
     addressable (2.2.2)
+    after_commit (1.0.8)
+      activerecord (< 3.0.0)
     amqp (0.6.7)
       eventmachine (>= 0.12.4)
     attr_encrypted (1.1.2)
@@ -33,11 +41,13 @@ GEM
       builder
       mime-types
       xml-simple
+    backports (1.18.2)
     bacon (1.1.0)
     builder (3.0.0)
     closure-compiler (0.3.3)
     compass (0.10.6)
       haml (>= 3.0.4)
+    daemon_controller (0.2.5)
     daemons (1.1.0)
     database_cleaner (0.6.0)
     delayed_job (2.0.4)
@@ -51,14 +61,21 @@ GEM
     factory_girl (1.3.2)
     faker (0.3.1)
     fakeweb (1.3.0)
+    fastthread (1.0.7)
     feed-normalizer (1.5.2)
       hpricot (>= 0.6)
       simple-rss (>= 1.1)
+    file-tail (1.0.5)
+      spruz (>= 0.1.0)
     haml (3.0.24)
+    hoe (2.7.0)
+      rake (>= 0.8.7)
+      rubyforge (>= 2.0.4)
     hpricot (0.8.3)
     jammit (0.5.4)
       closure-compiler (>= 0.1.0)
       yui-compressor (>= 0.9.1)
+    json_pure (1.4.6)
     macaddr (1.0.0)
     mechanize (1.0.0)
       nokogiri (>= 1.2.1)
@@ -72,6 +89,12 @@ GEM
     paperclip (2.3.6)
       activerecord
       activesupport
+    passenger (3.0.0)
+      daemon_controller (>= 0.2.5)
+      fastthread (>= 1.0.1)
+      file-tail
+      rack
+      rake (>= 0.8.1)
     rack (1.1.0)
     rails (2.3.10)
       actionmailer (= 2.3.10)
@@ -81,21 +104,30 @@ GEM
       activesupport (= 2.3.10)
       rake (>= 0.8.3)
     rake (0.8.7)
+    riddle (1.2.1)
     rspec (1.3.1)
     rspec-rails (1.3.3)
       rack (>= 1.0.0)
       rspec (= 1.3.1)
+    rubyforge (2.0.4)
+      json_pure (>= 1.1.7)
     simple-rss (1.2.3)
     spork (0.8.4)
     spreedly (1.3.4)
       mechanize
+    spruz (0.2.2)
     talker (0.0.4)
       eventmachine
       yajl-ruby
-    thin (1.2.7)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
+    test-unit (1.2.3)
+      hoe (>= 1.5.1)
+    thinking-sphinx (1.4.0)
+      activerecord (>= 1.15.6, < 3.0.0)
+      after_commit (>= 1.0.7)
+      riddle (>= 1.2.0)
+    ts-datetime-delta (1.0.2)
+      thinking-sphinx (>= 1.3.8)
+    unicode_utils (1.0.0)
     uuid (2.3.1)
       macaddr (~> 1.0)
     vcr (1.3.3)
@@ -112,6 +144,7 @@ DEPENDENCIES
   amqp
   attr_encrypted
   aws-s3
+  backports
   compass
   database_cleaner
   delayed_job
@@ -124,18 +157,23 @@ DEPENDENCIES
   feed-normalizer
   haml
   jammit
+  jrails!
   mocha
   moqueue
   mysqlplus
   nokogiri
   paperclip
+  passenger
   rails (= 2.3.10)
   rspec (< 2.0.0)
   rspec-rails (< 2.0.0)
   spork
   spreedly
   talker
-  thin
+  test-unit (= 1.2.3)
+  thinking-sphinx
+  ts-datetime-delta
+  unicode_utils
   uuid
   vcr
   will_paginate
