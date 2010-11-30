@@ -41,7 +41,7 @@ Talker.Plugin_#{plugin.id} = function(){ // #{plugin.name} by #{plugin.author.na
   def render_events_for_logs(events, json_options={})
     <<-EOS
 // preloading events like this is not that costly
-var talkerEvents = #{escape_json @events.to_json(json_options)};
+var talkerEvents = #{escape_json @events.collect{|event| event.to_json(json_options)}.to_json};
 var talkerUsers  = [];
 
 for (var i = 0, len = talkerEvents.length; i < len; i++) {

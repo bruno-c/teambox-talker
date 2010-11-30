@@ -46,7 +46,7 @@
       parentCallback: parent.window.talkerCallback
     }).connect();
 
-    parent.window.processLastEvents && parent.window.processLastEvents(<%= escape_json @events.to_json %>);
+    parent.window.processLastEvents && parent.window.processLastEvents(<%= escape_json @events.collect(&:to_json) %>);
   });
 //]]>
 </script>
