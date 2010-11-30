@@ -21,6 +21,8 @@ gem 'acts_as_state_machine'
 gem 'jammit'
 gem 'yui-compressor'
 gem 'feed-normalizer'
+gem 'jrails', :git => 'git://github.com/aaronchi/jrails.git'
+gem 'thinking-sphinx'
 
 group :development do
   gem "thin", :require => false

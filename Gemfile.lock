@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/aaronchi/jrails.git
+  revision: 712ccd1245d2871c7018a1c095f27db243209c46
+  specs:
+    jrails (0.6.0)
+
+GIT
   remote: git://github.com/macournoyer/em-spec.git
   revision: 50f00cae29579e5cbcd856e8995bf44435f16a3f
   specs:
@@ -23,6 +29,8 @@ GEM
     acts_as_state_machine (2.2.0)
       activerecord (>= 2.1)
     addressable (2.2.2)
+    after_commit (1.0.8)
+      activerecord (< 3.0.0)
     amqp (0.6.7)
       eventmachine (>= 0.12.4)
     attr_encrypted (1.1.2)
@@ -81,6 +89,7 @@ GEM
       activesupport (= 2.3.10)
       rake (>= 0.8.3)
     rake (0.8.7)
+    riddle (1.2.1)
     rspec (1.3.1)
     rspec-rails (1.3.3)
       rack (>= 1.0.0)
@@ -96,6 +105,10 @@ GEM
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
+    thinking-sphinx (1.4.0)
+      activerecord (>= 1.15.6, < 3.0.0)
+      after_commit (>= 1.0.7)
+      riddle (>= 1.2.0)
     uuid (2.3.1)
       macaddr (~> 1.0)
     vcr (1.3.3)
@@ -124,6 +137,7 @@ DEPENDENCIES
   feed-normalizer
   haml
   jammit
+  jrails!
   mocha
   moqueue
   mysqlplus
@@ -136,6 +150,7 @@ DEPENDENCIES
   spreedly
   talker
   thin
+  thinking-sphinx
   uuid
   vcr
   will_paginate
