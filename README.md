@@ -28,6 +28,10 @@ Install **RabbitMQ** using MacPorts or homebrew with:
     # or
     brew install rabbitmq
 
+For ubuntu users:
+
+    sudo apt-get install rabbitmq-server
+
 ### Ruby Gems
 
 The gem rubyosa seems to break in Snow Leopard, you can use this fork: http://github.com/jboyett/rubyosa
@@ -45,8 +49,7 @@ You can always try to use the original rubyosa gem:
 
 For the rest of the gems just:
 
-    gem install eventmachine amqp yajl-ruby mysqlplus em-http-request rb-appscript thin
-    rake gems:install
+    bundle install
 
 ## Configuration / bootstrapping
 
@@ -62,3 +65,7 @@ Some pieces of talker in development assume your mysql root's account has no pas
 Start the whole stack in development environment:
 
     script/devenv
+
+For ubuntu users:
+
+    script/devenv-ubuntu
