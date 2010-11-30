@@ -25,9 +25,10 @@ gem 'jrails', :git => 'git://github.com/aaronchi/jrails.git'
 gem 'thinking-sphinx'
 gem 'ts-datetime-delta', :require => 'thinking_sphinx/deltas/datetime_delta'
 gem 'backports'
+gem 'unicode_utils'
 
 group :development do
-  gem "thin", :require => false
+  gem "passenger"
 end
 
 group :test do

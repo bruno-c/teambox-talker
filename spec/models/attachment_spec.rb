@@ -43,7 +43,7 @@ describe Attachment do
         Factory.build(:attachment, :upload_file_name => "Screen shot 2009-11-25 at 10.48.27 AM").basename.should == "screen-shot-2009-11-25-at-1048"
       end
       it "sanitizes odd characters" do
-        Factory.build(:attachment, :upload_file_name => "éé").basename.should == ""
+        Factory.build(:attachment, :upload_file_name => "éé").basename.should == "ee"
       end
     end
   end

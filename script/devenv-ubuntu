@@ -3,7 +3,7 @@ echo "Starting all services ..."
 echo "Don't you touch anything until you see 5 new tabs in your console."
 gnome-terminal \
   --tab -e "bundle exec script/rabbitmq" -t 'RabbitMQ' \
-  --tab -e "bundle exec thin start" -t 'Thin' \
+  --tab -e "bundle exec passenger start" -t 'Passenger' \
   --tab -e "bundle exec script/orbited" -t "Orbited" &
  
 sleep 5
