@@ -6,7 +6,7 @@ EM.describe "Token" do
       client.on_connected do
         client.send :type => "token"
       end
-      
+
       client.on_event do |event|
         if event["type"] == "token"
           event["acquired"].should be_true
@@ -14,7 +14,7 @@ EM.describe "Token" do
           success
         end
       end
-      
+
       client.on_close { done }
     end
   end

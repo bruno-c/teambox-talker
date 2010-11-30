@@ -42,6 +42,7 @@ module Talker::Server
           
           @connections[connection.signature] = connection
         end
+
       end
       
       def running?

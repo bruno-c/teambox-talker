@@ -36,7 +36,7 @@ module Talker::Server
       SQL
       
       Talker::Server.logger.debug{"Querying for authentication:\n#{sql}"}
-      
+
       EventedMysql.select(sql) do |results|
         if result = results[0]
           user = User.new("id" => result["id"].to_i, "name" => result["name"], "email" => result["email"])

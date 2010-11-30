@@ -35,7 +35,7 @@ Talker.Plugin_#{plugin.id} = function(){ // #{plugin.name} by #{plugin.author.na
   end
   
   def render_events(events)
-   "$.each(#{escape_json @events.to_json}, function(){ Talker.Broadcaster.broadcastEvent(this); });"
+   "$.each(#{escape_json @events.collect(&:to_json).to_json}, function(){ Talker.Broadcaster.broadcastEvent(this); });"
   end
   
   def render_events_for_logs(events, json_options={})

@@ -27,50 +27,61 @@ EM.describe Talker::Server::Logger do
   end
   
   it "should insert message" do
+    now = Time.now
     message = { "type" => "message", "user" => {"id" => 1},
-                "time" => 5, "content" => "ohaie" }
+                "time" => now.to_i, "content" => "ohaie" }
     
     @exchange.publish encode(message), :key => "talker.channels.room.1"
     
     expect_event do |event|
+
       event["room_id"].should == "1"
       event["type"].should == "message"
       event["content"].should == "ohaie"
       event["payload"].should_not be_nil
-      event["created_at"].should == "1970-01-01 00:00:05"
-      event["updated_at"].should == "1970-01-01 00:00:05"
+
+      formatted_time = now.strftime("%Y-%m-%d %H:%M:%S") 
+
+      event["created_at"].should == formatted_time
+      event["updated_at"].should == formatted_time
       done
     end
   end
   
   it "should insert join" do
-    message = { "type" => "join", "user" => {"id" => 1}, "time" => 5 }
+    now = Time.now
+    message = { "type" => "join", "user" => {"id" => 1}, "time" => now.to_i }
     
     @exchange.publish encode(message), :key => "talker.channels.room.1"
     
+    formatted_time = now.strftime("%Y-%m-%d %H:%M:%S") 
+
     expect_event do |event|
       event["room_id"].should == "1"
       event["type"].should == "join"
       event["content"].should == ""
       event["payload"].should_not be_nil
-      event["created_at"].should == "1970-01-01 00:00:05"
-      event["updated_at"].should == "1970-01-01 00:00:05"
+      event["created_at"].should == formatted_time
+      event["updated_at"].should == formatted_time
       done
     end
   end
   
   it "should insert leave" do
-    message = { "type" => "leave", "user" => {"id" => 1}, "time" => 5 }
+    now = Time.now
+    message = { "type" => "leave", "user" => {"id" => 1}, "time" => now.to_i }
     
     @exchange.publish encode(message), :key => "talker.channels.room.1"
     
+    formatted_time = now.strftime("%Y-%m-%d %H:%M:%S") 
+
     expect_event do |event|
       event["room_id"].should == "1"
       event["type"].should == "leave"
       event["content"].should == ""
       event["payload"].should_not be_nil
-      event["created_at"].should == "1970-01-01 00:00:05"
-      event["updated_at"].should == "1970-01-01 00:00:05"
+      event["created_at"].should == formatted_time
+      event["updated_at"].should == formatted_time
       done
     end
   end
@@ -87,19 +98,22 @@ EM.describe Talker::Server::Logger do
   end
   
   it "should insert paste" do
+    now = Time.now
     message = { "type" => "message", "user" => {"id" => 1},
-                "time" => 5, "content" => "ohaie...", 
+                "time" => now.to_i, "content" => "ohaie...", 
                 "paste" => {"id" => "abc123", "lines" => 5, "preview_lines" => 3} }
     
     @exchange.publish encode(message), :key => "talker.channels.room.1"
     
+    formatted_time = now.strftime("%Y-%m-%d %H:%M:%S") 
+
     expect_event do |event|
       event["room_id"].should == "1"
       event["type"].should == "message"
       event["content"].should == "ohaie..."
       event["payload"].should_not be_nil
-      event["created_at"].should == "1970-01-01 00:00:05"
-      event["updated_at"].should == "1970-01-01 00:00:05"
+      event["created_at"].should == formatted_time
+      event["updated_at"].should == formatted_time
       done
     end
   end

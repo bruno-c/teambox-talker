@@ -7,7 +7,7 @@ gem "compass"
 gem "eventmachine"
 gem "mysqlplus", :require => false
 gem "em-http-request"
-gem "tmm1-amqp", :require => 'amqp' 
+gem "amqp"
 gem "attr_encrypted"
 gem "aws-s3", :require => 'aws/s3'
 gem "uuid", :require => false
@@ -37,4 +37,7 @@ group :test do
   gem "rspec", "<2.0.0"
   gem "rspec-rails", "<2.0.0"
   gem "spork"
+  gem "talker"
+  gem "em-spec", :git => 'git://github.com/macournoyer/em-spec.git'
+  gem "moqueue"
 end
