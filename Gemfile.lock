@@ -44,6 +44,12 @@ GEM
     backports (1.18.2)
     bacon (1.1.0)
     builder (3.0.0)
+    capistrano (2.5.19)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.0.0)
     closure-compiler (0.3.3)
     compass (0.10.6)
       haml (>= 3.0.4)
@@ -68,6 +74,7 @@ GEM
     file-tail (1.0.5)
       spruz (>= 0.1.0)
     haml (3.0.24)
+    highline (1.6.1)
     hoe (2.7.0)
       rake (>= 0.8.7)
       rubyforge (>= 2.0.4)
@@ -85,6 +92,13 @@ GEM
     moqueue (0.1.4)
       amqp
     mysqlplus (0.1.2)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.0.23)
+    net-ssh-gateway (1.0.1)
+      net-ssh (>= 1.99.1)
     nokogiri (1.4.4)
     paperclip (2.3.6)
       activerecord
@@ -145,6 +159,7 @@ DEPENDENCIES
   attr_encrypted
   aws-s3
   backports
+  capistrano
   compass
   database_cleaner
   delayed_job

@@ -6,6 +6,7 @@ set :deploy_via, :remote_cache
 
 set :runner, "admin"
 set :user, "admin"
+set :keep_releases, 4 
 # set :port, 30000 # ssh port
 
 set :scm, :git

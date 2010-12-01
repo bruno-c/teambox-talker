@@ -29,6 +29,7 @@ gem 'unicode_utils' unless RUBY_VERSION < '1.9.1'
 
 group :development do
   gem "passenger"
+  gem "capistrano"
 end
 
 group :test do
