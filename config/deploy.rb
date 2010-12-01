@@ -1,3 +1,5 @@
+require 'bundler/deployment'
+
 set :application, "talker"
 set :repository, "git@github.com:teambox/talker.git"
 
