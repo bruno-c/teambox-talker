@@ -5,7 +5,7 @@ body {
   margin: 0px -8px 16px 0;
   padding: 0; }
 
-html>body p code {
+html > body p code {
   *white-space: normal; }
 
 #home #page {
@@ -37,10 +37,10 @@ fieldset {
 
 input.text, input.title {
   margin: 0.5em 0;
-  background-color: #fff;
-  border: 1px solid #bbb; }
+  background-color: white;
+  border: 1px solid #bbbbbb; }
   input.text:focus, input.title:focus {
-    border: 1px solid #666; }
+    border: 1px solid #666666; }
 input.checkbox, input.radio, input.button {
   position: relative;
   top: 0.25em; }

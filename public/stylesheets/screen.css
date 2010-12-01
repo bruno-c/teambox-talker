@@ -434,7 +434,7 @@ html[xmlns] .clearfix {
             -moz-border-radius: 2px;
             -webkit-border-radius: 2px;
             border: none;
-            background-image: url("../../images/embed/icons/magnifier.png");
+            background-image: url("/images/embed/icons/magnifier.png");
             background-repeat: no-repeat;
             background-position: 2px center; }
   #nav p.utilities {
@@ -706,17 +706,17 @@ a.button, button {
       opacity: 1;
       -moz-opacity: 1; }
   a.button.add, button.add {
-    background-image: url("../../images/embed/icons/plus-circle.png");
+    background-image: url("/images/embed/icons/plus-circle.png");
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
   a.button.remove, button.remove {
-    background-image: url("../../images/embed/icons/minus-circle.png");
+    background-image: url("/images/embed/icons/minus-circle.png");
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
   a.button.update, button.update {
-    background-image: url("../../images/embed/icons/document--pencil.png");
+    background-image: url("/images/embed/icons/document--pencil.png");
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 31px; }
@@ -799,7 +799,7 @@ a.button, button {
   z-index: 99;
   top: -300px;
   left: 0px;
-  background: url(../../images/top_fader.png);
+  background: url(/images/embed/top_fader.png);
   width: 100%;
   height: 320px; }
 
@@ -1031,7 +1031,7 @@ a.button, button {
             top: 5px; }
           #chat_log table tr.timestamp td.time div span.marker i {
             height: 20px;
-            background-image: url("../../images/embed/icons/clock.png");
+            background-image: url("/images/embed/icons/clock.png");
             line-height: 20px;
             margin: 0 0 0 5px; }
       #chat_log table tr.notice td.message div.line {
@@ -1044,7 +1044,7 @@ a.button, button {
         border: 2px dotted #d3ebf6;
         padding: 3px 8px; }
         #chat_log table tr.private td.message blockquote span.marker.private {
-          background: url("../../images/embed/icons/spectacles-sunglass.png") no-repeat left center; }
+          background: url("/images/embed/icons/spectacles-sunglass.png") no-repeat left center; }
         #chat_log table tr.private td.message blockquote div.line {
           font-style: italic;
           color: gray; }
@@ -1063,7 +1063,7 @@ a.button, button {
   overflow: hidden;
   width: 100%;
   margin: 0px 230px 0 0;
-  background: url("../../images/bottom_fader.png"); }
+  background: url("/images/embed/bottom_fader.png"); }
   #message_form.expanded form.fade {
     margin: 20px 80px 0 0; }
   #message_form #toggle_sound {
@@ -1085,9 +1085,9 @@ a.button, button {
       height: 20px;
       width: 20px; }
     #message_form #toggle_sound.active .sound_img {
-      background: url(../images/embed/icons/volume.png) center no-repeat; }
+      background: url(/images/embed/icons/volume.png) center no-repeat; }
     #message_form #toggle_sound.inactive .sound_img {
-      background: url(../images/embed/icons/volume-control-mute.png) center no-repeat; }
+      background: url(/images/embed/icons/volume-control-mute.png) center no-repeat; }
   #message_form .form_help {
     float: right;
     display: inline-block;
@@ -1573,7 +1573,7 @@ div.flash {
     margin-left: 19px; }
     #errorExplanation ul li {
       font-size: 12px;
-      background: url("../../images/embed/icons/exclamation-small-red.png") no-repeat left center;
+      background: url("/images/embed/icons/exclamation-small-red.png") no-repeat left center;
       padding-left: 21px;
       list-style: none; }
 
