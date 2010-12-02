@@ -7,7 +7,6 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register', :controller => 'accounts', :action => 'create'
   map.signup '/signup/:plan', :controller => 'accounts', :action => 'new'
   map.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
-  
   map.pricing '/pricing', :controller => "site", :action => "pricing"
   map.about '/about', :controller => "site", :action => "about"
   map.tour '/tour/:step', :controller => "site", :action => "tour", :step => nil
