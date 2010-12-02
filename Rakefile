@@ -8,6 +8,7 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+require 'thinking_sphinx/tasks'
 
 desc "Configure mysql database"
 task "db:config" => :environment do
