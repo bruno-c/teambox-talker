@@ -4,7 +4,7 @@ module SprocketsApplication
   
   class << self
     def routes(map)
-      map.connect "/javascripts/talker.js", :controller => "sprockets", :action => "show"
+      map.sprockets "/javascripts/talker.js", :controller => "sprockets", :action => "show"
     end
     
     def source
