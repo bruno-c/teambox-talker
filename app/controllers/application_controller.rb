@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  include ExceptionNotifiable
   include SslRequirement
   include TimeZoneSupport
   include AuthenticatedSystem
