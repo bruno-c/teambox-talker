@@ -8,4 +8,5 @@ config/*.sphinx.conf
 db/sphinx
 .bundle
 .sass-cache
-public/assets/**/*.gz
+public/assets/**/*
+public/stylesheets/**/*
