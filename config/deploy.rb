@@ -1,5 +1,6 @@
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
+require 'capistrano_colors'
 
 set :stages, %w{staging production}
 set :default_stage, :production
