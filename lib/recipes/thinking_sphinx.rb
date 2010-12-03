@@ -1,7 +1,7 @@
 after "deploy:symlink", :roles => :app do
-#  thinking_sphinx.symlink_indexes
-#  thinking_sphinx.configure
-#  thinking_sphinx.restart
+  thinking_sphinx.symlink_indexes
+  thinking_sphinx.configure
+  thinking_sphinx.restart
 end
 
 

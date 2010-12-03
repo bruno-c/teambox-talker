@@ -10,7 +10,3 @@ stylesheets:
     - public/stylesheets/screen.css 
   site:
     - public/stylesheets/root/screen.css
-  site_ie7:
-    - public/stylesheets/root/ie_7.css
-  site_ie8:
-    - public/stylesheets/root/ie_8.css
