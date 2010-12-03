@@ -33,7 +33,6 @@ class LogsController < ApplicationController
         with[:room_id] = current_user.accessible_rooms.map(&:id)
       end
     end
-    
     @events = Event.search @query, :order => :created_at, :sort_mode => :desc, :with => with
   end
   

@@ -62,7 +62,7 @@ class Event < ActiveRecord::Base
     if options.key?(:include) # Simulate normal to_json(:include => ...) behaviour
       object = payload_object
       Array(options[:include]).each { |attr| object[attr] = send(attr) }
-      object.to_json
+      object
     else
       payload_object
     end

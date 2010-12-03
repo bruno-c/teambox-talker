@@ -56,7 +56,7 @@ GEM
     daemon_controller (0.2.5)
     daemons (1.1.0)
     database_cleaner (0.6.0)
-    delayed_job (2.0.4)
+    delayed_job (2.0.5)
       daemons
     eigenclass (1.1.1)
     em-http-request (0.2.15)
