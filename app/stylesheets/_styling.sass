@@ -1,81 +1,81 @@
 // Rounded Corners
-=rounded_corners(!corner, !radius)
-  @if !corner == "all"
-    border-radius = !radius + "px"
-    -moz-border-radius = !radius + "px"
-    -webkit-border-radius = !radius + "px"
-  @if !corner == "top_right"
-    border-top-right-radius = !radius + "px"
-    -moz-border-radius-topright = !radius + "px"
-    -webkit-border-top-right-radius = !radius + "px"
-  @if !corner == "bottom_right"
-    border-bottom-right-radius = !radius + "px"
-    -moz-border-radius-bottomright = !radius + "px"
-    -webkit-border-bottom-right-radius = !radius + "px"
-  @if !corner == "bottom_left"
-    border-bottom-left-radius = !radius + "px"
-    -moz-border-radius-bottomleft = !radius + "px"
-    -webkit-border-bottom-left-radius = !radius + "px"
-  @if !corner == "top_left"
-    border-top-left-radius = !radius + "px"
-    -moz-border-radius-topleft = !radius + "px"
-    -webkit-border-top-left-radius = !radius + "px"
-  @if !corner == "top"
-    +rounded_corners("top_left", !radius)
-    +rounded_corners("top_right", !radius)
-  @if !corner == "right"
-    +rounded_corners("top_right", !radius)
-    +rounded_corners("bottom_right", !radius)
-  @if !corner == "bottom"
-    +rounded_corners("bottom_right", !radius)
-    +rounded_corners("bottom_left", !radius)
-  @if !corner == "left"
-    +rounded_corners("bottom_left", !radius)
-    +rounded_corners("top_left", !radius)
+=rounded_corners($corner, $radius)
+  @if $corner == "all"
+    border-radius: $radius + px
+    -moz-border-radius: $radius + px
+    -webkit-border-radius: $radius + px
+  @if $corner == "top_right"
+    border-top-right-radius: $radius + px
+    -moz-border-radius-topright: $radius + px
+    -webkit-border-top-right-radius: $radius + px
+  @if $corner == "bottom_right"
+    border-bottom-right-radius: $radius + px
+    -moz-border-radius-bottomright: $radius + px
+    -webkit-border-bottom-right-radius: $radius + px
+  @if $corner == "bottom_left"
+    border-bottom-left-radius: $radius + px
+    -moz-border-radius-bottomleft: $radius + px
+    -webkit-border-bottom-left-radius: $radius + px
+  @if $corner == "top_left"
+    border-top-left-radius: $radius + px
+    -moz-border-radius-topleft: $radius + px
+    -webkit-border-top-left-radius: $radius + px
+  @if $corner == "top"
+    +rounded_corners(top_left, $radius)
+    +rounded_corners(top_right, $radius)
+  @if $corner == "right"
+    +rounded_corners(top_right, $radius)
+    +rounded_corners(bottom_right, $radius)
+  @if $corner == "bottom"
+    +rounded_corners(bottom_right, $radius)
+    +rounded_corners(bottom_left, $radius)
+  @if $corner == "left"
+    +rounded_corners(bottom_left, $radius)
+    +rounded_corners(top_left, $radius)
 
 // Opacity
-=opacity(!opacity)
-  filter = "alpha(opacity=" + !opacity + ")"
-  opacity = !opacity / 100
-  -moz-opacity = !opacity / 100
+=opacity($opacity)
+  filter: unquote("alpha(opacity=") + $opacity + unquote(")")
+  opacity: $opacity / 100
+  -moz-opacity: $opacity / 100
 
 // Box Shadows
-=box_shadow(!distance_x, !distance_y, !size, !colour)
-  box-shadow = !distance_x + "px" !distance_y + "px" !size + "px" !colour
-  -webkit-box-shadow = !distance_x + "px" !distance_y + "px" !size + "px" !colour
-  -moz-box-shadow = !distance_x + "px" !distance_y + "px" !size + "px" !colour
+=box_shadow($distance_x, $distance_y, $size, $colour)
+  box-shadow: $distance_x + px $distance_y + px $size + px $colour
+  -webkit-box-shadow: $distance_x + px $distance_y + px $size + px $colour
+  -moz-box-shadow: $distance_x + px $distance_y + px $size + px $colour
 
 // Text Shadows
-=text_shadow(!distance_x, !distance_y, !size, !colour)
-  text-shadow = !distance_x + "px" !distance_y + "px" !size + "px" !colour
+=text_shadow($distance_x, $distance_y, $size, $colour)
+  text-shadow: $distance_x + px $distance_y + px $size + px $colour
 
 // Button-like effect
-=emboss(!color)
+=emboss($color)
   border:
-    top-color = !color * 0.5 + !white * 0.5
-    left-color = !color * 0.5 + !white * 0.5
-    bottom-color = !color
-    right-color = !color
+    top-color: $color * 0.5 + $white * 0.5
+    left-color: $color * 0.5 + $white * 0.5
+    bottom-color: $color
+    right-color: $color
 
 // Font Sizes
-=font_size(!size)
-  !font_size_medium = 14px
-  @if !size == "medium"
-    font-size = !font_size_medium
-  @if !size == "tiny"
-    font-size = !font_size_medium - 4px
-  @if !size == "small"
-    font-size = !font_size_medium - 2px
-  @if !size == "large"
-    font-size = !font_size_medium + 2px
-  @if !size == "xlarge"
-    font-size = !font_size_medium + 4px
-  @if !size == "xxlarge"
-    font-size = !font_size_medium + 6px
-  @if !size == "xxxlarge"
-    font-size = !font_size_medium + 8px
+=font_size($size)
+  $font_size_medium: 14px
+  @if $size == "medium"
+    font-size: $font_size_medium
+  @if $size == "tiny"
+    font-size: $font_size_medium - 4px
+  @if $size == "small"
+    font-size: $font_size_medium - 2px
+  @if $size == "large"
+    font-size: $font_size_medium + 2px
+  @if $size == "xlarge"
+    font-size: $font_size_medium + 4px
+  @if $size == "xxlarge"
+    font-size: $font_size_medium + 6px
+  @if $size == "xxxlarge"
+    font-size: $font_size_medium + 8px
 
-=fade(!bgcolor)
+=fade($bgcolor)
   position: relative
   display: block
   overflow: hidden
@@ -83,16 +83,16 @@
   height: 1em
   white-space: nowrap
   b.fade
-    background = !bgcolor none repeat scroll 0% 0%
+    background: $bgcolor none repeat scroll 0% 0%
     display: block
     position: absolute
-    +box_shadow(-20, 0, 20, !bgcolor)
+    +box_shadow(-20, 0, 20, $bgcolor)
     width: 3em
     height: 2em
     top: -8px
     right: -30px
 
 =alt
-  font-family: Baskerville, Palatino, 'Book Antiqua', serif
+  font-family: Baskerville, Palatino, "Book Antiqua", serif
   font-style: italic
   font-weight: normal

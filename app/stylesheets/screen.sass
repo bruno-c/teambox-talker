@@ -9,40 +9,47 @@ body
   height: 100%
   position: relative
   font-family: helvetica, arial, sans-serif
-  +font_size("medium")
-  color = !black
-  background = !black * 0.1 + !white * 0.9
+  +font_size(medium)
+  color: $black
+  background: $black * 0.1 + $white * 0.9
   &.blank
-    background-color = !white
+    background-color: $white
+
 html
   height: 100%
+
 *
   text-shadow: rgba(0, 0, 0, 0.01) 0 0 0
+
 a
-  color = !accent_colour * 0.75 + !black * 0.25
+  color: $accent_colour * 0.75 + $black * 0.25
   outline: none
   &.negative
-    color = !colour_negative
+    color: $colour_negative
   &.disabled
-    color = !grey
+    color: $grey
     text-decoration: none
     cursor: default
   &:hover, &.hover
     text-decoration: none
+
 h2
-  +font_size("xxxlarge")
+  +font_size(xxxlarge)
   margin: 0 0 1em
   font-weight: bold
+
 h3
-  +font_size("xxlarge")
+  +font_size(xxlarge)
   margin: 0 0 0.66em
-  color = !dark_grey
+  color: $dark_grey
+
 h4
-  +font_size("xlarge")
+  +font_size(xlarge)
   font-weight: bold
   margin: 0 0 0.5em
+
 p
-  color = !dark_grey
+  color: $dark_grey
   &.more
     margin: 0 0 10px
   &.pagination
@@ -54,12 +61,12 @@ p
       padding: 0 10px
       height: 22px
       line-height: 22px
-      +rounded_corners("all", 3)
-      border = 1px "solid" !light_grey * 0.25 + !white * 0.75
-      border-right = 1px "solid" !light_grey * 0.5 + !white * 0.5
-      border-bottom = 1px "solid" !light_grey * 0.5 + !white * 0.5
+      +rounded_corners(all, 3)
+      border: 1px solid $light_grey * 0.25 + $white * 0.75
+      border-right: 1px solid $light_grey * 0.5 + $white * 0.5
+      border-bottom: 1px solid $light_grey * 0.5 + $white * 0.5
       &:hover
-        background = !accent_colour * 0.5 + !white * 0.5
+        background: $accent_colour * 0.5 + $white * 0.5
       b
         display: block
       &.previous
@@ -68,7 +75,7 @@ p
           float: left
           border: 5px solid transparent
           border-left: none
-          border-right = 8px "solid" !light_grey
+          border-right: 8px solid $light_grey
           margin: 5px 5px 0 0
       &.next
         float: right
@@ -76,31 +83,36 @@ p
           float: right
           border: 5px solid transparent
           border-right: none
-          border-left = 8px "solid" !light_grey
+          border-left: 8px solid $light_grey
           margin: 5px 0 0 5px
+
 input, select, textarea
   font-family: helvetica, arial, sans-serif
-  +font_size("small")
+  +font_size(small)
+
 input.placeholder
-  color = !light_grey
+  color: $light_grey
+
 em
   font-style: oblique
+
 hr
   height: 0
   border: none
-  border-top = 1px "solid" !light_grey
+  border-top: 1px solid $light_grey
   margin: 0 0 1.5em
+
 pre
   font-family: monospace
 
 .highlight
-  background: #EFEF00
+  background: #efef00
   color: black
   font-weight: bold
   margin: 4px
   padding: 2px 5px 2px 5px
-  +rounded_corners("all", 4)
-  +box_shadow(0, 0, 4, !light_grey * 0.66 + !white * 0.33)
+  +rounded_corners(all, 4)
+  +box_shadow(0, 0, 4, $light_grey * 0.66 + $white * 0.33)
 
 // Clearfix
 .clearfix
@@ -112,8 +124,10 @@ pre
     visibility: hidden
     line-height: 0
     height: 0
+
 html[xmlns] .clearfix
   display: block
+
 * html .clearfix
   height: 1%
 
@@ -124,11 +138,11 @@ html[xmlns] .clearfix
   left: 0
   right: 0
   overflow: hidden
-  background = !dark_grey
+  background: $dark_grey
   padding: 0 10px 0
-  +font_size("small")
+  +font_size(small)
   height: 40px
-  border-bottom = 2px solid !light_grey
+  border-bottom: 2px solid $light_grey
   ul
     margin: 10px 0 0
     float: left
@@ -144,33 +158,33 @@ html[xmlns] .clearfix
         height: 20px
         font-weight: bold
         text-decoration: none
-        color = !white
-        +rounded_corners("all", 2)
+        color: $white
+        +rounded_corners(all, 2)
         &:hover
-          background = !white
-          color = !accent_colour
+          background: $white
+          color: $accent_colour
         &.active
-          background = !grey
+          background: $grey
       form
         margin: 0 0 0 10px
         p
           padding: 0
           line-height: normal
           input
-            +font_size("small")
+            +font_size(small)
             height: 16px
             padding: 4px 2px 0 21px
-            +rounded_corners("all", 2)
+            +rounded_corners(all, 2)
             border: none
-            background-image: url('/images/embed/icons/magnifier.png')
+            background-image: url("/images/embed/icons/magnifier.png")
             background-repeat: no-repeat
             background-position: 2px center
   p.utilities
     float: right
-    color = !grey
+    color: $grey
     line-height: 40px
     a
-      color = !white
+      color: $white
       margin: 2px
       font-weight: bold
       text-decoration: none
@@ -183,32 +197,34 @@ html[xmlns] .clearfix
           left: 4px
     a:hover
       text-decoration: underline
-      
 
 // Layout
 #content
   padding: 40px 0 0
+
 #main
   margin: 0 240px 0 0
   padding: 40px
   &.expanded
     margin: 0 40px 0 0
   div.sheet
-    background = !white
+    background: $white
     padding: 40px
-    +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
+    +box_shadow(1, 1, 2, $light_grey * 0.66 + $white * 0.33)
     min-width: 700px
   &.dialog
     margin: 0 auto
     width: 500px
     div.sheet
       min-width: 0
+
 #sidebar
   position: fixed
   right: 0
   float: right
   width: 195px
   padding: 37px 37px 37px 0
+
 body#rooms_controller.show
   #content
     padding: 0
@@ -238,10 +254,10 @@ body#rooms_controller.show
           min-height: 80px
           p
             &.description
-              +font_size("small")
+              +font_size(small)
             &.people
               label
-                color = !grey
+                color: $grey
               img
                 height: 18px
                 width: 18px
@@ -266,17 +282,17 @@ body#rooms_controller.show
             span.author
               float: right
               font-size: 12px
-              color = !light_grey
+              color: $light_grey
               img
                 position: relative
                 top: 3px
           &.content
             p
               &.description
-                +font_size("small")
+                +font_size(small)
               &.people
                 label
-                  color = !grey
+                  color: $grey
                 img
                   height: 18px
                   width: 18px
@@ -286,9 +302,9 @@ body#rooms_controller.show
         +opacity(100)
         div.panel
           div.header
-            background = !accent_colour * 0.75 + !black * 0.25
+            background: $accent_colour * 0.75 + $black * 0.25
             span.author
-              color = !white
+              color: $white
       &.disabled
         +opacity(50)
       &:hover
@@ -326,7 +342,7 @@ form
     &.description
       line-height: 1
       margin-top: 5px
-      +font_size("small")
+      +font_size(small)
       float: none
       text-align: left
     &.inline
@@ -335,17 +351,17 @@ form
       font-weight: normal
       margin: 0
   input[type=text], input[type=password], textarea
-    background = !white
-    +font_size("medium")
+    background: $white
+    +font_size(medium)
     padding: 5px 3px 0
-    border = 1px "solid" !white * 0.9 + !black * 0.1
-    border-top = 1px "solid" !white * 0.75 + !black * 0.25
-    border-left = 1px "solid" !white * 0.75 + !black * 0.25
+    border: 1px solid $white * 0.9 + $black * 0.1
+    border-top: 1px solid $white * 0.75 + $black * 0.25
+    border-left: 1px solid $white * 0.75 + $black * 0.25
     margin: 0
   input[type=text], input[type=password]
     height: 21px
   select
-    +font_size("medium")
+    +font_size(medium)
   textarea.wide
     width: 100%
   fieldset
@@ -355,7 +371,7 @@ form
   div.fieldWithErrors
     display: inline
     input, textarea
-      border-color = !colour_negative
+      border-color: $colour_negative
   p.actions
     margin-bottom: 30px
   &.lw40
@@ -395,53 +411,53 @@ form
 a.button, button
   cursor: pointer
   display: inline-block
-  +rounded_corners("all", 3)
-  background = !button_colour_off
-  color = !white
-  +text_shadow(-1, -1, 0, !accent_colour * 0.75 + !black * 0.25)
-  border = 1px "solid" !button_colour_off
+  +rounded_corners(all, 3)
+  background: $button_colour_off
+  color: $white
+  +text_shadow(-1, -1, 0, $accent_colour * 0.75 + $black * 0.25)
+  border: 1px solid $button_colour_off
   text-decoration: none
   padding: 0 10px
   line-height: 27px
   font: inherit
-  +font_size("medium")
-  +box_shadow(2, 2, 4, !light_grey * 0.5 + !white * 0.5)
+  +font_size(medium)
+  +box_shadow(2, 2, 4, $light_grey * 0.5 + $white * 0.5)
   &:hover, &.hover
-    background = !button_colour_on
+    background: $button_colour_on
   &.large
-    +font_size("xlarge")
-    line-height = 31px
+    +font_size(xlarge)
+    line-height: 31px
   &.small
-    +font_size("small")
-    line-height = 20px
+    +font_size(small)
+    line-height: 20px
     padding: 0 6px
   &.negative
-    background = !colour_negative
-    +emboss(!colour_negative * 0.75 + !black * 0.25)
+    background: $colour_negative
+    +emboss($colour_negative * 0.75 + $black * 0.25)
     +text_shadow(0, 0, 0, transparent)
     +opacity(80)
     &:hover
       +opacity(100)
   &.neutral, &.submit
-    background = !light_grey * 0.2 + !white * 0.8
-    +emboss(!grey)
+    background: $light_grey * 0.2 + $white * 0.8
+    +emboss($grey)
     +text_shadow(0, 0, 0, transparent)
-    color = !black
+    color: $black
     +opacity(80)
     &:hover, &.hover
       +opacity(100)
   &.add
-    background-image: url('/images/embed/icons/plus-circle.png')
+    background-image: url("/images/embed/icons/plus-circle.png")
     background-position: 10px center
     background-repeat: no-repeat
     padding-left: 31px
   &.remove
-    background-image: url('/images/embed/icons/minus-circle.png')
+    background-image: url("/images/embed/icons/minus-circle.png")
     background-position: 10px center
     background-repeat: no-repeat
     padding-left: 31px
   &.update
-    background-image: url('/images/embed/icons/document--pencil.png')
+    background-image: url("/images/embed/icons/document--pencil.png")
     background-position: 10px center
     background-repeat: no-repeat
     padding-left: 31px
@@ -454,7 +470,7 @@ a.button, button
   &.delete
     background-image: url(/images/embed/icons/cross-circle.png)
   &.cancel
-    background-color = !colour_negative * 0.3 + !white * 0.7
+    background-color: $colour_negative * 0.3 + $white * 0.7
     background-image: url(/images/embed/icons/cross-circle.png)
   &.ok
     background-image: url(/images/embed/icons/tick.png)
@@ -465,22 +481,22 @@ a.button, button
 #sidebar
   #actions
     a.button
-      +font_size("xlarge")
+      +font_size(xlarge)
       font-weight: bold
       line-height: 1
       height: auto
       padding: 10px 15px 10px 36px
       background-position: 15px center
-      +rounded_corners("all", 5)
-      +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
+      +rounded_corners(all, 5)
+      +box_shadow(1, 1, 2, $light_grey * 0.66 + $white * 0.33)
     a.talker_team
-      +font_size("medium")
+      +font_size(medium)
       padding: 10px
   .info
     margin: 20px 0
-    border = solid 1px !white
+    border: solid 1px $white
     &.warning
-      border = solid 2px !red * 0.5 + !white * 0.5
+      border: solid 2px $red * 0.5 + $white * 0.5
 
 // People
 #people
@@ -492,9 +508,9 @@ a.button, button
     float: left
     &.pending
       div.header
-        :background-color = !grey
+        background-color: $grey
     ul.roles
-      :list-style none
+      list-style: none
     div.panel
       div
         &.header
@@ -508,13 +524,13 @@ a.button, button
           h3
             margin: 0 0 0 50px
           .tag.you
-            :background-color = !light_grey
+            background-color: $light_grey
         &.content
           min-height: 40px
           padding: 8px 10px 9px 60px
-          +rounded_corners("bottom", 3)
+          +rounded_corners(bottom, 3)
           p
-            +font_size("small")
+            +font_size(small)
         &.footer
           height: 22px
 
@@ -527,27 +543,27 @@ a.button, button
   background: url(/images/embed/top_fader.png)
   width: 100%
   height: 320px
-  
+
 #chat_log
-  background = !white
+  background: $white
   padding: 5px 10px 5px
   margin: 0 0 60px 0
-  +box_shadow(0, 0, 16, !grey * 0.66 + !white * 0.3)
+  +box_shadow(0, 0, 16, $grey * 0.66 + $white * 0.3)
   table
     width: 100%
     tr
       position: relative
       td
-        +font_size("medium")
+        +font_size(medium)
         a.log
           float: right
-          background: url('../../images/embed/icons/calendar--arrow.png') no-repeat 3px center
-          background-color = !grey * 0.5 + !dark_grey * 0.5
+          background: url("../../images/embed/icons/calendar--arrow.png") no-repeat 3px center
+          background-color: $grey * 0.5 + $dark_grey * 0.5
           padding: 0 5px 0 21px
           height: 20px
           line-height: 20px
-          +rounded_corners("all", 3)
-          color = !white
+          +rounded_corners(all, 3)
+          color: $white
           text-decoration: none
         img.avatar
           height: 18px
@@ -567,24 +583,24 @@ a.button, button
             height: 0
             border: 5px solid transparent
             border-left: none
-            border-right = 5px "solid" !accent_colour * 0.15 + !white * 0.85
+            border-right: 5px solid $accent_colour * 0.15 + $white * 0.85
         &.message
           padding: 5px 0
           .wrap_lines
             -moz-user-select: none
             -webkit-user-select: none
           blockquote
-            +rounded_corners("all", 3)
-            background = !accent_colour * 0.15 + !white * 0.85
+            +rounded_corners(all, 3)
+            background: $accent_colour * 0.15 + $white * 0.85
             font-style: normal
             padding: 3px 10px
             overflow: hidden
             span.marker
               float: right
               display: block
-              color = !grey
+              color: $grey
               margin: 0 0 5px 5px
-              +font_size("tiny")
+              +font_size(tiny)
               padding: 0 0 0 19px
               line-height: 16px
               white-space: nowrap
@@ -592,14 +608,14 @@ a.button, button
               margin: 2px 0
               overflow: auto
               span.more_lines
-                +font_size("tiny")
-                color = !grey
+                +font_size(tiny)
+                color: $grey
               a.view_paste
-                +font_size("small")
+                +font_size(small)
               span.wrap_lines
                 float: right
-                +font_size("small")
-                color = !grey
+                +font_size(small)
+                color: $grey
                 input[type=checkbox]
                   top: -1px
                   position: relative
@@ -607,17 +623,17 @@ a.button, button
               overflow: auto
               padding: 10px
               width: auto
-              background = !white
-              border = 1px solid !light_grey
+              background: $white
+              border: 1px solid $light_grey
               margin: 0 0 5px
       &.me
         td
           &.author
             b.blockquote_tail
-              border-right = 5px solid !alt_colour * 0.15 + !white * 0.85
+              border-right: 5px solid $alt_colour * 0.15 + $white * 0.85
           &.message
             blockquote
-              background = !alt_colour * 0.15 + !white * 0.85
+              background: $alt_colour * 0.15 + $white * 0.85
       &.feed
         td
           &.author
@@ -625,7 +641,7 @@ a.button, button
           &.message
             blockquote
               position: relative
-              background = !light_grey * 0.33 + !white * 0.66
+              background: $light_grey * 0.33 + $white * 0.66
               padding: 1px 10px
               overflow: visible
               line-height: 1
@@ -639,18 +655,18 @@ a.button, button
                 img
                   height: 16px
                   width: 16px
-                  color = !light_grey
+                  color: $light_grey
                   font-size: 13px
               a.title
                 font-weight: bold
-                +fade(!light_grey * 0.33 + !white * 0.66)
+                +fade($light_grey * 0.33 + $white * 0.66)
               small
-                +font_size("small")
-                color = !grey
+                +font_size(small)
+                color: $grey
                 &.timestamp
                   float: right
-                  color = !light_grey
-                  +rounded_corners("all", 3)
+                  color: $light_grey
+                  +rounded_corners(all, 3)
                 &.url
                   +opacity(66)
               b.content_tail
@@ -658,22 +674,22 @@ a.button, button
                 height: 0
                 width: 0
                 border: 5px solid transparent
-                border-bottom = 5px solid !white
+                border-bottom: 5px solid $white
                 border-top: none
                 margin: 3px 0 0 10px
               pre.content
                 padding: 10px
                 line-height: normal
-                background = !white
+                background: $white
                 border: none
-                +rounded_corners("all", 3)
+                +rounded_corners(all, 3)
                 margin-bottom: 10px
                 white-space: pre-wrap
                 &:last-child
                   margin: 0
       &.timestamp
         td
-          border-top = 1px "dotted" !grey * 0.5 + !white * 0.5
+          border-top: 1px dotted $grey * 0.5 + $white * 0.5
           height: 0
           padding: 0
           div
@@ -691,12 +707,12 @@ a.button, button
                 position: relative
               i
                 display: block
-                background-color = !light_grey
+                background-color: $light_grey
                 background-repeat: no-repeat
                 background-position: 3px center
-                color = !white
-                +font_size("tiny")
-                +rounded_corners("all", 2)
+                color: $white
+                +font_size(tiny)
+                +rounded_corners(all, 2)
                 padding: 0 5px 0 20px
                 font-style: normal
                 white-space: nowrap
@@ -708,24 +724,23 @@ a.button, button
                 margin: 0 -2 0 0
                 b
                   float: right
-                  border-left = 5px "solid" !red * 0.5 + !grey * 0.5
+                  border-left: 5px solid $red * 0.5 + $grey * 0.5
                   border-right: none
                   top: 13px
                 i
                   line-height: 1
                   padding: 5px
                   margin: 0 5px 0 0
-                  background = !red * 0.5 + !grey * 0.5
+                  background: $red * 0.5 + $grey * 0.5
                   span
                     display: block
                     text-align: center
                     &.date
                       font-weight: bold
-                      +font_size("medium")
+                      +font_size(medium)
                     &.time
                       text-transform: uppercase
-                      +font_size("tiny")
-
+                      +font_size(tiny)
           &.time
             div
               span.marker
@@ -734,44 +749,44 @@ a.button, button
                 margin: 0 0 0 -2px
                 b
                   float: left
-                  border-right = 5px "solid" !light_grey
+                  border-right: 5px solid $light_grey
                   border-left: none
                   top: 5px
                 i
                   height: 20px
-                  background-image: url('/images/embed/icons/clock.png')
+                  background-image: url("/images/embed/icons/clock.png")
                   line-height: 20px
                   margin: 0 0 0 5px
       &.notice
         td
           &.message
             div.line
-              color = !light_grey
-              +font_size("small")
+              color: $light_grey
+              +font_size(small)
       &.private
         td
           &.author
             b.blockquote_tail
-              border-right = 5px solid !accent_colour * 0.25 + !white * 0.75
+              border-right: 5px solid $accent_colour * 0.25 + $white * 0.75
           &.message
             blockquote
-              background = !accent_colour * 0.075 + !white * 0.925
-              border = 2px "dotted" !accent_colour * 0.2 + !white * 0.8
+              background: $accent_colour * 0.075 + $white * 0.925
+              border: 2px dotted $accent_colour * 0.2 + $white * 0.8
               padding: 3px 8px
               span.marker.private
-                background: url('/images/embed/icons/spectacles-sunglass.png') no-repeat left center
+                background: url("/images/embed/icons/spectacles-sunglass.png") no-repeat left center
               div.line
                 font-style: italic
-                color = !grey
+                color: $grey
       &.private.me
         td
           &.author
             b.blockquote_tail
-              border-right = 5px "solid" !alt_colour * 0.25 + !white * 0.75
+              border-right: 5px solid $alt_colour * 0.25 + $white * 0.75
           &.message
             blockquote
-              background = !alt_colour * 0.075 + !white * 0.925
-              border = 2px "dotted" !alt_colour * 0.25 + !white * 0.75
+              background: $alt_colour * 0.075 + $white * 0.925
+              border: 2px dotted $alt_colour * 0.25 + $white * 0.75
 
 #message_form
   position: fixed
@@ -782,7 +797,7 @@ a.button, button
   overflow: hidden
   width: 100%
   margin: 0px 230px 0 0
-  background: url('/images/embed/bottom_fader.png')
+  background: url("/images/embed/bottom_fader.png")
   &.expanded form.fade
     margin: 20px 80px 0 0
   #toggle_sound
@@ -790,8 +805,8 @@ a.button, button
     display: inline-block
     width: 20px
     height: 20px
-    +rounded_corners("all", 5)
-    color = !white
+    +rounded_corners(all, 5)
+    color: $white
     text-align: center
     margin-right: 260px
     margin-left: -300px
@@ -812,9 +827,9 @@ a.button, button
     display: inline-block
     width: 20px
     height: 20px
-    +rounded_corners("all", 5)
-    background = !light_grey
-    color = !white
+    +rounded_corners(all, 5)
+    background: $light_grey
+    color: $white
     text-align: center
     margin-right: 260px
     margin-left: -300px
@@ -829,17 +844,17 @@ a.button, button
     position: relative
     overflow: hidden
     textarea
-      +rounded_corners("left", 5)
+      +rounded_corners(left, 5)
       resize: none
       float: left
       z-index: 10
       height: 50px
       width: 100%
       padding: 5px
-      border = 1px solid !light_grey
+      border: 1px solid $light_grey
     textarea:focus
       outline: none
-      border = 1px solid !dark_grey * 0.90 + !white * 0.40
+      border: 1px solid $dark_grey * 0.9 + $white * 0.4
       overflow: auto
     div.options
       position: absolute
@@ -849,23 +864,23 @@ a.button, button
         margin-top: 7px
         margin-left: 25px
       a.button
-        +rounded_corners("all", 0)
+        +rounded_corners(all, 0)
         display: block
-        color = !dark_grey
+        color: $dark_grey
         font-weight: bold
         line-height: 1
         text-align: center
         vertical-align: middle
         &#send
-          +rounded_corners("top_right", 5)
-          +font_size("medium")
+          +rounded_corners(top_right, 5)
+          +font_size(medium)
           padding: 11px 17px
         &#upload
-          +rounded_corners("bottom_right", 5)
-          +font_size("tiny")
+          +rounded_corners(bottom_right, 5)
+          +font_size(tiny)
           margin-top: -1px
           padding: 7px 16px 6px
-          background-color = !light_grey * 0.5 + !white * 0.5
+          background-color: $light_grey * 0.5 + $white * 0.5
 
 #logs
   min-height: 400px
@@ -874,23 +889,23 @@ a.button, button
     td
       padding: 4px
       vertical-align: top
-      border-bottom = dotted 1px !light_grey
+      border-bottom: dotted 1px $light_grey
       &.day
         text-align: right
-        +font_size("small")
+        +font_size(small)
         padding: 5px
       &.date, &.actions
         white-space: nowrap
       &.details
         width: 80%
         padding: 5px 20px
-        +font_size("small")
+        +font_size(small)
         label
-          color = !grey
-          +font_size("tiny")
+          color: $grey
+          +font_size(tiny)
   a.delete
-    color = !red * 0.6 + !accent_colour * 0.4
-    +font_size("small")
+    color: $red * 0.6 + $accent_colour * 0.4
+    +font_size(small)
 
 #log_tabs
   float: right
@@ -907,7 +922,7 @@ a.button, button
       text-decoration: none
       display: block
     &.year
-      +font_size("large")
+      +font_size(large)
       font-weight: bold
       margin:
         top: 10px
@@ -915,45 +930,45 @@ a.button, button
         right: 10px
     &.month
       margin: 2px 0
-      border = solid 1px !light_grey
+      border: solid 1px $light_grey
       border-left: none
-      background = !light_grey * 0.2 + !white * 0.8
-      +rounded_corners("right", 3)
+      background: $light_grey * 0.2 + $white * 0.8
+      +rounded_corners(right, 3)
     &.current
-      background = !white
+      background: $white
       a
-        color = !black
+        color: $black
 
 // Panel
 div.panel
   margin: 0 0 10px
-  +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
+  +box_shadow(1, 1, 2, $light_grey * 0.66 + $white * 0.33)
   div
     &.header
-      +rounded_corners("top", 3)
-      background = !dark_grey
+      +rounded_corners(top, 3)
+      background: $dark_grey
       padding: 5px 10px
-      border-bottom = 1px solid !light_grey
+      border-bottom: 1px solid $light_grey
       position: relative
       span.actions
         float: right
-        +font_size("tiny")
+        +font_size(tiny)
         +opacity(66)
         a
           display: inline-block
           height: 20px
           line-height: 20px
           padding: 0 3px
-          +rounded_corners("all", 3)
-          background = !grey * 0.5 + !dark_grey * 0.5
-          color = !white
+          +rounded_corners(all, 3)
+          background: $grey * 0.5 + $dark_grey * 0.5
+          color: $white
           text-decoration: none
           &:hover
-            background = !accent_colour
+            background: $accent_colour
       h3
         margin: 0
-        color = !white
-        +font_size("xlarge")
+        color: $white
+        +font_size(xlarge)
         a
           text-decoration: none
           color: inherit
@@ -961,50 +976,48 @@ div.panel
             text-decoration: underline
       small
         display: block
-        color = !light_grey
-        +font_size("small")
+        color: $light_grey
+        +font_size(small)
       &:hover
         span.actions
           +opacity(100)
-
     &.content
-      background = !white
+      background: $white
       padding: 7px 10px 9px
-      border-top = 2px solid !light_grey * 0.1 + !white * 0.9
-      border-bottom = 1px solid !light_grey * 0.33 + !white * 0.66
+      border-top: 2px solid $light_grey * 0.1 + $white * 0.9
+      border-bottom: 1px solid $light_grey * 0.33 + $white * 0.66
       p
         margin: 0 0 0.66em
       ol
         margin-left: 20px
       h4
-        +font_size("large")
+        +font_size(large)
       .loader
         float: right
     &.footer
       text-align: right
-      +font_size("small")
+      +font_size(small)
       padding: 3px 10px 5px
-      +rounded_corners("bottom", 3)
-      border-top = 2px solid !light_grey * 0.2 + !white * 0.8
-      background = !light_grey * 0.1 + !white * 0.9
+      +rounded_corners(bottom, 3)
+      border-top: 2px solid $light_grey * 0.2 + $white * 0.8
+      background: $light_grey * 0.1 + $white * 0.9
       overflow: hidden
       a
         margin-left: 4px
       span.actions
         float: right
         a.delete
-          color = !red * 0.6 + !accent_colour * 0.4
+          color: $red * 0.6 + $accent_colour * 0.4
   .tag
-    :top 5px
+    top: 5px
 
 span.tag
-  +rounded_corners("all", 3)
-  +font_size("tiny")
-  :background-color = !alt_colour
-  :color = !white
-  :padding 1px 3px
-  :position relative
-
+  +rounded_corners(all, 3)
+  +font_size(tiny)
+  background-color: $alt_colour
+  color: $white
+  padding: 1px 3px
+  position: relative
 
 #error_page
   h2
@@ -1012,7 +1025,6 @@ span.tag
   div.content
     p
       padding: 6px
-  
 
 div.dialog
   div.content
@@ -1028,20 +1040,20 @@ div.dialog
         padding-left: 21px
         list-style: none
       &.links
-        +font_size("xxlarge")
+        +font_size(xxlarge)
         li
           background-position-y: center
 
 a#logo, a.logo
   text-decoration: none
-  color = !light_grey
-  +font_size("tiny")
+  color: $light_grey
+  +font_size(tiny)
   img
     position: relative
     top: 5px
     +opacity(50)
   &:hover
-    color = !accent_colour
+    color: $accent_colour
     img
       +opacity(100)
 
@@ -1057,18 +1069,18 @@ a#logo, a.logo
       display: inline
       margin-right: 55px
       line-height: 1em
-      color = !dark_grey
+      color: $dark_grey
       line-height: 20px
     b
-      +rounded_corners("all", 3)
+      +rounded_corners(all, 3)
       position: relative
       text-align: center
       left: 155px
       display: block
       height: 20px
       width: 40px
-      background = !dark_grey
-      color = !white
+      background: $dark_grey
+      color: $white
       cursor: pointer
       &.show
         display: none
@@ -1092,15 +1104,15 @@ a#logo, a.logo
     text-align: right
     margin: -40px 0 10px
     div.wrapper
-      +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
-      background = !light_grey * 0.1 + !white * 0.9
+      +box_shadow(1, 1, 2, $light_grey * 0.66 + $white * 0.33)
+      background: $light_grey * 0.1 + $white * 0.9
       padding: 8px 10px 7px
-      +rounded_corners("bottom", 3)
-      color = !light_grey
-      +font_size("small")
+      +rounded_corners(bottom, 3)
+      color: $light_grey
+      +font_size(small)
       line-height: 16px
       display: inline-block
-      border = 1px solid !light_grey * 0.66 + !white * 0.33
+      border: 1px solid $light_grey * 0.66 + $white * 0.33
       border-top: none
       a
         font-weight: bold
@@ -1108,10 +1120,10 @@ a#logo, a.logo
         float: left
         margin: 0 5px 0 0
   #room
-    +box_shadow(0, 0, 8, !light_grey * 0.66 + !white * 0.20)
+    +box_shadow(0, 0, 8, $light_grey * 0.66 + $white * 0.2)
     .description
       line-height: 14px
-      +font_size("small")
+      +font_size(small)
     div
       &.header
         position: relative
@@ -1120,19 +1132,19 @@ a#logo, a.logo
           span.switch_rooms
             position: relative
             top: 5px
-            background = !grey * 0.15 + !dark_grey * 0.85
+            background: $grey * 0.15 + $dark_grey * 0.85
             display: inline-block
             height: 20px
             width: 20px
-            +rounded_corners("all", 3)
+            +rounded_corners(all, 3)
             &.show_rooms
               b
-                border-bottom = 5px "solid" !white
+                border-bottom: 5px solid $white
                 border-top: none
             &.hide_rooms
               b
                 border-bottom: none
-                border-top = 5px "solid" !white
+                border-top: 5px solid $white
             b
               position: relative
               top: 7px
@@ -1148,8 +1160,8 @@ a#logo, a.logo
               right: 0
               top: 21px
               padding: 3px 3px 2px
-              background = !grey * 0.5 + !dark_grey * 0.5
-              +rounded_corners("all", 3)
+              background: $grey * 0.5 + $dark_grey * 0.5
+              +rounded_corners(all, 3)
               a
                 min-width: 80px
                 margin: 0 0 1px
@@ -1157,23 +1169,23 @@ a#logo, a.logo
                 display: block
                 padding: 5px
                 line-height: 1
-                background = !white
-                color = !accent_colour * 0.75 + !black * 0.25
+                background: $white
+                color: $accent_colour * 0.75 + $black * 0.25
                 white-space: nowrap
                 text-decoration: none
-                +rounded_corners("all", 2)
+                +rounded_corners(all, 2)
                 &:hover
-                  background = !light_grey * 0.8 + !white * 0.2
+                  background: $light_grey * 0.8 + $white * 0.2
                 &.current
-                  background = !accent_colour
-                  color = !white
+                  background: $accent_colour
+                  color: $white
                 &.back
-                  background = !grey * 0.5 + !dark_grey * 0.5
-                  color = !white
-                  +font_size("tiny")
+                  background: $grey * 0.5 + $dark_grey * 0.5
+                  color: $white
+                  +font_size(tiny)
             &:hover
               span.switch_rooms
-                background = !grey * 0.5 + !dark_grey * 0.5
+                background: $grey * 0.5 + $dark_grey * 0.5
       &.content
         ul.people
           margin: 0 0 -5px
@@ -1183,9 +1195,9 @@ a#logo, a.logo
             float: left
             margin: 0 5px 5px 0
             padding: 2px 5px
-            background = !light_grey * 0.15 + !white * 0.85
-            +rounded_corners("all", 3)
-            +font_size("small")
+            background: $light_grey * 0.15 + $white * 0.85
+            +rounded_corners(all, 3)
+            +font_size(small)
             img
               height: 18px
               width: 18px
@@ -1196,79 +1208,79 @@ a#logo, a.logo
           &.search_form
             padding-bottom: 10px
             a.browse
-              +font_size("small")
+              +font_size(small)
       &.footer
         label
-          +font_size("tiny")
-          color= !grey
+          +font_size(tiny)
+          color: $grey
         #guest_url
-          +font_size("tiny")
+          +font_size(tiny)
           width: 100%
           border: 0
-          background = !light_grey * 0.1 + !white * 0.9
-       
+          background: $light_grey * 0.1 + $white * 0.9
+
 #footer
   margin: 30px 0 10px 0
-  +font_size("tiny")
+  +font_size(tiny)
   text-align: center
-  color = !grey
+  color: $grey
   a#logo
     img
       margin: 0 4px
   .links
     a
-      color = !accent_colour * 0.5 + !light_grey * 0.5
+      color: $accent_colour * 0.5 + $light_grey * 0.5
       margin: 0 2px
 
 // Flash Messages
 div.flash
   margin: 0 0 1.5em
-  color = !black
+  color: $black
   padding: 10px 10px 10px 31px
-  +rounded_corners("all", 3)
+  +rounded_corners(all, 3)
   line-height: normal
   &.error
-    background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/embed/icons/exclamation-red.png") "no-repeat" 10px 10px
+    background: ($accent_colour * 0.25 + $red * 0.75) * 0.25 + $white * 0.75 url("/images/embed/icons/exclamation-red.png") no-repeat 10px 10px
   &.notice
-    background = (!accent_colour * 0.25 + !blue * 0.75) * 0.25 + !white * 0.75 url("/images/embed/icons/information.png") "no-repeat" 10px 10px
+    background: ($accent_colour * 0.25 + $blue * 0.75) * 0.25 + $white * 0.75 url("/images/embed/icons/information.png") no-repeat 10px 10px
 
 // Error Explananation
 #errorExplanation
-  color = !black
+  color: $black
   padding: 10px 10px 10px 31px
-  +rounded_corners("all", 3)
+  +rounded_corners(all, 3)
   margin: 0 0 20px
-  color = !black
-  background = (!accent_colour * 0.25 + !red * 0.75) * 0.25 + !white * 0.75 url("/images/embed/icons/exclamation-red.png") "no-repeat" 10px 10px
+  color: $black
+  background: ($accent_colour * 0.25 + $red * 0.75) * 0.25 + $white * 0.75 url("/images/embed/icons/exclamation-red.png") no-repeat 10px 10px
   h2
-    +font_size("medium")
+    +font_size(medium)
     margin: 0
   p
-    +font_size("small")
+    +font_size(small)
     margin-bottom: 0
-    color = !black
+    color: $black
   ul
     margin-left: 19px
     li
-      +font_size("small")
-      background: url('/images/embed/icons/exclamation-small-red.png') no-repeat left center
+      +font_size(small)
+      background: url("/images/embed/icons/exclamation-small-red.png") no-repeat left center
       padding-left: 21px
       list-style: none
 
 div.info
   margin: 0 0 1.5em
-  color = !accent_colour * 0.4
+  color: $accent_colour * 0.4
   padding: 11px 10px 10px 33px
-  +rounded_corners("all", 3)
-  +font_size("small")
+  +rounded_corners(all, 3)
+  +font_size(small)
   line-height: normal
-  background = !accent_colour * 0.2 + !white * 0.8 url(/images/embed/icons/information.png) "no-repeat" 10px 10px
-  +box_shadow(1, 1, 2, !light_grey * 0.66 + !white * 0.33)
+  background: $accent_colour * 0.2 + $white * 0.8 url(/images/embed/icons/information.png) no-repeat 10px 10px
+  +box_shadow(1, 1, 2, $light_grey * 0.66 + $white * 0.33)
   p
     margin-bottom: 4px
   &.warning
-    border = solid 2px !red * 0.5 + !white * 0.5
-    background = !red * 0.1 + !white * 0.9 url("/images/embed/icons/exclamation-red.png") "no-repeat" 10px 10px
+    border: solid 2px $red * 0.5 + $white * 0.5
+    background: $red * 0.1 + $white * 0.9 url("/images/embed/icons/exclamation-red.png") no-repeat 10px 10px
 
 #guest_login
   .user_list
@@ -1278,41 +1290,41 @@ div.info
 #admin
   div.stats
     float: right
-    color = !grey
+    color: $grey
   table
     width: 100%
     margin-bottom: 20px
     tr.failed
-      background-color= !red * 0.1 + !white * 0.9
+      background-color: $red * 0.1 + $white * 0.9
     th, td
       padding: 3px
     th
-      +font_size("small")
-      background-color = !accent_colour
-      color = !white
+      +font_size(small)
+      background-color: $accent_colour
+      color: $white
     td
-      border-bottom = 1px dotted !grey
+      border-bottom: 1px dotted $grey
   span.warn
-    color = !colour_negative
+    color: $colour_negative
 
 table
   tr.odd
-    background = !accent_colour * 0.05 + !white * 0.95
+    background: $accent_colour * 0.05 + $white * 0.95
 
 table#feeds
   width: 100%
   margin: 10px 0
   th
-    +font_size("tiny")
+    +font_size(tiny)
     padding: 0 6px
-    color = !light_grey
+    color: $light_grey
   td
     vertical-align: text-top
-    border-bottom = 1px dotted !light_grey
+    border-bottom: 1px dotted $light_grey
     padding: 0 6px
     .error
-      +font_size("small")
-      color = !red * 0.5
+      +font_size(small)
+      color: $red * 0.5
       a
         color: inherit
     img
@@ -1320,16 +1332,15 @@ table#feeds
       top: 3px
       &.to
         margin: 0 6px
-      
   td.actions
     white-space: nowrap
     padding: 6px
     text-align: right
     a
       margin: 0 1px
-      +font_size("small")
+      +font_size(small)
       &.remove
-        color = !red * 0.6 + !accent_colour * 0.4
+        color: $red * 0.6 + $accent_colour * 0.4
 
 div.log_browser
   margin-bottom: 14px
@@ -1360,76 +1371,76 @@ div.log_browser
 
 #account
   div.next_billing
-    background-color = !accent_colour * 0.1 + !white * 0.9
-    border-top = dotted 1px !accent_colour * 0.5 + !white * 0.5
-    border-bottom = dotted 1px !accent_colour * 0.5 + !white * 0.5
+    background-color: $accent_colour * 0.1 + $white * 0.9
+    border-top: dotted 1px $accent_colour * 0.5 + $white * 0.5
+    border-bottom: dotted 1px $accent_colour * 0.5 + $white * 0.5
     padding: 10px
   table#plans
     width: 100%
     margin: 20px 0
     th, td
       &.current
-        background-color = !accent_colour * 0.1 + !white * 0.9
+        background-color: $accent_colour * 0.1 + $white * 0.9
     thead
       th
         width: 100px
         text-align: center
-        +font_size("xlarge")
-        border-bottom = solid 1px !light_grey
+        +font_size(xlarge)
+        border-bottom: solid 1px $light_grey
         padding: 4px
         &.current
           font-weight: bold
-          +rounded_corners("top", 5)
+          +rounded_corners(top, 5)
         .price
-          +font_size("small")
+          +font_size(small)
           small
-            +font_size("tiny")
-            color = !grey
+            +font_size(tiny)
+            color: $grey
     tfoot
       th
         vertical-align: top
         padding: 6px
         text-align: center
         &.current
-          +rounded_corners("bottom", 5)
+          +rounded_corners(bottom, 5)
         strong
-          color = !accent_colour
+          color: $accent_colour
         .will_expire
-          +font_size("tiny")
-          color = !colour_negative
+          +font_size(tiny)
+          color: $colour_negative
           strong
-            color = !colour_negative
+            color: $colour_negative
     tbody
       th, td
-        border-bottom = dotted 1px !light_grey
+        border-bottom: dotted 1px $light_grey
         padding: 6px
       th
         .description
-          +font_size("tiny")
-          color = !grey
+          +font_size(tiny)
+          color: $grey
       td
         text-align: center
-        +font_size("large")
+        +font_size(large)
         img
           position: relative
           top: 2px
   p.side_description
     float: right
-    +font_size("small")
-    color = !grey
+    +font_size(small)
+    color: $grey
     position: relative
     top: 2px
   div.meter
     margin-bottom: 6px
-    border = solid 1px !light_grey
-    +rounded_corners("all", 5)
+    border: solid 1px $light_grey
+    +rounded_corners(all, 5)
     span
-      +rounded_corners("all", 5)
+      +rounded_corners(all, 5)
       display: block
       overflow: hidden
-      background = !accent_colour
+      background: $accent_colour
       &.reached
-        background = !colour_negative
+        background: $colour_negative
 
 #settings
   #user_color_picker
@@ -1440,8 +1451,8 @@ div.log_browser
 
 #paste
   #editorcontainer
-    +box_shadow(0, 0, 16, !grey * 0.66 + !white * 0.3)
-    height: 1000px // changed programmatically
+    +box_shadow(0, 0, 16, $grey * 0.66 + $white * 0.3)
+    height: 1000px
     margin: 0 240px 0 0
     iframe
       width: 100%
@@ -1451,7 +1462,7 @@ div.log_browser
       margin: 0
   #infobox
     margin: -15px -10px 0px 17px
-    +box_shadow(0, 0, 8, !light_grey * 0.66 + !white * 0.20)
+    +box_shadow(0, 0, 8, $light_grey * 0.66 + $white * 0.2)
     div
       &.content
         ul.people
@@ -1462,9 +1473,9 @@ div.log_browser
             float: left
             margin: 0 5px 5px 0
             padding: 2px 5px
-            background = !light_grey * 0.15 + !white * 0.85
-            +rounded_corners("all", 3)
-            +font_size("small")
+            background: $light_grey * 0.15 + $white * 0.85
+            +rounded_corners(all, 3)
+            +font_size(small)
             img
               height: 18px
               width: 18px
@@ -1472,8 +1483,8 @@ div.log_browser
               top: 3px
       &.footer
         label
-          +font_size("tiny")
-          color= !grey
+          +font_size(tiny)
+          color: $grey
 
 #curtain, #loading
   position: fixed
@@ -1481,10 +1492,12 @@ div.log_browser
   left: 0
   right: 0
   bottom: 0
+
 #curtain
-  background-color: #000
+  background-color: black
   +opacity(50)
   z-index: 500
+
 #loading
   text-align: center
   z-index: 501
@@ -1492,7 +1505,7 @@ div.log_browser
   height: 45px
   margin: 60px auto
   padding: 10px
-  background-color: #fff
-  +rounded_corners("all", 10)
+  background-color: white
+  +rounded_corners(all, 10)
   p
     font-weight: bold
