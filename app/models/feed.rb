@@ -56,7 +56,8 @@ class Feed < ActiveRecord::Base
   end
  
   def open_feed(url, options)
-    FeedNormalizer::FeedNormalizer.parse open(url, options)
+    FeedNormalizer::FeedNormalizer.parse( open(url, options),
+      :force_parser => FeedNormalizer::SimpleRssParser, :try_others => false)
   end
 
   def perform
