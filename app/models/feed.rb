@@ -1,4 +1,3 @@
-require 'nokogiri'
 class Feed < ActiveRecord::Base
   MAX_RUN_TIME   = 1.hour     # Max time a job can run before it is considered as failed
   INTERVAL       = 2.minutes  # Interval of check for due notifications
