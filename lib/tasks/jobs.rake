@@ -23,7 +23,7 @@ namespace :jobs do
 
   desc "Run Jobs worker"
   task :work => :environment do
-    Delayed::Worker.new.start  
+    system('./../../script/jobs')
   end
 
   desc "Show size of delayed_job queue."
