@@ -10,5 +10,15 @@
   </div>
 
 <%= render "layouts/stats" %>
+<script>
+  $(function() {
+    if(navigator.platform.match(/iP(?:[ao]d|hone)/))
+    {
+      $("#message_form").css('position', 'static')
+      $("#message_form").addClass('ios')
+    }
+  })
+</script>
+
 </body>
 </html>
