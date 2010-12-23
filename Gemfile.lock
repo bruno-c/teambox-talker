@@ -54,10 +54,7 @@ GEM
     compass (0.10.6)
       haml (>= 3.0.4)
     daemon_controller (0.2.5)
-    daemons (1.1.0)
     database_cleaner (0.6.0)
-    delayed_job (2.0.5)
-      daemons
     eigenclass (1.1.1)
     em-http-request (0.2.15)
       addressable (>= 2.0.0)
@@ -164,7 +161,6 @@ DEPENDENCIES
   capistrano
   compass
   database_cleaner
-  delayed_job
   em-http-request
   em-spec!
   eventmachine

@@ -16,7 +16,7 @@ gem "spreedly", :require => false
 gem 'uuid'
 gem 'paperclip'
 gem 'will_paginate'
-gem 'delayed_job'
+# gem 'delayed_job'
 gem 'acts_as_state_machine'
 gem 'jammit'
 gem 'yui-compressor'

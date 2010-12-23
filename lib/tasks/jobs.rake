@@ -21,11 +21,6 @@ namespace :jobs do
     show_jobs Delayed::Job.scoped(:conditions => "last_error IS NOT NULL")
   end
 
-  desc "Run Jobs worker"
-  task :work => :environment do
-    system('./../../script/jobs')
-  end
-
   desc "Show size of delayed_job queue."
   task :size => :environment do
     puts "%d delayed jobs, %d with error, %d locked" % [
