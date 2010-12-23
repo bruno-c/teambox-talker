@@ -4,7 +4,7 @@ class UpdateSpreedlySubscription
   end
   
   def account
-    @account ||= Account.find(@account_id)
+    Account.find(@account_id)
   end
   
   def perform
