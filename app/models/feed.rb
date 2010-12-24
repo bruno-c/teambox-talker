@@ -96,14 +96,14 @@ class Feed < ActiveRecord::Base
   end
   
   def publish(entry)
-    title = sanitize(entry.title.strip)
+    title = sanitize(entry.title.to_s.strip)
     content = sanitize(entry.content)
     uri = URI.parse(entry.url)
     truncated_content = Paste.truncate(content)
    
-    room.send_message "#{title.strip}",
-                      :feed => { :author => entry.author.strip,
-                                 :title => title.strip,
+    room.send_message "#{title.to_s.strip}",
+                      :feed => { :author => entry.author.to_s.strip,
+                                 :title => title.to_s.strip,
                                  :url => entry.url,
                                  :published => entry.last_updated.to_i,
                                  :content => truncated_content,
@@ -111,7 +111,7 @@ class Feed < ActiveRecord::Base
   end
   
   def sanitize(content)
-    Nokogiri::HTML(content).text.strip
+    Nokogiri::HTML(content).text.to_s.strip
   end
   
   def lock
