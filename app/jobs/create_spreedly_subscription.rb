@@ -4,20 +4,23 @@ class CreateSpreedlySubscription
   end
   
   def account
-    @account ||= Account.find(@account_id)
+    Account.find(@account_id)
   end
   
   def user
-    @user ||= account.owner
+    account.owner
   end
   
   def create_subscriber
-    Spreedly::Subscriber.create!(account.id, :email => user.email, :screen_name => account.subdomain)
+    @account = account
+    @user = user
+    Spreedly::Subscriber.create!(@account.id, :email => @user.email, :screen_name => @account.subdomain)
   end
   
   def perform
-    subscriber = account.subscriber || create_subscriber
+    @account = account
+    subscriber = @account.subscriber || create_subscriber
     
-    account.update_subscription_info!(subscriber)
+    @account.update_subscription_info!(subscriber)
   end
 end
