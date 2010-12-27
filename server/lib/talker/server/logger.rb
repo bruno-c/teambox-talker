@@ -1,6 +1,7 @@
 require "em/mysql"
 require "mq"
 require "yajl"
+require "active_support/all"
 
 module Talker::Server
   class Logger
