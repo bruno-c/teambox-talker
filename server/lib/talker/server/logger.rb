@@ -18,22 +18,28 @@ module Talker::Server
       Talker::Server.logger.info "Subscribing to #{@queue.name}"
       
       @queue.subscribe(:ack => true) do |headers, message|
-        message.chomp!
-        
-        Talker::Server.logger.debug "#{headers.routing_key}<<<#{message.inspect}"
-        
-        type, id = Channel.name_from_routing_key(headers.routing_key)
-        
-        if type && id
-          event = Yajl::Parser.parse(message, :check_utf8 => false)
-          received(type, id, event) { headers.ack }
-        
-        else
-          Talker::Server.logger.warn "Ignoring message from " + headers.routing_key
+        begin
+          message.chomp!
+          
+          Talker::Server.logger.info "#{headers.routing_key}<<<#{message.inspect}"
+          
+          type, id = Channel.name_from_routing_key(headers.routing_key)
+          
+          if type && id
+            event = JSON.parse(message)
+            received(type, id, event) { headers.ack }
+          
+          else
+            Talker::Server.logger.warn "Ignoring message from " + headers.routing_key
+            headers.ack
+          end
+        rescue Yajl::ParseError 
+          Talker::Server.logger.warn "YAJL parse error from " + headers.routing_key
           headers.ack
         end
         
       end
+
     end
     
     def stop(&callback)
