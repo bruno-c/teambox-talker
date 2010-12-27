@@ -24,7 +24,7 @@ module Talker::Server
         type, id = Channel.name_from_routing_key(headers.routing_key)
         
         if type && id
-          event = Yajl::Parser.parse(message, :check_utf8 => false)
+          event = Yajl::Parser.parse(message.to_json)
           received(type, id, event) { headers.ack }
         
         else
