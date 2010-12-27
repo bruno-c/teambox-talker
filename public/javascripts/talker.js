@@ -19421,10 +19421,12 @@ Talker.Broadcaster = {
   },
 
   broadcastEvent: function(event) {
+    if(event!=undefined){
     var eventName = (event.type == 'message'
                   ? 'MessageReceived'
                   :  event.type.charAt(0).toUpperCase() + event.type.substr(1, event.type.length));
     Talker.Broadcaster.broadcast(eventName, event);
+    }
   }
 };
 

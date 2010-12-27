@@ -21,7 +21,7 @@ module Talker::Server
         begin
           message.chomp!
           
-          Talker::Server.logger.info "#{headers.routing_key}<<<#{message.inspect}"
+          Talker::Server.logger.debug "#{headers.routing_key}<<<#{message.inspect}"
           
           type, id = Channel.name_from_routing_key(headers.routing_key)
           
