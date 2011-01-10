@@ -26,8 +26,11 @@ module Talker::Server
           type, id = Channel.name_from_routing_key(headers.routing_key)
           
           if type && id
-            event = JSON.parse(message)
-            received(type, id, event) { headers.ack }
+            begin
+              event = JSON.parse(message)
+              received(type, id, event) { headers.ack }
+            rescue
+            end
           
           else
             Talker::Server.logger.warn "Ignoring message from " + headers.routing_key
