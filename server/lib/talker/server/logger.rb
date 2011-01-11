@@ -26,16 +26,15 @@ module Talker::Server
           type, id = Channel.name_from_routing_key(headers.routing_key)
           
           if type && id
-            begin
-              event = JSON.parse(message)
-              received(type, id, event) { headers.ack }
-            rescue
-            end
-          
+            event = JSON.parse(message)
+            received(type, id, event) { headers.ack }
           else
             Talker::Server.logger.warn "Ignoring message from " + headers.routing_key
             headers.ack
           end
+        rescue JSON::ParserError
+          Talker::Server.logger.warn "JSON parse error from " + headers.routing_key
+          headers.ack
         rescue Yajl::ParseError 
           Talker::Server.logger.warn "YAJL parse error from " + headers.routing_key
           headers.ack
