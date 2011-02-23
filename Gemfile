@@ -33,6 +33,7 @@ gem "nokogiri"
 group :development do
   gem "passenger"
   gem "capistrano"
+  gem "vagrant"
 end
 
 group :test do
