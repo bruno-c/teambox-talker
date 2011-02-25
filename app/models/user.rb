@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of     :email,    :unless => :guest
   validates_length_of       :email,    :allow_nil => true, :within => 6..100 #r@a.wk
-  validates_uniqueness_of   :email,    :allow_nil => true, :scope => :state
+  validates_uniqueness_of   :email,    :allow_nil => true
   validates_format_of       :email,    :allow_nil => true, :with => Authentication.email_regex, :message => Authentication.bad_email_message
   
   validates_format_of       :color,    :with => /\A\#[a-f0-9]{6}\z/i, :allow_blank => true
@@ -65,7 +65,11 @@ class User < ActiveRecord::Base
   end
 
   def duplicates
-    self.class.find(:all, :conditions => {:email => self.email}) - [self]
+    if !self.email.blank?
+      self.class.find(:all, :conditions => {:email => self.email}) - [self]
+    else
+      []
+    end
   end
 
   def merge_duplicates!

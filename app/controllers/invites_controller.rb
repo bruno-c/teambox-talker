@@ -57,7 +57,7 @@ class InvitesController < ApplicationController
 
         User.transaction do
           # user.permissions.create :room => @room unless @room.public
-          user.accounts << current_account
+          user.accounts << current_account unless user.accounts.exists?(current_account.id)
           user.save!
           send_invitation user, @room
           success_count += 1
