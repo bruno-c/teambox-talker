@@ -28,20 +28,17 @@ module Talker::Server
       token = token.to_s
       
       sql = <<-SQL
-        SELECT id, name, email, account_id, admin
+        SELECT *
         FROM users
         WHERE users.talker_token = '#{quote(token)}'
           AND users.state = 'active'
         LIMIT 1
       SQL
-      
-      Talker::Server.logger.debug{"Querying for authentication:\n#{sql}"}
+
 
       EventedMysql.select(sql) do |results|
         if result = results[0]
           user = User.new("id" => result["id"].to_i, "name" => result["name"], "email" => result["email"])
-          user.account_id = result["account_id"].to_i
-          user.admin = (result["admin"] == "1")
           yield user
         else
           Talker::Server.logger.warn "Authentication failed with token #{token}"
@@ -51,21 +48,34 @@ module Talker::Server
     end
     
     def authorize_room(user, room)
+      
       sql = <<-SQL
-        SELECT id
-        FROM rooms as r
-        WHERE account_id = #{user.account_id}
-          AND (id = #{room.to_i} OR name = '#{quote(room)}')
-          AND (1 = #{user.admin ? 1 : 0}
-               OR private = 0
-               OR EXISTS (SELECT *
-                          FROM permissions
-                          WHERE user_id = #{user.id}
-                            AND room_id = r.id)
-              )
+        SELECT id FROM rooms
+        WHERE 
+          (id = #{room.to_i} OR name = '#{quote(room)}')
+          AND
+          (
+            EXISTS (
+              select * from registrations where
+              registrations.user_id = #{user.id} and
+              registrations.account_id = rooms.account_id and
+              (registrations.admin = 1 OR rooms.private = 0)
+            ) 
+            OR EXISTS (
+              SELECT *
+              FROM permissions
+              WHERE user_id = #{user.id}
+              AND room_id = rooms.id
+            )
+            OR EXISTS (
+              SELECT *
+              FROM users
+              WHERE room_id = rooms.id
+            )
+          )
         LIMIT 1
       SQL
-      
+     
       Talker::Server.logger.debug{"Querying for room authorization:\n#{sql}"}
       
       EventedMysql.select(sql) do |results|

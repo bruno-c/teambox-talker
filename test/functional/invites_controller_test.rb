@@ -110,6 +110,20 @@ class InvitesControllerTest < ActionController::TestCase
     end
     assert_redirected_to users_path
   end
+
+  def test_create_with_existing_email
+    login_as :quentin
+    aaron = create_user(:email => 'aaron@example.com')
+    assert_difference 'User.count', 0 do
+      assert_difference 'ActionMailer::Base.deliveries.size', 1 do
+        post :create, :invitees => "aaron@example.com", :room_id => Room.first
+        assert_nil flash[:error]
+      end
+    end
+    aaron = User.find_by_email('aaron@example.com')
+    assert_equal true, aaron.permissions.map(&:room).include? (Room.first)
+    assert_redirected_to users_path
+  end
   
   def test_resend
     login_as :quentin

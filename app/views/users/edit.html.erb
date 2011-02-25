@@ -5,7 +5,7 @@
   </h2>
   
   <div class="content">
-    <% form_for @user do |f| %>
+    <% form_for @registration, :url => user_path(@user), :html =>{:method => :put} do |f| %>
       <%= f.error_messages %>
       
       <h3>Administrator access</h3>
@@ -40,13 +40,6 @@
         <% end %>
       </fieldset>
       
-      <fieldset id="delete">
-        <h3>Delete user</h3>
-        
-        <p>To completely remove the user from the system you can delete his account.</p>
-        
-        <%= link_to "Delete this user", user_path(@user), :confirm => "Are your sure?", :method => :delete, :class => "button negative icon delete" %>
-      </fieldset>
       
     <% end %>
   </div>

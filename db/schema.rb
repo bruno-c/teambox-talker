@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100203020518) do
+ActiveRecord::Schema.define(:version => 20101109074707) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -129,6 +129,17 @@ ActiveRecord::Schema.define(:version => 20100203020518) do
     t.datetime "updated_at"
   end
 
+  create_table "registrations", :force => true do |t|
+    t.integer "account_id"
+    t.integer "user_id"
+    t.boolean "admin"
+    t.boolean "guest"
+  end
+
+  add_index "registrations", ["account_id", "user_id"], :name => "index_registrations_on_account_id_and_user_id", :unique => true
+  add_index "registrations", ["account_id"], :name => "index_registrations_on_account_id"
+  add_index "registrations", ["user_id"], :name => "index_registrations_on_user_id"
+
   create_table "rooms", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -148,16 +159,13 @@ ActiveRecord::Schema.define(:version => 20100203020518) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember_token",   :limit => 40
-    t.integer  "account_id"
     t.string   "talker_token"
     t.string   "perishable_token"
-    t.boolean  "admin",                           :default => false
     t.string   "state",                           :default => "pending"
     t.datetime "deleted_at"
     t.datetime "activated_at"
     t.string   "time_zone"
     t.boolean  "staff",                           :default => false
-    t.boolean  "guest",                           :default => false
     t.integer  "room_id"
     t.string   "color",            :limit => 7
   end

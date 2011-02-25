@@ -1,5 +1,7 @@
 class Account < ActiveRecord::Base
-  has_many :users, :dependent => :destroy
+  has_many :registrations
+  has_many :users, :through => :registrations
+
   has_many :rooms, :dependent => :destroy
   has_many :events, :through => :rooms
   has_many :feeds, :dependent => :destroy
@@ -14,7 +16,12 @@ class Account < ActiveRecord::Base
   validates_format_of :subdomain, :with => /\A[A-Z0-9\-]+\z/i
   validates_exclusion_of :subdomain, :in => %w(www mail smtp ssh ftp dev chat service api admin) + 
                                             (0..3).map { |i| "assets#{i}" } # see action_controller.asset_host
-  
+
+  validate :check_existing_user, :on => :create
+  after_create :activate_user
+
+  accepts_nested_attributes_for :users
+
   after_create :create_default_rooms
   after_create :create_default_plugin_installations
   after_create :create_subscription
@@ -22,13 +29,40 @@ class Account < ActiveRecord::Base
   
   named_scope :paying, :conditions => ["plan_id <> ? AND recurring = 1", Plan.free.id]
   named_scope :not_on_trial, :conditions => "on_trial = 0"
+
+  attr_accessor :existing_user_email, :existing_user_password
+
+  def check_existing_user
+    unless existing_user_email.blank?
+      if authenticatable = User.authenticate(existing_user_email,
+                                             existing_user_password)
+        self.users = [authenticatable]
+      else
+        errors.add(:existing_user_email, "or password invalid.")
+      end
+    end
+  end
+  private :check_existing_user
+
+  def activate_user
+    if user = users.first
+      user.activate! if existing_user_email.blank?
+      user.create_perishable_token! unless user.active?
+      user.registration_for(self).update_attribute(:admin, true)
+    end
+  end
+  private :activate_user
+
+  def user_admin?(user)
+    registrations.find(:user => user).admin?
+  end
   
   def features
     plan.features
   end
   
   def owner
-    users.first(:conditions => "admin = 1", :order => "id")
+    registrations.first(:conditions => "admin = 1", :order => "id").try(:user)
   end
   
   def used_storage
@@ -60,15 +94,6 @@ class Account < ActiveRecord::Base
   def plan=(p)
     self.plan_id = p.id
     @plan = p
-  end
-  
-  def change_plan(new_plan, return_url)
-    if new_plan.free?
-      cancel_subscription
-      return return_url
-    else
-      return new_plan.subscribe_url(self, return_url)
-    end
   end
   
   def edit_subscriber_url(return_url)

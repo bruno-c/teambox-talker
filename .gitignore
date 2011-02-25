@@ -10,3 +10,4 @@ db/sphinx
 .sass-cache
 public/assets/**/*
 public/stylesheets/**/*
+capybara*

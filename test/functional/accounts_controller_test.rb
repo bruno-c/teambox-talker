@@ -18,15 +18,34 @@ class AccountsControllerTest < ActionController::TestCase
                                      :token => assigns(:user).perishable_token), @response.body
     assert ! assigns(:account).new_record?
     assert ! assigns(:user).new_record?
-    assert_equal assigns(:user).account, assigns(:account)
+    assert assigns(:account).users.any? {|a| a == assigns(:user)}
     assert assigns(:user).admin, "1st user must be admin"
     assert assigns(:user).active?, "1st user must be active"
+    assert_equal assigns(:user), assigns(:account).owner
+  end
+
+  def test_existing_user_valid_create
+    post :create, :account => hash_for_account, :registered_user => hash_for_existing_user
+
+    assert_equal users(:quentin), assigns(:user)
+    assert ! assigns(:account).new_record?
+    assert ! assigns(:user).new_record?
+    assert assigns(:account).users.any? {|a| a == assigns(:user)}
     assert_equal assigns(:user), assigns(:account).owner
   end
 
   def test_invalid_create
     User.any_instance.stubs(:valid?).returns(false)
     post :create, :account => hash_for_account, :user => hash_for_user
+    assert_response :success
+    assert_template "new"
+    assert assigns(:account).new_record?
+    assert assigns(:user).new_record?
+  end
+
+  def test_existing_user_invalid_create
+    post :create, :account => hash_for_account, :registered_user => hash_for_existing_user(:password => '1')
+
     assert_response :success
     assert_template "new"
     assert assigns(:account).new_record?

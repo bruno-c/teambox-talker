@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_filter :cant_edit_self, :only => [:edit, :update, :suspend, :unsuspend, :destroy]
   
   def index
-    @users = current_account.users.registered
+    @users = current_account.users
   end
   
   def edit
@@ -13,39 +13,28 @@ class UsersController < ApplicationController
   
   def update
     # Assign protected attributes
-    if params[:user]
-      @user.admin = params[:user][:admin]
+    User.transaction do |u|
+      if params[:registration]
+        @registration.admin = params[:registration][:admin]
+      end
+      @registration.save!
+      @user.update_attribute(:room_access, current_account.rooms.find(params[:room_access])) if params[:room_access]
     end
-    
-    @user.room_access = current_account.rooms.find(params[:room_access]) if params[:room_access]
-    
-    if @user.save
-      redirect_to users_path
-    else
-      render :edit
-    end
+    redirect_to users_path
+
+  rescue ActiveRecord::RecordInvalid => e
+    render :edit
   end
   
   def suspend
-    @user.suspend!
-    redirect_to users_path
-  end
-  
-  def unsuspend
-    @user.unsuspend!
-    redirect_to users_path
-  end
-  
-  def destroy
-    flash[:notice] = "User deleted!"
-    @user.destroy
-    
+    @user.registration_for(current_account).destroy
     redirect_to users_path
   end
   
   private
     def find_user
       @user = current_account.users.find(params[:id])
+      @registration = @user.registration_for(current_account)
     end
     
     def cant_edit_self

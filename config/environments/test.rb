@@ -33,3 +33,5 @@ config.gem "faker"
 config.gem "database_cleaner"
 config.gem "vcr"
 config.gem "fakeweb"
+
+ActionController::Base.session_options[:domain] = '.example.com'

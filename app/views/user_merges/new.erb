@@ -1,0 +1,31 @@
+<% @title = "User accounts merge" %>
+
+<div class="sheet">
+  <h2>Talker single user log-in</h2>
+  <h3>We've detected you have <%=current_user.duplicates.count + 1 %> multiple user accounts with the same email address.</h3>
+  <h3>Please confirm your data and a single user login will be used across all your accounts from now on.</h3>
+  
+  <% form_for current_user, :url =>user_merge_path, :html => {:method => :post}, :class => "lw120" do |f|%>
+    <%= f.error_messages %>
+    <p>
+      <%= label_tag :email, 'Email or name' %>
+      <%=current_user.email%>
+    </p>
+    <p>
+      <%= f.label :name, "User name" %>
+      <%= f.text_field :name, :size => 20 %>
+    </p>
+    <p>
+      <%= f.label :password, "Password" %>
+      <%= f.password_field :password, :size => 20 %>
+    </p>
+    <p>
+      <%= f.label :password_confirmation, "Confirmation"%>
+      <%= f.password_field :password_confirmation %>
+    </p>
+    <p class="submit indent">
+      <%= ok_button 'Merge all my accounts' %>
+    </p>
+  <% end %>
+  </div>
+</div>

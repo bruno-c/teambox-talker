@@ -391,12 +391,12 @@ html[xmlns] .clearfix {
   width: auto;
   left: 0;
   right: 0;
-  overflow: hidden;
   background: #404040;
   padding: 0 10px 0;
   font-size: 12px;
   height: 40px;
-  border-bottom: 2px solid silver; }
+  border-bottom: 2px solid silver;
+  z-index: 100; }
   #nav ul {
     margin: 10px 0 0;
     float: left; }
@@ -796,7 +796,7 @@ a.button, button {
 
 #top_mask {
   position: fixed;
-  z-index: 99;
+  z-index: 75;
   top: -300px;
   left: 0px;
   background: url(/images/embed/top_fader.png);
@@ -1367,7 +1367,7 @@ a#logo, a.logo {
       -moz-opacity: 1; }
 
 #sidebar {
-  z-index: 100; }
+  z-index: 80; }
   #sidebar span.toggle_sidebar {
     display: block;
     width: 100%;
@@ -1432,9 +1432,6 @@ a#logo, a.logo {
       border-top: none; }
       #sidebar #utilities div.wrapper a {
         font-weight: bold; }
-      #sidebar #utilities div.wrapper img.avatar {
-        float: left;
-        margin: 0 5px 0 0; }
   #sidebar #room {
     box-shadow: 0px 0px 8px #b1b1b1;
     -webkit-box-shadow: 0px 0px 8px #b1b1b1;
@@ -1842,3 +1839,63 @@ div.log_browser {
   -webkit-border-radius: 10px; }
   #loading p {
     font-weight: bold; }
+
+#account-switcher {
+  float: right;
+  display: block;
+  margin-right: 10px;
+  color: white;
+  z-index: 100;
+  position: relative; }
+  #account-switcher .account {
+    display: block;
+    float: left;
+    width: 50px; }
+  #account-switcher .current {
+    float: left;
+    width: 80px; }
+  #account-switcher ul li a .switch {
+    width: 70px;
+    display: block;
+    float: left; }
+  #account-switcher a#current-account {
+    text-decoration: none;
+    color: white; }
+    #account-switcher a#current-account:hover {
+      background: none;
+      text-decoration: none; }
+  #account-switcher .current, #account-switcher .account, #account-switcher ul li a {
+    overflow: hidden;
+    padding: 10px;
+    height: 20px;
+    line-height: 20px; }
+  #account-switcher ul {
+    width: 170px;
+    overflow: hidden;
+    margin-top: 0px;
+    display: none;
+    position: absolute;
+    top: 40px;
+    border-bottom: 2px solid silver;
+    padding: 0px;
+    margin: 0px;
+    background-color: #404040; }
+    #account-switcher ul li {
+      padding: 0px;
+      margin: 0px;
+      display: block;
+      clear: both; }
+      #account-switcher ul li a {
+        display: block;
+        -webkit-border-radius: 0;
+        -moz-border-radius: none;
+        margin: 0px;
+        font-weight: normal; }
+        #account-switcher ul li a:hover {
+          background: none;
+          color: white;
+          text-decoration: none; }
+          #account-switcher ul li a:hover .subdomain {
+            text-decoration: underline; }
+  #account-switcher:hover ul {
+    display: block; }

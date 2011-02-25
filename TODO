@@ -1,0 +1,6 @@
+=== Global users feature
+
+  [v] When you create a new account, you can do it with existing user credentials
+  [v] If somebody invites you to a room by email, then talker should know that you have an account and give you access to that room with your existing account
+  [ ] Move subdomains to /organizationname/roomname à la github
+  [ ] Going to /rooms should display access for all your rooms in every organization

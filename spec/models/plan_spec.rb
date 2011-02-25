@@ -5,6 +5,8 @@ describe Plan do
     account = Factory(:account, :subdomain => 'master')
     user = Factory(:admin_user, :name => 'quentin', :email => 'quentin@example.com')
     account.users << user
+    user.registration_for(account).update_attribute(:admin, true)
+
     url = Plan.all[1].subscribe_url(account, "/")
     url.should match("https://spreedly.com/")
     url.should match("/master?")

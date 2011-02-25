@@ -1,14 +1,32 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 
 describe Permission do
+
   it "cant add admin" do
-    permission = Factory(:room).permissions.create(:user => Factory(:admin_user))
+    room = Factory(:room)
+    user = Factory(:user)
+    room.account.users << user
+    user.registration_for(room.account).update_attribute(:admin, true)
+    permission = room.permissions.create(:user => user)
     permission.errors.on(:user).should_not be_nil
   end
   
   it "admin can access all rooms" do
-    Factory(:admin_user).permission?(Factory(:room)).should_not be_nil
-    Factory(:admin_user).permission?(Room.new).should_not be_nil
+
+    account = Factory(:account)
+    user = Factory(:user)
+    account.users << user
+
+    account.rooms << Factory(:room)
+    account.rooms << Factory(:room)
+    account.rooms << Factory(:room)
+
+    user.registration_for(account).update_attribute(:admin, true)
+
+    account.rooms.each do |room|
+      user.permission?(room).should_not be_nil
+    end
+
   end
   
   it "everyone can access public" do
@@ -18,7 +36,7 @@ describe Permission do
     Factory(:user).permission?(main).should_not be_nil
   end
   
-  it "restricted user can access private rooms" do
+  it "only restricted users can access private rooms" do
     Permission.delete_all
     main = Factory(:room)
     main.update_attribute :private, true
@@ -26,7 +44,18 @@ describe Permission do
   end
   
   it "update access" do
-    Permission.update_access [Factory(:admin_user).id]
-    Permission.count.should == 0
+
+    account = Factory(:account)
+    user = Factory(:user)
+
+    account.users << user
+    user.registration_for(account).update_attribute(:admin, true)
+
+    account.rooms << Factory(:room)
+    room = account.rooms.first
+
+    room.permissions.update_access [user]
+    room.permissions.count.should == 1
+
   end
 end

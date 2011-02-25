@@ -23,11 +23,10 @@
     
     <fieldset id="user">
       <h3>Administrator User</h3>
-      <% fields_for @user do |uf| %>
+      <% f.fields_for :users do |uf| %>
         <div class="info">
-          Create a master user account to invite other users and manage chat rooms.
+          Create a master user to invite other users and manage chat rooms.
         </div>
-        <%= uf.error_messages %>
         <p>
           <%= uf.label :name, "User name" %>
           <%= uf.text_field :name, :size => 20 %>
@@ -46,6 +45,24 @@
           <%= uf.password_field :password_confirmation, :size => 20 %>
         </p>
       <% end %>
+    </fieldset>
+
+    <fieldset id="existing_user">
+      <h3>Are you a registered user?</h3>
+        <div class="info">
+          Type your login data if you want to create this account with your existing user.
+        </div>
+        <p>
+          <%= f.label :existing_user_email, 'Email or name' %>
+          <%= f.text_field :existing_user_email %>
+        </p>
+        <p>
+          <%= f.label :existing_user_password, 'Password' %>
+          <%= f.password_field :existing_user_password, :size => 20 %>
+        </p>
+        <p>
+          <%= link_to 'Forgot your password?', reset_password_path %>
+        </p>
     </fieldset>
     
     

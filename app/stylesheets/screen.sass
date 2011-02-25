@@ -137,12 +137,12 @@ html[xmlns] .clearfix
   width: auto
   left: 0
   right: 0
-  overflow: hidden
   background: $dark_grey
   padding: 0 10px 0
   +font_size(small)
   height: 40px
   border-bottom: 2px solid $light_grey
+  z-index: 100
   ul
     margin: 10px 0 0
     float: left
@@ -537,7 +537,7 @@ a.button, button
 // Chat Log
 #top_mask
   position: fixed
-  z-index: 99
+  z-index: 75
   top: -300px
   left: 0px
   background: url(/images/embed/top_fader.png)
@@ -1069,7 +1069,7 @@ a#logo, a.logo
 
 // Sidebar
 #sidebar
-  z-index: 100
+  z-index: 80
   span.toggle_sidebar
     display: block
     width: 100%
@@ -1126,9 +1126,6 @@ a#logo, a.logo
       border-top: none
       a
         font-weight: bold
-      img.avatar
-        float: left
-        margin: 0 5px 0 0
   #room
     +box_shadow(0, 0, 8, $light_grey * 0.66 + $white * 0.2)
     .description
@@ -1519,3 +1516,65 @@ div.log_browser
   +rounded_corners(all, 10)
   p
     font-weight: bold
+
+#account-switcher
+  float: right
+  display: block
+  margin-right: 10px
+  color: #fff
+  z-index: 100
+  position: relative
+  .account
+    display: block
+    float: left
+    width: 50px
+  .current
+    float: left
+    width: 80px
+  ul li a .switch
+    width: 70px
+    display: block
+    float: left
+  a#current-account
+    text-decoration: none
+    color: #fff
+    &:hover
+      background: none
+      text-decoration: none
+
+  .current, .account, ul li a
+    overflow: hidden
+    padding: 10px
+    height: 20px
+    line-height: 20px
+  ul
+    width: 170px
+    overflow: hidden
+    margin-top: 0px
+    display: none
+    position: absolute
+    top: 40px
+    border-bottom: 2px solid $light_grey
+    padding: 0px
+    margin: 0px
+    background-color: $dark-grey
+    li
+      padding: 0px
+      margin: 0px
+      display: block
+      clear: both
+      a
+        display: block
+        -webkit-border-radius: 0
+        -moz-border-radius: none
+        margin: 0px
+        font-weight: normal
+        &:hover
+          background: none
+          color: #fff
+          text-decoration: none
+          .subdomain
+            text-decoration: underline
+  &:hover
+    ul
+      display: block

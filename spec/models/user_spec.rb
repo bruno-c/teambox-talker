@@ -25,35 +25,43 @@ describe User do
   it "generate name" do
     account = Factory.create(:account)
 
-    user = Factory.create(:user, :email => "ma@gmail.com", :account => account)
+    user = Factory.create(:user, :email => "ma@gmail.com")
+    user.accounts << account
+
     user.generate_name
     user.save!
     user.name.should == "ma"
     
-    user = Factory.create(:user, :email => "ma@hotmail.com", :account => account)
+    user = Factory.create(:user, :email => "ma@hotmail.com")
+    user.accounts << account
+
     user.generate_name
     user.save!
     user.name.should == "ma_1"
     
-    user = Factory.create(:user, :email => "ma@yahoo.com", :account => account)
+    user = Factory.create(:user, :email => "ma@yahoo.com")
+    user.accounts << account
+
     user.generate_name
     user.save!
     user.name.should == "ma_2"
   end
   
   it "generate name without email" do
-    account = Factory.create(:account)
-    user = Factory.build(:user, :email => nil, :account => account)
-    user.guest = true
+    user = Factory.build(:user, :email => nil)
+    user.room = Factory.build(:room)
+
     user.generate_name
     user.save!
     user.name.should == "user"
     
-    user = Factory.build(:user, :email => nil, :account => account)
-    user.guest = true
+    user = Factory.build(:user, :email => nil)
+    user.room = Factory.build(:room)
+
     user.generate_name
     user.save!
     user.name.should == "user_1"
+
   end
 
   it "activating should set timestamp" do
@@ -90,7 +98,7 @@ describe User do
     admin = Factory(:admin_user, :password => 'monkey',
                                  :password_confirmation => 'monkey')
     admin.activate!
-    admin.account = Factory(:account)
+    admin.accounts << Factory(:account)
     User.authenticate(admin.email, 'monkey').should == admin
   end
 
@@ -98,7 +106,7 @@ describe User do
     admin = Factory(:admin_user, :password => 'monkey',
                                  :password_confirmation => 'monkey')
     admin.activate!
-    admin.account = Factory(:account)
+    admin.accounts << Factory(:account)
     User.authenticate(admin.name, 'monkey').should == admin
   end
 
@@ -144,13 +152,13 @@ describe User do
   
   it "guest have permission to room" do
     expect {
-      Factory.create(:user, :guest => true, :room => Factory(:room))
+      Factory.create(:user, :room => Factory(:room))
     }.to change(Permission, :count).by(1)
   end
   
   it "delete unconnected guest user with same name" do
     room = Factory(:room)
-    user = Factory.build(:user, :name => "bob", :guest => true)
+    user = Factory.build(:user, :name => "bob")
     user.room = room
     
     other_user = Factory.build(:user, :name => "bob", :room => room)
@@ -160,7 +168,7 @@ describe User do
 
   it "do not delete connected guest user with same name" do
     room = Factory(:room)
-    user = Factory(:user, :name => "bob", :guest => true, :room => room)
+    user = Factory(:user, :name => "bob", :room => room)
     user.connections.create :channel => room
     
     other_user = Factory.build(:user, :name => "bob", :room => room)
@@ -182,4 +190,23 @@ describe User do
     end
     User.create.errors.on(:color).should == nil
   end
+
+  describe '#in_account?' do
+    context 'if the user belongs to this account' do
+      it 'returns true' do
+        user = Factory(:user)
+        account = Factory(:account)
+        user.accounts << account
+        user.in_account?(account).should be_true
+      end
+    end
+    context 'otherwise' do
+      it 'returns false' do
+        user = Factory(:user)
+        account = Factory(:account)
+        user.in_account?(account).should be_false
+      end
+    end
+  end
+
 end

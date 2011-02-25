@@ -8,4 +8,6 @@ Rails::Initializer.run do |config|
                            #{RAILS_ROOT}/app/jobs )
 
   config.time_zone = 'UTC'
+
+  config.active_record.observers = :account_observer
 end

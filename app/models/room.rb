@@ -16,13 +16,22 @@ class Room < ActiveRecord::Base
   
   validates_presence_of   :account_id
   validate_on_create      :respect_limit
-  
+ 
+  # TODO: Maybe move the logic to the room relation
   named_scope :with_permission, proc { |user|
-    if user.admin
-      {}
-    else
-      { :conditions => ["private = 0 OR id IN (?)", user.permissions.map(&:room_id)] }
-    end
+      { :conditions => ["
+        id IN (?)
+        OR (private = 0 and account_id IN (?))
+        OR (private = 1 and account_id IN (?))
+        OR id = ? 
+        ", 
+          user.permissions.map(&:room_id), 
+          user.registrations.map(&:account_id), 
+          user.registrations.find(:all, :conditions => {:admin => true}).map(&:account_id), 
+          user.room_id] }
+  }
+  named_scope :from_account, proc {|account|
+    {:conditions => {:account_id => account.id}}
   }
   named_scope :private, :conditions => { :private => true }
   named_scope :public, :conditions => { :private => false }
@@ -96,12 +105,13 @@ class Room < ActiveRecord::Base
   private
     def update_permissions
       return unless @invitee_ids
-      
+
       if self.public
         @invitee_ids = [] # force update even if none is selected
       end
       
       permissions.update_access @invitee_ids
+
     end
     
     def respect_limit

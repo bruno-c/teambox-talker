@@ -33,10 +33,10 @@ gem "nokogiri"
 group :development do
   gem "passenger"
   gem "capistrano"
-  gem "vagrant"
 end
 
 group :test do
+  gem "launchy"
   gem "mocha", :require => false
   gem "database_cleaner"
   gem "vcr"
@@ -50,4 +50,9 @@ group :test do
   gem "em-spec", :git => 'git://github.com/macournoyer/em-spec.git'
   gem "moqueue"
   gem 'test-unit', '1.2.3'
+  gem 'gherkin', '2.1.5'
+  gem 'cucumber-rails', '>=0.3.2'
+  gem 'cucumber', '>=0.8.5' 
+  gem 'capybara', '0.3.9'
+  gem 'pickle'
 end

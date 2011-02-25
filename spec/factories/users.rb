@@ -1,6 +1,9 @@
 Factory.define :user do |f|
   f.sequence(:name) {|n| "User#{n}"}
   f.sequence(:email) {|n| "email#{n}@talkerapp.com"}
+  f.password "secret123"
+  f.password_confirmation "secret123"
+  f.state 'active'
 end
 
 Factory.define :talker_user, :class => User do |f|
@@ -18,5 +21,4 @@ Factory.define :admin_user, :class => User do |f|
   f.sequence(:name) {|n| "Admin#{n}"}
   f.sequence(:email) {|n| "admin#{n}@talkerapp.com"}
   f.staff true
-  f.admin true
 end

@@ -23,15 +23,17 @@ class SessionsController < ApplicationController
       note_failed_signin
       render :action => 'new'
     end
+
   end
   
   def destroy
     @user = current_user
     logout_killing_session!
     flash[:notice] = "You have been logged out."
-    
-    if @user && @user.guest
-      @user.destroy
+   
+    @registration = @user.registration_for(current_account)
+    if @registration && @registration.guest
+      @registration.destroy
       redirect_to public_room_path(@user.room.public_token)
     else
       redirect_to login_path

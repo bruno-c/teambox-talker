@@ -2,7 +2,7 @@ module Talker::Server
   class User
     include Comparable
     
-    attr_accessor :info, :account_id, :admin
+    attr_accessor :info, :account_id, :admin, :registration_id
     
     def initialize(info)
       @info = info || raise(ArgumentError, "User info required")

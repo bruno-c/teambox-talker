@@ -33,20 +33,20 @@ class GuestsController < ApplicationController
   end
   
   def create
-    @user = current_account.users.build(params[:user])
+
+    @user = User.new(params[:user])
     @user.room = @room
-    @user.guest = true
     
-    if @user.save
-      @user.activate!
-      
-      self.current_user = @user
-      remember_me!
-      
-      redirect_to @room
-    else
-      render :new
-    end
+    @user.save!
+    @user.activate!
+    
+    self.current_user = @user
+    remember_me!
+
+    redirect_to @room
+
+  rescue ActiveRecord::RecordInvalid
+    render :new
   end
   
   private

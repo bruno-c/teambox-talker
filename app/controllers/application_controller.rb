@@ -8,16 +8,22 @@ class ApplicationController < ActionController::Base
   
   helper :all # include all helpers, all the time
 
+  helper_method :account_host
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password, :password_confirmation
   
   protected
+
     def authorized?(action = action_name, resource = nil)
-      logged_in? && (!current_account? || current_account.users.exists?(current_user.id))
+      if logged_in? && current_user.duplicates.count > 0
+        redirect_to new_user_merge_path
+      else
+        logged_in?
+      end
     end
 
     def admin?
-      logged_in? && current_user.admin
+      logged_in? && current_user.admin?(current_account)
     end
     helper_method :admin?
     
@@ -31,7 +37,7 @@ class ApplicationController < ActionController::Base
     end
     
     def admin_required
-      role_required(:admin)
+      authorized? && current_user.admin?(current_account) || access_denied
     end
     
     def staff_required

@@ -83,7 +83,10 @@
 
   <div id="utilities">
     <div class="wrapper">
-      <%= image_tag avatar_url(current_user), :class => "avatar", :alt => h(current_user.name) %>
+      <% unless current_user.guest %>
+      <%= link_to "Rooms", rooms_path %> |
+      <% end %>
+      <%#= image_tag avatar_url(current_user), :class => "avatar", :alt => h(current_user.name) %>
       <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %> |
       <%= link_to "Logout", logout_path, :title => "Logout" %>
     </div>

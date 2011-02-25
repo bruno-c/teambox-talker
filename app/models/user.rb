@@ -6,22 +6,24 @@ class User < ActiveRecord::Base
   
   belongs_to :room # access restricted to this room if user is a guest, nil otherwise
 
-  belongs_to :account
+  has_many :registrations
+  has_many :accounts, :through => :registrations
+
   has_many :connections,    :dependent => :destroy
-  has_many :permissions,    :dependent => :destroy
   has_many :plugins,        :foreign_key => "author_id"
+  has_many :permissions, :dependent => :destroy
   
   before_create             :create_talker_token
-  
+
   validates_presence_of     :name
-  validates_uniqueness_of   :name,     :scope => :account_id
+  validates_uniqueness_of   :name
   validates_format_of       :name,     :with => /\A[^[:cntrl:]\\<>\/&\s]*\z/,
                                        :message => "should not contain non-printing characters \\, <, >, & and spaces"
   validates_length_of       :name,     :maximum => 100
 
   validates_presence_of     :email,    :unless => :guest
   validates_length_of       :email,    :allow_nil => true, :within => 6..100 #r@a.wk
-  validates_uniqueness_of   :email,    :allow_nil => true, :scope => :account_id
+  validates_uniqueness_of   :email,    :allow_nil => true, :scope => :state
   validates_format_of       :email,    :allow_nil => true, :with => Authentication.email_regex, :message => Authentication.bad_email_message
   
   validates_format_of       :color,    :with => /\A\#[a-f0-9]{6}\z/i, :allow_blank => true
@@ -31,8 +33,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation, :time_zone, :color
   
   named_scope :active, :conditions => { :state => "active" }
-  named_scope :registered, :conditions => { :guest => false }
-  named_scope :guests, :conditions => { :guest => true }
+  named_scope :registered
+  named_scope :guests, :conditions => ['room_id <> NULL'] 
   named_scope :by_name, :order => :name
   
   # Ensure guests have access to the room
@@ -57,10 +59,40 @@ class User < ActiveRecord::Base
     transitions :from => :suspended, :to => :active,  :guard => proc { |u| u.activated_at }
     transitions :from => :suspended, :to => :pending
   end
+
+  def permissions_for(account)
+    permissions.find(:all, :conditions => ['room_id in (?)', account.rooms.map(&:id)])
+  end
+
+  def duplicates
+    self.class.find(:all, :conditions => {:email => self.email}) - [self]
+  end
+
+  def merge_duplicates!
+    duplicates.each do |duplicate|
+      self.registrations += duplicate.registrations
+      self.permissions += duplicate.permissions
+      self.plugins += duplicate.plugins
+      self.connections += duplicate.connections
+      raise Exception.new unless save(false)
+      duplicate.destroy
+    end
+  end
   
+  def create_perishable_token!
+    update_attribute :perishable_token, ActiveSupport::SecureRandom.hex(10)
+  end
+
+  def clear_perishable_token!
+    update_attribute :perishable_token, nil
+  end
   
   def registered
-    !guest
+    !room
+  end
+
+  def guest
+    !!room
   end
   
   def email=(value)
@@ -70,7 +102,7 @@ class User < ActiveRecord::Base
   def generate_name
     name = name_prefix = email.to_s.split('@').first || "user"
     uid = 0
-    while account.users.find_by_name(name)
+    while User.find_by_name(name)
       uid += 1
       name = "#{name_prefix}_#{uid}"
     end
@@ -97,26 +129,34 @@ class User < ActiveRecord::Base
     self
   end
   
-  def create_perishable_token!
-    self.perishable_token = ActiveSupport::SecureRandom.hex(10)
-    save(false)
-  end
-
-  def clear_perishable_token!
-    self.perishable_token = nil
-    save(false)
-  end
   
   def permission?(room)
-    admin || room.public || permissions.find_by_room_id(room.id)
+    admin?(room.account) || room.public || permissions.find_by_room_id(room.id)
   end
-  
+
   def permission_without_room_access?(room)
-    admin || permissions.find_by_room_id(room.id)
+    (self.room == room) || admin?(room.account) || permissions.find_by_room_id(room.id)
+  end
+
+  def admin?(account)
+    registration = registration_for(account)
+    if registration.nil?
+      false 
+    else 
+      registration.admin?
+    end
+  end
+
+  def registration_for(account)
+    registrations.find_by_account_id(account.id)
   end
   
   def accessible_rooms
-    account.rooms.with_permission(self)
+    Room.with_permission(self)
+  end
+
+  def in_account?(account)
+    accounts.any?{ |a| a == account }
   end
   
   def to_json(options = {})
@@ -125,8 +165,8 @@ class User < ActiveRecord::Base
   
   def assign_color
     return if color.present?
-    if account
-      used_colors = account.users.all(:select => "color").map(&:color)
+    unless accounts.empty?
+      used_colors = accounts.map(&:users).flatten.map(&:color)
       available_colors = COLOR_PALETTE - used_colors
       available_colors = COLOR_PALETTE if available_colors.empty?
     else
@@ -138,13 +178,15 @@ class User < ActiveRecord::Base
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(email_or_username, password)
     return nil if email_or_username.blank? || password.blank?
-    u = first(:conditions => ["(email = ? OR name = ?) AND state = 'active'",
+    users = find(:all, :conditions => ["(email = ? OR name = ?) AND state = 'active'",
                               email_or_username.downcase, email_or_username]) # need to get the salt
-    u && u.authenticated?(password) ? u : nil
+    users.find do |user|
+      user.authenticated?(password) 
+    end
   end
   
   def self.authenticate_by_perishable_token(token)
-    if token.present? && user = find_by_perishable_token(token)
+    if token.present? && user=find_by_perishable_token(token)
       user.clear_perishable_token!
       user
     end
@@ -162,8 +204,10 @@ class User < ActiveRecord::Base
     # We delete previous guest w/ same name if not currently connected.
     # This allows guest user names to be reused.
     def remove_guest_with_same_name
-      if account && existing_guest = account.users.guests.find_by_name(name)
-        existing_guest.destroy if existing_guest.connections.empty?
+      if accounts && existing_guests = accounts.map(&:users).flatten.select(&:guest).select {|guest| guest.name == name}
+        existing_guests.each do |guest|
+          guest.destroy if guest.connections.empty? 
+        end
       end
     end
 end

@@ -8,7 +8,7 @@
         <% if user == current_user %>
           <span class="tag you">You</span>
         <% end %>
-        <% if user.admin %>
+        <% if user.admin?(current_account) %>
           <span class="tag">Admin</span>
         <% end %>
       </span>
@@ -17,7 +17,7 @@
     <div class="content">
       <% if user.suspended? %>
         <p>Access suspended.</p>
-      <% elsif user.admin %>
+      <% elsif user.admin?(current_account) %>
         <p>Can edit and access everything.</p>
       <% else %>
         <p>Can access <%= access_description user %>.</p>

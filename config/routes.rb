@@ -15,6 +15,8 @@ ActionController::Routing::Routes.draw do |map|
   map.service_policy "/service_policy", :controller => "site", :action => "service_policy"
   
   map.public_room "/r/:token", :controller => "guests", :action => "new"
+
+  map.resource :user_merge, :only => [:new, :create]
   
   map.resources :users, :member => { :suspend => :delete, :unsuspend => :post }
   map.resources :invites, :member => { :resend => :post }, :collection => { :set_password => :put }

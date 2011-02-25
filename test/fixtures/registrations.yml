@@ -1,0 +1,14 @@
+quentin_master:
+  account: master
+  user: quentin
+  admin: true
+
+aaron_master:
+  account: master
+  user: aaron
+  admin: true
+
+guest_master:
+  account: master
+  guest: true
+  user: guest

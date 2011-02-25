@@ -36,28 +36,39 @@ class InvitesController < ApplicationController
       render :show, :layout => "dialog"
     end
   end
-  
+ 
   def create
     @invitees = params[:invitees].split(/[\n,]/).map(&:strip)
     @room = current_account.rooms.find(params[:room_id])
     success_count = 0
-    
+     
     flash.delete(:error)
-    
-    @invitees.each do |email|
-      email.strip!
-      user = current_account.users.build(:email => email)
-      user.generate_name
-      User.transaction do
-        if user.save
-          user.permissions.create :room => @room unless @room.public
+     
+    begin
+      @invitees.each do |email|
+        email.strip!
+        
+        user = nil
+
+        unless user = User.find_by_email(email)
+          user = User.new(:email => email)
+          user.generate_name
+        end
+
+        User.transaction do
+          # user.permissions.create :room => @room unless @room.public
+          user.accounts << current_account
+          user.save!
           send_invitation user, @room
           success_count += 1
-        else
-          flash.now[:error] ||= "<h3>Some errors occured while sending invitations:</h3>"
-          flash.now[:error] += "<p><strong>" + email + "</strong>: " + user.errors.full_messages.to_sentence + "</p>"
         end
+
       end
+
+    rescue ActiveRecord::RecordInvalid => e
+        flash.now[:error] ||= "<h3>Some errors occured while sending invitations:</h3>"
+        flash.now[:error] += "<p><strong>" + e.record.email + "</strong>: " + e.record.errors.full_messages.to_sentence + "</p>"
+
     end
 
     respond_to do |format|

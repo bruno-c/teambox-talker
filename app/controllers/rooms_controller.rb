@@ -10,7 +10,7 @@ class RoomsController < ApplicationController
   before_filter :check_connections_limit, :only => :show
   
   def index
-    @rooms = current_account.rooms.with_permission(current_user)
+    @rooms = Room.with_permission(current_user).from_account(current_account)
     respond_to do |format|
       format.html
       format.json { render :json => @rooms }
@@ -27,7 +27,7 @@ class RoomsController < ApplicationController
       @rooms = []
       @events = @room.events.recent.since(@room.opened_at).reverse
     else
-      @rooms = current_user.accessible_rooms
+      @rooms = Room.with_permission(current_user).from_account(current_account)
       @events = @room.events.recent.reverse
     end
     
