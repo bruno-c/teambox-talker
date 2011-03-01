@@ -1900,7 +1900,11 @@ div.log_browser {
   #account-switcher:hover ul {
     display: block; }
 
+#landing #logout {
+  float: right; }
 #landing #accounts ul {
   padding-left: 20px; }
+#landing #accounts li {
+  margin-top: 5px; }
 #landing #accounts h4 {
   margin-top: 20px; }

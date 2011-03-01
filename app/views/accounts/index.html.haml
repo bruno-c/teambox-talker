@@ -3,7 +3,8 @@
   %h3 These are all your accounts and rooms
   #accounts
     -current_user.accounts.each do |account|
-      %h4=account.subdomain
+      %h4
+        =link_to account.subdomain, rooms_url(:host => account_host(account))
       %ul
         -account.rooms.with_permission(current_user).each do |room|
           %li
@@ -12,3 +13,6 @@
               .inside
                 %strong Inside:
                 =avatars room.users
+
+  #logout
+    =link_to 'Log out', logout_path

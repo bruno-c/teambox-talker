@@ -13,6 +13,7 @@
   </ul>
   <p class="utilities">
     <% if logged_in? %>
+      <%= link_to 'Landing page', landing_url, :class => 'landing'%>
       <%= link_to image_tag(avatar_url(current_user), :alt => h(current_user.name)), settings_path, :title => "Logged in as #{h current_user.name}, manage my account", :class => "avatar" %>
       <%= link_to "My Settings", settings_path, :title => "Manage my settings", :accesskey => "m" %> |
       <%= link_to "Logout", logout_path, :title => "Logout" %>
