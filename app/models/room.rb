@@ -4,7 +4,11 @@ class Room < ActiveRecord::Base
   has_many :events, :dependent => :destroy
   has_many :connections, :as => :channel, :dependent => :destroy
   has_many :users, :through => :connections
-  has_many :guests, :class_name => "User", :dependent => :destroy
+
+  def guests
+    User.find(:all, :conditions => {:room_id => id})
+  end
+
   has_many :attachments, :class_name => "::Attachment", # FIX class w/ Paperclip::Attachment
                          :dependent => :destroy
   has_many :feeds, :dependent => :destroy

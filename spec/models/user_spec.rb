@@ -170,11 +170,13 @@ describe User do
     room = Factory(:room)
     user = Factory(:user, :name => "bob", :room => room)
     user.connections.create :channel => room
+    user.save
     
     other_user = Factory.build(:user, :name => "bob", :room => room)
-    other_user.valid?
+    other_user.should_not be_valid
     other_user.errors.on(:name).should_not be_nil
-    User.exists?(user.id).should_not be_nil
+    User.exists?(user.id).should be_true
+    User.exists?(other_user.id).should_not be_true
   end
   
   it "color validation" do

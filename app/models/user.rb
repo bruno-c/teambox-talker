@@ -16,7 +16,8 @@ class User < ActiveRecord::Base
   before_create             :create_talker_token
 
   validates_presence_of     :name
-  validates_uniqueness_of   :name
+  validates_uniqueness_of   :name, :unless => :guest
+  validate                  :uniqueness_of_name
   validates_format_of       :name,     :with => /\A[^[:cntrl:]\\<>\/&\s]*\z/,
                                        :message => "should not contain non-printing characters \\, <, >, & and spaces"
   validates_length_of       :name,     :maximum => 100
@@ -208,10 +209,14 @@ class User < ActiveRecord::Base
     # We delete previous guest w/ same name if not currently connected.
     # This allows guest user names to be reused.
     def remove_guest_with_same_name
-      if accounts && existing_guests = accounts.map(&:users).flatten.select(&:guest).select {|guest| guest.name == name}
-        existing_guests.each do |guest|
-          guest.destroy if guest.connections.empty? 
-        end
+      if guest && room && guest = room.guests.find{|g| g.name == name}
+        guest.destroy if guest.connections.empty? 
+      end
+    end
+
+    def uniqueness_of_name
+      if guest && (room.guests.find{|guest| guest.name == name && guest.id != id} || room.account.users.find_by_name(name))
+        self.errors.add(:name, 'is currently in use by another user')
       end
     end
 end
