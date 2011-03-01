@@ -10,12 +10,11 @@ module AccountSupport
     
     # Authentication helpers
     def current_account
-      @current_account ||= Account.find_by_subdomain(request.subdomains.first) ||
-                           raise(ActiveRecord::RecordNotFound, "account required")
+      @current_account ||= Account.find_by_subdomain(request.subdomains.first)
     end
     
     def account_required
-      current_account
+      current_account || raise(ActiveRecord::RecordNotFound, "account required")
     end
     
     def active_account_required

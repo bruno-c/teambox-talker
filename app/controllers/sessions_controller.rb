@@ -1,6 +1,6 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
-  before_filter :account_required, :except => :destroy
+  #before_filter :account_required, :except => :destroy
   
   layout "dialog"
   
@@ -12,13 +12,23 @@ class SessionsController < ApplicationController
     
     @email = params[:email]
     
-    if user = current_account.users.authenticate(@email, params[:password])
+    if user = User.authenticate(@email, params[:password])
       # Fix for previous crossdomain cookie
       delete_old_cookies
       reset_session
       self.current_user = user
       remember_me!
-      redirect_back_or_default rooms_path
+      if current_account
+        redirect_back_or_default rooms_path
+      else
+        if current_user.accounts.count > 1
+          redirect_back_or_default landing_path
+        elsif current_user.accounts.count == 1
+          redirect_back_or_default rooms_url(:host => account_host(current_user.accounts.first))
+        else
+          redirect_to root_path 
+        end
+      end
     else
       note_failed_signin
       render :action => 'new'

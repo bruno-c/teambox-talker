@@ -1,7 +1,11 @@
 <% @title = "Log In" %>
 
 <div class="sheet">
-  <h2>Log in to <%=h possessive(current_account.subdomain.titleize) %> Talker account</h2>
+  <% if current_account %>
+    <h2>Log in to <%=h possessive(current_account.subdomain.titleize) %> Talker account</h2>
+  <% else %>
+    <h2>Log in to Talker</h2>
+  <% end %>
   
   <% form_tag session_path, :class => "lw120" do %>
     <p>

@@ -1,0 +1,8 @@
+.sheet
+  %h2 Talker landing page
+  %h3 These are all your accounts and rooms
+  -current_user.accounts.each do |account|
+    %h4=account.subdomain
+    %ul
+      -account.rooms.with_permission(current_user).each do |room|
+        %li=link_to h(room.name), room_url(room, :host => account_host(account))

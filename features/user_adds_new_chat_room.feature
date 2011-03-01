@@ -2,7 +2,7 @@ Feature: User adds chat rooms
 
   Scenario: Add a chat room in one domain
     Given I am logged in in the account "teambox"
-    And I have the following accounts:
+    And the user has the following accounts:
       | subdomain  |
       | codegram   |
     And I am within the subdomain "teambox"

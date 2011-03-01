@@ -3,6 +3,11 @@ class AccountsController < ApplicationController
   before_filter :admin_required, :only => [:show, :update, :plan_changed]
   ssl_required :new, :create
   
+  def index
+    @accounts = current_user.accounts
+    render :layout => "dialog"
+  end
+
   def new
     delete_old_cookies
     @plan = Plan.find_by_name(params[:plan])

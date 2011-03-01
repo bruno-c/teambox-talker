@@ -1,5 +1,5 @@
 Given /^I am logged in in the account "([^"]*)"$/ do |subdomain|
-  user = create_model('user', :password => 'secret123', :password_confirmation => 'secret123')
+  user = create_model('user', :email => 'foo@bar.com')
   user.activate!
   account = create_model('account', :subdomain => subdomain, :users => [user])
   Given "I am within the subdomain \"#{account.subdomain}\""
@@ -9,11 +9,15 @@ Given /^I am logged in in the account "([^"]*)"$/ do |subdomain|
   Then "I should see \"Logout\""
 end
 
-Given /^I have the following accounts:$/ do |table|
+Given /^#{capture_model} has the following accounts:$/ do |user, table|
   table.hashes.each do |data|
-    user = find_model('the user')
+    user = find_model(user, :email => 'foo@bar.com')
     account = Account.new(data)
     account.users << user
     account.save!
   end
+end
+
+Given /^an active user exists$/ do
+    create_model('user', :email => 'foo@bar.com').activate! 
 end

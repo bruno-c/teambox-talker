@@ -4,7 +4,7 @@ Feature: Sign up with a free account
   I want to sign up with a free account
 
   Scenario: Guest signs up with a free account
-    Given I go to the landing page
+    Given I go to the home page
     And I follow "Pricing & Signup" 
     And I follow "Free Plan"
 
@@ -21,7 +21,7 @@ Feature: Sign up with a free account
     And I should see "Thank you for trying our app!"
 
   Scenario: Guest signs up with a free account and fails
-    Given I go to the landing page
+    Given I go to the home page
     And I follow "Pricing & Signup" 
     And I follow "Free Plan"
 
@@ -40,7 +40,7 @@ Feature: Sign up with a free account
     Given a user exists with name: "John", email: "jsmith@example.com"
     And the user is active
     And the user has an account named "talker"
-    And I go to the landing page
+    And I go to the home page
     And I follow "Pricing & Signup" 
     And I follow "Free Plan"
 
@@ -56,7 +56,7 @@ Feature: Sign up with a free account
     Given a user exists with name: "John", email: "jsmith@example.com"
     And the user is active
     And the user has an account named "talker"
-    And I go to the landing page
+    And I go to the home page
     And I follow "Pricing & Signup" 
     And I follow "Free Plan"
 
