@@ -17,4 +17,4 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 config.action_mailer.perform_deliveries = false
 
-ActionController::Base.session_options[:domain] = '.lvh.me'
+ActionController::Base.session_options[:domain] = '.faketalker.com'
