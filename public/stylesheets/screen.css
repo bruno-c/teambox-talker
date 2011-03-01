@@ -1899,3 +1899,8 @@ div.log_browser {
             text-decoration: underline; }
   #account-switcher:hover ul {
     display: block; }
+
+#landing #accounts ul {
+  padding-left: 20px; }
+#landing #accounts h4 {
+  margin-top: 20px; }
