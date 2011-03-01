@@ -26,9 +26,14 @@
   <div class="container">
     <div id="menu">
       <ul>
+        <% if params[:action] == 'home' %>
+        <li><%= link_to "Login", login_path %></li>
+        <% end %>
         <li><%= link_to "Pricing <span class='and'>&amp;</span> Signup", pricing_path %></li>
         <li><%= link_to "Tour", tour_path %></li>
+        <% if params[:action] != 'home' %>
         <li><%= link_to "Home", root_path %></li>
+        <% end %>
       </ul>
     </div>
   </div>

@@ -2,7 +2,8 @@ Feature: User logs in
 
   Scenario: User without account logs in using the home page login form
     Given an active user exists
-    When I go to the login page
+    When I go to the home page
+    And I follow "Login"
     And I fill in "email" with "foo@bar.com"
     And I fill in "password" with "secret123"
     And I press "Log in"
