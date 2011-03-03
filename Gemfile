@@ -33,6 +33,8 @@ gem "nokogiri"
 group :development do
   gem "passenger"
   gem "capistrano"
+  gem "capistrano-ext"
+  gem "capistrano_colors"
 end
 
 group :test do
