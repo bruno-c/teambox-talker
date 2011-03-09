@@ -176,7 +176,7 @@ GEM
     test-unit (1.2.3)
       hoe (>= 1.5.1)
     thinking-sphinx (1.4.0)
-      activerecord (>= 1.15.6, < 3.0.0)
+      activerecord (< 3.0.0, >= 1.15.6)
       after_commit (>= 1.0.7)
       riddle (>= 1.2.0)
     trollop (1.16.2)

@@ -95,6 +95,15 @@ class Account < ActiveRecord::Base
     self.plan_id = p.id
     @plan = p
   end
+
+  def change_plan(new_plan, return_url)
+    if new_plan.free?
+      cancel_subscription
+      return return_url
+    else
+      return new_plan.subscribe_url(self, return_url)
+    end
+  end
   
   def edit_subscriber_url(return_url)
     if spreedly_token
