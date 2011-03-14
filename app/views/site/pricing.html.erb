@@ -2,38 +2,22 @@
 <% @tagline = "Pick The Right Plan For Your Team" %>
 
 <div id="plans">
-  <% Plan.payings.reject { |p| p.name == "Bootstrap" }[0,4].each do |plan| %>
-  <div class="plan <%= plan.name.downcase %>">
+  <%= render :partial => 'plan', :locals => { :plan => Plan.free } %>
+  <div class="plan info">
     <div class="box">
-      <h2><%= plan.name %></h2>
-      <h3>
-        <%= number_to_currency plan.price, :precision => 0 %>/month
-      </h3>
-      <p>
-        <span><%= plan.features.max_connections %></span> chatters<br />
-        <span><%= number_to_human_size plan.features.max_storage %></span> upload space<br />
-      </p>
-      <p>
-        <%= plan.features.log_history ? plan.features.log_history.inspect : "Unlimited" %> chat log<br />
-        <% if plan.features.private_rooms %>
-          Private rooms
-        <% end %><br />
-      </p>
-      <div class="buttons"><%= link_to "Sign Up", signup_path(plan) %></div>
+      <p>Did you hear? We're offering <strong>Talker for free</strong>!</p>
+      <p>We're giving away Talker for free because it's now part of the <strong>Teambox collaboration ecosystem</strong>.</p>
+      <p>For more storage, private rooms and unlimited chat logs, you can use our <strong>Cool</strong> plan.</p>
       <div class="clear"></div>
     </div>
   </div>
-  <% end %>
+  <%= render :partial => 'plan', :locals => { :plan => Plan.find_by_name('Cool') } %>
+
   <div class="clear"></div>
-  
+
   <div id="all">
     <div class="box">
-      <div class="free">
-        <%# link_to image_tag("root/free.png"), signup_path(Plan.free), :class => "badge" %>
-        <p class="extras">Not convinced yet? Try our <%= link_to "Free Plan", signup_path("free"), :class => "free_plan" %> for an <span>Unlimited time</span> and <span>No credit card required</span></p>
-        <p class="details">The Free plan allows up to <span><%= Plan.free.features.max_connections %> chatters</span> and <span><%= number_to_human_size Plan.free.features.max_storage %></span>. You can upgrade to a paying plan at any time and still get a one         month free trial.</p>
-      </div>
-      <p class="extras">All paying plans come with <span>One month free trial</span>, powerful <span>Plugins</span> and enhanced <span>Security</span>.</p> 
+      <p class="extras">Talker is brought to you by <strong>Teambox</strong>. Check out our <a href="http://teambox.com/" title="online collaboration software">online collaboration software.</a></p>
     </div>
   </div>
   
@@ -44,7 +28,7 @@
     </div>
     <div class="spot right">
       <h3>One Month Free Trial</h3>
-      <p>You can try any of the paying plans for one month, without any restrictions. If you're not happy with it, simply cancel your subscription and we wont charge you a dime.</p>
+      <p>You can try our paying plan for one month, without any restrictions. If you're not happy with it, simply cancel your subscription and we wont charge you a dime.</p>
     </div>
   </div>
   <div class="clear"></div>

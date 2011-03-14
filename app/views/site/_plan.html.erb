@@ -1,0 +1,21 @@
+<div class="plan <%= plan.name.downcase %>">
+  <div class="box">
+    <h2><%= plan.name %></h2>
+    <h3>
+      <%= number_to_currency plan.price, :precision => 0 %>/month
+    </h3>
+    <p>
+      <span>Unlimited </span> chatters!<br />
+      <span><%= number_to_human_size plan.features.max_storage %></span> upload space<br />
+    </p>
+    <p>
+      <%= plan.features.log_history ? plan.features.log_history.inspect : "Unlimited" %> chat log<br />
+      <% if plan.features.private_rooms %>
+        Private rooms
+      <% end %><br />
+    </p>
+    <div class="buttons"><%= link_to "Sign Up", signup_path(plan) %></div>
+    <div class="clear"></div>
+  </div>
+</div>
+

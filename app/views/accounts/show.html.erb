@@ -25,7 +25,7 @@
         <thead>
           <tr>
             <td></td>
-            <% Plan.all.each do |plan| %>
+            <% Plan.new_plans.each do |plan| %>
             <th class="<%= 'current' if plan == @account.plan %>">
               <%=h plan.name %>
               <div class="price"><%= number_to_currency plan.price %><small>/month</small></div>
@@ -36,7 +36,7 @@
         <tfoot>
           <tr>
             <td></td>
-            <% Plan.all.each do |plan| %>
+            <% Plan.new_plans.each do |plan| %>
             <th class="<%= 'current' if plan == @account.plan %>">
               <% if plan == @account.plan %>
                 <strong>Current</strong>
@@ -63,7 +63,7 @@
         <tbody>
           <%= feature_line("Online Users",
                            "Number of users simultaneously connected to your account."
-                          ) { |features| pluralize features.max_connections, "user" } %>
+                          ) { |features| "Unlimited!" } %>
           <%= feature_line("File Upload Space",
                            "Total size of files you can upload across all rooms."
                           ) { |features| number_to_human_size features.max_storage } %>
@@ -87,12 +87,5 @@
     </p>
     <strong>File Upload Space</strong>
     <%= meter_tag @account.used_storage.to_f / @account.features.max_storage.to_f %>
-    
-    <p class="side_description">
-      You're currently using <strong><%= @account.connections.users_count %></strong>
-      of your <strong><%= pluralize @account.features.max_connections, "online users" %></strong> limit.
-    </p>
-    <strong>Online Users</strong>
-    <%= meter_tag @account.connections.users_count.to_f / @account.features.max_connections.to_f %>
   </div>
 </div>

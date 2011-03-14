@@ -48,6 +48,10 @@ class Plan
   def self.all
     @all ||= [Plan.free] + payings
   end
+
+  def self.new_plans
+    @new_plans ||= [Plan.free, Plan.find_by_name('Cool')]
+  end
   
   def self.free
     @free ||= Plan.new(:id => 0,

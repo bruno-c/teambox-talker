@@ -11,7 +11,7 @@ module AccountsHelper
     content_tag(:tr,
       content_tag(:th, title +
                        content_tag(:div, description, :class => "description")) +
-      Plan.all.map { |plan|
+      Plan.new_plans.map { |plan|
         content_tag(:td, block.call(plan.features), :class => ("current" if current_account.plan == plan))
       }.join
     )

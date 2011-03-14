@@ -1697,7 +1697,7 @@ div.log_browser {
   #account table#plans th.current, #account table#plans td.current {
     background-color: #e8f4fa; }
   #account table#plans thead th {
-    width: 100px;
+    width: 200px;
     text-align: center;
     font-size: 18px;
     border-bottom: solid 1px silver;

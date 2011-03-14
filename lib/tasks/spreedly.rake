@@ -15,7 +15,7 @@ namespace :plans do
     
     File.open(Plan::DB_FILE, "w") do |file|
       file << "# This file is generated automatically.\n"
-      file << "# Run `rake update_plans` to update this file\n"
+      file << "# Run `rake plans:update` to update this file\n"
       YAML.dump(all_plans, file)
     end
   end

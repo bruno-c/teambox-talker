@@ -138,13 +138,13 @@ class Account < ActiveRecord::Base
   
   # Blocking! Called from a job.
   def update_subscription_info!(subscriber=self.subscriber)
-    self.plan = Plan.find_by_name(subscriber.feature_level) # Plan name is nil if lifetime_subscription
-    self.active = plan.free? || subscriber.active
-    self.active_until = subscriber.active_until
-    self.grace_until = subscriber.grace_until
-    self.on_trial = subscriber.on_trial
-    self.recurring = subscriber.recurring
-    self.spreedly_token = subscriber.token
+    self.plan = Plan.find_by_name(subscriber.try(:feature_level)) # Plan name is nil if lifetime_subscription
+    self.active = plan.free? || subscriber.try(:active)
+    self.active_until = subscriber.try :active_until
+    self.grace_until = subscriber.try :grace_until
+    self.on_trial = subscriber.try :on_trial
+    self.recurring = subscriber.try :recurring
+    self.spreedly_token = subscriber.try :token
     self.subscription_info_changed = false
     save(false)
   end

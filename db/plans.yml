@@ -1,5 +1,5 @@
 # This file is generated automatically.
-# Run `rake update_plans` to update this file
+# Run `rake plans:update` to update this file
 --- 
 production: 
 - !ruby/object:Plan 
@@ -37,75 +37,139 @@ production:
   name: Big
   plan_type: regular
   price: 49.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: cool
+  id: 10189
+  name: Cool
+  plan_type: regular
+  price: 15.0
 development: 
 - !ruby/object:Plan 
   description: 
   feature_level: bootstrap
-  id: 3318
+  id: 10190
   name: Bootstrap
   plan_type: regular
   price: 8.0
 - !ruby/object:Plan 
   description: 
   feature_level: startup
-  id: 3401
+  id: 10191
   name: Startup
   plan_type: regular
   price: 6.0
 - !ruby/object:Plan 
   description: 
   feature_level: basic
-  id: 3403
+  id: 10192
   name: Basic
   plan_type: regular
   price: 12.0
 - !ruby/object:Plan 
   description: 
   feature_level: premium
-  id: 3404
+  id: 10193
   name: Premium
   plan_type: regular
   price: 24.0
 - !ruby/object:Plan 
   description: 
   feature_level: big
-  id: 3593
+  id: 10194
   name: Big
   plan_type: regular
   price: 49.0
-test: 
+- !ruby/object:Plan 
+  description: 
+  feature_level: cool
+  id: 10195
+  name: Cool
+  plan_type: regular
+  price: 15.0
+cucumber: 
+- !ruby/object:Plan 
+  description: 
+  feature_level: bootstrap
+  id: 10190
+  name: Bootstrap
+  plan_type: regular
+  price: 8.0
 - !ruby/object:Plan 
   description: 
   feature_level: startup
-  id: 3016
+  id: 10191
   name: Startup
   plan_type: regular
   price: 6.0
 - !ruby/object:Plan 
   description: 
   feature_level: basic
-  id: 3045
+  id: 10192
   name: Basic
+  plan_type: regular
+  price: 12.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: premium
+  id: 10193
+  name: Premium
   plan_type: regular
   price: 24.0
 - !ruby/object:Plan 
   description: 
+  feature_level: big
+  id: 10194
+  name: Big
+  plan_type: regular
+  price: 49.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: cool
+  id: 10195
+  name: Cool
+  plan_type: regular
+  price: 15.0
+test: 
+- !ruby/object:Plan 
+  description: 
   feature_level: bootstrap
-  id: 3316
+  id: 10190
   name: Bootstrap
   plan_type: regular
   price: 8.0
 - !ruby/object:Plan 
   description: 
+  feature_level: startup
+  id: 10191
+  name: Startup
+  plan_type: regular
+  price: 6.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: basic
+  id: 10192
+  name: Basic
+  plan_type: regular
+  price: 12.0
+- !ruby/object:Plan 
+  description: 
   feature_level: premium
-  id: 3317
+  id: 10193
   name: Premium
+  plan_type: regular
+  price: 24.0
+- !ruby/object:Plan 
+  description: 
+  feature_level: big
+  id: 10194
+  name: Big
   plan_type: regular
   price: 49.0
 - !ruby/object:Plan 
   description: 
-  feature_level: big
-  id: 3592
-  name: Big
+  feature_level: cool
+  id: 10195
+  name: Cool
   plan_type: regular
-  price: 99.0
+  price: 15.0
