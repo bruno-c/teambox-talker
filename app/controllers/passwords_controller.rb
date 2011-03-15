@@ -1,5 +1,4 @@
 class PasswordsController < ApplicationController
-  before_filter :account_required
   before_filter :registered_user_required, :except => [:reset, :show, :create]
   
   layout "dialog"
@@ -8,7 +7,7 @@ class PasswordsController < ApplicationController
     @token = params[:token]
     
     if @token
-      if @user = current_account.users.authenticate_by_perishable_token(@token)
+      if @user = User.authenticate_by_perishable_token(@token)
         @user.activate!
         self.current_user = @user
       else
@@ -23,7 +22,7 @@ class PasswordsController < ApplicationController
   def create
     @email = params[:email]
     
-    if @user = current_account.users.find_by_email(@email.downcase)
+    if @user = User.find_by_email(@email.downcase)
       @user.create_perishable_token!
     
       UserMailer.deliver_reset_password(@email, reset_password_url(@user.perishable_token))
@@ -41,7 +40,7 @@ class PasswordsController < ApplicationController
     
     if @user.update_attributes(params[:user])
       flash[:notice] = "Excellent! Password updated."
-      redirect_to rooms_path
+      redirect_to landing_path
     else
       render :show
     end
