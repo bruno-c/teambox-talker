@@ -3,6 +3,16 @@ module Talker::Server
     attr_reader :options
     
     def initialize
+      require 'ruby-debug'
+      database_config = {
+        :database => "talker_development",
+        :user => "root",
+        :password => "",
+        :host => "localhost"
+      }
+
+      YAML.load_file('config/database.yml')['development'].each_pair{|k, v| database_config[k.to_sym] = v}
+
       @options = {
         :host => Talker::Server::Channels::Server::DEFAULT_HOST,
         :port => Talker::Server::Channels::Server::DEFAULT_PORT,
@@ -16,12 +26,7 @@ module Talker::Server
         :user => nil,
         :logger => nil,
         :debug => false,
-        :database => {
-          :database => "talker_development",
-          :user => "root",
-          :password => "",
-          :host => "localhost"
-        }
+        :database => database_config
       }
     end
     
