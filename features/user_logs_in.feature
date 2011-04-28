@@ -27,7 +27,7 @@ Feature: User logs in
     And the user has the following accounts:
       | subdomain  |
       | teambox   |
-    When I am within the subdomain "teambox"
+    When I am within the account "teambox"
     Then I should see "Account: teambox"
     And I should not see "Account: developers"
 
@@ -37,7 +37,7 @@ Feature: User logs in
     And the user has the following accounts:
       | subdomain  |
       | teambox   |
-    When I am within the subdomain "developers"
+    When I am within the account "developers"
     When I change to the first account in the account switcher
     Then I should see "Account: teambox"
     And I should not see "Account: developers"

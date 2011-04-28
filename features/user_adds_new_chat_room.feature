@@ -5,7 +5,8 @@ Feature: User adds chat rooms
     And the user has the following accounts:
       | subdomain  |
       | codegram   |
-    And I am within the subdomain "teambox"
+    And I am within the account "teambox"
+    And I follow "Rooms"
     And I follow "Add a room"
     And I fill in "Name" with "Main Room"
     And I fill in "Description" with "Description for main room"

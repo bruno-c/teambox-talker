@@ -2,7 +2,7 @@ Given /^I am logged in in the account "([^"]*)"$/ do |subdomain|
   user = create_model('user', :email => 'foo@bar.com')
   user.activate!
   account = create_model('account', :subdomain => subdomain, :users => [user])
-  Given "I am within the subdomain \"#{account.subdomain}\""
+  Given "I am within the account \"#{account.subdomain}\""
   And "I fill in \"email\" with \"#{user.email}\""
   And "I fill in \"password\" with \"secret123\""
   And "I press \"Log in\""

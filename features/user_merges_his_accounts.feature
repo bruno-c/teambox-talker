@@ -6,7 +6,7 @@ Feature: User merges all his accounts
     And a duplicate of the user exists with an account named: "bar"
 
   Scenario: Merges its accounts
-    Given I go to the rooms page
+    Given I am within the account "talker"
     When I fill in "User name" with "cool_username"
     And I fill in "Password" with "newpassword"
     And I fill in "Confirmation" with "newpassword"
@@ -16,7 +16,7 @@ Feature: User merges all his accounts
     And the account "bar" should belong to me
 
   Scenario: Merges his accounts without password
-    Given I go to the rooms page
+    Given I am within the account "talker"
     When I fill in "User name" with "New user"
     And I press "Merge all my accounts" 
     Then I should see "Password can't be empty"

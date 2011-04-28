@@ -1,7 +1,7 @@
-Given /I am within the subdomain "([^"]*)"/ do |subdomain|
-  Capybara.default_host = "#{subdomain}.example.com" #for Rack::Test
-  Capybara.app_host = "http://#{subdomain}.example.com:9887" if Capybara.current_driver == :selenium
-  visit "http://#{subdomain}.example.com" + rooms_path
+Given /I am within the account "([^"]*)"/ do |subdomain|
+  Capybara.default_host = "example.com" #for Rack::Test
+  Capybara.app_host = "http://example.com:9887" if Capybara.current_driver == :selenium
+  visit "http://example.com" + account_rooms_path(Account.find_by_subdomain(subdomain))
 end
 
 Given /^#{capture_model} has an account named "([^"]*)"$/ do |user, account_name|
