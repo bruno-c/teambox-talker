@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_filter :admin_required, :only => [:show, :update, :plan_changed]
+  before_filter :admin_required, :only => [:show, :update]
   ssl_required :new, :create
   
   def index
@@ -9,8 +9,7 @@ class AccountsController < ApplicationController
 
   def new
     delete_old_cookies
-    @plan = Plan.find_by_name(params[:plan])
-    @account = Account.new(:plan_id => @plan.id)
+    @account = Account.new
     @account.users.build if @account.users.empty?
     @account.existing_user_email = current_user.email if current_user && @account.existing_user_email.blank?
     render :layout => "dialog"
@@ -41,63 +40,28 @@ class AccountsController < ApplicationController
 
       registration = @account.registrations.first
 
-      if @account.plan.free?
-        if !params[:account][:existing_user_email].blank?
-          delete_old_cookies
-          reset_session
-          self.current_user = @account.users.first
-          remember_me!
-          redirect_to account_rooms_url(@account)
-        else
-          registration.user.create_perishable_token!
-          welcome_page = welcome_url(:host => account_host(@account), :token => registration.user.perishable_token)
-          redirect_to welcome_page
-        end
+      if !params[:account][:existing_user_email].blank?
+        delete_old_cookies
+        reset_session
+        self.current_user = @account.users.first
+        remember_me!
+        redirect_to account_rooms_url(@account)
       else
         registration.user.create_perishable_token!
         welcome_page = welcome_url(:host => account_host(@account), :token => registration.user.perishable_token)
-        redirect_to @account.plan.subscribe_url(@account, welcome_page)
+        redirect_to welcome_page
       end
     end
-    
+
   rescue ActiveRecord::RecordInvalid => e
     @account = e.record
     @account.users.build unless (params[:account][:existing_user_email].blank? || @account.users.first)
     render :action => 'new', :layout => "dialog"
   end
-  
+
   def show
     @account = current_account
-    
-    if params[:changed]
-      @account.update_subscription_info
-      flash[:notice] = "Your information has been updated. " +
-                       "It might take a few minutes for this change to take effect."
-      redirect_to account_path # To prevent refresh w/ param
-      return
-    end
-  end
-  
-  def plan_changed
-    @account = current_account
-    @plan = Plan.find_by_name(params[:plan])
-    
-    @account.update_subscription_info
-    
-    flash[:notice] = "You'll soon be rollin' on the #{@plan.name} plan, congrats! " +
-                     "It might take a few minutes for this change to take effect."
-    
-    redirect_to account_path
-  end
-  
-  # Spreedly callback
-  def subscribers_changed
-    @account_ids = params[:subscriber_ids].split(",")
-    @account_ids.each do |account_id|
-      Account.find_by_id(account_id).try(:update_subscription_info)
-    end
-    
-    head :ok
+    return redirect_to account_rooms_path(@account)
   end
 
   protected

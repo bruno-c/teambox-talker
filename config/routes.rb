@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'accounts', :action => 'create'
-  map.signup '/signup/:plan', :controller => 'accounts', :action => 'new'
+  map.signup '/signup', :controller => 'accounts', :action => 'new'
   map.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
   map.pricing '/pricing', :controller => "site", :action => "pricing"
   map.about '/about', :controller => "site", :action => "about"
