@@ -69,3 +69,13 @@ Start the whole stack in development environment:
 For ubuntu users:
 
     script/devenv-ubuntu
+
+Manually:
+
+    bundle exec script/rabbitmq
+    bundle exec passenger start
+    bundle exec script/orbited
+    bundle exec script/talker channel
+    bundle exec script/talker presence
+    bundle exec script/talker logger
+
