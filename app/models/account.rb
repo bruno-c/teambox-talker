@@ -14,7 +14,7 @@ class Account < ActiveRecord::Base
   validates_presence_of :subdomain
   validates_uniqueness_of :subdomain
   validates_format_of :subdomain, :with => /\A[A-Z0-9\-]+\z/i
-  validates_exclusion_of :subdomain, :in => %w(www mail smtp ssh ftp dev chat service api admin) + 
+  validates_exclusion_of :subdomain, :in => %w(www mail smtp ssh ftp dev chat service api admin logout login register signup welcome pricing about tour privacy_policy terms_and_conditions service_policy landing r user_merge users invites account session settings plans rooms guest pastes feeds admin plugins avatar close_connection passwords password search rooms client) + 
                                             (0..3).map { |i| "assets#{i}" } # see action_controller.asset_host
 
   validate :check_existing_user, :on => :create
