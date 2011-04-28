@@ -3,7 +3,6 @@ module Talker::Server
     attr_reader :options
     
     def initialize
-      require 'ruby-debug'
       database_config = {
         :database => "talker_development",
         :user => "root",
