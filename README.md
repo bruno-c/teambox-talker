@@ -70,7 +70,7 @@ For ubuntu users:
 
     script/devenv-ubuntu
 
-Manually:
+Or **manually**, you can open each process. Use a tab for each process:
 
     bundle exec script/rabbitmq
     bundle exec passenger start
