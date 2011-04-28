@@ -3,11 +3,7 @@ class Attachment < ActiveRecord::Base
   belongs_to :room
   belongs_to :user
   
-  has_attached_file :upload, :storage => :s3,
-                             :s3_credentials => "#{RAILS_ROOT}/config/s3.yml",
-                             :s3_permissions => "authenticated-read",
-                             :s3_protocol => "https",
-                             :path => "attachments/:id/:style/:filename"
+  has_attached_file :upload
   
   validates_attachment_size :upload, :less_than => 10.megabyte
   validates_attachment_presence :upload
