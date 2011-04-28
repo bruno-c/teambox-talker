@@ -1,6 +1,4 @@
 class MonitorMailer < ActionMailer::Base
-  include GmailSmtpSettings
-  
   def signup(account, user)
     from        "\"Talker Notifier\" <notifier@talkerapp.com>"
     recipients  "info@talkerapp.com"
