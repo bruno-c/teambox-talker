@@ -24,7 +24,7 @@ class PluginsController < ApplicationController
     
     if @plugin.save
       flash[:notice] = 'Plugin was successfully created.'
-      redirect_to plugins_path
+      redirect_to account_plugins_path(current_account)
     else
       render :action => "new"
     end
@@ -35,7 +35,7 @@ class PluginsController < ApplicationController
 
     if @plugin.update_attributes(params[:plugin])
       flash[:notice] = 'Plugin was successfully updated.'
-      redirect_to plugins_path
+      redirect_to account_plugins_path(current_account)
     else
       render :action => "edit"
     end
@@ -47,6 +47,6 @@ class PluginsController < ApplicationController
     
     flash[:notice] = "Bye bye #{@plugin.name}!"
 
-    redirect_to(plugins_url)
+    redirect_to account_plugins_url(current_account)
   end
 end

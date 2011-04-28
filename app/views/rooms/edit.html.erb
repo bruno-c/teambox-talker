@@ -1,13 +1,13 @@
 <div class="sheet">
   <h2><%=h @title = "Edit #{@room.name}" %></h2>
 
-  <% form_for @room, :html => { :class => "lw120" } do |f| %>
+  <% form_for [current_account, @room], :html => { :class => "lw120" } do |f| %>
     <%= render f %>
     <p class="indent">
-      <%= buttons "Update", :cancel_to => rooms_path %>
+      <%= buttons "Update", :cancel_to => account_rooms_path(current_account) %>
     </p>
     <p class="indent submit">
-      <%= link_to "Delete room and chat logs", room_path(@room), :class => "button negative icon delete", :title => "Delete this room", :confirm => "Are you sure?", :method => :delete %>
+      <%= link_to "Delete room and chat logs", [current_account, @room], :class => "button negative icon delete", :title => "Delete this room", :confirm => "Are you sure?", :method => :delete %>
     </p>
   <% end %>
 </div>

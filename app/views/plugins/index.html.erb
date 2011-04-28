@@ -21,6 +21,6 @@
 
 <% content_for :sidebar do %>
   <div id="actions">
-    <%= link_to "Create a plugin", new_plugin_path, :title => "Create a plugin", :class => "button add" %>
+    <%= link_to "Create a plugin", new_account_plugin_path(current_account), :title => "Create a plugin", :class => "button add" %>
   </div>
 <% end %>

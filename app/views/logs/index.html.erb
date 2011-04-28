@@ -6,7 +6,7 @@
       <ul class="months">
       <% months.each do |date| %>
         <li class="month <%= 'current' if same_month?(@date, date) %>">
-          <%= link_to month_name(date), room_month_logs_path(@room, year, date.month) %>
+          <%= link_to month_name(date), account_room_month_logs_path(current_account, @room, year, date.month) %>
         </li>
       <% end %>
       </ul>
@@ -26,7 +26,7 @@
   <% @dates.each do |date| %>
     <tr>
       <td class="day"><%= human_day(date) %></td>
-      <td class="date"><%= link_to date.strftime("%B %e"), room_log_path(@room, date.year, date.month, date.day) %></td>
+      <td class="date"><%= link_to date.strftime("%B %e"), account_room_log_path(current_account, @room, date.year, date.month, date.day) %></td>
       <td class="details">
         <% unless (attachments = @room.attachments.created_on(date)).empty? %>
           <label>Attachments:</label>
@@ -35,7 +35,7 @@
           end.join(", ") %>
         <% end %>
       </td>
-      <td class="actions"><%= link_to "Delete Log", room_log_path(@room, date.year, date.month, date.day),
+      <td class="actions"><%= link_to "Delete Log", account_room_log_path(current_account, @room, date.year, date.month, date.day),
                                       :confirm => "Are you sure? All messages and attachments will be deleted.",
                                       :method => :delete, :class => "delete" %></td>
     </tr>

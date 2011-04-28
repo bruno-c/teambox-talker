@@ -32,6 +32,10 @@ class Account < ActiveRecord::Base
 
   attr_accessor :existing_user_email, :existing_user_password
 
+  def to_param
+    subdomain
+  end
+
   def check_existing_user
     unless existing_user_email.blank?
       if authenticatable = User.authenticate(existing_user_email,

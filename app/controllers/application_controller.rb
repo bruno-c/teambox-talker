@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
     
     def ssl_required?
       if Rails.env.production?
-        current_account? && current_account.features.ssl || super
+        current_account && current_account.features.ssl || super
       else
         false
       end
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
     helper_method :connected?
     
     def store_referer
-      if current_account? && current_account.referrer.blank? && cookies[:referrer].present?
+      if current_account && current_account.referrer.blank? && cookies[:referrer].present?
         logger.info "Setting referrer for #{current_account.subdomain} to #{cookies[:referrer]}"
         current_account.update_attribute :referrer, cookies[:referrer]
       end

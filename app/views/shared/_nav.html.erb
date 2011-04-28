@@ -1,12 +1,12 @@
 <div id="nav">
   <ul>
     <% if registered? %>
-      <li><%= link_to_with_active "Rooms", rooms_path, :title => "Rooms", :accesskey => "r" %></li>
+      <li><%= link_to_with_active "Rooms", account_rooms_path(current_account), :title => "Rooms", :accesskey => "r" %></li>
       <% if admin? %>
-        <li><%= link_to_with_active "Plugins", plugins_path, :accesskey => "p" %></li>
-        <li><%= link_to_with_active "Feeds", feeds_path, :accesskey => "f" %></li>
+        <li><%= link_to_with_active "Plugins", account_plugins_path(current_account), :accesskey => "p" %></li>
+        <li><%= link_to_with_active "Feeds", account_feeds_path(current_account), :accesskey => "f" %></li>
         <li><%= link_to_with_active "Users", users_path, :accesskey => "u" %></li>
-        <li><%= link_to_with_active "Account", account_path %></li>
+        <li><%= link_to_with_active "Account", current_account %></li>
       <% end %>
       <li><%= render :partial => "logs/search_form" %></li>
     <% end %>

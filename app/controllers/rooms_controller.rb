@@ -70,7 +70,7 @@ class RoomsController < ApplicationController
     @room = current_account.rooms.build(params[:room])
 
     if @room.save
-      redirect_to(@room)
+      redirect_to [current_account,@room]
     else
       render :action => "new"
     end
@@ -84,7 +84,7 @@ class RoomsController < ApplicationController
     
     if @room.update_attributes(params[:room])
       flash[:notice] = "Nicely Done! Room updated."
-      redirect_to rooms_path
+      redirect_to account_rooms_path(current_account)
     else
       render :edit
     end
@@ -93,7 +93,7 @@ class RoomsController < ApplicationController
   def destroy
     @room.destroy
     flash[:notice] = "Goodbye #{@room.name}!"
-    redirect_to rooms_path
+    redirect_to account_rooms_path(current_account)
   end
   
   def refresh
@@ -113,7 +113,7 @@ class RoomsController < ApplicationController
           flash[:error] = "The room is full. Contact your administrator to upgrade."
         end
         
-        redirect_to rooms_path
+        redirect_to account_rooms_path(current_account)
       end
     end
 end

@@ -1,7 +1,7 @@
 <div class="sheet">
   <h2><%= @title = "New Plugin" %></h2>
 
-  <% form_for @plugin, :html => { :class => "lw80" } do |f| %>
+  <% form_for [current_account, @plugin], :html => { :class => "lw80" } do |f| %>
     <%= f.error_messages %>
     <p>
       <%= f.label :name %>
@@ -16,7 +16,7 @@
       <%= f.text_area :source, :rows => 18, :cols => 60  %>
     </p>
     <p class="indent submit">
-      <%= buttons "Create", :cancel_to => plugins_path %>
+      <%= buttons "Create", :cancel_to => account_plugins_path(current_account) %>
     </p>
   <% end %>
 </div>

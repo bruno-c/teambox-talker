@@ -21,17 +21,25 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :users, :member => { :suspend => :delete, :unsuspend => :post }
   map.resources :invites, :member => { :resend => :post }, :collection => { :set_password => :put }
-  map.resource :account, :collection => { :plan_changed => :get, :subscribers_changed => :post }
+
+  map.resources :accounts, :collection => { :plan_changed => :get, :subscribers_changed => :post }, :path => "" do |acc|
+    acc.resources :rooms, :has_many => [:messages, :attachments], :member => { :refresh => :get } do |rooms|
+      rooms.resource :guest, :member => { :enable => :post, :disable => :post }
+    end
+    acc.resources :plugins, :has_one => :installation
+    acc.resources :feeds
+    acc.room_logs "/rooms/:room_id/logs", :controller => "logs", :action => "index"
+    acc.room_month_logs "/rooms/:room_id/logs/:year/:month", :controller => "logs", :action => "index"
+    acc.room_log "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "show", :conditions => { :method => :get }
+    acc.connect "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "destroy", :conditions => { :method => :delete }
+    acc.search_room "/rooms/:room_id/search", :controller => "logs", :action => "search"
+  end
+
   map.resource :session
   map.resource :settings
   map.resources :plans
-  map.resources :rooms, :has_many => [:messages, :attachments], :member => { :refresh => :get } do |rooms|
-    rooms.resource :guest, :member => { :enable => :post, :disable => :post }
-  end
   map.resources :pastes
-  map.resources :feeds
   map.resource :admin, :controller => "admin", :member => { :jobs => :get, :accounts => :get }
-  map.resources :plugins, :has_one => :installation
   
   map.connect "/avatar/:id.jpg", :controller => "avatars", :action => "show"
   map.connect "/close_connection", :controller => "attachments", :action => "close_connection"
@@ -41,11 +49,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.search "/search", :controller => "logs", :action => "search"
   
-  map.room_logs "/rooms/:room_id/logs", :controller => "logs", :action => "index"
-  map.room_month_logs "/rooms/:room_id/logs/:year/:month", :controller => "logs", :action => "index"
-  map.room_log "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "show", :conditions => { :method => :get }
-  map.connect "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "destroy", :conditions => { :method => :delete }
-  map.search_room "/rooms/:room_id/search", :controller => "logs", :action => "search"
   
   map.client_room "/rooms/:id/client", :controller => "client", :action => "client"
   map.iframe_client "/client/:account/:id/iframe", :controller => "client", :action => "iframe"

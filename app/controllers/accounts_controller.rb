@@ -1,5 +1,4 @@
 class AccountsController < ApplicationController
-  before_filter :top_level_domain_required, :only => [:new, :create]
   before_filter :admin_required, :only => [:show, :update, :plan_changed]
   ssl_required :new, :create
   

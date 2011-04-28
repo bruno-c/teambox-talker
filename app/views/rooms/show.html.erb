@@ -28,7 +28,7 @@
       Talker.plugins.push(new Talker.Scroller());
       Talker.plugins.push(new Talker.Notifier()); //provides onblur/onfocus handlers
       Talker.plugins.push(new Talker.UserList($('#people'))); // sidebar updating of users.
-      Talker.plugins.push(new Talker.RoomUpdater('<%= refresh_room_path(@room) %>')); // update room info
+      Talker.plugins.push(new Talker.RoomUpdater('<%= refresh_account_room_path(@room.account, @room) %>')); // update room info
       Talker.plugins.push(new Talker.Timestamp());// << depends on order to be included properly.  I say it should remain mandatory for usability reasons.
       Talker.plugins.push(new Talker.HighlightMe());
       Talker.plugins.push(new Talker.ReceivedSound());
@@ -84,7 +84,7 @@
   <div id="utilities">
     <div class="wrapper">
       <% unless current_user.guest %>
-      <%= link_to "Rooms", rooms_path %> |
+      <%= link_to "Rooms", account_rooms_path(current_account) %> |
       <% end %>
       <%#= image_tag avatar_url(current_user), :class => "avatar", :alt => h(current_user.name) %>
       <%= link_to "Settings", settings_path, :title => "Manage my settings", :accesskey => "m", :target => "_blank" %> |
@@ -108,9 +108,9 @@
             <b><!----></b>
             <div id="rooms">
               <% @rooms.each_with_index do |room, i| %>
-                <%= link_to h(room.name), room_path(room), :title => h("#{room.name} : #{room.description}"), :class => ("current" if room == @room), :accesskey => i+1 %>
+                <%= link_to h(room.name), [room.account,room], :title => h("#{room.name} : #{room.description}"), :class => ("current" if room == @room), :accesskey => i+1 %>
               <% end %>
-              <%= link_to "&laquo; Back to Rooms", rooms_path, :class => "back", :accesskey => "r" %>
+              <%= link_to "&laquo; Back to Rooms", account_rooms_path(current_account), :class => "back", :accesskey => "r" %>
             </div>
           </span>
         <% end %>
@@ -126,8 +126,8 @@
     <% if admin? %>
     <div class="footer" id="admin_actions">
       <label>Manage:</label>
-      <%= link_to "Plugins", plugins_path, :title => "Manage plugins", :target => "_blank", :accesskey => "p" %>
-      <%= link_to "Feeds", feeds_path, :title => "Manage feeds", :target => "_blank", :accesskey => "f" %>
+      <%= link_to "Plugins", account_plugins_path(current_account), :title => "Manage plugins", :target => "_blank", :accesskey => "p" %>
+      <%= link_to "Feeds", account_feeds_path(current_account), :title => "Manage feeds", :target => "_blank", :accesskey => "f" %>
       <%= link_to "Users", users_path, :title => "Manage users", :target => "_blank", :accesskey => "u" %>
     </div>
     <div class="footer" id="guest_access">
@@ -167,7 +167,7 @@
     <textarea rows="1" id="msgbox"></textarea>
     <div class="options">
       <%= link_to "Send", "#", :title => "", :class => "button neutral", :id => "send" %>
-      <%= link_to "Upload", room_attachments_path(@room), :onclick => "return false", :title => "Upload a file", :class => "button neutral", :accesskey => "f", :id => "upload" %>
+      <%= link_to "Upload", account_room_attachments_path(@room.account, @room), :onclick => "return false", :title => "Upload a file", :class => "button neutral", :accesskey => "f", :id => "upload" %>
       <img src="/images/loader.gif" width="16" height="11" id="upload_loader" alt="uploading file..." title="Uploading file." style="display:none"/>
     </div>
   </form>

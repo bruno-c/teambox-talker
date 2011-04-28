@@ -4,11 +4,11 @@
   #accounts
     -current_user.accounts.each do |account|
       %h4
-        =link_to account.subdomain, rooms_url(:host => account_host(account))
+        =link_to account.subdomain, account_rooms_path(account)
       %ul
         -account.rooms.with_permission(current_user).each do |room|
           %li
-            =link_to h(room.name), room_url(room, :host => account_host(account))
+            =link_to h(room.name), [account, room]
             -if room.users.any?
               .inside
                 %strong Inside:

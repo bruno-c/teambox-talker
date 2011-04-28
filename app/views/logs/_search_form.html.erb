@@ -1,4 +1,4 @@
-<% form_tag @room ? search_room_path(@room) : search_path, :method => :get, :class => "search_form" do %>
+<% form_tag @room ? account_search_room_path(current_account, @room) : search_path, :method => :get, :class => "search_form" do %>
   <p>
     <%= text_field_tag :q, @query, :class => "search", :type => "search", :results => 5, :placeholder => "Search chat logs ...", :accesskey => "s" %>
   </p>

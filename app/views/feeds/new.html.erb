@@ -1,13 +1,13 @@
 <div class="sheet">
   <h2><%= @title = "New feed" %></h2>
 
-  <% form_for @feed, :html => { :class => "lw120", :autocomplete => "off" } do |f| %>
+  <% form_for [current_account, @feed], :html => { :class => "lw120", :autocomplete => "off" } do |f| %>
     <%= f.error_messages %>
     
     <%= render f %>
     
     <p class="indent submit">
-      <%= buttons "Create", :cancel_to => feeds_path %>
+      <%= buttons "Create", :cancel_to => account_feeds_path(current_account) %>
     </p>
   <% end %>
 </div>

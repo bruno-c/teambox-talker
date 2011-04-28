@@ -10,7 +10,7 @@
         <div class="actions">
           <%= image_tag "icons/lock.png", :title => "This room is private, only allowed users can access it" if room.private %>
         </div>
-        <h3><%= link_to h(room.name), room, :accesskey => i+1 %></h3>
+        <h3><%= link_to h(room.name), [room.account, room], :accesskey => i+1 %></h3>
       </div>
       
       <div class="content">
@@ -32,9 +32,9 @@
     
       <div class="footer">
         <% if admin? %>
-          <%= link_to "Edit", edit_room_path(room), :title => "Edit this room" %>
+          <%= link_to "Edit", edit_account_room_path(room.account, room), :title => "Edit this room" %>
         <% end %>
-        <%= link_to "Chat Logs", room_logs_path(room), :title => "Chat Logs" %>
+        <%= link_to "Chat Logs", account_room_logs_path(current_account, room), :title => "Chat Logs" %>
       </div>
 
     </div>
@@ -45,7 +45,7 @@
 <% content_for :sidebar do %>
   <% if admin? %>
   <div id="actions">
-    <%= link_to "Add a room", new_room_path, :title => "Add a room", :class => "button add" %>
+    <%= link_to "Add a room", new_account_room_path(current_account), :title => "Add a room", :class => "button add" %>
   </div>
   <% end %>
   

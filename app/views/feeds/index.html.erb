@@ -21,8 +21,8 @@
       <td><%= image_tag "icons/arrow.png", :class => "to", :title => "Send to room" %></td>
       <td><%=h feed.room.name %></td>
       <td class="actions">
-        <%= link_to "Edit", edit_feed_path(feed), :class => "edit" %>
-        <%= link_to "Remove", feed_path(feed), :class => "remove", :confirm => "Are your sure?", :method => :delete %>
+        <%= link_to "Edit", edit_account_feed_path(current_account, feed), :class => "edit" %>
+        <%= link_to "Remove", [current_account, feed], :class => "remove", :confirm => "Are your sure?", :method => :delete %>
       </td>
     </tr>
   <% end %>
@@ -31,7 +31,7 @@
 
 <% content_for :sidebar do %>
   <div id="actions">
-    <%= link_to "Add a feed", new_feed_path, :title => "Add a feed", :class => "button add" %>
+    <%= link_to "Add a feed", new_account_feed_path(current_account), :title => "Add a feed", :class => "button add" %>
   </div>
   
   <div class="info">

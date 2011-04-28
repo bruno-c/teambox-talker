@@ -3,8 +3,8 @@
 <%= image_tag "loader.gif", :id => "guest_access_loader", :style => "display:none" %>
 
 <% if @room.guest_allowed? %>
-  <%= link_to "Disable", disable_room_guest_path(@room), :class => "disable" %><br/>
+  <%= link_to "Disable", disable_account_room_guest_path(current_account, @room), :class => "disable" %><br/>
   <input type="text" id="guest_url" title="Send this link to someone to invite him to this room" value="<%= public_room_url(@room.public_token) %>"/>
 <% else %>
-  <%= link_to "Enable", enable_room_guest_path(@room), :class => "enable" %>
+  <%= link_to "Enable", enable_account_room_guest_path(@room.account, @room), :class => "enable" %>
 <% end %>

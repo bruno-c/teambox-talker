@@ -13,7 +13,7 @@ module UrlHelper
   
   def link_to_log(room, date, options={})
     link_to [options.delete(:prefix), human_date(date), options.delete(:postfix)].compact.join(" "),
-            room_log_path(room, date.year, date.month, date.day), options
+            account_room_log_path(current_account, room, date.year, date.month, date.day), options
   end
   
   def plugin_api_path

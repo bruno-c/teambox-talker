@@ -15,7 +15,7 @@ class FeedsController < ApplicationController
     
     if @feed.save
       flash[:notice] = "Sit back and relax, we'll let you know when #{@feed.url} is updated."
-      redirect_to feeds_path
+      redirect_to account_feeds_path(current_account)
     else
       render :new
     end
@@ -26,7 +26,7 @@ class FeedsController < ApplicationController
   
   def update
     if @feed.update_attributes(params[:feed])
-      redirect_to feeds_path
+      redirect_to account_feeds_path(current_account)
     else
       render :edit
     end
@@ -35,7 +35,7 @@ class FeedsController < ApplicationController
   def destroy
     @feed.destroy
     
-    redirect_to feeds_path
+    redirect_to account_feeds_path(current_account)
   end
   
   private

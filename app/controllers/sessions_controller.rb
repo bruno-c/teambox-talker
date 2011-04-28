@@ -19,12 +19,12 @@ class SessionsController < ApplicationController
       self.current_user = user
       remember_me!
       if current_account
-        redirect_back_or_default rooms_path
+        redirect_back_or_default landing_path
       else
         if current_user.accounts.count > 1
           redirect_back_or_default landing_path
         elsif current_user.accounts.count == 1
-          redirect_back_or_default rooms_url(:host => account_host(current_user.accounts.first))
+          redirect_back_or_default account_rooms_url(current_user.accounts.first)
         else
           redirect_to root_path 
         end
