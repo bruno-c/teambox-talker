@@ -1,6 +1,6 @@
 #account-switcher
   - if current_account
-    %a#current-account{:href =>url_for(:host => account_host(current_account))}
+    %a#current-account{:href =>account_path(current_account)}
       %span.account
         Account:
       %strong.current
@@ -9,7 +9,7 @@
     %ul
       -(current_user.accounts - [current_account]).each do |account|
         %li{:class => (account == current_account ? 'active' : nil)}
-          %a{:href =>url_for(:host => account_host(account))}
+          %a{:href =>account_path(account)}
             %span.switch
               Switch to:
             %strong.subdomain

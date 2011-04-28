@@ -29,7 +29,7 @@ class LogsController < ApplicationController
       with = { :account_id => current_account.id }
       
       # Limit search to room with permissions
-      unless current_user.admin
+      unless current_user.admin?(current_account)
         with[:room_id] = current_user.accessible_rooms.map(&:id)
       end
     end

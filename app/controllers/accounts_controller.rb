@@ -47,7 +47,7 @@ class AccountsController < ApplicationController
           reset_session
           self.current_user = @account.users.first
           remember_me!
-          redirect_to rooms_url(:host => account_host(@account))
+          redirect_to account_rooms_url(@account)
         else
           registration.user.create_perishable_token!
           welcome_page = welcome_url(:host => account_host(@account), :token => registration.user.perishable_token)

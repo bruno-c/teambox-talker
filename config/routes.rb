@@ -32,6 +32,7 @@ ActionController::Routing::Routes.draw do |map|
     acc.search_room "/rooms/:room_id/search", :controller => "logs", :action => "search"
     acc.resources :users, :member => { :suspend => :delete, :unsuspend => :post }
     acc.resources :invites, :member => { :resend => :post }, :collection => { :set_password => :put }
+    acc.search "/search", :controller => "logs", :action => "search"
   end
 
   map.resource :session
@@ -46,7 +47,6 @@ ActionController::Routing::Routes.draw do |map|
   map.reset_password "/passwords/reset/:token", :controller => "passwords", :action => "show", :token => nil, :conditions => { :method => :get }
   map.resource :password
   
-  map.search "/search", :controller => "logs", :action => "search"
   
   
   map.root :controller => "site", :action => "home"
