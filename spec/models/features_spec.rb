@@ -12,16 +12,16 @@ describe Features do
       Features[:free].ssl.should_not be_true
     end
     it "has a max of 4 connections" do
-      Features[:free].max_connections.should == 4
+      Features[:free].max_connections.should == 1000
     end
   end
 
-  describe "basic" do
+  describe "cool" do
     it "has SSL" do
-      Features[:basic].ssl.should_not be_nil
+      Features[:cool].ssl.should_not be_nil
     end
-    it "has a max of 30 connections" do
-      Features[:basic].max_connections.should == 30
+    it "has a max of 1000 connections" do
+      Features[:cool].max_connections.should == 1000
     end
   end
 end
