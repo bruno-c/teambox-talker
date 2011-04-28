@@ -106,7 +106,7 @@ class InvitesController < ApplicationController
     
     def redirect_to_room_or_default(room, default)
       if room
-        redirect_to current_account, room
+        redirect_to [current_account, room]
       else
         redirect_to default
       end

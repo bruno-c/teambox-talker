@@ -6,7 +6,6 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'accounts', :action => 'create'
   map.signup '/signup', :controller => 'accounts', :action => 'new'
-  map.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
   map.pricing '/pricing', :controller => "site", :action => "pricing"
   map.about '/about', :controller => "site", :action => "about"
   map.tour '/tour/:step', :controller => "site", :action => "tour", :step => nil
@@ -34,6 +33,7 @@ ActionController::Routing::Routes.draw do |map|
     acc.resources :invites, :member => { :resend => :post }, :collection => { :set_password => :put }
     acc.search "/search", :controller => "logs", :action => "search"
     acc.resources :pastes
+    acc.welcome '/welcome', :controller => 'accounts', :action => 'welcome'
   end
 
   map.resource :session

@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_filter :admin_required, :only => [:show, :update]
+  before_filter :admin_required, :only => [:update]
   ssl_required :new, :create
   
   def index
@@ -23,7 +23,6 @@ class AccountsController < ApplicationController
     elsif @user = User.authenticate_by_perishable_token(@token)
       self.current_user = @user
       remember_me!
-      current_account.update_subscription_info
       render :layout => "dialog"
     else
       flash[:error] = "Bad authentication token"
@@ -48,7 +47,7 @@ class AccountsController < ApplicationController
         redirect_to account_rooms_url(@account)
       else
         registration.user.create_perishable_token!
-        welcome_page = welcome_url(:host => account_host(@account), :token => registration.user.perishable_token)
+        welcome_page = account_welcome_url(:account_id => @account.subdomain, :token => registration.user.perishable_token)
         redirect_to welcome_page
       end
     end
