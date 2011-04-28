@@ -10,12 +10,9 @@ Talker.Client = function(options) {
   var reconnect = true;
   var requestingToken = false;
   var lastEventId = options.lastEventId;
-  var parentCallback = options.parentCallback;
 
   // LineProtocol implementation.
   function onLineReceived(line) {
-    parentCallback && parentCallback(line);
-
     try {
       var line = eval('(' + line + ')');
     } catch (SyntaxError) {
