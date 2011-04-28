@@ -5,7 +5,7 @@
       <% if admin? %>
         <li><%= link_to_with_active "Plugins", account_plugins_path(current_account), :accesskey => "p" %></li>
         <li><%= link_to_with_active "Feeds", account_feeds_path(current_account), :accesskey => "f" %></li>
-        <li><%= link_to_with_active "Users", users_path, :accesskey => "u" %></li>
+        <li><%= link_to_with_active "Users", account_users_path(current_account), :accesskey => "u" %></li>
         <li><%= link_to_with_active "Account", current_account %></li>
       <% end %>
       <li><%= render :partial => "logs/search_form" %></li>

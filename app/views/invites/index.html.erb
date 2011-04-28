@@ -2,7 +2,7 @@
 
   <h2><%= @title = "Send Invites" %></h2>
 
-  <% form_tag invites_path do %>
+  <% form_tag account_invites_path(current_account) do %>
     <p>
       <%= label_tag :invitees, "Enter the email addresses of the people you want to invite. One per line." %>
       <%= text_area_tag :invitees, params[:invitees], :class => "wide", :rows => 10 %>
@@ -14,7 +14,7 @@
     <p>
       <%= submit_button "Send Invites", :class => "icon send-email" %>
       or
-      <%= cancel_button users_path %>
+      <%= cancel_button account_users_path(current_account) %>
     </p>
   <% end %>
 

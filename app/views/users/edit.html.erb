@@ -5,7 +5,7 @@
   </h2>
   
   <div class="content">
-    <% form_for @registration, :url => user_path(@user), :html =>{:method => :put} do |f| %>
+    <% form_for @registration, :url => account_user_path(current_account, @user), :html =>{:method => :put} do |f| %>
       <%= f.error_messages %>
       
       <h3>Administrator access</h3>
@@ -15,7 +15,7 @@
       </p>
       
       <p class="actions">
-        <%= buttons "Update", :cancel_to => users_path %>
+        <%= buttons "Update", :cancel_to => account_users_path(current_account) %>
       </p>
       
       <fieldset id="suspend">
@@ -35,7 +35,7 @@
           </p>
       
           <p>
-            <%= link_to "Suspend access", suspend_user_path(@user), :class => "button neutral icon cancel", :method => :delete %>
+            <%= link_to "Suspend access", suspend_account_user_path(current_account, @user), :class => "button neutral icon cancel", :method => :delete %>
           </p>
         <% end %>
       </fieldset>

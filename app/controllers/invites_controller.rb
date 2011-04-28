@@ -17,7 +17,7 @@ class InvitesController < ApplicationController
         @user.activate!
         render :layout => "dialog"
       else
-        redirect_to_room_or_default @room, rooms_path
+        redirect_to_room_or_default @room, account_rooms_path(current_account)
       end
       
     else
@@ -31,7 +31,7 @@ class InvitesController < ApplicationController
     @room = current_account.rooms.find_by_id(params[:room_id])
     
     if @user.update_attributes(params[:user])
-      redirect_to_room_or_default @room, rooms_path
+      redirect_to_room_or_default @room, account_rooms_path(current_account)
     else
       render :show, :layout => "dialog"
     end
@@ -75,7 +75,7 @@ class InvitesController < ApplicationController
       if success_count > 0
         format.html {
           flash[:notice] = "Yeah! #{success_count} user(s) invited! You can now edit permissions."
-          redirect_to users_path
+          redirect_to account_users_path(current_account)
         }
         format.js
       else
@@ -90,23 +90,23 @@ class InvitesController < ApplicationController
     send_invitation @user
     
     flash[:notice] = "Invitation sent to #{@user.email}"
-    redirect_to users_path
+    redirect_to account_users_path(current_account)
   end
   
   private
     def send_invitation(user, room=nil)
       user.create_perishable_token!
       if room
-        url = invite_url(:id => user.perishable_token, :room => room.id)
+        url = account_invite_url(:id => user.perishable_token, :room => room.id, :account => current_account)
       else
-        url = invite_url(user.perishable_token)
+        url = account_invite_url(user.perishable_token, :account => current_account)
       end
       UserMailer.deliver_invitation(current_user, url, user.email)
     end
     
     def redirect_to_room_or_default(room, default)
       if room
-        redirect_to room
+        redirect_to current_account, room
       else
         redirect_to default
       end

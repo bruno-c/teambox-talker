@@ -41,7 +41,7 @@ class LogsController < ApplicationController
     @room.attachments.created_on(@date).destroy_all
     
     flash[:notice] = "I hope you printed this log, because it is now gone forever."
-    redirect_to room_month_logs_path(@room, @date.year, @date.month)
+    redirect_to account_room_month_logs_path(current_account, @room, @date.year, @date.month)
   end
   
   private

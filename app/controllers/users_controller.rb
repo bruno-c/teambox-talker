@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       @registration.save!
       @user.update_attribute(:room_access, current_account.rooms.find(params[:room_access])) if params[:room_access]
     end
-    redirect_to users_path
+    redirect_to account_users_path(current_account)
 
   rescue ActiveRecord::RecordInvalid => e
     render :edit
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   
   def suspend
     @user.registration_for(current_account).destroy
-    redirect_to users_path
+    redirect_to account_users_path(current_account)
   end
   
   private
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     def cant_edit_self
       if @user == current_user
         flash[:error] = "You can't edit your own account."
-        redirect_to users_path
+        redirect_to account_users_path(current_account)
       end
     end
 end

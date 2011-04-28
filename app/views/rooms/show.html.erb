@@ -128,7 +128,7 @@
       <label>Manage:</label>
       <%= link_to "Plugins", account_plugins_path(current_account), :title => "Manage plugins", :target => "_blank", :accesskey => "p" %>
       <%= link_to "Feeds", account_feeds_path(current_account), :title => "Manage feeds", :target => "_blank", :accesskey => "f" %>
-      <%= link_to "Users", users_path, :title => "Manage users", :target => "_blank", :accesskey => "u" %>
+      <%= link_to "Users", account_users_path(current_account), :title => "Manage users", :target => "_blank", :accesskey => "u" %>
     </div>
     <div class="footer" id="guest_access">
       <%= render :partial => "guest_access" %>

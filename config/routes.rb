@@ -18,9 +18,6 @@ ActionController::Routing::Routes.draw do |map|
   map.public_room "/r/:token", :controller => "guests", :action => "new"
 
   map.resource :user_merge, :only => [:new, :create]
-  
-  map.resources :users, :member => { :suspend => :delete, :unsuspend => :post }
-  map.resources :invites, :member => { :resend => :post }, :collection => { :set_password => :put }
 
   map.resources :accounts, :collection => { :plan_changed => :get, :subscribers_changed => :post }, :path => "" do |acc|
     acc.resources :rooms, :has_many => [:messages, :attachments], :member => { :refresh => :get } do |rooms|
@@ -33,6 +30,8 @@ ActionController::Routing::Routes.draw do |map|
     acc.room_log "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "show", :conditions => { :method => :get }
     acc.connect "/rooms/:room_id/logs/:year/:month/:day", :controller => "logs", :action => "destroy", :conditions => { :method => :delete }
     acc.search_room "/rooms/:room_id/search", :controller => "logs", :action => "search"
+    acc.resources :users, :member => { :suspend => :delete, :unsuspend => :post }
+    acc.resources :invites, :member => { :resend => :post }, :collection => { :set_password => :put }
   end
 
   map.resource :session

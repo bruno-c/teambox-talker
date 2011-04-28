@@ -2,7 +2,7 @@
 
 <% content_for :sidebar do %>
   <div id="actions">
-    <%= link_to "Send Invites", invites_path, :class => "button add" %>
+    <%= link_to "Send Invites", account_invites_path(current_account), :class => "button add" %>
   </div>
 <% end %>
 
