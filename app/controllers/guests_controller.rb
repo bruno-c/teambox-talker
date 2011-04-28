@@ -17,13 +17,13 @@ class GuestsController < ApplicationController
 
   def new
     @token = params[:token]
-    @room = current_account.rooms.find_by_public_token(@token)
-    
-    render :full and return if current_account.full?
-    
+    @room = Room.find_by_public_token(@token)
+
+    render :full and return if @room.account.full?
+
     if @room
       if logged_in?
-        redirect_to @room
+        redirect_to [@room.account, @room]
       else
         @user = User.new
       end
@@ -43,7 +43,7 @@ class GuestsController < ApplicationController
     self.current_user = @user
     remember_me!
 
-    redirect_to @room
+    redirect_to [@room.account, @room]
 
   rescue ActiveRecord::RecordInvalid
     render :new
@@ -51,6 +51,6 @@ class GuestsController < ApplicationController
   
   private
     def find_room
-      @room = current_account.rooms.find(params[:room_id])
+      @room = Room.find(params[:room_id])
     end
 end

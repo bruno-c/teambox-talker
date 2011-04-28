@@ -12,7 +12,7 @@
     accept the invitation.
   </div>
   
-  <% form_for @user, :url => room_guest_path(@room), :html => { :class => "lw120" } do |f| %>
+  <% form_for @user, :url => account_room_guest_path(@room.account, @room), :html => { :class => "lw120" } do |f| %>
     <%= f.error_messages %>
     <p>
       <%= f.label :name, "User name" %>
