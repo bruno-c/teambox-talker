@@ -22,5 +22,9 @@
       <%= link_to 'Forgot your password?', reset_password_path %>
     </p>
   <% end %>
+    <p class="indent note">
+      Don't have an account yet?
+      <%= link_to 'Sign up for free now', signup_path(Plan.find_by_name('Free')) %>
+    </p>
   </div>
 </div>
