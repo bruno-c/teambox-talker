@@ -32,24 +32,9 @@ For ubuntu users:
 
     sudo apt-get install rabbitmq-server
 
-### Ruby Gems
+Resolve ruby dependancy with bundler:
 
-The gem rubyosa seems to break in Snow Leopard, you can use this fork: http://github.com/jboyett/rubyosa
-
-    git clone git://github.com/jrom/rubyosa.git
-    cd rubyosa
-    ruby extconf.rb
-    make
-    make install
-    make install-extras
-
-You can always try to use the original rubyosa gem:
-
-    gem install rubyosa
-
-For the rest of the gems just:
-
-    bundle install
+    bundle
 
 ## Configuration / bootstrapping
 
@@ -62,11 +47,13 @@ Some pieces of talker in development assume your mysql root's account has no pas
 
 ## Running the stack
 
-Start the whole stack in development environment:
+Start the whole stack in development environment on OSX:
+
+    gem install appscript
 
     script/devenv
 
-For ubuntu users:
+For Ubuntu users:
 
     script/devenv-ubuntu
 
