@@ -1,9 +1,10 @@
 #account-switcher
-  %a#current-account{:href =>url_for(:host => account_host(current_account))}
-    %span.account
-      Account: 
-    %strong.current
-      =current_account.subdomain
+  - if current_account
+    %a#current-account{:href =>url_for(:host => account_host(current_account))}
+      %span.account
+        Account:
+      %strong.current
+        =current_account.subdomain
   -if current_user.accounts.count > 1
     %ul
       -(current_user.accounts - [current_account]).each do |account|
