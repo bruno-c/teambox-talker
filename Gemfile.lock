@@ -84,8 +84,6 @@ GEM
       eventmachine (>= 0.12.9)
     encryptor (1.1.1)
     eventmachine (0.12.10)
-    exceptional (2.0.30)
-      rack
     factory_girl (1.3.2)
     faker (0.3.1)
     fakeweb (1.3.0)
@@ -212,7 +210,6 @@ DEPENDENCIES
   em-http-request
   em-spec!
   eventmachine
-  exceptional
   factory_girl
   faker
   fakeweb

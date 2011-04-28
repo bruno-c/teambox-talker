@@ -27,7 +27,6 @@ gem 'ts-datetime-delta', :require => 'thinking_sphinx/deltas/datetime_delta'
 gem 'backports'
 gem 'unicode_utils' unless RUBY_VERSION < '1.9.1'
 gem 'builder'
-gem 'exceptional'
 gem "nokogiri"
 
 group :development do
