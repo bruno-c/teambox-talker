@@ -4,7 +4,7 @@
   <div id="my_plugins">
     <h3>My Plugins</h3>
     <% if @plugins.empty? %>
-      You have not authored any plugins yet but you can <%= link_to "create one now", new_plugin_path, :title => "create a plugin" %>.
+      You have not authored any plugins yet but you can <%= link_to "create one now", new_account_plugin_path(current_account), :title => "create a plugin" %>.
     <% end %>
     <% @plugins.each_with_index do |plugin, i| %>
       <%= render :partial => "plugin", :locals => {:plugin => plugin, :i => i}  %>
