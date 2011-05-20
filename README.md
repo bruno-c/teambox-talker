@@ -20,7 +20,7 @@ Well well, before we could skip this step, but now some dependencies are not hos
 
 And now, finally, do the rest with one command:
 
-    easy_install orbited
+    pip install orbited
 
 Install **RabbitMQ** using MacPorts or homebrew with:
 
